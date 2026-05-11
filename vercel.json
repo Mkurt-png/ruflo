@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "buildCommand": "echo skip",
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/outreach", "destination": "/outreach.html" },
+    { "source": "/", "destination": "/outreach.html" }
+  ]
+}

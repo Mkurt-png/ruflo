@@ -1,0 +1,25 @@
+{
+  "_comment": "Copy this to config/outreach.json and fill in your keys. Never commit secrets.",
+
+  "anthropic_api_key": "",
+  "serpapi_key": "",
+
+  "data_dir": "./data/outreach",
+
+  "max_leads_per_source": 20,
+
+  "take_screenshots": false,
+
+  "generate_emails": true,
+
+  "analysis_concurrency": 5,
+
+  "email_gen_concurrency": 3,
+
+  "min_score_to_email": 0,
+
+  "only_needs_redesign": false,
+
+  "_sources_note": "Available: google_maps (needs serpapi_key), pages_jaunes, yelp",
+  "sources": ["pages_jaunes", "yelp"]
+}

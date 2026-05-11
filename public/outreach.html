@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outreach Pipeline — Audit & Email</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f0f13;
+      --surface: #1a1a24;
+      --border: #2a2a38;
+      --accent: #7c6dfa;
+      --accent2: #4ade80;
+      --danger: #f87171;
+      --warn: #fbbf24;
+      --text: #e2e2ef;
+      --muted: #8888aa;
+      --radius: 10px;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+    a { color: var(--accent); }
+    .container { max-width: 860px; margin: 0 auto; padding: 32px 20px; }
+    h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 32px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
+    .card h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 16px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 180px; }
+    label { font-size: 0.8rem; color: var(--muted); }
+    input, select { background: var(--bg); border: 1px solid var(--border); border-radius: 7px; color: var(--text); padding: 9px 12px; font-size: 0.9rem; outline: none; width: 100%; }
+    input:focus, select:focus { border-color: var(--accent); }
+    .btn { background: var(--accent); color: #fff; border: none; border-radius: 7px; padding: 10px 20px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: opacity .15s; white-space: nowrap; }
+    .btn:hover { opacity: .88; }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-green { background: #166534; }
+    .scores { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 16px; }
+    .score-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; text-align: center; }
+    .score-box .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .score-box .value { font-size: 1.8rem; font-weight: 700; }
+    .score-good { color: var(--accent2); }
+    .score-mid { color: var(--warn); }
+    .score-bad { color: var(--danger); }
+    .issues { margin-top: 16px; }
+    .issues h3 { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+    .issue-item { display: flex; align-items: flex-start; gap: 8px; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .issue-item:last-child { border-bottom: none; }
+    .dot-bad { color: var(--danger); font-size: 1rem; line-height: 1.2; }
+    .dot-good { color: var(--accent2); font-size: 1rem; line-height: 1.2; }
+    .recs { margin-top: 12px; }
+    .rec-item { background: #14271e; border: 1px solid #1f4030; border-radius: 6px; padding: 8px 12px; font-size: 0.85rem; color: var(--accent2); margin-bottom: 6px; }
+    .email-box { position: relative; }
+    .email-subject { font-weight: 700; margin-bottom: 10px; color: var(--accent); font-size: 0.95rem; }
+    .email-body { font-size: 0.9rem; line-height: 1.65; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    .copy-btn { position: absolute; top: 0; right: 0; }
+    .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; border-radius: 20px; padding: 3px 9px; font-weight: 600; }
+    .tag-bad { background: #3f1515; color: var(--danger); }
+    .tag-good { background: #143322; color: var(--accent2); }
+    .tag-warn { background: #3a2a00; color: var(--warn); }
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.2); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hidden { display: none; }
+    .notice { background: #1e1a00; border: 1px solid #3a3000; border-radius: 8px; padding: 12px 16px; font-size: 0.83rem; color: var(--warn); margin-bottom: 16px; }
+    .bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; transition: width .5s; }
+    .features { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    footer { text-align: center; color: var(--muted); font-size: 0.78rem; padding: 32px 0 16px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Outreach Pipeline</h1>
+  <p class="subtitle">Audit de site web + génération d'email personnalisé — Montréal & Victoriaville</p>
+
+  <!-- API Key -->
+  <div class="card" id="apikey-card">
+    <h2>Clé API Anthropic</h2>
+    <div class="row">
+      <div class="field" style="flex:3">
+        <label>Clé API <span style="color:var(--muted)">(stockée localement, jamais envoyée ailleurs)</span></label>
+        <input id="api-key" type="password" placeholder="sk-ant-api03-..." autocomplete="off" />
+      </div>
+      <div class="field" style="justify-content:flex-end">
+        <label>&nbsp;</label>
+        <button class="btn btn-ghost" onclick="saveKey()">Sauvegarder</button>
+      </div>
+    </div>
+    <div id="key-status" style="font-size:.8rem;margin-top:8px;color:var(--muted)"></div>
+  </div>
+
+  <!-- Input -->
+  <div class="card">
+    <h2>Informations entreprise</h2>
+    <div class="row" style="margin-bottom:12px">
+      <div class="field" style="flex:2">
+        <label>Nom de l'entreprise</label>
+        <input id="biz-name" type="text" placeholder="ex: Plomberie Dupont" />
+      </div>
+      <div class="field">
+        <label>Catégorie / niche</label>
+        <select id="biz-cat">
+          <option value="plombier">Plombier</option>
+          <option value="dentiste">Dentiste</option>
+          <option value="resto">Restaurant</option>
+          <option value="gym">Gym / Fitness</option>
+          <option value="salon_coiffure">Salon de coiffure</option>
+          <option value="avocat">Avocat</option>
+          <option value="courtier">Courtier immobilier</option>
+          <option value="garage">Garage auto</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Ville</label>
+        <select id="biz-city">
+          <option value="Montréal">Montréal</option>
+          <option value="Victoriaville">Victoriaville</option>
+          <option value="Québec">Québec</option>
+          <option value="Laval">Laval</option>
+          <option value="Longueuil">Longueuil</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field" style="flex:3">
+        <label>Site web à analyser</label>
+        <input id="biz-url" type="text" placeholder="ex: plomberiedupont.com" />
+      </div>
+      <div class="field" style="justify-content:flex-end">
+        <label>&nbsp;</label>
+        <button class="btn" id="analyze-btn" onclick="runAnalyze()">Analyser le site</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analysis result -->
+  <div class="card hidden" id="analysis-card">
+    <h2>Résultat de l'analyse</h2>
+    <div id="analysis-content"></div>
+    <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn" id="gen-btn" onclick="runGenerate()">Générer l'email</button>
+      <button class="btn btn-ghost" onclick="resetAnalysis()">Nouvelle analyse</button>
+    </div>
+  </div>
+
+  <!-- Email result -->
+  <div class="card hidden" id="email-card">
+    <h2>Email personnalisé</h2>
+    <div class="email-box">
+      <div class="email-subject" id="email-subject"></div>
+      <div class="email-body" id="email-body"></div>
+      <button class="btn btn-green copy-btn" style="margin-top:12px;position:static;" onclick="copyEmail()">Copier l'email</button>
+    </div>
+  </div>
+
+  <footer>
+    Outreach Pipeline · <a href="https://rama-barbier.vercel.app" target="_blank">rama-barbier.vercel.app</a>
+  </footer>
+</div>
+
+<script>
+let currentAnalysis = null;
+
+function saveKey() {
+  const key = document.getElementById('api-key').value.trim();
+  if (!key.startsWith('sk-ant-')) {
+    document.getElementById('key-status').innerHTML = '<span style="color:var(--danger)">❌ Clé invalide — doit commencer par sk-ant-</span>';
+    return;
+  }
+  localStorage.setItem('anthropic_key', key);
+  document.getElementById('key-status').innerHTML = '<span style="color:var(--accent2)">✓ Clé sauvegardée</span>';
+  document.getElementById('api-key').value = '••••••••••••••••••••' + key.slice(-4);
+}
+
+function getKey() {
+  return localStorage.getItem('anthropic_key') || '';
+}
+
+// Load key on page init
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('anthropic_key');
+  if (saved) {
+    document.getElementById('api-key').value = '••••••••••••••••••••' + saved.slice(-4);
+    document.getElementById('key-status').innerHTML = '<span style="color:var(--accent2)">✓ Clé chargée</span>';
+  }
+});
+
+function scoreClass(s) {
+  if (s >= 7) return 'score-good';
+  if (s >= 5) return 'score-mid';
+  return 'score-bad';
+}
+
+function barColor(s) {
+  if (s >= 7) return '#4ade80';
+  if (s >= 5) return '#fbbf24';
+  return '#f87171';
+}
+
+function setLoading(btnId, loading, label) {
+  const btn = document.getElementById(btnId);
+  btn.disabled = loading;
+  btn.innerHTML = loading ? `<span class="spinner"></span>${label}` : label;
+}
+
+async function runAnalyze() {
+  const url = document.getElementById('biz-url').value.trim();
+  if (!url) { alert('Entre un URL à analyser.'); return; }
+
+  setLoading('analyze-btn', true, 'Analyse en cours…');
+  document.getElementById('analysis-card').classList.add('hidden');
+  document.getElementById('email-card').classList.add('hidden');
+
+  try {
+    const resp = await fetch('/api/outreach/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Erreur serveur');
+    currentAnalysis = data;
+    renderAnalysis(data);
+  } catch (err) {
+    alert('Erreur: ' + err.message);
+  } finally {
+    setLoading('analyze-btn', false, 'Analyser le site');
+  }
+}
+
+function renderAnalysis(a) {
+  const card = document.getElementById('analysis-card');
+  const content = document.getElementById('analysis-content');
+
+  const scores = [
+    { label: 'Global', value: a.overall_score },
+    { label: 'Mobile', value: a.mobile_score },
+    { label: 'SEO', value: a.seo_score },
+    { label: 'Vitesse', value: a.speed_score },
+    { label: 'Design', value: a.design_score },
+  ];
+
+  const scoreHtml = scores.map(s => `
+    <div class="score-box">
+      <div class="label">${s.label}</div>
+      <div class="value ${scoreClass(s.value)}">${s.value}<span style="font-size:.9rem;color:var(--muted)">/10</span></div>
+      <div class="bar-wrap" style="margin-top:8px">
+        <div class="bar-track"><div class="bar-fill" style="width:${s.value*10}%;background:${barColor(s.value)}"></div></div>
+      </div>
+    </div>
+  `).join('');
+
+  const feats = [
+    { label: 'HTTPS', ok: a.has_https },
+    { label: 'CTA visible', ok: a.has_cta },
+    { label: 'Formulaire', ok: a.has_contact_form },
+    { label: 'Réservation', ok: a.has_booking },
+  ];
+  const featHtml = feats.map(f =>
+    `<span class="tag ${f.ok ? 'tag-good' : 'tag-bad'}">${f.ok ? '✓' : '✗'} ${f.label}</span>`
+  ).join('');
+
+  const issuesHtml = a.issues.length
+    ? a.issues.map(i => `<div class="issue-item"><span class="dot-bad">✗</span><span>${i}</span></div>`).join('')
+    : '<div class="issue-item"><span class="dot-good">✓</span><span>Aucun problème majeur détecté</span></div>';
+
+  const recsHtml = a.recommendations.length
+    ? a.recommendations.map(r => `<div class="rec-item">→ ${r}</div>`).join('')
+    : '';
+
+  content.innerHTML = `
+    ${a.page_title ? `<div style="font-size:.85rem;color:var(--muted);margin-bottom:8px">📄 ${a.page_title}</div>` : ''}
+    <div class="badges">${featHtml}</div>
+    ${a.load_time_ms ? `<div style="font-size:.8rem;color:var(--muted);margin-top:8px">⏱ Chargement: ${(a.load_time_ms/1000).toFixed(2)}s</div>` : ''}
+    <div class="scores">${scoreHtml}</div>
+    <div class="issues" style="margin-top:20px">
+      <h3>Problèmes détectés (${a.issues.length})</h3>
+      ${issuesHtml}
+    </div>
+    ${recsHtml ? `<div class="recs"><h3 style="font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px">Recommandations</h3>${recsHtml}</div>` : ''}
+  `;
+
+  card.classList.remove('hidden');
+}
+
+async function runGenerate() {
+  const name = document.getElementById('biz-name').value.trim() || 'Cette entreprise';
+  const cat = document.getElementById('biz-cat').value;
+  const city = document.getElementById('biz-city').value;
+  const url = document.getElementById('biz-url').value.trim();
+
+  setLoading('gen-btn', true, 'Génération en cours…');
+  document.getElementById('email-card').classList.add('hidden');
+
+  try {
+    const key = getKey();
+    if (!key) { alert('Entre ta clé API Anthropic en haut de page.'); return; }
+
+    const resp = await fetch('/api/outreach/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        business_name: name,
+        category: cat,
+        city,
+        website: url,
+        analysis: currentAnalysis,
+        api_key: key,
+      }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Erreur serveur');
+    renderEmail(data);
+  } catch (err) {
+    alert('Erreur: ' + err.message);
+  } finally {
+    setLoading('gen-btn', false, 'Générer l\'email');
+  }
+}
+
+function renderEmail({ subject, body }) {
+  document.getElementById('email-subject').textContent = '📧 Sujet : ' + subject;
+  document.getElementById('email-body').textContent = body;
+  document.getElementById('email-card').classList.remove('hidden');
+  document.getElementById('email-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyEmail() {
+  const subj = document.getElementById('email-subject').textContent.replace('📧 Sujet : ', '');
+  const body = document.getElementById('email-body').textContent;
+  navigator.clipboard.writeText(`Sujet: ${subj}\n\n${body}`).then(() => {
+    const btn = event.target;
+    btn.textContent = '✓ Copié !';
+    setTimeout(() => btn.textContent = 'Copier l\'email', 2000);
+  });
+}
+
+function resetAnalysis() {
+  currentAnalysis = null;
+  document.getElementById('analysis-card').classList.add('hidden');
+  document.getElementById('email-card').classList.add('hidden');
+  document.getElementById('biz-url').value = '';
+  document.getElementById('biz-name').value = '';
+}
+</script>
+</body>
+</html>
