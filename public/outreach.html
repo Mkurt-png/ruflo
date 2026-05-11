@@ -201,6 +201,45 @@
     <div id="history-list"></div>
   </div>
 
+  <!-- Automation quotidienne -->
+  <div class="card" id="automation-card">
+    <h2>Automation quotidienne (50 emails/jour)</h2>
+    <div class="notice">
+      <strong>Variables d'environnement requises dans le dashboard Vercel :</strong><br><br>
+      <code style="font-size:.82rem;line-height:2">
+        ANTHROPIC_API_KEY — Clé Claude AI<br>
+        GMAIL_USER — Adresse Gmail expéditeur<br>
+        GMAIL_APP_PASS — Mot de passe d'application Gmail<br>
+        GOOGLE_PLACES_KEY — Clé Google Places API<br>
+        HUNTER_API_KEY — (Optionnel) Clé Hunter.io pour trouver plus d'emails<br>
+        FROM_NAME — Ton nom affiché (ex : Rama Barbier)<br>
+        SENDER_ADDRESS — Ton adresse postale (obligatoire CASL, ex : Montréal, QC, Canada)<br>
+        UNSUBSCRIBE_BASE_URL — URL de base de ton app (ex : https://automatisation.vercel.app)<br>
+        KV_REST_API_URL — Vercel KV URL (pour éviter les doublons)<br>
+        KV_REST_API_TOKEN — Vercel KV Token<br>
+        CRON_SECRET — Secret pour sécuriser le déclenchement du cron<br>
+        DAILY_EMAIL_TARGET — Nombre d'emails par run (défaut : 15)
+      </code>
+    </div>
+
+    <div style="font-size:.83rem;color:var(--muted);margin-bottom:16px">
+      Le cron s'exécute automatiquement chaque jour à 13h UTC. Tu peux aussi le déclencher manuellement ci-dessous.
+    </div>
+
+    <div class="row" style="margin-bottom:12px">
+      <div class="field" style="flex:2">
+        <label>CRON_SECRET (pour déclencher manuellement)</label>
+        <input id="cron-secret" type="password" placeholder="Ton CRON_SECRET Vercel" autocomplete="off" />
+      </div>
+      <div class="field" style="justify-content:flex-end">
+        <label>&nbsp;</label>
+        <button class="btn" id="cron-btn" onclick="triggerCron()">Déclencher manuellement</button>
+      </div>
+    </div>
+
+    <div id="cron-result" class="hidden" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:.85rem;line-height:1.7;margin-top:4px"></div>
+  </div>
+
   <footer>
     Outreach Pipeline · <a href="https://rama-barbier.vercel.app" target="_blank">rama-barbier.vercel.app</a>
   </footer>
@@ -499,6 +538,43 @@ function resetAnalysis() {
   document.getElementById('email-card').classList.add('hidden');
   document.getElementById('biz-url').value = '';
   document.getElementById('biz-name').value = '';
+}
+
+async function triggerCron() {
+  const secret = document.getElementById('cron-secret').value.trim();
+  const resultEl = document.getElementById('cron-result');
+
+  setLoading('cron-btn', true, 'Déclenchement…');
+  resultEl.classList.add('hidden');
+  resultEl.innerHTML = '';
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (secret) headers['Authorization'] = 'Bearer ' + secret;
+
+  try {
+    const resp = await fetch('/api/outreach/cron-daily', { method: 'POST', headers });
+    const data = await resp.json();
+
+    if (!resp.ok) {
+      resultEl.innerHTML = `<span style="color:var(--danger)">❌ Erreur: ${data.error || resp.status}</span>`;
+    } else {
+      const bizLines = (data.businesses || []).map(b => `<div style="color:var(--muted);padding:2px 0">• ${b}</div>`).join('');
+      resultEl.innerHTML = `
+        <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:10px">
+          <span style="color:var(--accent2)">✓ Envoyés : <strong>${data.sent ?? 0}</strong></span>
+          <span style="color:var(--warn)">⟳ Ignorés : <strong>${data.skipped ?? 0}</strong></span>
+          <span style="color:var(--danger)">✗ Erreurs : <strong>${data.errors ?? 0}</strong></span>
+        </div>
+        ${bizLines ? `<div style="margin-top:6px;font-size:.8rem">${bizLines}</div>` : ''}
+        <div style="color:var(--muted);font-size:.78rem;margin-top:8px">Date : ${data.date || new Date().toISOString().slice(0,10)}</div>
+      `;
+    }
+  } catch (err) {
+    resultEl.innerHTML = `<span style="color:var(--danger)">❌ ${err.message}</span>`;
+  } finally {
+    setLoading('cron-btn', false, 'Déclencher manuellement');
+    resultEl.classList.remove('hidden');
+  }
 }
 </script>
 </body>
