@@ -75,6 +75,22 @@
   <h1>Outreach Pipeline</h1>
   <p class="subtitle">Audit de site web + génération d'email personnalisé — Montréal & Victoriaville</p>
 
+  <!-- API Key -->
+  <div class="card" id="apikey-card">
+    <h2>Clé API Anthropic</h2>
+    <div class="row">
+      <div class="field" style="flex:3">
+        <label>Clé API <span style="color:var(--muted)">(stockée localement, jamais envoyée ailleurs)</span></label>
+        <input id="api-key" type="password" placeholder="sk-ant-api03-..." autocomplete="off" />
+      </div>
+      <div class="field" style="justify-content:flex-end">
+        <label>&nbsp;</label>
+        <button class="btn btn-ghost" onclick="saveKey()">Sauvegarder</button>
+      </div>
+    </div>
+    <div id="key-status" style="font-size:.8rem;margin-top:8px;color:var(--muted)"></div>
+  </div>
+
   <!-- Input -->
   <div class="card">
     <h2>Informations entreprise</h2>
@@ -147,6 +163,30 @@
 
 <script>
 let currentAnalysis = null;
+
+function saveKey() {
+  const key = document.getElementById('api-key').value.trim();
+  if (!key.startsWith('sk-ant-')) {
+    document.getElementById('key-status').innerHTML = '<span style="color:var(--danger)">❌ Clé invalide — doit commencer par sk-ant-</span>';
+    return;
+  }
+  localStorage.setItem('anthropic_key', key);
+  document.getElementById('key-status').innerHTML = '<span style="color:var(--accent2)">✓ Clé sauvegardée</span>';
+  document.getElementById('api-key').value = '••••••••••••••••••••' + key.slice(-4);
+}
+
+function getKey() {
+  return localStorage.getItem('anthropic_key') || '';
+}
+
+// Load key on page init
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('anthropic_key');
+  if (saved) {
+    document.getElementById('api-key').value = '••••••••••••••••••••' + saved.slice(-4);
+    document.getElementById('key-status').innerHTML = '<span style="color:var(--accent2)">✓ Clé chargée</span>';
+  }
+});
 
 function scoreClass(s) {
   if (s >= 7) return 'score-good';
@@ -256,6 +296,9 @@ async function runGenerate() {
   document.getElementById('email-card').classList.add('hidden');
 
   try {
+    const key = getKey();
+    if (!key) { alert('Entre ta clé API Anthropic en haut de page.'); return; }
+
     const resp = await fetch('/api/outreach/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -265,6 +308,7 @@ async function runGenerate() {
         city,
         website: url,
         analysis: currentAnalysis,
+        api_key: key,
       }),
     });
     const data = await resp.json();

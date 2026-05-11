@@ -7,8 +7,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) return res.status(500).json({ error: "ANTHROPIC_API_KEY not configured" });
+  // Accept key from request body (client-side) or fallback to server env
+  const apiKey = req.body?.api_key || process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return res.status(400).json({ error: "Clé API Anthropic manquante" });
 
   const { business_name, category, city, website, analysis } = req.body || {};
   if (!business_name) return res.status(400).json({ error: "business_name is required" });
