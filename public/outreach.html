@@ -89,24 +89,30 @@
       </div>
     </div>
     <div class="row" style="margin-bottom:12px">
+      <div class="field" style="flex:2">
+        <label>Ton adresse Gmail (expéditeur + réception des réponses)</label>
+        <input id="gmail-user" type="email" placeholder="ton.email@gmail.com" />
+      </div>
+      <div class="field" style="flex:2">
+        <label>Nom affiché (optionnel)</label>
+        <input id="from-name" type="text" placeholder="ex: Rama Barbier" />
+      </div>
+    </div>
+    <div class="row" style="margin-bottom:12px">
       <div class="field" style="flex:3">
-        <label>Clé Resend (envoi d'emails) — <a href="https://resend.com/api-keys" target="_blank" style="color:var(--accent)">obtenir</a></label>
-        <input id="resend-key" type="password" placeholder="re_..." autocomplete="off" />
+        <label>Mot de passe d'application Gmail — <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color:var(--accent)">en créer un</a> (nécessite 2FA activée)</label>
+        <input id="gmail-pass" type="password" placeholder="abcd efgh ijkl mnop (16 caractères)" autocomplete="off" />
       </div>
       <div class="field" style="justify-content:flex-end">
         <label>&nbsp;</label>
-        <button class="btn btn-ghost" onclick="saveResendKey()">Sauvegarder Resend</button>
+        <button class="btn btn-ghost" onclick="saveGmail()">Sauvegarder Gmail</button>
       </div>
     </div>
-    <div class="row">
-      <div class="field" style="flex:2">
-        <label>Email expéditeur (doit être un domaine vérifié sur Resend)</label>
-        <input id="from-email" type="email" placeholder="ex: contact@tondomaine.com" />
-      </div>
-      <div class="field" style="flex:2">
-        <label>Email de réponse (où tu reçois les réponses)</label>
-        <input id="reply-to-email" type="email" placeholder="ex: ton.email@gmail.com" />
-      </div>
+    <div style="background:#1a1f2e;border:1px solid #2c3a52;border-radius:8px;padding:10px 14px;font-size:.8rem;color:var(--muted);margin-bottom:8px">
+      💡 Le mot de passe d'application est différent de ton mot de passe Gmail.
+      Il faut <strong>activer la 2FA</strong> sur ton compte Google, puis générer un App Password
+      sur <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color:var(--accent)">myaccount.google.com/apppasswords</a>.
+      Les emails partiront de ton Gmail et les réponses arriveront dans ta boîte Gmail.
     </div>
     <div id="key-status" style="font-size:.8rem;margin-top:8px;color:var(--muted)"></div>
   </div>
@@ -218,55 +224,66 @@ function saveKey() {
   setStatus('✓ Clé Anthropic sauvegardée', 'ok');
 }
 
-function saveResendKey() {
-  const key = document.getElementById('resend-key').value.trim();
-  if (!key.startsWith('re_')) {
-    setStatus('❌ Clé Resend invalide — doit commencer par re_', 'err'); return;
+function saveGmail() {
+  const user = document.getElementById('gmail-user').value.trim();
+  const pass = document.getElementById('gmail-pass').value.replace(/\s+/g, '');
+  const name = document.getElementById('from-name').value.trim();
+
+  if (!user.includes('@')) {
+    setStatus('❌ Adresse Gmail invalide', 'err'); return;
   }
-  localStorage.setItem('resend_key', key);
-  document.getElementById('resend-key').value = '••••••••••••••••••••' + key.slice(-4);
+  if (pass.length !== 16 && !pass.startsWith('•')) {
+    setStatus('❌ Mot de passe d\'application invalide (doit faire 16 caractères, sans les espaces)', 'err'); return;
+  }
 
-  // Persist from/reply-to too
-  const from = document.getElementById('from-email').value.trim();
-  const reply = document.getElementById('reply-to-email').value.trim();
-  if (from) localStorage.setItem('from_email', from);
-  if (reply) localStorage.setItem('reply_to_email', reply);
+  localStorage.setItem('gmail_user', user);
+  if (!pass.startsWith('•')) {
+    localStorage.setItem('gmail_app_pass', pass);
+    document.getElementById('gmail-pass').value = '••••••••••••' + pass.slice(-4);
+  }
+  if (name) localStorage.setItem('from_name', name);
 
-  setStatus('✓ Clé Resend + adresses sauvegardées', 'ok');
+  setStatus('✓ Gmail configuré — les emails partiront depuis ' + user, 'ok');
 }
 
 function getKey() { return localStorage.getItem('anthropic_key') || ''; }
-function getResendKey() { return localStorage.getItem('resend_key') || ''; }
+function getGmailCreds() {
+  return {
+    user: localStorage.getItem('gmail_user') || '',
+    pass: localStorage.getItem('gmail_app_pass') || '',
+    name: localStorage.getItem('from_name') || '',
+  };
+}
 
 // Load all on page init
 window.addEventListener('DOMContentLoaded', () => {
   const ak = localStorage.getItem('anthropic_key');
-  const rk = localStorage.getItem('resend_key');
-  const from = localStorage.getItem('from_email');
-  const reply = localStorage.getItem('reply_to_email');
+  const gu = localStorage.getItem('gmail_user');
+  const gp = localStorage.getItem('gmail_app_pass');
+  const fn = localStorage.getItem('from_name');
 
   if (ak) document.getElementById('api-key').value = '••••••••••••••••••••' + ak.slice(-4);
-  if (rk) document.getElementById('resend-key').value = '••••••••••••••••••••' + rk.slice(-4);
-  if (from) document.getElementById('from-email').value = from;
-  if (reply) document.getElementById('reply-to-email').value = reply;
+  if (gu) document.getElementById('gmail-user').value = gu;
+  if (gp) document.getElementById('gmail-pass').value = '••••••••••••' + gp.slice(-4);
+  if (fn) document.getElementById('from-name').value = fn;
 
-  if (ak && rk) setStatus('✓ Configuration chargée', 'ok');
-  else if (ak) setStatus('⚠ Clé Anthropic OK, ajoute une clé Resend pour envoyer', 'warn');
+  if (ak && gu && gp) setStatus('✓ Configuration complète chargée', 'ok');
+  else if (ak) setStatus('⚠ Anthropic OK — configure Gmail pour envoyer', 'warn');
 
   renderHistory();
 });
 
 async function runSend() {
-  const rk = getResendKey();
-  if (!rk) { alert('Ajoute ta clé Resend et clique Sauvegarder Resend.'); return; }
+  const creds = getGmailCreds();
+  if (!creds.user || !creds.pass) {
+    alert('Configure ton Gmail et le mot de passe d\'application en haut de page.');
+    return;
+  }
 
-  const from = document.getElementById('from-email').value.trim() || localStorage.getItem('from_email');
-  const replyTo = document.getElementById('reply-to-email').value.trim() || localStorage.getItem('reply_to_email');
   const to = document.getElementById('to-email').value.trim();
   const subject = document.getElementById('email-subject').textContent.replace(/^📧 Sujet : /, '');
   const body = document.getElementById('email-body').textContent;
 
-  if (!from) { alert('Renseigne l\'email expéditeur.'); return; }
   if (!to) { alert('Renseigne l\'email du destinataire.'); return; }
 
   setLoading('send-btn', true, 'Envoi…');
@@ -277,19 +294,20 @@ async function runSend() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        resend_key: rk,
-        from, to, reply_to: replyTo,
-        subject, body,
+        gmail_user: creds.user,
+        gmail_app_pass: creds.pass,
+        from_name: creds.name,
+        to, subject, body,
       }),
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.error || 'Erreur d\'envoi');
 
     document.getElementById('send-status').innerHTML =
-      `<span style="color:var(--accent2)">✓ Envoyé à ${to} (id: ${data.id?.slice(0,8) || 'n/a'})</span>`;
+      `<span style="color:var(--accent2)">✓ Envoyé à ${to} depuis ${creds.user}</span>`;
 
     saveToHistory({
-      to, subject, sent_at: data.sent_at, id: data.id,
+      to, subject, sent_at: data.sent_at,
       business: document.getElementById('biz-name').value.trim(),
       city: document.getElementById('biz-city').value,
     });
