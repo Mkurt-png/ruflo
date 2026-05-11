@@ -75,17 +75,37 @@
   <h1>Outreach Pipeline</h1>
   <p class="subtitle">Audit de site web + génération d'email personnalisé — Montréal & Victoriaville</p>
 
-  <!-- API Key -->
+  <!-- API Keys -->
   <div class="card" id="apikey-card">
-    <h2>Clé API Anthropic</h2>
-    <div class="row">
+    <h2>Configuration des clés (stockées localement)</h2>
+    <div class="row" style="margin-bottom:12px">
       <div class="field" style="flex:3">
-        <label>Clé API <span style="color:var(--muted)">(stockée localement, jamais envoyée ailleurs)</span></label>
+        <label>Clé Anthropic (génération d'email)</label>
         <input id="api-key" type="password" placeholder="sk-ant-api03-..." autocomplete="off" />
       </div>
       <div class="field" style="justify-content:flex-end">
         <label>&nbsp;</label>
-        <button class="btn btn-ghost" onclick="saveKey()">Sauvegarder</button>
+        <button class="btn btn-ghost" onclick="saveKey()">Sauvegarder Anthropic</button>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom:12px">
+      <div class="field" style="flex:3">
+        <label>Clé Resend (envoi d'emails) — <a href="https://resend.com/api-keys" target="_blank" style="color:var(--accent)">obtenir</a></label>
+        <input id="resend-key" type="password" placeholder="re_..." autocomplete="off" />
+      </div>
+      <div class="field" style="justify-content:flex-end">
+        <label>&nbsp;</label>
+        <button class="btn btn-ghost" onclick="saveResendKey()">Sauvegarder Resend</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field" style="flex:2">
+        <label>Email expéditeur (doit être un domaine vérifié sur Resend)</label>
+        <input id="from-email" type="email" placeholder="ex: contact@tondomaine.com" />
+      </div>
+      <div class="field" style="flex:2">
+        <label>Email de réponse (où tu reçois les réponses)</label>
+        <input id="reply-to-email" type="email" placeholder="ex: ton.email@gmail.com" />
       </div>
     </div>
     <div id="key-status" style="font-size:.8rem;margin-top:8px;color:var(--muted)"></div>
@@ -152,8 +172,27 @@
     <div class="email-box">
       <div class="email-subject" id="email-subject"></div>
       <div class="email-body" id="email-body"></div>
-      <button class="btn btn-green copy-btn" style="margin-top:12px;position:static;" onclick="copyEmail()">Copier l'email</button>
     </div>
+    <div class="row" style="margin-top:16px">
+      <div class="field" style="flex:3">
+        <label>Email du destinataire</label>
+        <input id="to-email" type="email" placeholder="contact@entreprise.com" />
+      </div>
+      <div class="field" style="justify-content:flex-end">
+        <label>&nbsp;</label>
+        <button class="btn btn-green" id="send-btn" onclick="runSend()">Envoyer l'email</button>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <button class="btn btn-ghost" onclick="copyEmail()">Copier (envoi manuel)</button>
+    </div>
+    <div id="send-status" style="font-size:.85rem;margin-top:12px"></div>
+  </div>
+
+  <!-- Sent history -->
+  <div class="card hidden" id="history-card">
+    <h2>Historique d'envois (cette session)</h2>
+    <div id="history-list"></div>
   </div>
 
   <footer>
@@ -164,29 +203,127 @@
 <script>
 let currentAnalysis = null;
 
+function setStatus(msg, type) {
+  const colors = { ok: 'var(--accent2)', err: 'var(--danger)', warn: 'var(--warn)', info: 'var(--muted)' };
+  document.getElementById('key-status').innerHTML = `<span style="color:${colors[type]||'var(--muted)'}">${msg}</span>`;
+}
+
 function saveKey() {
   const key = document.getElementById('api-key').value.trim();
   if (!key.startsWith('sk-ant-')) {
-    document.getElementById('key-status').innerHTML = '<span style="color:var(--danger)">❌ Clé invalide — doit commencer par sk-ant-</span>';
-    return;
+    setStatus('❌ Clé Anthropic invalide — doit commencer par sk-ant-', 'err'); return;
   }
   localStorage.setItem('anthropic_key', key);
-  document.getElementById('key-status').innerHTML = '<span style="color:var(--accent2)">✓ Clé sauvegardée</span>';
   document.getElementById('api-key').value = '••••••••••••••••••••' + key.slice(-4);
+  setStatus('✓ Clé Anthropic sauvegardée', 'ok');
 }
 
-function getKey() {
-  return localStorage.getItem('anthropic_key') || '';
-}
-
-// Load key on page init
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('anthropic_key');
-  if (saved) {
-    document.getElementById('api-key').value = '••••••••••••••••••••' + saved.slice(-4);
-    document.getElementById('key-status').innerHTML = '<span style="color:var(--accent2)">✓ Clé chargée</span>';
+function saveResendKey() {
+  const key = document.getElementById('resend-key').value.trim();
+  if (!key.startsWith('re_')) {
+    setStatus('❌ Clé Resend invalide — doit commencer par re_', 'err'); return;
   }
+  localStorage.setItem('resend_key', key);
+  document.getElementById('resend-key').value = '••••••••••••••••••••' + key.slice(-4);
+
+  // Persist from/reply-to too
+  const from = document.getElementById('from-email').value.trim();
+  const reply = document.getElementById('reply-to-email').value.trim();
+  if (from) localStorage.setItem('from_email', from);
+  if (reply) localStorage.setItem('reply_to_email', reply);
+
+  setStatus('✓ Clé Resend + adresses sauvegardées', 'ok');
+}
+
+function getKey() { return localStorage.getItem('anthropic_key') || ''; }
+function getResendKey() { return localStorage.getItem('resend_key') || ''; }
+
+// Load all on page init
+window.addEventListener('DOMContentLoaded', () => {
+  const ak = localStorage.getItem('anthropic_key');
+  const rk = localStorage.getItem('resend_key');
+  const from = localStorage.getItem('from_email');
+  const reply = localStorage.getItem('reply_to_email');
+
+  if (ak) document.getElementById('api-key').value = '••••••••••••••••••••' + ak.slice(-4);
+  if (rk) document.getElementById('resend-key').value = '••••••••••••••••••••' + rk.slice(-4);
+  if (from) document.getElementById('from-email').value = from;
+  if (reply) document.getElementById('reply-to-email').value = reply;
+
+  if (ak && rk) setStatus('✓ Configuration chargée', 'ok');
+  else if (ak) setStatus('⚠ Clé Anthropic OK, ajoute une clé Resend pour envoyer', 'warn');
+
+  renderHistory();
 });
+
+async function runSend() {
+  const rk = getResendKey();
+  if (!rk) { alert('Ajoute ta clé Resend et clique Sauvegarder Resend.'); return; }
+
+  const from = document.getElementById('from-email').value.trim() || localStorage.getItem('from_email');
+  const replyTo = document.getElementById('reply-to-email').value.trim() || localStorage.getItem('reply_to_email');
+  const to = document.getElementById('to-email').value.trim();
+  const subject = document.getElementById('email-subject').textContent.replace(/^📧 Sujet : /, '');
+  const body = document.getElementById('email-body').textContent;
+
+  if (!from) { alert('Renseigne l\'email expéditeur.'); return; }
+  if (!to) { alert('Renseigne l\'email du destinataire.'); return; }
+
+  setLoading('send-btn', true, 'Envoi…');
+  document.getElementById('send-status').innerHTML = '';
+
+  try {
+    const resp = await fetch('/api/outreach/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        resend_key: rk,
+        from, to, reply_to: replyTo,
+        subject, body,
+      }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Erreur d\'envoi');
+
+    document.getElementById('send-status').innerHTML =
+      `<span style="color:var(--accent2)">✓ Envoyé à ${to} (id: ${data.id?.slice(0,8) || 'n/a'})</span>`;
+
+    saveToHistory({
+      to, subject, sent_at: data.sent_at, id: data.id,
+      business: document.getElementById('biz-name').value.trim(),
+      city: document.getElementById('biz-city').value,
+    });
+  } catch (err) {
+    document.getElementById('send-status').innerHTML =
+      `<span style="color:var(--danger)">❌ ${err.message}</span>`;
+  } finally {
+    setLoading('send-btn', false, 'Envoyer l\'email');
+  }
+}
+
+function saveToHistory(entry) {
+  const hist = JSON.parse(localStorage.getItem('sent_history') || '[]');
+  hist.unshift(entry);
+  localStorage.setItem('sent_history', JSON.stringify(hist.slice(0, 50)));
+  renderHistory();
+}
+
+function renderHistory() {
+  const hist = JSON.parse(localStorage.getItem('sent_history') || '[]');
+  if (hist.length === 0) return;
+  const card = document.getElementById('history-card');
+  const list = document.getElementById('history-list');
+  list.innerHTML = hist.map(h => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem">
+      <div>
+        <div style="color:var(--text)">${h.business || h.to}</div>
+        <div style="color:var(--muted);font-size:.78rem">${h.to} · ${h.city || ''}</div>
+      </div>
+      <div style="color:var(--muted);font-size:.75rem">${new Date(h.sent_at).toLocaleString('fr-CA', {dateStyle:'short', timeStyle:'short'})}</div>
+    </div>
+  `).join('');
+  card.classList.remove('hidden');
+}
 
 function scoreClass(s) {
   if (s >= 7) return 'score-good';
