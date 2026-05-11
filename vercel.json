@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "buildCommand": "echo 'no build needed'",
+  "outputDirectory": "public",
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "@vercel/node@4"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/outreach/(.*)",
+      "dest": "/api/outreach/$1"
+    },
+    {
+      "src": "/outreach",
+      "dest": "/outreach.html"
+    },
+    {
+      "src": "/",
+      "dest": "/outreach.html"
+    }
+  ],
+  "env": {
+    "ANTHROPIC_API_KEY": "@anthropic_api_key"
+  }
+}
