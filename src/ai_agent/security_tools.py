@@ -213,21 +213,16 @@ def scan_ast(source: str, path: str) -> list[Finding]:
         )]
 
     for node in ast.walk(tree):
-        # Dangerous builtins called directly
-        if isinstance(node, ast.Call):
-            func = node.func
-            name: Optional[str] = None
-            if isinstance(func, ast.Name):
-                name = func.id
-            elif isinstance(func, ast.Attribute):
-                name = func.attr
-
+        # Dangerous builtins called directly (bare name only — avoid false
+        # positives on re.compile, typing.cast, etc.)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+            name = node.func.id
             if name in ("eval", "exec", "compile"):
                 findings.append(Finding(
                     severity="HIGH",
                     category="Dangerous",
                     rule="EVAL_EXEC",
-                    message=f"Use of '{name}()' can execute arbitrary code",
+                    message=f"Use of bare '{name}()' can execute arbitrary code",
                     line=node.lineno,
                 ))
 
