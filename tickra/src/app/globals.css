@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: 248 247 243;
+  --surface: 255 255 255;
+  --elevated: 252 251 247;
+  --ink: 10 10 12;
+  --muted: 92 92 100;
+  --subtle: 152 152 158;
+  --line: 226 224 218;
+  --brand: 41 98 255;
+  --up: 38 166 154;
+  --down: 239 83 80;
+  color-scheme: light;
+}
+
+html.dark {
+  --canvas: 19 23 34;
+  --surface: 24 28 41;
+  --elevated: 30 34 45;
+  --ink: 234 236 240;
+  --muted: 156 162 174;
+  --subtle: 110 116 128;
+  --line: 42 47 60;
+  --brand: 92 138 255;
+  --up: 38 166 154;
+  --down: 239 83 80;
+  color-scheme: dark;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: rgb(var(--canvas));
+  color: rgb(var(--ink));
+  font-feature-settings: 'ss01', 'cv11';
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: rgb(var(--ink));
+  color: rgb(var(--canvas));
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
