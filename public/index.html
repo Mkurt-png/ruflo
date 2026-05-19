@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ruflo Trading Academy — Apprends le trading de A à Z</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#0e1530; --panel:#121a36; --panel2:#172248;
+    --line:#1f2a55; --text:#e7ecff; --muted:#8a96c8;
+    --accent:#5b8cff; --accent2:#22d3ee; --green:#26d97f; --red:#ef4d5f;
+    --yellow:#f5c451; --purple:#a78bfa;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 ui-sans-serif,system-ui,Segoe UI,Roboto,Inter,sans-serif}
+  a{color:var(--accent2);text-decoration:none}
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);background:rgba(11,16,32,.78);border-bottom:1px solid var(--line)}
+  .nav{max-width:1280px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:18px}
+  .logo{font-weight:800;letter-spacing:.3px;font-size:18px;background:linear-gradient(90deg,#5b8cff,#22d3ee,#26d97f);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav nav{display:flex;gap:16px;flex:1}
+  .nav a{color:var(--muted);font-weight:500}
+  .nav a:hover{color:var(--text)}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer;font-weight:600}
+  .btn.primary{background:linear-gradient(90deg,#3b6eff,#22d3ee);border:none}
+  .btn:hover{transform:translateY(-1px)}
+  .hero{max-width:1280px;margin:0 auto;padding:56px 20px 24px;display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center}
+  .hero h1{font-size:44px;line-height:1.1;margin:0 0 14px}
+  .hero p{color:var(--muted);font-size:17px;max-width:560px}
+  .hero .ctas{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+  .badges{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .badge{padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}
+  .hero-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:14px}
+  .ticker{display:flex;gap:14px;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:8px 12px}
+  .ticker-row{display:flex;gap:24px;animation:scroll 30s linear infinite;white-space:nowrap}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .tk{display:inline-flex;gap:8px;align-items:center}
+  .tk .sym{color:var(--text);font-weight:700}
+  .tk .px{color:var(--muted)}
+  .tk .up{color:var(--green)} .tk .dn{color:var(--red)}
+
+  section{max-width:1280px;margin:0 auto;padding:36px 20px}
+  h2{font-size:26px;margin:0 0 6px}
+  .sub{color:var(--muted);margin-bottom:20px}
+
+  /* Chart */
+  .chart-wrap{display:grid;grid-template-columns:56px 1fr 220px;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+  .toolbar{display:flex;flex-direction:column;gap:4px;padding:8px 6px;border-right:1px solid var(--line);background:var(--bg2)}
+  .tool{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;background:transparent;color:var(--muted);cursor:pointer;position:relative}
+  .tool:hover{background:#1a2348;color:var(--text)}
+  .tool.active{background:#1f2a55;color:#fff;border-color:#2d3b78}
+  .tool svg{width:20px;height:20px}
+  .tool[data-tip]:hover::after{content:attr(data-tip);position:absolute;left:48px;top:50%;transform:translateY(-50%);background:#0b1226;color:#fff;padding:5px 8px;border-radius:6px;font-size:12px;white-space:nowrap;border:1px solid var(--line);z-index:10}
+
+  .chart-main{position:relative;background:radial-gradient(1200px 400px at 30% 0%,#13204a 0%,#0c1430 60%,#0a1029 100%)}
+  .chart-top{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.15)}
+  .chip{padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:var(--muted);cursor:pointer;font-weight:600;font-size:12px;background:transparent}
+  .chip.active{color:#fff;border-color:#2d3b78;background:#1b2553}
+  .chart-stats{margin-left:auto;color:var(--muted);font-size:12px;display:flex;gap:14px}
+  .chart-stats b{color:var(--text);font-weight:700}
+  canvas{display:block;width:100%;height:520px}
+  .chart-right{border-left:1px solid var(--line);background:var(--bg2);padding:12px}
+  .chart-right h4{margin:6px 0 8px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #1a2348;font-size:13px}
+  .row b{color:var(--text)} .row span{color:var(--muted)}
+
+  /* Curriculum */
+  .modules{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .mod{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer;transition:.15s}
+  .mod:hover{transform:translateY(-2px);border-color:#2d3b78}
+  .mod .num{font-size:12px;color:var(--accent2);font-weight:800;letter-spacing:.1em}
+  .mod h3{margin:6px 0 6px;font-size:17px}
+  .mod p{color:var(--muted);margin:0 0 10px;font-size:13px}
+  .progress{height:6px;background:#1a2348;border-radius:4px;overflow:hidden}
+  .progress > div{height:100%;background:linear-gradient(90deg,#3b6eff,#22d3ee)}
+  .mod .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:8px}
+
+  /* Lesson modal */
+  .modal{position:fixed;inset:0;background:rgba(2,6,20,.7);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+  .modal.open{display:flex}
+  .sheet{max-width:900px;width:100%;max-height:88vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+  .sheet header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:1}
+  .sheet h3{margin:0;font-size:18px}
+  .sheet .x{cursor:pointer;color:var(--muted);background:none;border:none;font-size:22px}
+  .sheet .content{padding:18px 22px 24px;line-height:1.7}
+  .sheet .content h4{margin:18px 0 6px}
+  .sheet .content ul{padding-left:18px}
+  .sheet .quiz{background:#0e1738;border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:18px}
+  .sheet .quiz label{display:flex;gap:8px;align-items:flex-start;padding:6px 0;cursor:pointer}
+  .sheet .quiz .res{margin-top:8px;font-weight:700}
+
+  /* Glossary */
+  .glossary{columns:2;column-gap:28px}
+  .glossary p{break-inside:avoid}
+  .glossary b{color:var(--text)}
+
+  footer{color:var(--muted);text-align:center;padding:30px;border-top:1px solid var(--line);margin-top:30px}
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr}
+    .chart-wrap{grid-template-columns:48px 1fr}
+    .chart-right{display:none}
+    .glossary{columns:1}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">◆ Ruflo Academy</div>
+    <nav>
+      <a href="#chart">Graphique</a>
+      <a href="#cours">Cours A→Z</a>
+      <a href="#strategies">Stratégies</a>
+      <a href="#glossaire">Glossaire</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+    <button class="btn primary" onclick="document.getElementById('cours').scrollIntoView({behavior:'smooth'})">Commencer →</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Apprends le trading <span style="background:linear-gradient(90deg,#26d97f,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent">de A à Z</span> avec un vrai graphique.</h1>
+    <p>26 modules progressifs, 18 outils de dessin professionnels, candlestick chart en temps réel simulé, quiz interactifs et glossaire complet. Du débutant absolu au trader intermédiaire.</p>
+    <div class="ctas">
+      <button class="btn primary" onclick="document.getElementById('chart').scrollIntoView({behavior:'smooth'})">Ouvrir le graphique</button>
+      <button class="btn" onclick="document.getElementById('cours').scrollIntoView({behavior:'smooth'})">Voir les 26 cours</button>
+    </div>
+    <div class="badges">
+      <span class="badge">📊 18 outils de dessin</span>
+      <span class="badge">🎓 26 modules</span>
+      <span class="badge">🧠 Quiz</span>
+      <span class="badge">📈 Indicateurs</span>
+      <span class="badge">🇫🇷 100% en français</span>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="ticker">
+      <div class="ticker-row" id="ticker"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
+      <div style="padding:12px;border:1px solid var(--line);border-radius:10px"><div style="color:var(--muted);font-size:12px">Élèves actifs</div><div style="font-size:22px;font-weight:800">12 487</div></div>
+      <div style="padding:12px;border:1px solid var(--line);border-radius:10px"><div style="color:var(--muted);font-size:12px">Leçons complétées</div><div style="font-size:22px;font-weight:800" id="completed-count">0</div></div>
+      <div style="padding:12px;border:1px solid var(--line);border-radius:10px"><div style="color:var(--muted);font-size:12px">Note moyenne</div><div style="font-size:22px;font-weight:800">4.8 ★</div></div>
+      <div style="padding:12px;border:1px solid var(--line);border-radius:10px"><div style="color:var(--muted);font-size:12px">Durée totale</div><div style="font-size:22px;font-weight:800">~32 h</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="chart">
+  <h2>Graphique interactif</h2>
+  <div class="sub">Bougies japonaises, multi-timeframes, indicateurs et <b>18 outils de dessin</b> (style TradingView). Clique sur un outil puis trace sur le graphique. Double-clic = effacer le dernier tracé.</div>
+
+  <div class="chart-wrap">
+    <div class="toolbar" id="toolbar">
+      <!-- 18 outils -->
+      <button class="tool active" data-tool="crosshair" data-tip="Réticule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="2"/></svg></button>
+      <button class="tool" data-tool="trendline" data-tip="Ligne de tendance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21L21 3"/><circle cx="3" cy="21" r="1.5" fill="currentColor"/><circle cx="21" cy="3" r="1.5" fill="currentColor"/></svg></button>
+      <button class="tool" data-tool="ray" data-tip="Rayon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21L21 9"/><path d="M21 9l-5-1m5 1l-1-5"/></svg></button>
+      <button class="tool" data-tool="hline" data-tip="Ligne horizontale"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/></svg></button>
+      <button class="tool" data-tool="vline" data-tip="Ligne verticale"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/></svg></button>
+      <button class="tool" data-tool="rect" data-tip="Rectangle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="12" rx="1"/></svg></button>
+      <button class="tool" data-tool="ellipse" data-tip="Ellipse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="9" ry="6"/></svg></button>
+      <button class="tool" data-tool="triangle" data-tip="Triangle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4L22 20H2L12 4z"/></svg></button>
+      <button class="tool" data-tool="fib" data-tip="Fibonacci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h20M2 10h20M2 14h20M2 18h20"/></svg></button>
+      <button class="tool" data-tool="channel" data-tip="Canal parallèle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18L18 3M6 21L21 6"/></svg></button>
+      <button class="tool" data-tool="arrow" data-tip="Flèche"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21L21 3"/><path d="M21 3l-7 0M21 3l0 7"/></svg></button>
+      <button class="tool" data-tool="measure" data-tip="Règle / Mesure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l14 14 4-4L7 3z"/><path d="M7 7l2 2M10 10l2 2M13 13l2 2"/></svg></button>
+      <button class="tool" data-tool="brush" data-tip="Pinceau libre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c4-2 5-5 9-9 3-3 5-5 7-5s2 4-1 7-6 5-9 8c-2 2-6-1-6-1z"/></svg></button>
+      <button class="tool" data-tool="text" data-tip="Texte / Annotation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M12 6v14M8 20h8"/></svg></button>
+      <button class="tool" data-tool="long" data-tip="Position long"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="1" fill="rgba(38,217,127,.25)"/><rect x="3" y="14" width="18" height="6" rx="1" fill="rgba(239,77,95,.25)"/></svg></button>
+      <button class="tool" data-tool="short" data-tip="Position short"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="6" rx="1" fill="rgba(239,77,95,.25)"/><rect x="3" y="14" width="18" height="6" rx="1" fill="rgba(38,217,127,.25)"/></svg></button>
+      <button class="tool" data-tool="eraser" data-tip="Effacer (clic sur tracé)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l8 4 10-10-8-8L3 13z"/></svg></button>
+      <button class="tool" data-tool="clear" data-tip="Tout effacer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button>
+    </div>
+
+    <div class="chart-main">
+      <div class="chart-top">
+        <div style="display:flex;gap:6px">
+          <button class="chip active" data-sym="BTCUSD">BTC/USD</button>
+          <button class="chip" data-sym="ETHUSD">ETH/USD</button>
+          <button class="chip" data-sym="EURUSD">EUR/USD</button>
+          <button class="chip" data-sym="AAPL">AAPL</button>
+          <button class="chip" data-sym="TSLA">TSLA</button>
+        </div>
+        <div style="width:1px;background:var(--line);height:22px"></div>
+        <div style="display:flex;gap:6px">
+          <button class="chip" data-tf="1m">1m</button>
+          <button class="chip" data-tf="5m">5m</button>
+          <button class="chip" data-tf="15m">15m</button>
+          <button class="chip active" data-tf="1h">1h</button>
+          <button class="chip" data-tf="1D">1D</button>
+          <button class="chip" data-tf="1W">1W</button>
+        </div>
+        <div style="width:1px;background:var(--line);height:22px"></div>
+        <div style="display:flex;gap:6px">
+          <button class="chip active" data-ind="candle">Bougies</button>
+          <button class="chip" data-ind="line">Ligne</button>
+          <button class="chip" data-ind="area">Aire</button>
+        </div>
+        <div style="width:1px;background:var(--line);height:22px"></div>
+        <div style="display:flex;gap:6px">
+          <button class="chip" data-overlay="ma20">MA20</button>
+          <button class="chip" data-overlay="ma50">MA50</button>
+          <button class="chip" data-overlay="bb">Bollinger</button>
+          <button class="chip" data-overlay="vol">Volume</button>
+        </div>
+        <div class="chart-stats">
+          <span>O <b id="o">-</b></span><span>H <b id="h">-</b></span><span>L <b id="l">-</b></span><span>C <b id="c">-</b></span><span id="chg" style="color:var(--green)">+0.00%</span>
+        </div>
+      </div>
+      <canvas id="chart" width="900" height="520"></canvas>
+    </div>
+
+    <div class="chart-right">
+      <h4>Carnet d'ordres</h4>
+      <div id="orderbook"></div>
+      <h4 style="margin-top:14px">Indicateurs</h4>
+      <div class="row"><span>RSI(14)</span><b id="rsi">—</b></div>
+      <div class="row"><span>MACD</span><b id="macd">—</b></div>
+      <div class="row"><span>ATR(14)</span><b id="atr">—</b></div>
+      <div class="row"><span>Volume 24h</span><b id="vol24">—</b></div>
+      <h4 style="margin-top:14px">Astuce</h4>
+      <div style="color:var(--muted);font-size:12.5px" id="tip">Clique sur un outil à gauche puis trace deux points sur le graphique. Double-clic pour annuler le dernier tracé.</div>
+    </div>
+  </div>
+</section>
+
+<section id="cours">
+  <h2>Le cours complet — de A à Z</h2>
+  <div class="sub">26 modules progressifs. Clique sur un module pour ouvrir la leçon + le quiz.</div>
+  <div class="modules" id="modules"></div>
+</section>
+
+<section id="strategies">
+  <h2>Stratégies populaires</h2>
+  <div class="sub">Approches concrètes que tu peux tester sur le graphique ci-dessus.</div>
+  <div class="modules">
+    <div class="mod"><div class="num">SCALPING</div><h3>Scalping 1-5 min</h3><p>Profits rapides sur micro-mouvements. Spreads serrés et discipline maximale.</p><div class="meta"><span>⏱ courte</span><span>⚠ risque élevé</span></div></div>
+    <div class="mod"><div class="num">DAY TRADING</div><h3>Day trading</h3><p>Tu ouvres et fermes tes positions dans la journée. Pas de risque overnight.</p><div class="meta"><span>⏱ jour</span><span>⚠ moyen</span></div></div>
+    <div class="mod"><div class="num">SWING</div><h3>Swing trading</h3><p>Tu joues les vagues sur plusieurs jours ou semaines. Idéal en combo travail.</p><div class="meta"><span>⏱ jours</span><span>⚠ moyen</span></div></div>
+    <div class="mod"><div class="num">TENDANCE</div><h3>Suivi de tendance</h3><p>« The trend is your friend. » MA50/MA200, pullbacks, breakouts.</p><div class="meta"><span>⏱ long</span><span>⚠ modéré</span></div></div>
+    <div class="mod"><div class="num">BREAKOUT</div><h3>Cassure de range</h3><p>Tu entres à la cassure d'un support/résistance. Faux signaux à filtrer.</p><div class="meta"><span>⏱ flexible</span><span>⚠ moyen</span></div></div>
+    <div class="mod"><div class="num">MEAN REV</div><h3>Retour à la moyenne</h3><p>RSI extrême, Bollinger, fade des excès. Marchés en range uniquement.</p><div class="meta"><span>⏱ courte</span><span>⚠ moyen</span></div></div>
+  </div>
+</section>
+
+<section id="glossaire">
+  <h2>Glossaire complet</h2>
+  <div class="sub">Tous les termes que tu dois absolument connaître.</div>
+  <div class="glossary" id="glossary"></div>
+</section>
+
+<section id="quiz">
+  <h2>Quiz final</h2>
+  <div class="sub">Teste tes connaissances. Chaque leçon a aussi son propre quiz.</div>
+  <div class="hero-card" id="final-quiz"></div>
+</section>
+
+<footer>
+  © 2026 Ruflo Trading Academy — Le trading comporte un risque de perte en capital. Contenu éducatif uniquement.
+</footer>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <header>
+      <h3 id="m-title">Leçon</h3>
+      <button class="x" onclick="closeModal()">✕</button>
+    </header>
+    <div class="content" id="m-content"></div>
+  </div>
+</div>
+
+<script>
+/* ============== TICKER ============== */
+const tickers=[
+  ['BTC/USD',67342.10,1.24],['ETH/USD',3521.40,-0.82],['EUR/USD',1.0842,0.12],
+  ['GBP/USD',1.2671,-0.21],['AAPL',218.43,0.65],['TSLA',243.81,-1.45],
+  ['NVDA',128.55,2.11],['XAU/USD',2384.20,0.34],['USOIL',78.42,-0.55],
+  ['SPX500',5421.30,0.18]
+];
+const trow=document.getElementById('ticker');
+const tickerHtml=tickers.map(t=>`<div class="tk"><span class="sym">${t[0]}</span><span class="px">${t[1]}</span><span class="${t[2]>=0?'up':'dn'}">${t[2]>=0?'▲':'▼'} ${Math.abs(t[2]).toFixed(2)}%</span></div>`).join('');
+trow.innerHTML=tickerHtml+tickerHtml;
+
+/* ============== CURRICULUM ============== */
+const lessons=[
+  {t:"Qu'est-ce que le trading ?",d:"Définition, marchés, acteurs, différence trading vs investissement.",c:`<p>Le <b>trading</b> consiste à acheter et vendre des actifs financiers (actions, crypto, devises, matières premières) pour profiter des variations de prix sur le court ou moyen terme.</p>
+    <h4>Les principaux marchés</h4>
+    <ul><li><b>Actions</b> — parts d'une entreprise cotée.</li><li><b>Forex</b> — échange de devises (EUR/USD, GBP/JPY…).</li><li><b>Crypto</b> — BTC, ETH, marché 24/7.</li><li><b>Matières premières</b> — or, pétrole, blé.</li><li><b>Indices</b> — CAC 40, S&P 500, Nasdaq.</li></ul>
+    <h4>Trader ≠ investir</h4>
+    <p>L'investisseur garde pendant des années. Le trader cherche des mouvements rapides, parfois en quelques secondes.</p>`,q:{q:"Quel marché est ouvert 24h/24 et 7j/7 ?",a:["Actions","Forex","Crypto","Indices"],ok:2}},
+  {t:"Les ordres : market, limit, stop",d:"Comprendre comment passer un ordre correctement.",c:`<p>Trois types d'ordres essentiels :</p>
+    <ul><li><b>Market</b> : exécuté immédiatement au meilleur prix disponible.</li><li><b>Limit</b> : exécuté seulement à un prix fixé (ou meilleur).</li><li><b>Stop</b> : devient market dès qu'un seuil est touché (utilisé pour le stop-loss).</li></ul>
+    <h4>Stop-loss et take-profit</h4>
+    <p>Le <b>stop-loss</b> coupe automatiquement ta perte. Le <b>take-profit</b> ferme la position au gain visé. Ne trade jamais sans stop-loss.</p>`,q:{q:"Quel ordre permet de garantir un prix d'achat maximum ?",a:["Market","Limit","Stop","Trailing"],ok:1}},
+  {t:"Le risk management",d:"La règle d'or qui sépare les gagnants des perdants.",c:`<p>Tu peux avoir 60% de trades perdants et gagner de l'argent si ton ratio risque/gain est bon.</p>
+    <h4>Les règles d'or</h4>
+    <ul><li>Ne jamais risquer plus de <b>1-2%</b> de ton capital par trade.</li><li>Toujours définir le stop-loss <b>avant</b> d'entrer.</li><li>Viser un ratio risque/récompense d'au moins <b>1:2</b>.</li><li>Pas de revenge trading.</li></ul>
+    <h4>Calcul de taille de position</h4>
+    <p>Taille = (Capital × % risque) ÷ (Distance au stop). Exemple : 10 000€ × 1% = 100€ risqué, stop à 50 pts → 2€/pt.</p>`,q:{q:"Risque max recommandé par trade ?",a:["10%","5%","1-2%","30%"],ok:2}},
+  {t:"La psychologie du trader",d:"FOMO, peur, avidité, biais cognitifs.",c:`<p>Le marché est un miroir de tes émotions. Les pires ennemis du trader :</p>
+    <ul><li><b>FOMO</b> (Fear of Missing Out) — tu entres trop tard.</li><li><b>Revenge trading</b> — tu veux récupérer une perte → tu en fais une plus grosse.</li><li><b>Overtrading</b> — trop de trades sans setup.</li><li><b>Biais de confirmation</b> — tu ne vois que ce qui valide ton trade.</li></ul>
+    <p>Solution : journal de trading + plan écrit + pauses.</p>`,q:{q:"Le FOMO te pousse à :",a:["Attendre","Entrer trop tard","Couper tôt","Diversifier"],ok:1}},
+  {t:"Analyse technique vs fondamentale",d:"Deux écoles, deux philosophies.",c:`<p><b>Analyse technique</b> : étude des graphiques, des prix passés, des indicateurs.</p>
+    <p><b>Analyse fondamentale</b> : étude des bilans, des résultats, du contexte macro-économique.</p>
+    <p>La plupart des traders combinent les deux : fondamentale pour <i>quoi</i> trader, technique pour <i>quand</i>.</p>`,q:{q:"Les bougies japonaises font partie de :",a:["L'AF","L'AT","La macro","La compta"],ok:1}},
+  {t:"Lire un graphique en chandeliers",d:"OHLC, mèches, corps, sens du marché.",c:`<p>Une bougie représente 4 informations sur une période :</p>
+    <ul><li><b>Open</b> — prix d'ouverture</li><li><b>High</b> — plus haut</li><li><b>Low</b> — plus bas</li><li><b>Close</b> — prix de clôture</li></ul>
+    <p>Bougie <span style="color:var(--green)">verte</span> = clôture > ouverture (haussière). Bougie <span style="color:var(--red)">rouge</span> = baissière.</p>`,q:{q:"Une bougie verte signifie :",a:["O>C","C>O","H=L","Aucun"],ok:1}},
+  {t:"Patterns de chandeliers",d:"Doji, marteau, étoile filante, engulfing.",c:`<p>Quelques patterns essentiels :</p>
+    <ul><li><b>Doji</b> — indécision (O ≈ C)</li><li><b>Marteau</b> — retournement haussier</li><li><b>Étoile filante</b> — retournement baissier</li><li><b>Engulfing</b> — bougie qui « avale » la précédente, signal fort</li><li><b>Three white soldiers</b> — 3 bougies vertes consécutives</li></ul>`,q:{q:"Le marteau est un signal :",a:["Baissier","Haussier","Neutre","De volume"],ok:1}},
+  {t:"Supports et résistances",d:"Les niveaux clés où le prix réagit.",c:`<p>Un <b>support</b> est un niveau où la demande l'emporte sur l'offre (le prix « rebondit »). Une <b>résistance</b> est l'inverse.</p>
+    <p>Quand un support est cassé, il devient souvent résistance (<i>polarité</i>). Trace-les avec l'outil Ligne horizontale du graphique.</p>`,q:{q:"Support cassé devient souvent :",a:["Volume","Résistance","Plateau","Range"],ok:1}},
+  {t:"Les tendances",d:"Haussière, baissière, range.",c:`<p>Une tendance haussière = série de sommets et creux plus hauts. Tendance baissière = sommets et creux plus bas. Range = mouvement horizontal.</p>
+    <p><i>« The trend is your friend until it bends. »</i></p>`,q:{q:"Tendance haussière =",a:["Hauts plus bas","Hauts plus hauts","Pas de hauts","Hauts plats"],ok:1}},
+  {t:"Lignes de tendance et canaux",d:"Tracer, valider, breakout.",c:`<p>Relie au moins <b>2 points</b> pour tracer une ligne de tendance. 3 touches = ligne fiable. Un canal est constitué de deux lignes parallèles.</p>
+    <p>Utilise l'outil <b>Trendline</b> et <b>Channel</b> du graphique pour t'entraîner.</p>`,q:{q:"Combien de points minimum pour une ligne ?",a:["1","2","3","5"],ok:1}},
+  {t:"Moyennes mobiles (MA, EMA)",d:"Lisser le bruit, trouver la tendance.",c:`<p>La <b>MA</b> moyenne simple les N derniers cours. L'<b>EMA</b> donne plus de poids aux cours récents.</p>
+    <p>Combos classiques : MA20/MA50 (court terme), MA50/MA200 (long terme — <i>golden cross</i> / <i>death cross</i>).</p>`,q:{q:"EMA donne plus de poids :",a:["Au volume","Aux cours récents","Aux mèches","Au RSI"],ok:1}},
+  {t:"RSI — Relative Strength Index",d:"Mesurer la suracheté / survente.",c:`<p>Le RSI oscille entre 0 et 100. >70 = suracheté, <30 = survendu. Attention : en forte tendance, le RSI peut rester >70 longtemps. Les <b>divergences</b> sont plus puissantes que les niveaux absolus.</p>`,q:{q:"RSI > 70 indique :",a:["Survente","Suracheté","Neutre","Crash"],ok:1}},
+  {t:"MACD",d:"Croisements et histogramme.",c:`<p>Le MACD = différence entre deux EMA (12 et 26) + une signal (9). Signal d'achat quand la ligne MACD croise au-dessus de la signal. L'histogramme mesure l'écart.</p>`,q:{q:"MACD est basé sur :",a:["RSI","Deux EMA","Volume","Bollinger"],ok:1}},
+  {t:"Bandes de Bollinger",d:"Volatilité et squeeze.",c:`<p>Bollinger = MA20 ± 2 écarts-types. Le prix « rebondit » entre les bandes en range. Un <b>squeeze</b> (bandes très serrées) annonce souvent un mouvement explosif.</p>`,q:{q:"Bollinger Squeeze annonce :",a:["Range plat","Mouvement fort","Crash garanti","Volume nul"],ok:1}},
+  {t:"Volume et OBV",d:"Le volume confirme le prix.",c:`<p>Un mouvement sans volume est suspect. Le <b>OBV</b> (On-Balance Volume) cumule le volume signé. Une divergence prix/OBV peut annoncer un retournement.</p>`,q:{q:"Un breakout sans volume est :",a:["Fort","Suspect","Sûr","Idéal"],ok:1}},
+  {t:"Fibonacci",d:"Retracements 0.236, 0.382, 0.5, 0.618, 0.786.",c:`<p>Après un mouvement, le prix retrace souvent vers ces niveaux. Le <b>0.618</b> (« golden ratio ») est le plus surveillé. Utilise l'outil <b>Fib</b> du graphique : trace du creux au sommet (ou inversement).</p>`,q:{q:"Le ratio doré de Fibo est :",a:["0.382","0.5","0.618","1.0"],ok:2}},
+  {t:"Figures chartistes",d:"Tête-épaules, double top, triangles, drapeaux.",c:`<p>Figures de retournement : tête-épaules, double top/bottom. Figures de continuation : drapeaux, fanions, triangles. Toujours attendre la <b>cassure confirmée</b>.</p>`,q:{q:"La tête-épaules est :",a:["Continuation","Retournement","Range","Volume"],ok:1}},
+  {t:"Price action",d:"Trader sans indicateurs, juste les bougies.",c:`<p>Le price action consiste à lire l'action des prix « pure » : structure de marché, breakouts, retests, zones d'offre/demande. Moins d'indicateurs = moins de bruit.</p>`,q:{q:"Le price action évite :",a:["Bougies","Indicateurs","Structure","Volume"],ok:1}},
+  {t:"Les timeframes",d:"Multi-TF : grande pour la tendance, petite pour l'entrée.",c:`<p>Règle de base : analyse la tendance sur un timeframe élevé (1D), trouve ton entrée sur un timeframe plus petit (1h ou 15m). Ne trade jamais contre la grande tendance.</p>`,q:{q:"Analyse de tendance se fait sur :",a:["1m","15m","TF élevé","TF aléatoire"],ok:2}},
+  {t:"Backtesting & journal",d:"Tester une stratégie sur du passé.",c:`<p>Un backtest = appliquer une stratégie sur l'historique pour mesurer son edge. Tiens un <b>journal de trading</b> : raison d'entrée, émotion, résultat. C'est 80% du progrès.</p>`,q:{q:"Le journal de trading sert à :",a:["Faire joli","Progresser","Frimer","Payer moins"],ok:1}},
+  {t:"Money management avancé",d:"Kelly, scaling in/out, R multiples.",c:`<p>Le R-multiple mesure ton gain en multiples de ton risque initial. Objectif : viser systématiquement +2R, +3R. Tu peux aussi <b>scaler</b> : entrer en plusieurs fois, sortir en plusieurs fois.</p>`,q:{q:"Un trade +3R signifie :",a:["3% gagnés","3× le risque","30 pips","3 lots"],ok:1}},
+  {t:"Le forex en détail",d:"Paires, pips, lots, sessions.",c:`<p>Le forex se trade en paires (EUR/USD). 1 pip = 4ᵉ décimale. Un lot standard = 100 000 unités. Sessions : Tokyo, Londres, New York. Plus de volatilité au croisement Londres/NY.</p>`,q:{q:"1 pip sur EUR/USD =",a:["0.1","0.01","0.0001","1"],ok:2}},
+  {t:"Crypto-monnaies",d:"Wallets, exchanges, on-chain.",c:`<p>Crypto = marché 24/7 ultra-volatile. Utilise un <b>cold wallet</b> pour stocker. Plateformes : Binance, Kraken, Coinbase. Garde tes clés privées.</p>`,q:{q:"Un cold wallet est :",a:["Connecté","Hors-ligne","Cassé","Public"],ok:1}},
+  {t:"Actions et fondamentaux",d:"PER, EPS, dividende, capitalisation.",c:`<p>Pour une action : regarde le PER (prix / bénéfice), l'EPS (bénéfice par action), la dette, la croissance. Les résultats trimestriels sont des catalyseurs.</p>`,q:{q:"PER bas peut indiquer :",a:["Surévalué","Sous-évalué","Pas de bénéfice","Aucune info"],ok:1}},
+  {t:"Fiscalité du trading",d:"PFU, plus-values, déclaration (France).",c:`<p>En France, les plus-values sur valeurs mobilières sont imposées au <b>PFU 30%</b> (flat tax) — ou IR + 17.2% PS. Crypto : régime spécifique. Garde tes relevés.</p><p><i>Ce module est purement éducatif, consulte un expert-comptable.</i></p>`,q:{q:"Le PFU en France est de :",a:["10%","30%","45%","0%"],ok:1}},
+  {t:"Construire ton plan de trading",d:"Le document qui sépare l'amateur du pro.",c:`<p>Ton plan doit contenir :</p>
+    <ul><li>Tes <b>marchés</b> et <b>timeframes</b></li><li>Tes <b>setups</b> précis (avec captures)</li><li>Tes règles de <b>risk management</b></li><li>Ta <b>routine</b> avant/pendant/après séance</li><li>Tes <b>critères d'arrêt</b> (perte max journalière)</li></ul>
+    <p>Sans plan écrit, tu n'es pas un trader, tu es un parieur.</p>`,q:{q:"Le plan de trading doit être :",a:["Mental","Écrit","Optionnel","Public"],ok:1}}
+];
+
+const modulesEl=document.getElementById('modules');
+const progressKey='ruflo-progress';
+let progress=JSON.parse(localStorage.getItem(progressKey)||'{}');
+function updateProgress(){
+  const done=Object.values(progress).filter(x=>x).length;
+  document.getElementById('completed-count').textContent=done.toLocaleString('fr-FR');
+}
+function renderModules(){
+  modulesEl.innerHTML=lessons.map((l,i)=>{
+    const p=progress[i]?100:0;
+    return `<div class="mod" onclick="openLesson(${i})">
+      <div class="num">MODULE ${String(i+1).padStart(2,'0')}</div>
+      <h3>${l.t}</h3>
+      <p>${l.d}</p>
+      <div class="progress"><div style="width:${p}%"></div></div>
+      <div class="meta"><span>~${8+Math.floor(Math.random()*20)} min</span><span>${p?'✓ Terminé':'À faire'}</span></div>
+    </div>`;
+  }).join('');
+}
+renderModules();
+updateProgress();
+
+function openLesson(i){
+  const l=lessons[i];
+  document.getElementById('m-title').textContent=`Module ${i+1} — ${l.t}`;
+  document.getElementById('m-content').innerHTML=`
+    ${l.c}
+    <div class="quiz">
+      <h4 style="margin-top:0">Quiz</h4>
+      <p><b>${l.q.q}</b></p>
+      ${l.q.a.map((a,k)=>`<label><input type="radio" name="q${i}" value="${k}"> ${a}</label>`).join('')}
+      <div style="margin-top:10px">
+        <button class="btn primary" onclick="checkAnswer(${i})">Valider</button>
+        <span class="res" id="res${i}"></span>
+      </div>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
+function checkAnswer(i){
+  const sel=document.querySelector(`input[name=q${i}]:checked`);
+  const r=document.getElementById('res'+i);
+  if(!sel){r.textContent='Choisis une réponse.';r.style.color='var(--yellow)';return;}
+  if(parseInt(sel.value)===lessons[i].q.ok){
+    r.textContent='✓ Bonne réponse !';r.style.color='var(--green)';
+    progress[i]=true;localStorage.setItem(progressKey,JSON.stringify(progress));
+    renderModules();updateProgress();
+  } else {
+    r.textContent='✗ Mauvaise réponse, relis la leçon.';r.style.color='var(--red)';
+  }
+}
+
+/* ============== GLOSSARY ============== */
+const glossary=[
+  ['Ask','Prix auquel tu peux acheter.'],
+  ['Bid','Prix auquel tu peux vendre.'],
+  ['Spread','Différence entre bid et ask.'],
+  ['Slippage','Écart entre prix attendu et prix exécuté.'],
+  ['Pip','Plus petite variation de prix sur le forex.'],
+  ['Lot','Unité standard de taille (100 000 sur forex).'],
+  ['Leverage','Effet de levier — multiplie gains et pertes.'],
+  ['Margin','Garantie déposée pour ouvrir une position.'],
+  ['Long','Position acheteuse, tu gagnes si ça monte.'],
+  ['Short','Position vendeuse, tu gagnes si ça baisse.'],
+  ['Drawdown','Baisse maximale du capital depuis le pic.'],
+  ['Equity','Capital + P&L latent.'],
+  ['Liquidité','Facilité à acheter/vendre sans bouger le prix.'],
+  ['Volatilité','Amplitude des mouvements de prix.'],
+  ['Bullish','Haussier.'],
+  ['Bearish','Baissier.'],
+  ['Pump','Hausse violente.'],
+  ['Dump','Chute violente.'],
+  ['Whale','Gros acteur qui peut bouger le marché.'],
+  ['HODL','Garder, ne pas vendre (crypto).'],
+  ['ATH','All-Time High — record historique.'],
+  ['ATL','All-Time Low.'],
+  ['FOMO','Peur de rater une opportunité.'],
+  ['FUD','Peur, incertitude, doute.'],
+  ['Edge','Avantage statistique de ta stratégie.'],
+  ['R-multiple','Gain exprimé en multiples du risque initial.'],
+  ['Trailing stop','Stop qui suit le prix.'],
+  ['Hedge','Position de couverture.']
+];
+document.getElementById('glossary').innerHTML=glossary.map(g=>`<p><b>${g[0]}</b> — ${g[1]}</p>`).join('');
+
+/* ============== FINAL QUIZ ============== */
+const finalQ=[
+  {q:"Risque maximum recommandé par trade ?",a:["10%","1-2%","50%","Tout"],ok:1},
+  {q:"Une bougie verte signifie :",a:["O>C","C>O","H=L","Doji"],ok:1},
+  {q:"Le ratio doré de Fibonacci est :",a:["0.382","0.5","0.618","1.272"],ok:2},
+  {q:"RSI > 70 signifie :",a:["Survente","Suracheté","Neutre","Bug"],ok:1},
+  {q:"Le stop-loss sert à :",a:["Augmenter le gain","Limiter la perte","Ouvrir un trade","Frimer"],ok:1}
+];
+document.getElementById('final-quiz').innerHTML=`
+  ${finalQ.map((f,i)=>`<div style="margin-bottom:14px"><b>${i+1}. ${f.q}</b><br>${f.a.map((a,k)=>`<label style="display:block;padding:4px 0;cursor:pointer"><input type="radio" name="fq${i}" value="${k}"> ${a}</label>`).join('')}</div>`).join('')}
+  <button class="btn primary" onclick="scoreFinal()">Voir mon score</button>
+  <div id="final-res" style="margin-top:12px;font-weight:700"></div>`;
+function scoreFinal(){
+  let s=0;
+  finalQ.forEach((f,i)=>{const sel=document.querySelector(`input[name=fq${i}]:checked`);if(sel&&parseInt(sel.value)===f.ok)s++;});
+  const el=document.getElementById('final-res');
+  el.textContent=`Score : ${s}/${finalQ.length} ${s===finalQ.length?'🎉 Parfait !':s>=3?'👍 Pas mal':'📚 Révise encore'}`;
+  el.style.color=s===finalQ.length?'var(--green)':s>=3?'var(--yellow)':'var(--red)';
+}
+
+/* =================== CHART ENGINE =================== */
+const canvas=document.getElementById('chart');
+const ctx=canvas.getContext('2d');
+let DPR=window.devicePixelRatio||1;
+function resize(){
+  const w=canvas.parentElement.clientWidth, h=520;
+  canvas.style.width=w+'px';canvas.style.height=h+'px';
+  canvas.width=w*DPR;canvas.height=h*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  draw();
+}
+window.addEventListener('resize',resize);
+
+const state={
+  sym:'BTCUSD', tf:'1h', chartType:'candle',
+  overlays:{ma20:false,ma50:false,bb:false,vol:false},
+  tool:'crosshair',
+  drawings:[], // {type,points,color}
+  current:null,
+  candles:[],
+  mouse:{x:0,y:0,inside:false},
+  view:{from:0,to:0,priceMin:0,priceMax:0}
+};
+
+const seedPrices={BTCUSD:67000,ETHUSD:3500,EURUSD:1.085,AAPL:218,TSLA:243};
+function genCandles(sym,n=180){
+  let p=seedPrices[sym]||100;
+  const vola=p*0.012;
+  const arr=[];
+  for(let i=0;i<n;i++){
+    const o=p;
+    const drift=(Math.sin(i/13)+Math.cos(i/7))*vola*0.3;
+    const noise=(Math.random()-0.5)*vola;
+    const c=Math.max(0.01,o+drift+noise);
+    const h=Math.max(o,c)+Math.random()*vola*0.6;
+    const l=Math.min(o,c)-Math.random()*vola*0.6;
+    arr.push({t:i,o,h,l,c,v:Math.random()*1000+200});
+    p=c;
+  }
+  return arr;
+}
+function regenerate(){
+  state.candles=genCandles(state.sym);
+  updateStats();
+}
+regenerate();
+
+function updateStats(){
+  const c=state.candles;
+  const last=c[c.length-1], prev=c[c.length-2]||last;
+  document.getElementById('o').textContent=last.o.toFixed(2);
+  document.getElementById('h').textContent=last.h.toFixed(2);
+  document.getElementById('l').textContent=last.l.toFixed(2);
+  document.getElementById('c').textContent=last.c.toFixed(2);
+  const chg=((last.c-prev.c)/prev.c)*100;
+  const ch=document.getElementById('chg');
+  ch.textContent=(chg>=0?'+':'')+chg.toFixed(2)+'%';
+  ch.style.color=chg>=0?'var(--green)':'var(--red)';
+
+  // RSI
+  let gains=0,losses=0;
+  for(let i=c.length-14;i<c.length;i++){const d=c[i].c-c[i-1].c;if(d>=0)gains+=d;else losses-=d;}
+  const rs=gains/(losses||1);const rsi=100-(100/(1+rs));
+  document.getElementById('rsi').textContent=rsi.toFixed(1);
+  // MACD (simple)
+  const ema=(arr,n)=>{const k=2/(n+1);let e=arr[0].c;for(let i=1;i<arr.length;i++)e=arr[i].c*k+e*(1-k);return e;};
+  const macd=ema(c,12)-ema(c,26);
+  document.getElementById('macd').textContent=macd.toFixed(2);
+  // ATR
+  let atr=0;for(let i=c.length-14;i<c.length;i++){atr+=Math.max(c[i].h-c[i].l,Math.abs(c[i].h-c[i-1].c),Math.abs(c[i].l-c[i-1].c));}
+  document.getElementById('atr').textContent=(atr/14).toFixed(2);
+  document.getElementById('vol24').textContent=(c.slice(-24).reduce((a,b)=>a+b.v,0)/1000).toFixed(1)+'K';
+  // orderbook
+  const ob=document.getElementById('orderbook');
+  let html='';
+  for(let i=5;i>0;i--){const p=(last.c+i*last.c*0.0005);const sz=(Math.random()*5).toFixed(3);html+=`<div class="row"><span style="color:var(--red)">${p.toFixed(2)}</span><b>${sz}</b></div>`;}
+  html+=`<div class="row" style="background:#0e1738"><span style="color:var(--text)">SPREAD</span><b>${(last.c*0.0005).toFixed(2)}</b></div>`;
+  for(let i=1;i<=5;i++){const p=(last.c-i*last.c*0.0005);const sz=(Math.random()*5).toFixed(3);html+=`<div class="row"><span style="color:var(--green)">${p.toFixed(2)}</span><b>${sz}</b></div>`;}
+  ob.innerHTML=html;
+}
+
+function priceToY(p,min,max,top,bot){return top+(max-p)/(max-min)*(bot-top);}
+function xToIdx(x,left,right,n){return Math.round((x-left)/(right-left)*(n-1));}
+
+function draw(){
+  const W=canvas.clientWidth,H=canvas.clientHeight;
+  const padL=10,padR=70,padT=10,padB=state.overlays.vol?100:30;
+  const top=padT,bot=H-padB,left=padL,right=W-padR;
+  ctx.clearRect(0,0,W,H);
+
+  // grid
+  ctx.strokeStyle='#1a2348';ctx.lineWidth=1;
+  for(let i=0;i<=8;i++){const y=top+i*(bot-top)/8;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();}
+  for(let i=0;i<=10;i++){const x=left+i*(right-left)/10;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,bot);ctx.stroke();}
+
+  const c=state.candles;
+  const n=c.length;
+  let min=Infinity,max=-Infinity;
+  for(const k of c){if(k.l<min)min=k.l;if(k.h>max)max=k.h;}
+  const pad=(max-min)*0.08;min-=pad;max+=pad;
+  state.view={from:0,to:n-1,priceMin:min,priceMax:max,left,right,top,bot,padL,padR,padT,padB};
+
+  // price axis
+  ctx.fillStyle='#8a96c8';ctx.font='11px ui-sans-serif';
+  for(let i=0;i<=8;i++){const p=max-(max-min)*i/8;const y=top+i*(bot-top)/8;ctx.fillText(p.toFixed(2),right+6,y+4);}
+
+  const cw=(right-left)/n;
+  const bw=Math.max(2,cw*0.65);
+
+  // volume
+  if(state.overlays.vol){
+    let vmax=0;for(const k of c)if(k.v>vmax)vmax=k.v;
+    const vTop=bot+10,vBot=H-10;
+    for(let i=0;i<n;i++){
+      const k=c[i];const x=left+i*cw+cw/2;
+      const h=(k.v/vmax)*(vBot-vTop);
+      ctx.fillStyle=k.c>=k.o?'rgba(38,217,127,.4)':'rgba(239,77,95,.4)';
+      ctx.fillRect(x-bw/2,vBot-h,bw,h);
+    }
+  }
+
+  // overlays - MAs
+  function sma(period){
+    const out=[];
+    for(let i=0;i<n;i++){
+      if(i<period-1){out.push(null);continue;}
+      let s=0;for(let j=i-period+1;j<=i;j++)s+=c[j].c;out.push(s/period);
+    }
+    return out;
+  }
+  function drawLine(arr,color){
+    ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.beginPath();let st=false;
+    for(let i=0;i<n;i++){if(arr[i]==null)continue;const x=left+i*cw+cw/2;const y=priceToY(arr[i],min,max,top,bot);if(!st){ctx.moveTo(x,y);st=true;}else ctx.lineTo(x,y);}
+    ctx.stroke();
+  }
+  if(state.overlays.ma20)drawLine(sma(20),'#f5c451');
+  if(state.overlays.ma50)drawLine(sma(50),'#a78bfa');
+  if(state.overlays.bb){
+    const m=sma(20);
+    const up=[],dn=[];
+    for(let i=0;i<n;i++){
+      if(m[i]==null){up.push(null);dn.push(null);continue;}
+      let s=0;for(let j=i-19;j<=i;j++)s+=Math.pow(c[j].c-m[i],2);
+      const sd=Math.sqrt(s/20);up.push(m[i]+2*sd);dn.push(m[i]-2*sd);
+    }
+    drawLine(up,'rgba(91,140,255,.7)');drawLine(dn,'rgba(91,140,255,.7)');drawLine(m,'rgba(91,140,255,.5)');
+  }
+
+  // candles / line / area
+  if(state.chartType==='candle'){
+    for(let i=0;i<n;i++){
+      const k=c[i];const x=left+i*cw+cw/2;
+      const yO=priceToY(k.o,min,max,top,bot);
+      const yC=priceToY(k.c,min,max,top,bot);
+      const yH=priceToY(k.h,min,max,top,bot);
+      const yL=priceToY(k.l,min,max,top,bot);
+      const up=k.c>=k.o;
+      ctx.strokeStyle=up?'#26d97f':'#ef4d5f';ctx.fillStyle=up?'#26d97f':'#ef4d5f';
+      ctx.beginPath();ctx.moveTo(x,yH);ctx.lineTo(x,yL);ctx.stroke();
+      ctx.fillRect(x-bw/2,Math.min(yO,yC),bw,Math.max(1,Math.abs(yC-yO)));
+    }
+  } else if(state.chartType==='line'){
+    ctx.strokeStyle='#22d3ee';ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<n;i++){const x=left+i*cw+cw/2;const y=priceToY(c[i].c,min,max,top,bot);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+    ctx.stroke();
+  } else {
+    const grd=ctx.createLinearGradient(0,top,0,bot);grd.addColorStop(0,'rgba(34,211,238,.45)');grd.addColorStop(1,'rgba(34,211,238,0)');
+    ctx.fillStyle=grd;ctx.beginPath();ctx.moveTo(left,bot);
+    for(let i=0;i<n;i++){const x=left+i*cw+cw/2;const y=priceToY(c[i].c,min,max,top,bot);ctx.lineTo(x,y);}
+    ctx.lineTo(left+(n-1)*cw+cw/2,bot);ctx.closePath();ctx.fill();
+    ctx.strokeStyle='#22d3ee';ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<n;i++){const x=left+i*cw+cw/2;const y=priceToY(c[i].c,min,max,top,bot);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}
+    ctx.stroke();
+  }
+
+  // last price marker
+  const last=c[n-1];const yLast=priceToY(last.c,min,max,top,bot);
+  ctx.strokeStyle='rgba(91,140,255,.6)';ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(left,yLast);ctx.lineTo(right,yLast);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#3b6eff';ctx.fillRect(right,yLast-9,padR-2,18);
+  ctx.fillStyle='#fff';ctx.font='bold 11px ui-sans-serif';ctx.fillText(last.c.toFixed(2),right+6,yLast+4);
+
+  // drawings
+  for(const d of state.drawings) drawShape(d);
+  if(state.current) drawShape(state.current,true);
+
+  // crosshair
+  if(state.mouse.inside && state.tool==='crosshair'){
+    ctx.strokeStyle='rgba(138,150,200,.4)';ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(state.mouse.x,top);ctx.lineTo(state.mouse.x,bot);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(left,state.mouse.y);ctx.lineTo(right,state.mouse.y);ctx.stroke();
+    ctx.setLineDash([]);
+    const p=max-(state.mouse.y-top)/(bot-top)*(max-min);
+    ctx.fillStyle='#0b1226';ctx.fillRect(right,state.mouse.y-9,padR-2,18);
+    ctx.strokeStyle='#2d3b78';ctx.strokeRect(right,state.mouse.y-9,padR-2,18);
+    ctx.fillStyle='#fff';ctx.fillText(p.toFixed(2),right+6,state.mouse.y+4);
+  }
+}
+
+function drawShape(d,preview){
+  ctx.lineWidth=1.8;ctx.strokeStyle=d.color||'#22d3ee';ctx.fillStyle=d.color||'#22d3ee';
+  const p=d.points;
+  if(!p||p.length<1)return;
+  const a=p[0],b=p[1]||state.mouse;
+  switch(d.type){
+    case 'trendline':
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();break;
+    case 'ray':{
+      const dx=b.x-a.x,dy=b.y-a.y;const t=2000;
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(a.x+dx*t,a.y+dy*t);ctx.stroke();break;}
+    case 'hline':
+      ctx.beginPath();ctx.moveTo(state.view.left,a.y);ctx.lineTo(state.view.right,a.y);ctx.stroke();
+      ctx.fillStyle='rgba(34,211,238,.15)';break;
+    case 'vline':
+      ctx.beginPath();ctx.moveTo(a.x,state.view.top);ctx.lineTo(a.x,state.view.bot);ctx.stroke();break;
+    case 'rect':
+      ctx.globalAlpha=.15;ctx.fillRect(a.x,a.y,b.x-a.x,b.y-a.y);ctx.globalAlpha=1;
+      ctx.strokeRect(a.x,a.y,b.x-a.x,b.y-a.y);break;
+    case 'ellipse':{
+      const cx=(a.x+b.x)/2,cy=(a.y+b.y)/2,rx=Math.abs(b.x-a.x)/2,ry=Math.abs(b.y-a.y)/2;
+      ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.stroke();break;}
+    case 'triangle':
+      ctx.beginPath();ctx.moveTo(a.x,b.y);ctx.lineTo((a.x+b.x)/2,a.y);ctx.lineTo(b.x,b.y);ctx.closePath();ctx.stroke();break;
+    case 'fib':{
+      const levels=[0,0.236,0.382,0.5,0.618,0.786,1,1.272,1.618];
+      const colors=['#8a96c8','#f5c451','#26d97f','#22d3ee','#a78bfa','#5b8cff','#ef4d5f','#f5c451','#26d97f'];
+      const minY=Math.min(a.y,b.y),maxY=Math.max(a.y,b.y);
+      const min=state.view.priceMin,max=state.view.priceMax,top=state.view.top,bot=state.view.bot;
+      const pA=max-(a.y-top)/(bot-top)*(max-min);
+      const pB=max-(b.y-top)/(bot-top)*(max-min);
+      levels.forEach((lv,i)=>{
+        const y=a.y+(b.y-a.y)*lv;
+        ctx.strokeStyle=colors[i];ctx.setLineDash(i===0||i===6?[]:[3,3]);
+        ctx.beginPath();ctx.moveTo(state.view.left,y);ctx.lineTo(state.view.right,y);ctx.stroke();
+        const price=pA+(pB-pA)*lv;
+        ctx.fillStyle=colors[i];ctx.font='11px ui-sans-serif';
+        ctx.fillText(`${lv} (${price.toFixed(2)})`,state.view.left+6,y-3);
+      });
+      ctx.setLineDash([]);break;}
+    case 'channel':{
+      const dx=b.x-a.x,dy=b.y-a.y;
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      const off=40;
+      ctx.beginPath();ctx.moveTo(a.x,a.y-off);ctx.lineTo(b.x,b.y-off);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(a.x,a.y+off);ctx.lineTo(b.x,b.y+off);ctx.stroke();break;}
+    case 'arrow':{
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      const ang=Math.atan2(b.y-a.y,b.x-a.x);
+      ctx.beginPath();ctx.moveTo(b.x,b.y);
+      ctx.lineTo(b.x-10*Math.cos(ang-0.4),b.y-10*Math.sin(ang-0.4));
+      ctx.lineTo(b.x-10*Math.cos(ang+0.4),b.y-10*Math.sin(ang+0.4));
+      ctx.closePath();ctx.fill();break;}
+    case 'measure':{
+      ctx.setLineDash([5,5]);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();ctx.setLineDash([]);
+      const min=state.view.priceMin,max=state.view.priceMax,top=state.view.top,bot=state.view.bot;
+      const pA=max-(a.y-top)/(bot-top)*(max-min);
+      const pB=max-(b.y-top)/(bot-top)*(max-min);
+      const diff=pB-pA;const pct=(diff/pA)*100;
+      const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+      ctx.fillStyle='#0b1226';ctx.fillRect(mx-50,my-22,100,18);
+      ctx.strokeStyle='#2d3b78';ctx.strokeRect(mx-50,my-22,100,18);
+      ctx.fillStyle=diff>=0?'#26d97f':'#ef4d5f';ctx.font='bold 11px ui-sans-serif';
+      ctx.fillText(`${diff>=0?'+':''}${diff.toFixed(2)} (${pct.toFixed(2)}%)`,mx-46,my-9);break;}
+    case 'brush':{
+      ctx.beginPath();
+      for(let i=0;i<p.length;i++){if(i===0)ctx.moveTo(p[i].x,p[i].y);else ctx.lineTo(p[i].x,p[i].y);}
+      ctx.stroke();break;}
+    case 'text':{
+      ctx.fillStyle=d.color||'#22d3ee';ctx.font='bold 13px ui-sans-serif';
+      ctx.fillText(d.text||'Annotation',a.x+6,a.y);
+      ctx.beginPath();ctx.arc(a.x,a.y,3,0,Math.PI*2);ctx.fill();break;}
+    case 'long':
+    case 'short':{
+      const isLong=d.type==='long';
+      const entry=a.y,target=b.y,stop=a.y+(a.y-b.y);
+      const x1=Math.min(a.x,b.x),x2=Math.max(a.x,b.x);
+      ctx.fillStyle=isLong?'rgba(38,217,127,.18)':'rgba(239,77,95,.18)';
+      ctx.fillRect(x1,Math.min(entry,target),x2-x1,Math.abs(entry-target));
+      ctx.fillStyle=isLong?'rgba(239,77,95,.18)':'rgba(38,217,127,.18)';
+      ctx.fillRect(x1,Math.min(entry,stop),x2-x1,Math.abs(entry-stop));
+      ctx.strokeStyle=isLong?'#26d97f':'#ef4d5f';
+      ctx.strokeRect(x1,Math.min(entry,target),x2-x1,Math.abs(entry-target));
+      ctx.strokeStyle=isLong?'#ef4d5f':'#26d97f';
+      ctx.strokeRect(x1,Math.min(entry,stop),x2-x1,Math.abs(entry-stop));
+      ctx.fillStyle='#fff';ctx.font='bold 11px ui-sans-serif';
+      ctx.fillText(isLong?'LONG':'SHORT',x1+4,Math.min(entry,target)+12);break;}
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ============== INTERACTION ============== */
+const toolbar=document.getElementById('toolbar');
+toolbar.addEventListener('click',e=>{
+  const b=e.target.closest('.tool');if(!b)return;
+  const t=b.dataset.tool;
+  if(t==='clear'){state.drawings=[];draw();return;}
+  document.querySelectorAll('.tool').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  state.tool=t;
+  document.getElementById('tip').textContent=({
+    crosshair:'Réticule : déplace la souris pour voir prix et niveau.',
+    trendline:'Ligne de tendance : clique 2 points.',
+    ray:'Rayon : clique 2 points, la ligne se prolonge.',
+    hline:'Ligne horizontale : un seul clic pour fixer le niveau.',
+    vline:'Ligne verticale : un seul clic.',
+    rect:'Rectangle : clique-glisse pour dessiner une zone.',
+    ellipse:'Ellipse : clique-glisse.',
+    triangle:'Triangle : clique-glisse pour la base et le sommet.',
+    fib:'Fibonacci : clique du sommet au creux (ou inverse).',
+    channel:'Canal parallèle : clique 2 points.',
+    arrow:'Flèche : clique 2 points.',
+    measure:'Règle : mesure pip et %.',
+    brush:'Pinceau libre : maintiens le clic.',
+    text:'Texte : clique pour placer une annotation.',
+    long:'Position long : clique entrée puis cible.',
+    short:'Position short : clique entrée puis cible.',
+    eraser:'Effaceur : clique près d\\'un tracé pour le supprimer.'
+  })[t]||'';
+});
+
+function getXY(e){
+  const r=canvas.getBoundingClientRect();
+  return {x:e.clientX-r.left,y:e.clientY-r.top};
+}
+canvas.addEventListener('mousemove',e=>{
+  const p=getXY(e);state.mouse.x=p.x;state.mouse.y=p.y;state.mouse.inside=true;
+  if(state.current){
+    if(state.current.type==='brush'){state.current.points.push(p);}
+    else {state.current.points[1]=p;}
+  }
+  draw();
+});
+canvas.addEventListener('mouseleave',()=>{state.mouse.inside=false;draw();});
+canvas.addEventListener('mousedown',e=>{
+  const p=getXY(e);
+  const t=state.tool;
+  if(t==='crosshair')return;
+  if(t==='eraser'){
+    // delete nearest drawing
+    let best=-1,bestD=20;
+    state.drawings.forEach((d,i)=>{
+      for(const pt of d.points){const dd=Math.hypot(pt.x-p.x,pt.y-p.y);if(dd<bestD){bestD=dd;best=i;}}
+    });
+    if(best>=0){state.drawings.splice(best,1);draw();}
+    return;
+  }
+  if(t==='hline'||t==='vline'){
+    state.drawings.push({type:t,points:[p],color:'#22d3ee'});draw();return;
+  }
+  if(t==='text'){
+    const txt=prompt('Texte de l\\'annotation:','Note');
+    if(txt!==null)state.drawings.push({type:'text',points:[p],text:txt,color:'#f5c451'});
+    draw();return;
+  }
+  if(t==='brush'){
+    state.current={type:'brush',points:[p],color:'#a78bfa'};return;
+  }
+  state.current={type:t,points:[p,p],color:t==='long'?'#26d97f':t==='short'?'#ef4d5f':'#22d3ee'};
+});
+canvas.addEventListener('mouseup',e=>{
+  if(state.current){state.drawings.push(state.current);state.current=null;draw();}
+});
+canvas.addEventListener('dblclick',()=>{state.drawings.pop();draw();});
+
+/* chips */
+document.querySelectorAll('[data-sym]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-sym]').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  state.sym=b.dataset.sym;regenerate();draw();
+}));
+document.querySelectorAll('[data-tf]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-tf]').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  state.tf=b.dataset.tf;regenerate();draw();
+}));
+document.querySelectorAll('[data-ind]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-ind]').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+  state.chartType=b.dataset.ind;draw();
+}));
+document.querySelectorAll('[data-overlay]').forEach(b=>b.addEventListener('click',()=>{
+  const k=b.dataset.overlay;state.overlays[k]=!state.overlays[k];b.classList.toggle('active');draw();
+}));
+
+/* simulate live ticks */
+setInterval(()=>{
+  const c=state.candles;const last=c[c.length-1];
+  const move=(Math.random()-0.5)*last.c*0.0015;
+  last.c=Math.max(0.01,last.c+move);
+  last.h=Math.max(last.h,last.c);last.l=Math.min(last.l,last.c);last.v+=Math.random()*20;
+  // new candle every 8s
+  if(Math.random()<0.05){
+    c.push({t:c.length,o:last.c,h:last.c,l:last.c,c:last.c,v:Math.random()*1000+200});
+    if(c.length>250)c.shift();
+  }
+  updateStats();draw();
+},800);
+
+resize();
+</script>
+</body>
+</html>

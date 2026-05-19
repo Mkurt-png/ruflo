@@ -4,7 +4,7 @@
   "outputDirectory": "public",
   "rewrites": [
     { "source": "/outreach", "destination": "/outreach.html" },
-    { "source": "/", "destination": "/outreach.html" }
+    { "source": "/", "destination": "/index.html" }
   ],
   "crons": [
     { "path": "/api/outreach/cron-daily", "schedule": "0 13 * * *" }
