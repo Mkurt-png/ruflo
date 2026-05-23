@@ -16,13 +16,19 @@ import { spawnSync } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 
+// ADR-100 / #1748 Issue 3 — CLI_CORE=1 routes to lite cli-core (~2s cold-cache).
+// Export is list+retrieve only; no search. JSON backend is fine.
+const CLI_PKG = process.env.CLI_CORE === '1'
+  ? '@claude-flow/cli-core@alpha'
+  : '@claude-flow/cli@latest';
+
 const NS = process.env.EXPORT_NAMESPACE || 'cost-tracking';
 
 function memoryListKeys() {
   const r = spawnSync('npx', [
-    '@claude-flow/cli@latest', 'memory', 'list',
+    CLI_PKG, 'memory', 'list',
     '--namespace', NS, '--format', 'json',
-  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
   if (r.status !== 0) return [];
   const m = /\[[\s\S]*\]/.exec(r.stdout || '');
   if (!m) return [];
@@ -30,9 +36,9 @@ function memoryListKeys() {
 }
 function memoryRetrieve(key) {
   const r = spawnSync('npx', [
-    '@claude-flow/cli@latest', 'memory', 'retrieve',
+    CLI_PKG, 'memory', 'retrieve',
     '--namespace', NS, '--key', key,
-  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
   if (r.status !== 0) return null;
   const m = /\{[\s\S]*\}/.exec(r.stdout || '');
   if (!m) return null;

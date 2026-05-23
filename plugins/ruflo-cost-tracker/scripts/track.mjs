@@ -46,8 +46,12 @@ function costForUsage(tier, usage) {
 }
 
 function encodeProjectPath(cwd) {
-  // Claude Code encodes absolute path by replacing `/` with `-`.
-  return cwd.replace(/\//g, '-');
+  // #1927: Claude Code encodes an absolute path by replacing path separators
+  // AND the Windows drive colon with `-`. So:
+  //   POSIX:   /home/user/proj      -> -home-user-proj
+  //   Windows: D:\project\Subcloudy -> D--project-Subcloudy   (`:` -> `-`, `\` -> `-`)
+  // The old code only replaced `/`, a no-op on Windows paths.
+  return cwd.replace(/[/\\:]/g, '-');
 }
 
 function findProjectDir(cwd) {
@@ -114,13 +118,21 @@ function summarizeSession(jsonlPath) {
 function persistToMemory(summary) {
   const ns = process.env.TRACK_NAMESPACE || 'cost-tracking';
   const key = `session-${summary.sessionId || 'unknown'}`;
+  // ADR-100 / #1748 Issue 3 — opt into cli-core's lite path with CLI_CORE=1.
+  // Cold-cache wall-time drops from ~25s to ~2s. JSON backend instead of
+  // SQLite/HNSW; semantic search degrades to substring (fine for cost-track
+  // which never invokes search — only store/list/retrieve). See
+  // v3/@claude-flow/cli-core/MIGRATION.md.
+  const cliPkg = process.env.CLI_CORE === '1'
+    ? '@claude-flow/cli-core@alpha'
+    : '@claude-flow/cli@latest';
   // spawnSync with explicit args avoids shell-escape pitfalls for the JSON value.
   const r = spawnSync('npx', [
-    '@claude-flow/cli@latest', 'memory', 'store',
+    cliPkg, 'memory', 'store',
     '--namespace', ns,
     '--key', key,
     '--value', JSON.stringify(summary),
-  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
   if (r.status !== 0) {
     return { ok: false, reason: r.stderr?.slice(0, 300) || `exit ${r.status}` };
   }

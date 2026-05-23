@@ -14,6 +14,14 @@
 
 import { spawnSync } from 'node:child_process';
 
+// ADR-100 / #1748 Issue 3 — opt into cli-core's lite path with CLI_CORE=1.
+// Cold-cache wall-time drops from ~25s to ~2s. JSON backend instead of
+// SQLite/HNSW; semantic search degrades to substring (fine here — budget
+// only does list/store/retrieve, no search). See cli-core/MIGRATION.md.
+const CLI_PKG = process.env.CLI_CORE === '1'
+  ? '@claude-flow/cli-core@alpha'
+  : '@claude-flow/cli@latest';
+
 const NS = process.env.BUDGET_NAMESPACE || 'cost-tracking';
 const KEY = 'budget-config';
 
@@ -26,9 +34,9 @@ function memoryStore(key, value) {
   if (key === KEY) {
     const stamped = `${KEY}-${Date.now()}`;
     const r = spawnSync('npx', [
-      '@claude-flow/cli@latest', 'memory', 'store',
+      CLI_PKG, 'memory', 'store',
       '--namespace', NS, '--key', stamped, '--value', JSON.stringify(value),
-    ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+    ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
     if (r.status !== 0) throw new Error(`memory store failed: ${r.stderr?.slice(0, 200) || r.status}`);
     // The "current pointer" is found at retrieval time by listing all
     // budget-config-* keys and picking the lexicographically-largest
@@ -36,17 +44,17 @@ function memoryStore(key, value) {
     return;
   }
   const r = spawnSync('npx', [
-    '@claude-flow/cli@latest', 'memory', 'store',
+    CLI_PKG, 'memory', 'store',
     '--namespace', NS, '--key', key, '--value', JSON.stringify(value),
-  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
   if (r.status !== 0) throw new Error(`memory store failed: ${r.stderr?.slice(0, 200) || r.status}`);
 }
 
 function memoryRetrieveOne(key) {
   const r = spawnSync('npx', [
-    '@claude-flow/cli@latest', 'memory', 'retrieve',
+    CLI_PKG, 'memory', 'retrieve',
     '--namespace', NS, '--key', key,
-  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
   if (r.status !== 0) return null;
   const m = /\{[\s\S]*\}/.exec(r.stdout || '');
   if (!m) return null;
@@ -57,9 +65,9 @@ function memoryRetrieve(key) {
   // For budget-config: pick the latest budget-config-<timestamp> entry.
   if (key === KEY) {
     const list = spawnSync('npx', [
-      '@claude-flow/cli@latest', 'memory', 'list',
+      CLI_PKG, 'memory', 'list',
       '--namespace', NS, '--format', 'json',
-    ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+    ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
     if (list.status !== 0) return null;
     const m = /\[[\s\S]*\]/.exec(list.stdout || '');
     if (!m) return null;
@@ -82,9 +90,9 @@ function memoryRetrieve(key) {
 function memoryListSessionRecords() {
   // Use --format json so keys aren't truncated with `...` in tabular output.
   const r = spawnSync('npx', [
-    '@claude-flow/cli@latest', 'memory', 'list',
+    CLI_PKG, 'memory', 'list',
     '--namespace', NS, '--format', 'json',
-  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+  ], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8', shell: process.platform === 'win32' });
   if (r.status !== 0) return [];
   // CLI may emit a small banner before the JSON array; extract the first '['..']' block.
   const m = /\[[\s\S]*\]/.exec(r.stdout || '');
