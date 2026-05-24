@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { locales } from '@/lib/i18n/config';
+import en from '@/lib/i18n/locales/en';
+import fr from '@/lib/i18n/locales/fr';
 
 const SITE = 'https://tickra.com';
 
@@ -20,7 +22,7 @@ const routes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  return locales.flatMap((locale) =>
+  const main = locales.flatMap((locale) =>
     routes.map((r) => ({
       url: `${SITE}/${locale}${r.path}`,
       lastModified: now,
@@ -28,4 +30,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: locale === 'en' ? r.priority : r.priority * 0.9,
     })),
   );
+
+  const articles = locales.flatMap((locale) => {
+    const dict = locale === 'fr' ? fr : en;
+    return Object.keys(dict.editorialArticles.posts).map((slug) => ({
+      url: `${SITE}/${locale}/editorial/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: locale === 'en' ? 0.55 : 0.5,
+    }));
+  });
+
+  return [...main, ...articles];
 }
