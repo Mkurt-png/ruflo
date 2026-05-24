@@ -538,6 +538,12 @@ const en = {
   pageHeader: {
     backHome: 'Back to home',
   },
+  press: {
+    title: 'As seen in',
+  },
+  stickyCta: {
+    label: 'Take the test',
+  },
   whyNot: {
     eyebrow: 'Comparison',
     title: 'Why not YouTube?',

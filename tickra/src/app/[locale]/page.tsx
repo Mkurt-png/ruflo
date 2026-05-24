@@ -3,6 +3,7 @@ import { isLocale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Hero } from '@/components/sections/Hero';
+import { PressStrip } from '@/components/sections/PressStrip';
 import { Method } from '@/components/sections/Method';
 import { BentoFeatures } from '@/components/sections/BentoFeatures';
 import { CurriculumPreview } from '@/components/sections/CurriculumPreview';
@@ -16,6 +17,7 @@ import { Newsletter } from '@/components/sections/Newsletter';
 import { CtaFinal } from '@/components/sections/CtaFinal';
 import { Footer } from '@/components/sections/Footer';
 import { HomeJsonLd } from '@/components/seo/HomeJsonLd';
+import { MobileStickyCta } from '@/components/site/MobileStickyCta';
 
 export default async function HomePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -27,6 +29,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <Hero dict={dict} locale={params.locale} />
+        <PressStrip dict={dict} />
         <Method dict={dict} />
         <BentoFeatures dict={dict} />
         <CurriculumPreview dict={dict} locale={params.locale} />
@@ -40,6 +43,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <CtaFinal dict={dict} locale={params.locale} />
       </main>
       <Footer dict={dict} locale={params.locale} />
+      <MobileStickyCta href={`/${params.locale}/onboarding`} label={dict.stickyCta.label} />
     </>
   );
 }

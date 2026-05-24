@@ -538,6 +538,12 @@ const fr = {
   pageHeader: {
     backHome: 'Retour à l’accueil',
   },
+  press: {
+    title: 'Vu et lu dans',
+  },
+  stickyCta: {
+    label: 'Passer le test',
+  },
   whyNot: {
     eyebrow: 'Comparaison',
     title: 'Pourquoi pas YouTube ?',

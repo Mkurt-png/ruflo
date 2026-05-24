@@ -3,6 +3,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { ThemeToggle } from './ThemeToggle';
+import { MobileMenu } from './MobileMenu';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -46,7 +47,10 @@ export function Navbar({ dict, locale }: Props) {
           >
             {dict.nav.signIn}
           </Link>
-          <Button href={`/${locale}/onboarding`}>{dict.nav.getStarted}</Button>
+          <div className="hidden md:block">
+            <Button href={`/${locale}/onboarding`}>{dict.nav.getStarted}</Button>
+          </div>
+          <MobileMenu dict={dict} locale={locale} links={links} />
         </div>
       </Container>
     </header>
