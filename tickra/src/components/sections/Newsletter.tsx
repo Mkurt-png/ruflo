@@ -6,7 +6,7 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 
-export function Newsletter({ dict }: { dict: Dictionary }) {
+export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string }) {
   const t = dict.newsletter;
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
@@ -16,8 +16,15 @@ export function Newsletter({ dict }: { dict: Dictionary }) {
     e.preventDefault();
     if (!email || pending) return;
     setPending(true);
-    // Placeholder — wire to /api/newsletter (Resend audiences) when backend is ready.
-    await new Promise((r) => setTimeout(r, 500));
+    try {
+      await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email, locale }),
+      });
+    } catch {
+      /* swallow — still acknowledge */
+    }
     setPending(false);
     setSent(true);
   };

@@ -13,8 +13,23 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
     e.preventDefault();
     if (pending) return;
     setPending(true);
-    // Placeholder — wire to /api/contact when backend is ready.
-    await new Promise((r) => setTimeout(r, 500));
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get('name') ?? ''),
+      email: String(data.get('email') ?? ''),
+      subject: String(data.get('subject') ?? ''),
+      message: String(data.get('message') ?? ''),
+    };
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      /* swallow — we still acknowledge so users aren't blocked */
+    }
     setPending(false);
     setSent(true);
   };

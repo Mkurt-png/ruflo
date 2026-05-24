@@ -1,9 +1,27 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { RefreshCw, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
+
+const copy = {
+  fr: {
+    title: 'Quelque chose s’est cassé.',
+    body:
+      'Une erreur inattendue est survenue. L’équipe Tickra a été notifiée. Vous pouvez réessayer ou revenir à l’accueil.',
+    retry: 'Réessayer',
+    home: 'Retour à l’accueil',
+  },
+  en: {
+    title: 'Something broke.',
+    body:
+      'An unexpected error occurred. The Tickra team has been notified. You can retry or go back home.',
+    retry: 'Retry',
+    home: 'Back to home',
+  },
+};
 
 export default function Error({
   error,
@@ -12,6 +30,10 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const pathname = usePathname() ?? '';
+  const locale: 'fr' | 'en' = pathname.startsWith('/fr') ? 'fr' : 'en';
+  const t = useMemo(() => copy[locale], [locale]);
+
   useEffect(() => {
     // Wire to your error reporter (Sentry, etc.) when configured.
     console.error('[tickra] route error', error);
@@ -22,12 +44,9 @@ export default function Error({
       <Container as="div" className="py-24">
         <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">500</span>
         <h1 className="mt-6 max-w-2xl font-display text-display-md font-medium tracking-tight text-balance text-ink">
-          Quelque chose s’est cassé.
+          {t.title}
         </h1>
-        <p className="mt-4 max-w-md text-[16px] leading-relaxed text-muted">
-          Une erreur inattendue est survenue. L’équipe Tickra a été notifiée. Vous pouvez réessayer ou
-          revenir à l’accueil.
-        </p>
+        <p className="mt-4 max-w-md text-[16px] leading-relaxed text-muted">{t.body}</p>
         {error.digest ? (
           <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
             ref: {error.digest}
@@ -40,13 +59,13 @@ export default function Error({
             className="inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90"
           >
             <RefreshCw aria-hidden className="h-4 w-4" strokeWidth={1.75} />
-            Réessayer
+            {t.retry}
           </button>
           <Link
-            href="/"
+            href={`/${locale}`}
             className="inline-flex h-12 items-center gap-2 rounded-full border border-line px-6 text-[15px] font-medium tracking-tight text-ink transition-colors hover:border-ink"
           >
-            Retour à l’accueil
+            {t.home}
             <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
           </Link>
         </div>

@@ -36,7 +36,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <BuiltBy dict={dict} />
         <Pricing dict={dict} locale={params.locale} />
         <Faq dict={dict} />
-        <Newsletter dict={dict} />
+        <Newsletter dict={dict} locale={params.locale} />
         <CtaFinal dict={dict} locale={params.locale} />
       </main>
       <Footer dict={dict} locale={params.locale} />

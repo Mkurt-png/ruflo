@@ -96,7 +96,7 @@ export default async function EditorialArticlePage({ params }: { params: Params 
           </section>
         </article>
 
-        <Newsletter dict={dict} />
+        <Newsletter dict={dict} locale={params.locale} />
       </main>
       <Footer dict={dict} locale={params.locale} />
     </>

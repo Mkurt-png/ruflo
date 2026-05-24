@@ -7,6 +7,7 @@ import { buildMetadata } from '@/lib/seo';
 import { isLocale, locales, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { CookieBanner } from '@/components/site/CookieBanner';
+import { Analytics } from '@/components/site/Analytics';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -59,6 +60,7 @@ export default async function LocaleLayout({
           Skip to content
         </a>
         <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
         <CookieBanner
           locale={locale}
           title={dict.cookies.title}

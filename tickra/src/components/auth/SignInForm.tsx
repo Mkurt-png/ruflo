@@ -17,8 +17,15 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
     e.preventDefault();
     if (!email || pending) return;
     setPending(true);
-    // Placeholder — wire to /api/auth/magic-link when backend is ready.
-    await new Promise((r) => setTimeout(r, 500));
+    try {
+      await fetch('/api/auth/magic-link', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email, locale }),
+      });
+    } catch {
+      /* swallow — we always show the same confirmation for security */
+    }
     setPending(false);
     setSent(true);
   };
