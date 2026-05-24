@@ -49,6 +49,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 
         <div className="col-span-12 mt-4 border-t border-line pt-8">
           <p className="max-w-3xl text-[12.5px] leading-relaxed text-muted">{t.risk}</p>
+          <p className="mt-4 max-w-3xl text-[12px] leading-relaxed text-subtle">{t.legal}</p>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
             <span>
               {t.copyright.replace('2026', String(year))}

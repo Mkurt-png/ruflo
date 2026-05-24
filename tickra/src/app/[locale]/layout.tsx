@@ -5,6 +5,8 @@ import { ThemeProvider } from '@/lib/theme/ThemeProvider';
 import { themeInitScript } from '@/lib/theme/script';
 import { buildMetadata } from '@/lib/seo';
 import { isLocale, locales, type Locale } from '@/lib/i18n/config';
+import { getDictionary } from '@/lib/i18n/dictionaries';
+import { CookieBanner } from '@/components/site/CookieBanner';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return buildMetadata(params.locale);
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
@@ -38,6 +40,7 @@ export default function LocaleLayout({
 }) {
   if (!isLocale(params.locale)) notFound();
   const locale: Locale = params.locale;
+  const dict = await getDictionary(locale);
 
   return (
     <html
@@ -56,6 +59,14 @@ export default function LocaleLayout({
           Skip to content
         </a>
         <ThemeProvider>{children}</ThemeProvider>
+        <CookieBanner
+          locale={locale}
+          title={dict.cookies.title}
+          body={dict.cookies.body}
+          accept={dict.cookies.accept}
+          reject={dict.cookies.reject}
+          learnMore={dict.cookies.learnMore}
+        />
       </body>
     </html>
   );

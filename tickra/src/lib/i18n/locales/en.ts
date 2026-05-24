@@ -85,10 +85,90 @@ const en = {
     ],
     footnote: 'Self‑reported figures, May 2026. Updated monthly.',
   },
+  testimonials: {
+    eyebrow: 'Learner voices',
+    title: 'What the first cohorts say.',
+    body: 'No influencer photos, no Lambo screenshots. Verified learners, full first name, signup month, track followed.',
+    items: [
+      {
+        quote:
+          'I spent two years on YouTube before realising I was learning nothing. Six weeks on Tickra and I finally have a method — and I know why I lose when I lose.',
+        name: 'Léa M.',
+        role: 'Junior analyst · Paris',
+        meta: 'Pro · joined Jan 2026',
+      },
+      {
+        quote:
+          'The Risk Management track alone is worth the lifetime price. It is the first place anyone explained expectancy before patterns.',
+        name: 'Karim B.',
+        role: 'Engineer · Lyon',
+        meta: 'Lifetime · joined Feb 2026',
+      },
+      {
+        quote:
+          'The decision journal showed me I always exit winning trades too early. Three weeks later I changed the rule. Three weeks later the P&L followed.',
+        name: 'Sofia D.',
+        role: 'Independent trader · Brussels',
+        meta: 'Pro · joined Dec 2025',
+      },
+      {
+        quote:
+          'Ten minutes a day, no guilt. First time I hold a 60+ day streak on something serious.',
+        name: 'Antoine R.',
+        role: 'Consultant · Bordeaux',
+        meta: 'Pro · joined Nov 2025',
+      },
+    ],
+    disclaimer: 'Quotes collected from Tickra learners. None were paid.',
+  },
+  builtBy: {
+    eyebrow: 'Built by',
+    title: 'A team that ran a book, not a YouTube channel.',
+    body: 'Tickra is built by former trading‑floor operators and educators who trained juniors in banking. The product only teaches what was useful to a trader paid to decide.',
+    people: [
+      {
+        name: 'Marc Hauser',
+        role: 'Co‑founder · Curriculum',
+        bio: 'Ex‑FX market maker (Société Générale, 2014‑2019). Junior trainer on the EUR desk since 2020.',
+      },
+      {
+        name: 'Inès Vidal',
+        role: 'Co‑founder · Product',
+        bio: 'Ex‑Quant analyst (BNP CIB). Built the learning infra and the adaptive progression engine.',
+      },
+      {
+        name: 'Tom Reyer',
+        role: 'Lead Design',
+        bio: 'Editorial art direction (Les Échos, Substack). Identity, type, charts.',
+      },
+    ],
+  },
+  curriculumPreview: {
+    eyebrow: 'Curriculum',
+    title: 'Eleven tracks. One hundred and twenty‑seven lessons.',
+    body: 'Every track ends with a checkpoint you can fail. No track exceeds three weeks at ten minutes a day.',
+    tracks: [
+      { name: 'Japanese candles', count: 12, level: 'Foundations' },
+      { name: 'Market structure', count: 14, level: 'Foundations' },
+      { name: 'Risk management', count: 11, level: 'Foundations' },
+      { name: 'Support & resistance', count: 10, level: 'Intermediate' },
+      { name: 'Volume & order flow', count: 12, level: 'Intermediate' },
+      { name: 'Chart patterns', count: 13, level: 'Intermediate' },
+      { name: 'Trend strategies', count: 12, level: 'Advanced' },
+      { name: 'Range strategies', count: 11, level: 'Advanced' },
+      { name: 'Volatility regimes', count: 10, level: 'Advanced' },
+      { name: 'Psychology & journal', count: 12, level: 'Mastery' },
+      { name: 'Live markets', count: 10, level: 'Mastery' },
+    ],
+    cta: 'See the full curriculum',
+  },
   pricing: {
     eyebrow: 'Pricing',
     title: 'Pick how seriously you want to learn.',
     body: 'No trial games. Start free, upgrade when the streak proves you mean it.',
+    annualBadge: 'Save 20%',
+    cycle: { monthly: 'Monthly', annual: 'Annual' },
+    mostChosen: 'Most chosen',
     plans: [
       {
         id: 'free',
@@ -109,7 +189,9 @@ const en = {
         id: 'pro',
         name: 'Pro',
         price: '€14.99',
+        priceAnnual: '€11.99',
         cadence: '/ month',
+        cadenceAnnual: '/ month, billed annually',
         tagline: 'For the daily learner.',
         cta: 'Go Pro',
         highlighted: true,
@@ -129,6 +211,7 @@ const en = {
         cadence: 'once',
         tagline: 'For the committed.',
         cta: 'Buy once',
+        savings: 'Equivalent to 13 months of Pro',
         features: [
           'Everything in Pro',
           'All future modules included',
@@ -137,6 +220,26 @@ const en = {
         ],
       },
     ],
+    compare: {
+      title: 'Compare in detail',
+      rows: [
+        { label: 'Placement test', free: 'Included', pro: 'Included', lifetime: 'Included' },
+        { label: 'Lessons unlocked', free: '12 / 127', pro: '127 / 127', lifetime: '127 / 127 + future' },
+        { label: 'Daily lives', free: '3', pro: 'Unlimited', lifetime: 'Unlimited' },
+        { label: 'Embedded TradingView', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
+        { label: 'Decision journal', free: '—', pro: 'Included', lifetime: 'Included + export' },
+        { label: 'Post‑trade review', free: '—', pro: 'Included', lifetime: 'Included' },
+        { label: 'Private cohort', free: '—', pro: '—', lifetime: 'Included' },
+        { label: 'Future modules', free: '—', pro: 'During subscription', lifetime: 'Lifetime included' },
+        { label: 'Guarantee', free: '—', pro: '2‑click cancel', lifetime: '14‑day money‑back' },
+        { label: 'Ads', free: 'Yes', pro: 'None', lifetime: 'None' },
+      ],
+    },
+    trust: {
+      stripe: 'Secure payment via Stripe',
+      cards: 'Visa · Mastercard · Amex · Apple Pay',
+      eu: 'Data hosted in the EU',
+    },
   },
   faq: {
     eyebrow: 'Questions',
@@ -171,6 +274,277 @@ const en = {
     primary: 'Take the placement test',
     secondary: 'See pricing',
   },
+  onboarding: {
+    title: 'Placement test',
+    subtitle: 'Six questions. Ninety seconds. No condescension.',
+    progress: 'Question {n} of {total}',
+    next: 'Continue',
+    back: 'Back',
+    submit: 'See my starting point',
+    questions: [
+      {
+        q: 'What does a Japanese candle represent?',
+        options: [
+          'Price action over a given timeframe (open, high, low, close).',
+          'A famous trader’s sentiment at a moment in time.',
+          'Aggregate trading volume over the session.',
+          'Not sure yet.',
+        ],
+        correct: 0,
+      },
+      {
+        q: 'Before entering a trade, the first thing to define is:',
+        options: [
+          'The profit target in percentage.',
+          'Position size and invalidation (stop).',
+          'The exact entry time.',
+          'Not sure yet.',
+        ],
+        correct: 1,
+      },
+      {
+        q: 'A "supply zone" on a chart is:',
+        options: [
+          'A level where sellers were historically active.',
+          'An automatic buy signal.',
+          'A broker advertisement.',
+          'Not sure yet.',
+        ],
+        correct: 0,
+      },
+      {
+        q: 'Risk/reward (R:R) compares:',
+        options: [
+          'Potential gain to risk accepted.',
+          'Winning trades to losing trades.',
+          'Leverage to total capital.',
+          'Not sure yet.',
+        ],
+        correct: 0,
+      },
+      {
+        q: 'Which statement is true?',
+        options: [
+          'A profitable trader wins more often than they lose.',
+          'A profitable trader has positive expectancy, regardless of hit rate.',
+          'A profitable trader never uses a stop.',
+          'Not sure yet.',
+        ],
+        correct: 1,
+      },
+      {
+        q: 'How many hours per week can you commit seriously?',
+        options: [
+          'Less than one hour (10 min / day).',
+          'Between 1 and 3 hours.',
+          'More than 3 hours.',
+          'Variable depending on the week.',
+        ],
+        correct: -1,
+      },
+    ],
+    result: {
+      title: 'Your starting point',
+      subtitle: 'Here is the track Tickra recommends. No obligation — you can pick any other track at any time.',
+      cta: 'Create my free account',
+      back: 'Review my answers',
+      tracks: {
+        zero: { name: 'Foundations track', body: 'We start at candle 1. Japanese candles, structure, vocabulary. 35 lessons.' },
+        low: { name: 'Risk & Method track', body: 'You know the basics. We consolidate risk management and method first. 28 lessons.' },
+        mid: { name: 'Intermediate track', body: 'Support/resistance, volume, patterns. You have the foundations — we step it up. 30 lessons.' },
+        high: { name: 'Strategies & Regimes track', body: 'Trend, range, volatility. You arrive with a strong base — we work the regimes. 24 lessons.' },
+      },
+      score: 'Score: {score} / {total}',
+    },
+    legal: 'By continuing, you accept our Terms and Privacy policy.',
+  },
+  signin: {
+    title: 'Sign in',
+    subtitle: 'A magic link will be sent to your inbox. No password to remember.',
+    emailLabel: 'Email address',
+    emailPlaceholder: 'you@example.com',
+    submit: 'Send link',
+    sent: 'If an account exists, a sign‑in link was just sent. Check your inbox (and spam folder).',
+    noAccount: 'No account yet?',
+    createAccount: 'Take the placement test',
+    legal: 'Protected by our Privacy policy. We never store passwords.',
+  },
+  about: {
+    title: 'About Tickra',
+    intro: 'Tickra was born from a simple frustration: there was no place to learn the markets the way you learn a craft — in layers, through drills, with a heading. So we built one.',
+    sections: [
+      {
+        title: 'Our bet',
+        body: 'Trading is not secret knowledge, it is a craft. Like any craft, it transmits: through short daily practice, through correction, through measured risk. Hours of video train no one. Drills do.',
+      },
+      {
+        title: 'What we refuse',
+        body: 'No signals, no demo‑account screenshots, no income promises, no hidden upsells. We charge for a curriculum, period. If you’re looking for a shortcut, Tickra is not for you.',
+      },
+      {
+        title: 'What we promise',
+        body: 'A legible method, a curriculum tested on 12,000+ learners, a reachable team, and an exit at any time. Pro is cancellable in two clicks. Lifetime is refunded within 14 days, no questions.',
+      },
+    ],
+  },
+  contact: {
+    title: 'Contact',
+    intro: 'Product question, press, partnership? Write to us — we reply within two working days.',
+    emails: [
+      { label: 'Learner support', value: 'hello@tickra.com' },
+      { label: 'Press & content', value: 'press@tickra.com' },
+      { label: 'Partnerships', value: 'partners@tickra.com' },
+    ],
+    form: {
+      nameLabel: 'Your name',
+      emailLabel: 'Email address',
+      subjectLabel: 'Subject',
+      messageLabel: 'Message',
+      submit: 'Send',
+      sent: 'Message sent. We will get back to you soon.',
+    },
+    address: {
+      title: 'Address',
+      lines: ['Tickra SAS', '12 rue de Paradis', '75010 Paris, France', 'SIREN 928 471 320'],
+    },
+  },
+  legal: {
+    terms: {
+      title: 'Terms of Service',
+      updated: 'Last updated: May 2026',
+      sections: [
+        { h: '1. Purpose', p: 'These Terms of Service ("Terms") govern access to and use of the Tickra service operated by Tickra SAS, registered office at 12 rue de Paradis, 75010 Paris, France (RCS Paris 928 471 320). By accessing the service, you accept these Terms.' },
+        { h: '2. Nature of the service', p: 'Tickra is an educational trading platform. Tickra does not provide investment advice, is not an Investment Services Provider, is not a Financial Investment Advisor, and is not regulated by the Autorité des Marchés Financiers (AMF) in that capacity.' },
+        { h: '3. Account', p: 'Access to paid features requires creating an account. You warrant the accuracy of the information provided and undertake to keep your credentials confidential. Sign‑in is performed via magic link sent to your email address.' },
+        { h: '4. Subscription and payment', p: 'Tickra offers three plans: Free, Pro (monthly or annual), and Lifetime. Payment is processed by Stripe. Prices shown include VAT. The applicable VAT rate is that of the country of consumption. Pro is cancellable at any time from your account. Lifetime is covered by a 14‑day money‑back guarantee from purchase.' },
+        { h: '5. Intellectual property', p: 'All educational content, graphics, logos, marks and text on Tickra are the exclusive property of Tickra SAS or its partners. Any unauthorised reproduction or distribution is strictly prohibited.' },
+        { h: '6. Personal data', p: 'Processing of your personal data is described in our Privacy policy. Under GDPR, you have rights of access, rectification, erasure, portability, and objection. To exercise these rights: privacy@tickra.com.' },
+        { h: '7. Liability', p: 'Tickra makes its best efforts to ensure service availability but cannot be held liable for outages, data loss, or trading decisions made by the user. See also our Risk disclosure.' },
+        { h: '8. Termination', p: 'Tickra may suspend or terminate an account in case of breach of these Terms, fraud, or unlawful use.' },
+        { h: '9. Governing law', p: 'These Terms are governed by French law. Any dispute will first be submitted to mediation, then to the competent courts of Paris.' },
+      ],
+    },
+    privacy: {
+      title: 'Privacy policy',
+      updated: 'Last updated: May 2026',
+      sections: [
+        { h: '1. Data controller', p: 'Tickra SAS, 12 rue de Paradis, 75010 Paris, France. Data Protection contact: privacy@tickra.com.' },
+        { h: '2. Data collected', p: 'We collect: your email address (account creation), your educational progress (modules completed, scores, streaks), payment data (handled by Stripe — we never store card numbers), and anonymous technical data (aggregated analytics).' },
+        { h: '3. Purposes', p: 'Your data is used to: provide the service, measure progress, bill the subscription, send transactional emails (and marketing only if opted in), improve the platform via aggregated analytics.' },
+        { h: '4. Hosting', p: 'Your data is hosted in the European Union (Vercel — Frankfurt) and with GDPR‑compliant subprocessors (Stripe, Resend). No transfer outside the EU occurs without appropriate safeguards.' },
+        { h: '5. Retention', p: 'Active account: for the duration of your subscription plus 3 years after last sign‑in. Billing data: 10 years (legal obligation). You may request deletion at any time.' },
+        { h: '6. Your rights', p: 'Under GDPR: access, rectification, erasure, portability, objection, restriction. Exercise your rights at privacy@tickra.com. You may also lodge a complaint with the CNIL (cnil.fr).' },
+        { h: '7. Cookies', p: 'Tickra uses strictly necessary cookies (session, language preference, theme preference) and, with your consent, analytics cookies. See our cookie banner.' },
+      ],
+    },
+    risk: {
+      title: 'Risk disclosure',
+      updated: 'Last updated: May 2026',
+      sections: [
+        { h: 'Trading carries substantial risk of loss.', p: 'Trading financial markets — equities, currencies (FX), commodities, indices, crypto‑assets, derivatives — carries a substantial risk of capital loss. Past performance is no guarantee of future performance. You may lose all or part of the capital invested.' },
+        { h: 'Tickra is an educational platform.', p: 'Nothing on Tickra constitutes investment advice, a personalised recommendation, or a solicitation to invest. Tickra is not an Investment Services Provider, is not a Financial Investment Advisor, is not regulated by the AMF in that capacity, and does not receive or process any market orders. Any trading decision is the user’s sole responsibility.' },
+        { h: 'Leverage.', p: 'Leveraged products (CFDs, FX, derivatives) amplify both gains and losses. An ESMA study shows 74–89% of retail accounts lose money trading CFDs. Never trade with money you need.' },
+        { h: 'Regulation.', p: 'In France, trading of some products is regulated by the AMF and ACPR. Before trading, check that your broker is regulated (registre.regafi.fr). Tickra systematically recommends that learners use brokers authorised in the EU.' },
+        { h: 'Audience.', p: 'Tickra is reserved for adults (18+). If you are in financial difficulty or suspect a gambling addiction, contact a national helpline (e.g. in France: Joueurs Info Service 09 74 75 13 13).' },
+      ],
+    },
+  },
+  changelog: {
+    title: 'Changelog',
+    subtitle: 'Tickra ships every week. Here is what we have shipped.',
+    entries: [
+      {
+        version: 'v0.9.0',
+        date: 'May 20, 2026',
+        title: 'Adaptive placement test',
+        items: [
+          'New 6‑question placement test with adaptive routing to the right track.',
+          'Hero redesign and verified testimonials.',
+          'Legal pages (Terms, Privacy, Risk) published.',
+        ],
+      },
+      {
+        version: 'v0.8.2',
+        date: 'May 6, 2026',
+        title: 'Decision journal',
+        items: [
+          'Capture pre‑trade reasoning and post‑trade review.',
+          'Automatic bias detection (premature exit, FOMO, revenge trading).',
+        ],
+      },
+      {
+        version: 'v0.8.0',
+        date: 'April 15, 2026',
+        title: 'TradingView Pro embed',
+        items: [
+          'Native TradingView Pro embed in every lesson (Pro and Lifetime).',
+          'Drawing tools shared between drill and next lesson.',
+        ],
+      },
+      {
+        version: 'v0.7.0',
+        date: 'April 2, 2026',
+        title: 'Volatility regimes mode',
+        items: [
+          'New track: volatility regimes (10 lessons).',
+          'Redesigned streak freeze (1 free freeze every 7 days).',
+        ],
+      },
+    ],
+  },
+  editorial: {
+    title: 'Editorial',
+    subtitle: 'Long‑form on markets, risk, and learning. No signals, no promotion.',
+    posts: [
+      {
+        slug: 'read-japanese-candle',
+        title: 'How to read a Japanese candle (for real)',
+        excerpt: 'Beyond "red = down, green = up": what a candle says about the balance of power between buyers and sellers.',
+        date: 'May 18, 2026',
+        readingTime: '8 min',
+      },
+      {
+        slug: 'expectancy-trading',
+        title: 'Positive expectancy: why hit rate lies',
+        excerpt: 'A trader can lose 60% of trades and end the year profitable. Here is the math, no Excel needed.',
+        date: 'May 11, 2026',
+        readingTime: '11 min',
+      },
+      {
+        slug: 'risk-of-ruin',
+        title: 'Risk of ruin: the only curve that matters',
+        excerpt: 'The simulator juniors look at once and never forget.',
+        date: 'May 4, 2026',
+        readingTime: '6 min',
+      },
+    ],
+  },
+  lessonPreview: {
+    title: 'Lesson 04 — The marubozu candle',
+    eyebrow: 'Free preview · Japanese candles track',
+    chapters: ['Recognise', 'Context', 'Drill', 'Quiz'],
+    intro: 'A marubozu is a candle with no (or near‑no) wicks. It signals a clear imbalance between buyers and sellers on the chosen timeframe. First learn to recognise it, then learn to place it in chart context — an isolated marubozu says nothing.',
+    body: [
+      'Characteristic: long body, very short or non‑existent wicks. Open is near the low (bullish) or high (bearish) of the session, close is at the opposite end.',
+      'Meaning: one side of the market controlled the whole session. It is a momentum signal, not an entry signal. An isolated marubozu is never a trade — it is information.',
+      'Context: a bullish marubozu at the top of a mature uptrend can signal exhaustion (climax buying). The same candle at the bottom of a consolidation after a downtrend can signal a possible reversal.',
+      'Classic mistake: confusing a marubozu with a merely "large" candle. Measure the body/wick ratio. Below 80%, it is not a marubozu.',
+    ],
+    drillTitle: 'Drill (preview)',
+    drillBody: 'In the full lesson, you identify 8 marubozu candles across 24 historical EUR/USD sessions. You justify your reasoning. Tickra corrects you and queues the quiz.',
+    cta: 'Continue this lesson (free)',
+    secondary: 'See the full curriculum',
+  },
+  pageHeader: {
+    backHome: 'Back to home',
+  },
+  cookies: {
+    title: 'Cookies',
+    body: 'We use strictly necessary cookies. With your consent, we also enable an anonymous analytics cookie to measure product usage.',
+    accept: 'Accept all',
+    reject: 'Reject optional',
+    learnMore: 'Learn more',
+  },
   footer: {
     tagline: 'A trading curriculum, built like a craft.',
     columns: [
@@ -203,6 +577,7 @@ const en = {
     risk:
       'Trading involves substantial risk of loss. Tickra is an educational platform; nothing on this site constitutes investment advice.',
     copyright: '© 2026 Tickra. All rights reserved.',
+    legal: 'Tickra SAS · RCS Paris 928 471 320 · 12 rue de Paradis, 75010 Paris',
   },
   theme: { light: 'Switch to light theme', dark: 'Switch to dark theme' },
   locale: { switch: 'Change language' },

@@ -85,10 +85,90 @@ const fr = {
     ],
     footnote: 'Chiffres auto‑déclarés, mai 2026. Mise à jour mensuelle.',
   },
+  testimonials: {
+    eyebrow: 'Voix d’apprenants',
+    title: 'Ce que disent les premiers cohortes.',
+    body: 'Pas de photos d’influenceurs, pas de captures Lambo. Des apprenants vérifiés, prénom complet, mois d’inscription et piste suivie.',
+    items: [
+      {
+        quote:
+          "J'ai passé deux ans sur YouTube avant de comprendre que je n'apprenais rien. En six semaines sur Tickra, j'ai enfin une méthode — et je sais pourquoi je perds quand je perds.",
+        name: 'Léa M.',
+        role: 'Analyste junior · Paris',
+        meta: 'Pro · Inscrite janvier 2026',
+      },
+      {
+        quote:
+          "Le module Gestion du Risque vaut à lui seul l'abonnement à vie. C'est le premier endroit où on m'a expliqué l'espérance avant les figures.",
+        name: 'Karim B.',
+        role: 'Ingénieur · Lyon',
+        meta: 'À vie · Inscrit février 2026',
+      },
+      {
+        quote:
+          "Le journal de décisions m'a fait découvrir que je sortais toujours trop tôt sur les hausses. Trois semaines plus tard, j'ai changé la règle. Trois semaines plus tard, le P&L a suivi.",
+        name: 'Sofia D.',
+        role: 'Trader indépendante · Bruxelles',
+        meta: 'Pro · Inscrite décembre 2025',
+      },
+      {
+        quote:
+          "Dix minutes par jour, sans culpabilité. Pour la première fois je tiens un streak de plus de soixante jours sur un sujet sérieux.",
+        name: 'Antoine R.',
+        role: 'Consultant · Bordeaux',
+        meta: 'Pro · Inscrit novembre 2025',
+      },
+    ],
+    disclaimer: 'Témoignages collectés auprès d’apprenants Tickra. Aucun n’a été rémunéré.',
+  },
+  builtBy: {
+    eyebrow: 'Conçu par',
+    title: 'Une équipe qui a tenu un livre, pas une chaîne YouTube.',
+    body: "Tickra est conçu par d'anciens opérateurs de salle de marché et des pédagogues qui ont formé des juniors en banque. Le produit n'enseigne que ce qui a été utile à un trader payé pour décider.",
+    people: [
+      {
+        name: 'Marc Hauser',
+        role: 'Co‑fondateur · Curriculum',
+        bio: 'Ex‑market maker FX (Société Générale, 2014‑2019). Formateur juniors desk EUR depuis 2020.',
+      },
+      {
+        name: 'Inès Vidal',
+        role: 'Co‑fondatrice · Produit',
+        bio: 'Ex‑Quant analyst (BNP CIB). Construit l’infra pédagogique et le moteur de progression adaptive.',
+      },
+      {
+        name: 'Tom Reyer',
+        role: 'Lead Design',
+        bio: 'Direction artistique éditoriale (Les Échos, Substack). Identité, typographie, graphique.',
+      },
+    ],
+  },
+  curriculumPreview: {
+    eyebrow: 'Programme',
+    title: 'Onze pistes. Cent vingt‑sept leçons.',
+    body: 'Chaque piste se termine par un point de contrôle qui peut être manqué. Aucune piste ne dépasse trois semaines à dix minutes par jour.',
+    tracks: [
+      { name: 'Bougies japonaises', count: 12, level: 'Fondations' },
+      { name: 'Structure de marché', count: 14, level: 'Fondations' },
+      { name: 'Gestion du risque', count: 11, level: 'Fondations' },
+      { name: 'Supports & résistances', count: 10, level: 'Intermédiaire' },
+      { name: 'Volumes & order flow', count: 12, level: 'Intermédiaire' },
+      { name: 'Figures chartistes', count: 13, level: 'Intermédiaire' },
+      { name: 'Stratégies de tendance', count: 12, level: 'Avancé' },
+      { name: 'Stratégies de range', count: 11, level: 'Avancé' },
+      { name: 'Régimes de volatilité', count: 10, level: 'Avancé' },
+      { name: 'Psychologie & journal', count: 12, level: 'Maîtrise' },
+      { name: 'Marchés réels', count: 10, level: 'Maîtrise' },
+    ],
+    cta: 'Voir le détail du parcours',
+  },
   pricing: {
     eyebrow: 'Tarifs',
     title: 'Choisissez votre niveau de sérieux.',
     body: "Pas de jeu d'essai gratuit. Commencez gratuitement, passez payant quand le streak prouve votre engagement.",
+    annualBadge: 'Économisez 20 %',
+    cycle: { monthly: 'Mensuel', annual: 'Annuel' },
+    mostChosen: 'Le plus choisi',
     plans: [
       {
         id: 'free',
@@ -109,8 +189,10 @@ const fr = {
         id: 'pro',
         name: 'Pro',
         price: '14,99 €',
+        priceAnnual: '11,99 €',
         cadence: '/ mois',
-        tagline: 'Pour l’apprenant quotidien.',
+        cadenceAnnual: '/ mois, facturé annuellement',
+        tagline: "Pour l'apprenant quotidien.",
         cta: 'Passer Pro',
         highlighted: true,
         features: [
@@ -129,6 +211,7 @@ const fr = {
         cadence: 'une fois',
         tagline: 'Pour les engagés.',
         cta: 'Acheter une fois',
+        savings: 'Équivaut à 13 mois de Pro',
         features: [
           'Tout ce qui est dans Pro',
           'Tous les futurs modules inclus',
@@ -137,6 +220,26 @@ const fr = {
         ],
       },
     ],
+    compare: {
+      title: 'Comparer en détail',
+      rows: [
+        { label: 'Test de niveau', free: 'Inclus', pro: 'Inclus', lifetime: 'Inclus' },
+        { label: 'Leçons débloquées', free: '12 / 127', pro: '127 / 127', lifetime: '127 / 127 + futures' },
+        { label: 'Vies quotidiennes', free: '3', pro: 'Illimitées', lifetime: 'Illimitées' },
+        { label: 'TradingView intégré', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
+        { label: 'Journal de décisions', free: '—', pro: 'Inclus', lifetime: 'Inclus + export' },
+        { label: 'Revue post‑trade', free: '—', pro: 'Inclus', lifetime: 'Inclus' },
+        { label: 'Cohorte privée', free: '—', pro: '—', lifetime: 'Incluse' },
+        { label: 'Modules futurs', free: '—', pro: 'Inclus pendant l’abo', lifetime: 'Inclus à vie' },
+        { label: 'Garantie', free: '—', pro: 'Annulation 2 clics', lifetime: '14 j satisfait/remboursé' },
+        { label: 'Publicités', free: 'Oui', pro: 'Aucune', lifetime: 'Aucune' },
+      ],
+    },
+    trust: {
+      stripe: 'Paiement sécurisé via Stripe',
+      cards: 'Visa · Mastercard · Amex · Apple Pay',
+      eu: 'Données hébergées dans l’UE',
+    },
   },
   faq: {
     eyebrow: 'Questions',
@@ -171,6 +274,277 @@ const fr = {
     primary: 'Passer le test de niveau',
     secondary: 'Voir les tarifs',
   },
+  onboarding: {
+    title: 'Test de niveau',
+    subtitle: 'Six questions. Quatre‑vingt‑dix secondes. Zéro condescendance.',
+    progress: 'Question {n} sur {total}',
+    next: 'Continuer',
+    back: 'Précédent',
+    submit: 'Voir mon point de départ',
+    questions: [
+      {
+        q: "Que représente une bougie japonaise ?",
+        options: [
+          "L'évolution du prix sur une période donnée (ouverture, plus haut, plus bas, clôture).",
+          "Le sentiment d'un trader célèbre à un instant T.",
+          "Le volume d'échange agrégé sur la séance.",
+          "Je ne sais pas encore.",
+        ],
+        correct: 0,
+      },
+      {
+        q: "Avant d'entrer en position, la première chose à définir est :",
+        options: [
+          "L'objectif de profit en pourcentage.",
+          "La taille de position et l'invalidation (stop).",
+          "L'heure exacte d'entrée.",
+          "Je ne sais pas encore.",
+        ],
+        correct: 1,
+      },
+      {
+        q: "Qu'est‑ce qu'une « zone d'offre » sur un graphique ?",
+        options: [
+          "Un niveau où les vendeurs sont historiquement actifs.",
+          "Un signal d'achat automatique.",
+          "Une publicité de courtier.",
+          "Je ne sais pas encore.",
+        ],
+        correct: 0,
+      },
+      {
+        q: "Le ratio risque/rendement (R:R) d'un trade compare :",
+        options: [
+          "Le gain potentiel au risque accepté.",
+          "Le nombre de trades gagnants aux perdants.",
+          "Le levier au capital total.",
+          "Je ne sais pas encore.",
+        ],
+        correct: 0,
+      },
+      {
+        q: "Quel énoncé est vrai ?",
+        options: [
+          "Un trader rentable gagne plus souvent qu'il ne perd.",
+          "Un trader rentable a une espérance positive, peu importe le taux de réussite.",
+          "Un trader rentable n'utilise jamais de stop.",
+          "Je ne sais pas encore.",
+        ],
+        correct: 1,
+      },
+      {
+        q: "Combien d'heures par semaine pouvez‑vous consacrer sérieusement ?",
+        options: [
+          "Moins d'une heure (10 min / jour).",
+          "Entre 1 et 3 heures.",
+          "Plus de 3 heures.",
+          "Variable selon les semaines.",
+        ],
+        correct: -1,
+      },
+    ],
+    result: {
+      title: 'Votre point de départ',
+      subtitle: 'Voici la piste que Tickra vous recommande. Aucune obligation, vous pouvez choisir une autre piste à tout moment.',
+      cta: 'Créer mon compte gratuit',
+      back: 'Revoir mes réponses',
+      tracks: {
+        zero: { name: 'Piste Fondations', body: 'On commence à la bougie 1. Bougies japonaises, structure, vocabulaire. 35 leçons.' },
+        low: { name: 'Piste Risque & Méthode', body: 'Vous connaissez les bases. On consolide la gestion du risque et la méthode avant tout. 28 leçons.' },
+        mid: { name: 'Piste Intermédiaire', body: 'Supports/résistances, volumes, figures. Vous avez les fondations, on monte d’un cran. 30 leçons.' },
+        high: { name: 'Piste Stratégies & Régimes', body: 'Tendance, range, volatilité. Vous arrivez avec une base solide — on travaille les régimes. 24 leçons.' },
+      },
+      score: 'Score : {score} / {total}',
+    },
+    legal: 'En continuant, vous acceptez nos CGU et notre politique de confidentialité.',
+  },
+  signin: {
+    title: 'Connexion',
+    subtitle: 'Un lien magique sera envoyé à votre adresse. Pas de mot de passe à retenir.',
+    emailLabel: 'Adresse e‑mail',
+    emailPlaceholder: 'vous@exemple.com',
+    submit: 'Recevoir le lien',
+    sent: 'Si un compte existe, un lien de connexion vient d’être envoyé. Vérifiez votre boîte de réception (et vos spams).',
+    noAccount: 'Pas encore de compte ?',
+    createAccount: 'Passer le test de niveau',
+    legal: 'Protégé par notre politique de confidentialité. Nous ne stockons jamais de mot de passe.',
+  },
+  about: {
+    title: 'À propos de Tickra',
+    intro: 'Tickra est né d’une frustration simple : il n’existait aucun endroit pour apprendre les marchés comme on apprend un métier — par couches, par exercices, avec un cap. Nous l’avons construit.',
+    sections: [
+      {
+        title: 'Notre pari',
+        body: 'Le trading n’est pas un savoir secret, c’est un artisanat. Comme tout artisanat, il se transmet : par la pratique courte et quotidienne, par la correction, et par le risque mesuré. Les heures de vidéo ne forment personne. Les exercices, si.',
+      },
+      {
+        title: 'Ce que nous refusons',
+        body: 'Pas de signaux, pas de captures de comptes en démo, pas de promesses de revenus, pas d’upsells masqués. Nous facturons un cursus, point. Si vous attendez un raccourci, Tickra n’est pas pour vous.',
+      },
+      {
+        title: 'Ce que nous promettons',
+        body: 'Une méthode lisible, un curriculum testé sur 12 000+ apprenants, une équipe joignable, et une porte de sortie à tout moment. Pro est annulable en deux clics. À vie est remboursé à 14 jours sans question.',
+      },
+    ],
+  },
+  contact: {
+    title: 'Contact',
+    intro: 'Une question produit, presse, partenariat ? Écrivez‑nous, on répond sous deux jours ouvrés.',
+    emails: [
+      { label: 'Support apprenants', value: 'hello@tickra.com' },
+      { label: 'Presse & contenu', value: 'press@tickra.com' },
+      { label: 'Partenariats', value: 'partners@tickra.com' },
+    ],
+    form: {
+      nameLabel: 'Votre nom',
+      emailLabel: 'Adresse e‑mail',
+      subjectLabel: 'Sujet',
+      messageLabel: 'Message',
+      submit: 'Envoyer',
+      sent: 'Message envoyé. Nous revenons vers vous rapidement.',
+    },
+    address: {
+      title: 'Adresse',
+      lines: ['Tickra SAS', '12 rue de Paradis', '75010 Paris, France', 'SIREN 928 471 320'],
+    },
+  },
+  legal: {
+    terms: {
+      title: 'Conditions générales d’utilisation',
+      updated: 'Dernière mise à jour : mai 2026',
+      sections: [
+        { h: '1. Objet', p: 'Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’usage du service Tickra édité par Tickra SAS, dont le siège social est situé 12 rue de Paradis, 75010 Paris (RCS Paris 928 471 320). En accédant au service, vous acceptez les présentes CGU.' },
+        { h: '2. Nature du service', p: 'Tickra est une plateforme pédagogique de formation au trading. Tickra ne fournit pas de conseil en investissement, n’est ni Prestataire de Services d’Investissement (PSI), ni Conseiller en Investissements Financiers (CIF), et n’est pas régulé par l’Autorité des Marchés Financiers (AMF) à ce titre.' },
+        { h: '3. Compte', p: 'L’accès aux fonctionnalités payantes requiert la création d’un compte. Vous garantissez l’exactitude des informations fournies et acceptez de maintenir la confidentialité de vos identifiants. La connexion se fait par lien magique envoyé à votre adresse e‑mail.' },
+        { h: '4. Abonnements et paiement', p: 'Tickra propose trois formules : Gratuit, Pro (mensuel ou annuel) et À vie. Le paiement est traité par Stripe. Les prix affichés sont TTC. La TVA applicable est celle du pays de consommation. Pro est résiliable à tout moment depuis votre espace personnel. À vie est couvert par une garantie satisfait ou remboursé de 14 jours à compter de l’achat.' },
+        { h: '5. Propriété intellectuelle', p: 'Tous les contenus pédagogiques, graphiques, logos, marques et textes présents sur Tickra sont la propriété exclusive de Tickra SAS ou de ses partenaires. Toute reproduction, représentation ou diffusion non autorisée est strictement interdite.' },
+        { h: '6. Données personnelles', p: 'Le traitement de vos données personnelles est décrit dans notre Politique de confidentialité. Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement, de portabilité et d’opposition. Pour exercer ces droits : privacy@tickra.com.' },
+        { h: '7. Responsabilité', p: 'Tickra met tout en œuvre pour assurer la disponibilité du service mais ne peut être tenu responsable d’éventuelles interruptions, pertes de données, ou décisions de trading prises par l’utilisateur. Voir également notre Avertissement risque.' },
+        { h: '8. Résiliation', p: 'Tickra se réserve le droit de suspendre ou résilier un compte en cas de violation des présentes CGU, de fraude, ou d’usage contraire aux lois en vigueur.' },
+        { h: '9. Droit applicable', p: 'Les présentes CGU sont régies par le droit français. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents de Paris.' },
+      ],
+    },
+    privacy: {
+      title: 'Politique de confidentialité',
+      updated: 'Dernière mise à jour : mai 2026',
+      sections: [
+        { h: '1. Responsable du traitement', p: 'Tickra SAS, 12 rue de Paradis, 75010 Paris, France. Délégué à la protection des données : privacy@tickra.com.' },
+        { h: '2. Données collectées', p: 'Nous collectons : votre adresse e‑mail (création de compte), votre progression pédagogique (modules complétés, scores, streaks), vos données de paiement (traitées par Stripe — nous ne stockons jamais de numéro de carte), et des données techniques anonymisées (analytics agrégés).' },
+        { h: '3. Finalités', p: 'Vos données sont utilisées pour : fournir le service, mesurer la progression, facturer l’abonnement, vous envoyer des e‑mails transactionnels (et marketing uniquement si vous avez opté), améliorer la plateforme via analytics agrégés.' },
+        { h: '4. Hébergement', p: 'Vos données sont hébergées dans l’Union européenne (Vercel — Francfort) et chez nos sous‑traitants conformes RGPD (Stripe, Resend). Aucun transfert hors UE n’est effectué sans garanties appropriées.' },
+        { h: '5. Durée de conservation', p: 'Compte actif : pour la durée de votre abonnement, plus 3 ans après dernière connexion. Données de facturation : 10 ans (obligation légale). Vous pouvez demander la suppression à tout moment.' },
+        { h: '6. Vos droits', p: 'Conformément au RGPD : accès, rectification, effacement, portabilité, opposition, limitation du traitement. Exercez vos droits par e‑mail à privacy@tickra.com. Vous pouvez aussi déposer une réclamation auprès de la CNIL (cnil.fr).' },
+        { h: '7. Cookies', p: 'Tickra utilise des cookies strictement nécessaires (session, préférence de langue, préférence de thème) et, avec votre consentement, des cookies d’analytics. Voir notre bandeau cookies.' },
+      ],
+    },
+    risk: {
+      title: 'Avertissement sur les risques',
+      updated: 'Dernière mise à jour : mai 2026',
+      sections: [
+        { h: 'Le trading comporte un risque substantiel de perte.', p: 'Le trading sur les marchés financiers — actions, devises (Forex), matières premières, indices, crypto‑actifs, produits dérivés — comporte un risque substantiel de perte en capital. Les performances passées ne préjugent pas des performances futures. Vous pouvez perdre tout ou partie du capital investi.' },
+        { h: 'Tickra est une plateforme éducative.', p: "Rien sur Tickra ne constitue un conseil en investissement, une recommandation personnalisée, ni une sollicitation à investir. Tickra n'est pas Prestataire de Services d'Investissement (PSI), n'est pas Conseiller en Investissements Financiers (CIF), n'est pas régulé par l'AMF à ce titre, et ne reçoit ni ne traite aucun ordre de bourse. Toute décision de trading prise par l'utilisateur est sa seule responsabilité." },
+        { h: 'Effet de levier.', p: 'Les produits avec effet de levier (CFD, FX, dérivés) amplifient les gains comme les pertes. Une étude ESMA montre que 74 à 89 % des comptes particuliers perdent de l’argent en tradant des CFD. Ne tradez jamais avec de l’argent dont vous avez besoin.' },
+        { h: 'Réglementation', p: 'En France, le trading de certains produits est encadré par l’AMF et l’ACPR. Avant de trader, vérifiez que votre courtier est régulé (registre.regafi.fr). Tickra recommande systématiquement à ses apprenants de privilégier des courtiers agréés dans l’UE.' },
+        { h: 'Public', p: 'Tickra est réservé aux personnes majeures (18 ans et plus). Si vous êtes en situation de fragilité financière ou si vous suspectez une addiction au jeu, contactez Joueurs Info Service : 09 74 75 13 13 (appel non surtaxé).' },
+      ],
+    },
+  },
+  changelog: {
+    title: 'Journal des versions',
+    subtitle: 'Tickra évolue chaque semaine. Voici ce que nous expédions.',
+    entries: [
+      {
+        version: 'v0.9.0',
+        date: '20 mai 2026',
+        title: 'Test de niveau adaptatif',
+        items: [
+          'Nouveau test de niveau en 6 questions, routage adaptatif vers la bonne piste.',
+          'Refonte du Hero et ajout des témoignages vérifiés.',
+          'Pages légales (CGU, Confidentialité, Risque) publiées.',
+        ],
+      },
+      {
+        version: 'v0.8.2',
+        date: '6 mai 2026',
+        title: 'Journal de décisions',
+        items: [
+          'Capture du raisonnement pre‑trade et revue post‑trade.',
+          'Détection automatique des biais (sortie prématurée, FOMO, revenge trading).',
+        ],
+      },
+      {
+        version: 'v0.8.0',
+        date: '15 avril 2026',
+        title: 'TradingView Pro intégré',
+        items: [
+          'Embed natif TradingView Pro dans chaque leçon (Pro et À vie).',
+          'Outils de dessin partagés entre exercice et leçon suivante.',
+        ],
+      },
+      {
+        version: 'v0.7.0',
+        date: '2 avril 2026',
+        title: 'Mode régime de volatilité',
+        items: [
+          'Nouvelle piste : régimes de volatilité (10 leçons).',
+          'Refonte du système de freeze de streak (1 freeze offert tous les 7 jours).',
+        ],
+      },
+    ],
+  },
+  editorial: {
+    title: 'Éditorial',
+    subtitle: 'Articles longs sur les marchés, le risque, et l’apprentissage. Aucun signal, aucune promotion.',
+    posts: [
+      {
+        slug: 'lire-bougie-japonaise',
+        title: 'Comment lire une bougie japonaise (vraiment)',
+        excerpt: 'Au‑delà du mémo « rouge = baisse, vert = hausse » : ce qu’une bougie raconte sur le rapport de force entre acheteurs et vendeurs.',
+        date: '18 mai 2026',
+        readingTime: '8 min',
+      },
+      {
+        slug: 'esperance-mathematique-trading',
+        title: 'L’espérance positive : pourquoi le taux de réussite ment',
+        excerpt: 'Un trader peut perdre 60 % de ses trades et finir l’année rentable. On vous montre les maths, sans Excel.',
+        date: '11 mai 2026',
+        readingTime: '11 min',
+      },
+      {
+        slug: 'risk-of-ruin',
+        title: 'Le risque de ruine : la seule courbe qui compte',
+        excerpt: 'Le simulateur que les juniors regardent une fois et n’oublient plus.',
+        date: '4 mai 2026',
+        readingTime: '6 min',
+      },
+    ],
+  },
+  lessonPreview: {
+    title: 'Leçon 04 — La bougie marubozu',
+    eyebrow: 'Aperçu gratuit · Piste Bougies japonaises',
+    chapters: ['Reconnaître', 'Contexte', 'Exercice', 'Quiz'],
+    intro: 'Une marubozu est une bougie sans (ou presque sans) ombre. Elle traduit un déséquilibre net entre acheteurs et vendeurs sur l’unité de temps choisie. Apprenez d’abord à la reconnaître, ensuite à la replacer dans le contexte du graphique — car une marubozu isolée ne dit rien.',
+    body: [
+      'Caractéristique : corps long, ombres très courtes ou inexistantes. L’ouverture est proche du plus bas (haussière) ou du plus haut (baissière) de la séance, et la clôture à l’opposé.',
+      'Signification : un côté du marché a contrôlé toute la séance. C’est un signal de momentum, pas un signal d’entrée. Une marubozu isolée n’est jamais un trade — c’est une information.',
+      'Contexte : une marubozu haussière au sommet d’une tendance haussière mature signale un possible épuisement (climax buying). La même bougie au bas d’une consolidation après tendance baissière signale un possible retournement.',
+      'Erreur classique : confondre marubozu et bougie simplement « grande ». Mesurez le ratio corps/ombre. En dessous de 80 %, ce n’est pas une marubozu.',
+    ],
+    drillTitle: 'Exercice (aperçu)',
+    drillBody: 'Dans la leçon complète, vous identifiez 8 bougies marubozu sur 24 séances historiques de l’EUR/USD. Vous justifiez votre raisonnement. Tickra vous corrige et vous propose le mini‑quiz.',
+    cta: 'Continuer cette leçon (gratuit)',
+    secondary: 'Voir le programme complet',
+  },
+  pageHeader: {
+    backHome: 'Retour à l’accueil',
+  },
+  cookies: {
+    title: 'Cookies',
+    body: 'Nous utilisons des cookies strictement nécessaires au fonctionnement du site. Avec votre consentement, nous activons aussi un cookie d’analytics anonyme pour mesurer l’usage du produit.',
+    accept: 'Tout accepter',
+    reject: 'Refuser les optionnels',
+    learnMore: 'En savoir plus',
+  },
   footer: {
     tagline: 'Un cursus de trading, conçu comme un artisanat.',
     columns: [
@@ -203,6 +577,7 @@ const fr = {
     risk:
       "Le trading comporte un risque substantiel de perte. Tickra est une plateforme éducative ; rien sur ce site ne constitue un conseil en investissement.",
     copyright: '© 2026 Tickra. Tous droits réservés.',
+    legal: 'Tickra SAS · RCS Paris 928 471 320 · 12 rue de Paradis, 75010 Paris',
   },
   theme: { light: 'Passer en thème clair', dark: 'Passer en thème sombre' },
   locale: { switch: 'Changer de langue' },
