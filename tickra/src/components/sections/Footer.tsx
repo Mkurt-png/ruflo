@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
+import { FooterNewsletter } from '@/components/site/FooterNewsletter';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -20,6 +21,9 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           <p className="mt-6 max-w-xs font-display text-xl font-medium leading-snug tracking-tight text-balance text-ink">
             {t.tagline}
           </p>
+          <div className="mt-10">
+            <FooterNewsletter dict={dict} locale={locale} />
+          </div>
         </div>
 
         <nav

@@ -10,6 +10,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Prose } from '@/components/ui/Prose';
 import { Newsletter } from '@/components/sections/Newsletter';
 import { ArticleShare } from '@/components/editorial/ArticleShare';
+import { ReadProgress } from '@/components/editorial/ReadProgress';
 import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
 
 type Params = { locale: string; slug: string };
@@ -79,6 +80,7 @@ export default async function EditorialArticlePage({ params }: { params: Params 
         locale={params.locale}
       />
       <Navbar dict={dict} locale={params.locale} />
+      <ReadProgress />
       <main id="main">
         <article>
           <section className="border-b border-line">

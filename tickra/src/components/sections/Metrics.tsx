@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
-import { SectionHeader } from '@/components/ui/SectionHeader';
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 import { fadeUp } from '@/lib/motion';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 
@@ -41,7 +41,7 @@ export function Metrics({ dict }: { dict: Dictionary }) {
                 {m.label}
               </dt>
               <dd className="mt-6 font-display text-5xl font-medium tracking-tight md:text-6xl">
-                {m.value}
+                <AnimatedNumber value={m.value} />
               </dd>
             </motion.div>
           ))}

@@ -544,6 +544,45 @@ const fr = {
   stickyCta: {
     label: 'Passer le test',
   },
+  roadmap: {
+    eyebrow: 'Feuille de route',
+    title: 'Ce qui arrive ensuite.',
+    body: 'La feuille de route est publique. Voter sur la priorité d’une fonctionnalité est inclus dans Pro et À vie.',
+    items: [
+      { quarter: 'Été 2026', status: 'En construction', title: 'Backtest 1 clic', body: 'Tester une règle simple (entrée/sortie/risque) sur 10 ans d’historique en moins de cinq secondes.' },
+      { quarter: 'Été 2026', status: 'En construction', title: 'Cohortes en direct', body: 'Sessions hebdomadaires de revue de trades avec un mentor Tickra, en petit groupe.' },
+      { quarter: 'Automne 2026', status: 'Planifié', title: 'Module Crypto', body: 'Adapter la piste Structure de marché aux particularités des crypto‑actifs (régime 24/7, liquidité fragmentée).' },
+      { quarter: 'Automne 2026', status: 'Planifié', title: 'API Journal', body: 'Exporter ton journal vers Notion, Obsidian, ou ton propre tableur.' },
+      { quarter: 'Hiver 2026', status: 'Recherche', title: 'Mode pédagogique guidé par IA', body: 'Un coach qui repère tes points faibles et te propose la prochaine leçon. En recherche — pas avant qu’il soit utile.' },
+    ],
+  },
+  community: {
+    eyebrow: 'Communauté',
+    title: 'Une promotion. Pas un groupe Telegram.',
+    body: 'La cohorte privée Tickra rassemble des apprenants vérifiés qui suivent la même méthode. Pas de signaux, pas de pump, pas de chasse aux likes — du travail entre pairs.',
+    bullets: [
+      'Salon par piste (bougies, risque, volume…).',
+      'Revue de trade hebdomadaire, modérée par un ancien trader de desk.',
+      'Charte : pas de signaux, pas de DM commercial, pas de captures de P&L.',
+    ],
+    primary: 'Rejoindre la cohorte',
+    secondary: 'Lire la charte',
+    badge: 'Inclus dans Pro et À vie',
+  },
+  hero_extra: {
+    badgeLive: 'Aperçu interactif',
+    poster: 'Cliquez pour lancer la démo (45 s)',
+  },
+  freezeTooltip: {
+    label: 'Qu’est‑ce qu’un freeze ?',
+    body: 'Un freeze conserve votre série quand vous ratez une journée. Un gratuit tous les 7 jours.',
+  },
+  footerNewsletter: {
+    title: 'Recevoir l’éditorial',
+    placeholder: 'vous@exemple.com',
+    submit: 'S’abonner',
+    sent: 'Merci, à très vite.',
+  },
   whyNot: {
     eyebrow: 'Comparaison',
     title: 'Pourquoi pas YouTube ?',

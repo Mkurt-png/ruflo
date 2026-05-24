@@ -544,6 +544,45 @@ const en = {
   stickyCta: {
     label: 'Take the test',
   },
+  roadmap: {
+    eyebrow: 'Roadmap',
+    title: 'What ships next.',
+    body: 'The roadmap is public. Voting on what we build next is included in Pro and Lifetime.',
+    items: [
+      { quarter: 'Summer 2026', status: 'Building', title: '1‑click backtest', body: 'Test a simple rule (entry/exit/risk) across 10 years of history in under five seconds.' },
+      { quarter: 'Summer 2026', status: 'Building', title: 'Live cohorts', body: 'Weekly trade‑review sessions with a Tickra mentor, in small groups.' },
+      { quarter: 'Fall 2026', status: 'Planned', title: 'Crypto track', body: 'Adapt the Market Structure track to crypto specifics (24/7 regime, fragmented liquidity).' },
+      { quarter: 'Fall 2026', status: 'Planned', title: 'Journal API', body: 'Export your journal to Notion, Obsidian, or your own spreadsheet.' },
+      { quarter: 'Winter 2026', status: 'Research', title: 'AI‑guided mode', body: 'A coach that spots your weak points and queues the right lesson. In research — not before it’s actually useful.' },
+    ],
+  },
+  community: {
+    eyebrow: 'Community',
+    title: 'A cohort. Not a Telegram group.',
+    body: 'The private Tickra cohort gathers verified learners following the same method. No signals, no pumps, no like‑chasing — peer work.',
+    bullets: [
+      'Channel per track (candles, risk, volume…).',
+      'Weekly trade review, moderated by a former desk trader.',
+      'Charter: no signals, no commercial DMs, no P&L screenshots.',
+    ],
+    primary: 'Join the cohort',
+    secondary: 'Read the charter',
+    badge: 'Included in Pro and Lifetime',
+  },
+  hero_extra: {
+    badgeLive: 'Interactive preview',
+    poster: 'Click to play the demo (45 s)',
+  },
+  freezeTooltip: {
+    label: 'What is a freeze?',
+    body: 'A freeze keeps your streak when you miss a day. One free every 7 days.',
+  },
+  footerNewsletter: {
+    title: 'Get the editorial',
+    placeholder: 'you@example.com',
+    submit: 'Subscribe',
+    sent: 'Thanks — talk soon.',
+  },
   whyNot: {
     eyebrow: 'Comparison',
     title: 'Why not YouTube?',

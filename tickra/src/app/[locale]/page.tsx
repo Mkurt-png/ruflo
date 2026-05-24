@@ -12,6 +12,8 @@ import { Metrics } from '@/components/sections/Metrics';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { BuiltBy } from '@/components/sections/BuiltBy';
 import { Pricing } from '@/components/sections/Pricing';
+import { Community } from '@/components/sections/Community';
+import { Roadmap } from '@/components/sections/Roadmap';
 import { Faq } from '@/components/sections/Faq';
 import { Newsletter } from '@/components/sections/Newsletter';
 import { CtaFinal } from '@/components/sections/CtaFinal';
@@ -38,6 +40,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <Testimonials dict={dict} />
         <BuiltBy dict={dict} />
         <Pricing dict={dict} locale={params.locale} />
+        <Community dict={dict} locale={params.locale} />
+        <Roadmap dict={dict} />
         <Faq dict={dict} />
         <Newsletter dict={dict} locale={params.locale} />
         <CtaFinal dict={dict} locale={params.locale} />
