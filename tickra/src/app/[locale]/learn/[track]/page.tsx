@@ -1,0 +1,103 @@
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { isLocale, locales, type Locale } from '@/lib/i18n/config';
+import { getDictionary } from '@/lib/i18n/dictionaries';
+import { Navbar } from '@/components/nav/Navbar';
+import { Footer } from '@/components/sections/Footer';
+import { Container } from '@/components/ui/Container';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { TRACKS, getTrack } from '@/lib/curriculum/data';
+import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
+
+type Params = { locale: string; track: string };
+
+export async function generateStaticParams() {
+  const params: Params[] = [];
+  for (const l of locales) {
+    for (const t of TRACKS) params.push({ locale: l, track: t.slug });
+  }
+  return params;
+}
+
+export async function generateMetadata({ params }: { params: Params }) {
+  if (!isLocale(params.locale)) return {};
+  const track = getTrack(params.track);
+  if (!track) return {};
+  return { title: `${track.title[params.locale as Locale]} · Tickra` };
+}
+
+export default async function TrackPage({ params }: { params: Params }) {
+  if (!isLocale(params.locale)) notFound();
+  const locale: Locale = params.locale;
+  const track = getTrack(params.track);
+  if (!track) notFound();
+  const dict = await getDictionary(locale);
+
+  return (
+    <>
+      <Navbar dict={dict} locale={locale} />
+      <main id="main">
+        <section className="border-b border-line">
+          <Container as="div" className="pb-16 pt-16 md:pb-20 md:pt-24">
+            <Link
+              href={`/${locale}/learn`}
+              className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-ink"
+            >
+              <ArrowLeft aria-hidden className="h-3.5 w-3.5" strokeWidth={1.75} />
+              {locale === 'fr' ? 'Toutes les pistes' : 'All tracks'}
+            </Link>
+            <Eyebrow>{locale === 'fr' ? 'Piste' : 'Track'}</Eyebrow>
+            <h1 className="mt-6 max-w-3xl font-display text-display-lg font-medium tracking-tight text-balance text-ink">
+              {track.title[locale]}
+            </h1>
+            <p className="mt-6 max-w-2xl text-pretty text-[17px] leading-relaxed text-muted md:text-lg">
+              {track.summary[locale]}
+            </p>
+          </Container>
+        </section>
+
+        <section className="border-b border-line">
+          <Container as="div" className="py-20 md:py-28">
+            <ol className="divide-y divide-line border-y border-line">
+              {track.lessons.map((lesson) => (
+                <li key={lesson.id}>
+                  <Link
+                    href={`/${locale}/learn/${track.slug}/${lesson.slug}`}
+                    className="group grid grid-cols-12 items-center gap-x-6 gap-y-2 py-5 md:py-6"
+                  >
+                    <span className="col-span-2 font-mono text-[12px] tabular-nums uppercase tracking-[0.18em] text-subtle md:col-span-1">
+                      {String(lesson.index).padStart(2, '0')}
+                    </span>
+                    <span className="col-span-9 font-display text-lg font-medium tracking-tight text-ink transition-colors group-hover:text-muted md:col-span-9 md:text-xl">
+                      {lesson.title[locale]}
+                    </span>
+                    <span className="col-span-1 flex items-center justify-end gap-3 md:col-span-2">
+                      <LessonCheckmark lessonId={lesson.id} />
+                      <ArrowRight
+                        aria-hidden
+                        className="h-4 w-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-ink"
+                        strokeWidth={1.75}
+                      />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-12">
+              <Link
+                href={`/${locale}/learn/${track.slug}/${track.lessons[0].slug}`}
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90"
+              >
+                {locale === 'fr' ? 'Commencer la piste' : 'Start the track'}
+                <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
+              </Link>
+            </div>
+          </Container>
+        </section>
+      </main>
+      <Footer dict={dict} locale={locale} />
+    </>
+  );
+}

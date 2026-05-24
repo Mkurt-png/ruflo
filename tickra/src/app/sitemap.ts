@@ -2,14 +2,15 @@ import type { MetadataRoute } from 'next';
 import { locales } from '@/lib/i18n/config';
 import en from '@/lib/i18n/locales/en';
 import fr from '@/lib/i18n/locales/fr';
+import { TRACKS } from '@/lib/curriculum/data';
 
 const SITE = 'https://tickra.com';
 
 const routes = [
   { path: '', changeFrequency: 'monthly' as const, priority: 1 },
+  { path: '/learn', changeFrequency: 'weekly' as const, priority: 0.95 },
   { path: '/pricing', changeFrequency: 'monthly' as const, priority: 0.9 },
   { path: '/onboarding', changeFrequency: 'monthly' as const, priority: 0.8 },
-  { path: '/lesson/japanese-candles', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/about', changeFrequency: 'yearly' as const, priority: 0.5 },
   { path: '/contact', changeFrequency: 'yearly' as const, priority: 0.5 },
   { path: '/editorial', changeFrequency: 'weekly' as const, priority: 0.6 },
@@ -41,5 +42,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  return [...main, ...articles];
+  const learn = locales.flatMap((locale) =>
+    TRACKS.flatMap((track) => [
+      {
+        url: `${SITE}/${locale}/learn/${track.slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: locale === 'en' ? 0.7 : 0.65,
+      },
+      ...track.lessons.map((lesson) => ({
+        url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly' as const,
+        priority: locale === 'en' ? 0.5 : 0.45,
+      })),
+    ]),
+  );
+
+  return [...main, ...articles, ...learn];
 }

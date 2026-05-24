@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Mail } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { GoogleButton } from './GoogleButton';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -44,7 +45,21 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
           <p className="text-[14.5px] leading-relaxed text-ink">{t.sent}</p>
         </div>
       ) : (
-        <form onSubmit={onSubmit} className="mt-10 space-y-5">
+        <>
+          <div className="mt-10">
+            <GoogleButton
+              locale={locale}
+              label={locale === 'fr' ? 'Continuer avec Google' : 'Continue with Google'}
+            />
+          </div>
+          <div className="my-7 flex items-center gap-4">
+            <span aria-hidden className="h-px flex-1 bg-line" />
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-subtle">
+              {locale === 'fr' ? 'ou par e‑mail' : 'or by email'}
+            </span>
+            <span aria-hidden className="h-px flex-1 bg-line" />
+          </div>
+          <form onSubmit={onSubmit} className="space-y-5">
           <div>
             <label
               htmlFor="email"
@@ -71,7 +86,8 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
             {t.submit}
             <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
           </button>
-        </form>
+          </form>
+        </>
       )}
 
       <div className="mt-10 border-t border-line pt-6">

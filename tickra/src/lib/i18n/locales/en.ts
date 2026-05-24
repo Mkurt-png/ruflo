@@ -2,6 +2,7 @@ const en = {
   nav: {
     method: 'Method',
     curriculum: 'Curriculum',
+    learn: 'Learn',
     pricing: 'Pricing',
     signIn: 'Sign in',
     getStarted: 'Get started',

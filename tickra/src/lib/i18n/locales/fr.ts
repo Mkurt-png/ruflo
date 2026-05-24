@@ -2,6 +2,7 @@ const fr = {
   nav: {
     method: 'Méthode',
     curriculum: 'Parcours',
+    learn: 'Apprendre',
     pricing: 'Tarifs',
     signIn: 'Connexion',
     getStarted: 'Commencer',

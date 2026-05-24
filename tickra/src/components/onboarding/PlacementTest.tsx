@@ -12,6 +12,13 @@ import type { Locale } from '@/lib/i18n/config';
 
 type TrackKey = 'zero' | 'low' | 'mid' | 'high';
 
+const trackKeyToSlug: Record<TrackKey, string> = {
+  zero: 'japanese-candles',
+  low: 'risk-management',
+  mid: 'support-resistance',
+  high: 'trend-strategies',
+};
+
 export function PlacementTest({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const t = dict.onboarding;
   const total = t.questions.length;
@@ -40,6 +47,7 @@ export function PlacementTest({ dict, locale }: { dict: Dictionary; locale: Loca
         score={score}
         total={t.questions.filter((q) => q.correct !== -1).length}
         track={track}
+        trackSlug={trackKeyToSlug[trackKey]}
         onBack={() => setSubmitted(false)}
       />
     );
@@ -198,6 +206,7 @@ function ResultCard({
   score,
   total,
   track,
+  trackSlug,
   onBack,
 }: {
   dict: Dictionary;
@@ -205,8 +214,13 @@ function ResultCard({
   score: number;
   total: number;
   track: { name: string; body: string };
+  trackSlug: string;
   onBack: () => void;
 }) {
+  // Look up the first lesson of the recommended track at compile time of the call.
+  // We rely on the curriculum's deterministic ordering: lesson #1 is always
+  // "01-…".  This keeps the result card light without importing the data here.
+  const firstLessonHref = `/${locale}/learn/${trackSlug}`;
   const t = dict.onboarding.result;
   return (
     <motion.div
@@ -233,11 +247,17 @@ function ResultCard({
 
       <div className="mt-10 flex flex-wrap items-center gap-3">
         <Link
-          href={`/${locale}/signin`}
+          href={firstLessonHref}
           className="inline-flex h-12 items-center gap-2 rounded-full bg-canvas px-6 text-[15px] font-medium tracking-tight text-ink transition-colors hover:bg-canvas/90"
         >
-          {t.cta}
+          {locale === 'fr' ? 'Démarrer la piste' : 'Start the track'}
           <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
+        </Link>
+        <Link
+          href={`/${locale}/signin`}
+          className="inline-flex h-12 items-center gap-2 rounded-full border border-canvas/30 px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:border-canvas hover:bg-canvas hover:text-ink"
+        >
+          {t.cta}
         </Link>
         <button
           type="button"

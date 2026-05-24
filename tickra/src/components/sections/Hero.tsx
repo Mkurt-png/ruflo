@@ -58,7 +58,7 @@ export function Hero({ dict, locale }: Props) {
               {t.primaryCta}
               <ArrowUpRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
             </Button>
-            <Button href={`/${locale}/lesson/japanese-candles`} variant="ghost" size="lg">
+            <Button href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`} variant="ghost" size="lg">
               <PlayCircle aria-hidden className="h-4 w-4" strokeWidth={1.5} />
               {t.secondaryCta}
             </Button>
