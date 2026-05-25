@@ -9,6 +9,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
 import { TrackProgress } from '@/components/learn/TrackProgress';
+import { LessonResumeCard } from '@/components/learn/LessonResumeCard';
 
 export const metadata = { title: 'Apprendre · Tickra' };
 
@@ -35,6 +36,12 @@ export default async function LearnPage({ params }: { params: { locale: string }
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Apprendre' : 'Learn'} title={title} body={body} />
+
+        <section className="border-b border-line">
+          <Container as="div" className="pb-12 pt-12 md:pb-16 md:pt-16">
+            <LessonResumeCard locale={locale} />
+          </Container>
+        </section>
 
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">

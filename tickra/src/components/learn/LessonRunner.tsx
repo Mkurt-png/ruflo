@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, Sparkles, X } from 'lucide-react';
@@ -125,6 +125,52 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
       setQuizRevealed(true);
     }
   };
+
+  // Keyboard shortcuts: digits choose an option, Enter validates/advances,
+  // ArrowLeft goes back to previous phase when applicable.
+  useEffect(() => {
+    if (phase === 'done') return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+      const digit = Number(e.key);
+      if (Number.isInteger(digit) && digit >= 1 && digit <= 9) {
+        if (phase === 'drill' && !drillRevealed) {
+          const i = digit - 1;
+          if (i < drillOptions.length) {
+            setDrillChoice(i);
+            e.preventDefault();
+          }
+        } else if (phase === 'quiz' && !quizRevealed) {
+          const i = digit - 1;
+          if (i < quizOptions.length) {
+            setQuizChoice(i);
+            e.preventDefault();
+          }
+        }
+        return;
+      }
+
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (phase === 'brief') {
+          setPhase('drill');
+        } else if (phase === 'drill') {
+          if (!drillRevealed && drillChoice !== null) setDrillRevealed(true);
+          else if (drillRevealed) setPhase('quiz');
+        } else if (phase === 'quiz') {
+          if (!quizRevealed && quizChoice !== null) {
+            if (quizCorrect) setQuizScore((s) => s + 1);
+            setQuizRevealed(true);
+          } else if (quizRevealed) {
+            onNextQuestion();
+          }
+        }
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
 
   const onNextQuestion = () => {
     if (quizIndex < content.quiz.length - 1) {
