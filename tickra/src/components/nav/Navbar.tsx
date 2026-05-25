@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { ThemeToggle } from './ThemeToggle';
 import { MobileMenu } from './MobileMenu';
+import { UserMenu } from './UserMenu';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -41,12 +42,11 @@ export function Navbar({ dict, locale }: Props) {
             <LocaleSwitcher current={locale} label={dict.locale.switch} />
           </div>
           <ThemeToggle labelLight={dict.theme.light} labelDark={dict.theme.dark} />
-          <Link
-            href={`/${locale}/signin`}
-            className="hidden text-sm text-muted transition-colors hover:text-ink md:inline"
-          >
-            {dict.nav.signIn}
-          </Link>
+          <UserMenu
+            locale={locale}
+            signInLabel={dict.nav.signIn}
+            accountLabel={locale === 'fr' ? 'Mon compte' : 'My account'}
+          />
           <div className="hidden md:block">
             <Button href={`/${locale}/onboarding`}>{dict.nav.getStarted}</Button>
           </div>

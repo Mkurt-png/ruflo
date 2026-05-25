@@ -54,6 +54,19 @@ export function useProgress() {
       write(next);
       return next;
     });
+    // Fire-and-forget server sync. Server returns 401 when no session, or
+    // {persisted:false} when the DB isn't configured — both fine, localStorage
+    // remains the source of truth.
+    if (typeof window !== 'undefined') {
+      fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ lessonId }),
+        keepalive: true,
+      }).catch(() => {
+        /* swallow */
+      });
+    }
   }, []);
 
   const isComplete = useCallback(

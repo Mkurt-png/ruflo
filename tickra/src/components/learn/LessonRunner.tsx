@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, Sparkles, X } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { TradingViewChart } from './TradingViewChart';
 import { useProgress } from '@/lib/progress/hook';
 import { easeOutExpo } from '@/lib/motion';
 import { cn } from '@/lib/cn';
@@ -190,6 +191,15 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
                     </p>
                   ))}
                 </div>
+                {content.chart ? (
+                  <div className="mt-10">
+                    <TradingViewChart
+                      symbol={content.chart.symbol}
+                      interval={content.chart.interval}
+                      caption={`${content.chart.symbol} · ${content.chart.interval ?? '60'}`}
+                    />
+                  </div>
+                ) : null}
                 <div className="mt-10 flex justify-end">
                   <button
                     type="button"
