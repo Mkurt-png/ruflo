@@ -4,11 +4,18 @@ import { useCallback, useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'tickra-progress-v1';
 
-export type ProgressState = {
-  completed: Record<string, number>; // lessonId → completion timestamp
+export type Mistake = {
+  lessonId: string;
+  loggedAt: number;             // when the user missed
+  reviewedAt?: number;          // last time the user reviewed it
 };
 
-const empty: ProgressState = { completed: {} };
+export type ProgressState = {
+  completed: Record<string, number>;       // lessonId → completion timestamp
+  mistakes?: Record<string, Mistake>;      // lessonId → mistake meta
+};
+
+const empty: ProgressState = { completed: {}, mistakes: {} };
 
 function read(): ProgressState {
   if (typeof window === 'undefined') return empty;
@@ -17,7 +24,7 @@ function read(): ProgressState {
     if (!raw) return empty;
     const parsed = JSON.parse(raw) as ProgressState;
     if (!parsed || typeof parsed !== 'object' || !parsed.completed) return empty;
-    return parsed;
+    return { completed: parsed.completed, mistakes: parsed.mistakes ?? {} };
   } catch {
     return empty;
   }
@@ -49,14 +56,12 @@ export function useProgress() {
   const markComplete = useCallback((lessonId: string) => {
     setState((prev) => {
       const next: ProgressState = {
+        ...prev,
         completed: { ...prev.completed, [lessonId]: Date.now() },
       };
       write(next);
       return next;
     });
-    // Fire-and-forget server sync. Server returns 401 when no session, or
-    // {persisted:false} when the DB isn't configured — both fine, localStorage
-    // remains the source of truth.
     if (typeof window !== 'undefined') {
       fetch('/api/progress', {
         method: 'POST',
@@ -67,6 +72,41 @@ export function useProgress() {
         /* swallow */
       });
     }
+  }, []);
+
+  const logMistake = useCallback((lessonId: string) => {
+    setState((prev) => {
+      const existing = prev.mistakes?.[lessonId];
+      const next: ProgressState = {
+        ...prev,
+        mistakes: {
+          ...(prev.mistakes ?? {}),
+          [lessonId]: {
+            lessonId,
+            // Don't reset the original loggedAt if the user keeps missing.
+            loggedAt: existing?.loggedAt ?? Date.now(),
+          },
+        },
+      };
+      write(next);
+      return next;
+    });
+  }, []);
+
+  const markReviewed = useCallback((lessonId: string) => {
+    setState((prev) => {
+      const existing = prev.mistakes?.[lessonId];
+      if (!existing) return prev;
+      const next: ProgressState = {
+        ...prev,
+        mistakes: {
+          ...prev.mistakes,
+          [lessonId]: { ...existing, reviewedAt: Date.now() },
+        },
+      };
+      write(next);
+      return next;
+    });
   }, []);
 
   const isComplete = useCallback(
@@ -81,5 +121,5 @@ export function useProgress() {
     write(empty);
   }, []);
 
-  return { state, ready, markComplete, isComplete, completedCount, reset };
+  return { state, ready, markComplete, isComplete, completedCount, reset, logMistake, markReviewed };
 }

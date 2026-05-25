@@ -39,6 +39,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const toggle = useCallback(() => apply(theme === 'dark' ? 'light' : 'dark'), [apply, theme]);
 
+  // Global event so non-descendant components (CommandPalette, mounted outside
+  // ThemeProvider in the layout) can request a toggle without prop-drilling.
+  useEffect(() => {
+    const onToggle = () => toggle();
+    window.addEventListener('tickra:toggle-theme', onToggle);
+    return () => window.removeEventListener('tickra:toggle-theme', onToggle);
+  }, [toggle]);
+
   const value = useMemo<ThemeContextValue>(
     () => ({ theme, setTheme: apply, toggle }),
     [theme, apply, toggle],

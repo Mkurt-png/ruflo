@@ -93,7 +93,7 @@ const copy: Record<'fr' | 'en', Copy> = {
 
 export function LessonRunner({ locale, track, lesson, content, next, globalIndex, total }: Props) {
   const t = copy[locale];
-  const { markComplete } = useProgress();
+  const { markComplete, logMistake, markReviewed } = useProgress();
   const [phase, setPhase] = useState<Phase>('brief');
   const [drillChoice, setDrillChoice] = useState<number | null>(null);
   const [quizIndex, setQuizIndex] = useState(0);
@@ -124,6 +124,7 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
     if (quizChoice === null) return;
     if (!quizRevealed) {
       if (quizCorrect) setQuizScore((s) => s + 1);
+      else logMistake(lesson.id);
       setQuizRevealed(true);
     }
   };
@@ -163,6 +164,7 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
         } else if (phase === 'quiz') {
           if (!quizRevealed && quizChoice !== null) {
             if (quizCorrect) setQuizScore((s) => s + 1);
+            else logMistake(lesson.id);
             setQuizRevealed(true);
           } else if (quizRevealed) {
             onNextQuestion();
@@ -182,6 +184,11 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
     } else {
       // Finish: mark complete then transition to done.
       markComplete(lesson.id);
+      // If the lesson was on the review queue and the user got everything
+      // right, log a review tick so the SR engine pushes the next interval out.
+      if (quizScore + (quizCorrect ? 1 : 0) === content.quiz.length) {
+        markReviewed(lesson.id);
+      }
       toast({
         tone: 'success',
         title:

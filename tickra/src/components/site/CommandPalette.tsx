@@ -14,7 +14,20 @@ type Item = {
   label: string;
   hint?: string;
   href: string;
-  group: 'lesson' | 'track' | 'page' | 'term';
+  group: 'lesson' | 'track' | 'page' | 'term' | 'action';
+};
+
+const quickActions = {
+  fr: [
+    { id: 'lang-en', label: 'Passer en anglais', href: '/en', group: 'action' as const, hint: 'Langue' },
+    { id: 'theme-toggle', label: 'Basculer thème clair / sombre', href: '#theme-toggle', group: 'action' as const, hint: 'Apparence' },
+    { id: 'signout', label: 'Se déconnecter', href: '/api/auth/signout?locale=fr', group: 'action' as const, hint: 'Session' },
+  ],
+  en: [
+    { id: 'lang-fr', label: 'Switch to French', href: '/fr', group: 'action' as const, hint: 'Language' },
+    { id: 'theme-toggle', label: 'Toggle light / dark theme', href: '#theme-toggle', group: 'action' as const, hint: 'Appearance' },
+    { id: 'signout', label: 'Sign out', href: '/api/auth/signout?locale=en', group: 'action' as const, hint: 'Session' },
+  ],
 };
 
 type Props = { locale: 'fr' | 'en' };
@@ -59,6 +72,9 @@ export function CommandPalette({ locale }: Props) {
   // Build the index once per render — it’s static.
   const items = useMemo<Item[]>(() => {
     const all: Item[] = [];
+    for (const a of quickActions[locale]) {
+      all.push({ id: `a-${a.id}`, label: a.label, hint: a.hint, href: a.href, group: 'action' });
+    }
     for (const p of staticPages[locale]) {
       all.push({ id: `p-${p.id}`, label: p.label, href: `/${locale}${p.href === '/' ? '' : p.href}`, group: 'page' });
     }
@@ -124,11 +140,19 @@ export function CommandPalette({ locale }: Props) {
       } else if (e.key === 'Enter') {
         const target = results[active];
         if (target) {
-          window.location.href = target.href;
+          runItem(target);
           setOpen(false);
         }
       }
     };
+
+    function runItem(item: Item) {
+      if (item.href === '#theme-toggle') {
+        window.dispatchEvent(new Event('tickra:toggle-theme'));
+        return;
+      }
+      window.location.href = item.href;
+    }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open, active, results]);
@@ -199,8 +223,14 @@ export function CommandPalette({ locale }: Props) {
                   {results.map((r, i) => (
                     <li key={r.id} role="option" aria-selected={i === active}>
                       <Link
-                        href={r.href}
-                        onClick={() => setOpen(false)}
+                        href={r.href === '#theme-toggle' ? '#' : r.href}
+                        onClick={(e) => {
+                          if (r.href === '#theme-toggle') {
+                            e.preventDefault();
+                            window.dispatchEvent(new Event('tickra:toggle-theme'));
+                          }
+                          setOpen(false);
+                        }}
                         onMouseEnter={() => setActive(i)}
                         className={cn(
                           'flex items-center gap-3 px-5 py-3 transition-colors',

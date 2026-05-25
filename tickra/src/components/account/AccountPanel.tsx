@@ -7,6 +7,8 @@ import { useProgress } from '@/lib/progress/hook';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
 import { StreakHeatmap } from './StreakHeatmap';
 import { Achievements } from './Achievements';
+import { TrackCertificates } from './TrackCertificates';
+import { ReviewQueue } from './ReviewQueue';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 
 type Locale = 'fr' | 'en';
@@ -135,6 +137,14 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
 
         <div className="mt-3">
           <StreakHeatmap locale={locale} />
+        </div>
+
+        <div className="mt-3">
+          <ReviewQueue locale={locale} />
+        </div>
+
+        <div className="mt-3">
+          <TrackCertificates locale={locale} />
         </div>
 
         <div className="mt-3">
