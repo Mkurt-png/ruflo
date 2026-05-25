@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Compass, FileText, Search, Settings } from 'lucide-react';
+import { ArrowRight, BookOpen, Compass, FileText, Hash, Search, Settings } from 'lucide-react';
 import { TRACKS } from '@/lib/curriculum/data';
+import { GLOSSARY } from '@/lib/curriculum/glossary';
 import { easeOutExpo } from '@/lib/motion';
 import { cn } from '@/lib/cn';
 
@@ -13,7 +14,7 @@ type Item = {
   label: string;
   hint?: string;
   href: string;
-  group: 'lesson' | 'track' | 'page';
+  group: 'lesson' | 'track' | 'page' | 'term';
 };
 
 type Props = { locale: 'fr' | 'en' };
@@ -78,6 +79,15 @@ export function CommandPalette({ locale }: Props) {
           group: 'lesson',
         });
       }
+    }
+    for (const g of GLOSSARY) {
+      all.push({
+        id: `g-${g.term.en}`,
+        label: g.term[locale],
+        hint: g.definition[locale].slice(0, 110),
+        href: `/${locale}/glossary`,
+        group: 'term',
+      });
     }
     return all;
   }, [locale]);
@@ -257,6 +267,9 @@ function GroupIcon({ group }: { group: Item['group'] }) {
   }
   if (group === 'page') {
     return <FileText aria-hidden className="h-4 w-4 flex-shrink-0 text-muted" strokeWidth={1.6} />;
+  }
+  if (group === 'term') {
+    return <Hash aria-hidden className="h-4 w-4 flex-shrink-0 text-muted" strokeWidth={1.6} />;
   }
   return <Settings aria-hidden className="h-4 w-4 flex-shrink-0 text-muted" strokeWidth={1.6} />;
 }

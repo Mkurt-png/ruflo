@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, Sparkles, X } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TradingViewChart } from './TradingViewChart';
+import { LessonToc } from './LessonToc';
 import { useProgress } from '@/lib/progress/hook';
 import { toast } from '@/components/site/ToastProvider';
 import { easeOutExpo } from '@/lib/motion';
@@ -227,7 +228,11 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
         <PhaseStepper phase={phase} t={t} />
       </header>
 
-      <div className="col-span-12">
+      <aside className="hidden lg:col-span-2 lg:block">
+        <LessonToc phase={phase} locale={locale} />
+      </aside>
+
+      <div className="col-span-12 lg:col-span-10">
         <AnimatePresence mode="wait">
           <motion.section
             key={phase}
