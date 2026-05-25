@@ -694,6 +694,7 @@ const fr = {
         links: [
           { label: 'À propos', href: '/about' },
           { label: 'Éditorial', href: '/editorial' },
+          { label: 'Glossaire', href: '/glossary' },
           { label: 'Contact', href: '/contact' },
         ],
       },

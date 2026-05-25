@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, CreditCard, GraduationCap, LogOut, RefreshCw } from 'lucide-react';
 import { useProgress } from '@/lib/progress/hook';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
+import { StreakHeatmap } from './StreakHeatmap';
 
 type Locale = 'fr' | 'en';
 
@@ -129,6 +130,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
             </Link>
           </div>
         </article>
+
+        <div className="mt-3">
+          <StreakHeatmap locale={locale} />
+        </div>
       </section>
 
       <aside className="col-span-12 lg:col-span-4">

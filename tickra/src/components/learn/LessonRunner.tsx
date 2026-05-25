@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, Check, Sparkles, X } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TradingViewChart } from './TradingViewChart';
 import { useProgress } from '@/lib/progress/hook';
+import { toast } from '@/components/site/ToastProvider';
 import { easeOutExpo } from '@/lib/motion';
 import { cn } from '@/lib/cn';
 import type { LessonContent } from '@/lib/curriculum/lesson-content';
@@ -180,6 +181,14 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
     } else {
       // Finish: mark complete then transition to done.
       markComplete(lesson.id);
+      toast({
+        tone: 'success',
+        title:
+          locale === 'fr'
+            ? `Leçon ${String(lesson.index).padStart(2, '0')} validée`
+            : `Lesson ${String(lesson.index).padStart(2, '0')} complete`,
+        body: locale === 'fr' ? 'Streak +1' : 'Streak +1',
+      });
       setPhase('done');
     }
   };

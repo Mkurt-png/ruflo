@@ -8,6 +8,8 @@ import { isLocale, locales, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { CookieBanner } from '@/components/site/CookieBanner';
 import { Analytics } from '@/components/site/Analytics';
+import { ToastProvider } from '@/components/site/ToastProvider';
+import { CommandPalette } from '@/components/site/CommandPalette';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -59,7 +61,10 @@ export default async function LocaleLayout({
         >
           Skip to content
         </a>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </ThemeProvider>
+        <CommandPalette locale={locale} />
         <Analytics />
         <CookieBanner
           locale={locale}

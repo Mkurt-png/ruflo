@@ -38,6 +38,7 @@ export function Navbar({ dict, locale }: Props) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <CommandHint />
           <div className="hidden sm:block">
             <LocaleSwitcher current={locale} label={dict.locale.switch} />
           </div>
@@ -54,6 +55,20 @@ export function Navbar({ dict, locale }: Props) {
         </div>
       </Container>
     </header>
+  );
+}
+
+function CommandHint() {
+  // Visual hint — does not need to be a real button, the global ⌘K listener
+  // in CommandPalette handles the actual open. Hidden on mobile for room.
+  return (
+    <span
+      aria-hidden
+      className="hidden h-9 items-center gap-1.5 rounded-full border border-line bg-surface px-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted md:inline-flex"
+    >
+      <kbd className="font-mono text-[11px]">⌘</kbd>
+      <kbd className="font-mono text-[11px]">K</kbd>
+    </span>
   );
 }
 
