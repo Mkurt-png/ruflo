@@ -9,6 +9,8 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TRACKS, getTrack } from '@/lib/curriculum/data';
 import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
+import { LessonPreviewPopover } from '@/components/learn/LessonPreviewPopover';
+import { Info } from 'lucide-react';
 
 type Params = { locale: string; track: string };
 
@@ -61,26 +63,38 @@ export default async function TrackPage({ params }: { params: Params }) {
           <Container as="div" className="py-20 md:py-28">
             <ol className="divide-y divide-line border-y border-line">
               {track.lessons.map((lesson) => (
-                <li key={lesson.id}>
+                <li key={lesson.id} className="grid grid-cols-12 items-center gap-x-6 gap-y-2 py-5 md:py-6">
+                  <span className="col-span-2 font-mono text-[12px] tabular-nums uppercase tracking-[0.18em] text-subtle md:col-span-1">
+                    {String(lesson.index).padStart(2, '0')}
+                  </span>
                   <Link
                     href={`/${locale}/learn/${track.slug}/${lesson.slug}`}
-                    className="group grid grid-cols-12 items-center gap-x-6 gap-y-2 py-5 md:py-6"
+                    className="group col-span-7 font-display text-lg font-medium tracking-tight text-ink transition-colors hover:text-muted md:col-span-8 md:text-xl"
                   >
-                    <span className="col-span-2 font-mono text-[12px] tabular-nums uppercase tracking-[0.18em] text-subtle md:col-span-1">
-                      {String(lesson.index).padStart(2, '0')}
-                    </span>
-                    <span className="col-span-9 font-display text-lg font-medium tracking-tight text-ink transition-colors group-hover:text-muted md:col-span-9 md:text-xl">
-                      {lesson.title[locale]}
-                    </span>
-                    <span className="col-span-1 flex items-center justify-end gap-3 md:col-span-2">
-                      <LessonCheckmark lessonId={lesson.id} />
-                      <ArrowRight
-                        aria-hidden
-                        className="h-4 w-4 text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-ink"
-                        strokeWidth={1.75}
-                      />
-                    </span>
+                    {lesson.title[locale]}
                   </Link>
+                  <span className="col-span-3 flex items-center justify-end gap-3 md:col-span-3">
+                    <LessonPreviewPopover
+                      trackSlug={track.slug}
+                      lessonSlug={lesson.slug}
+                      locale={locale}
+                    >
+                      <span
+                        aria-label={locale === 'fr' ? 'Aperçu de la leçon' : 'Lesson preview'}
+                        className="inline-flex h-7 w-7 cursor-help items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-ink hover:text-ink"
+                      >
+                        <Info aria-hidden className="h-3.5 w-3.5" strokeWidth={1.6} />
+                      </span>
+                    </LessonPreviewPopover>
+                    <LessonCheckmark lessonId={lesson.id} />
+                    <Link
+                      href={`/${locale}/learn/${track.slug}/${lesson.slug}`}
+                      aria-label={locale === 'fr' ? 'Ouvrir' : 'Open'}
+                      className="inline-flex h-7 w-7 items-center justify-center text-muted transition-colors hover:text-ink"
+                    >
+                      <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
+                    </Link>
+                  </span>
                 </li>
               ))}
             </ol>
