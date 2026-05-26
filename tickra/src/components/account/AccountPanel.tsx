@@ -14,6 +14,9 @@ import { Bookmarks } from './Bookmarks';
 import { LifetimeStats } from './LifetimeStats';
 import { NotificationOptin } from './NotificationOptin';
 import { FirstRunTour } from './FirstRunTour';
+import { DailyChallenge } from './DailyChallenge';
+import { ExportProgress } from './ExportProgress';
+import { WhatsNewBanner } from './WhatsNewBanner';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 
@@ -101,6 +104,11 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
   return (
     <div className="grid grid-cols-12 gap-x-6 gap-y-10">
       <FirstRunTour locale={locale} />
+
+      <div className="col-span-12">
+        <WhatsNewBanner locale={locale} />
+      </div>
+
       <section className="col-span-12 lg:col-span-8">
         <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
           <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
@@ -143,6 +151,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
         </article>
 
         <div className="mt-3">
+          <DailyChallenge locale={locale} />
+        </div>
+
+        <div className="mt-3">
           <LifetimeStats locale={locale} />
         </div>
 
@@ -180,6 +192,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
 
         <div className="mt-3">
           <ExpectancyCalculator locale={locale} />
+        </div>
+
+        <div className="mt-3">
+          <ExportProgress locale={locale} />
         </div>
       </section>
 
