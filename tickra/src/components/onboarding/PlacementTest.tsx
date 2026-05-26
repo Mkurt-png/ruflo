@@ -129,8 +129,19 @@ export function PlacementTest({ dict, locale }: { dict: Dictionary; locale: Loca
           type="button"
           onClick={() => {
             if (!canNext) return;
-            if (isLast) setSubmitted(true);
-            else setStep((s) => s + 1);
+            if (isLast) {
+              setSubmitted(true);
+              // Best-effort persistence. Endpoint replies gracefully when
+              // there is no session or no DB — no UI blocking.
+              fetch('/api/placement', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({ trackSlug: trackKeyToSlug[trackKey], score }),
+                keepalive: true,
+              }).catch(() => {
+                /* swallow */
+              });
+            } else setStep((s) => s + 1);
           }}
           disabled={!canNext}
           className={cn(

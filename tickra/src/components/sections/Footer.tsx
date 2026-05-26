@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { FooterNewsletter } from '@/components/site/FooterNewsletter';
+import { QuoteOfTheDay } from '@/components/site/QuoteOfTheDay';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -50,6 +51,10 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             </div>
           ))}
         </nav>
+
+        <div className="col-span-12 mt-2">
+          <QuoteOfTheDay locale={locale} />
+        </div>
 
         <div className="col-span-12 mt-4 border-t border-line pt-8">
           <p className="max-w-3xl text-[12.5px] leading-relaxed text-muted">{t.risk}</p>
