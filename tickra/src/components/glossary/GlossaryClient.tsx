@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
-import { GLOSSARY, categoryLabel, type GlossaryTerm } from '@/lib/curriculum/glossary';
+import { GLOSSARY, categoryLabel, tagsFor, tagLabel, type GlossaryTerm } from '@/lib/curriculum/glossary';
 import { cn } from '@/lib/cn';
 
 type Locale = 'fr' | 'en';
@@ -75,9 +75,21 @@ export function GlossaryClient({ locale }: { locale: Locale }) {
                   {categoryLabel(g.category, locale)}
                 </div>
               </div>
-              <p className="col-span-12 max-w-2xl text-[15.5px] leading-relaxed text-muted md:col-span-8">
-                {g.definition[locale]}
-              </p>
+              <div className="col-span-12 md:col-span-8">
+                <p className="max-w-2xl text-[15.5px] leading-relaxed text-muted">
+                  {g.definition[locale]}
+                </p>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {tagsFor(g).map((tag) => (
+                    <li
+                      key={tag}
+                      className="inline-flex h-6 items-center rounded-full border border-line bg-canvas px-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted"
+                    >
+                      #{tagLabel(tag, locale)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </li>
           ))}
         </ul>

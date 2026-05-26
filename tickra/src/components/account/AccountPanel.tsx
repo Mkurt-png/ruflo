@@ -17,6 +17,8 @@ import { FirstRunTour } from './FirstRunTour';
 import { DailyChallenge } from './DailyChallenge';
 import { ExportProgress } from './ExportProgress';
 import { ImportProgress } from './ImportProgress';
+import { CurriculumHeatmap } from './CurriculumHeatmap';
+import { ShareProfile } from './ShareProfile';
 import { WhatsNewBanner } from './WhatsNewBanner';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
@@ -168,6 +170,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
         </div>
 
         <div className="mt-3">
+          <CurriculumHeatmap locale={locale} />
+        </div>
+
+        <div className="mt-3">
           <NotificationOptin locale={locale} />
         </div>
 
@@ -201,6 +207,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
 
         <div className="mt-3">
           <ImportProgress locale={locale} />
+        </div>
+
+        <div className="mt-3">
+          <ShareProfile locale={locale} />
         </div>
       </section>
 

@@ -1,8 +1,54 @@
+export type GlossaryTag = 'basics' | 'pattern' | 'level' | 'trend' | 'volume' | 'sizing' | 'bias' | 'order' | 'volatility';
+
 export type GlossaryTerm = {
   term: { fr: string; en: string };
   definition: { fr: string; en: string };
   category: 'candles' | 'structure' | 'risk' | 'execution' | 'psychology';
+  tags?: GlossaryTag[];
 };
+
+export function tagLabel(tag: GlossaryTag, locale: 'fr' | 'en'): string {
+  const map: Record<GlossaryTag, { fr: string; en: string }> = {
+    basics: { fr: 'Bases', en: 'Basics' },
+    pattern: { fr: 'Figure', en: 'Pattern' },
+    level: { fr: 'Niveau', en: 'Level' },
+    trend: { fr: 'Tendance', en: 'Trend' },
+    volume: { fr: 'Volume', en: 'Volume' },
+    sizing: { fr: 'Sizing', en: 'Sizing' },
+    bias: { fr: 'Biais', en: 'Bias' },
+    order: { fr: 'Ordre', en: 'Order' },
+    volatility: { fr: 'Volatilité', en: 'Volatility' },
+  };
+  return map[tag][locale];
+}
+
+// Tag inference from existing categories + a small keyword pass. Cheap and
+// good enough — explicit tags can be added per-entry later.
+function inferTags(term: GlossaryTerm): GlossaryTag[] {
+  if (term.tags && term.tags.length) return term.tags;
+  const out = new Set<GlossaryTag>();
+  if (term.category === 'candles') out.add('pattern');
+  if (term.category === 'structure') {
+    out.add('level');
+    if (/tend|trend|bos|cassure|break/i.test(term.term.en + ' ' + term.term.fr)) out.add('trend');
+  }
+  if (term.category === 'risk') {
+    if (/taille|sizing|stop|1 %|1%/i.test(term.term.en + ' ' + term.term.fr)) out.add('sizing');
+  }
+  if (term.category === 'execution') {
+    out.add('order');
+    if (/vwap|volume|order block/i.test(term.term.en + ' ' + term.term.fr)) out.add('volume');
+  }
+  if (term.category === 'psychology') out.add('bias');
+  if (/vol/i.test(term.term.en + ' ' + term.term.fr) && term.category !== 'execution') out.add('volatility');
+  // Sensible default
+  if (out.size === 0) out.add('basics');
+  return Array.from(out);
+}
+
+export function tagsFor(term: GlossaryTerm): GlossaryTag[] {
+  return inferTags(term);
+}
 
 export const GLOSSARY: GlossaryTerm[] = [
   { category: 'candles', term: { fr: 'Bougie japonaise', en: 'Japanese candle' }, definition: { fr: 'Représentation graphique d’une période contenant l’ouverture, le plus haut, le plus bas, et la clôture.', en: 'Graphical representation of a period containing open, high, low, and close.' } },
