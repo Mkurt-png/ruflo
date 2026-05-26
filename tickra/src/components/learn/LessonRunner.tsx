@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, Check, Sparkles, X } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TradingViewChart } from './TradingViewChart';
 import { LessonToc } from './LessonToc';
+import { BookmarkButton } from './BookmarkButton';
 import { useProgress } from '@/lib/progress/hook';
 import { toast } from '@/components/site/ToastProvider';
 import { easeOutExpo } from '@/lib/motion';
@@ -225,11 +226,14 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
               {String(lesson.index).padStart(2, '0')} · {lesson.title[locale]}
             </h1>
           </div>
-          <div className="hidden flex-shrink-0 text-right md:block">
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.progress}</div>
-            <div className="mt-1 font-display text-2xl font-medium tracking-tight text-ink">
-              {globalIndex} / {total}
+          <div className="flex flex-shrink-0 items-start gap-4">
+            <div className="hidden text-right md:block">
+              <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.progress}</div>
+              <div className="mt-1 font-display text-2xl font-medium tracking-tight text-ink">
+                {globalIndex} / {total}
+              </div>
             </div>
+            <BookmarkButton lessonId={lesson.id} locale={locale} />
           </div>
         </div>
 

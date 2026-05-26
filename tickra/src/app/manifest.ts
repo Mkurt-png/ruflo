@@ -15,5 +15,28 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
     ],
     categories: ['education', 'finance', 'productivity'],
+    shortcuts: [
+      {
+        name: 'Resume learning',
+        short_name: 'Resume',
+        description: 'Pick up where you left off',
+        url: '/en/learn',
+        icons: [{ src: '/favicon.svg', sizes: 'any' }],
+      },
+      {
+        name: 'My account',
+        short_name: 'Account',
+        description: 'Streak, progress, certificates',
+        url: '/en/me',
+        icons: [{ src: '/favicon.svg', sizes: 'any' }],
+      },
+      {
+        name: 'Glossary',
+        short_name: 'Glossary',
+        description: 'Trading vocabulary',
+        url: '/en/glossary',
+        icons: [{ src: '/favicon.svg', sizes: 'any' }],
+      },
+    ],
   };
 }

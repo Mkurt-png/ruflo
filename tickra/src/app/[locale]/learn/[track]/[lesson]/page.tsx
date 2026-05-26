@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { TRACKS, getLesson, getNeighbours, lessonGlobalIndex, totalLessons } from '@/lib/curriculum/data';
 import { getLessonContent } from '@/lib/curriculum/lesson-content';
 import { LessonRunner } from '@/components/learn/LessonRunner';
+import { LessonNotes } from '@/components/learn/LessonNotes';
 
 type Params = { locale: string; track: string; lesson: string };
 
@@ -64,6 +65,12 @@ export default async function LessonPage({
               total={totalLessons()}
               reviewMode={reviewMode}
             />
+          </Container>
+        </section>
+
+        <section className="border-b border-line bg-elevated">
+          <Container as="div" className="py-12 md:py-16">
+            <LessonNotes lessonId={lesson.id} locale={locale} />
           </Container>
         </section>
       </main>

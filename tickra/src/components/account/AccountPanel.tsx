@@ -9,6 +9,7 @@ import { StreakHeatmap } from './StreakHeatmap';
 import { Achievements } from './Achievements';
 import { TrackCertificates } from './TrackCertificates';
 import { ReviewQueue } from './ReviewQueue';
+import { Bookmarks } from './Bookmarks';
 import { LifetimeStats } from './LifetimeStats';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
@@ -147,6 +148,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
 
         <div className="mt-3">
           <ReviewQueue locale={locale} />
+        </div>
+
+        <div className="mt-3">
+          <Bookmarks locale={locale} />
         </div>
 
         <div className="mt-3">
