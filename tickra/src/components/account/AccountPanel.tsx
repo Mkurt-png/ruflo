@@ -6,6 +6,7 @@ import { ArrowRight, CreditCard, GraduationCap, LogOut, RefreshCw } from 'lucide
 import { useProgress } from '@/lib/progress/hook';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
 import { StreakHeatmap } from './StreakHeatmap';
+import { ActivityChart } from './ActivityChart';
 import { Achievements } from './Achievements';
 import { TrackCertificates } from './TrackCertificates';
 import { ReviewQueue } from './ReviewQueue';
@@ -144,6 +145,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
 
         <div className="mt-3">
           <StreakHeatmap locale={locale} />
+        </div>
+
+        <div className="mt-3">
+          <ActivityChart locale={locale} />
         </div>
 
         <div className="mt-3">

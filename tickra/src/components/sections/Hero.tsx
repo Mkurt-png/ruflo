@@ -6,6 +6,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { CandlestickChart } from '@/components/hero/CandlestickChart';
+import { HeroVideoTrigger } from './HeroVideo';
 import { fadeUp, easeOutExpo } from '@/lib/motion';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
@@ -62,6 +63,10 @@ export function Hero({ dict, locale }: Props) {
               <PlayCircle aria-hidden className="h-4 w-4" strokeWidth={1.5} />
               {t.secondaryCta}
             </Button>
+            <HeroVideoTrigger
+              label={locale === 'fr' ? 'Voir la démo (45 s)' : 'Watch the demo (45 s)'}
+              closeLabel={locale === 'fr' ? 'Fermer' : 'Close'}
+            />
           </motion.div>
 
           <motion.dl

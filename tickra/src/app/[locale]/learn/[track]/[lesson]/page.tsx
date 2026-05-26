@@ -8,6 +8,7 @@ import { TRACKS, getLesson, getNeighbours, lessonGlobalIndex, totalLessons } fro
 import { getLessonContent } from '@/lib/curriculum/lesson-content';
 import { LessonRunner } from '@/components/learn/LessonRunner';
 import { LessonNotes } from '@/components/learn/LessonNotes';
+import { PrefetchNeighbours } from '@/components/learn/PrefetchNeighbours';
 
 type Params = { locale: string; track: string; lesson: string };
 
@@ -49,8 +50,18 @@ export default async function LessonPage({
   const dict = await getDictionary(locale);
   const reviewMode = searchParams?.mode === 'review';
 
+  const prefetchHrefs = [
+    neighbours.next
+      ? `/${locale}/learn/${neighbours.next.trackSlug}/${neighbours.next.lesson.slug}`
+      : null,
+    neighbours.prev
+      ? `/${locale}/learn/${neighbours.prev.trackSlug}/${neighbours.prev.lesson.slug}`
+      : null,
+  ].filter((s): s is string => Boolean(s));
+
   return (
     <>
+      <PrefetchNeighbours hrefs={prefetchHrefs} />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <section className="border-b border-line">
