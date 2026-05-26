@@ -12,6 +12,7 @@ import { TrackCertificates } from './TrackCertificates';
 import { ReviewQueue } from './ReviewQueue';
 import { Bookmarks } from './Bookmarks';
 import { LifetimeStats } from './LifetimeStats';
+import { NotificationOptin } from './NotificationOptin';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 
@@ -149,6 +150,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
 
         <div className="mt-3">
           <ActivityChart locale={locale} />
+        </div>
+
+        <div className="mt-3">
+          <NotificationOptin locale={locale} />
         </div>
 
         <div className="mt-3">

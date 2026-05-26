@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Compass, FileText, Hash, Search, Settings } from 'lucide-react';
 import { TRACKS } from '@/lib/curriculum/data';
 import { GLOSSARY } from '@/lib/curriculum/glossary';
+import { searchIndex } from '@/lib/curriculum/search';
 import { easeOutExpo } from '@/lib/motion';
 import { cn } from '@/lib/cn';
 
@@ -116,8 +117,28 @@ export function CommandPalette({ locale }: Props) {
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 50);
-    return scored.map((x) => x.it);
-  }, [items, query]);
+    const labelScored = scored.map((x) => x.it);
+
+    // Augment with full-text lesson + glossary matches that didn't hit on
+    // label/hint alone. De-dup by href.
+    if (q.length >= 2) {
+      const seen = new Set(labelScored.map((it) => it.href));
+      const deep = searchIndex(q, locale, 10);
+      for (const d of deep) {
+        const href = d.href[locale];
+        if (seen.has(href)) continue;
+        seen.add(href);
+        labelScored.push({
+          id: `s-${d.id}`,
+          label: d.label[locale],
+          hint: d.snippet?.[locale] ?? d.parent?.[locale],
+          href,
+          group: d.kind === 'lesson' ? 'lesson' : 'term',
+        });
+      }
+    }
+    return labelScored;
+  }, [items, query, locale]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

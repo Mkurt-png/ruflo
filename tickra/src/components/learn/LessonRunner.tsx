@@ -8,6 +8,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TradingViewChart } from './TradingViewChart';
 import { LessonToc } from './LessonToc';
 import { BookmarkButton } from './BookmarkButton';
+import { QuizSuggestions } from './QuizSuggestions';
 import { useProgress } from '@/lib/progress/hook';
 import { toast } from '@/components/site/ToastProvider';
 import { easeOutExpo } from '@/lib/motion';
@@ -307,7 +308,14 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
                 </ul>
 
                 {drillRevealed ? (
-                  <FeedbackBox correct={drillCorrect} message={drillRationale} t={t} />
+                  <FeedbackBox
+                    correct={drillCorrect}
+                    message={drillRationale}
+                    t={t}
+                    suggestQuery={lesson.title[locale]}
+                    lessonId={lesson.id}
+                    locale={locale}
+                  />
                 ) : null}
 
                 <div className="mt-10 flex justify-end">
@@ -367,7 +375,16 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
                   ))}
                 </ul>
 
-                {quizRevealed ? <FeedbackBox correct={quizCorrect} message={quizRationale} t={t} /> : null}
+                {quizRevealed ? (
+                  <FeedbackBox
+                    correct={quizCorrect}
+                    message={quizRationale}
+                    t={t}
+                    suggestQuery={currentQuiz.q[locale]}
+                    lessonId={lesson.id}
+                    locale={locale}
+                  />
+                ) : null}
 
                 <div className="mt-10 flex justify-end">
                   {quizRevealed ? (
@@ -495,7 +512,21 @@ function OptionButton({
   );
 }
 
-function FeedbackBox({ correct, message, t }: { correct: boolean; message: string; t: Copy }) {
+function FeedbackBox({
+  correct,
+  message,
+  t,
+  suggestQuery,
+  lessonId,
+  locale,
+}: {
+  correct: boolean;
+  message: string;
+  t: Copy;
+  suggestQuery?: string;
+  lessonId?: string;
+  locale?: Locale;
+}) {
   return (
     <div
       className={cn(
@@ -507,6 +538,9 @@ function FeedbackBox({ correct, message, t }: { correct: boolean; message: strin
         {correct ? t.correct : t.incorrect}
       </div>
       <p className="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-ink">{message}</p>
+      {!correct && suggestQuery && lessonId && locale ? (
+        <QuizSuggestions lessonId={lessonId} query={suggestQuery} locale={locale} />
+      ) : null}
     </div>
   );
 }
