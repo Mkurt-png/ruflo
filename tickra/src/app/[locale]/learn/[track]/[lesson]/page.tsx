@@ -8,6 +8,7 @@ import { TRACKS, getLesson, getNeighbours, lessonGlobalIndex, totalLessons } fro
 import { getLessonContent } from '@/lib/curriculum/lesson-content';
 import { LessonRunner } from '@/components/learn/LessonRunner';
 import { LessonNotes } from '@/components/learn/LessonNotes';
+import { LessonFeedback } from '@/components/learn/LessonFeedback';
 import { PrefetchNeighbours } from '@/components/learn/PrefetchNeighbours';
 
 type Params = { locale: string; track: string; lesson: string };
@@ -81,7 +82,10 @@ export default async function LessonPage({
 
         <section className="border-b border-line bg-elevated">
           <Container as="div" className="py-12 md:py-16">
-            <LessonNotes lessonId={lesson.id} locale={locale} />
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              <LessonNotes lessonId={lesson.id} locale={locale} />
+              <LessonFeedback lessonId={lesson.id} locale={locale} />
+            </div>
           </Container>
         </section>
       </main>

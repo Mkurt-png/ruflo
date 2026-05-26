@@ -9,6 +9,7 @@ const SITE = 'https://tickra.com';
 const routes = [
   { path: '', changeFrequency: 'monthly' as const, priority: 1 },
   { path: '/learn', changeFrequency: 'weekly' as const, priority: 0.95 },
+  { path: '/curriculum', changeFrequency: 'monthly' as const, priority: 0.85 },
   { path: '/pricing', changeFrequency: 'monthly' as const, priority: 0.9 },
   { path: '/onboarding', changeFrequency: 'monthly' as const, priority: 0.8 },
   { path: '/about', changeFrequency: 'yearly' as const, priority: 0.5 },

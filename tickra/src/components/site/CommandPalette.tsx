@@ -37,6 +37,7 @@ const staticPages = {
   fr: [
     { id: 'home', label: 'Accueil', href: '/', group: 'page' as const },
     { id: 'learn', label: 'Apprendre', href: '/learn', group: 'page' as const },
+    { id: 'curriculum', label: 'Curriculum', href: '/curriculum', group: 'page' as const },
     { id: 'pricing', label: 'Tarifs', href: '/pricing', group: 'page' as const },
     { id: 'editorial', label: 'Éditorial', href: '/editorial', group: 'page' as const },
     { id: 'changelog', label: 'Journal des versions', href: '/changelog', group: 'page' as const },
@@ -50,6 +51,7 @@ const staticPages = {
   en: [
     { id: 'home', label: 'Home', href: '/', group: 'page' as const },
     { id: 'learn', label: 'Learn', href: '/learn', group: 'page' as const },
+    { id: 'curriculum', label: 'Curriculum', href: '/curriculum', group: 'page' as const },
     { id: 'pricing', label: 'Pricing', href: '/pricing', group: 'page' as const },
     { id: 'editorial', label: 'Editorial', href: '/editorial', group: 'page' as const },
     { id: 'changelog', label: 'Changelog', href: '/changelog', group: 'page' as const },
