@@ -1,41 +1,30 @@
-// Tickra DB client. Wraps the Supabase JS client behind a lazy import so the
-// project still builds when no env keys are present. All callers must check
-// `isConfigured()` first — otherwise they should fall back to client-side state.
+// Tickra DB client. Real Supabase wiring behind a lazy import so the project
+// still builds (and runtime works) when no env keys are present.
 //
 // Env keys required to activate:
 //   SUPABASE_URL                  https://<project>.supabase.co
 //   SUPABASE_SERVICE_ROLE_KEY     (server-only, never exposed to the client)
 
+import type { SupabaseClient } from '@supabase/supabase-js';
+
 export function isDbConfigured(): boolean {
   return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 }
 
-type SupabaseClient = {
-  from: (table: string) => {
-    select: (cols?: string) => Promise<{ data: unknown; error: unknown }>;
-    upsert: (rows: unknown, opts?: unknown) => Promise<{ data: unknown; error: unknown }>;
-    delete: () => unknown;
-  };
-};
+let cached: SupabaseClient | null = null;
 
-let cached: unknown = null;
-
-export async function getDb() {
+export async function getDb(): Promise<SupabaseClient | null> {
   if (!isDbConfigured()) return null;
-  if (cached) return cached as SupabaseClient;
-
+  if (cached) return cached;
   try {
-    const mod = (await import('@supabase/supabase-js')) as {
-      createClient: (url: string, key: string, opts?: unknown) => unknown;
-    };
+    const mod = await import('@supabase/supabase-js');
     cached = mod.createClient(
       process.env.SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      { auth: { persistSession: false } },
+      { auth: { persistSession: false, autoRefreshToken: false } },
     );
-    return cached as SupabaseClient;
+    return cached;
   } catch {
-    // @supabase/supabase-js not installed yet — keep the route graceful.
     return null;
   }
 }

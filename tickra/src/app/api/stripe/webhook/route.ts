@@ -1,23 +1,30 @@
 import { NextResponse } from 'next/server';
+import { updateUser, getUserByStripeCustomer } from '@/lib/db/queries';
 
 // POST /api/stripe/webhook
-//
-// Stripe webhook handler. Required to keep subscription state in sync.
-// Configure in Stripe Dashboard → Developers → Webhooks → add endpoint
-// pointing at https://tickra.com/api/stripe/webhook with these events:
-//   checkout.session.completed
-//   customer.subscription.created
-//   customer.subscription.updated
-//   customer.subscription.deleted
-//   invoice.payment_failed
-//
-// Env required:
-//   STRIPE_SECRET_KEY
-//   STRIPE_WEBHOOK_SECRET   (whsec_…)
-//
-// Persistence is intentionally left as TODO comments — wire to your DB.
+// Required events: checkout.session.completed, customer.subscription.created,
+// customer.subscription.updated, customer.subscription.deleted,
+// invoice.payment_failed.
 
 export const runtime = 'nodejs';
+
+function planFromMetadata(meta: Record<string, string | undefined> | null | undefined): 'pro' | 'lifetime' | null {
+  const p = meta?.plan;
+  if (p === 'pro' || p === 'lifetime') return p;
+  return null;
+}
+
+function cycleFromMetadata(meta: Record<string, string | undefined> | null | undefined): 'monthly' | 'annual' | 'once' | null {
+  const c = meta?.cycle;
+  if (c === 'monthly' || c === 'annual') return c;
+  return null;
+}
+
+async function emailForCustomer(customerId: string | null | undefined): Promise<string | null> {
+  if (!customerId) return null;
+  const u = await getUserByStripeCustomer(customerId);
+  return u?.email ?? null;
+}
 
 export async function POST(req: Request) {
   const secret = process.env.STRIPE_SECRET_KEY;
@@ -27,9 +34,7 @@ export async function POST(req: Request) {
   }
 
   const sig = req.headers.get('stripe-signature');
-  if (!sig) {
-    return NextResponse.json({ error: 'missing signature' }, { status: 400 });
-  }
+  if (!sig) return NextResponse.json({ error: 'missing signature' }, { status: 400 });
 
   const rawBody = await req.text();
 
@@ -42,37 +47,46 @@ export async function POST(req: Request) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
-        // TODO: persist { customerId: session.customer, email: session.customer_email,
-        //                  plan: session.metadata?.plan, cycle: session.metadata?.cycle,
-        //                  subscriptionId: session.subscription }
-        console.log('[stripe] checkout.session.completed', {
-          id: session.id,
-          customer: session.customer,
-          plan: session.metadata?.plan,
-        });
+        const email = session.customer_email ?? (await emailForCustomer(session.customer as string | null));
+        if (!email) break;
+        const plan = planFromMetadata(session.metadata as Record<string, string | undefined> | null);
+        const cycle = cycleFromMetadata(session.metadata as Record<string, string | undefined> | null);
+        const patch: Parameters<typeof updateUser>[1] = {
+          stripe_customer: typeof session.customer === 'string' ? session.customer : null,
+        };
+        if (plan) patch.plan = plan;
+        if (cycle) patch.cycle = cycle === 'monthly' || cycle === 'annual' ? cycle : null;
+        if (plan === 'lifetime') patch.cycle = 'once';
+        await updateUser(email, patch);
         break;
       }
       case 'customer.subscription.created':
       case 'customer.subscription.updated': {
         const sub = event.data.object;
-        // TODO: update subscription state, current_period_end, status
-        console.log('[stripe] subscription.upserted', { id: sub.id, status: sub.status });
+        const email = await emailForCustomer(typeof sub.customer === 'string' ? sub.customer : null);
+        if (!email) break;
+        const periodEndSeconds =
+          (sub.items?.data?.[0] as { current_period_end?: number } | undefined)?.current_period_end ??
+          null;
+        await updateUser(email, {
+          plan: sub.status === 'active' || sub.status === 'trialing' ? 'pro' : 'free',
+          current_period_end: periodEndSeconds ? new Date(periodEndSeconds * 1000).toISOString() : null,
+        });
         break;
       }
       case 'customer.subscription.deleted': {
         const sub = event.data.object;
-        // TODO: mark subscription cancelled, downgrade entitlements
-        console.log('[stripe] subscription.deleted', { id: sub.id });
+        const email = await emailForCustomer(typeof sub.customer === 'string' ? sub.customer : null);
+        if (!email) break;
+        await updateUser(email, { plan: 'free', current_period_end: null });
         break;
       }
       case 'invoice.payment_failed': {
-        const invoice = event.data.object;
-        // TODO: notify the customer, mark account past_due
-        console.log('[stripe] invoice.payment_failed', { id: invoice.id });
+        // Intentionally no DB write here — keep entitlements until the
+        // subscription itself flips. The flag-down happens in subscription.deleted.
         break;
       }
       default:
-        // Ignore events we don't track yet — Stripe still expects a 200.
         break;
     }
 

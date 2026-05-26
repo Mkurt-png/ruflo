@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'tickra-bookmarks-v1';
+const SYNCED_KEY = 'tickra-bookmarks-server-synced-v1';
 
 export type BookmarksState = {
   bookmarks: Record<string, number>; // lessonId → bookmarked timestamp
@@ -32,6 +33,14 @@ function write(state: BookmarksState) {
   }
 }
 
+function merge(local: BookmarksState, server: Record<string, number>): BookmarksState {
+  const out: Record<string, number> = { ...local.bookmarks };
+  for (const [k, v] of Object.entries(server)) {
+    if (!out[k] || v < out[k]) out[k] = v;
+  }
+  return { bookmarks: out };
+}
+
 export function useBookmarks() {
   const [state, setState] = useState<BookmarksState>(empty);
   const [ready, setReady] = useState(false);
@@ -43,16 +52,59 @@ export function useBookmarks() {
       if (e.key === STORAGE_KEY) setState(read());
     };
     window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
+
+    let cancelled = false;
+    (async () => {
+      const already = (() => {
+        try {
+          return window.sessionStorage.getItem(SYNCED_KEY) === '1';
+        } catch {
+          return false;
+        }
+      })();
+      if (already) return;
+      try {
+        const res = await fetch('/api/bookmarks', { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = (await res.json()) as { bookmarks?: Record<string, number>; configured?: boolean };
+        if (cancelled || !data?.configured) return;
+        const merged = merge(read(), data.bookmarks ?? {});
+        write(merged);
+        setState(merged);
+        try {
+          window.sessionStorage.setItem(SYNCED_KEY, '1');
+        } catch {
+          /* ignore */
+        }
+      } catch {
+        /* offline / 401 — keep local state */
+      }
+    })();
+
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      cancelled = true;
+    };
   }, []);
 
   const toggle = useCallback((lessonId: string) => {
     setState((prev) => {
       const next = { ...prev.bookmarks };
-      if (next[lessonId]) delete next[lessonId];
-      else next[lessonId] = Date.now();
+      const on = !next[lessonId];
+      if (on) next[lessonId] = Date.now();
+      else delete next[lessonId];
       const out = { bookmarks: next };
       write(out);
+      if (typeof window !== 'undefined') {
+        fetch('/api/bookmarks', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ lessonId, on }),
+          keepalive: true,
+        }).catch(() => {
+          /* swallow */
+        });
+      }
       return out;
     });
   }, []);

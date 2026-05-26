@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
+import { isDbConfigured, recordFeedback } from '@/lib/db/queries';
 
 // POST /api/feedback
 // Body: { lessonId: string, vote: 'up' | 'down', note?: string }
-//
-// Lightweight feedback collector. Stores nothing by itself; would persist via
-// the DB when wired. Accepts anonymous votes (session optional).
+// Accepts anonymous votes (session optional).
 
 export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as
@@ -17,12 +16,14 @@ export async function POST(req: Request) {
   }
 
   const session = getSession();
-
-  // Real implementation: persist { lessonId, vote, note, email: session?.email, at: now() }.
-  // Kept as a no-op so the endpoint behaves cleanly without a DB. Honest copy:
-  return NextResponse.json({
-    ok: true,
-    persisted: false,
-    sessionPresent: Boolean(session),
+  if (!isDbConfigured()) {
+    return NextResponse.json({ ok: true, persisted: false, reason: 'db_not_configured' });
+  }
+  const ok = await recordFeedback({
+    email: session?.email ?? null,
+    lessonId: body.lessonId,
+    vote: body.vote,
+    note: body.note?.slice(0, 1000),
   });
+  return NextResponse.json({ ok: true, persisted: ok, sessionPresent: Boolean(session) });
 }

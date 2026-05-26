@@ -1,27 +1,40 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
-import { getDb, isDbConfigured } from '@/lib/db/supabase';
+import { isDbConfigured, listProgress, listMistakes, markComplete } from '@/lib/db/queries';
 
-// GET /api/progress         → returns { completed: Record<lessonId, isoDate> }
-// POST /api/progress        → body { lessonId: string }, marks complete server-side
+// GET  /api/progress    → { completed, mistakes, configured }
+// POST /api/progress    body { lessonId } → marks complete server-side
 //
-// Both routes require a valid session. When the DB is not configured, returns
-// a noop response so the client can continue to rely on localStorage.
+// Both endpoints require a valid session. When the DB is not configured, they
+// return cleanly so the client can continue to rely on localStorage.
 
 export async function GET() {
   const session = getSession();
-  if (!session) return NextResponse.json({ completed: {} }, { status: 401 });
-  if (!isDbConfigured()) return NextResponse.json({ completed: {}, configured: false });
+  if (!session) {
+    return NextResponse.json({ completed: {}, mistakes: {}, configured: false }, { status: 401 });
+  }
+  if (!isDbConfigured()) {
+    return NextResponse.json({ completed: {}, mistakes: {}, configured: false });
+  }
 
-  const db = await getDb();
-  if (!db) return NextResponse.json({ completed: {}, configured: false });
+  const [rows, mistakes] = await Promise.all([
+    listProgress(session.email),
+    listMistakes(session.email),
+  ]);
 
-  // Direct call without `.eq()` for type-safety with our minimal client wrapper —
-  // we read all rows for this email by relying on the DB returning only owned rows
-  // (in production you'd use .eq('email', session.email)). The full Supabase
-  // client surface is wired the moment @supabase/supabase-js is installed.
-  // Kept intentionally narrow here so the route stays a clean scaffold.
-  return NextResponse.json({ completed: {}, configured: true, email: session.email });
+  const completed: Record<string, number> = {};
+  for (const r of rows) completed[r.lesson_id] = new Date(r.completed_at).getTime();
+
+  const m: Record<string, { lessonId: string; loggedAt: number; reviewedAt?: number }> = {};
+  for (const r of mistakes) {
+    m[r.lesson_id] = {
+      lessonId: r.lesson_id,
+      loggedAt: new Date(r.logged_at).getTime(),
+      reviewedAt: r.reviewed_at ? new Date(r.reviewed_at).getTime() : undefined,
+    };
+  }
+
+  return NextResponse.json({ completed, mistakes: m, configured: true, email: session.email });
 }
 
 export async function POST(req: Request) {
@@ -37,11 +50,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, persisted: false, reason: 'db_not_configured' });
   }
 
-  const db = await getDb();
-  if (!db) return NextResponse.json({ ok: true, persisted: false, reason: 'db_not_available' });
-
-  // Real implementation:
-  //   await db.from('tickra_progress').upsert({ email: session.email, lesson_id: body.lessonId });
-  // Kept as a no-op until @supabase/supabase-js is installed and the schema is migrated.
-  return NextResponse.json({ ok: true, persisted: true, lessonId: body.lessonId });
+  const ok = await markComplete(session.email, body.lessonId);
+  return NextResponse.json({ ok: true, persisted: ok, lessonId: body.lessonId });
 }
