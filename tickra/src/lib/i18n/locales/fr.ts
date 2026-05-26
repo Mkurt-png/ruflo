@@ -685,6 +685,7 @@ const fr = {
         links: [
           { label: 'Méthode', href: '#method' },
           { label: 'Parcours', href: '#curriculum' },
+          { label: 'Outils', href: '/tools' },
           { label: 'Tarifs', href: '/pricing' },
           { label: 'Journal des versions', href: '/changelog' },
         ],

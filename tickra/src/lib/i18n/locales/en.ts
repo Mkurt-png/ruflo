@@ -685,6 +685,7 @@ const en = {
         links: [
           { label: 'Method', href: '#method' },
           { label: 'Curriculum', href: '#curriculum' },
+          { label: 'Tools', href: '/tools' },
           { label: 'Pricing', href: '/pricing' },
           { label: 'Changelog', href: '/changelog' },
         ],

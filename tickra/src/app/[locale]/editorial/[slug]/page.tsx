@@ -11,6 +11,7 @@ import { Prose } from '@/components/ui/Prose';
 import { Newsletter } from '@/components/sections/Newsletter';
 import { ArticleShare } from '@/components/editorial/ArticleShare';
 import { ReadProgress } from '@/components/editorial/ReadProgress';
+import { ArticleToc } from '@/components/editorial/ArticleToc';
 import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
 
 type Params = { locale: string; slug: string };
@@ -119,14 +120,21 @@ export default async function EditorialArticlePage({ params }: { params: Params 
 
           <section className="border-b border-line">
             <Container as="div" className="py-20 md:py-28">
-              <Prose>
-                {post.body.map((b) => (
-                  <section key={b.h}>
-                    <h2>{b.h}</h2>
-                    <p>{b.p}</p>
-                  </section>
-                ))}
-              </Prose>
+              <div className="grid grid-cols-12 gap-x-6">
+                <div className="col-span-12 lg:col-span-8">
+                  <Prose>
+                    {post.body.map((b) => (
+                      <section key={b.h}>
+                        <h2>{b.h}</h2>
+                        <p>{b.p}</p>
+                      </section>
+                    ))}
+                  </Prose>
+                </div>
+                <aside className="hidden lg:col-span-3 lg:col-start-10 lg:block">
+                  <ArticleToc locale={params.locale as 'fr' | 'en'} />
+                </aside>
+              </div>
             </Container>
           </section>
 

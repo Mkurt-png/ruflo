@@ -13,6 +13,7 @@ import { ReviewQueue } from './ReviewQueue';
 import { Bookmarks } from './Bookmarks';
 import { LifetimeStats } from './LifetimeStats';
 import { NotificationOptin } from './NotificationOptin';
+import { FirstRunTour } from './FirstRunTour';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 
@@ -99,6 +100,7 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
 
   return (
     <div className="grid grid-cols-12 gap-x-6 gap-y-10">
+      <FirstRunTour locale={locale} />
       <section className="col-span-12 lg:col-span-8">
         <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
           <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
