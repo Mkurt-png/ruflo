@@ -30,7 +30,13 @@ export async function generateMetadata({ params }: { params: Params }) {
   return { title: `${title} · Tickra` };
 }
 
-export default async function LessonPage({ params }: { params: Params }) {
+export default async function LessonPage({
+  params,
+  searchParams,
+}: {
+  params: Params;
+  searchParams?: { mode?: string };
+}) {
   if (!isLocale(params.locale)) notFound();
   const locale: Locale = params.locale;
   const found = getLesson(params.track, params.lesson);
@@ -40,6 +46,7 @@ export default async function LessonPage({ params }: { params: Params }) {
   const neighbours = getNeighbours(track.slug, lesson.slug);
   const globalIndex = lessonGlobalIndex(track.slug, lesson.slug);
   const dict = await getDictionary(locale);
+  const reviewMode = searchParams?.mode === 'review';
 
   return (
     <>
@@ -55,6 +62,7 @@ export default async function LessonPage({ params }: { params: Params }) {
               next={neighbours.next}
               globalIndex={globalIndex}
               total={totalLessons()}
+              reviewMode={reviewMode}
             />
           </Container>
         </section>

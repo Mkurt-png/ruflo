@@ -58,7 +58,7 @@ export function TrackCertificates({ locale }: { locale: Locale }) {
         {items.map(({ tr, done, earnedAt }) => (
           <li key={tr.id}>
             <Link
-              href={`/${locale}/learn/${tr.slug}`}
+              href={done ? `/${locale}/certificate/${tr.slug}` : `/${locale}/learn/${tr.slug}`}
               className={cn(
                 'group flex h-full flex-col gap-4 rounded-sm border p-5 transition-colors',
                 done ? 'border-ink bg-elevated hover:bg-ink hover:text-canvas' : 'border-line/60 bg-canvas hover:border-line',

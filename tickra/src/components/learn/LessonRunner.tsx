@@ -26,6 +26,7 @@ type Props = {
   next: Neighbour;
   globalIndex: number;
   total: number;
+  reviewMode?: boolean;
 };
 
 type Phase = 'brief' | 'drill' | 'quiz' | 'done';
@@ -91,10 +92,10 @@ const copy: Record<'fr' | 'en', Copy> = {
   },
 };
 
-export function LessonRunner({ locale, track, lesson, content, next, globalIndex, total }: Props) {
+export function LessonRunner({ locale, track, lesson, content, next, globalIndex, total, reviewMode = false }: Props) {
   const t = copy[locale];
   const { markComplete, logMistake, markReviewed } = useProgress();
-  const [phase, setPhase] = useState<Phase>('brief');
+  const [phase, setPhase] = useState<Phase>(reviewMode ? 'quiz' : 'brief');
   const [drillChoice, setDrillChoice] = useState<number | null>(null);
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizChoice, setQuizChoice] = useState<number | null>(null);

@@ -78,7 +78,7 @@ export function ReviewQueue({ locale }: { locale: Locale }) {
                   {isDue ? t.due : formatRelative(q.dueAt, locale)}
                 </span>
                 <Link
-                  href={`/${locale}/learn/${q.track.slug}/${q.lesson.slug}`}
+                  href={`/${locale}/learn/${q.track.slug}/${q.lesson.slug}?mode=review`}
                   className="col-span-6 inline-flex h-9 items-center justify-end gap-2 text-[13.5px] text-ink transition-colors hover:text-muted md:col-span-2 md:justify-end"
                 >
                   {t.review}
