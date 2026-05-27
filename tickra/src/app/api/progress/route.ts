@@ -11,10 +11,15 @@ import { isDbConfigured, listProgress, listMistakes, markComplete } from '@/lib/
 export async function GET() {
   const session = getSession();
   if (!session) {
-    return NextResponse.json({ completed: {}, mistakes: {}, configured: false }, { status: 401 });
+    // No session — return `configured` based on DB env state, not on auth.
+    // This way the same endpoint can answer "is the DB wired?" before login.
+    return NextResponse.json(
+      { completed: {}, mistakes: {}, configured: isDbConfigured(), authenticated: false },
+      { status: 401 },
+    );
   }
   if (!isDbConfigured()) {
-    return NextResponse.json({ completed: {}, mistakes: {}, configured: false });
+    return NextResponse.json({ completed: {}, mistakes: {}, configured: false, authenticated: true });
   }
 
   const [rows, mistakes] = await Promise.all([
