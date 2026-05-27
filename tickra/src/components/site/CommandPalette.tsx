@@ -46,6 +46,7 @@ const staticPages = {
     { id: 'about', label: 'À propos', href: '/about', group: 'page' as const },
     { id: 'contact', label: 'Contact', href: '/contact', group: 'page' as const },
     { id: 'me', label: 'Mon compte', href: '/me', group: 'page' as const },
+    { id: 'settings', label: 'Paramètres', href: '/me/settings', group: 'page' as const },
     { id: 'diploma', label: 'Diplôme', href: '/diploma', group: 'page' as const },
   ],
   en: [
@@ -60,6 +61,7 @@ const staticPages = {
     { id: 'about', label: 'About', href: '/about', group: 'page' as const },
     { id: 'contact', label: 'Contact', href: '/contact', group: 'page' as const },
     { id: 'me', label: 'My account', href: '/me', group: 'page' as const },
+    { id: 'settings', label: 'Settings', href: '/me/settings', group: 'page' as const },
     { id: 'diploma', label: 'Diploma', href: '/diploma', group: 'page' as const },
   ],
 };

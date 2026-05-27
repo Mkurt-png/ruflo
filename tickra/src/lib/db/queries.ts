@@ -18,6 +18,10 @@ export type TickraUser = {
   placement_score?: number | null;
   placement_taken_at?: string | null;
   marketing_optin?: boolean | null;
+  display_name?: string | null;
+  avatar_url?: string | null;
+  locale?: 'fr' | 'en' | null;
+  theme?: 'light' | 'dark' | null;
 };
 
 export type ProgressRow = { lesson_id: string; completed_at: string };
@@ -50,6 +54,14 @@ export async function getUser(email: string): Promise<TickraUser | null> {
     .maybeSingle();
   if (error) return null;
   return (data as TickraUser | null) ?? null;
+}
+
+export async function deleteUser(email: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  // Cascade through the foreign keys removes progress/mistakes/bookmarks too.
+  const { error } = await db.from('tickra_users').delete().eq('email', email);
+  return !error;
 }
 
 export async function getUserByStripeCustomer(customerId: string): Promise<TickraUser | null> {
