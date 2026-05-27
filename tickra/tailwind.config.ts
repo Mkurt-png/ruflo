@@ -14,6 +14,8 @@ const config: Config = {
         subtle: 'rgb(var(--subtle) / <alpha-value>)',
         line: 'rgb(var(--line) / <alpha-value>)',
         brand: 'rgb(var(--brand) / <alpha-value>)',
+        accent: 'rgb(var(--accent) / <alpha-value>)',
+        glow: 'rgb(var(--glow) / <alpha-value>)',
         up: 'rgb(var(--up) / <alpha-value>)',
         down: 'rgb(var(--down) / <alpha-value>)',
       },

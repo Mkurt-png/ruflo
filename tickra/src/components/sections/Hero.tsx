@@ -19,7 +19,9 @@ export function Hero({ dict, locale }: Props) {
 
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden border-b border-line">
-      <Container as="div" className="relative grid grid-cols-12 gap-x-6 gap-y-16 pb-24 pt-16 md:pb-32 md:pt-24">
+      <span aria-hidden className="aurora" />
+      <span aria-hidden className="aurora aurora--lt" />
+      <Container as="div" className="relative z-10 grid grid-cols-12 gap-x-6 gap-y-16 pb-24 pt-16 md:pb-32 md:pt-24">
         <div className="col-span-12 lg:col-span-6 xl:col-span-5">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
             <Eyebrow>{t.eyebrow}</Eyebrow>

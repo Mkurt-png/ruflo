@@ -22,7 +22,7 @@ const sizes: Record<Size, string> = {
 };
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-ink text-canvas hover:bg-ink/90',
+  primary: 'bg-ink text-canvas hover:bg-ink/90 glow-soft',
   ghost: 'border border-line text-ink hover:border-ink hover:bg-ink hover:text-canvas',
 };
 
