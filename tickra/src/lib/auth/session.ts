@@ -48,7 +48,13 @@ export function getSession(): Session | null {
 
   if (!safeEqual(sign(payload, secret), sig)) return null;
 
-  const [email, expiresAtStr] = payload.split('.');
+  // expiresAt is a plain integer at the end of the payload. Emails contain
+  // dots (`foo@bar.com`), so we split on the LAST `.` only — never on every
+  // dot, otherwise `Number("com")` returns NaN and we lose every session.
+  const lastDot = payload.lastIndexOf('.');
+  if (lastDot < 0) return null;
+  const email = payload.slice(0, lastDot);
+  const expiresAtStr = payload.slice(lastDot + 1);
   const expiresAt = Number(expiresAtStr);
   if (!email || !Number.isFinite(expiresAt)) return null;
   if (Date.now() / 1000 > expiresAt) return null;

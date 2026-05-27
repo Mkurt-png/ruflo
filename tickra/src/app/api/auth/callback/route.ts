@@ -48,9 +48,15 @@ export async function GET(req: Request) {
   const expected = sign(payload, secret);
   if (!safeEqual(expected, sig)) return homeRedirect;
 
-  const [email, expiresAtStr] = payload.split('.');
+  // Magic-link payload is `<email>.<expiresAt>.<nonce>`. Emails contain dots,
+  // so naive split('.') breaks. Pop the trailing two fields instead.
+  const payloadParts = payload.split('.');
+  if (payloadParts.length < 3) return homeRedirect;
+  const nonce = payloadParts.pop();
+  const expiresAtStr = payloadParts.pop();
+  const email = payloadParts.join('.');
   const expiresAt = Number(expiresAtStr);
-  if (!email || !Number.isFinite(expiresAt)) return homeRedirect;
+  if (!email || !nonce || !Number.isFinite(expiresAt)) return homeRedirect;
   if (Date.now() / 1000 > expiresAt) {
     return NextResponse.redirect(new URL(`/${locale}/signin?error=expired`, url));
   }
