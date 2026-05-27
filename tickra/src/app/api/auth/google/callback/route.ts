@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createHmac } from 'node:crypto';
+import { ensureUser, isDbConfigured } from '@/lib/db/queries';
 
 // GET /api/auth/google/callback?code=…&state=…
 //
@@ -72,6 +73,15 @@ export async function GET(req: Request) {
   }
 
   if (!userEmail) return fail('no_email');
+
+  // Persist the user row immediately so it appears in Supabase as soon as
+  // someone signs in. Fire-and-forget — no need to block the redirect on it.
+  if (isDbConfigured()) {
+    ensureUser(userEmail).catch(() => {
+      /* swallow — login still succeeds, the row will be created on the next
+         /api/me/profile or /api/progress write. */
+    });
+  }
 
   // Set the same signed session cookie as the magic-link flow.
   const sessionPayload = `${userEmail}.${Math.floor(Date.now() / 1000) + COOKIE_TTL_SECONDS}`;

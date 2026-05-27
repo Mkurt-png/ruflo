@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { ensureUser, isDbConfigured } from '@/lib/db/queries';
 
 // GET /api/auth/callback?token=…&locale=fr|en
 // Verifies the magic-link token issued by /api/auth/magic-link, sets a session
@@ -59,6 +60,14 @@ export async function GET(req: Request) {
   if (!email || !nonce || !Number.isFinite(expiresAt)) return homeRedirect;
   if (Date.now() / 1000 > expiresAt) {
     return NextResponse.redirect(new URL(`/${locale}/signin?error=expired`, url));
+  }
+
+  // Persist the user row immediately so it appears in Supabase as soon as
+  // someone signs in. Fire-and-forget — login still succeeds even if it fails.
+  if (isDbConfigured()) {
+    ensureUser(email).catch(() => {
+      /* swallow */
+    });
   }
 
   // Set a signed session marker. Replace with a real session ID from your store.
