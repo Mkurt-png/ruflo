@@ -174,7 +174,7 @@ const en = {
       {
         id: 'free',
         name: 'Free',
-        price: '€0',
+        price: 'CA$0',
         cadence: 'forever',
         tagline: 'For the first week of curiosity.',
         cta: 'Start free',
@@ -189,8 +189,8 @@ const en = {
       {
         id: 'pro',
         name: 'Pro',
-        price: '€14.99',
-        priceAnnual: '€11.99',
+        price: 'CA$14.99',
+        priceAnnual: 'CA$11.99',
         cadence: '/ month',
         cadenceAnnual: '/ month, billed annually',
         tagline: 'For the daily learner.',
@@ -208,7 +208,7 @@ const en = {
       {
         id: 'lifetime',
         name: 'Lifetime',
-        price: '€199',
+        price: 'CA$199',
         cadence: 'once',
         tagline: 'For the committed.',
         cta: 'Buy once',
@@ -597,7 +597,7 @@ const en = {
       { label: 'Risk taught first', values: ['Rarely', 'Sometimes', 'Often at the end', 'Module 03'] },
       { label: 'No signals, no promises', values: ['Not guaranteed', 'Yes', 'Variable', 'Editorial commitment'] },
       { label: 'Realistic daily commitment', values: ['None', 'Module‑dependent', '1‑3 h', '10 min'] },
-      { label: 'Cost', values: ['€0 + attention', '€0‑500', '€500‑5,000', '€15/mo or €199 lifetime'] },
+      { label: 'Cost', values: ['CA$0 + attention', 'CA$0‑500', 'CA$500‑5,000', 'CA$15/mo or CA$199 lifetime'] },
     ],
     footnote: 'Tickra does not say YouTube has nothing to offer. Tickra says a method beats a feed.',
   },

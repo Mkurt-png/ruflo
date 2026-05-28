@@ -9,7 +9,7 @@ const copy = {
   fr: {
     title: 'Calculateur de taille de position',
     subtitle: 'Trois variables, une équation. Tickra l’utilise sur chaque trade.',
-    capital: 'Capital (€)',
+    capital: 'Capital ($)',
     riskPct: 'Risque par trade (%)',
     entry: 'Prix d’entrée',
     stop: 'Prix du stop',
@@ -25,7 +25,7 @@ const copy = {
   en: {
     title: 'Position size calculator',
     subtitle: 'Three inputs, one equation. Tickra uses it on every trade.',
-    capital: 'Capital (€)',
+    capital: 'Capital ($)',
     riskPct: 'Risk per trade (%)',
     entry: 'Entry price',
     stop: 'Stop price',
@@ -149,7 +149,7 @@ function fmtMoney(n: number, locale: Locale): string {
   if (!Number.isFinite(n)) return '—';
   return new Intl.NumberFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
     style: 'currency',
-    currency: 'EUR',
+    currency: 'CAD',
     maximumFractionDigits: 0,
   }).format(n);
 }

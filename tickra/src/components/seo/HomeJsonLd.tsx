@@ -54,7 +54,7 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
       '@type': 'Offer',
       name: plan.name,
       price: plan.price.replace(/[^\d.,]/g, '').replace(',', '.'),
-      priceCurrency: 'EUR',
+      priceCurrency: 'CAD',
       url: `${url}/pricing`,
       availability: 'https://schema.org/InStock',
     })),

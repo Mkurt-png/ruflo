@@ -174,7 +174,7 @@ const fr = {
       {
         id: 'free',
         name: 'Gratuit',
-        price: '0 €',
+        price: '0 $CA',
         cadence: 'pour toujours',
         tagline: 'Pour la première semaine de curiosité.',
         cta: 'Commencer gratuitement',
@@ -189,8 +189,8 @@ const fr = {
       {
         id: 'pro',
         name: 'Pro',
-        price: '14,99 €',
-        priceAnnual: '11,99 €',
+        price: '14,99 $CA',
+        priceAnnual: '11,99 $CA',
         cadence: '/ mois',
         cadenceAnnual: '/ mois, facturé annuellement',
         tagline: "Pour l'apprenant quotidien.",
@@ -208,7 +208,7 @@ const fr = {
       {
         id: 'lifetime',
         name: 'À vie',
-        price: '199 €',
+        price: '199 $CA',
         cadence: 'une fois',
         tagline: 'Pour les engagés.',
         cta: 'Acheter une fois',
@@ -597,7 +597,7 @@ const fr = {
       { label: 'Risque enseigné en premier', values: ['Rarement', 'Parfois', 'Souvent en fin', 'Module 03'] },
       { label: 'Sans signaux, sans promesses', values: ['Non garanti', 'Oui', 'Variable', 'Engagement éditorial'] },
       { label: 'Engagement quotidien réaliste', values: ['Aucun', 'Selon module', '1‑3 h', '10 min'] },
-      { label: 'Coût', values: ['0 € + attention', '0–500 €', '500–5 000 €', '15 €/mois ou 199 € à vie'] },
+      { label: 'Coût', values: ['0 $CA + attention', '0–500 $CA', '500–5 000 $CA', '15 $CA/mois ou 199 $CA à vie'] },
     ],
     footnote: 'Tickra ne dit pas que YouTube n’a rien à offrir. Tickra dit qu’une méthode bat un flux.',
   },
