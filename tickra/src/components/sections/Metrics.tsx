@@ -10,8 +10,10 @@ import type { Dictionary } from '@/lib/i18n/dictionaries';
 export function Metrics({ dict }: { dict: Dictionary }) {
   const t = dict.metrics;
   return (
-    <section aria-labelledby="metrics-title" className="border-b border-line bg-ink text-canvas">
-      <Container as="div" className="py-24 md:py-32">
+    <section aria-labelledby="metrics-title" className="relative overflow-hidden border-b border-line bg-ink text-canvas">
+      {/* TICKRA-DESIGN: trading-screen grid on the dark metrics band. */}
+      <span aria-hidden className="absolute inset-0 tickra-grid opacity-40" />
+      <Container as="div" className="relative py-24 md:py-32">
         <div id="metrics-title" className="grid grid-cols-12 gap-x-6 gap-y-6">
           <div className="col-span-12 lg:col-span-5">
             <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-canvas/60">

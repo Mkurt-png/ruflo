@@ -108,6 +108,67 @@ body {
       0 8px 24px -8px rgb(var(--accent) / 0.35),
       0 0 0 1px rgb(var(--accent) / 0.15);
   }
+
+  /* TICKRA-DESIGN: subtle dotted grid behind hero/metrics — "trading screen" texture.
+     Pointer-events disabled, very low contrast so it never competes with content. */
+  .tickra-grid {
+    background-image:
+      radial-gradient(circle, rgb(var(--ink) / 0.07) 1px, transparent 1.4px);
+    background-size: 22px 22px;
+    background-position: 0 0;
+    pointer-events: none;
+  }
+  html.dark .tickra-grid {
+    background-image:
+      radial-gradient(circle, rgb(var(--ink) / 0.18) 1px, transparent 1.4px);
+  }
+
+  /* TICKRA-DESIGN: glassmorphism for dominant cards (Pricing Pro, dashboard tiles). */
+  .glass {
+    background:
+      linear-gradient(180deg, rgb(var(--surface) / 0.82), rgb(var(--surface) / 0.62));
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    border: 1px solid rgb(var(--ink) / 0.06);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.5) inset,
+      0 30px 80px -40px rgb(var(--brand) / 0.45);
+  }
+  html.dark .glass {
+    background:
+      linear-gradient(180deg, rgb(var(--surface) / 0.65), rgb(var(--surface) / 0.45));
+    border: 1px solid rgb(var(--accent) / 0.18);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.06) inset,
+      0 30px 80px -40px rgb(var(--accent) / 0.55);
+  }
+
+  /* TICKRA-DESIGN: colored halos behind numbers / pulses / status lights. */
+  .glow-up    { box-shadow: 0 0 24px -6px rgb(var(--up)    / 0.55); }
+  .glow-down  { box-shadow: 0 0 24px -6px rgb(var(--down)  / 0.55); }
+  .glow-brand { box-shadow: 0 0 32px -8px rgb(var(--brand) / 0.5);  }
+
+  /* TICKRA-DESIGN: animated gradient sweep on the hero emphatic word. */
+  .title-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgb(var(--brand))   0%,
+      rgb(var(--accent)) 35%,
+      rgb(var(--up))     50%,
+      rgb(var(--accent)) 65%,
+      rgb(var(--brand))  100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: title-shimmer 8s linear infinite;
+  }
+}
+
+@keyframes title-shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 @keyframes aurora-drift {

@@ -19,6 +19,8 @@ export function Hero({ dict, locale }: Props) {
 
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden border-b border-line">
+      {/* TICKRA-DESIGN: trading-screen grid texture behind hero. */}
+      <span aria-hidden className="absolute inset-0 tickra-grid opacity-70" />
       <span aria-hidden className="aurora" />
       <span aria-hidden className="aurora aurora--lt" />
       <Container as="div" className="relative z-10 grid grid-cols-12 gap-x-6 gap-y-16 pb-24 pt-16 md:pb-32 md:pt-24">
@@ -138,7 +140,8 @@ function renderEm(line: string, emphasis: string) {
   return (
     <>
       {before}
-      <span className="font-display italic text-muted">{match}</span>
+      {/* TICKRA-DESIGN: animated gradient on the emphasised word ("institutionnel"). */}
+      <span className="font-display italic title-shimmer">{match}</span>
       {after}
     </>
   );

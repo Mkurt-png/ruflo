@@ -79,11 +79,11 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
               variants={fadeUp}
               custom={i}
               className={cn(
-                'relative flex flex-col rounded-sm border p-8 transition-transform duration-200 ease-out md:p-10',
-                // TICKRA-DESIGN: Pro plan visually dominant — scale up, brand ring, deeper shadow.
+                'relative flex flex-col rounded-sm p-8 transition-transform duration-200 ease-out md:p-10',
+                // TICKRA-DESIGN: Pro plan = ink card + glassy halo + brand ring + scale.
                 highlighted
-                  ? 'border-ink bg-ink text-canvas shadow-[0_22px_60px_-22px_rgba(124,92,217,0.55)] ring-2 ring-brand lg:scale-[1.04]'
-                  : 'border-line bg-surface text-ink',
+                  ? 'border border-ink bg-ink text-canvas shadow-[0_22px_60px_-22px_rgba(124,92,217,0.55)] ring-2 ring-brand lg:scale-[1.04]'
+                  : 'glass text-ink',
               )}
             >
               {highlighted ? (
