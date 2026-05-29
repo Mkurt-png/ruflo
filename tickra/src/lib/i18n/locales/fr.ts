@@ -6,6 +6,10 @@ const fr = {
     pricing: 'Tarifs',
     signIn: 'Connexion',
     getStarted: 'Commencer',
+    explore: 'Explorer',
+    glossary: 'Glossaire',
+    editorial: 'Éditorial',
+    about: 'À propos',
   },
   hero: {
     eyebrow: 'Un parcours structuré · Depuis la bougie 1',

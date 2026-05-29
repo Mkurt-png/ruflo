@@ -102,7 +102,8 @@ export function Hero({ dict, locale }: Props) {
               aria-hidden
               className="absolute -inset-x-4 -top-4 hidden h-16 border-l border-t border-line lg:block"
             />
-            <div className="relative rounded-sm border border-line bg-surface p-6 md:p-8">
+            {/* TICKRA-DESIGN: slight tilt + soft shadow gives the chart card a "product shot" feel without an external image. */}
+            <div className="relative rounded-sm border border-line bg-surface p-6 shadow-[0_30px_60px_-25px_rgba(27,29,51,0.25)] transition-transform duration-500 ease-out md:p-8 lg:-rotate-[1.5deg] lg:hover:rotate-0">
               <div className="mb-5 flex items-baseline justify-between border-b border-line pb-4">
                 <div className="flex items-baseline gap-3">
                   <span className="font-display text-xl font-medium tracking-tight">EUR/USD</span>

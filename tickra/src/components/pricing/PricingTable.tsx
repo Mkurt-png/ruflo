@@ -79,12 +79,16 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
               variants={fadeUp}
               custom={i}
               className={cn(
-                'relative flex flex-col rounded-sm border p-8 md:p-10',
-                highlighted ? 'border-ink bg-ink text-canvas' : 'border-line bg-surface text-ink',
+                'relative flex flex-col rounded-sm border p-8 transition-transform duration-200 ease-out md:p-10',
+                // TICKRA-DESIGN: Pro plan visually dominant — scale up, brand ring, deeper shadow.
+                highlighted
+                  ? 'border-ink bg-ink text-canvas shadow-[0_22px_60px_-22px_rgba(124,92,217,0.55)] ring-2 ring-brand lg:scale-[1.04]'
+                  : 'border-line bg-surface text-ink',
               )}
             >
               {highlighted ? (
-                <span className="absolute -top-3 left-8 inline-flex items-center gap-2 rounded-full bg-canvas px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-ink ring-1 ring-ink">
+                // TICKRA-DESIGN: "Most chosen" badge — filled brand pill centred at the top.
+                <span className="absolute -top-3 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-brand px-4 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.22em] text-canvas shadow-md">
                   {t.mostChosen}
                 </span>
               ) : null}

@@ -5,6 +5,7 @@ import { LocaleSwitcher } from './LocaleSwitcher';
 import { ThemeToggle } from './ThemeToggle';
 import { MobileMenu } from './MobileMenu';
 import { UserMenu } from './UserMenu';
+import { ExploreMenu } from './ExploreMenu';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -15,6 +16,14 @@ export function Navbar({ dict, locale }: Props) {
     { href: `/${locale}/learn`, label: dict.nav.learn },
     { href: `/${locale}#method`, label: dict.nav.method },
     { href: `/${locale}/pricing`, label: dict.nav.pricing },
+  ];
+
+  // TICKRA-DESIGN: surface secondary discovery pages from the navbar
+  // instead of leaving them buried in the footer only.
+  const exploreItems = [
+    { href: `/${locale}/editorial`, label: dict.nav.editorial },
+    { href: `/${locale}/glossary`, label: dict.nav.glossary },
+    { href: `/${locale}/about`, label: dict.nav.about },
   ];
 
   return (
@@ -34,6 +43,9 @@ export function Navbar({ dict, locale }: Props) {
                 </Link>
               </li>
             ))}
+            <li>
+              <ExploreMenu label={dict.nav.explore} items={exploreItems} />
+            </li>
           </ul>
         </nav>
 

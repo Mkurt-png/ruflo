@@ -6,6 +6,10 @@ const en = {
     pricing: 'Pricing',
     signIn: 'Sign in',
     getStarted: 'Get started',
+    explore: 'Explore',
+    glossary: 'Glossary',
+    editorial: 'Editorial',
+    about: 'About',
   },
   hero: {
     eyebrow: 'A structured path · From candle 1',

@@ -86,7 +86,27 @@ export function MobileMenu({ dict, locale, links }: Props) {
                     </Link>
                   </li>
                 ))}
-                <li>
+                {/* TICKRA-DESIGN: explore section in mobile menu — same surface as desktop dropdown. */}
+                <li className="mt-4 border-t border-line pt-4">
+                  <p className="pb-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-subtle">
+                    {dict.nav.explore}
+                  </p>
+                  {[
+                    { href: `/${locale}/editorial`, label: dict.nav.editorial },
+                    { href: `/${locale}/glossary`, label: dict.nav.glossary },
+                    { href: `/${locale}/about`, label: dict.nav.about },
+                  ].map((it) => (
+                    <Link
+                      key={it.href}
+                      href={it.href}
+                      onClick={() => setOpen(false)}
+                      className="block py-2 text-lg text-muted transition-colors hover:text-ink"
+                    >
+                      {it.label}
+                    </Link>
+                  ))}
+                </li>
+                <li className="mt-4">
                   <Link
                     href={`/${locale}/signin`}
                     onClick={() => setOpen(false)}
