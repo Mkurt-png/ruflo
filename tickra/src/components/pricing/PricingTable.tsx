@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
 import { fadeUp } from '@/lib/motion';
+import { useUser } from '@/lib/auth/useUser';
+import { toast } from '@/components/site/ToastProvider';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -14,6 +16,37 @@ type Cycle = 'monthly' | 'annual';
 export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const t = dict.pricing;
   const [cycle, setCycle] = useState<Cycle>('monthly');
+  const [pending, setPending] = useState<string | null>(null);
+  const { user } = useUser();
+
+  const startCheckout = async (planId: string) => {
+    setPending(planId);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ plan: planId, cycle, locale, email: user?.email }),
+      });
+      const data = (await res.json()) as { url?: string; error?: string; hint?: string };
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      // No URL — surface the error to the user.
+      toast({
+        tone: 'error',
+        title: locale === 'fr' ? 'Paiement indisponible' : 'Checkout unavailable',
+        body: data.hint ?? data.error ?? (locale === 'fr' ? 'Réessayez plus tard.' : 'Try again later.'),
+      });
+    } catch {
+      toast({
+        tone: 'error',
+        title: locale === 'fr' ? 'Erreur réseau' : 'Network error',
+      });
+    } finally {
+      setPending(null);
+    }
+  };
 
   return (
     <div>
@@ -33,6 +66,9 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
           const cadence =
             showAnnual && 'cadenceAnnual' in plan && plan.cadenceAnnual ? plan.cadenceAnnual : plan.cadence;
           const savings = 'savings' in plan && plan.savings ? plan.savings : null;
+          const isFree = plan.id === 'free';
+          const isPaid = !isFree;
+          const isLoading = pending === plan.id;
 
           return (
             <motion.article
@@ -105,17 +141,52 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
               </ul>
 
               <div className="mt-10 pt-2">
-                <Button
-                  href={`/${locale}/onboarding?plan=${plan.id}&cycle=${cycle}`}
-                  variant={highlighted ? 'ghost' : 'primary'}
-                  className={cn(
-                    'w-full',
-                    highlighted &&
-                      'border-canvas/30 text-canvas hover:border-canvas hover:bg-canvas hover:text-ink',
-                  )}
-                >
-                  {plan.cta}
-                </Button>
+                {isFree ? (
+                  // Free plan: keep the original onboarding link.
+                  <Link
+                    href={`/${locale}/onboarding?plan=${plan.id}`}
+                    className={cn(
+                      'inline-flex h-12 w-full items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-colors duration-200 ease-out',
+                      highlighted
+                        ? 'border border-canvas/30 text-canvas hover:border-canvas hover:bg-canvas hover:text-ink'
+                        : 'bg-ink text-canvas hover:bg-ink/90',
+                    )}
+                  >
+                    {plan.cta}
+                  </Link>
+                ) : (
+                  // Paid plans: route differs based on auth state.
+                  // - Signed in  → POST /api/checkout → Stripe Checkout URL
+                  // - Signed out → /signin?next=/pricing so the user comes back and we trigger checkout
+                  <button
+                    type="button"
+                    disabled={isLoading}
+                    onClick={() => {
+                      if (!user) {
+                        const next = encodeURIComponent(`/${locale}/pricing`);
+                        window.location.href = `/${locale}/signin?next=${next}`;
+                        return;
+                      }
+                      startCheckout(plan.id);
+                    }}
+                    className={cn(
+                      'inline-flex h-12 w-full items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-colors duration-200 ease-out disabled:cursor-not-allowed disabled:opacity-60',
+                      highlighted
+                        ? 'border border-canvas/30 text-canvas hover:border-canvas hover:bg-canvas hover:text-ink'
+                        : 'bg-ink text-canvas hover:bg-ink/90',
+                    )}
+                  >
+                    {isLoading
+                      ? locale === 'fr'
+                        ? 'Ouverture du paiement…'
+                        : 'Opening checkout…'
+                      : isPaid && !user
+                        ? locale === 'fr'
+                          ? 'Connexion + ' + plan.cta.toLowerCase()
+                          : 'Sign in + ' + plan.cta.toLowerCase()
+                        : plan.cta}
+                  </button>
+                )}
               </div>
             </motion.article>
           );
