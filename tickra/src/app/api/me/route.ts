@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 
+// Always run per-request: the response depends on the session cookie.
+export const dynamic = 'force-dynamic';
+
 // GET /api/me — returns current user + entitlement plan derived from DB.
 // Free / Pro / Lifetime are surfaced so client gates can decide what to show.
 export async function GET() {
