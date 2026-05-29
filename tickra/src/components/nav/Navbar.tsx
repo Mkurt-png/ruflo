@@ -20,7 +20,9 @@ export function Navbar({ dict, locale }: Props) {
 
   // TICKRA-DESIGN: surface secondary discovery pages from the navbar
   // instead of leaving them buried in the footer only.
+  // TICKRA-SPRINT-B: simulator entry exposed here too (Pro-gated inside).
   const exploreItems = [
+    { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
     { href: `/${locale}/editorial`, label: dict.nav.editorial },
     { href: `/${locale}/glossary`, label: dict.nav.glossary },
     { href: `/${locale}/about`, label: dict.nav.about },

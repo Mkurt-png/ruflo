@@ -92,6 +92,7 @@ export function MobileMenu({ dict, locale, links }: Props) {
                     {dict.nav.explore}
                   </p>
                   {[
+                    { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
                     { href: `/${locale}/editorial`, label: dict.nav.editorial },
                     { href: `/${locale}/glossary`, label: dict.nav.glossary },
                     { href: `/${locale}/about`, label: dict.nav.about },

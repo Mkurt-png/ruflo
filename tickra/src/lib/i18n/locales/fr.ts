@@ -10,6 +10,7 @@ const fr = {
     glossary: 'Glossaire',
     editorial: 'Éditorial',
     about: 'À propos',
+    simulator: 'Simulateur',
   },
   hero: {
     eyebrow: 'Un parcours structuré · Depuis la bougie 1',

@@ -10,6 +10,7 @@ const en = {
     glossary: 'Glossary',
     editorial: 'Editorial',
     about: 'About',
+    simulator: 'Simulator',
   },
   hero: {
     eyebrow: 'A structured path · From candle 1',
