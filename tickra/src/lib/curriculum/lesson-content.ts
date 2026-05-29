@@ -1873,33 +1873,728 @@ const seeded: Seed = {
       },
     ],
   },
+
+  // ─── Marchés & forex — les bases (basics) ────────────────────────────────
+  'basics-01': {
+    intro: {
+      fr: [
+        'Le forex (foreign exchange) est le marché où s’échangent les devises. Quand vous achetez de l’EUR/USD, vous achetez des euros en vendant des dollars — toujours par paires.',
+        'C’est le plus grand marché du monde : environ 7 500 milliards de dollars échangés chaque jour. Aucune place centralisée — il vit dans un réseau d’ordinateurs entre banques, brokers et hedge funds, 24 h sur 24 du dimanche soir au vendredi soir.',
+        'Vous ne possédez jamais physiquement les devises : vous spéculez sur leur écart de prix. Acheter EUR/USD, c’est parier que l’euro va monter face au dollar.',
+      ],
+      en: [
+        'Forex (foreign exchange) is the market where currencies are traded. When you buy EUR/USD, you buy euros by selling dollars — always in pairs.',
+        'It is the largest market in the world: roughly $7.5 trillion changes hands every day. No central venue — it lives across a network of computers between banks, brokers and hedge funds, 24/5 from Sunday night to Friday night.',
+        'You never physically own the currencies: you speculate on the price gap. Buying EUR/USD means betting the euro will rise against the dollar.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Vous achetez EUR/USD. Vous pariez que :', en: 'You buy EUR/USD. You bet that:' },
+      options: {
+        fr: ['L’euro va monter face au dollar', 'Le dollar va monter face à l’euro', 'Les deux vont monter ensemble'],
+        en: ['The euro will rise against the dollar', 'The dollar will rise against the euro', 'Both will rise together'],
+      },
+      correct: 0,
+      rationale: { fr: 'Acheter une paire = acheter la première devise contre la seconde.', en: 'Buying a pair = buying the first currency against the second.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Le forex est ouvert :', en: 'Forex is open:' },
+        options: { fr: ['24 h sur 24, 5 jours sur 7', 'Aux heures de bourse de Paris', 'Tous les jours, dimanche compris'], en: ['24 hours a day, 5 days a week', 'Paris stock-exchange hours only', 'Every day, including Sunday'] },
+        correct: 0,
+        rationale: { fr: 'Du dimanche 22 h GMT au vendredi 22 h GMT.', en: 'From Sunday 22:00 GMT to Friday 22:00 GMT.' },
+      },
+      {
+        q: { fr: 'Le volume quotidien moyen du forex est de :', en: 'Average daily forex volume is:' },
+        options: { fr: ['Environ 7 500 milliards $', 'Environ 100 milliards $', 'Environ 50 milliards $'], en: ['About $7.5 trillion', 'About $100 billion', 'About $50 billion'] },
+        correct: 0,
+        rationale: { fr: 'BIS Triennial Survey 2022.', en: 'BIS Triennial Survey 2022.' },
+      },
+      {
+        q: { fr: 'Sur le forex, vous échangez :', en: 'On forex, you trade:' },
+        options: { fr: ['Une devise contre une autre', 'Des actions et obligations', 'Des matières premières uniquement'], en: ['One currency against another', 'Stocks and bonds', 'Commodities only'] },
+        correct: 0,
+        rationale: { fr: 'Toujours par paires : EUR/USD, GBP/JPY, etc.', en: 'Always in pairs: EUR/USD, GBP/JPY, etc.' },
+      },
+    ],
+  },
+
+  'basics-02': {
+    intro: {
+      fr: [
+        'Trois raisons rendent le forex attractif. D’abord la liquidité : sur les majors, vous entrez et sortez sans bouger le prix, même avec quelques centaines de milliers d’euros.',
+        'Ensuite l’accessibilité : pas besoin de centaines de milliers d’euros pour commencer — un compte standard fonctionne dès quelques centaines. Le levier permet d’ouvrir des positions plus grosses que votre dépôt (avec les risques qui vont avec).',
+        'Enfin la couverture 24/5 : vous pouvez trader avant le travail, le soir, la nuit. Mais cette flexibilité piège ceux qui ne fixent pas leurs propres horaires — la discipline remplace la cloche d’ouverture.',
+      ],
+      en: [
+        'Three reasons make forex attractive. First, liquidity: on majors, you can enter and exit without moving price, even with a few hundred thousand euros.',
+        'Second, accessibility: you do not need huge capital to start — a standard account works from a few hundred. Leverage lets you open positions larger than your deposit (with the matching risks).',
+        'Third, 24/5 coverage: you can trade before work, in the evening, at night. But that flexibility traps anyone who does not set their own hours — discipline replaces the opening bell.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Quel piège du « 24/5 » est le plus dangereux pour un débutant ?', en: 'Which 24/5 trap is most dangerous for a beginner?' },
+      options: {
+        fr: ['Trader sans plage horaire fixe', 'Manquer le close de Wall Street', 'Ne pas connaître les news'],
+        en: ['Trading without a fixed time window', 'Missing the Wall Street close', 'Not knowing the news'],
+      },
+      correct: 0,
+      rationale: { fr: 'Sans rituel horaire, on trade épuisé — et on perd.', en: 'Without a time ritual, you trade exhausted — and lose.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Le levier permet :', en: 'Leverage allows:' },
+        options: { fr: ['D’ouvrir des positions plus grosses que le dépôt', 'D’éviter les pertes', 'D’augmenter sa probabilité de gagner'], en: ['Opening positions larger than your deposit', 'Avoiding losses', 'Raising your win probability'] },
+        correct: 0,
+        rationale: { fr: 'Outil double tranchant : multiplie gains ET pertes.', en: 'Double-edged: multiplies gains AND losses.' },
+      },
+      {
+        q: { fr: 'La liquidité du forex profite surtout :', en: 'Forex liquidity helps mostly:' },
+        options: { fr: ['À l’exécution des ordres', 'Aux dividendes', 'Aux frais bancaires'], en: ['Order execution', 'Dividends', 'Bank fees'] },
+        correct: 0,
+        rationale: { fr: 'Entrées/sorties propres, peu de slippage.', en: 'Clean entries/exits, little slippage.' },
+      },
+      {
+        q: { fr: 'Pour un débutant, l’avantage le plus mal exploité est :', en: 'For a beginner, the most misused advantage is:' },
+        options: { fr: ['Le 24/5 sans discipline', 'La liquidité', 'L’accessibilité du capital'], en: ['24/5 without discipline', 'Liquidity', 'Capital accessibility'] },
+        correct: 0,
+        rationale: { fr: 'Le marché ouvert tout le temps ≠ vous devez trader tout le temps.', en: 'Market open all the time ≠ you trade all the time.' },
+      },
+    ],
+  },
+
+  'basics-03': {
+    intro: {
+      fr: [
+        'Les paires majeures incluent toutes le dollar US. Les sept majors classiques : EUR/USD, GBP/USD, USD/JPY, USD/CHF, AUD/USD, USD/CAD, NZD/USD.',
+        'Elles concentrent ~75 % du volume mondial. Leurs spreads sont les plus serrés, leur liquidité la plus profonde, leur comportement le plus étudié. C’est par elles qu’on apprend.',
+        'EUR/USD à elle seule représente ~24 % du volume forex. Si vous débutez, c’est l’instrument à connaître par cœur avant tout autre.',
+      ],
+      en: [
+        'Major pairs all include the US dollar. The seven classic majors: EUR/USD, GBP/USD, USD/JPY, USD/CHF, AUD/USD, USD/CAD, NZD/USD.',
+        'They concentrate ~75% of global volume. Their spreads are the tightest, their liquidity the deepest, their behaviour the most studied. They are the gateway.',
+        'EUR/USD alone accounts for ~24% of forex volume. If you are starting out, it is the instrument to know inside out before any other.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Laquelle de ces paires est une major ?', en: 'Which of these is a major pair?' },
+      options: { fr: ['USD/JPY', 'EUR/SEK', 'GBP/TRY'], en: ['USD/JPY', 'EUR/SEK', 'GBP/TRY'] },
+      correct: 0,
+      rationale: { fr: 'Les majors incluent toutes le USD.', en: 'Majors always include the USD.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Combien y a‑t‑il de majors classiques ?', en: 'How many classic majors are there?' },
+        options: { fr: ['7', '12', '3'], en: ['7', '12', '3'] },
+        correct: 0,
+        rationale: { fr: 'EUR, GBP, JPY, CHF, AUD, CAD, NZD — tous versus USD.', en: 'EUR, GBP, JPY, CHF, AUD, CAD, NZD — all versus USD.' },
+      },
+      {
+        q: { fr: 'La paire la plus traitée au monde est :', en: 'The most traded pair in the world is:' },
+        options: { fr: ['EUR/USD', 'GBP/JPY', 'USD/CAD'], en: ['EUR/USD', 'GBP/JPY', 'USD/CAD'] },
+        correct: 0,
+        rationale: { fr: '~24 % du volume global.', en: '~24% of global volume.' },
+      },
+      {
+        q: { fr: 'L’avantage principal des majors est :', en: 'The main edge of majors is:' },
+        options: { fr: ['Spread serré et liquidité profonde', 'Mouvements toujours haussiers', 'Aucun risque'], en: ['Tight spread and deep liquidity', 'Always trending up', 'No risk'] },
+        correct: 0,
+        rationale: { fr: 'C’est ce qui les rend lisibles.', en: 'That is what makes them readable.' },
+      },
+    ],
+  },
+
+  'basics-04': {
+    intro: {
+      fr: [
+        'Les paires mineures (« crosses ») n’incluent pas le USD : EUR/GBP, EUR/JPY, GBP/JPY, AUD/NZD, etc. Spreads plus larges, liquidité moindre, mais souvent plus de personnalité que les majors.',
+        'Les exotiques associent une major à une devise émergente : USD/TRY (Turquie), USD/ZAR (Afrique du Sud), USD/MXN (Mexique). Spreads très larges, volatilité brutale, slippage fréquent.',
+        'Règle pour un débutant : restez sur les majors les trois premiers mois. Les exotiques sont un terrain pour vétérans — pas par snobisme, mais parce que les frais et les chocs y mangent votre capital plus vite que les setups ne le construisent.',
+      ],
+      en: [
+        'Minor pairs ("crosses") do not include the USD: EUR/GBP, EUR/JPY, GBP/JPY, AUD/NZD, etc. Wider spreads, lower liquidity, but often more personality than majors.',
+        'Exotics pair a major with an emerging-market currency: USD/TRY (Turkey), USD/ZAR (South Africa), USD/MXN (Mexico). Very wide spreads, brutal volatility, frequent slippage.',
+        'Beginner rule: stay on majors for the first three months. Exotics are veteran terrain — not from snobbery, but because costs and shocks eat your capital faster than setups build it.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Une paire avec un spread soudain de 60 pips est probablement :', en: 'A pair with a sudden 60-pip spread is probably:' },
+      options: { fr: ['Une exotique', 'Une major', 'Une erreur du broker'], en: ['An exotic', 'A major', 'A broker error'] },
+      correct: 0,
+      rationale: { fr: 'Les exotiques voient régulièrement des écarts énormes sur news.', en: 'Exotics regularly see massive spreads on news.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'EUR/JPY est :', en: 'EUR/JPY is:' },
+        options: { fr: ['Une cross (mineure)', 'Une major', 'Une exotique'], en: ['A cross (minor)', 'A major', 'An exotic'] },
+        correct: 0,
+        rationale: { fr: 'Pas de USD = pas major.', en: 'No USD = not a major.' },
+      },
+      {
+        q: { fr: 'Risque principal des exotiques :', en: 'Main risk of exotics:' },
+        options: { fr: ['Spread et slippage', 'Frais d’inscription', 'Manque de graphiques'], en: ['Spread and slippage', 'Sign-up fees', 'Lack of charts'] },
+        correct: 0,
+        rationale: { fr: 'Coût d’entrée énorme, sortie incertaine.', en: 'Huge entry cost, uncertain exit.' },
+      },
+      {
+        q: { fr: 'Recommandation pour un débutant :', en: 'Beginner recommendation:' },
+        options: { fr: ['Majors uniquement au début', 'Exotiques pour mieux apprendre', 'Toutes à la fois'], en: ['Majors only at first', 'Exotics to learn faster', 'All at once'] },
+        correct: 0,
+        rationale: { fr: 'On apprend sur des marchés lisibles.', en: 'You learn on readable markets.' },
+      },
+    ],
+  },
+
+  'basics-05': {
+    intro: {
+      fr: [
+        'Un pip est la quatrième décimale du prix d’une paire (sauf pour les paires en JPY où c’est la deuxième). Sur EUR/USD = 1.0850, monter à 1.0851 = +1 pip.',
+        'Une pipette (ou point) est le dixième de pip : la cinquième décimale (ou troisième pour les paires JPY). C’est la précision réelle de la cotation.',
+        'Pourquoi c’est utile : tout votre risque, tous vos stops, tous vos take-profits se mesurent en pips. C’est l’unité commune entre setups, gestion de position et statistiques de votre journal.',
+      ],
+      en: [
+        'A pip is the fourth decimal of a pair’s price (except JPY pairs where it is the second). On EUR/USD = 1.0850, moving to 1.0851 = +1 pip.',
+        'A pipette (or point) is one-tenth of a pip: the fifth decimal (or third for JPY pairs). It is the true quote precision.',
+        'Why it matters: all your risk, all your stops, all your take-profits are measured in pips. It is the shared unit between setups, position management and journal stats.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'EUR/USD passe de 1.0850 à 1.0875. Combien de pips ?', en: 'EUR/USD goes from 1.0850 to 1.0875. How many pips?' },
+      options: { fr: ['25 pips', '2,5 pips', '250 pips'], en: ['25 pips', '2.5 pips', '250 pips'] },
+      correct: 0,
+      rationale: { fr: '1.0875 − 1.0850 = 0,0025 = 25 pips.', en: '1.0875 − 1.0850 = 0.0025 = 25 pips.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Sur USD/JPY, un pip est :', en: 'On USD/JPY, a pip is:' },
+        options: { fr: ['La deuxième décimale', 'La quatrième décimale', 'La première décimale'], en: ['The second decimal', 'The fourth decimal', 'The first decimal'] },
+        correct: 0,
+        rationale: { fr: 'JPY = 2 décimales pour le pip.', en: 'JPY = 2 decimals for the pip.' },
+      },
+      {
+        q: { fr: 'Une pipette = ', en: 'A pipette = ' },
+        options: { fr: ['Un dixième de pip', 'Dix pips', 'Un pip'], en: ['One-tenth of a pip', 'Ten pips', 'One pip'] },
+        correct: 0,
+        rationale: { fr: 'Précision sub-pip.', en: 'Sub-pip precision.' },
+      },
+      {
+        q: { fr: 'Mesurer son risque en pips permet surtout :', en: 'Measuring risk in pips mainly enables:' },
+        options: { fr: ['De normaliser entre instruments', 'D’éviter le levier', 'De doubler le capital'], en: ['Normalising across instruments', 'Avoiding leverage', 'Doubling capital'] },
+        correct: 0,
+        rationale: { fr: 'Unité commune pour stats et taille.', en: 'Common unit for stats and sizing.' },
+      },
+    ],
+  },
+
+  'basics-06': {
+    intro: {
+      fr: [
+        'Un lot standard = 100 000 unités de la devise de base. Sur EUR/USD, 1 lot = 100 000 €. Trop pour la majorité des particuliers.',
+        'Un mini lot = 10 000 unités. Un micro lot = 1 000 unités. Un nano lot (rare) = 100 unités. Les courtiers retail acceptent souvent les micro et nano.',
+        'Sur EUR/USD, 1 pip vaut : 10 $ sur un lot standard, 1 $ sur un mini, 0,10 $ sur un micro. La taille du lot détermine la valeur monétaire de chaque pip.',
+      ],
+      en: [
+        'A standard lot = 100,000 units of the base currency. On EUR/USD, 1 lot = €100,000. Too much for most retail traders.',
+        'A mini lot = 10,000 units. A micro lot = 1,000 units. A nano lot (rare) = 100 units. Retail brokers usually allow micro and nano.',
+        'On EUR/USD, 1 pip is worth: $10 on a standard lot, $1 on a mini, $0.10 on a micro. Lot size sets the monetary value of each pip.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Vous tradez 0,5 lot sur EUR/USD. Combien vaut 1 pip ?', en: 'You trade 0.5 lot on EUR/USD. What is 1 pip worth?' },
+      options: { fr: ['5 $', '50 $', '0,50 $'], en: ['$5', '$50', '$0.50'] },
+      correct: 0,
+      rationale: { fr: '1 lot = 10 $/pip → 0,5 lot = 5 $/pip.', en: '1 lot = $10/pip → 0.5 lot = $5/pip.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Un mini lot = ', en: 'A mini lot = ' },
+        options: { fr: ['10 000 unités', '1 000 unités', '100 000 unités'], en: ['10,000 units', '1,000 units', '100,000 units'] },
+        correct: 0,
+        rationale: { fr: 'Un dixième du standard.', en: 'One-tenth of standard.' },
+      },
+      {
+        q: { fr: 'Sur EUR/USD, 1 pip sur un micro lot vaut :', en: 'On EUR/USD, 1 pip on a micro lot is worth:' },
+        options: { fr: ['0,10 $', '1 $', '10 $'], en: ['$0.10', '$1', '$10'] },
+        correct: 0,
+        rationale: { fr: 'Micro = 1 000 unités.', en: 'Micro = 1,000 units.' },
+      },
+      {
+        q: { fr: 'Choisir un micro lot quand on débute, c’est :', en: 'Choosing a micro lot as a beginner is:' },
+        options: { fr: ['Prudent et pédagogique', 'Réservé aux pauvres', 'Inefficace'], en: ['Prudent and educational', 'Only for poor traders', 'Inefficient'] },
+        correct: 0,
+        rationale: { fr: 'On apprend le geste sans risquer son capital.', en: 'You learn the motion without risking capital.' },
+      },
+    ],
+  },
+
+  'basics-07': {
+    intro: {
+      fr: [
+        'Le levier est un multiplicateur fourni par le broker. Avec un levier 1:30, déposer 1 000 € permet d’ouvrir une position de 30 000 €. La marge est la part de votre capital « bloquée » pour tenir la position.',
+        'Levier élevé = marge faible = puissance énorme mais risque énorme. Une variation de 3 % contre vous avec un levier 1:30 = −90 % de votre dépôt.',
+        'En Europe, le levier retail est plafonné (1:30 sur les majors, 1:20 sur les mineures, 1:2 sur les cryptos) par l’ESMA depuis 2018 — pour protéger les particuliers d’eux-mêmes. Vous n’avez presque jamais besoin du levier maximal.',
+      ],
+      en: [
+        'Leverage is a broker-provided multiplier. With 30:1 leverage, depositing €1,000 lets you open a €30,000 position. Margin is the slice of your capital "locked" to hold the position.',
+        'High leverage = low margin = huge power but huge risk. A 3% move against you at 30:1 = −90% of your deposit.',
+        'In Europe, retail leverage is capped (30:1 on majors, 20:1 on minors, 2:1 on crypto) by ESMA since 2018 — to protect retail traders from themselves. You almost never need the max.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Avec 1 000 € et un levier 1:30, votre exposition maximale est :', en: 'With €1,000 and 30:1 leverage, your maximum exposure is:' },
+      options: { fr: ['30 000 €', '3 000 €', '300 000 €'], en: ['€30,000', '€3,000', '€300,000'] },
+      correct: 0,
+      rationale: { fr: '1 000 × 30 = 30 000.', en: '1,000 × 30 = 30,000.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'La marge est :', en: 'Margin is:' },
+        options: { fr: ['Le capital bloqué pour tenir la position', 'Le profit attendu', 'Le spread'], en: ['Capital locked to hold the position', 'Expected profit', 'The spread'] },
+        correct: 0,
+        rationale: { fr: 'Caution restituée à la clôture.', en: 'Returned at close.' },
+      },
+      {
+        q: { fr: 'Risque principal du levier :', en: 'Main leverage risk:' },
+        options: { fr: ['Pertes amplifiées', 'Gains plafonnés', 'Spread plus large'], en: ['Amplified losses', 'Capped gains', 'Wider spread'] },
+        correct: 0,
+        rationale: { fr: 'L’épée à double tranchant.', en: 'Double-edged sword.' },
+      },
+      {
+        q: { fr: 'Le bon réflexe :', en: 'The right reflex:' },
+        options: { fr: ['Calculer son risque en €, pas en levier', 'Utiliser toujours le max', 'Ignorer la marge'], en: ['Compute risk in €, not in leverage', 'Always use max', 'Ignore margin'] },
+        correct: 0,
+        rationale: { fr: 'On raisonne en perte tolérée par trade.', en: 'You reason in loss tolerated per trade.' },
+      },
+    ],
+  },
+
+  'basics-08': {
+    intro: {
+      fr: [
+        'Le bid est le prix auquel le marché vous achète (donc auquel vous vendez). L’ask (ou offer) est le prix auquel le marché vous vend (donc auquel vous achetez). Le bid est toujours inférieur à l’ask.',
+        'Le spread est la différence ask − bid. C’est votre coût d’entrée immédiat : ouvrir une position vous coûte le spread, peu importe la direction.',
+        'EUR/USD spread typique = 0,1 à 1 pip sur un broker ECN, 1 à 2 pips sur un broker standard. Sur les exotiques ou en pleine news, ça peut sauter à 20+ pips — un piège tendu aux ordres marché.',
+      ],
+      en: [
+        'The bid is the price at which the market buys from you (so where you sell). The ask (or offer) is where the market sells to you (so where you buy). Bid is always lower than ask.',
+        'The spread is ask − bid. It is your immediate entry cost: opening a position costs the spread, whichever direction you take.',
+        'EUR/USD typical spread = 0.1 to 1 pip on an ECN broker, 1 to 2 pips on a standard broker. On exotics or during news, it can jump to 20+ pips — a trap for market orders.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'EUR/USD bid 1.0850, ask 1.0851. Vous achetez. À quel prix ?', en: 'EUR/USD bid 1.0850, ask 1.0851. You buy. At what price?' },
+      options: { fr: ['1.0851', '1.0850', '1.08505'], en: ['1.0851', '1.0850', '1.08505'] },
+      correct: 0,
+      rationale: { fr: 'Acheter = payer l’ask.', en: 'Buying = paying the ask.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Le spread est :', en: 'The spread is:' },
+        options: { fr: ['Ask − bid', 'Bid − ask', 'Le levier'], en: ['Ask − bid', 'Bid − ask', 'Leverage'] },
+        correct: 0,
+        rationale: { fr: 'Ask est toujours > bid.', en: 'Ask is always > bid.' },
+      },
+      {
+        q: { fr: 'Quand est-ce que le spread s’élargit le plus ?', en: 'When does the spread widen most?' },
+        options: { fr: ['Sur news à fort impact', 'Au milieu de la session de Londres', 'À l’ouverture asiatique du lundi'], en: ['On high-impact news', 'Mid London session', 'Sunday Asian open'] },
+        correct: 0,
+        rationale: { fr: 'Les market makers se protègent.', en: 'Market makers protect themselves.' },
+      },
+      {
+        q: { fr: 'L’ordre limite protège contre :', en: 'A limit order protects against:' },
+        options: { fr: ['Le spread excessif', 'La levée des stops', 'Les frais de retrait'], en: ['Excessive spread', 'Stop hunts', 'Withdrawal fees'] },
+        correct: 0,
+        rationale: { fr: 'Limit garantit le prix, pas l’exécution.', en: 'Limit guarantees price, not fill.' },
+      },
+    ],
+  },
+
+  'basics-09': {
+    intro: {
+      fr: [
+        'Long = acheter en pariant sur la hausse. Short = vendre en pariant sur la baisse. Sur le forex, vendre à découvert ne demande aucune autorisation : la mécanique des paires permet de shorter aussi facilement que de longer.',
+        'Long EUR/USD = acheter EUR, vendre USD. Short EUR/USD = vendre EUR, acheter USD. Aucune position n’est neutre — vous tenez toujours deux jambes.',
+        'Un short n’est pas plus dangereux qu’un long en théorie. En pratique, la pression psychologique d’une position contre la tendance haussière de long terme demande plus de discipline. C’est pour ça qu’on commence par apprendre à longer dans une tendance.',
+      ],
+      en: [
+        'Long = buying, betting on a rise. Short = selling, betting on a fall. On forex, short-selling needs no authorisation: the pair mechanics let you short as easily as long.',
+        'Long EUR/USD = buy EUR, sell USD. Short EUR/USD = sell EUR, buy USD. No position is neutral — you always carry two legs.',
+        'A short is not riskier than a long in theory. In practice, the psychological pressure of trading against a long-term uptrend demands more discipline. That is why you first learn to long with the trend.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Vous shortez GBP/USD à 1.2700, vous clôturez à 1.2650. Vous avez :', en: 'You short GBP/USD at 1.2700, close at 1.2650. You:' },
+      options: { fr: ['Gagné 50 pips', 'Perdu 50 pips', 'Fait neutre'], en: ['Gained 50 pips', 'Lost 50 pips', 'Broke even'] },
+      correct: 0,
+      rationale: { fr: 'En short, le prix qui baisse = profit.', en: 'When short, falling price = profit.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Sur le forex, shorter demande :', en: 'On forex, shorting requires:' },
+        options: { fr: ['Rien de spécial — la mécanique est symétrique', 'Une autorisation broker', 'Un compte spécial'], en: ['Nothing special — mechanics are symmetric', 'Broker authorisation', 'A special account'] },
+        correct: 0,
+        rationale: { fr: 'Trader une paire = symétrique.', en: 'Trading a pair = symmetric.' },
+      },
+      {
+        q: { fr: 'Long USD/JPY signifie :', en: 'Long USD/JPY means:' },
+        options: { fr: ['Acheter USD, vendre JPY', 'Vendre USD, acheter JPY', 'Acheter les deux'], en: ['Buy USD, sell JPY', 'Sell USD, buy JPY', 'Buy both'] },
+        correct: 0,
+        rationale: { fr: 'Long = on possède la première devise.', en: 'Long = you hold the first currency.' },
+      },
+      {
+        q: { fr: 'Le principal piège du short :', en: 'The main pitfall of shorting:' },
+        options: { fr: ['Trader contre la tendance dominante', 'Le swap toujours négatif', 'Pas d’accès graphique'], en: ['Trading against the dominant trend', 'Always negative swap', 'No chart access'] },
+        correct: 0,
+        rationale: { fr: 'Psychologiquement plus dur.', en: 'Psychologically harder.' },
+      },
+    ],
+  },
+
+  'basics-10': {
+    intro: {
+      fr: [
+        'P&L = (Prix de sortie − Prix d’entrée) × Taille × Valeur du pip. Pour un long : gain si sortie > entrée. Pour un short : gain si sortie < entrée.',
+        'Exemple long EUR/USD : entrée 1.0800, sortie 1.0850, taille 1 lot (10 $/pip). Gain = 50 pips × 10 $ = 500 $.',
+        'Toujours raisonner en pips d’abord, en $ ensuite. La traduction monétaire dépend de votre taille — la performance brute se mesure en pips, comparable d’un trade à l’autre, d’un instrument à l’autre.',
+      ],
+      en: [
+        'P&L = (Exit price − Entry price) × Size × Pip value. For a long: profit if exit > entry. For a short: profit if exit < entry.',
+        'Long EUR/USD example: entry 1.0800, exit 1.0850, size 1 lot ($10/pip). Profit = 50 pips × $10 = $500.',
+        'Always reason in pips first, $ second. The monetary translation depends on your size — raw performance lives in pips, comparable across trades and instruments.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Short USD/JPY 150.50 → 150.20, 0,5 lot. Combien de pips ?', en: 'Short USD/JPY 150.50 → 150.20, 0.5 lot. How many pips?' },
+      options: { fr: ['30 pips de gain', '30 pips de perte', '0,30 pip'], en: ['30 pips gain', '30 pips loss', '0.30 pip'] },
+      correct: 0,
+      rationale: { fr: 'Short et prix qui baisse = gain. Différence = 30 pips JPY.', en: 'Short and falling price = gain. Difference = 30 JPY pips.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'La performance brute se compare :', en: 'Raw performance compares in:' },
+        options: { fr: ['En pips d’abord', 'En $ uniquement', 'En % du PIB'], en: ['Pips first', '$ only', '% of GDP'] },
+        correct: 0,
+        rationale: { fr: 'Les pips sont comparables.', en: 'Pips are comparable.' },
+      },
+      {
+        q: { fr: 'Sur 1 mini lot EUR/USD (1 $/pip), gagner 80 pips =', en: 'On 1 mini lot EUR/USD ($1/pip), gaining 80 pips =' },
+        options: { fr: ['80 $', '8 $', '800 $'], en: ['$80', '$8', '$800'] },
+        correct: 0,
+        rationale: { fr: '80 × 1 = 80.', en: '80 × 1 = 80.' },
+      },
+      {
+        q: { fr: 'Pour un trade perdant, la formule donne :', en: 'For a losing trade, the formula gives:' },
+        options: { fr: ['Un résultat négatif', 'Toujours zéro', 'Une erreur'], en: ['A negative result', 'Always zero', 'An error'] },
+        correct: 0,
+        rationale: { fr: 'P&L peut être négatif.', en: 'P&L can be negative.' },
+      },
+    ],
+  },
+
+  'basics-11': {
+    intro: {
+      fr: [
+        'Dans une paire X/Y, X est la devise de base, Y la devise cotée (ou quote). Le prix indique combien de Y vaut 1 X. EUR/USD = 1.0850 ⇒ 1 € = 1,0850 $.',
+        'Important : la valeur du pip est exprimée dans la devise cotée. Sur EUR/USD, 1 pip vaut une fraction de USD ; sur USD/JPY, 1 pip vaut une fraction de JPY (qu’il faut reconvertir en USD pour votre compte si nécessaire).',
+        'C’est pour ça que les pips d’une paire JPY n’ont pas la même valeur monétaire que ceux d’une paire en USD. Votre broker fait la conversion pour vous — mais comprendre l’asymétrie évite les surprises.',
+      ],
+      en: [
+        'In a pair X/Y, X is the base currency, Y the quote currency. The price shows how many Y equal 1 X. EUR/USD = 1.0850 ⇒ €1 = $1.0850.',
+        'Important: pip value is expressed in the quote currency. On EUR/USD, 1 pip is a fraction of USD; on USD/JPY, 1 pip is a fraction of JPY (which your broker converts back if needed).',
+        'That is why JPY-pair pips do not carry the same monetary value as USD-pair pips. Your broker does the conversion — but understanding the asymmetry saves you from surprises.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'GBP/USD = 1.2700. Que vaut 1 £ en $ ?', en: 'GBP/USD = 1.2700. What is £1 worth in $?' },
+      options: { fr: ['1,2700 $', '0,7874 $', '12,70 $'], en: ['$1.2700', '$0.7874', '$12.70'] },
+      correct: 0,
+      rationale: { fr: 'Prix = X exprimé en Y.', en: 'Price = X expressed in Y.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Dans EUR/JPY, la devise cotée est :', en: 'In EUR/JPY, the quote currency is:' },
+        options: { fr: ['JPY', 'EUR', 'USD'], en: ['JPY', 'EUR', 'USD'] },
+        correct: 0,
+        rationale: { fr: 'Toujours la deuxième.', en: 'Always the second.' },
+      },
+      {
+        q: { fr: 'Pip value est exprimée :', en: 'Pip value is expressed:' },
+        options: { fr: ['Dans la devise cotée', 'Dans la devise de base', 'En euros toujours'], en: ['In the quote currency', 'In the base currency', 'Always in euros'] },
+        correct: 0,
+        rationale: { fr: 'Convertie ensuite si nécessaire.', en: 'Converted afterwards if needed.' },
+      },
+      {
+        q: { fr: 'USD/CHF = 0.9000 signifie :', en: 'USD/CHF = 0.9000 means:' },
+        options: { fr: ['1 $ = 0,9000 CHF', '1 CHF = 0,9 $', 'Aucune des deux'], en: ['$1 = 0.9000 CHF', '1 CHF = $0.9', 'Neither'] },
+        correct: 0,
+        rationale: { fr: 'X/Y = combien de Y pour 1 X.', en: 'X/Y = how many Y for 1 X.' },
+      },
+    ],
+  },
+
+  'basics-12': {
+    intro: {
+      fr: [
+        'Cinq grandes catégories d’acteurs animent le forex. Les banques centrales (FED, BCE) fixent les taux et interviennent rarement mais lourdement. Les banques commerciales font la majorité du volume — c’est le marché interbancaire.',
+        'Les hedge funds et corporates utilisent le forex pour spéculer ou couvrir leur exposition réelle (un exportateur allemand qui doit convertir des dollars). Les market makers et brokers fournissent la liquidité aux particuliers.',
+        'Les particuliers représentent environ 5 % du volume mondial. C’est petit — et c’est pour ça que vous ne déplacerez jamais le marché tout seul. Votre seul levier d’influence est la qualité de vos décisions, pas la taille de vos ordres.',
+      ],
+      en: [
+        'Five big categories drive forex. Central banks (FED, ECB) set rates and intervene rarely but heavily. Commercial banks handle most volume — the interbank market.',
+        'Hedge funds and corporates use forex to speculate or hedge real exposure (a German exporter converting dollars). Market makers and brokers provide liquidity to retail.',
+        'Retail traders are roughly 5% of global volume. That is small — and that is why you will never move the market alone. Your only lever of influence is decision quality, not order size.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'L’acteur qui pèse le plus dans le volume quotidien :', en: 'The actor with the biggest share of daily volume:' },
+      options: { fr: ['Banques commerciales', 'Banques centrales', 'Particuliers'], en: ['Commercial banks', 'Central banks', 'Retail traders'] },
+      correct: 0,
+      rationale: { fr: 'Marché interbancaire ≈ 70 % du flux.', en: 'Interbank ≈ 70% of flow.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'La FED décide :', en: 'The FED decides:' },
+        options: { fr: ['Les taux directeurs US', 'Les spreads brokers', 'Les heures de marché'], en: ['US policy rates', 'Broker spreads', 'Market hours'] },
+        correct: 0,
+        rationale: { fr: 'Politique monétaire US.', en: 'US monetary policy.' },
+      },
+      {
+        q: { fr: 'Un corporate « hedge » pour :', en: 'A corporate hedges to:' },
+        options: { fr: ['Verrouiller un taux de change', 'Spéculer agressivement', 'Influencer la BCE'], en: ['Lock in a rate', 'Speculate aggressively', 'Influence the ECB'] },
+        correct: 0,
+        rationale: { fr: 'Couverture, pas spéculation.', en: 'Hedging, not speculation.' },
+      },
+      {
+        q: { fr: 'La place du particulier :', en: 'Retail’s place:' },
+        options: { fr: ['~5 % du volume', '~40 %', 'Majoritaire'], en: ['~5% of volume', '~40%', 'Majority'] },
+        correct: 0,
+        rationale: { fr: 'On ne déplace pas le marché.', en: 'You do not move the market.' },
+      },
+    ],
+  },
+
+  'basics-13': {
+    intro: {
+      fr: [
+        'Exercice pratique : convertissez cinq mouvements en P&L. Posez les calculs à la main avant de regarder la réponse — c’est le geste qui ancre la mécanique.',
+        'Rappels utiles : 1 lot standard EUR/USD = 10 $/pip ; 1 mini lot = 1 $/pip ; 1 micro lot = 0,10 $/pip. Pour USD/JPY, la valeur du pip dépend du prix actuel mais tourne autour de 9 $/pip par lot standard.',
+        'L’objectif n’est pas d’apprendre une formule, c’est d’en automatiser le geste. Une fois fait cinquante fois, vous calculez en deux secondes — et plus jamais vous ne sur-tradez par mauvaise estimation.',
+      ],
+      en: [
+        'Hands-on drill: turn five moves into P&L. Work each one out by hand before peeking at the answer — the gesture is what locks the mechanic in.',
+        'Useful reminders: 1 standard lot EUR/USD = $10/pip; 1 mini lot = $1/pip; 1 micro lot = $0.10/pip. For USD/JPY, the pip value depends on the current price but hovers around $9/pip per standard lot.',
+        'The goal is not to memorise a formula, it is to automate the motion. After fifty repetitions you compute in two seconds — and you stop over-sizing from sloppy estimation.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Long EUR/USD 1.0820 → 1.0890, 2 mini lots. Gain en $ ?', en: 'Long EUR/USD 1.0820 → 1.0890, 2 mini lots. Gain in $?' },
+      options: { fr: ['140 $', '14 $', '1 400 $'], en: ['$140', '$14', '$1,400'] },
+      correct: 0,
+      rationale: { fr: '70 pips × 2 $/pip = 140 $.', en: '70 pips × $2/pip = $140.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Short GBP/USD 1.2750 → 1.2700, 1 lot. Résultat ?', en: 'Short GBP/USD 1.2750 → 1.2700, 1 lot. Result?' },
+        options: { fr: ['+500 $', '−500 $', '0 $'], en: ['+$500', '−$500', '$0'] },
+        correct: 0,
+        rationale: { fr: '50 pips × 10 $ = 500 $.', en: '50 pips × $10 = $500.' },
+      },
+      {
+        q: { fr: 'Long AUD/USD 0.6500 → 0.6480, 5 mini lots. Résultat ?', en: 'Long AUD/USD 0.6500 → 0.6480, 5 mini lots. Result?' },
+        options: { fr: ['−100 $', '+100 $', '−10 $'], en: ['−$100', '+$100', '−$10'] },
+        correct: 0,
+        rationale: { fr: 'Long et baisse = perte. 20 × 5 = 100.', en: 'Long with drop = loss. 20 × 5 = 100.' },
+      },
+      {
+        q: { fr: 'Pourquoi faire le calcul AVANT d’entrer ?', en: 'Why compute BEFORE entering?' },
+        options: { fr: ['Pour décider la taille', 'Pour gagner du temps en sortie', 'Par superstition'], en: ['To set position size', 'To save time on exit', 'Superstition'] },
+        correct: 0,
+        rationale: { fr: 'La taille découle du risque tolérable.', en: 'Size flows from tolerable risk.' },
+      },
+    ],
+  },
+
+  'basics-14': {
+    intro: {
+      fr: [
+        'Point de contrôle de la piste « bases ». Trois acquis à valider avant de passer à la suite : vocabulaire (pip, lot, levier, spread), mécanique (long/short, calcul P&L), et garde-fous (pourquoi le levier max est rarement une bonne idée).',
+        'Si une de ces trois bases est floue, refaites la leçon correspondante. Le reste du cursus suppose ces fondations stables — il ne sert à rien d’étudier les figures chartistes si vous ne savez pas calculer un risque.',
+        'C’est court, c’est dense, c’est suffisant. La prochaine piste, brokers & plateformes, est l’infrastructure dans laquelle vous allez maintenant manœuvrer.',
+      ],
+      en: [
+        'Checkpoint for the "basics" track. Three things to lock in before moving on: vocabulary (pip, lot, leverage, spread), mechanics (long/short, P&L computation), and guardrails (why max leverage is rarely a good idea).',
+        'If any of these three is fuzzy, retake the matching lesson. The rest of the curriculum assumes these foundations are solid — there is no point studying chart patterns if you cannot compute risk.',
+        'Short, dense, enough. The next track, brokers & platforms, is the infrastructure you will now be operating inside.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Vous ne savez pas calculer 1 % de risque. Que faire ?', en: 'You cannot compute 1% of risk. What do you do?' },
+      options: { fr: ['Reprendre la leçon « levier et marge »', 'Continuer quand même', 'Passer à la piste suivante'], en: ['Replay the "leverage and margin" lesson', 'Push through anyway', 'Skip to the next track'] },
+      correct: 0,
+      rationale: { fr: 'Pas de dette technique dans les fondations.', en: 'No technical debt in foundations.' },
+    },
+    quiz: [
+      {
+        q: { fr: 'Le levier max est :', en: 'Max leverage is:' },
+        options: { fr: ['Rarement nécessaire', 'Toujours souhaitable', 'Obligatoire au démarrage'], en: ['Rarely necessary', 'Always desirable', 'Required from day one'] },
+        correct: 0,
+        rationale: { fr: 'On dimensionne par le risque, pas par le levier.', en: 'You size by risk, not by leverage.' },
+      },
+      {
+        q: { fr: 'Quel ordre suivre dans la formation ?', en: 'Which order to follow in training?' },
+        options: { fr: ['Bases → brokers → bougies → risque', 'Bougies en premier toujours', 'Au hasard, c’est égal'], en: ['Basics → brokers → candles → risk', 'Candles first always', 'Random, no difference'] },
+        correct: 0,
+        rationale: { fr: 'Tickra empile les blocs.', en: 'Tickra stacks blocks.' },
+      },
+      {
+        q: { fr: 'La règle d’or quand un module est flou :', en: 'Golden rule when a module feels fuzzy:' },
+        options: { fr: ['Refaire la leçon', 'Forcer le suivant', 'Demander un signal'], en: ['Replay the lesson', 'Force the next one', 'Ask for a signal'] },
+        correct: 0,
+        rationale: { fr: 'On consolide, on n’avance pas dans le brouillard.', en: 'You consolidate, you do not advance in fog.' },
+      },
+    ],
+  },
 };
 
 // ─── Placeholder generator ─────────────────────────────────────────────────
 
+// Small lesson-id hash → pick a deterministic variant from a pool, so two
+// unseeded lessons feel different even though they share the placeholder
+// template structure.
+function hashIndex(id: string, modulo: number): number {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return h % modulo;
+}
+
+const PLACEHOLDER_INTRO_OPENERS: { fr: string[]; en: string[] } = {
+  fr: [
+    'Cette leçon décortique un concept précis avant de le confronter à un graphique.',
+    'On entre ici dans un sujet où le détail compte autant que la vue d’ensemble.',
+    'Un module court, dense, conçu pour rentrer dans la routine quotidienne de dix minutes.',
+    'Préparez papier et crayon : un schéma vaut souvent mieux que trois phrases.',
+    'Ce qui suit n’a rien d’ésotérique — c’est de l’hygiène de marché.',
+    'On va lier ce que vous savez déjà à ce qui arrive après.',
+  ],
+  en: [
+    'This lesson dissects a precise concept before testing it against a chart.',
+    'We enter a topic where detail counts as much as the big picture.',
+    'A short, dense module designed for the daily ten-minute routine.',
+    'Grab paper and pen: one sketch beats three sentences.',
+    'Nothing esoteric here — this is market hygiene.',
+    'We will link what you already know to what is coming next.',
+  ],
+};
+
+const PLACEHOLDER_INTRO_TAIL: { fr: string[]; en: string[] } = {
+  fr: [
+    'Lisez l’exposé, faites l’exercice, regardez la correction. Puis seulement, passez à la suite.',
+    'Le quiz ci-dessous ne piège pas — il fixe les idées. Reprenez-le si nécessaire.',
+    'Chaque leçon est une brique : ne la posez pas si la précédente n’est pas droite.',
+    'Si une idée vous échappe, notez-la et revenez-y après l’exercice.',
+  ],
+  en: [
+    'Read the brief, do the drill, look at the correction. Only then move on.',
+    'The quiz below is not a trap — it locks the ideas in. Retake it if needed.',
+    'Each lesson is a brick: do not lay it if the previous one is crooked.',
+    'If an idea slips, note it down and come back after the drill.',
+  ],
+};
+
+const PLACEHOLDER_QUIZ_POOL: ReadonlyArray<{
+  q: { fr: string; en: string };
+  options: { fr: string[]; en: string[] };
+  correct: number;
+  rationale: { fr: string; en: string };
+}> = [
+  {
+    q: { fr: 'La méthode Tickra met l’accent sur :', en: 'The Tickra method emphasises:' },
+    options: { fr: ['L’exposé puis l’exercice', 'Les indicateurs secrets', 'Le trading en live'], en: ['Brief then drill', 'Secret indicators', 'Live trading'] },
+    correct: 0,
+    rationale: { fr: 'Pas de raccourci.', en: 'No shortcut.' },
+  },
+  {
+    q: { fr: 'Une leçon dure environ :', en: 'A lesson runs about:' },
+    options: { fr: ['10 minutes', '1 heure', '3 heures'], en: ['10 minutes', '1 hour', '3 hours'] },
+    correct: 0,
+    rationale: { fr: 'Court, dense, refaisable.', en: 'Short, dense, repeatable.' },
+  },
+  {
+    q: { fr: 'Une notion floue se traite par :', en: 'A fuzzy notion is fixed by:' },
+    options: { fr: ['Reprendre la leçon', 'Forcer la suivante', 'Demander un signal'], en: ['Replaying the lesson', 'Forcing the next one', 'Asking for a signal'] },
+    correct: 0,
+    rationale: { fr: 'Pas de dette technique.', en: 'No technical debt.' },
+  },
+  {
+    q: { fr: 'Le risque par trade se calcule :', en: 'Per-trade risk is computed:' },
+    options: { fr: ['Avant l’entrée', 'Après le résultat', 'Jamais'], en: ['Before entry', 'After the result', 'Never'] },
+    correct: 0,
+    rationale: { fr: 'On dimensionne par le risque.', en: 'You size by risk.' },
+  },
+  {
+    q: { fr: 'Le contexte d’une figure se lit sur :', en: 'A pattern’s context is read on:' },
+    options: { fr: ['Le timeframe supérieur', 'Le timeframe inférieur', 'Une bougie isolée'], en: ['The higher timeframe', 'The lower timeframe', 'A single candle'] },
+    correct: 0,
+    rationale: { fr: 'Sans contexte, le signal ment.', en: 'Without context, the signal lies.' },
+  },
+  {
+    q: { fr: 'Le journal de trade sert à :', en: 'The trade journal serves to:' },
+    options: { fr: ['Repérer ses propres patterns d’erreur', 'Battre le marché', 'Comparer aux autres'], en: ['Spot your own error patterns', 'Beat the market', 'Compare to others'] },
+    correct: 0,
+    rationale: { fr: 'On corrige ce qu’on mesure.', en: 'You fix what you measure.' },
+  },
+  {
+    q: { fr: 'Le levier maximal est :', en: 'Max leverage is:' },
+    options: { fr: ['Rarement nécessaire', 'Toujours souhaitable', 'Obligatoire'], en: ['Rarely necessary', 'Always desirable', 'Required'] },
+    correct: 0,
+    rationale: { fr: 'On raisonne par le risque, pas par le levier.', en: 'You reason by risk, not leverage.' },
+  },
+  {
+    q: { fr: 'Un point de contrôle :', en: 'A checkpoint:' },
+    options: { fr: ['Peut être manqué et repassé', 'Bloque définitivement', 'Coûte des crédits'], en: ['Can be failed and retaken', 'Locks you out permanently', 'Costs credits'] },
+    correct: 0,
+    rationale: { fr: 'Test, pas sanction.', en: 'Test, not punishment.' },
+  },
+];
+
 function placeholder(track: TrackMeta, lesson: LessonMeta): LessonContent {
   const title = lesson.title;
+  const id = lesson.id;
+  const oFr = PLACEHOLDER_INTRO_OPENERS.fr[hashIndex(id, PLACEHOLDER_INTRO_OPENERS.fr.length)];
+  const oEn = PLACEHOLDER_INTRO_OPENERS.en[hashIndex(id, PLACEHOLDER_INTRO_OPENERS.en.length)];
+  const tFr = PLACEHOLDER_INTRO_TAIL.fr[hashIndex(id + 'tail', PLACEHOLDER_INTRO_TAIL.fr.length)];
+  const tEn = PLACEHOLDER_INTRO_TAIL.en[hashIndex(id + 'tail', PLACEHOLDER_INTRO_TAIL.en.length)];
+
+  // Pick 3 quiz questions deterministically without repeats.
+  const picks: number[] = [];
+  let cursor = hashIndex(id + 'quiz', PLACEHOLDER_QUIZ_POOL.length);
+  while (picks.length < 3) {
+    if (!picks.includes(cursor)) picks.push(cursor);
+    cursor = (cursor + 1) % PLACEHOLDER_QUIZ_POOL.length;
+  }
+  const quiz = picks.map((i) => PLACEHOLDER_QUIZ_POOL[i]);
+
   return {
     intro: {
       fr: [
         `Cette leçon couvre : ${title.fr}.`,
-        `Elle s’inscrit dans la piste « ${track.title.fr} » et s’appuie sur les leçons précédentes.`,
-        'Le contenu complet sera dévoilé séance après séance : Tickra ne déverse pas tout d’un coup, vous progressez bloc par bloc.',
+        `Sujet rattaché à la piste « ${track.title.fr} ». ${oFr}`,
+        tFr,
       ],
       en: [
         `This lesson covers: ${title.en}.`,
-        `It belongs to the "${track.title.en}" track and builds on the previous lessons.`,
-        'Full content is unlocked session after session: Tickra does not dump everything at once, you progress block by block.',
+        `Topic linked to the "${track.title.en}" track. ${oEn}`,
+        tEn,
       ],
     },
     drill: {
       prompt: {
-        fr: `Sur l’aperçu de la leçon « ${title.fr} », quelle affirmation est la plus prudente ?`,
-        en: `On the preview for "${title.en}", which statement is the most prudent?`,
+        fr: `Sur la leçon « ${title.fr} », quelle posture est la plus prudente ?`,
+        en: `On the lesson "${title.en}", which posture is most prudent?`,
       },
       options: {
         fr: [
-          'Je vais lire l’exposé puis pratiquer sur trois cas avant de juger.',
+          'Je lis l’exposé puis pratique sur trois cas avant de juger.',
           'J’applique immédiatement sur un compte réel.',
           'Je passe la leçon, je connais déjà le sujet.',
         ],
@@ -1915,26 +2610,7 @@ function placeholder(track: TrackMeta, lesson: LessonMeta): LessonContent {
         en: 'The Tickra method: brief → drill → review. Skipping a step does not save time.',
       },
     },
-    quiz: [
-      {
-        q: { fr: 'Tickra enseigne d’abord :', en: 'Tickra teaches first:' },
-        options: { fr: ['La méthode', 'Les signaux', 'Les indicateurs secrets'], en: ['The method', 'Signals', 'Secret indicators'] },
-        correct: 0,
-        rationale: { fr: 'La méthode, toujours. Le reste se transmet ensuite.', en: 'The method, always. The rest follows.' },
-      },
-      {
-        q: { fr: 'Une leçon Tickra dure :', en: 'A Tickra lesson runs:' },
-        options: { fr: ['Environ 10 minutes', 'Une heure minimum', 'Aucune durée fixe'], en: ['About 10 minutes', 'At least one hour', 'No fixed length'] },
-        correct: 0,
-        rationale: { fr: 'Dix minutes. Court, dense, refaisable.', en: 'Ten minutes. Short, dense, repeatable.' },
-      },
-      {
-        q: { fr: 'Le point de contrôle d’une piste sert à :', en: 'A track checkpoint exists to:' },
-        options: { fr: ['Valider l’ensemble de la piste', 'Punir les retards', 'Comparer avec d’autres apprenants'], en: ['Validate the whole track', 'Punish lateness', 'Compare with other learners'] },
-        correct: 0,
-        rationale: { fr: 'Un point de contrôle peut être manqué — et repassé. C’est un test, pas une sanction.', en: 'A checkpoint can be failed — and retaken. It is a test, not a punishment.' },
-      },
-    ],
+    quiz,
   };
 }
 
