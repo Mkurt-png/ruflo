@@ -15,6 +15,8 @@ import { LifetimeStats } from './LifetimeStats';
 import { NotificationOptin } from './NotificationOptin';
 import { FirstRunTour } from './FirstRunTour';
 import { DailyChallenge } from './DailyChallenge';
+import { DailyQuests } from './DailyQuests';
+import { XpBadge } from './XpBadge';
 import { ExportProgress } from './ExportProgress';
 import { ImportProgress } from './ImportProgress';
 import { CurriculumHeatmap } from './CurriculumHeatmap';
@@ -152,6 +154,16 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
             </Link>
           </div>
         </article>
+
+        {/* TICKRA-SPRINT-C: XP badge surfaces level + progress at a glance. */}
+        <div className="mt-3">
+          <XpBadge locale={locale} />
+        </div>
+
+        {/* TICKRA-SPRINT-C: 3 daily quests with claimable XP rewards. */}
+        <div className="mt-3">
+          <DailyQuests locale={locale} />
+        </div>
 
         <div className="mt-3">
           <DailyChallenge locale={locale} />

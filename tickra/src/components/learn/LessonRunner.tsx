@@ -10,6 +10,7 @@ import { LessonToc } from './LessonToc';
 import { BookmarkButton } from './BookmarkButton';
 import { QuizSuggestions } from './QuizSuggestions';
 import { useProgress } from '@/lib/progress/hook';
+import { addXp } from '@/lib/progress/xp';
 import { toast } from '@/components/site/ToastProvider';
 import { easeOutExpo } from '@/lib/motion';
 import { cn } from '@/lib/cn';
@@ -187,6 +188,11 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
     } else {
       // Finish: mark complete then transition to done.
       markComplete(lesson.id);
+      // TICKRA-SPRINT-C: award XP on lesson completion + ping the UI badge.
+      addXp(20);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('tickra-xp-changed'));
+      }
       // If the lesson was on the review queue and the user got everything
       // right, log a review tick so the SR engine pushes the next interval out.
       if (quizScore + (quizCorrect ? 1 : 0) === content.quiz.length) {

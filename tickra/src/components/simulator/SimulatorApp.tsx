@@ -16,6 +16,7 @@ import { ArrowDownRight, ArrowUpRight, Lock, RotateCcw, TrendingDown, TrendingUp
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
 import { useUser } from '@/lib/auth/useUser';
+import { addXp } from '@/lib/progress/xp';
 import { TradingViewWidget } from './TradingViewWidget';
 import { PaywallCard } from '@/components/learn/PaywallCard';
 
@@ -212,6 +213,12 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
           }
         }
 
+        // TICKRA-SPRINT-C: every closed trade rewards 10 XP — both wins & losses.
+        if (newlyClosed.length) {
+          addXp(10 * newlyClosed.length);
+          window.dispatchEvent(new Event('tickra-xp-changed'));
+        }
+
         const out: State = {
           balance,
           open: stillOpen,
@@ -277,6 +284,9 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
         closed: [closed, ...prev.closed].slice(0, 200),
       };
       saveState(out);
+      // TICKRA-SPRINT-C: manual close also rewards XP.
+      addXp(10);
+      window.dispatchEvent(new Event('tickra-xp-changed'));
       return out;
     });
   };
