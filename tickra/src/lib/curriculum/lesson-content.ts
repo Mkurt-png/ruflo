@@ -2454,6 +2454,460 @@ const seeded: Seed = {
       },
     ],
   },
+
+  // ─── Brokers & plateformes (brokers) ─────────────────────────────────────
+  'brokers-01': {
+    intro: {
+      fr: [
+        'Un broker régulé est supervisé par une autorité de marché (AMF en France, FCA au Royaume-Uni, CySEC à Chypre, ASIC en Australie). La régulation impose la séparation des fonds clients, des audits, et une indemnisation partielle en cas de faillite.',
+        'Trois signaux à vérifier avant d’ouvrir : régulateur affiché clairement (numéro de licence), siège dans une juridiction sérieuse, retraits documentés (combien de jours, quelles méthodes).',
+        'Évitez les brokers offshore sans régulation reconnue. Le spread paraît moins cher, le levier énorme — c’est un piège. En cas de litige, vous n’avez aucun recours.',
+      ],
+      en: [
+        'A regulated broker is supervised by a market authority (FCA in the UK, ASIC in Australia, CySEC in Cyprus, AMF in France). Regulation enforces client-fund segregation, audits, and partial compensation in case of bankruptcy.',
+        'Three signals to check before opening: regulator clearly displayed (licence number), HQ in a serious jurisdiction, documented withdrawals (how many days, which methods).',
+        'Avoid offshore brokers with no recognised regulation. The spread looks cheaper, the leverage is huge — it is a trap. If you have a dispute, you have no recourse.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Un broker propose un levier 1:500 sans afficher de régulateur. Vous :', en: 'A broker offers 500:1 leverage and shows no regulator. You:' },
+      options: { fr: ['Passez votre chemin', 'Ouvrez un compte rapidement', 'Cherchez les avis sur Trustpilot uniquement'], en: ['Walk away', 'Open quickly', 'Check Trustpilot only'] },
+      correct: 0,
+      rationale: { fr: 'Pas de régulateur = pas de recours.', en: 'No regulator = no recourse.' },
+    },
+    quiz: [
+      { q: { fr: 'La séparation des fonds clients sert à :', en: 'Client-fund segregation exists to:' }, options: { fr: ['Protéger en cas de faillite', 'Réduire le spread', 'Augmenter le levier'], en: ['Protect during bankruptcy', 'Reduce the spread', 'Raise leverage'] }, correct: 0, rationale: { fr: 'Vos fonds ne servent pas l’opérationnel du broker.', en: 'Your money does not fund broker operations.' } },
+      { q: { fr: 'Quelle juridiction inspire le plus confiance :', en: 'Which jurisdiction is most trusted:' }, options: { fr: ['FCA Royaume-Uni', 'Caraïbes anonymes', 'Aucune en particulier'], en: ['UK FCA', 'Anonymous Caribbean', 'None in particular'] }, correct: 0, rationale: { fr: 'Régulateur strict, recours possible.', en: 'Strict regulator, recourse available.' } },
+      { q: { fr: 'Un retrait flou (« délai variable ») signale :', en: 'A vague withdrawal ("variable delay") signals:' }, options: { fr: ['Un risque de friction', 'Une opération normale', 'Une fonctionnalité premium'], en: ['Friction risk', 'Normal operation', 'A premium feature'] }, correct: 0, rationale: { fr: 'Le retrait doit être chronométré.', en: 'Withdrawals should be timed.' } },
+    ],
+  },
+
+  'brokers-02': {
+    intro: {
+      fr: [
+        'Trois grandes familles de comptes : Standard (spread incluant la marge du broker, pas de commission), ECN/Raw (spread quasi nul, commission par lot), et Cent (compte en centimes pour micro-tests).',
+        'Le Standard est plus simple à lire mais cache une partie du coût dans le spread élargi. L’ECN est plus transparent — vous voyez la commission, mais demande un capital minimum souvent plus élevé.',
+        'Pour un débutant : Cent ou micro-compte les 30 premiers jours, Standard pour la pratique régulière, ECN quand vos volumes justifient les commissions.',
+      ],
+      en: [
+        'Three account families: Standard (spread includes broker mark-up, no commission), ECN/Raw (near-zero spread, per-lot commission), and Cent (cent-denominated account for micro tests).',
+        'Standard is easier to read but hides part of the cost in a wider spread. ECN is more transparent — you see the commission, but the minimum capital is usually higher.',
+        'For a beginner: Cent or micro account the first 30 days, Standard for regular practice, ECN once volume justifies commissions.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Vous débutez avec 300 €. Quel compte choisir ?', en: 'You start with €300. Which account?' },
+      options: { fr: ['Micro/Cent', 'ECN standard', 'Compte pro'], en: ['Micro/Cent', 'Standard ECN', 'Pro account'] },
+      correct: 0,
+      rationale: { fr: 'On dimensionne au capital réel.', en: 'You size to your real capital.' },
+    },
+    quiz: [
+      { q: { fr: 'Un ECN facture :', en: 'An ECN charges:' }, options: { fr: ['Une commission par lot', 'Aucune commission jamais', 'Un abonnement mensuel'], en: ['Per-lot commission', 'No commission ever', 'A monthly fee'] }, correct: 0, rationale: { fr: 'Spread brut + commission.', en: 'Raw spread + commission.' } },
+      { q: { fr: 'Le compte Cent permet :', en: 'A cent account lets you:' }, options: { fr: ['Tester en très petite taille', 'Trader plus gros', 'Économiser les frais'], en: ['Test at tiny size', 'Trade bigger', 'Save fees'] }, correct: 0, rationale: { fr: 'Idéal pour apprendre le geste.', en: 'Ideal to learn the motion.' } },
+      { q: { fr: 'Le Standard cache le coût dans :', en: 'Standard hides the cost in:' }, options: { fr: ['Le spread élargi', 'La marge', 'Le swap uniquement'], en: ['Wider spread', 'Margin', 'Swap only'] }, correct: 0, rationale: { fr: 'Spread = revenu broker.', en: 'Spread = broker revenue.' } },
+    ],
+  },
+
+  'brokers-03': {
+    intro: {
+      fr: [
+        'Méthodes de dépôt courantes : virement bancaire (lent mais traçable), carte (instantané mais souvent plafonné), Skrill/Neteller (rapide, frais variables), crypto (rapide, attention aux frais réseau).',
+        'Pour le retrait : exigez la même méthode que le dépôt — c’est une règle AML que la plupart des brokers appliquent. Si vous avez déposé par carte, vous retirez d’abord sur la même carte.',
+        'Toujours faire un petit dépôt test avant un dépôt sérieux. Un broker qui rend difficile un retrait de 100 € le rendra impossible pour 10 000 €.',
+      ],
+      en: [
+        'Common deposit methods: bank transfer (slow but traceable), card (instant but often capped), Skrill/Neteller (fast, variable fees), crypto (fast, watch network fees).',
+        'For withdrawal: expect the same method as the deposit — an AML rule most brokers apply. If you deposited by card, you withdraw to the same card first.',
+        'Always do a small test deposit before a serious one. A broker that makes a €100 withdrawal hard will make €10,000 impossible.',
+      ],
+    },
+    drill: { prompt: { fr: 'Premier dépôt sur un nouveau broker. Vous mettez :', en: 'First deposit on a new broker. You put:' }, options: { fr: ['Un petit montant test', 'Tout votre capital', 'Le minimum requis seulement'], en: ['A small test amount', 'All your capital', 'Only the required minimum'] }, correct: 0, rationale: { fr: 'On vérifie le canal de retrait avant.', en: 'You test the withdrawal channel first.' } },
+    quiz: [
+      { q: { fr: 'La règle « même canal dépôt/retrait » est :', en: 'The "same channel deposit/withdrawal" rule is:' }, options: { fr: ['AML/KYC', 'Marketing', 'Optionnelle'], en: ['AML/KYC', 'Marketing', 'Optional'] }, correct: 0, rationale: { fr: 'Lutte anti-blanchiment.', en: 'Anti-money-laundering.' } },
+      { q: { fr: 'Un dépôt crypto rapide expose à :', en: 'A fast crypto deposit exposes to:' }, options: { fr: ['Frais réseau variables', 'Aucun risque', 'Plus de levier'], en: ['Variable network fees', 'No risk', 'More leverage'] }, correct: 0, rationale: { fr: 'Gas peut surprendre.', en: 'Gas can surprise.' } },
+      { q: { fr: 'Le virement bancaire est :', en: 'Bank transfer is:' }, options: { fr: ['Lent mais traçable', 'Rapide et anonyme', 'Gratuit toujours'], en: ['Slow but traceable', 'Fast and anonymous', 'Always free'] }, correct: 0, rationale: { fr: 'Idéal pour les gros montants.', en: 'Best for large amounts.' } },
+    ],
+  },
+
+  'brokers-04': {
+    intro: {
+      fr: [
+        'MetaTrader 4 (MT4) reste la référence forex retail : graphiques, indicateurs, scripts, expert advisors. Interface datée mais ultra-stable. MetaTrader 5 (MT5) ajoute des timeframes, des types d’ordres, et l’accès aux actions/futures — moins universel mais plus moderne.',
+        'Les deux tournent en local : votre PC charge la plateforme, le broker fournit le flux de prix. Conséquence : vous pouvez perdre la connexion mais vos ordres en attente restent côté broker.',
+        'Pour commencer : MT5 si votre broker le propose (plus de fonctionnalités), MT4 sinon. Ne dépensez pas un mois à apprendre les EAs avant de savoir lire un graphique.',
+      ],
+      en: [
+        'MetaTrader 4 (MT4) is still the retail forex reference: charts, indicators, scripts, expert advisors. Dated UI but ultra-stable. MetaTrader 5 (MT5) adds timeframes, order types, and access to stocks/futures — less universal but more modern.',
+        'Both run locally: your PC loads the platform, the broker supplies the price feed. Consequence: you can drop your connection but pending orders remain on the broker side.',
+        'To start: MT5 if your broker offers it (more features), MT4 otherwise. Do not spend a month learning EAs before you can read a chart.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous perdez Internet 30 sec. Votre stop-loss :', en: 'You lose internet for 30 seconds. Your stop-loss:' }, options: { fr: ['Reste actif côté broker', 'S’annule', 'Devient une limite'], en: ['Stays active broker-side', 'Cancels', 'Becomes a limit'] }, correct: 0, rationale: { fr: 'L’ordre vit chez le broker.', en: 'The order lives with the broker.' } },
+    quiz: [
+      { q: { fr: 'MT5 supporte :', en: 'MT5 supports:' }, options: { fr: ['Actions, futures, forex', 'Forex uniquement', 'Crypto uniquement'], en: ['Stocks, futures, forex', 'Forex only', 'Crypto only'] }, correct: 0, rationale: { fr: 'Multi-actifs.', en: 'Multi-asset.' } },
+      { q: { fr: 'Un Expert Advisor est :', en: 'An Expert Advisor is:' }, options: { fr: ['Un script automatisé', 'Un humain payant', 'Une option premium'], en: ['An automated script', 'A paid human', 'A premium option'] }, correct: 0, rationale: { fr: 'Bot, à coder ou acheter.', en: 'Bot, code or buy.' } },
+      { q: { fr: 'L’avantage de MT4 sur MT5 :', en: 'MT4 advantage over MT5:' }, options: { fr: ['Universalité (tous brokers)', 'Plus de fonctionnalités', 'Meilleur graphique'], en: ['Universality (every broker)', 'More features', 'Better charts'] }, correct: 0, rationale: { fr: 'Le standard de facto.', en: 'De facto standard.' } },
+    ],
+  },
+
+  'brokers-05': {
+    intro: {
+      fr: [
+        'TradingView est devenu l’outil graphique standard. Free : 1 graphique, 3 indicateurs, 1 alerte. Pro : 4 graphiques, 5 alertes. Pro+ : 8 graphiques. Premium : 10 graphiques, replays intrabar, données 2nd-by-2nd.',
+        'Avantage majeur : la communauté. Vous pouvez publier votre analyse, comparer aux autres, suivre des traders sérieux (et ignorer les vendeurs de rêve).',
+        'Tickra intègre TradingView dans les leçons et le simulateur. Pas besoin de compte payant pour démarrer — le free suffit jusqu’à ce que vous ayez besoin de multi-écrans.',
+      ],
+      en: [
+        'TradingView has become the standard charting tool. Free: 1 chart, 3 indicators, 1 alert. Pro: 4 charts, 5 alerts. Pro+: 8 charts. Premium: 10 charts, intrabar replays, second-by-second data.',
+        'Major edge: the community. You can publish your analysis, compare to others, follow serious traders (and ignore the dream-sellers).',
+        'Tickra embeds TradingView inside lessons and the simulator. No paid plan needed to start — free is enough until you need multi-screens.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous voulez 4 graphiques côte à côte. Quel plan ?', en: 'You want 4 charts side by side. Which plan?' }, options: { fr: ['Pro', 'Free', 'Aucun, c’est impossible'], en: ['Pro', 'Free', 'None, impossible'] }, correct: 0, rationale: { fr: 'Pro débloque 4.', en: 'Pro unlocks 4.' } },
+    quiz: [
+      { q: { fr: 'La fonction Replay sert à :', en: 'Replay feature is for:' }, options: { fr: ['Rejouer des sessions historiques', 'Copier d’autres traders', 'Sauter des news'], en: ['Replay historical sessions', 'Copy others', 'Skip news'] }, correct: 0, rationale: { fr: 'Pratique reflex sur historique.', en: 'Practice reflexes on history.' } },
+      { q: { fr: 'L’avantage social de TradingView :', en: 'TradingView’s social edge:' }, options: { fr: ['Publier et comparer', 'Trader directement', 'Recevoir des signaux gratuits'], en: ['Publish and compare', 'Trade directly', 'Receive free signals'] }, correct: 0, rationale: { fr: 'Discussion, pas signal.', en: 'Discussion, not signals.' } },
+      { q: { fr: 'TradingView free suffit pour :', en: 'TradingView free is enough for:' }, options: { fr: ['Apprendre à analyser', 'Faire 4 graphiques', 'Trader en multi-comptes'], en: ['Learning to analyse', 'Doing 4 charts', 'Multi-account trading'] }, correct: 0, rationale: { fr: 'Free couvre l’essentiel.', en: 'Free covers the basics.' } },
+    ],
+  },
+
+  'brokers-06': {
+    intro: {
+      fr: [
+        'Quatre types d’ordres à connaître. Marché : achat/vente immédiat au meilleur prix disponible. Limite : déclenche seulement à un prix fixé ou meilleur. Stop : déclenche au prix fixé, ensuite devient ordre marché. Stop-limit : combine — déclenche au stop, exécute à la limite.',
+        'OCO (One-Cancels-Other) : deux ordres liés ; l’exécution de l’un annule l’autre. Idéal pour borner une fourchette : si breakout, achat ; si retournement, vente.',
+        'Règle d’hygiène : ne pas utiliser d’ordre marché en pleine news. Le slippage peut vous coûter plusieurs pips. Préférez un ordre limit même si vous risquez de ne pas être exécuté.',
+      ],
+      en: [
+        'Four order types to know. Market: instant buy/sell at best available price. Limit: triggers only at a set price or better. Stop: triggers at a set price, then becomes a market order. Stop-limit: combines — triggers at the stop, executes at the limit.',
+        'OCO (One-Cancels-Other): two linked orders; executing one cancels the other. Ideal to bracket a range: if breakout, buy; if reversal, sell.',
+        'Hygiene rule: do not use market orders during news. Slippage can cost you several pips. Prefer a limit even at the risk of not getting filled.',
+      ],
+    },
+    drill: { prompt: { fr: 'En pleine NFP, vous voulez acheter. Vous utilisez :', en: 'During NFP, you want to buy. You use:' }, options: { fr: ['Un ordre limite', 'Un ordre marché', 'Un stop d’achat'], en: ['A limit order', 'A market order', 'A buy stop'] }, correct: 0, rationale: { fr: 'Marché en news = slippage.', en: 'Market on news = slippage.' } },
+    quiz: [
+      { q: { fr: 'OCO signifie :', en: 'OCO means:' }, options: { fr: ['One Cancels Other', 'Open Close Order', 'Off-Chain Order'], en: ['One Cancels Other', 'Open Close Order', 'Off-Chain Order'] }, correct: 0, rationale: { fr: 'Deux ordres liés.', en: 'Two linked orders.' } },
+      { q: { fr: 'Un stop classique devient :', en: 'A regular stop becomes:' }, options: { fr: ['Un ordre marché au déclenchement', 'Une limite', 'Un trailing'], en: ['A market order on trigger', 'A limit', 'A trailing'] }, correct: 0, rationale: { fr: 'D’où le slippage possible.', en: 'Hence possible slippage.' } },
+      { q: { fr: 'Une limite garantit :', en: 'A limit guarantees:' }, options: { fr: ['Le prix, pas l’exécution', 'L’exécution, pas le prix', 'Les deux'], en: ['Price, not fill', 'Fill, not price', 'Both'] }, correct: 0, rationale: { fr: 'Trade-off classique.', en: 'Classic trade-off.' } },
+    ],
+  },
+
+  'brokers-07': {
+    intro: {
+      fr: [
+        'Slippage = écart entre le prix demandé et le prix obtenu. Sur EUR/USD en pleine session de Londres : presque nul. Sur GBP/JPY pendant un statement BCE : 5 à 15 pips, fréquent.',
+        'Trois facteurs : volatilité (plus c’est nerveux, plus le slippage est large), liquidité (paires majeures = faible, exotiques = élevé), exécution broker (ECN = mieux, market maker = parfois pire).',
+        'Latence = délai entre votre clic et l’arrivée de l’ordre côté broker. 50 ms est excellent, 200 ms acceptable, 800 ms = changez de broker (ou trouvez un VPS plus proche).',
+      ],
+      en: [
+        'Slippage = gap between the requested price and the obtained price. On EUR/USD during London session: nearly zero. On GBP/JPY during an ECB statement: 5 to 15 pips, frequent.',
+        'Three factors: volatility (the more nervous, the wider the slippage), liquidity (majors = low, exotics = high), broker execution (ECN = better, market maker = sometimes worse).',
+        'Latency = delay between your click and the order reaching the broker. 50 ms is excellent, 200 ms acceptable, 800 ms = change broker (or find a closer VPS).',
+      ],
+    },
+    drill: { prompt: { fr: 'Sur GBP/JPY pendant un statement BCE, attendez-vous à :', en: 'On GBP/JPY during an ECB statement, expect:' }, options: { fr: ['Slippage 5-15 pips', 'Slippage nul', 'Exécution garantie au prix demandé'], en: ['5-15 pips slippage', 'Zero slippage', 'Guaranteed execution at requested price'] }, correct: 0, rationale: { fr: 'Vol + spread = écart.', en: 'Vol + spread = gap.' } },
+    quiz: [
+      { q: { fr: 'Une latence de 800 ms :', en: '800 ms latency:' }, options: { fr: ['Demande de changer de broker/VPS', 'Est normale', 'Est excellente'], en: ['Demands a broker/VPS change', 'Is normal', 'Is excellent'] }, correct: 0, rationale: { fr: 'Trop lent pour exécuter.', en: 'Too slow to execute.' } },
+      { q: { fr: 'Un broker ECN tend à offrir :', en: 'An ECN broker tends to offer:' }, options: { fr: ['Moins de slippage', 'Plus de slippage', 'Aucun spread'], en: ['Less slippage', 'More slippage', 'No spread'] }, correct: 0, rationale: { fr: 'Pas de market making.', en: 'No internal market making.' } },
+      { q: { fr: 'Le VPS sert à :', en: 'A VPS is used to:' }, options: { fr: ['Réduire la latence', 'Augmenter le levier', 'Bypass la KYC'], en: ['Cut latency', 'Raise leverage', 'Skip KYC'] }, correct: 0, rationale: { fr: 'Serveur proche du broker.', en: 'Server close to the broker.' } },
+    ],
+  },
+
+  'brokers-08': {
+    intro: {
+      fr: [
+        'Trois frais cachés sur lesquels vous saignerez si vous ne regardez pas. Swap (rollover) : intérêt journalier prélevé/crédité chaque nuit selon la différence de taux entre les deux devises de la paire. Inactif quelques jours = ignorable. Position tenue 3 mois = peut représenter 5 % du PnL.',
+        'Commission par lot : surtout en ECN. Comptez 3 à 7 $ par lot standard (allers-retours). Sur scalping intraday avec 20 trades/jour, c’est votre principal poste.',
+        'Spread variable vs fixe : un broker à spread fixe paraît rassurant, mais facture toujours plus large en moyenne. Le spread variable monte en news mais redescend en session calme.',
+      ],
+      en: [
+        'Three hidden fees that will bleed you if you don’t look. Swap (rollover): daily interest paid/credited each night based on the rate differential between the two currencies in the pair. Held a few days = ignorable. Held 3 months = can be 5 % of P&L.',
+        'Commission per lot: mostly on ECN. Expect $3 to $7 per standard lot (round-trip). For intraday scalping with 20 trades/day, it is your main cost.',
+        'Variable vs fixed spread: a fixed-spread broker feels safe but charges wider on average. Variable spreads spike on news but drop in calm sessions.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous tenez une position USD/TRY 3 mois. Risque principal hors prix :', en: 'You hold a USD/TRY position for 3 months. Main non-price risk:' }, options: { fr: ['Swap très négatif', 'Spread', 'Slippage'], en: ['Very negative swap', 'Spread', 'Slippage'] }, correct: 0, rationale: { fr: 'Taux TRY haut = swap ruineux.', en: 'High TRY rate = ruinous swap.' } },
+    quiz: [
+      { q: { fr: 'Le swap est calculé :', en: 'Swap is computed:' }, options: { fr: ['Chaque nuit (rollover)', 'À la clôture du trade', 'Par mois'], en: ['Each night (rollover)', 'On trade close', 'Monthly'] }, correct: 0, rationale: { fr: 'Mercredi triple sur le forex.', en: 'Triple on Wednesday in forex.' } },
+      { q: { fr: 'Un spread fixe est :', en: 'A fixed spread is:' }, options: { fr: ['Plus large en moyenne', 'Toujours moins cher', 'Identique au variable'], en: ['Wider on average', 'Always cheaper', 'Same as variable'] }, correct: 0, rationale: { fr: 'Vous payez l’assurance.', en: 'You pay the insurance.' } },
+      { q: { fr: 'En scalping intraday, le poste #1 :', en: 'In intraday scalping, the #1 cost:' }, options: { fr: ['Commissions', 'Swap', 'Frais de retrait'], en: ['Commissions', 'Swap', 'Withdrawal fees'] }, correct: 0, rationale: { fr: 'Trop de trades = commissions cumulées.', en: 'Many trades = stacked commissions.' } },
+    ],
+  },
+
+  'brokers-09': {
+    intro: {
+      fr: [
+        'Le compte démo n’est pas un compte « pour rire ». C’est votre vraie salle d’entraînement. Tout y est techniquement identique au réel — sauf l’émotion. La main qui tremble ne tremble pas sur une démo.',
+        'Règle simple : trader en démo jusqu’à 30 jours consécutifs profitables avant de toucher le réel. Pas « jusqu’à ce que je gagne une fois », mais « jusqu’à ce que la régularité soit là ».',
+        'Quand vous passez au réel : commencez avec le micro lot. Une perte de 5 € fait travailler les mêmes circuits émotionnels qu’une perte de 5 000 € sur un gros compte — c’est de la pratique mentale, pas une question d’argent.',
+      ],
+      en: [
+        'A demo account is not a "for fun" account. It is your real training ground. Everything is technically identical to live — except emotion. The shaky hand does not shake on demo.',
+        'Simple rule: trade demo until 30 consecutive profitable days before touching real money. Not "until I win once", but "until consistency shows".',
+        'When you move to real: start with micro lots. A €5 loss runs the same emotional circuits as a €5,000 loss on a big account — it is mental practice, not a money question.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous êtes vert sur la démo depuis 5 jours. Vous :', en: 'You are green on demo for 5 days. You:' }, options: { fr: ['Continuez la démo', 'Passez au réel petit', 'Passez au réel gros'], en: ['Stay on demo', 'Move to small live', 'Move to big live'] }, correct: 0, rationale: { fr: 'Régularité avant tout.', en: 'Consistency first.' } },
+    quiz: [
+      { q: { fr: 'La démo manque surtout :', en: 'Demo mostly lacks:' }, options: { fr: ['L’émotion', 'Le slippage', 'Le spread'], en: ['Emotion', 'Slippage', 'Spread'] }, correct: 0, rationale: { fr: 'Mécanique OK, mental absent.', en: 'Mechanics OK, mental missing.' } },
+      { q: { fr: 'Le micro lot sert à :', en: 'Micro lot is for:' }, options: { fr: ['Apprivoiser le réel', 'Économiser des frais', 'Trader plus vite'], en: ['Taming live trading', 'Saving fees', 'Trading faster'] }, correct: 0, rationale: { fr: 'Engagement émotionnel sans risquer gros.', en: 'Emotional engagement without big risk.' } },
+      { q: { fr: 'Le passage démo → réel doit attendre :', en: 'Moving demo → live should wait:' }, options: { fr: ['30 jours profitables', 'Un seul trade gagnant', 'Un mois entier sans trader'], en: ['30 profitable days', 'A single win', 'A month of not trading'] }, correct: 0, rationale: { fr: 'On valide la régularité.', en: 'You validate consistency.' } },
+    ],
+  },
+
+  'brokers-10': {
+    intro: {
+      fr: [
+        'Point de contrôle de la piste Brokers & plateformes. Trois acquis à valider : choisir un broker régulé (juridiction sérieuse, séparation des fonds), maîtriser les ordres de base (marché, limite, stop, OCO), connaître les coûts cachés (swap, commission, spread variable).',
+        'Si la moindre des trois est floue, refaites la leçon correspondante. La piste suivante (Bougies japonaises) suppose ces fondations posées.',
+        'Bonus pratique : faites un dépôt-retrait test de 50 € sur votre futur broker avant de prendre l’abonnement Pro Tickra. C’est 50 € d’assurance pour vérifier que le canal fonctionne dans les deux sens.',
+      ],
+      en: [
+        'Checkpoint for Brokers & platforms. Three things to lock in: pick a regulated broker (serious jurisdiction, segregated funds), master basic orders (market, limit, stop, OCO), know the hidden costs (swap, commission, variable spread).',
+        'If any of the three is fuzzy, retake the matching lesson. The next track (Japanese candles) assumes these foundations are set.',
+        'Practical bonus: do a €50 test deposit-withdrawal on your future broker before subscribing to Tickra Pro. It’s €50 of insurance to check the channel works both ways.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous hésitez entre deux brokers. Test décisif :', en: 'You hesitate between two brokers. Decisive test:' }, options: { fr: ['Dépôt-retrait de 50 € sur les deux', 'Comparer leurs spreads affichés', 'Choisir le plus grand bonus'], en: ['€50 deposit-withdraw on both', 'Compare advertised spreads', 'Pick the bigger bonus'] }, correct: 0, rationale: { fr: 'On éprouve avant de s’engager.', en: 'You test before you commit.' } },
+    quiz: [
+      { q: { fr: 'Un bonus broker énorme signale souvent :', en: 'A huge broker bonus often signals:' }, options: { fr: ['Conditions de retrait restrictives', 'Une opportunité', 'Une régulation forte'], en: ['Restrictive withdrawal terms', 'An opportunity', 'Strong regulation'] }, correct: 0, rationale: { fr: 'On verrouille votre capital.', en: 'They lock your capital.' } },
+      { q: { fr: 'La séquence apprentissage est :', en: 'The learning sequence is:' }, options: { fr: ['Brokers → Bougies → Risque', 'Risque en premier toujours', 'Au hasard'], en: ['Brokers → Candles → Risk', 'Risk first always', 'Random'] }, correct: 0, rationale: { fr: 'Tickra empile.', en: 'Tickra stacks.' } },
+      { q: { fr: 'En cas de doute sur un broker :', en: 'When in doubt about a broker:' }, options: { fr: ['On passe', 'On y va à fond', 'On demande à un signal Telegram'], en: ['Walk away', 'Go all in', 'Ask a Telegram signal'] }, correct: 0, rationale: { fr: 'Le doute coûte moins cher.', en: 'Doubt is cheaper.' } },
+    ],
+  },
+
+  // ─── Bougies (candles) — nouvelles 13-18 ─────────────────────────────────
+  'candles-13': {
+    intro: {
+      fr: [
+        'Le harami est une figure de retournement en deux bougies. Une grande bougie d’un côté, puis une petite bougie de l’autre côté entièrement englobée dans le corps de la précédente. « Harami » signifie « enceinte » en japonais — la petite bougie est le bébé.',
+        'Lecture : la tendance perd son momentum. La grande bougie représente le dernier élan ; la petite, l’épuisement. Plus la petite est centrée et symétrique, plus le signal est fort.',
+        'Confirmation indispensable : attendez une bougie suivante qui casse dans le sens du retournement. Sans elle, le harami est juste un essoufflement temporaire.',
+      ],
+      en: [
+        'The harami is a two-candle reversal pattern. A large candle one way, then a small candle the other way entirely engulfed by the prior body. "Harami" means "pregnant" in Japanese — the small candle is the baby.',
+        'Reading: the trend loses momentum. The big candle is the final push; the small one is exhaustion. The more centred and symmetric the small candle, the stronger the signal.',
+        'Confirmation required: wait for a following candle that breaks in the reversal direction. Without it, a harami is just a temporary pause.',
+      ],
+    },
+    drill: { prompt: { fr: 'Tendance haussière, grande bougie verte, puis petite bougie rouge dans le corps. C’est :', en: 'Uptrend, large green candle, then small red candle inside the body. It is:' }, options: { fr: ['Un harami baissier', 'Un englobant', 'Un doji'], en: ['A bearish harami', 'An engulfing', 'A doji'] }, correct: 0, rationale: { fr: 'Petit bébé contre la tendance.', en: 'Small baby against the trend.' } },
+    quiz: [
+      { q: { fr: 'Harami signifie :', en: 'Harami means:' }, options: { fr: ['Enceinte (japonais)', 'Force', 'Vide'], en: ['Pregnant (Japanese)', 'Strength', 'Empty'] }, correct: 0, rationale: { fr: 'Métaphore visuelle.', en: 'Visual metaphor.' } },
+      { q: { fr: 'Sans confirmation, le harami est :', en: 'Without confirmation, harami is:' }, options: { fr: ['Une pause possible', 'Un retournement certain', 'Un breakout'], en: ['A possible pause', 'A certain reversal', 'A breakout'] }, correct: 0, rationale: { fr: 'On attend la bougie suivante.', en: 'You wait for the next candle.' } },
+      { q: { fr: 'Force du signal renforcée par :', en: 'Signal strength is reinforced by:' }, options: { fr: ['Petite bougie centrée et symétrique', 'Petite bougie décalée', 'Aucun critère'], en: ['Centred symmetric small candle', 'Off-centre small candle', 'No criterion'] }, correct: 0, rationale: { fr: 'Équilibre = indécision pure.', en: 'Balance = pure indecision.' } },
+    ],
+  },
+
+  'candles-14': {
+    intro: {
+      fr: [
+        'Piercing line (perçant) : deux bougies. Dans une tendance baissière, une grande bougie rouge, puis une bougie verte qui ouvre sous le plus bas de la rouge et clôture au-dessus de la médiane du corps rouge.',
+        'Dark cloud cover (couverture nuageuse) : le miroir inverse. En tendance haussière, grande bougie verte, puis bougie rouge qui ouvre au-dessus du plus haut et clôture sous la médiane du corps vert.',
+        'Les deux sont des figures de retournement de courte durée. Plus la pénétration dans le corps précédent est profonde (>50 %), plus le signal est valide. Sous 50 %, c’est juste du bruit.',
+      ],
+      en: [
+        'Piercing line: two candles. In a downtrend, a large red candle, then a green candle that opens below the red’s low and closes above the midpoint of the red body.',
+        'Dark cloud cover: the mirror. In an uptrend, large green candle, then a red candle that opens above the high and closes below the midpoint of the green body.',
+        'Both are short-duration reversal patterns. The deeper the penetration into the previous body (>50%), the more valid the signal. Below 50%, it is noise.',
+      ],
+    },
+    drill: { prompt: { fr: 'Pour valider un piercing line, la verte doit clôturer :', en: 'To validate a piercing line, the green must close:' }, options: { fr: ['Au-dessus de la médiane du corps rouge', 'À la clôture rouge exacte', 'En dessous du plus bas rouge'], en: ['Above the midpoint of the red body', 'At the exact red close', 'Below the red low'] }, correct: 0, rationale: { fr: 'Plus de 50 % de pénétration.', en: 'Over 50% penetration.' } },
+    quiz: [
+      { q: { fr: 'Dark cloud cover apparaît en :', en: 'Dark cloud cover appears in a:' }, options: { fr: ['Tendance haussière', 'Tendance baissière', 'Range'], en: ['Uptrend', 'Downtrend', 'Range'] }, correct: 0, rationale: { fr: 'Retournement haussier → baissier.', en: 'Bull → bear reversal.' } },
+      { q: { fr: 'Pénétration < 50 % = :', en: 'Penetration < 50% =' }, options: { fr: ['Bruit', 'Signal validé', 'Très fort'], en: ['Noise', 'Validated', 'Very strong'] }, correct: 0, rationale: { fr: 'Pas assez de force.', en: 'Not enough force.' } },
+      { q: { fr: 'Ces deux figures durent :', en: 'These two patterns last:' }, options: { fr: ['Court terme', 'Mois', 'Années'], en: ['Short-term', 'Months', 'Years'] }, correct: 0, rationale: { fr: 'Réflexes pas marées.', en: 'Reflexes not tides.' } },
+    ],
+  },
+
+  'candles-15': {
+    intro: {
+      fr: [
+        'Tweezer tops (pinces hautes) : deux bougies (parfois plus) qui forment exactement le même plus haut. Apparaît au sommet d’une tendance haussière. Signal de rejet du niveau testé deux fois.',
+        'Tweezer bottoms : miroir. Deux plus bas identiques au creux d’une tendance baissière. Le marché a testé et refusé le niveau deux fois.',
+        'Force relative : les tweezers sont des signaux d’alerte plus que de retournement. À combiner avec une résistance/support visible — sans niveau préexistant, l’égalité des plus hauts/bas est souvent fortuite.',
+      ],
+      en: [
+        'Tweezer tops: two candles (sometimes more) forming exactly the same high. Appears at the top of an uptrend. Signal of rejection of a level tested twice.',
+        'Tweezer bottoms: mirror. Two identical lows at the bottom of a downtrend. The market tested and refused the level twice.',
+        'Relative strength: tweezers are alert signals more than reversal signals. Combine with a visible resistance/support — without a pre-existing level, identical highs/lows are often coincidence.',
+      ],
+    },
+    drill: { prompt: { fr: 'Tweezer bottoms sans support visible préalable :', en: 'Tweezer bottoms with no pre-existing support:' }, options: { fr: ['Probablement coïncidence', 'Toujours valide', 'Retournement garanti'], en: ['Probably coincidence', 'Always valid', 'Guaranteed reversal'] }, correct: 0, rationale: { fr: 'Le contexte précède la figure.', en: 'Context precedes the pattern.' } },
+    quiz: [
+      { q: { fr: 'Tweezer tops apparaissent en :', en: 'Tweezer tops appear in:' }, options: { fr: ['Sommet de tendance haussière', 'Range neutre', 'Cassure'], en: ['Top of uptrend', 'Neutral range', 'Breakout'] }, correct: 0, rationale: { fr: 'Au sommet, rejet du high.', en: 'At top, high rejection.' } },
+      { q: { fr: 'Combien de bougies minimum :', en: 'Minimum candles:' }, options: { fr: ['Deux', 'Cinq', 'Une suffit'], en: ['Two', 'Five', 'One is enough'] }, correct: 0, rationale: { fr: 'Deux plus hauts égaux.', en: 'Two equal highs.' } },
+      { q: { fr: 'Catégorie réelle du signal :', en: 'Actual signal category:' }, options: { fr: ['Alerte', 'Retournement certain', 'Continuation'], en: ['Alert', 'Certain reversal', 'Continuation'] }, correct: 0, rationale: { fr: 'À confirmer.', en: 'To confirm.' } },
+    ],
+  },
+
+  'candles-16': {
+    intro: {
+      fr: [
+        'Three inside up : harami baissier suivi d’une bougie haussière qui clôture au-dessus du plus haut de la première grande bougie. Confirmation du retournement haussier en trois bougies.',
+        'Three inside down : miroir. Harami haussier suivi d’une bougie baissière qui clôture sous le plus bas de la première bougie. Retournement baissier confirmé.',
+        'Avantage : la troisième bougie supprime l’incertitude du harami simple. Inconvénient : vous entrez tard, à un meilleur prix possible passé. Compromis classique du trader réactif : moins de signaux mais plus solides.',
+      ],
+      en: [
+        'Three inside up: bearish harami followed by a bullish candle that closes above the high of the first large candle. Confirmation of the bullish reversal in three candles.',
+        'Three inside down: mirror. Bullish harami followed by a bearish candle that closes below the low of the first candle. Bearish reversal confirmed.',
+        'Edge: the third candle removes the ambiguity of the lone harami. Drawback: you enter late, missing the best possible price. Classic reactive-trader trade-off: fewer signals but more solid.',
+      ],
+    },
+    drill: { prompt: { fr: 'Three inside up est plus fiable que le harami simple parce que :', en: 'Three inside up is more reliable than lone harami because:' }, options: { fr: ['La troisième bougie confirme', 'Il dure plus longtemps', 'Il prédit le prix exact'], en: ['Third candle confirms', 'It lasts longer', 'It predicts exact price'] }, correct: 0, rationale: { fr: 'Confirmation = moins de bruit.', en: 'Confirmation = less noise.' } },
+    quiz: [
+      { q: { fr: 'La troisième bougie doit clôturer :', en: 'Third candle must close:' }, options: { fr: ['Au-delà du plus haut/bas de la première', 'À la médiane', 'Au prix d’ouverture'], en: ['Beyond the high/low of the first', 'At midpoint', 'At opening'] }, correct: 0, rationale: { fr: 'Sinon pas de confirmation.', en: 'Otherwise no confirmation.' } },
+      { q: { fr: 'Le coût de la fiabilité :', en: 'The cost of reliability:' }, options: { fr: ['Entrée tardive', 'Pas de stop', 'Trop d’indicateurs'], en: ['Late entry', 'No stop', 'Too many indicators'] }, correct: 0, rationale: { fr: 'Toujours un trade-off.', en: 'Always a trade-off.' } },
+      { q: { fr: 'Three inside down se forme en :', en: 'Three inside down forms in:' }, options: { fr: ['Tendance haussière', 'Tendance baissière', 'Tout régime'], en: ['Uptrend', 'Downtrend', 'Any regime'] }, correct: 0, rationale: { fr: 'Retournement baissier.', en: 'Bearish reversal.' } },
+    ],
+  },
+
+  'candles-17': {
+    intro: {
+      fr: [
+        'Three outside up : englobante haussière (la grande bougie verte couvre la rouge précédente) suivie d’une troisième bougie verte qui clôture au-dessus de la deuxième. Signal de retournement haussier renforcé par la confirmation.',
+        'Three outside down : miroir. Englobante baissière + troisième bougie rouge clôturant sous la deuxième. Retournement baissier validé.',
+        'Différence avec « three inside » : ici la deuxième bougie engloutit la première (outside) au lieu d’être engloutie (inside). C’est plus rare, plus violent, et signale en général un retournement plus fort.',
+      ],
+      en: [
+        'Three outside up: bullish engulfing (large green candle covers the prior red) followed by a third green candle closing above the second. Bullish reversal signal reinforced by confirmation.',
+        'Three outside down: mirror. Bearish engulfing + third red candle closing below the second. Bearish reversal validated.',
+        'Difference with "three inside": here the second candle engulfs the first (outside) instead of being engulfed (inside). It is rarer, more violent, and usually signals a stronger reversal.',
+      ],
+    },
+    drill: { prompt: { fr: 'Three outside vs three inside : la première est en général :', en: 'Three outside vs three inside: the former is usually:' }, options: { fr: ['Plus violente, retournement plus fort', 'Plus douce', 'Identique en force'], en: ['More violent, stronger reversal', 'Softer', 'Equal in strength'] }, correct: 0, rationale: { fr: 'Englobante = plus de momentum.', en: 'Engulfing = more momentum.' } },
+    quiz: [
+      { q: { fr: 'La deuxième bougie ici :', en: 'The second candle here:' }, options: { fr: ['Englobe la première', 'Est dans la première', 'Est égale à la première'], en: ['Engulfs the first', 'Is inside the first', 'Equals the first'] }, correct: 0, rationale: { fr: 'Outside = autour.', en: 'Outside = around.' } },
+      { q: { fr: 'Rareté relative :', en: 'Relative rarity:' }, options: { fr: ['Plus rare que three inside', 'Plus fréquente', 'Aussi fréquente'], en: ['Rarer than three inside', 'More frequent', 'Equally frequent'] }, correct: 0, rationale: { fr: 'Engloutir = mouvement plus puissant.', en: 'Engulfing = bigger move.' } },
+      { q: { fr: 'Three outside up confirme :', en: 'Three outside up confirms:' }, options: { fr: ['Un retournement haussier', 'Une continuation baissière', 'Un range'], en: ['A bullish reversal', 'A bearish continuation', 'A range'] }, correct: 0, rationale: { fr: 'Lecture standard.', en: 'Standard reading.' } },
+    ],
+  },
+
+  'candles-18': {
+    intro: {
+      fr: [
+        'Point de contrôle bougies. Trois acquis : la mécanique d’une bougie (anatomie, corps, ombres, contexte), les retournements clés (marteau, doji, étoile, englobante, harami), les confirmations en multi-bougies (three inside, three outside).',
+        'Si une figure reste floue, refaites la leçon dédiée. La piste suivante (Structure de marché) suppose que vous lisez une bougie de tête.',
+        'Bonus pratique : sur les 20 prochains jours de trading, identifiez 1 figure de retournement par séance et journalisez : « Cette figure annonçait quoi ? Le marché a-t-il suivi ? » Cinquante itérations construisent un œil que dix vidéos YouTube ne construiront jamais.',
+      ],
+      en: [
+        'Candles checkpoint. Three things to lock in: the mechanics of a candle (anatomy, body, wicks, context), the key reversals (hammer, doji, star, engulfing, harami), and multi-candle confirmations (three inside, three outside).',
+        'If any pattern feels fuzzy, retake the matching lesson. The next track (Market structure) assumes you read a candle without thinking.',
+        'Practical bonus: over the next 20 trading days, identify one reversal pattern per session and journal: "What was this pattern signalling? Did the market follow?" Fifty iterations build an eye that ten YouTube videos never will.',
+      ],
+    },
+    drill: { prompt: { fr: 'Pour ancrer la lecture des bougies, vous devez surtout :', en: 'To anchor candle reading, you mainly need to:' }, options: { fr: ['Pratiquer et journaliser', 'Apprendre par cœur les 50 figures', 'Regarder des heures de vidéos'], en: ['Practise and journal', 'Memorise 50 patterns', 'Watch hours of videos'] }, correct: 0, rationale: { fr: 'Pratique réflexive battue.', en: 'Reflective practice wins.' } },
+    quiz: [
+      { q: { fr: 'Une bougie isolée :', en: 'An isolated candle:' }, options: { fr: ['Ne dit rien sans contexte', 'Suffit à décider', 'Prédit le futur'], en: ['Says nothing without context', 'Is enough to decide', 'Predicts the future'] }, correct: 0, rationale: { fr: 'Le contexte d’abord.', en: 'Context first.' } },
+      { q: { fr: 'Le mieux pour intérioriser une figure :', en: 'Best way to internalise a pattern:' }, options: { fr: ['Journalisation répétée', 'Mémoriser sa définition', 'Coller un poster au mur'], en: ['Repeated journaling', 'Memorise the definition', 'Stick a poster on the wall'] }, correct: 0, rationale: { fr: 'On ancre par la pratique.', en: 'Anchored by practice.' } },
+      { q: { fr: 'Combien d’itérations approximatives pour ancrer :', en: 'Approximate iterations to anchor:' }, options: { fr: ['~50', '~3', '~500'], en: ['~50', '~3', '~500'] }, correct: 0, rationale: { fr: 'Empirique mais cohérent.', en: 'Empirical but consistent.' } },
+    ],
+  },
+
+  // ─── Risk — nouvelles 12-16 ─────────────────────────────────────────────
+  'risk-12': {
+    intro: {
+      fr: [
+        'Le critère de Kelly est une formule qui calcule la fraction « optimale » du capital à risquer par trade pour maximiser la croissance composée. Formule : f = (p × b − q) / b où p = probabilité de gagner, q = 1 − p, b = ratio gain/perte.',
+        'Exemple : 55 % de réussite, R:R 1:1. f = (0,55 × 1 − 0,45) / 1 = 0,1 = 10 % du capital par trade. Mathématiquement optimal — mais émotionnellement insupportable.',
+        'La pratique des pros : « half-Kelly » ou « quarter-Kelly ». La volatilité est divisée par 4, le drawdown maximal aussi, au prix d’une croissance plus lente. Pour un retail, on rabote souvent à 5 % de Kelly, soit ~1 % par trade.',
+      ],
+      en: [
+        'The Kelly criterion is a formula that computes the "optimal" fraction of capital to risk per trade to maximise compounded growth. Formula: f = (p × b − q) / b where p = win prob, q = 1 − p, b = gain/loss ratio.',
+        'Example: 55 % hit rate, 1:1 R:R. f = (0.55 × 1 − 0.45) / 1 = 0.1 = 10 % of capital per trade. Mathematically optimal — but emotionally unbearable.',
+        'Pro practice: "half-Kelly" or "quarter-Kelly". Volatility is divided by 4, max drawdown too, at the cost of slower growth. Retail typically trims to 5 % of Kelly, i.e. ~1 % per trade.',
+      ],
+    },
+    drill: { prompt: { fr: 'Kelly « complet » est rarement appliqué parce que :', en: 'Full Kelly is rarely applied because:' }, options: { fr: ['Volatilité insupportable', 'Trop conservateur', 'Trop simple'], en: ['Unbearable volatility', 'Too conservative', 'Too simple'] }, correct: 0, rationale: { fr: 'Math vs psychologie.', en: 'Math vs psychology.' } },
+    quiz: [
+      { q: { fr: 'Half-Kelly divise le drawdown par :', en: 'Half-Kelly divides drawdown by:' }, options: { fr: ['~4', '~2', '~10'], en: ['~4', '~2', '~10'] }, correct: 0, rationale: { fr: 'Effet quadratique sur la vol.', en: 'Quadratic effect on vol.' } },
+      { q: { fr: 'Avec 55 % et R:R 1:1, Kelly recommande :', en: 'With 55 % and 1:1 R:R, Kelly recommends:' }, options: { fr: ['10 % par trade', '1 %', '50 %'], en: ['10 % per trade', '1 %', '50 %'] }, correct: 0, rationale: { fr: 'Voir la formule.', en: 'See the formula.' } },
+      { q: { fr: 'En pratique retail, on applique :', en: 'In retail practice, you apply:' }, options: { fr: ['~5 % de Kelly', 'Kelly complet', '0 %'], en: ['~5 % of Kelly', 'Full Kelly', '0 %'] }, correct: 0, rationale: { fr: 'Survie avant performance.', en: 'Survival before performance.' } },
+    ],
+  },
+
+  'risk-13': {
+    intro: {
+      fr: [
+        'Couverture (hedging) : ouvrir une position contraire pour neutraliser une partie du risque. Exemple : vous êtes long 1 lot EUR/USD, vous shortez 1 lot DXY pour vous protéger du dollar.',
+        'Sur le forex retail, le hedging direct (long ET short la même paire au même moment) est interdit aux US (FIFO rule) mais autorisé en Europe. En pratique, c’est rarement utile — c’est plus efficace de fermer la position que de la « bloquer ».',
+        'Vrai hedging utile pour le particulier : croiser deux paires corrélées négativement. Long EUR/USD + Long USD/CHF a tendance à se neutraliser. Long EUR/USD + Long GBP/USD a tendance à s’aggraver.',
+      ],
+      en: [
+        'Hedging: opening an opposite position to neutralise part of the risk. Example: you are long 1 lot EUR/USD, you short 1 lot DXY to protect against the dollar.',
+        'On retail forex, direct hedging (long AND short the same pair at once) is banned in the US (FIFO rule) but allowed in Europe. In practice it is rarely useful — closing the position is more efficient than "locking" it.',
+        'Real useful hedging for retail: cross two negatively correlated pairs. Long EUR/USD + Long USD/CHF tends to neutralise. Long EUR/USD + Long GBP/USD tends to compound.',
+      ],
+    },
+    drill: { prompt: { fr: 'Long EUR/USD + Long GBP/USD revient à :', en: 'Long EUR/USD + Long GBP/USD amounts to:' }, options: { fr: ['Doubler la position contre le dollar', 'Hedger', 'Diversifier'], en: ['Doubling the position against the dollar', 'Hedging', 'Diversifying'] }, correct: 0, rationale: { fr: 'Corrélation positive forte.', en: 'Strong positive correlation.' } },
+    quiz: [
+      { q: { fr: 'FIFO rule s’applique :', en: 'FIFO rule applies in:' }, options: { fr: ['Aux États-Unis retail', 'Partout', 'Nulle part'], en: ['US retail', 'Everywhere', 'Nowhere'] }, correct: 0, rationale: { fr: 'NFA réglementation.', en: 'NFA regulation.' } },
+      { q: { fr: 'Le hedging direct (long+short même paire) sert surtout à :', en: 'Direct hedge (long+short same pair) mostly serves to:' }, options: { fr: ['Rien d’utile en pratique', 'Doubler le profit', 'Annuler les frais'], en: ['Nothing useful in practice', 'Double profit', 'Cancel fees'] }, correct: 0, rationale: { fr: 'Fermer = plus simple.', en: 'Closing is simpler.' } },
+      { q: { fr: 'EUR/USD et USD/CHF sont :', en: 'EUR/USD and USD/CHF are:' }, options: { fr: ['Corrélés négativement', 'Corrélés positivement', 'Décorrélés'], en: ['Negatively correlated', 'Positively correlated', 'Uncorrelated'] }, correct: 0, rationale: { fr: 'EUR et CHF bougent ensemble vs USD.', en: 'EUR and CHF move together vs USD.' } },
+    ],
+  },
+
+  'risk-14': {
+    intro: {
+      fr: [
+        'Le budget de risque hebdomadaire : décidez en début de semaine combien vous êtes prêt à perdre au total. Exemple : 3 % du capital max. Une fois atteint, vous arrêtez de trader jusqu’au lundi suivant. Pas de discussion.',
+        'Avantage : protège du tilt et des séquences de pertes. Quand vous savez que la « banque hebdo » est limitée, vous prenez moins de trades médiocres.',
+        'Mise en place : créez une feuille simple avec colonne « risque pris cette semaine ». Mettez à jour chaque jour. Si vous arrivez à 80 % du budget en milieu de semaine, basculez en revue uniquement — pas de nouveau trade.',
+      ],
+      en: [
+        'Weekly risk budget: decide at the start of the week how much you are willing to lose in total. Example: 3 % of capital max. Once reached, you stop trading until next Monday. No discussion.',
+        'Edge: protects from tilt and losing streaks. When you know the "weekly bank" is limited, you take fewer mediocre trades.',
+        'Setup: create a simple sheet with a "risk taken this week" column. Update daily. If you hit 80 % of the budget mid-week, switch to review-only — no new trades.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous atteignez votre budget hebdo mardi soir. Vous :', en: 'You hit your weekly budget Tuesday night. You:' }, options: { fr: ['Arrêtez jusqu’au lundi suivant', 'Continuez à plus petite taille', 'Augmentez le risque pour rattraper'], en: ['Stop until next Monday', 'Continue at smaller size', 'Raise risk to catch up'] }, correct: 0, rationale: { fr: 'Règle stricte sinon inutile.', en: 'Strict rule or useless.' } },
+    quiz: [
+      { q: { fr: 'Budget hebdo typique :', en: 'Typical weekly budget:' }, options: { fr: ['2-3 % du capital', '20 %', '50 %'], en: ['2-3 % of capital', '20 %', '50 %'] }, correct: 0, rationale: { fr: 'Survie d’abord.', en: 'Survival first.' } },
+      { q: { fr: 'Quand basculer en revue uniquement :', en: 'When to switch to review-only:' }, options: { fr: ['À 80 % du budget atteint', 'À 50 %', 'Jamais avant 100 %'], en: ['At 80 % of budget hit', 'At 50 %', 'Never before 100 %'] }, correct: 0, rationale: { fr: 'Marge de sécurité.', en: 'Safety margin.' } },
+      { q: { fr: 'Le budget protège surtout de :', en: 'The budget mostly protects from:' }, options: { fr: ['Tilt et séquences perdantes', 'News imprévues', 'Spreads'], en: ['Tilt and losing streaks', 'Unexpected news', 'Spreads'] }, correct: 0, rationale: { fr: 'Discipline > prédiction.', en: 'Discipline > prediction.' } },
+    ],
+  },
+
+  'risk-15': {
+    intro: {
+      fr: [
+        'La math du recovery : perdre N % du capital demande un gain de N / (1 − N) pour récupérer. Perdre 10 % → +11 % pour revenir. Perdre 30 % → +43 %. Perdre 50 % → +100 %. Perdre 80 % → +400 %.',
+        'Conséquence pratique : plus le drawdown est profond, plus le retour est asymétriquement dur. Un drawdown de 50 % vous force à doubler le capital restant — quasi impossible en moins de 12-24 mois sur une stratégie sérieuse.',
+        'C’est pour ça que les pros plafonnent leur drawdown maximal autorisé bien avant 50 %. Au-delà de 20 %, on coupe le levier. Au-delà de 30 %, on arrête de trader et on refait un audit méthode complet.',
+      ],
+      en: [
+        'Recovery math: losing N % requires a gain of N / (1 − N) to recover. Lose 10 % → +11 % to come back. Lose 30 % → +43 %. Lose 50 % → +100 %. Lose 80 % → +400 %.',
+        'Practical consequence: the deeper the drawdown, the more asymmetrically hard the bounce-back. A 50 % drawdown forces you to double the remaining capital — nearly impossible in under 12-24 months on a serious strategy.',
+        'That is why pros cap their max allowed drawdown well before 50 %. Above 20 %, cut leverage. Above 30 %, stop trading and run a full method audit.',
+      ],
+    },
+    drill: { prompt: { fr: 'Drawdown de 30 %. Gain nécessaire :', en: 'Drawdown of 30 %. Required gain:' }, options: { fr: ['+43 %', '+30 %', '+10 %'], en: ['+43 %', '+30 %', '+10 %'] }, correct: 0, rationale: { fr: '30/(1-0.3) = 0.43.', en: '30/(1-0.3) = 0.43.' } },
+    quiz: [
+      { q: { fr: 'Drawdown de 50 % nécessite :', en: 'Drawdown of 50 % requires:' }, options: { fr: ['+100 % de gain', '+50 %', '+25 %'], en: ['+100 % gain', '+50 %', '+25 %'] }, correct: 0, rationale: { fr: 'Doubler le restant.', en: 'Double the remainder.' } },
+      { q: { fr: 'Limite typique d’un pro :', en: 'Typical pro cap:' }, options: { fr: ['Drawdown < 20-30 %', '50 %', 'Aucune limite'], en: ['Drawdown < 20-30 %', '50 %', 'No cap'] }, correct: 0, rationale: { fr: 'Asymétrie brutale.', en: 'Brutal asymmetry.' } },
+      { q: { fr: 'La leçon principale :', en: 'Main lesson:' }, options: { fr: ['Protéger le capital prime sur la performance', 'Tout risquer pour rattraper', 'Drawdown insignifiant'], en: ['Capital protection over performance', 'Risk all to recover', 'Drawdown irrelevant'] }, correct: 0, rationale: { fr: 'Tu existes encore = tu peux apprendre.', en: 'Still alive = still learning.' } },
+    ],
+  },
+
+  'risk-16': {
+    intro: {
+      fr: [
+        'Point de contrôle risque. Trois acquis : la règle des 1 % (taille de position cohérente avec votre risque par trade), l’espérance positive (taux × R:R compose votre courbe), la math du recovery (drawdown asymétrique).',
+        'Si une notion est floue, refaites la leçon. La piste suivante (Supports & résistances) suppose que vous savez calculer une taille de position avant d’étudier où entrer.',
+        'Exercice obligatoire : ouvrez votre journal et notez 10 trades fictifs avec entrée, stop, take-profit, taille calculée. Reproduisez ce calcul à voix haute jusqu’à ce qu’il devienne réflexe. C’est la base technique de tout le reste.',
+      ],
+      en: [
+        'Risk checkpoint. Three things to lock in: the 1 % rule (position size matching your per-trade risk), positive expectancy (rate × R:R compounds your curve), recovery math (asymmetric drawdown).',
+        'If any notion is fuzzy, retake the lesson. The next track (Support & resistance) assumes you size a position before studying where to enter.',
+        'Mandatory drill: open your journal and write 10 fictional trades with entry, stop, take-profit, computed size. Reproduce that math out loud until it becomes reflex. It is the technical base of everything else.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous ne savez plus calculer la taille de position. Action :', en: 'You forgot how to size a position. Action:' }, options: { fr: ['Reprendre la leçon « taille de position »', 'Trader plus petit au feeling', 'Demander un signal'], en: ['Replay the "position sizing" lesson', 'Trade smaller by feel', 'Ask a signal'] }, correct: 0, rationale: { fr: 'Pas de dette technique.', en: 'No technical debt.' } },
+    quiz: [
+      { q: { fr: 'Combien doit-on risquer par trade en règle générale :', en: 'How much per trade as a rule:' }, options: { fr: ['1 %', '10 %', '50 %'], en: ['1 %', '10 %', '50 %'] }, correct: 0, rationale: { fr: 'La règle d’or retail.', en: 'Golden retail rule.' } },
+      { q: { fr: 'Espérance positive nécessite :', en: 'Positive expectancy needs:' }, options: { fr: ['Taux × R:R adéquats', 'Beaucoup de trades', 'Chance'], en: ['Adequate hit rate × R:R', 'Many trades', 'Luck'] }, correct: 0, rationale: { fr: 'Équation universelle.', en: 'Universal equation.' } },
+      { q: { fr: 'Drawdown asymétrique signifie :', en: 'Asymmetric drawdown means:' }, options: { fr: ['Récupérer coûte plus que perdre', 'Tout symétrique', 'Aucun impact'], en: ['Recovering costs more than losing', 'All symmetric', 'No impact'] }, correct: 0, rationale: { fr: 'Math implacable.', en: 'Inflexible math.' } },
+    ],
+  },
 };
 
 // ─── Placeholder generator ─────────────────────────────────────────────────
