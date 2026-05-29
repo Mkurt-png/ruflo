@@ -69,7 +69,7 @@ export async function POST(req: Request) {
       mode: resolved.mode,
       line_items: [{ price: resolved.price, quantity: 1 }],
       customer_email: body.email,
-      success_url: `${siteUrl}/${locale}/onboarding?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${siteUrl}/${locale}/welcome?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/${locale}/pricing?checkout=cancelled`,
       allow_promotion_codes: true,
       locale: locale === 'fr' ? 'fr' : 'en',
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
       // first going through the Tax onboarding. Re-enable once you've set
       // up Stripe Tax + your registrations.
       billing_address_collection: 'auto',
-      metadata: { plan: body.plan, cycle },
+      metadata: { plan: body.plan, cycle, locale },
     });
 
     return NextResponse.json({ url: session.url });

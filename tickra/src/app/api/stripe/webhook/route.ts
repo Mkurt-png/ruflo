@@ -1,5 +1,33 @@
 import { NextResponse } from 'next/server';
 import { updateUser, getUserByStripeCustomer } from '@/lib/db/queries';
+import { sendEmail, FROM } from '@/lib/email/resend';
+import { SITE_URL } from '@/lib/site-url';
+
+function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
+  const planName = plan === 'lifetime' ? 'Tickra Lifetime' : 'Tickra Pro';
+  const meHref = `${SITE_URL}/${locale}/me`;
+  const curriculumHref = `${SITE_URL}/${locale}/curriculum`;
+  if (locale === 'fr') {
+    return {
+      subject: `Bienvenue dans ${planName}`,
+      text:
+        `Merci pour votre paiement — votre accès ${planName} est actif.\n\n` +
+        `Prochaine étape : commencez la piste "Bougies japonaises" depuis le cursus.\n` +
+        `Votre espace : ${meHref}\n` +
+        `Le cursus : ${curriculumHref}\n\n` +
+        `À très vite,\nL'équipe Tickra`,
+    };
+  }
+  return {
+    subject: `Welcome to ${planName}`,
+    text:
+      `Thanks for your payment — your ${planName} access is now live.\n\n` +
+      `Next step: start the "Japanese candles" track from the curriculum.\n` +
+      `Your space: ${meHref}\n` +
+      `The curriculum: ${curriculumHref}\n\n` +
+      `Speak soon,\nThe Tickra team`,
+  };
+}
 
 // POST /api/stripe/webhook
 // Required events: checkout.session.completed, customer.subscription.created,
@@ -58,6 +86,15 @@ export async function POST(req: Request) {
         if (cycle) patch.cycle = cycle === 'monthly' || cycle === 'annual' ? cycle : null;
         if (plan === 'lifetime') patch.cycle = 'once';
         await updateUser(email, patch);
+
+        // Fire-and-forget welcome email (Resend). Locale is stored in
+        // metadata at checkout time so we can localise.
+        const meta = session.metadata as Record<string, string | undefined> | null;
+        const locale: 'fr' | 'en' = meta?.locale === 'fr' ? 'fr' : 'en';
+        const mail = welcomeEmail(plan, locale);
+        sendEmail({ from: FROM, to: email, subject: mail.subject, text: mail.text }).catch(() => {
+          /* swallow — never fail the webhook on email errors */
+        });
         break;
       }
       case 'customer.subscription.created':
