@@ -10,6 +10,9 @@ import { CookieBanner } from '@/components/site/CookieBanner';
 import { Analytics } from '@/components/site/Analytics';
 import { ToastProvider } from '@/components/site/ToastProvider';
 import { CommandPalette } from '@/components/site/CommandPalette';
+import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
+import { InstallPrompt } from '@/components/site/InstallPrompt';
+import { MobileStickyCta } from '@/components/site/MobileStickyCta';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -65,6 +68,14 @@ export default async function LocaleLayout({
           <ToastProvider>{children}</ToastProvider>
         </ThemeProvider>
         <CommandPalette locale={locale} />
+        {/* TICKRA-PHASE-6: install offline support + show "Add to home screen" prompt. */}
+        <ServiceWorkerRegister />
+        <InstallPrompt locale={locale} />
+        {/* TICKRA-PHASE-6: contextual mobile sticky CTA, available on every page. */}
+        <MobileStickyCta
+          href={`/${locale}/onboarding`}
+          label={dict.stickyCta.label}
+        />
         <Analytics />
         <CookieBanner
           locale={locale}
