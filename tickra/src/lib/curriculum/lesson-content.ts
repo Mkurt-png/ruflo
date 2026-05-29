@@ -2908,6 +2908,386 @@ const seeded: Seed = {
       { q: { fr: 'Drawdown asymétrique signifie :', en: 'Asymmetric drawdown means:' }, options: { fr: ['Récupérer coûte plus que perdre', 'Tout symétrique', 'Aucun impact'], en: ['Recovering costs more than losing', 'All symmetric', 'No impact'] }, correct: 0, rationale: { fr: 'Math implacable.', en: 'Inflexible math.' } },
     ],
   },
+
+  // ─── Market structure — nouvelles 15-18 (Wyckoff & SMC) ─────────────────
+  'structure-15': {
+    intro: {
+      fr: [
+        'Richard Wyckoff (1873-1934) a formalisé une lecture du marché basée sur l’interaction entre prix et volume. Sa thèse centrale : le marché passe par quatre phases successives — accumulation, hausse (markup), distribution, baisse (markdown). Identifier la phase actuelle vaut plus que prédire les bougies.',
+        'Wyckoff observe que les « composite operators » (banques, hedge funds) accumulent quand les particuliers paniquent, et distribuent quand les particuliers achètent. Vous lisez le marché en cherchant les empreintes des gros, pas les vôtres.',
+        'Trois lois de Wyckoff : offre/demande (le déséquilibre crée le mouvement), cause/effet (la durée de l’accumulation détermine la hauteur de la hausse), effort/résultat (un grand volume sans mouvement = signal de retournement).',
+      ],
+      en: [
+        'Richard Wyckoff (1873-1934) formalised a market reading based on the interaction of price and volume. His central thesis: markets cycle through four successive phases — accumulation, markup, distribution, markdown. Identifying the current phase is worth more than predicting the next candle.',
+        'Wyckoff observes that "composite operators" (banks, hedge funds) accumulate when retail panics, and distribute when retail buys. You read the market by hunting the big players’ footprint, not yours.',
+        'Three Wyckoff laws: supply/demand (imbalance creates the move), cause/effect (the duration of accumulation sets the height of the rally), effort/result (high volume with no movement = reversal signal).',
+      ],
+    },
+    drill: { prompt: { fr: 'Grand volume mais clôture quasi inchangée signale, selon Wyckoff :', en: 'High volume but nearly unchanged close signals, per Wyckoff:' }, options: { fr: ['Un possible retournement', 'Une continuation forte', 'Rien de particulier'], en: ['A possible reversal', 'Strong continuation', 'Nothing in particular'] }, correct: 0, rationale: { fr: 'Effort sans résultat = absorption.', en: 'Effort without result = absorption.' } },
+    quiz: [
+      { q: { fr: 'Combien de phases dans le cycle Wyckoff :', en: 'How many phases in the Wyckoff cycle:' }, options: { fr: ['Quatre', 'Deux', 'Sept'], en: ['Four', 'Two', 'Seven'] }, correct: 0, rationale: { fr: 'Accumulation, markup, distribution, markdown.', en: 'Accumulation, markup, distribution, markdown.' } },
+      { q: { fr: 'Les composite operators :', en: 'Composite operators:' }, options: { fr: ['Achètent quand les autres paniquent', 'Achètent quand les autres achètent', 'Ne tradent jamais'], en: ['Buy when others panic', 'Buy when others buy', 'Never trade'] }, correct: 0, rationale: { fr: 'Définition contrarienne du smart money.', en: 'Contrarian definition of smart money.' } },
+      { q: { fr: 'La loi cause/effet relie :', en: 'Cause/effect law links:' }, options: { fr: ['Durée d’accumulation et amplitude de hausse', 'Volume et heure', 'Spread et bougie'], en: ['Accumulation duration and rally amplitude', 'Volume and time', 'Spread and candle'] }, correct: 0, rationale: { fr: 'Long base = grand mouvement.', en: 'Long base = big move.' } },
+    ],
+  },
+
+  'structure-16': {
+    intro: {
+      fr: [
+        'L’accumulation Wyckoff se déroule en cinq sous-phases (A→E) sur une zone latérale. Phase A : arrêt de la baisse (preliminary support + selling climax). Phase B : la construction lente où le smart money absorbe. Phase C : le test final, souvent un faux breakdown (spring) qui piège les vendeurs.',
+        'Phase D : montée de la zone — le prix remonte de manière saccadée, mais les bougies vertes sont plus fortes que les rouges. Phase E : sortie nette par le haut, la hausse commence vraiment.',
+        'Marqueur clé du spring : un breakdown sous le support visible suivi d’un retour rapide dans la zone. C’est souvent le meilleur point d’entrée long de tout le cycle — le marché vient de vous montrer où sont placés les stops des vendeurs.',
+      ],
+      en: [
+        'Wyckoff accumulation unfolds in five sub-phases (A→E) on a sideways zone. Phase A: stopping the downtrend (preliminary support + selling climax). Phase B: the slow build where smart money absorbs. Phase C: the final test, often a false breakdown (spring) that traps sellers.',
+        'Phase D: rising up out of the zone — price moves choppily up, but green candles outpower red ones. Phase E: clean breakout up, the real rally begins.',
+        'Key marker of the spring: a breakdown below visible support followed by a quick return inside the zone. It is often the best long entry of the whole cycle — the market just showed you where seller stops were placed.',
+      ],
+    },
+    drill: { prompt: { fr: 'Le « spring » d’accumulation est :', en: 'The accumulation "spring" is:' }, options: { fr: ['Un faux breakdown qui piège les vendeurs', 'Une cassure haussière', 'Un range étroit'], en: ['A false breakdown trapping sellers', 'A bullish breakout', 'A tight range'] }, correct: 0, rationale: { fr: 'Stop hunt avant la hausse.', en: 'Stop hunt before the rally.' } },
+    quiz: [
+      { q: { fr: 'L’accumulation Wyckoff a :', en: 'Wyckoff accumulation has:' }, options: { fr: ['Cinq sous-phases', 'Trois', 'Aucune'], en: ['Five sub-phases', 'Three', 'None'] }, correct: 0, rationale: { fr: 'A, B, C, D, E.', en: 'A, B, C, D, E.' } },
+      { q: { fr: 'Phase A se caractérise par :', en: 'Phase A features:' }, options: { fr: ['Arrêt de la baisse + climax', 'Cassure haussière', 'Doubles tops'], en: ['Stopping the downtrend + climax', 'Bullish breakout', 'Double tops'] }, correct: 0, rationale: { fr: 'Premier signal d’absorption.', en: 'First absorption signal.' } },
+      { q: { fr: 'Le bon point d’entrée long du cycle est souvent :', en: 'The best long entry of the cycle is often:' }, options: { fr: ['Le retour dans la zone après le spring', 'Le sommet de la phase E', 'Le climax de la phase A'], en: ['Return into the zone after the spring', 'Top of phase E', 'Phase A climax'] }, correct: 0, rationale: { fr: 'Asymétrie maximale.', en: 'Maximum asymmetry.' } },
+    ],
+  },
+
+  'structure-17': {
+    intro: {
+      fr: [
+        'La distribution Wyckoff est le miroir de l’accumulation, au sommet d’une tendance haussière. Sous-phases A→E. Phase A : preliminary supply, ralentissement de la hausse. Phase B : construction latérale, smart money distribue. Phase C : faux breakout au-dessus (« upthrust ») qui piège les acheteurs tardifs.',
+        'Phase D : baisse progressive dans la zone, les bougies rouges deviennent plus fortes. Phase E : sortie nette par le bas, début du markdown.',
+        'L’upthrust est le miroir du spring : breakout au-dessus de la résistance suivi d’un retour rapide. Souvent le meilleur point d’entrée short de tout le cycle. Repérer ces deux figures vaut plus que toutes les MACD du monde.',
+      ],
+      en: [
+        'Wyckoff distribution is the mirror of accumulation, at the top of an uptrend. Sub-phases A→E. Phase A: preliminary supply, slowing rally. Phase B: lateral construction, smart money distributes. Phase C: false breakout above ("upthrust") that traps late buyers.',
+        'Phase D: gradual decline inside the zone, red candles become stronger. Phase E: clean breakout down, markdown begins.',
+        'The upthrust mirrors the spring: breakout above resistance followed by a quick return. Often the best short entry of the whole cycle. Spotting these two patterns is worth more than every MACD in the world.',
+      ],
+    },
+    drill: { prompt: { fr: '« Upthrust » distribution = :', en: '"Upthrust" distribution = :' }, options: { fr: ['Faux breakout haussier qui piège', 'Vraie cassure haussière', 'Faux retournement'], en: ['False bullish breakout trapping', 'Real bullish breakout', 'False reversal'] }, correct: 0, rationale: { fr: 'Symétrique du spring.', en: 'Mirror of the spring.' } },
+    quiz: [
+      { q: { fr: 'Distribution apparaît :', en: 'Distribution appears:' }, options: { fr: ['Au sommet d’une tendance haussière', 'Au creux baissier', 'Dans un range parfait'], en: ['Top of an uptrend', 'Bear bottom', 'Perfect range'] }, correct: 0, rationale: { fr: 'Smart money sort.', en: 'Smart money exits.' } },
+      { q: { fr: 'Phase D distribution se traduit par :', en: 'Phase D distribution shows:' }, options: { fr: ['Baisse progressive avec bougies rouges fortes', 'Hausse vive', 'Doji répétés'], en: ['Gradual decline with strong red candles', 'Sharp rally', 'Repeated dojis'] }, correct: 0, rationale: { fr: 'Le déséquilibre s’installe.', en: 'Imbalance settles in.' } },
+      { q: { fr: 'L’upthrust est le miroir du :', en: 'Upthrust mirrors the:' }, options: { fr: ['Spring', 'Climax', 'Doji'], en: ['Spring', 'Climax', 'Doji'] }, correct: 0, rationale: { fr: 'Stop hunt haut → bas.', en: 'Stop hunt top → bottom.' } },
+    ],
+  },
+
+  'structure-18': {
+    intro: {
+      fr: [
+        'Smart Money Concepts (SMC) reprend l’idée wyckoffienne et l’habille de vocabulaire moderne. Notions clés : order block (zone où le smart money a placé ses ordres), liquidity (cluster de stops repérables au-dessus/dessous des highs/lows), break of structure (BOS, le marché casse une structure pour confirmer la nouvelle direction).',
+        'SMC se prête à une lecture mécanique : repérer un BOS, attendre le retour au dernier order block opposé, entrer avec stop derrière le BOS. C’est élégant mais piège souvent les débutants qui voient des « order blocks » partout.',
+        'Recommandation honnête : SMC est utile comme grille de lecture complémentaire de Wyckoff/structure classique. Ne basez jamais un trade entier sur un seul concept SMC sans confirmation multi-timeframe.',
+      ],
+      en: [
+        'Smart Money Concepts (SMC) takes the Wyckoffian idea and dresses it in modern vocabulary. Key notions: order block (zone where smart money placed orders), liquidity (cluster of stops visible above/below highs/lows), break of structure (BOS, the market breaks a structure to confirm a new direction).',
+        'SMC lends itself to a mechanical reading: spot a BOS, wait for return to the last opposite order block, enter with stop behind the BOS. Elegant but often traps beginners who see "order blocks" everywhere.',
+        'Honest recommendation: SMC is useful as a complementary grid on top of Wyckoff/classical structure. Never base a whole trade on a single SMC concept without multi-timeframe confirmation.',
+      ],
+    },
+    drill: { prompt: { fr: 'BOS signifie :', en: 'BOS means:' }, options: { fr: ['Break of structure', 'Big offer signal', 'Buy on stop'], en: ['Break of structure', 'Big offer signal', 'Buy on stop'] }, correct: 0, rationale: { fr: 'Notion centrale de SMC.', en: 'Central SMC notion.' } },
+    quiz: [
+      { q: { fr: 'Un order block est :', en: 'An order block is:' }, options: { fr: ['Une zone d’ordres placés par smart money', 'Un type d’ordre marché', 'Un broker spécifique'], en: ['A zone of orders placed by smart money', 'A market order type', 'A specific broker'] }, correct: 0, rationale: { fr: 'Zone de référence pour entrée.', en: 'Reference zone for entry.' } },
+      { q: { fr: 'Le risque principal de SMC pour un débutant :', en: 'Main SMC risk for a beginner:' }, options: { fr: ['Voir des order blocks partout', 'Pas assez de signaux', 'Spread trop large'], en: ['See order blocks everywhere', 'Not enough signals', 'Spread too wide'] }, correct: 0, rationale: { fr: 'Surinterprétation classique.', en: 'Classic over-interpretation.' } },
+      { q: { fr: 'SMC s’utilise au mieux :', en: 'SMC best used:' }, options: { fr: ['Comme grille complémentaire', 'Seul, sans contexte', 'Avec un EA automatique'], en: ['As a complementary grid', 'Alone, no context', 'With an automatic EA'] }, correct: 0, rationale: { fr: 'Outil, pas religion.', en: 'Tool, not religion.' } },
+    ],
+  },
+
+  // ─── Support & résistance (sr) — full track ─────────────────────────────
+  'sr-01': {
+    intro: {
+      fr: [
+        'Un niveau de support/résistance n’est pas une ligne ; c’est une zone. Le prix n’est pas un point fixe — il y a un bid, un ask, un slippage, et des ordres latents. Tracez donc systématiquement des bandes de quelques pips/dollars, pas des traits au pixel.',
+        'Pour définir un niveau valable, vérifiez trois critères : il est visible sur multiple timeframes (au moins 4h et 1D), il a été testé au moins deux fois (sinon c’est de la coïncidence), il a produit une réaction nette (longue mèche, grosse bougie).',
+        'Un niveau « propre » qui n’a jamais été testé n’a aucune valeur. Le marché ne sait pas qu’il existe — ce sera juste un nombre rond dans votre tête.',
+      ],
+      en: [
+        'A support/resistance level is not a line — it is a zone. Price is not a fixed point: there is a bid, an ask, slippage, and latent orders. Systematically draw bands of a few pips/dollars, not pixel-perfect lines.',
+        'To define a valid level, check three criteria: visible on multiple timeframes (at least 4h and 1D), tested at least twice (otherwise coincidence), produced a clean reaction (long wick, large candle).',
+        'A "clean" level that has never been tested has zero value. The market does not know it exists — it is just a round number in your head.',
+      ],
+    },
+    drill: { prompt: { fr: 'Un niveau testé une seule fois est :', en: 'A level tested only once is:' }, options: { fr: ['De la coïncidence', 'Très fort', 'Toujours valable'], en: ['Coincidence', 'Very strong', 'Always valid'] }, correct: 0, rationale: { fr: 'Il faut deux touches mini.', en: 'You need at least two touches.' } },
+    quiz: [
+      { q: { fr: 'Un niveau valable apparaît :', en: 'A valid level shows up:' }, options: { fr: ['Sur multiple timeframes', 'Sur la 1 min seule', 'Sur un seul TF'], en: ['On multiple timeframes', 'On 1-min alone', 'On a single TF'] }, correct: 0, rationale: { fr: 'Validation croisée.', en: 'Cross-validation.' } },
+      { q: { fr: 'Vous tracez :', en: 'You draw:' }, options: { fr: ['Une zone', 'Un trait au pixel', 'Un cercle'], en: ['A zone', 'A pixel-perfect line', 'A circle'] }, correct: 0, rationale: { fr: 'Bande, pas ligne.', en: 'Band, not line.' } },
+      { q: { fr: 'La réaction qui valide :', en: 'The reaction that validates:' }, options: { fr: ['Longue mèche, grosse bougie', 'Doji indécis', 'Aucune'], en: ['Long wick, large candle', 'Indecisive doji', 'None'] }, correct: 0, rationale: { fr: 'Signature de rejet.', en: 'Rejection signature.' } },
+    ],
+  },
+
+  'sr-02': {
+    intro: {
+      fr: [
+        'La force d’un niveau dépend de trois choses : le nombre de tests historiques (plus = plus fort, jusqu’à un certain point), la magnitude des réactions (rebonds amples = niveau respecté), et l’âge (un niveau de 2008 toujours actif aujourd’hui est extrêmement fort).',
+        'Paradoxe : un niveau TROP testé devient une zone de bataille rangée. Le marché y stagne, accumule des ordres, et finit souvent par y casser violemment dans une direction.',
+        'Trois tests, c’est le sweet spot : assez pour confirmer la zone, pas assez pour que les algos l’aient sur-exploitée. Quatre tests et plus = méfiance, le breakout devient probable.',
+      ],
+      en: [
+        'A level’s strength depends on three things: number of historical tests (more = stronger, up to a point), magnitude of reactions (large bounces = respected level), and age (a 2008 level still active today is extremely strong).',
+        'Paradox: a level tested TOO many times becomes a battle zone. Price stalls there, orders accumulate, and it usually ends up breaking violently one way.',
+        'Three tests is the sweet spot: enough to confirm the zone, not enough for algos to have over-exploited it. Four+ tests = caution, breakout becomes likely.',
+      ],
+    },
+    drill: { prompt: { fr: 'Cinq tests sur un niveau plat = :', en: 'Five tests on a flat level = :' }, options: { fr: ['Breakout probable', 'Niveau quasi-éternel', 'Aucun impact'], en: ['Breakout likely', 'Nearly eternal level', 'No impact'] }, correct: 0, rationale: { fr: 'L’énergie cumulée s’évacue.', en: 'Built-up energy releases.' } },
+    quiz: [
+      { q: { fr: 'Le sweet spot de tests est :', en: 'Test sweet spot is:' }, options: { fr: ['Trois', 'Un', 'Dix'], en: ['Three', 'One', 'Ten'] }, correct: 0, rationale: { fr: 'Confirmé sans saturation.', en: 'Confirmed without saturation.' } },
+      { q: { fr: 'Un vieux niveau qui tient :', en: 'An old level that holds:' }, options: { fr: ['Est plus fort', 'Est obsolète', 'Doit être effacé'], en: ['Is stronger', 'Is obsolete', 'Should be erased'] }, correct: 0, rationale: { fr: 'L’histoire pèse.', en: 'History matters.' } },
+      { q: { fr: 'Magnitude de réaction = :', en: 'Reaction magnitude = :' }, options: { fr: ['Amplitude du rebond', 'Volume du jour', 'Spread moyen'], en: ['Bounce amplitude', 'Day volume', 'Average spread'] }, correct: 0, rationale: { fr: 'Plus le rebond est ample, plus c’est respecté.', en: 'The bigger the bounce, the more respected.' } },
+    ],
+  },
+
+  'sr-03': {
+    intro: {
+      fr: [
+        'Le phénomène « flip » : une fois un support cassé proprement, il devient résistance. Et inversement. Mécanique : les acheteurs piégés au support cassé vendent dès que le prix y revient — ils transforment leur perte en break-even.',
+        'Pour qu’un flip soit valable, il faut une cassure « propre » : clôture franche au-delà du niveau, idéalement avec volume. Une mèche qui dépasse temporairement n’invalide rien — c’est juste du bruit.',
+        'Le retest du flip est souvent le meilleur point d’entrée du trade. Si vous shortez un ancien support devenu résistance avec un stop juste au-dessus, votre R:R est exceptionnel.',
+      ],
+      en: [
+        'The "flip" phenomenon: once a support breaks cleanly, it becomes resistance. And vice versa. Mechanics: buyers trapped at the broken support sell as soon as price returns — they turn their loss into break-even.',
+        'For a flip to be valid, the break must be "clean": decisive close beyond the level, ideally on volume. A wick temporarily piercing does not invalidate anything — it is just noise.',
+        'The flip retest is often the best entry of the trade. Shorting an old support turned resistance with stop just above gives exceptional R:R.',
+      ],
+    },
+    drill: { prompt: { fr: 'Support à 1.0800 cassé, prix maintenant à 1.0850 puis revient à 1.0800 :', en: '1.0800 support broken, price now at 1.0850 then back to 1.0800:' }, options: { fr: ['Probable résistance maintenant', 'Toujours support', 'Sans signification'], en: ['Likely resistance now', 'Still support', 'Meaningless'] }, correct: 0, rationale: { fr: 'Mécanique du flip.', en: 'Flip mechanics.' } },
+    quiz: [
+      { q: { fr: 'Un flip valide demande :', en: 'A valid flip requires:' }, options: { fr: ['Clôture franche au-delà du niveau', 'Une mèche', 'Rien'], en: ['Decisive close beyond level', 'A wick', 'Nothing'] }, correct: 0, rationale: { fr: 'Sinon faux signal.', en: 'Otherwise fake signal.' } },
+      { q: { fr: 'Pourquoi le flip marche, en mécanique :', en: 'Why the flip works, mechanically:' }, options: { fr: ['Acheteurs piégés vendent au break-even', 'Personne ne se souvient du niveau', 'Magie'], en: ['Trapped buyers sell at break-even', 'No one remembers the level', 'Magic'] }, correct: 0, rationale: { fr: 'Mémoire de marché.', en: 'Market memory.' } },
+      { q: { fr: 'Le retest du flip offre :', en: 'Flip retest offers:' }, options: { fr: ['Un excellent R:R', 'Un slippage garanti', 'Rien'], en: ['Excellent R:R', 'Guaranteed slippage', 'Nothing'] }, correct: 0, rationale: { fr: 'Asymétrie favorable.', en: 'Favourable asymmetry.' } },
+    ],
+  },
+
+  'sr-04': {
+    intro: {
+      fr: [
+        'Une zone d’offre est une zone où le prix a chuté brutalement après y avoir séjourné — les vendeurs ont placé une grosse offre, le marché a basculé. Une zone de demande est l’inverse : zone d’où le prix est parti à la hausse.',
+        'Différence avec un simple support/résistance : la zone d’offre/demande capture le départ d’un mouvement, pas l’endroit où il a réagi. C’est un niveau plus précis et souvent plus puissant.',
+        'Trois caractéristiques d’une zone valide : départ explosif (grosse bougie qui quitte la zone), faible nombre de bougies dans la zone (moins = plus puissant), et zone vierge (pas retestée depuis sa formation).',
+      ],
+      en: [
+        'A supply zone is a zone where price dropped sharply after sitting there — sellers placed a big offer, the market flipped. A demand zone is the inverse: a zone from which price launched higher.',
+        'Difference vs simple support/resistance: a supply/demand zone captures the start of a move, not the place it reacted. A more precise and often more powerful level.',
+        'Three traits of a valid zone: explosive departure (large candle leaving the zone), few candles inside (fewer = more powerful), and untested (not revisited since its formation).',
+      ],
+    },
+    drill: { prompt: { fr: 'Plus une zone d’offre est inhabitée (peu de bougies dedans), plus :', en: 'The fewer candles inside a supply zone, the:' }, options: { fr: ['Elle est puissante', 'Elle est faible', 'C’est sans impact'], en: ['More powerful', 'Weaker', 'No impact'] }, correct: 0, rationale: { fr: 'Concentration d’offres.', en: 'Concentration of offers.' } },
+    quiz: [
+      { q: { fr: 'Une zone de demande émet :', en: 'A demand zone marks:' }, options: { fr: ['Le départ d’un mouvement haussier', 'Une fin de baisse', 'Un breakout neutre'], en: ['Start of an up move', 'End of a fall', 'Neutral breakout'] }, correct: 0, rationale: { fr: 'Lieu d’origine.', en: 'Origin point.' } },
+      { q: { fr: 'Différence avec support classique :', en: 'Difference from classic support:' }, options: { fr: ['On capture le départ', 'On capture la réaction', 'Aucune'], en: ['Captures the start', 'Captures the reaction', 'None'] }, correct: 0, rationale: { fr: 'Précision supérieure.', en: 'Better precision.' } },
+      { q: { fr: 'Zone retestée trois fois :', en: 'Zone retested three times:' }, options: { fr: ['Perd de la force', 'Gagne de la force', 'Aucun effet'], en: ['Loses strength', 'Gains strength', 'No effect'] }, correct: 0, rationale: { fr: 'Pareil que les S/R classiques.', en: 'Same as classic S/R.' } },
+    ],
+  },
+
+  'sr-05': {
+    intro: {
+      fr: [
+        'Un order block est une bougie (ou un cluster) qui marque le dernier engagement du smart money avant un mouvement directionnel fort. Concrètement : la dernière bougie baissière avant une explosion haussière, ou inversement.',
+        'Pour identifier un order block bullish : trouvez une bougie rouge suivie immédiatement d’un mouvement haussier brutal qui casse la structure. Cette bougie rouge est votre order block. Le retour du prix dessus est votre opportunité de long.',
+        'Avantage : l’order block donne une zone d’entrée TRÈS précise, avec un stop logique juste en-dessous. Inconvénient : sans formation Wyckoff/SMC, vous en verrez partout. Critère strict : il DOIT y avoir un break of structure après la bougie.',
+      ],
+      en: [
+        'An order block is a candle (or cluster) that marks the smart money’s last engagement before a strong directional move. Concretely: the last bearish candle before an explosive rally, or vice versa.',
+        'To spot a bullish order block: find a red candle immediately followed by a sharp bullish move that breaks structure. That red candle is your order block. Price returning to it is your long opportunity.',
+        'Edge: order block gives a VERY precise entry zone with a logical stop just below. Drawback: without Wyckoff/SMC training, you will see them everywhere. Strict criterion: there MUST be a break of structure after the candle.',
+      ],
+    },
+    drill: { prompt: { fr: 'Bougie rouge suivie d’une explosion haussière qui casse la structure :', en: 'Red candle followed by bullish explosion breaking structure:' }, options: { fr: ['Order block bullish candidat', 'Englobant baissier', 'Doji'], en: ['Candidate bullish order block', 'Bearish engulfing', 'Doji'] }, correct: 0, rationale: { fr: 'Dernier engagement.', en: 'Last engagement.' } },
+    quiz: [
+      { q: { fr: 'Critère strict pour valider un order block :', en: 'Strict criterion to validate an order block:' }, options: { fr: ['Break of structure après', 'Volume élevé seul', 'Bougie longue uniquement'], en: ['Break of structure after', 'High volume alone', 'Long candle only'] }, correct: 0, rationale: { fr: 'Sinon ce n’est qu’une bougie.', en: 'Otherwise just a candle.' } },
+      { q: { fr: 'Stop logique sur OB bullish :', en: 'Logical stop on bullish OB:' }, options: { fr: ['Sous l’OB', 'Au milieu', 'À la cassure'], en: ['Below the OB', 'At midpoint', 'At the break'] }, correct: 0, rationale: { fr: 'Invalidation claire.', en: 'Clear invalidation.' } },
+      { q: { fr: 'Sans formation, le piège est :', en: 'Without training, the trap is:' }, options: { fr: ['Voir des OB partout', 'Ne pas en voir', 'Confondre avec doji'], en: ['Seeing OB everywhere', 'Seeing none', 'Confusing with doji'] }, correct: 0, rationale: { fr: 'Surinterprétation classique.', en: 'Classic over-interpretation.' } },
+    ],
+  },
+
+  'sr-06': {
+    intro: {
+      fr: [
+        'Confluence = plusieurs raisons techniques alignées sur le même niveau. Exemple : un support classique tracé sur 1D + une zone de demande + un retracement Fibonacci 61.8 % + un niveau psychologique rond. Quatre arguments en un = trade à haute probabilité.',
+        'Sans confluence, vous tradez un signal isolé. Avec confluence, vous tradez une conviction. La différence sur 100 trades : le R moyen passe souvent de 0,3 à 0,8 — une transformation totale du compte.',
+        'Règle de discipline : si vous identifiez moins de trois confluences sur un setup, passez. Ce n’est pas que le trade ne peut pas marcher ; c’est qu’il n’est pas assez asymétrique pour mériter votre attention.',
+      ],
+      en: [
+        'Confluence = several technical reasons aligned on the same level. Example: classic support drawn on 1D + a demand zone + 61.8% Fibonacci retracement + a round psychological level. Four arguments in one = high-probability trade.',
+        'Without confluence, you trade an isolated signal. With confluence, you trade a conviction. The difference over 100 trades: average R often moves from 0.3 to 0.8 — a total account transformation.',
+        'Discipline rule: if you identify fewer than three confluences on a setup, pass. Not because the trade cannot work; because it is not asymmetric enough to deserve your attention.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous identifiez UN seul argument technique. Vous :', en: 'You spot ONE technical reason. You:' }, options: { fr: ['Passez le trade', 'Entrez avec petit stop', 'Doublez la taille'], en: ['Pass the trade', 'Enter with small stop', 'Double size'] }, correct: 0, rationale: { fr: 'Pas assez asymétrique.', en: 'Not asymmetric enough.' } },
+    quiz: [
+      { q: { fr: 'Seuil typique de confluences pour entrer :', en: 'Typical confluence threshold to enter:' }, options: { fr: ['Trois ou plus', 'Une', 'Aucun seuil'], en: ['Three or more', 'One', 'No threshold'] }, correct: 0, rationale: { fr: 'Discipline numérique.', en: 'Numeric discipline.' } },
+      { q: { fr: 'L’impact sur R moyen :', en: 'Impact on average R:' }, options: { fr: ['Souvent doublé', 'Marginal', 'Nul'], en: ['Often doubled', 'Marginal', 'None'] }, correct: 0, rationale: { fr: 'Filtre puissant.', en: 'Powerful filter.' } },
+      { q: { fr: 'Confluence = :', en: 'Confluence = :' }, options: { fr: ['Plusieurs raisons alignées', 'Une seule très forte', 'Pure intuition'], en: ['Several aligned reasons', 'A single strong one', 'Pure intuition'] }, correct: 0, rationale: { fr: 'Multiplication des signaux.', en: 'Stacking signals.' } },
+    ],
+  },
+
+  'sr-07': {
+    intro: {
+      fr: [
+        'La liquidité aux extrêmes : les stops s’accumulent juste au-dessus des plus hauts récents (pour les vendeurs) et juste sous les plus bas récents (pour les acheteurs). Le smart money sait où ces stops sont. Il pousse parfois le prix les chercher délibérément.',
+        'Signature visible : une mèche longue qui dépasse un plus haut/bas évident, suivie d’un retour rapide. C’est la chasse aux stops. Le marché vient de récolter la liquidité.',
+        'Trade asymétrique : entrer à contre-courant juste après la chasse aux stops, avec stop placé derrière l’extrême récent. R:R souvent 1:5 ou mieux. À condition d’avoir un contexte structurel cohérent — sinon c’est juste un breakout normal.',
+      ],
+      en: [
+        'Liquidity at extremes: stops accumulate just above recent highs (for sellers) and just below recent lows (for buyers). Smart money knows where those stops are. It sometimes pushes price deliberately to hunt them.',
+        'Visible signature: a long wick spiking past an obvious high/low, followed by a quick return. That is the stop hunt. The market just harvested the liquidity.',
+        'Asymmetric trade: enter against the move right after the stop hunt, with stop placed behind the recent extreme. R:R often 1:5 or better. Requires coherent structural context — otherwise just a normal breakout.',
+      ],
+    },
+    drill: { prompt: { fr: 'Longue mèche au-dessus d’un plus haut évident, retour rapide :', en: 'Long wick above an obvious high, quick return:' }, options: { fr: ['Probable chasse aux stops', 'Vraie cassure', 'Sans signification'], en: ['Likely stop hunt', 'Real breakout', 'Meaningless'] }, correct: 0, rationale: { fr: 'Liquidité absorbée.', en: 'Liquidity absorbed.' } },
+    quiz: [
+      { q: { fr: 'Les stops des acheteurs sont sous :', en: 'Buyer stops sit below:' }, options: { fr: ['Les plus bas récents', 'Les plus hauts', 'Le centre du range'], en: ['Recent lows', 'Highs', 'Range center'] }, correct: 0, rationale: { fr: 'Mécanique du stop loss.', en: 'Stop-loss mechanics.' } },
+      { q: { fr: 'Le trade post-chasse :', en: 'The post-hunt trade:' }, options: { fr: ['À contre-courant avec stop derrière l’extrême', 'Dans le sens de la chasse', 'Avec stop large'], en: ['Against the hunt with stop behind extreme', 'Same as the hunt', 'With wide stop'] }, correct: 0, rationale: { fr: 'Asymétrie maximale.', en: 'Maximum asymmetry.' } },
+      { q: { fr: 'Le contexte requis :', en: 'Required context:' }, options: { fr: ['Cohérence structurelle', 'Aucun', 'Volume élevé seul'], en: ['Structural coherence', 'None', 'High volume alone'] }, correct: 0, rationale: { fr: 'Sinon faux signal.', en: 'Otherwise fake signal.' } },
+    ],
+  },
+
+  'sr-08': {
+    intro: {
+      fr: [
+        'Un stop hunt est l’événement où le prix dépasse temporairement un niveau évident (support, résistance, plus haut, plus bas) pour déclencher les stops, puis revient rapidement de l’autre côté. Le marché s’est servi de la liquidité accumulée.',
+        'Trois signatures qui distinguent un vrai stop hunt d’un breakout : (1) la mèche est longue mais le corps clôture en deçà du niveau ; (2) le volume du débordement est anormalement élevé ; (3) la bougie suivante repart vivement dans le sens opposé.',
+        'Stratégie « anti stop hunt » : ne placez jamais votre stop pile au niveau évident. Décalez-le de 5 à 15 pips au-delà (selon la volatilité) pour absorber la mèche de chasse sans vous faire sortir.',
+      ],
+      en: [
+        'A stop hunt is the event where price temporarily exceeds an obvious level (support, resistance, high, low) to trigger stops, then quickly returns to the other side. The market has consumed the accumulated liquidity.',
+        'Three signatures that separate a real stop hunt from a breakout: (1) long wick but body closes back inside the level; (2) overflow volume is abnormally high; (3) next candle reverses sharply.',
+        'Anti-hunt strategy: never place your stop exactly at the obvious level. Offset it by 5 to 15 pips beyond (depending on volatility) to absorb the hunt wick without getting taken out.',
+      ],
+    },
+    drill: { prompt: { fr: 'Où placer votre stop loss pour éviter la chasse :', en: 'Where to place stop to avoid hunting:' }, options: { fr: ['5-15 pips au-delà du niveau évident', 'Pile au niveau', 'Très près du prix'], en: ['5-15 pips beyond the obvious level', 'Right at the level', 'Very close to price'] }, correct: 0, rationale: { fr: 'Marge anti-chasse.', en: 'Anti-hunt margin.' } },
+    quiz: [
+      { q: { fr: 'Signature d’un vrai stop hunt :', en: 'Real stop hunt signature:' }, options: { fr: ['Mèche longue, corps en deçà', 'Corps fermé au-delà', 'Pas de mèche'], en: ['Long wick, body inside', 'Body closed beyond', 'No wick'] }, correct: 0, rationale: { fr: 'Le corps fait foi.', en: 'The body decides.' } },
+      { q: { fr: 'Volume sur la mèche :', en: 'Volume on the wick:' }, options: { fr: ['Anormalement élevé', 'Faible', 'Indifférent'], en: ['Abnormally high', 'Low', 'Irrelevant'] }, correct: 0, rationale: { fr: 'Récolte de liquidité.', en: 'Liquidity harvest.' } },
+      { q: { fr: 'La bougie suivante doit :', en: 'Next candle should:' }, options: { fr: ['Repartir dans l’autre sens', 'Continuer le breakout', 'Faire un doji'], en: ['Reverse', 'Continue breakout', 'Print a doji'] }, correct: 0, rationale: { fr: 'Confirmation visuelle.', en: 'Visual confirmation.' } },
+    ],
+  },
+
+  'sr-09': {
+    intro: {
+      fr: [
+        'Le retracement de Fibonacci découpe un mouvement haussier (ou baissier) en proportions clés : 23.6 %, 38.2 %, 50 %, 61.8 %, 78.6 %. Le marché tend à respecter ces niveaux dans ses pullbacks intermédiaires.',
+        'Niveau le plus respecté : le 61.8 %. C’est la « zone d’or » — un pullback qui s’y arrête avant de repartir confirme souvent la tendance. Le 50 % n’est techniquement pas un Fib mais reste très observé par les traders.',
+        'Erreur fréquente : tracer Fib n’importe où. À utiliser uniquement sur un mouvement clair, du début à la fin d’une impulsion. Sur un range, Fibonacci ne signifie rien.',
+      ],
+      en: [
+        'Fibonacci retracement splits a bullish (or bearish) move into key ratios: 23.6%, 38.2%, 50%, 61.8%, 78.6%. The market tends to respect these levels in intermediate pullbacks.',
+        'Most respected level: 61.8%. The "golden zone" — a pullback that stops there before resuming often confirms the trend. The 50% is not technically a Fib but is heavily watched.',
+        'Common mistake: drawing Fib anywhere. Use it only on a clear move, from start to end of an impulse. On a range, Fibonacci means nothing.',
+      ],
+    },
+    drill: { prompt: { fr: 'Le retracement « zone d’or » est :', en: 'The "golden zone" retracement is:' }, options: { fr: ['61.8 %', '23.6 %', '100 %'], en: ['61.8%', '23.6%', '100%'] }, correct: 0, rationale: { fr: 'Le ratio doré.', en: 'Golden ratio.' } },
+    quiz: [
+      { q: { fr: 'Fib doit être tracé :', en: 'Fib should be drawn:' }, options: { fr: ['Sur une impulsion claire', 'Sur un range', 'N’importe où'], en: ['On a clear impulse', 'On a range', 'Anywhere'] }, correct: 0, rationale: { fr: 'Outil pour pullbacks.', en: 'Pullback tool.' } },
+      { q: { fr: 'Le 50 % est :', en: 'The 50% is:' }, options: { fr: ['Pas un vrai Fib mais très observé', 'Le plus fort', 'Inutile'], en: ['Not a real Fib but heavily watched', 'The strongest', 'Useless'] }, correct: 0, rationale: { fr: 'Convention de fait.', en: 'De facto convention.' } },
+      { q: { fr: 'Un pullback qui dépasse 78.6 % :', en: 'A pullback past 78.6%:' }, options: { fr: ['Invalide souvent la tendance', 'Confirme la tendance', 'N’a aucun sens'], en: ['Often invalidates the trend', 'Confirms it', 'Means nothing'] }, correct: 0, rationale: { fr: 'Au-delà = retournement probable.', en: 'Beyond = likely reversal.' } },
+    ],
+  },
+
+  'sr-10': {
+    intro: {
+      fr: [
+        'Les extensions de Fibonacci projettent la suite d’un mouvement après pullback. Ratios standard : 1.272, 1.414, 1.618, 2.618. Le 1.618 est la cible « naturelle » de la majorité des impulsions trending.',
+        'Usage classique : impulsion 1, pullback à 61.8 %, impulsion 2 qui vise 1.618. Cette mécanique alimente la plupart des stratégies « measured move » sur le forex.',
+        'Combiner extension Fib avec un niveau de résistance horizontal préexistant donne une cible à haute probabilité. Si les deux convergent à quelques pips près, c’est votre take-profit prioritaire.',
+      ],
+      en: [
+        'Fibonacci extensions project the next leg after a pullback. Standard ratios: 1.272, 1.414, 1.618, 2.618. The 1.618 is the "natural" target of most trending impulses.',
+        'Classic use: impulse 1, pullback to 61.8%, impulse 2 targeting 1.618. This mechanic feeds most "measured move" strategies in forex.',
+        'Combining Fib extension with a pre-existing horizontal resistance gives a high-probability target. If both converge within a few pips, that is your priority take-profit.',
+      ],
+    },
+    drill: { prompt: { fr: 'L’extension Fib la plus « naturelle » comme cible :', en: 'Most "natural" Fib extension target:' }, options: { fr: ['1.618', '0.5', '2.618'], en: ['1.618', '0.5', '2.618'] }, correct: 0, rationale: { fr: 'Ratio doré projeté.', en: 'Golden ratio projected.' } },
+    quiz: [
+      { q: { fr: 'Mécanique measured move :', en: 'Measured-move mechanic:' }, options: { fr: ['Impulsion → 61.8 pullback → 1.618', 'Impulsion → 50 pullback → 1.0', 'Aléatoire'], en: ['Impulse → 61.8 pullback → 1.618', 'Impulse → 50 pullback → 1.0', 'Random'] }, correct: 0, rationale: { fr: 'Structure canonique.', en: 'Canonical structure.' } },
+      { q: { fr: 'Extension + résistance convergente = :', en: 'Extension + convergent resistance = :' }, options: { fr: ['Cible prioritaire', 'À ignorer', 'Setup faible'], en: ['Priority target', 'To ignore', 'Weak setup'] }, correct: 0, rationale: { fr: 'Confluence puissante.', en: 'Strong confluence.' } },
+      { q: { fr: 'Extension utile quand :', en: 'Extension useful when:' }, options: { fr: ['Tendance claire', 'Range complet', 'Sans direction'], en: ['Clear trend', 'Full range', 'No direction'] }, correct: 0, rationale: { fr: 'Projection après pullback.', en: 'Projection after pullback.' } },
+    ],
+  },
+
+  'sr-11': {
+    intro: {
+      fr: [
+        'Les pivots Camarilla sont un set particulier de pivots calculés à partir du high, low, close de la veille. Les niveaux H3/L3 et H4/L4 sont les plus utilisés en intraday — ils ciblent des zones de retournement statistiquement fiables.',
+        'Stratégie classique : si le prix d’ouverture est entre H3 et L3, on s’attend à un range ; toucher H3 = vendre, toucher L3 = acheter. Si le prix dépasse H4 ou L4, c’est un breakout et on suit la tendance.',
+        'Avantage des Camarilla : ils s’adaptent à la volatilité de la veille, contrairement aux pivots standards qui peuvent être déphasés en marché nerveux. Excellent complément si vous tradez l’ouverture européenne ou américaine.',
+      ],
+      en: [
+        'Camarilla pivots are a specific set of pivots computed from the previous day’s high, low, close. H3/L3 and H4/L4 are most used intraday — they target statistically reliable reversal zones.',
+        'Classic strategy: if the open is between H3 and L3, expect a range; touching H3 = sell, touching L3 = buy. If price clears H4 or L4, it is a breakout and you follow the trend.',
+        'Camarilla edge: they adapt to the previous day’s volatility, unlike standard pivots which can mis-fire in nervous markets. Excellent complement if you trade the European or American open.',
+      ],
+    },
+    drill: { prompt: { fr: 'Le prix touche H4 et clôture au-dessus. Vous :', en: 'Price touches H4 and closes above. You:' }, options: { fr: ['Suivez le breakout', 'Vendez', 'Attendez le retour'], en: ['Follow the breakout', 'Sell', 'Wait for return'] }, correct: 0, rationale: { fr: 'Au-dessus de H4 = trend.', en: 'Above H4 = trend.' } },
+    quiz: [
+      { q: { fr: 'Camarilla s’adapte à :', en: 'Camarilla adapts to:' }, options: { fr: ['Volatilité veille', 'Volume hebdo', 'Spread'], en: ['Previous day volatility', 'Weekly volume', 'Spread'] }, correct: 0, rationale: { fr: 'Calcul OHLC veille.', en: 'OHLC computation.' } },
+      { q: { fr: 'Niveau intraday le plus utilisé :', en: 'Most used intraday level:' }, options: { fr: ['H3 et L3', 'H1 et L1', 'Pivot central'], en: ['H3 and L3', 'H1 and L1', 'Central pivot'] }, correct: 0, rationale: { fr: 'Zones de retournement.', en: 'Reversal zones.' } },
+      { q: { fr: 'Entre H3 et L3 on attend :', en: 'Between H3 and L3 expect:' }, options: { fr: ['Un range', 'Un breakout vif', 'Une chute'], en: ['A range', 'Sharp breakout', 'A fall'] }, correct: 0, rationale: { fr: 'Zone neutre.', en: 'Neutral zone.' } },
+    ],
+  },
+
+  'sr-12': {
+    intro: {
+      fr: [
+        'Liquidity grab : une chasse aux stops particulièrement nette, où le marché crée délibérément un faux signal pour ramasser les ordres en attente. Apparaît à proximité de niveaux super évidents (round numbers, plus hauts/bas hebdomadaires).',
+        'Différence avec un stop hunt classique : le liquidity grab est plus large, plus brutal, et précède souvent un mouvement de fond important (50+ pips). Le stop hunt « normal » est plus court et tactique.',
+        'Trade type : vous repérez un niveau qui « doit » céder selon la majorité (par exemple, un plus bas de la semaine). Vous attendez que le marché y aille, déclenche la cassure, et revienne. C’est votre signal d’entrée à contre-courant.',
+      ],
+      en: [
+        'Liquidity grab: a particularly clean stop hunt where the market deliberately creates a fake signal to harvest resting orders. Appears near super-obvious levels (round numbers, weekly highs/lows).',
+        'Difference from a classic stop hunt: the liquidity grab is wider, more brutal, and often precedes a major background move (50+ pips). The "normal" stop hunt is shorter and tactical.',
+        'Typical trade: you spot a level the majority believes "must" break (a weekly low, for instance). You wait for price to go there, trigger the break, and return. That is your counter-trend entry signal.',
+      ],
+    },
+    drill: { prompt: { fr: 'Différence liquidity grab vs stop hunt :', en: 'Liquidity grab vs stop hunt:' }, options: { fr: ['Grab plus large, précède gros mouvement', 'Identique', 'Plus court'], en: ['Grab is wider, precedes larger move', 'Identical', 'Shorter'] }, correct: 0, rationale: { fr: 'Échelle et impact.', en: 'Scale and impact.' } },
+    quiz: [
+      { q: { fr: 'Où apparaît typiquement un grab :', en: 'Where does a grab typically show:' }, options: { fr: ['Near round numbers, weekly extremes', 'Au milieu du range', 'À l’ouverture asiatique'], en: ['Near round numbers, weekly extremes', 'Range middle', 'Asian open'] }, correct: 0, rationale: { fr: 'Liquidité dense.', en: 'Dense liquidity.' } },
+      { q: { fr: 'Le mouvement post-grab fait souvent :', en: 'Post-grab move often:' }, options: { fr: ['50+ pips', '5 pips', 'Aucun'], en: ['50+ pips', '5 pips', 'None'] }, correct: 0, rationale: { fr: 'Force de fond.', en: 'Background force.' } },
+      { q: { fr: 'Le trade après grab est :', en: 'Trade after grab is:' }, options: { fr: ['À contre-courant du grab', 'Avec le grab', 'Neutre'], en: ['Against the grab', 'With the grab', 'Neutral'] }, correct: 0, rationale: { fr: 'Le piège vous donne l’asymétrie.', en: 'The trap gives the asymmetry.' } },
+    ],
+  },
+
+  'sr-13': {
+    intro: {
+      fr: [
+        'Exercice pratique : ouvrez 5 graphiques journaliers de paires majeures (EUR/USD, GBP/USD, USD/JPY, AUD/USD, USD/CAD). Pour chacun, tracez 3 niveaux : un support clair, une résistance claire, une zone de demande ou d’offre.',
+        'Critères stricts : chaque niveau doit avoir été testé au moins 2 fois, sur 6 mois ou plus, avec une réaction nette (longue mèche, grosse bougie). Pas plus de 3 niveaux par graphique — sinon vous trichez en multipliant les options.',
+        'Une fois fini, comparez avec ce que les autres traders publient publiquement sur TradingView. Vous verrez les mêmes niveaux émerger chez les bons. C’est rassurant — et instructif sur ce qui distingue les bons des autres.',
+      ],
+      en: [
+        'Practical drill: open 5 daily charts of major pairs (EUR/USD, GBP/USD, USD/JPY, AUD/USD, USD/CAD). On each, draw 3 levels: a clear support, a clear resistance, a demand or supply zone.',
+        'Strict criteria: each level must have been tested at least twice, over 6 months or more, with a clean reaction (long wick, large candle). No more than 3 levels per chart — otherwise you cheat by multiplying options.',
+        'Once done, compare with what other traders publish publicly on TradingView. You will see the same levels emerge among the good ones. Reassuring — and instructive about what separates the good from the rest.',
+      ],
+    },
+    drill: { prompt: { fr: 'Trop de niveaux sur un graphique :', en: 'Too many levels on a chart:' }, options: { fr: ['Vous trichez en multipliant les options', 'Plus c’est mieux', 'Sans impact'], en: ['You cheat by multiplying options', 'More is better', 'No impact'] }, correct: 0, rationale: { fr: 'Trois max suffit.', en: 'Three max is enough.' } },
+    quiz: [
+      { q: { fr: 'Critère temporel minimum :', en: 'Minimum time criterion:' }, options: { fr: ['6 mois et plus', '1 semaine', '1 jour'], en: ['6 months or more', '1 week', '1 day'] }, correct: 0, rationale: { fr: 'Pertinence historique.', en: 'Historical relevance.' } },
+      { q: { fr: 'Comparer avec d’autres traders :', en: 'Compare with other traders:' }, options: { fr: ['Confirme les niveaux solides', 'Inutile', 'Distrait toujours'], en: ['Confirms solid levels', 'Useless', 'Always distracting'] }, correct: 0, rationale: { fr: 'Validation croisée.', en: 'Cross-validation.' } },
+      { q: { fr: 'Combien de paires dans l’exercice :', en: 'How many pairs in the drill:' }, options: { fr: ['Cinq', 'Une', 'Vingt'], en: ['Five', 'One', 'Twenty'] }, correct: 0, rationale: { fr: 'Échantillon représentatif.', en: 'Representative sample.' } },
+    ],
+  },
+
+  'sr-14': {
+    intro: {
+      fr: [
+        'Point de contrôle S&R. Trois acquis : tracer un vrai niveau (zone, multi-timeframe, deux tests minimum), lire la mécanique du flip (cassure propre + retest = excellent point d’entrée), comprendre la liquidité (chasse aux stops + grab + extension Fib + confluence).',
+        'Si vous mélangez encore order block et zone de demande, ou pivot Camarilla et niveau psychologique, refaites les leçons correspondantes. La piste suivante (Volumes & order flow) part du principe que vous lisez un graphique propre.',
+        'Bonus : durant la semaine prochaine, tracez sur chaque graphique au moins une confluence à 3+ raisons. Si vous n’en trouvez aucune, ne tradez pas. Cette discipline filtre les setups médiocres dès l’entrée.',
+      ],
+      en: [
+        'S&R checkpoint. Three things to lock in: drawing a real level (zone, multi-timeframe, two tests minimum), reading the flip (clean break + retest = excellent entry), understanding liquidity (stop hunts + grab + Fib extension + confluence).',
+        'If you still mix order block with demand zone, or Camarilla pivot with psychological level, retake the lessons. The next track (Volume & order flow) assumes you read a clean chart.',
+        'Bonus: over the next week, find on each chart at least one 3+ reason confluence. If you find none, do not trade. This discipline filters mediocre setups before you even enter.',
+      ],
+    },
+    drill: { prompt: { fr: 'La piste suivante suppose que :', en: 'The next track assumes that:' }, options: { fr: ['Vous lisez un graphique propre', 'Vous trouverez tout par hasard', 'Vous évitez la lecture technique'], en: ['You read a clean chart', 'You find everything by chance', 'You avoid technical reading'] }, correct: 0, rationale: { fr: 'Pas de dette technique.', en: 'No technical debt.' } },
+    quiz: [
+      { q: { fr: 'Le filtre discipline le plus puissant :', en: 'Most powerful discipline filter:' }, options: { fr: ['3+ confluences avant d’entrer', 'Lire les news', 'Avoir un grand stop'], en: ['3+ confluences before entry', 'Reading news', 'Wide stop'] }, correct: 0, rationale: { fr: 'Qualité > quantité.', en: 'Quality > quantity.' } },
+      { q: { fr: 'Si vous mélangez encore les concepts :', en: 'If you still mix concepts:' }, options: { fr: ['Refaire les leçons', 'Forcer la suite', 'Demander un signal'], en: ['Retake lessons', 'Force the next ones', 'Ask for a signal'] }, correct: 0, rationale: { fr: 'Consolidation avant tout.', en: 'Consolidation first.' } },
+      { q: { fr: 'Tracer un vrai niveau requiert :', en: 'Drawing a real level requires:' }, options: { fr: ['Zone, multi-TF, 2 tests', 'Une seule mèche', 'Un nombre rond'], en: ['Zone, multi-TF, 2 tests', 'A single wick', 'A round number'] }, correct: 0, rationale: { fr: 'Les trois critères.', en: 'The three criteria.' } },
+    ],
+  },
 };
 
 // ─── Placeholder generator ─────────────────────────────────────────────────
