@@ -8,7 +8,7 @@ type Props = {
   locale: 'fr' | 'en';
 };
 
-const SITE_URL = 'https://tickra.com';
+import { SITE_URL } from '@/lib/site-url';
 
 export function ArticleJsonLd({ url, title, description, date, author, image, locale }: Props) {
   const payload = {

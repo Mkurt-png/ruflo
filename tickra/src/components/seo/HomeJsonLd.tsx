@@ -1,7 +1,6 @@
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
-
-const SITE_URL = 'https://tickra.com';
+import { SITE_URL } from '@/lib/site-url';
 
 export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const url = `${SITE_URL}/${locale}`;

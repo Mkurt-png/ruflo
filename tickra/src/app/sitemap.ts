@@ -3,8 +3,7 @@ import { locales } from '@/lib/i18n/config';
 import en from '@/lib/i18n/locales/en';
 import fr from '@/lib/i18n/locales/fr';
 import { TRACKS } from '@/lib/curriculum/data';
-
-const SITE = 'https://tickra.com';
+import { SITE_URL as SITE } from '@/lib/site-url';
 
 const routes = [
   { path: '', changeFrequency: 'monthly' as const, priority: 1 },

@@ -13,10 +13,10 @@ import { ArticleShare } from '@/components/editorial/ArticleShare';
 import { ReadProgress } from '@/components/editorial/ReadProgress';
 import { ArticleToc } from '@/components/editorial/ArticleToc';
 import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
+import { SITE_URL } from '@/lib/site-url';
 
 type Params = { locale: string; slug: string };
-
-const SITE_URL = 'https://tickra.com';
 
 type Post = {
   title: string;
@@ -45,10 +45,17 @@ export async function generateMetadata({ params }: { params: Params }) {
   const dict = await getDictionary(params.locale);
   const post = (dict.editorialArticles.posts as Record<string, Post>)[params.slug];
   if (!post) return {};
+  const canonical = `/${params.locale}/editorial/${params.slug}`;
   return {
     title: `${post.title} · Tickra`,
     description: post.excerpt,
-    openGraph: { title: post.title, description: post.excerpt, type: 'article' },
+    alternates: { canonical },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      url: `${SITE_URL}${canonical}`,
+    },
   };
 }
 
@@ -79,6 +86,16 @@ export default async function EditorialArticlePage({ params }: { params: Params 
         date={post.date}
         author={post.author}
         locale={params.locale}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${params.locale}` },
+          {
+            name: params.locale === 'fr' ? 'Éditorial' : 'Editorial',
+            path: `/${params.locale}/editorial`,
+          },
+          { name: post.title, path: `/${params.locale}/editorial/${params.slug}` },
+        ]}
       />
       <Navbar dict={dict} locale={params.locale} />
       <ReadProgress />
