@@ -73,7 +73,10 @@ export async function POST(req: Request) {
       cancel_url: `${siteUrl}/${locale}/pricing?checkout=cancelled`,
       allow_promotion_codes: true,
       locale: locale === 'fr' ? 'fr' : 'en',
-      automatic_tax: { enabled: true },
+      // automatic_tax requires Stripe Tax to be activated and a registered
+      // tax origin. Off by default so a fresh account can checkout without
+      // first going through the Tax onboarding. Re-enable once you've set
+      // up Stripe Tax + your registrations.
       billing_address_collection: 'auto',
       metadata: { plan: body.plan, cycle },
     });
@@ -81,6 +84,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ url: session.url });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error';
-    return NextResponse.json({ error: 'stripe error', detail: message }, { status: 502 });
+    // Echo the message in the response so the front-end toast can show
+    // exactly what Stripe complained about — much faster to diagnose than
+    // a generic "stripe error".
+    console.error('[checkout] stripe error', message);
+    return NextResponse.json(
+      { error: 'stripe_error', detail: message, hint: message },
+      { status: 502 },
+    );
   }
 }
