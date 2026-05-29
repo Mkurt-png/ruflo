@@ -7,9 +7,10 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { TRACKS, getTrack } from '@/lib/curriculum/data';
+import { TRACKS, getTrack, lessonGlobalIndex } from '@/lib/curriculum/data';
 import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
 import { LessonPreviewPopover } from '@/components/learn/LessonPreviewPopover';
+import { LessonLockBadge } from '@/components/learn/LessonLockBadge';
 import { Info } from 'lucide-react';
 
 type Params = { locale: string; track: string };
@@ -69,9 +70,13 @@ export default async function TrackPage({ params }: { params: Params }) {
                   </span>
                   <Link
                     href={`/${locale}/learn/${track.slug}/${lesson.slug}`}
-                    className="group col-span-7 font-display text-lg font-medium tracking-tight text-ink transition-colors hover:text-muted md:col-span-8 md:text-xl"
+                    className="group col-span-7 flex flex-wrap items-center gap-3 font-display text-lg font-medium tracking-tight text-ink transition-colors hover:text-muted md:col-span-8 md:text-xl"
                   >
                     {lesson.title[locale]}
+                    <LessonLockBadge
+                      globalIndex={lessonGlobalIndex(track.slug, lesson.slug)}
+                      locale={locale}
+                    />
                   </Link>
                   <span className="col-span-3 flex items-center justify-end gap-3 md:col-span-3">
                     <LessonPreviewPopover

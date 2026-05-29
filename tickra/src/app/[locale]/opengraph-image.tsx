@@ -77,7 +77,7 @@ export default async function OgImage({ params }: { params: { locale: string } }
             textTransform: 'uppercase',
           }}
         >
-          <span>127 lessons · 11 tracks · 10 min/day</span>
+          <span>222 lessons · 15 tracks · 10 min/day</span>
           <span>tickra.com</span>
         </div>
       </div>

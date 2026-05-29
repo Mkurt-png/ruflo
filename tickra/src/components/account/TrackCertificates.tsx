@@ -11,7 +11,7 @@ type Locale = 'fr' | 'en';
 const copy = {
   fr: {
     title: 'Certificats de piste',
-    subtitle: 'Un mini‑diplôme par piste validée. Le diplôme Tickra final à la 127.',
+    subtitle: 'Un mini‑diplôme par piste validée. Le diplôme Tickra final à la 222.',
     counter: 'obtenus',
     earnedAt: 'Obtenu le',
     resume: 'Reprendre',
@@ -19,7 +19,7 @@ const copy = {
   },
   en: {
     title: 'Track certificates',
-    subtitle: 'One mini‑diploma per completed track. The final Tickra diploma at 127.',
+    subtitle: 'One mini‑diploma per completed track. The final Tickra diploma at 222.',
     counter: 'earned',
     earnedAt: 'Earned on',
     resume: 'Resume',

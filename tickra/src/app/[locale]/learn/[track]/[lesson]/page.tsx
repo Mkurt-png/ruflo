@@ -10,6 +10,7 @@ import { LessonRunner } from '@/components/learn/LessonRunner';
 import { LessonNotes } from '@/components/learn/LessonNotes';
 import { LessonFeedback } from '@/components/learn/LessonFeedback';
 import { PrefetchNeighbours } from '@/components/learn/PrefetchNeighbours';
+import { LessonGate } from '@/components/learn/LessonGate';
 
 type Params = { locale: string; track: string; lesson: string };
 
@@ -51,6 +52,13 @@ export default async function LessonPage({
   const dict = await getDictionary(locale);
   const reviewMode = searchParams?.mode === 'review';
 
+  // Entitlement: free unlocks the first N lessons (computed client-side
+  // because cookies() is not available during static generation).
+  const firstFreeLesson = TRACKS[0]?.lessons[0];
+  const fallbackFreeHref = firstFreeLesson
+    ? `/${locale}/learn/${TRACKS[0].slug}/${firstFreeLesson.slug}`
+    : `/${locale}/learn`;
+
   const prefetchHrefs = [
     neighbours.next
       ? `/${locale}/learn/${neighbours.next.trackSlug}/${neighbours.next.lesson.slug}`
@@ -67,25 +75,29 @@ export default async function LessonPage({
       <main id="main">
         <section className="border-b border-line">
           <Container as="div" className="py-16 md:py-24">
-            <LessonRunner
+            <LessonGate
               locale={locale}
-              track={track}
-              lesson={lesson}
-              content={content}
-              next={neighbours.next}
               globalIndex={globalIndex}
-              total={totalLessons()}
-              reviewMode={reviewMode}
+              freeLessonHref={fallbackFreeHref}
+              unlockedMain={
+                <LessonRunner
+                  locale={locale}
+                  track={track}
+                  lesson={lesson}
+                  content={content}
+                  next={neighbours.next}
+                  globalIndex={globalIndex}
+                  total={totalLessons()}
+                  reviewMode={reviewMode}
+                />
+              }
+              unlockedExtras={
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <LessonNotes lessonId={lesson.id} locale={locale} />
+                  <LessonFeedback lessonId={lesson.id} locale={locale} />
+                </div>
+              }
             />
-          </Container>
-        </section>
-
-        <section className="border-b border-line bg-elevated">
-          <Container as="div" className="py-12 md:py-16">
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              <LessonNotes lessonId={lesson.id} locale={locale} />
-              <LessonFeedback lessonId={lesson.id} locale={locale} />
-            </div>
           </Container>
         </section>
       </main>

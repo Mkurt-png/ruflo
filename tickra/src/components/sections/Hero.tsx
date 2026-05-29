@@ -111,7 +111,7 @@ export function Hero({ dict, locale }: Props) {
                   </span>
                 </div>
                 <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
-                  Lesson 04 / 127
+                  Lesson 04 / 222
                 </span>
               </div>
               <CandlestickChart caption={t.chartCaption} />
