@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { AlertTriangle, Check, CreditCard, ExternalLink, Key, LogOut, Save, Shield, User } from 'lucide-react';
+import { AlertTriangle, Check, CreditCard, Download, ExternalLink, Key, LogOut, Save, Shield, User } from 'lucide-react';
 import { toast } from '@/components/site/ToastProvider';
 import { cn } from '@/lib/cn';
 
@@ -22,7 +22,7 @@ type Profile = {
 
 const copy = {
   fr: {
-    sections: { profile: 'Profil', plan: 'Abonnement', preferences: 'Préférences', security: 'Sécurité', danger: 'Zone dangereuse' },
+    sections: { profile: 'Profil', plan: 'Abonnement', preferences: 'Préférences', security: 'Sécurité', data: 'Mes données', danger: 'Zone dangereuse' },
     profileTitle: 'Profil',
     profileSubtitle: 'Vos informations publiques. L’email n’est pas modifiable — il provient de votre méthode de connexion.',
     emailLabel: 'Adresse e‑mail',
@@ -59,6 +59,11 @@ const copy = {
     passwordNotice: 'Vous vous êtes connecté avec Google. Le mot de passe est géré directement chez Google.',
     managePassword: 'Gérer mon mot de passe Google',
 
+    dataTitle: 'Mes données',
+    dataSubtitle: 'Téléchargez une copie complète de votre profil, de votre progression, de vos notes et favoris au format JSON.',
+    dataCta: 'Télécharger mes données',
+    dataDownloading: 'Préparation…',
+
     dangerTitle: 'Zone dangereuse',
     dangerSubtitle: 'Supprimer votre compte est définitif. Toute votre progression, vos notes, vos favoris seront effacés.',
     deleteCta: 'Supprimer mon compte',
@@ -72,7 +77,7 @@ const copy = {
     notConfigured: 'Base de données non configurée — vos modifications ne seront pas persistées.',
   },
   en: {
-    sections: { profile: 'Profile', plan: 'Subscription', preferences: 'Preferences', security: 'Security', danger: 'Danger zone' },
+    sections: { profile: 'Profile', plan: 'Subscription', preferences: 'Preferences', security: 'Security', data: 'My data', danger: 'Danger zone' },
     profileTitle: 'Profile',
     profileSubtitle: 'Your public information. Email is not editable — it comes from your sign-in method.',
     emailLabel: 'Email address',
@@ -109,6 +114,11 @@ const copy = {
     passwordNotice: 'You signed in with Google. Your password is managed there.',
     managePassword: 'Manage Google password',
 
+    dataTitle: 'My data',
+    dataSubtitle: 'Download a full copy of your profile, progress, notes and bookmarks as JSON.',
+    dataCta: 'Download my data',
+    dataDownloading: 'Preparing…',
+
     dangerTitle: 'Danger zone',
     dangerSubtitle: 'Deleting your account is permanent. All your progress, notes, bookmarks will be erased.',
     deleteCta: 'Delete my account',
@@ -141,6 +151,7 @@ export function SettingsPanel({ locale, email }: { locale: Locale; email: string
   const [savingPrefs, setSavingPrefs] = useState(false);
   const [openingPortal, setOpeningPortal] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState('');
   const [showDelete, setShowDelete] = useState(false);
 
@@ -185,6 +196,29 @@ export function SettingsPanel({ locale, email }: { locale: Locale; email: string
       else toast({ tone: 'error', title: data.error ?? 'error' });
     } finally {
       setOpeningPortal(false);
+    }
+  };
+
+  const onExport = async () => {
+    setExporting(true);
+    try {
+      const res = await fetch('/api/me/export', { cache: 'no-store' });
+      if (!res.ok) {
+        toast({ tone: 'error', title: locale === 'fr' ? 'Export indisponible' : 'Export unavailable' });
+        return;
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const stamp = new Date().toISOString().slice(0, 10);
+      a.download = `tickra-export-${stamp}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setExporting(false);
     }
   };
 
@@ -401,6 +435,23 @@ export function SettingsPanel({ locale, email }: { locale: Locale; email: string
             </form>
           </ActionRow>
         </div>
+      </Section>
+
+      {/* ─── Data export ──────────────────────────────────────────────── */}
+      <Section
+        icon={<Download className="h-4 w-4" strokeWidth={1.75} />}
+        title={t.dataTitle}
+        subtitle={t.dataSubtitle}
+      >
+        <button
+          type="button"
+          onClick={onExport}
+          disabled={exporting}
+          className="inline-flex h-10 items-center gap-2 rounded-full border border-line px-4 text-[13.5px] font-medium tracking-tight text-ink transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          <Download className="h-3.5 w-3.5" strokeWidth={1.75} />
+          {exporting ? t.dataDownloading : t.dataCta}
+        </button>
       </Section>
 
       {/* ─── Danger zone ──────────────────────────────────────────────── */}
