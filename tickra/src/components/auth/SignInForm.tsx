@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail, AlertTriangle } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { GoogleButton } from './GoogleButton';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
@@ -13,6 +13,15 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [pending, setPending] = useState(false);
+  const [oauthError, setOauthError] = useState<string | null>(null);
+
+  // Surface the ?error= param from a failed OAuth round-trip so the user
+  // sees WHY signin didn't go through (was silently swallowed before).
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const err = params.get('error');
+    if (err) setOauthError(err);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +47,16 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
         {t.title}
       </h1>
       <p className="mt-4 text-[15.5px] leading-relaxed text-muted">{t.subtitle}</p>
+
+      {oauthError ? (
+        <div className="mt-6 flex items-start gap-3 rounded-sm border border-down/40 bg-down/10 p-4">
+          <AlertTriangle aria-hidden className="mt-0.5 h-4 w-4 flex-shrink-0 text-down" strokeWidth={1.75} />
+          <p className="text-[13.5px] leading-relaxed text-ink">
+            {locale === 'fr' ? 'Échec de la connexion' : 'Sign-in failed'} ·{' '}
+            <span className="font-mono text-[12px] text-down">{oauthError}</span>
+          </p>
+        </div>
+      ) : null}
 
       {sent ? (
         <div className="mt-10 flex items-start gap-3 rounded-sm border border-line bg-elevated p-5">

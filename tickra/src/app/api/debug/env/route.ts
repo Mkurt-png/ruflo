@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+// Per-request: env vars can change between deploys.
+export const dynamic = 'force-dynamic';
+
 // GET /api/_debug/env
 // Returns presence + length only — never the actual values. Safe to leave
 // public for quick diagnostics; remove once everything is wired and verified.
