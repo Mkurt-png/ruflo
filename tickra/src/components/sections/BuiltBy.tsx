@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Linkedin } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { fadeUp } from '@/lib/motion';
@@ -32,6 +33,18 @@ export function BuiltBy({ dict }: { dict: Dictionary }) {
                 <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">{p.role}</div>
               </div>
               <p className="text-[14.5px] leading-relaxed text-muted">{p.bio}</p>
+              {/* TICKRA-IMPROVEMENT: clickable LinkedIn icon (renders only when a URL is set in dict). */}
+              {p.linkedin ? (
+                <a
+                  href={p.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${t.linkedinLabel} — ${p.name}`}
+                  className="mt-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-ink hover:text-ink"
+                >
+                  <Linkedin aria-hidden className="h-4 w-4" strokeWidth={1.75} />
+                </a>
+              ) : null}
             </motion.li>
           ))}
         </ul>

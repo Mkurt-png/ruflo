@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
+import { ActiveNowLine } from './ActiveNowLine';
 import { fadeUp } from '@/lib/motion';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 
@@ -47,7 +48,10 @@ export function Metrics({ dict }: { dict: Dictionary }) {
           ))}
         </dl>
 
-        <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.22em] text-canvas/45">
+        {/* TICKRA-IMPROVEMENT: live "X learners studying right now" pulse line. */}
+        <ActiveNowLine label={t.activeNowLabel} />
+
+        <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.22em] text-canvas/45">
           {t.footnote}
         </p>
       </Container>

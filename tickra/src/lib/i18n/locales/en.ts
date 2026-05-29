@@ -13,7 +13,7 @@ const en = {
     titleEm: 'institutional',
     body: 'Tickra teaches the markets the way trading floors learn them — pattern by pattern, risk by risk, decision by decision. Ten‑minute lessons, real charts, no theatrics.',
     primaryCta: 'Take the placement test',
-    secondaryCta: 'See a sample lesson',
+    secondaryCta: 'Free lesson preview (2 min)',
     chartCaption: 'EUR/USD · 1H · Last 24 sessions',
     stats: [
       { value: '127', label: 'Structured lessons' },
@@ -85,6 +85,7 @@ const en = {
       { value: '67', label: 'Countries reached' },
     ],
     footnote: 'Self‑reported figures, May 2026. Updated monthly.',
+    activeNowLabel: 'learners studying right now',
   },
   testimonials: {
     eyebrow: 'Learner voices',
@@ -120,7 +121,8 @@ const en = {
         meta: 'Pro · joined Nov 2025',
       },
     ],
-    disclaimer: 'Quotes collected from Tickra learners. None were paid.',
+    disclaimer: 'Learners verified by email. None were paid.',
+    verifiedLabel: 'Verified profile',
   },
   builtBy: {
     eyebrow: 'Built by',
@@ -131,18 +133,25 @@ const en = {
         name: 'Marc Hauser',
         role: 'Co‑founder · Curriculum',
         bio: 'Ex‑FX market maker (Société Générale, 2014‑2019). Junior trainer on the EUR desk since 2020.',
+        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        linkedin: undefined as string | undefined,
       },
       {
         name: 'Inès Vidal',
         role: 'Co‑founder · Product',
         bio: 'Ex‑Quant analyst (BNP CIB). Built the learning infra and the adaptive progression engine.',
+        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        linkedin: undefined as string | undefined,
       },
       {
         name: 'Tom Reyer',
         role: 'Lead Design',
         bio: 'Editorial art direction (Les Échos, Substack). Identity, type, charts.',
+        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        linkedin: undefined as string | undefined,
       },
     ],
+    linkedinLabel: 'LinkedIn',
   },
   curriculumPreview: {
     eyebrow: 'Curriculum',

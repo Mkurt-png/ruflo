@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { Quote, BadgeCheck } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 import { fadeUp } from '@/lib/motion';
@@ -37,8 +37,15 @@ export function Testimonials({ dict }: { dict: Dictionary }) {
               </blockquote>
               <figcaption className="mt-8 flex items-center gap-4 border-t border-line pt-6">
                 <Avatar name={item.name} />
-                <div>
-                  <div className="text-[14.5px] font-medium tracking-tight text-ink">{item.name}</div>
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 text-[14.5px] font-medium tracking-tight text-ink">
+                    {item.name}
+                    {/* TICKRA-IMPROVEMENT: verified-profile badge under each testimonial. */}
+                    <span className="inline-flex items-center gap-1 rounded-full border border-line bg-canvas px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+                      <BadgeCheck aria-hidden className="h-3 w-3 text-up" strokeWidth={2} />
+                      {t.verifiedLabel}
+                    </span>
+                  </div>
                   <div className="text-[13px] text-muted">{item.role}</div>
                   <div className="mt-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-subtle">
                     {item.meta}

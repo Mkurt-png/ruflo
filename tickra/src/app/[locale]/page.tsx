@@ -3,7 +3,10 @@ import { isLocale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Hero } from '@/components/sections/Hero';
-import { PressStrip } from '@/components/sections/PressStrip';
+// TICKRA-IMPROVEMENT: press-strip removed until real article URLs are available.
+// To re-enable: uncomment the import + the <PressStrip /> below <Hero /> once
+// real hrefs are wired in `src/components/sections/PressStrip.tsx`.
+// import { PressStrip } from '@/components/sections/PressStrip';
 import { Method } from '@/components/sections/Method';
 import { BentoFeatures } from '@/components/sections/BentoFeatures';
 import { CurriculumPreview } from '@/components/sections/CurriculumPreview';
@@ -14,6 +17,7 @@ import { BuiltBy } from '@/components/sections/BuiltBy';
 import { Pricing } from '@/components/sections/Pricing';
 import { Community } from '@/components/sections/Community';
 import { Roadmap } from '@/components/sections/Roadmap';
+import { ChangelogPing } from '@/components/sections/ChangelogPing';
 import { Faq } from '@/components/sections/Faq';
 import { Newsletter } from '@/components/sections/Newsletter';
 import { CtaFinal } from '@/components/sections/CtaFinal';
@@ -31,7 +35,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <Hero dict={dict} locale={params.locale} />
-        <PressStrip dict={dict} />
+        {/* TICKRA-IMPROVEMENT: <PressStrip /> hidden until real article links exist. */}
         <Method dict={dict} />
         <BentoFeatures dict={dict} />
         <CurriculumPreview dict={dict} locale={params.locale} />
@@ -42,6 +46,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <Pricing dict={dict} locale={params.locale} />
         <Community dict={dict} locale={params.locale} />
         <Roadmap dict={dict} />
+        {/* TICKRA-IMPROVEMENT: small "last product update" proof-of-life line. */}
+        <ChangelogPing locale={params.locale} />
         <Faq dict={dict} />
         <Newsletter dict={dict} locale={params.locale} />
         <CtaFinal dict={dict} locale={params.locale} />

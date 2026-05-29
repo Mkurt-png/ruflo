@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { candles } from './candleData';
 import { easeOutExpo } from '@/lib/motion';
@@ -34,6 +35,22 @@ export function CandlestickChart({ caption }: { caption: string }) {
   const trendEnd = { x: PAD.left + cw * 23 + cw / 2, y: y(candles[23].h) };
 
   const lastPrice = candles[candles.length - 1].c;
+  // TICKRA-IMPROVEMENT: tiny live-tick simulation on the last price + pct change
+  // so the hero chart feels like a live market without a heavy data lib.
+  const [tick, setTick] = useState({ price: lastPrice, pct: 0.21 });
+  useEffect(() => {
+    const id = setInterval(() => {
+      // Oscillate around the static last price by ±0.0008 (≈8 pips on EUR/USD).
+      const jitter = (Math.random() - 0.5) * 0.0016;
+      const next = lastPrice + jitter;
+      const pct = ((next - candles[candles.length - 1].o) / candles[candles.length - 1].o) * 100;
+      setTick({ price: next, pct });
+    }, 1800);
+    return () => clearInterval(id);
+  }, [lastPrice]);
+  const livePrice = tick.price;
+  const livePct = tick.pct;
+  const liveUp = livePct >= 0;
 
   return (
     <figure className="relative">
@@ -143,8 +160,8 @@ export function CandlestickChart({ caption }: { caption: string }) {
           <line
             x1={PAD.left}
             x2={PAD.left + innerW}
-            y1={y(lastPrice)}
-            y2={y(lastPrice)}
+            y1={y(livePrice)}
+            y2={y(livePrice)}
             stroke="rgb(var(--ink))"
             strokeOpacity={0.35}
             strokeDasharray="2 3"
@@ -152,7 +169,7 @@ export function CandlestickChart({ caption }: { caption: string }) {
           />
           <rect
             x={PAD.left + innerW + 4}
-            y={y(lastPrice) - 10}
+            y={y(livePrice) - 10}
             width={48}
             height={20}
             fill="rgb(var(--ink))"
@@ -160,21 +177,27 @@ export function CandlestickChart({ caption }: { caption: string }) {
           />
           <text
             x={PAD.left + innerW + 28}
-            y={y(lastPrice) + 4}
+            y={y(livePrice) + 4}
             textAnchor="middle"
             fontFamily="var(--font-jetbrains)"
             fontSize={10}
             fill="rgb(var(--canvas))"
           >
-            {lastPrice.toFixed(4)}
+            {livePrice.toFixed(4)}
           </text>
         </motion.g>
       </svg>
       <figcaption className="mt-3 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
         <span>{caption}</span>
-        <span className="flex items-center gap-1.5 text-up">
-          <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-up" />
-          +0.21%
+        <span
+          className={`flex items-center gap-1.5 tabular-nums transition-colors duration-300 ${liveUp ? 'text-up' : 'text-down'}`}
+        >
+          <span
+            aria-hidden
+            className={`inline-block h-1.5 w-1.5 rounded-full ${liveUp ? 'bg-up' : 'bg-down'} animate-pulse`}
+          />
+          {liveUp ? '+' : ''}
+          {livePct.toFixed(2)}%
         </span>
       </figcaption>
     </figure>

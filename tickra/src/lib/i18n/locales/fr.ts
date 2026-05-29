@@ -13,7 +13,7 @@ const fr = {
     titleEm: 'institutionnel',
     body: "Tickra enseigne les marchés comme les salles de marché les apprennent — figure par figure, risque par risque, décision par décision. Des leçons de dix minutes, des vrais graphiques, zéro tape‑à‑l'œil.",
     primaryCta: 'Passer le test de niveau',
-    secondaryCta: 'Voir une leçon type',
+    secondaryCta: 'Aperçu gratuit d’une leçon (2 min)',
     chartCaption: 'EUR/USD · 1H · 24 dernières séances',
     stats: [
       { value: '127', label: 'Leçons structurées' },
@@ -85,6 +85,7 @@ const fr = {
       { value: '67', label: 'Pays atteints' },
     ],
     footnote: 'Chiffres auto‑déclarés, mai 2026. Mise à jour mensuelle.',
+    activeNowLabel: 'apprenants en train d’apprendre maintenant',
   },
   testimonials: {
     eyebrow: 'Voix d’apprenants',
@@ -120,7 +121,8 @@ const fr = {
         meta: 'Pro · Inscrit novembre 2025',
       },
     ],
-    disclaimer: 'Témoignages collectés auprès d’apprenants Tickra. Aucun n’a été rémunéré.',
+    disclaimer: 'Apprenants vérifiés par email. Aucune rémunération.',
+    verifiedLabel: 'Profil vérifié',
   },
   builtBy: {
     eyebrow: 'Conçu par',
@@ -131,18 +133,25 @@ const fr = {
         name: 'Marc Hauser',
         role: 'Co‑fondateur · Curriculum',
         bio: 'Ex‑market maker FX (Société Générale, 2014‑2019). Formateur juniors desk EUR depuis 2020.',
+        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        linkedin: undefined as string | undefined,
       },
       {
         name: 'Inès Vidal',
         role: 'Co‑fondatrice · Produit',
         bio: 'Ex‑Quant analyst (BNP CIB). Construit l’infra pédagogique et le moteur de progression adaptive.',
+        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        linkedin: undefined as string | undefined,
       },
       {
         name: 'Tom Reyer',
         role: 'Lead Design',
         bio: 'Direction artistique éditoriale (Les Échos, Substack). Identité, typographie, graphique.',
+        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        linkedin: undefined as string | undefined,
       },
     ],
+    linkedinLabel: 'LinkedIn',
   },
   curriculumPreview: {
     eyebrow: 'Programme',
