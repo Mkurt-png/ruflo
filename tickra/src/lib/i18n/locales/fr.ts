@@ -11,6 +11,7 @@ const fr = {
     editorial: 'Éditorial',
     about: 'À propos',
     simulator: 'Simulateur',
+    communityLink: 'Communauté',
   },
   hero: {
     eyebrow: 'Un parcours structuré · Depuis la bougie 1',
@@ -615,6 +616,21 @@ const fr = {
     primary: 'Rejoindre la cohorte',
     secondary: 'Lire la charte',
     badge: 'Inclus dans Pro et À vie',
+    // TICKRA-PHASE-4: charter + live sessions used on /community page.
+    charterTitle: 'La charte Tickra',
+    charterIntro: 'Trois règles qui rendent la cohorte vivable, et que personne ne contourne.',
+    charterRules: [
+      { title: 'Pas de signaux', body: 'Aucun partage de positions à recopier. La cohorte enseigne à décider, pas à suivre.' },
+      { title: 'Pas de DM commercial', body: 'Toute proposition de service en messages privés vaut un bannissement immédiat. Sans avertissement.' },
+      { title: 'Pas de captures de P&L', body: 'Les screenshots de gains n’éduquent personne et nourrissent la jalousie. On parle de méthode, pas de résultats.' },
+    ],
+    sessionsTitle: 'Sessions live à venir',
+    sessionsIntro: 'Deux sessions par semaine, 30 minutes, réservées aux membres Pro et Lifetime. Replay disponible 7 jours.',
+    sessions: [
+      { date: 'Mardi 18:30 GMT', title: 'Revue de la semaine — EUR/USD et indices', host: 'Marc Hauser' },
+      { date: 'Jeudi 19:00 GMT', title: 'Drill : 5 setups historiques sur l’or', host: 'Inès Vidal' },
+      { date: 'Samedi 11:00 GMT', title: 'Post-mortem collectif — vos trades de la semaine', host: 'Cohorte' },
+    ],
   },
   hero_extra: {
     badgeLive: 'Aperçu interactif',

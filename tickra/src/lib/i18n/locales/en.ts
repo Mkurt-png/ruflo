@@ -11,6 +11,7 @@ const en = {
     editorial: 'Editorial',
     about: 'About',
     simulator: 'Simulator',
+    communityLink: 'Community',
   },
   hero: {
     eyebrow: 'A structured path · From candle 1',
@@ -615,6 +616,21 @@ const en = {
     primary: 'Join the cohort',
     secondary: 'Read the charter',
     badge: 'Included in Pro and Lifetime',
+    // TICKRA-PHASE-4: charter + live sessions used on /community page.
+    charterTitle: 'The Tickra charter',
+    charterIntro: 'Three rules that make the cohort liveable, and nobody bends them.',
+    charterRules: [
+      { title: 'No signals', body: 'No position sharing to copy. The cohort teaches you to decide, not to follow.' },
+      { title: 'No commercial DMs', body: 'Any service pitch in private messages = immediate ban. No warning.' },
+      { title: 'No P&L screenshots', body: 'Gain screenshots teach nobody and feed envy. We talk method, not results.' },
+    ],
+    sessionsTitle: 'Upcoming live sessions',
+    sessionsIntro: 'Two sessions a week, 30 minutes, reserved for Pro and Lifetime. Replay available for 7 days.',
+    sessions: [
+      { date: 'Tuesday 18:30 GMT', title: 'Week review — EUR/USD and indices', host: 'Marc Hauser' },
+      { date: 'Thursday 19:00 GMT', title: 'Drill: 5 historical gold setups', host: 'Inès Vidal' },
+      { date: 'Saturday 11:00 GMT', title: 'Collective post-mortem — your week trades', host: 'Cohort' },
+    ],
   },
   hero_extra: {
     badgeLive: 'Interactive preview',

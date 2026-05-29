@@ -17,6 +17,7 @@ import { FirstRunTour } from './FirstRunTour';
 import { DailyChallenge } from './DailyChallenge';
 import { DailyQuests } from './DailyQuests';
 import { XpBadge } from './XpBadge';
+import { CommunityPanel } from './CommunityPanel';
 import { ExportProgress } from './ExportProgress';
 import { ImportProgress } from './ImportProgress';
 import { CurriculumHeatmap } from './CurriculumHeatmap';
@@ -163,6 +164,11 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
         {/* TICKRA-SPRINT-C: 3 daily quests with claimable XP rewards. */}
         <div className="mt-3">
           <DailyQuests locale={locale} />
+        </div>
+
+        {/* TICKRA-PHASE-4: community CTA + charter link. */}
+        <div className="mt-3">
+          <CommunityPanel locale={locale} />
         </div>
 
         <div className="mt-3">

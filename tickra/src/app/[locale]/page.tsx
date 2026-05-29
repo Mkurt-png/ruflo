@@ -17,6 +17,7 @@ import { BuiltBy } from '@/components/sections/BuiltBy';
 import { Pricing } from '@/components/sections/Pricing';
 import { Community } from '@/components/sections/Community';
 import { Roadmap } from '@/components/sections/Roadmap';
+import { WallOfWins } from '@/components/sections/WallOfWins';
 import { ChangelogPing } from '@/components/sections/ChangelogPing';
 import { Faq } from '@/components/sections/Faq';
 import { Newsletter } from '@/components/sections/Newsletter';
@@ -46,6 +47,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <Pricing dict={dict} locale={params.locale} />
         <Community dict={dict} locale={params.locale} />
         <Roadmap dict={dict} />
+        {/* TICKRA-PHASE-4: anonymised weekly wall-of-wins, transparent stats. */}
+        <WallOfWins locale={params.locale} />
         {/* TICKRA-IMPROVEMENT: small "last product update" proof-of-life line. */}
         <ChangelogPing locale={params.locale} />
         <Faq dict={dict} />

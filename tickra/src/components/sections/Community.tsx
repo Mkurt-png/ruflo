@@ -48,7 +48,8 @@ export function Community({ dict, locale }: { dict: Dictionary; locale: Locale }
               {t.primary}
               <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
             </Button>
-            <Button href={`/${locale}/editorial`} variant="ghost" size="lg">
+            {/* TICKRA-PHASE-4: charter lives at /community now. */}
+            <Button href={`/${locale}/community`} variant="ghost" size="lg">
               {t.secondary}
             </Button>
           </div>

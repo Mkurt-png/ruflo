@@ -23,6 +23,7 @@ export function Navbar({ dict, locale }: Props) {
   // TICKRA-SPRINT-B: simulator entry exposed here too (Pro-gated inside).
   const exploreItems = [
     { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
+    { href: `/${locale}/community`, label: dict.nav.communityLink },
     { href: `/${locale}/editorial`, label: dict.nav.editorial },
     { href: `/${locale}/glossary`, label: dict.nav.glossary },
     { href: `/${locale}/about`, label: dict.nav.about },
