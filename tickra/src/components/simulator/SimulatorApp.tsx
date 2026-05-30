@@ -18,6 +18,7 @@ import { cn } from '@/lib/cn';
 import { useUser } from '@/lib/auth/useUser';
 import { addXp } from '@/lib/progress/xp';
 import { TradingViewWidget } from './TradingViewWidget';
+import { TradeCoach } from './TradeCoach';
 import { PaywallCard } from '@/components/learn/PaywallCard';
 
 type Locale = 'fr' | 'en';
@@ -496,15 +497,32 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
                 const meta = SYMBOLS[c.symbol];
                 const reason = c.closeReason === 'tp' ? t.closeReasonTp : c.closeReason === 'sl' ? t.closeReasonSl : t.closeReasonManual;
                 return (
-                  <li key={c.id} className="flex flex-wrap items-center gap-3 py-3 text-[13px]">
-                    <span className={cn('font-mono text-[11px] uppercase tracking-[0.18em]', c.side === 'long' ? 'text-up' : 'text-down')}>
-                      {meta.label} · {c.side}
-                    </span>
-                    <span className="font-mono text-[11px] text-muted">{c.size.toFixed(2)} lot</span>
-                    <span className="font-mono text-[11px] text-subtle">{reason}</span>
-                    <span className={cn('ml-auto font-display tabular-nums', c.pnl >= 0 ? 'text-up' : 'text-down')}>
-                      {c.pnl >= 0 ? '+' : ''}{fmtUsd(c.pnl)}
-                    </span>
+                  <li key={c.id} className="py-3 text-[13px]">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className={cn('font-mono text-[11px] uppercase tracking-[0.18em]', c.side === 'long' ? 'text-up' : 'text-down')}>
+                        {meta.label} · {c.side}
+                      </span>
+                      <span className="font-mono text-[11px] text-muted">{c.size.toFixed(2)} lot</span>
+                      <span className="font-mono text-[11px] text-subtle">{reason}</span>
+                      <span className={cn('ml-auto font-display tabular-nums', c.pnl >= 0 ? 'text-up' : 'text-down')}>
+                        {c.pnl >= 0 ? '+' : ''}{fmtUsd(c.pnl)}
+                      </span>
+                    </div>
+                    {/* TICKRA-PHASE-2.2: AI Trade Coach review on demand. */}
+                    <TradeCoach
+                      locale={locale}
+                      trade={{
+                        symbol: meta.label,
+                        side: c.side,
+                        sizeLots: c.size,
+                        entry: c.entry,
+                        exit: c.current,
+                        stopPips: c.stopPips,
+                        tpPips: c.tpPips,
+                        pnl: c.pnl,
+                        closeReason: c.closeReason,
+                      }}
+                    />
                   </li>
                 );
               })}

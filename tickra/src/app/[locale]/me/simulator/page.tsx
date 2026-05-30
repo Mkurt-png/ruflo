@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { SimulatorApp } from '@/components/simulator/SimulatorApp';
+import { FlashCrashMode } from '@/components/simulator/FlashCrashMode';
 
 export const metadata = { title: 'Simulateur · Tickra' };
 
@@ -31,6 +32,13 @@ export default async function SimulatorPage({ params }: { params: { locale: stri
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-16">
             <SimulatorApp locale={locale} />
+          </Container>
+        </section>
+
+        {/* TICKRA-PHASE-2.4: replay famous historical crashes for pedagogical value. */}
+        <section className="border-b border-line bg-elevated">
+          <Container as="div" className="py-12 md:py-16">
+            <FlashCrashMode locale={locale} />
           </Container>
         </section>
       </main>
