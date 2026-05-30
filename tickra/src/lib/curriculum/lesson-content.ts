@@ -3288,6 +3288,638 @@ const seeded: Seed = {
       { q: { fr: 'Tracer un vrai niveau requiert :', en: 'Drawing a real level requires:' }, options: { fr: ['Zone, multi-TF, 2 tests', 'Une seule mèche', 'Un nombre rond'], en: ['Zone, multi-TF, 2 tests', 'A single wick', 'A round number'] }, correct: 0, rationale: { fr: 'Les trois critères.', en: 'The three criteria.' } },
     ],
   },
+
+  // ─── Volume & order flow (volume) ───────────────────────────────────────
+  'volume-01': {
+    intro: {
+      fr: [
+        'Le volume est le nombre de contrats/lots échangés sur une période donnée. C’est l’unique métrique qui montre l’engagement réel — le prix peut monter par défaut (peu d’acheteurs, encore moins de vendeurs) ou par conviction (énorme volume).',
+        'Sur le forex retail, vous ne voyez que le volume tick (nombre de ticks) car il n’y a pas de marché centralisé. Sur les futures (ex : ES, NQ) vous avez le vrai volume. C’est une différence cruciale.',
+        'Règle simple : un mouvement avec volume montant = engagement réel. Un mouvement avec volume baissant = essoufflement, attendre un retournement potentiel.',
+      ],
+      en: [
+        'Volume is the number of contracts/lots traded over a given period. The only metric that shows real engagement — price can rise by default (few buyers, even fewer sellers) or by conviction (huge volume).',
+        'On retail forex, you only see tick volume (number of ticks) because there is no central market. On futures (e.g. ES, NQ) you see real volume. A crucial distinction.',
+        'Simple rule: a move with rising volume = real engagement. A move with falling volume = exhaustion, watch for a potential reversal.',
+      ],
+    },
+    drill: { prompt: { fr: 'Hausse de prix + volume qui baisse :', en: 'Rising price + falling volume:' }, options: { fr: ['Essoufflement probable', 'Tendance solide', 'Aucun signal'], en: ['Likely exhaustion', 'Solid trend', 'No signal'] }, correct: 0, rationale: { fr: 'Divergence prix-volume.', en: 'Price-volume divergence.' } },
+    quiz: [
+      { q: { fr: 'Sur forex retail, le volume affiché est :', en: 'On retail forex, the volume shown is:' }, options: { fr: ['Tick volume', 'Vrai volume', 'Volume brut'], en: ['Tick volume', 'True volume', 'Raw volume'] }, correct: 0, rationale: { fr: 'Pas de marché central.', en: 'No central market.' } },
+      { q: { fr: 'Le vrai volume existe sur :', en: 'Real volume exists on:' }, options: { fr: ['Futures', 'Spot forex', 'OTC'], en: ['Futures', 'Spot forex', 'OTC'] }, correct: 0, rationale: { fr: 'Marché centralisé.', en: 'Central market.' } },
+      { q: { fr: 'L’engagement réel se mesure par :', en: 'Real engagement is measured by:' }, options: { fr: ['Volume', 'Prix seul', 'Spread'], en: ['Volume', 'Price alone', 'Spread'] }, correct: 0, rationale: { fr: 'Volume = conviction.', en: 'Volume = conviction.' } },
+    ],
+  },
+
+  'volume-02': {
+    intro: {
+      fr: [
+        'Le profil de volume (Volume Profile) affiche le volume traité à chaque niveau de prix sur une période donnée. Au lieu de regarder le temps (axe X), vous regardez le prix (axe Y).',
+        'Lecture : les zones à fort volume sont des « value areas » — le marché y est à l’aise. Les zones à faible volume sont des « zones de transit » — le prix les traverse vite.',
+        'Trading : on s’attend à ce que le prix revienne dans la value area s’il s’en éloigne, et qu’il traverse rapidement les zones de bas volume. Outil puissant pour cibler des take-profits ou des entrées.',
+      ],
+      en: [
+        'Volume profile shows the volume traded at each price level over a given period. Instead of looking at time (X axis), you look at price (Y axis).',
+        'Reading: high-volume zones are "value areas" — the market is comfortable there. Low-volume zones are "transit zones" — price crosses them fast.',
+        'Trading: expect price to return to the value area when it strays, and cross low-volume zones quickly. Powerful tool to target take-profits or entries.',
+      ],
+    },
+    drill: { prompt: { fr: 'Le prix s’éloigne d’une value area. Probable :', en: 'Price strays from a value area. Likely:' }, options: { fr: ['Retour dans la zone', 'Continuation infinie', 'Aucun effet'], en: ['Return to the zone', 'Infinite continuation', 'No effect'] }, correct: 0, rationale: { fr: 'Mean reversion sur value.', en: 'Mean reversion to value.' } },
+    quiz: [
+      { q: { fr: 'Une zone à faible volume :', en: 'A low-volume zone:' }, options: { fr: ['Est traversée rapidement', 'Bloque le prix', 'Sans signification'], en: ['Is crossed fast', 'Blocks price', 'Meaningless'] }, correct: 0, rationale: { fr: 'Aucune conviction installée.', en: 'No conviction settled.' } },
+      { q: { fr: 'Volume profile affiche :', en: 'Volume profile shows:' }, options: { fr: ['Volume par niveau de prix', 'Volume par heure', 'Spread moyen'], en: ['Volume per price level', 'Volume per hour', 'Average spread'] }, correct: 0, rationale: { fr: 'Axe vertical = prix.', en: 'Vertical axis = price.' } },
+      { q: { fr: 'Value area = :', en: 'Value area = :' }, options: { fr: ['Zone à fort volume', 'Zone à bas volume', 'Top du range'], en: ['High-volume zone', 'Low-volume zone', 'Range top'] }, correct: 0, rationale: { fr: 'Le marché s’y stabilise.', en: 'Market settles there.' } },
+    ],
+  },
+
+  'volume-03': {
+    intro: {
+      fr: [
+        'Le Point of Control (POC) est le niveau de prix où le volume traité est le plus élevé sur la période. C’est le « centre de gravité » du marché pour cette période.',
+        'Le POC agit comme un aimant : le prix tend à y revenir s’il s’en éloigne. Quand le prix dérive vers le POC, on parle de « POC magnet ».',
+        'Setup classique : entrée long à un POC sur une journée de range, take-profit sur la value area high. Inversement pour les shorts. Excellent rapport rendement/risque sur des marchés non-tendance.',
+      ],
+      en: [
+        'Point of Control (POC) is the price level with the highest traded volume over the period. The market’s "center of gravity" for that period.',
+        'POC acts as a magnet: price tends to return there when it strays. When price drifts towards the POC, traders call it "POC magnet".',
+        'Classic setup: long entry at POC on a range day, take-profit at value area high. Inverse for shorts. Excellent risk/reward on non-trending markets.',
+      ],
+    },
+    drill: { prompt: { fr: 'Le prix est au-dessus du POC, en range. Vous :', en: 'Price is above POC, in range. You:' }, options: { fr: ['Vendez vers le POC', 'Achetez', 'Attendez sans rien faire'], en: ['Sell towards POC', 'Buy', 'Wait'] }, correct: 0, rationale: { fr: 'Aimant vers le centre.', en: 'Magnet to center.' } },
+    quiz: [
+      { q: { fr: 'POC = :', en: 'POC = :' }, options: { fr: ['Niveau de prix le plus traité', 'Pivot quotidien', 'Plus haut'], en: ['Most traded price level', 'Daily pivot', 'Highest high'] }, correct: 0, rationale: { fr: 'Volume maximal.', en: 'Maximum volume.' } },
+      { q: { fr: 'POC est utile surtout sur :', en: 'POC is mostly useful on:' }, options: { fr: ['Marchés en range', 'Trends violents', 'News flashes'], en: ['Ranging markets', 'Violent trends', 'News flashes'] }, correct: 0, rationale: { fr: 'Mean reversion.', en: 'Mean reversion.' } },
+      { q: { fr: 'Le POC magnet est :', en: 'POC magnet is:' }, options: { fr: ['Retour du prix vers POC', 'Cassure du POC', 'Volume nul'], en: ['Price returning to POC', 'Breaking POC', 'Zero volume'] }, correct: 0, rationale: { fr: 'Attraction du centre.', en: 'Central attraction.' } },
+    ],
+  },
+
+  'volume-04': {
+    intro: {
+      fr: [
+        'La value area est la zone qui contient 70 % du volume traité (correspondant à un écart-type sur une distribution normale). Délimitée par le Value Area High (VAH) et le Value Area Low (VAL).',
+        'Sur une journée typique, le prix passe la majorité du temps dans la value area. Sortir au-delà du VAH = breakout haussier potentiel, sortir sous le VAL = breakout baissier.',
+        'Stratégie : si le prix est au-dessus du VAH et qu’il y revient, on attend une entrée long avec stop sous le VAH. Le VAH devient alors un support technique fort.',
+      ],
+      en: [
+        'Value area is the zone containing 70% of traded volume (one standard deviation on a normal distribution). Bounded by Value Area High (VAH) and Value Area Low (VAL).',
+        'On a typical day, price spends most of its time in the value area. Exiting above VAH = potential bullish breakout, below VAL = bearish breakout.',
+        'Strategy: if price is above VAH and returns to it, wait for a long entry with stop below VAH. The VAH then acts as strong technical support.',
+      ],
+    },
+    drill: { prompt: { fr: 'Le prix revient sur le VAH après breakout. Le VAH agit comme :', en: 'Price returns to VAH after breakout. VAH acts as:' }, options: { fr: ['Support', 'Résistance encore', 'Aucune signification'], en: ['Support', 'Still resistance', 'Meaningless'] }, correct: 0, rationale: { fr: 'Mécanique du flip.', en: 'Flip mechanic.' } },
+    quiz: [
+      { q: { fr: 'Value area contient :', en: 'Value area contains:' }, options: { fr: ['70 % du volume', '50 %', '100 %'], en: ['70% of volume', '50%', '100%'] }, correct: 0, rationale: { fr: 'Un sigma.', en: 'One sigma.' } },
+      { q: { fr: 'VAH = :', en: 'VAH = :' }, options: { fr: ['Borne haute de la value area', 'Plus haut du jour', 'Pivot'], en: ['Upper bound of value area', 'Daily high', 'Pivot'] }, correct: 0, rationale: { fr: 'Définition standard.', en: 'Standard definition.' } },
+      { q: { fr: 'Sortir au-delà du VAL signale :', en: 'Exiting below VAL signals:' }, options: { fr: ['Breakout baissier potentiel', 'Range parfait', 'Rien'], en: ['Potential bearish breakout', 'Perfect range', 'Nothing'] }, correct: 0, rationale: { fr: 'Sortie de zone d’équilibre.', en: 'Exit from equilibrium.' } },
+    ],
+  },
+
+  'volume-05': {
+    intro: {
+      fr: [
+        'Le climax volume est un pic de volume anormalement élevé, souvent 3-5x la moyenne récente. Apparaît à des points de retournement importants ou à la fin de mouvements forts.',
+        'Lecture : un climax en haut de tendance haussière + bougie qui clôture mal = épuisement, retournement probable. À la baisse, c’est la capitulation des derniers vendeurs.',
+        'Signal mécanique : bougie à volume très élevé, longue mèche (haute ou basse), corps petit ou contraire à la tendance. C’est le climax. Surveillez la bougie suivante pour confirmation.',
+      ],
+      en: [
+        'Climax volume is an abnormally high volume spike, often 3-5x recent average. Appears at major turning points or at the end of strong moves.',
+        'Reading: a climax at the top of an uptrend + candle closing badly = exhaustion, likely reversal. At the bottom, it is the capitulation of the last sellers.',
+        'Mechanical signal: candle with very high volume, long wick (top or bottom), small body or counter-trend. That is the climax. Watch the next candle for confirmation.',
+      ],
+    },
+    drill: { prompt: { fr: 'Volume 5x la moyenne + mèche basse + clôture haute en bas de tendance baissière :', en: 'Volume 5x average + low wick + high close at bottom of downtrend:' }, options: { fr: ['Capitulation/climax baissier', 'Continuation forte', 'Rien'], en: ['Capitulation/bearish climax', 'Strong continuation', 'Nothing'] }, correct: 0, rationale: { fr: 'Vendeurs épuisés.', en: 'Sellers exhausted.' } },
+    quiz: [
+      { q: { fr: 'Climax volume typique :', en: 'Typical climax volume:' }, options: { fr: ['3-5x la moyenne', 'Égal à la moyenne', '0.5x'], en: ['3-5x average', 'Equal to average', '0.5x'] }, correct: 0, rationale: { fr: 'Anomalie statistique.', en: 'Statistical anomaly.' } },
+      { q: { fr: 'Climax en sommet =' , en: 'Climax at top =' }, options: { fr: ['Épuisement', 'Continuation', 'Range'], en: ['Exhaustion', 'Continuation', 'Range'] }, correct: 0, rationale: { fr: 'Buying climax.', en: 'Buying climax.' } },
+      { q: { fr: 'Confirmation requise :', en: 'Required confirmation:' }, options: { fr: ['Bougie suivante', 'Aucune', 'Cinq bougies de plus'], en: ['Next candle', 'None', 'Five more candles'] }, correct: 0, rationale: { fr: 'Patience anti-faux signal.', en: 'Patience against false signal.' } },
+    ],
+  },
+
+  'volume-06': {
+    intro: {
+      fr: [
+        'Divergence prix-volume : le prix fait un nouveau plus haut (ou bas) mais le volume diminue. Le mouvement perd de la force.',
+        'Cas typique : tendance haussière de 3 semaines, chaque nouveau sommet a moins de volume que le précédent. Le marché monte par défaut, plus par conviction. Retournement probable.',
+        'À ne pas confondre avec la simple variation quotidienne. La divergence doit apparaître sur au moins 3 sommets/creux consécutifs pour être validée.',
+      ],
+      en: [
+        'Price-volume divergence: price makes a new high (or low) but volume decreases. The move is losing strength.',
+        'Typical case: 3-week uptrend, each new high has less volume than the previous. The market goes up by default, not by conviction. Likely reversal.',
+        'Not to be confused with simple daily noise. Divergence must appear over at least 3 consecutive highs/lows to be validated.',
+      ],
+    },
+    drill: { prompt: { fr: 'Trois sommets successifs, volumes : 1000, 800, 500 :', en: 'Three successive highs with volumes 1000, 800, 500:' }, options: { fr: ['Divergence baissière confirmée', 'Tendance forte', 'Aucun signal'], en: ['Confirmed bearish divergence', 'Strong trend', 'No signal'] }, correct: 0, rationale: { fr: 'Volume décroît à chaque high.', en: 'Volume falls at each high.' } },
+    quiz: [
+      { q: { fr: 'Validation divergence demande :', en: 'Divergence validation requires:' }, options: { fr: ['3 sommets/creux consécutifs', '1 sommet', '10 sommets'], en: ['3 consecutive highs/lows', '1 high', '10 highs'] }, correct: 0, rationale: { fr: 'Pattern minimum.', en: 'Minimum pattern.' } },
+      { q: { fr: 'Une divergence signale :', en: 'A divergence signals:' }, options: { fr: ['Perte de force du mouvement', 'Continuation forte', 'Rien'], en: ['Loss of momentum', 'Strong continuation', 'Nothing'] }, correct: 0, rationale: { fr: 'Manque de participation.', en: 'Lack of participation.' } },
+      { q: { fr: 'À combiner avec :', en: 'Combine with:' }, options: { fr: ['Niveau S/R', 'Aucun outil', 'Plus de divergence'], en: ['S/R level', 'No tool', 'More divergence'] }, correct: 0, rationale: { fr: 'Confluence.', en: 'Confluence.' } },
+    ],
+  },
+
+  'volume-07': {
+    intro: {
+      fr: [
+        'Le carnet d’ordres (order book) affiche les ordres limit en attente, par niveau de prix. Côté bid (acheteurs en attente), côté ask (vendeurs en attente). C’est la « profondeur » du marché.',
+        'Disponible sur les futures, certaines actions, et les exchanges crypto. PAS sur le forex retail (marché OTC, pas de carnet centralisé).',
+        'Lecture : un mur de bids (gros volume à un niveau acheteur) suggère un support fort. Un mur d’asks suggère une résistance. Mais attention au spoofing — les ordres peuvent disparaître à la dernière seconde.',
+      ],
+      en: [
+        'The order book displays resting limit orders by price level. Bid side (waiting buyers), ask side (waiting sellers). The market’s "depth".',
+        'Available on futures, some stocks, and crypto exchanges. NOT on retail forex (OTC market, no central book).',
+        'Reading: a bid wall (large volume at a buy level) suggests strong support. An ask wall suggests resistance. But watch for spoofing — orders can vanish at the last second.',
+      ],
+    },
+    drill: { prompt: { fr: 'Mur de bids à un niveau, mais ils disparaissent quand le prix s’approche :', en: 'Bid wall at a level but vanishes as price approaches:' }, options: { fr: ['Spoofing probable', 'Vrai support', 'Bug du broker'], en: ['Likely spoofing', 'Real support', 'Broker bug'] }, correct: 0, rationale: { fr: 'Manipulation classique.', en: 'Classic manipulation.' } },
+    quiz: [
+      { q: { fr: 'Forex retail a un carnet d’ordres :', en: 'Retail forex has an order book:' }, options: { fr: ['Non, OTC décentralisé', 'Oui complet', 'Partiel'], en: ['No, decentralised OTC', 'Yes, complete', 'Partial'] }, correct: 0, rationale: { fr: 'Pas de marché central.', en: 'No central market.' } },
+      { q: { fr: 'Mur d’asks suggère :', en: 'Ask wall suggests:' }, options: { fr: ['Résistance', 'Support', 'Range'], en: ['Resistance', 'Support', 'Range'] }, correct: 0, rationale: { fr: 'Offre concentrée.', en: 'Concentrated supply.' } },
+      { q: { fr: 'Le bid est :', en: 'Bid is:' }, options: { fr: ['Prix acheteur', 'Prix vendeur', 'Pivot'], en: ['Buy price', 'Sell price', 'Pivot'] }, correct: 0, rationale: { fr: 'Côté acheteurs.', en: 'Buyer side.' } },
+    ],
+  },
+
+  'volume-08': {
+    intro: {
+      fr: [
+        'Spoofing : afficher de gros ordres pour influencer la perception du marché, puis les annuler avant exécution. Illégal aux US depuis 2010 (Dodd-Frank), encore pratiqué sur certains marchés crypto.',
+        'Iceberg orders : un gros ordre découpé en petits morceaux visibles, le reste caché. Légal et largement utilisé par les institutionnels. Vous ne voyez que la pointe.',
+        'Comment détecter ? Surveillez les ordres qui réapparaissent en boucle au même niveau sans bouger le prix (iceberg) ou qui disparaissent juste avant exécution (spoof). C’est le quotidien du trader DOM.',
+      ],
+      en: [
+        'Spoofing: displaying large orders to influence market perception, then cancelling them before execution. Illegal in the US since 2010 (Dodd-Frank), still practised on some crypto markets.',
+        'Iceberg orders: a large order broken into small visible chunks, the rest hidden. Legal and widely used by institutions. You only see the tip.',
+        'How to detect? Watch for orders that reappear in a loop at the same level without moving price (iceberg) or that vanish just before execution (spoof). The daily life of the DOM trader.',
+      ],
+    },
+    drill: { prompt: { fr: 'Ordre qui réapparaît 10 fois au même niveau sans bouger le prix :', en: 'Order that reappears 10x at the same level without moving price:' }, options: { fr: ['Iceberg', 'Spoof', 'Bug'], en: ['Iceberg', 'Spoof', 'Bug'] }, correct: 0, rationale: { fr: 'Volume caché derrière.', en: 'Hidden volume behind.' } },
+    quiz: [
+      { q: { fr: 'Spoofing aux US est :', en: 'Spoofing in the US is:' }, options: { fr: ['Illégal depuis 2010', 'Légal', 'Recommandé'], en: ['Illegal since 2010', 'Legal', 'Recommended'] }, correct: 0, rationale: { fr: 'Dodd-Frank.', en: 'Dodd-Frank.' } },
+      { q: { fr: 'Iceberg = :', en: 'Iceberg = :' }, options: { fr: ['Gros ordre fractionné, partie cachée', 'Petit ordre simple', 'Stop loss caché'], en: ['Large order split, part hidden', 'Small simple order', 'Hidden stop'] }, correct: 0, rationale: { fr: 'Pratique institutionnelle.', en: 'Institutional practice.' } },
+      { q: { fr: 'Détection nécessite :', en: 'Detection requires:' }, options: { fr: ['Surveiller le DOM en temps réel', 'Lire les news', 'Avoir un EA'], en: ['Watch DOM live', 'Read news', 'Have an EA'] }, correct: 0, rationale: { fr: 'Action en direct.', en: 'Live action.' } },
+    ],
+  },
+
+  'volume-09': {
+    intro: {
+      fr: [
+        'VWAP (Volume Weighted Average Price) : prix moyen pondéré par le volume sur une période, typiquement la journée. Référence majeure pour les traders institutionnels.',
+        'Au-dessus du VWAP : le marché « paie cher » — bias haussier. En-dessous : marché « pas cher » — bias baissier. Les algos institutionnels achètent au-dessous du VWAP et vendent au-dessus pour minimiser l’impact.',
+        'Stratégie : sur cassure haussière, attendre un retour au VWAP pour un long. Le VWAP joue alors le rôle de support dynamique. Fonctionne très bien sur les indices et les futures.',
+      ],
+      en: [
+        'VWAP (Volume Weighted Average Price): volume-weighted average price over a period, typically the day. Major reference for institutional traders.',
+        'Above VWAP: market "pricey" — bullish bias. Below: market "cheap" — bearish bias. Institutional algos buy below VWAP and sell above to minimise impact.',
+        'Strategy: on a bullish breakout, wait for return to VWAP for a long. VWAP then acts as dynamic support. Works very well on indices and futures.',
+      ],
+    },
+    drill: { prompt: { fr: 'Prix au-dessus du VWAP = :', en: 'Price above VWAP = :' }, options: { fr: ['Bias haussier', 'Bias baissier', 'Neutre'], en: ['Bullish bias', 'Bearish bias', 'Neutral'] }, correct: 0, rationale: { fr: 'Marché « cher ».', en: 'Market "pricey".' } },
+    quiz: [
+      { q: { fr: 'VWAP est :', en: 'VWAP is:' }, options: { fr: ['Moyenne pondérée par volume', 'Moyenne mobile simple', 'EMA'], en: ['Volume-weighted average', 'Simple MA', 'EMA'] }, correct: 0, rationale: { fr: 'Définition exacte.', en: 'Exact definition.' } },
+      { q: { fr: 'Les institutionnels achètent souvent :', en: 'Institutions often buy:' }, options: { fr: ['Sous le VWAP', 'Au-dessus', 'Au pic'], en: ['Below VWAP', 'Above', 'At peak'] }, correct: 0, rationale: { fr: 'Minimiser l’impact.', en: 'Minimise impact.' } },
+      { q: { fr: 'VWAP fonctionne bien sur :', en: 'VWAP works well on:' }, options: { fr: ['Indices, futures', 'Forex retail uniquement', 'Aucun marché'], en: ['Indices, futures', 'Retail forex only', 'No market'] }, correct: 0, rationale: { fr: 'Volume réel disponible.', en: 'Real volume available.' } },
+    ],
+  },
+
+  'volume-10': {
+    intro: {
+      fr: [
+        'Time and Sales (Tape) : flux brut des transactions exécutées, en temps réel. Affiche prix, taille, et côté (achat/vente) de chaque trade.',
+        'Lecture rapide : flux dominé par les ventes agressives (au bid) = pression vendeuse. Flux dominé par les achats agressifs (à l’ask) = pression acheteuse.',
+        'Outil de scalping et de short-term. Demande une réflexivité énorme et beaucoup d’expérience. Pas pour débuter, mais bon à comprendre pour interpréter les changements de momentum.',
+      ],
+      en: [
+        'Time and Sales (Tape): raw stream of executed trades, in real time. Shows price, size, and side (buy/sell) of each trade.',
+        'Quick reading: flow dominated by aggressive sells (at bid) = selling pressure. Flow dominated by aggressive buys (at ask) = buying pressure.',
+        'Scalping and short-term tool. Demands huge reflexivity and lots of experience. Not for beginners, but good to understand momentum shifts.',
+      ],
+    },
+    drill: { prompt: { fr: 'Flux Tape : 80 % de trades exécutés au bid. Signal :', en: 'Tape flow: 80% trades at bid. Signal:' }, options: { fr: ['Pression vendeuse forte', 'Achat fort', 'Aucun'], en: ['Strong selling pressure', 'Strong buying', 'None'] }, correct: 0, rationale: { fr: 'Agressivité vendeur.', en: 'Aggressive sellers.' } },
+    quiz: [
+      { q: { fr: 'Tape affiche :', en: 'Tape shows:' }, options: { fr: ['Transactions exécutées', 'Ordres en attente', 'Spread historique'], en: ['Executed trades', 'Pending orders', 'Historical spread'] }, correct: 0, rationale: { fr: 'Flux d’exécution.', en: 'Execution flow.' } },
+      { q: { fr: 'Acheté à l’ask = :', en: 'Bought at ask = :' }, options: { fr: ['Achat agressif', 'Vente agressive', 'Neutre'], en: ['Aggressive buy', 'Aggressive sell', 'Neutral'] }, correct: 0, rationale: { fr: 'L’acheteur paie la prime.', en: 'Buyer pays the premium.' } },
+      { q: { fr: 'Tape convient à :', en: 'Tape suits:' }, options: { fr: ['Scalpers expérimentés', 'Débutants', 'Swing traders'], en: ['Experienced scalpers', 'Beginners', 'Swing traders'] }, correct: 0, rationale: { fr: 'Réflexivité requise.', en: 'Reflexivity required.' } },
+    ],
+  },
+
+  'volume-11': {
+    intro: {
+      fr: [
+        'Exercice pratique : ouvrez TradingView, sélectionnez EUR/USD sur le 1H, et affichez le volume profile sur les 5 dernières séances.',
+        'Identifiez : le POC global, le VAH et le VAL, ainsi qu’une zone de transit (faible volume) au-dessus ou en-dessous. Notez si le prix actuel est au-dessus, dans, ou en-dessous de la value area.',
+        'Puis projetez : où placeriez-vous un long avec stop logique ? Un short ? Quelle est la cible la plus évidente selon la lecture du profil ? Faites cet exercice 5 fois sur 5 paires différentes.',
+      ],
+      en: [
+        'Practical drill: open TradingView, select EUR/USD on 1H, and display the volume profile over the last 5 sessions.',
+        'Identify: the global POC, the VAH and VAL, and a transit zone (low volume) above or below. Note whether current price is above, within, or below the value area.',
+        'Then project: where would you place a long with logical stop? A short? What is the most obvious target from the profile reading? Do this drill 5 times on 5 different pairs.',
+      ],
+    },
+    drill: { prompt: { fr: 'Le profile montre prix sous la value area, POC 30 pips au-dessus. Setup :', en: 'Profile shows price below value area, POC 30 pips above. Setup:' }, options: { fr: ['Long avec stop sous, cible POC', 'Short urgent', 'Attendre'], en: ['Long with stop below, target POC', 'Urgent short', 'Wait'] }, correct: 0, rationale: { fr: 'Mean reversion.', en: 'Mean reversion.' } },
+    quiz: [
+      { q: { fr: 'Combien d’itérations pour l’exercice :', en: 'How many drill iterations:' }, options: { fr: ['5 paires', '1 paire', '50 paires'], en: ['5 pairs', '1 pair', '50 pairs'] }, correct: 0, rationale: { fr: 'Échantillon utile.', en: 'Useful sample.' } },
+      { q: { fr: 'L’outil utilisé :', en: 'Tool used:' }, options: { fr: ['Volume profile sur TradingView', 'Tape', 'EA seul'], en: ['Volume profile on TradingView', 'Tape', 'EA alone'] }, correct: 0, rationale: { fr: 'Visuel par niveau.', en: 'Visual per level.' } },
+      { q: { fr: 'L’étape projet :', en: 'Projection step:' }, options: { fr: ['Identifier setup long/short avec cible', 'Acheter immédiatement', 'Désactiver le profil'], en: ['Identify long/short setup with target', 'Buy immediately', 'Disable the profile'] }, correct: 0, rationale: { fr: 'Pratique de décision.', en: 'Decision practice.' } },
+    ],
+  },
+
+  'volume-12': {
+    intro: {
+      fr: [
+        'Point de contrôle volume. Trois acquis : lire le volume (tick vs réel, divergence prix-volume), décoder le profile (POC, VAH, VAL, zones de transit), comprendre les outils avancés (carnet d’ordres, VWAP, Tape).',
+        'Si une notion est floue, refaites la leçon. La piste suivante (Figures chartistes) suppose que vous savez lire un graphique avec son profil de volume.',
+        'Bonus : pendant 10 séances, regardez chaque matin le POC et la value area de la veille avant d’ouvrir une seule position. Ce simple geste filtre 80 % des trades médiocres en intraday.',
+      ],
+      en: [
+        'Volume checkpoint. Three things to lock in: reading volume (tick vs real, price-volume divergence), decoding the profile (POC, VAH, VAL, transit zones), understanding advanced tools (order book, VWAP, Tape).',
+        'If anything is fuzzy, retake the lesson. The next track (Chart patterns) assumes you read a chart with its volume profile.',
+        'Bonus: for 10 sessions, check the previous day’s POC and value area each morning before opening a single position. This single habit filters 80% of mediocre intraday trades.',
+      ],
+    },
+    drill: { prompt: { fr: 'Geste filtre #1 avant d’ouvrir une position :', en: '#1 filter gesture before opening:' }, options: { fr: ['Vérifier POC + value area du jour précédent', 'Lire X (Twitter)', 'Demander un signal'], en: ['Check POC + previous-day value area', 'Read X (Twitter)', 'Ask for a signal'] }, correct: 0, rationale: { fr: 'Cadre objectif.', en: 'Objective frame.' } },
+    quiz: [
+      { q: { fr: 'Le volume tick vs réel :', en: 'Tick vs real volume:' }, options: { fr: ['Spot forex = tick, futures = réel', 'Identique partout', 'Inversé'], en: ['Spot forex = tick, futures = real', 'Same everywhere', 'Reversed'] }, correct: 0, rationale: { fr: 'Marchés différents.', en: 'Different markets.' } },
+      { q: { fr: 'Combien de séances pour le bonus :', en: 'How many sessions for the bonus:' }, options: { fr: ['Dix', 'Une', 'Cent'], en: ['Ten', 'One', 'One hundred'] }, correct: 0, rationale: { fr: 'Construction habitude.', en: 'Habit building.' } },
+      { q: { fr: 'Avant la piste suivante :', en: 'Before the next track:' }, options: { fr: ['Refaire si flou', 'Forcer la suite', 'Sauter le checkpoint'], en: ['Retake if fuzzy', 'Force the next ones', 'Skip checkpoint'] }, correct: 0, rationale: { fr: 'Consolidation.', en: 'Consolidation.' } },
+    ],
+  },
+
+  // ─── Chart patterns (patterns) ─────────────────────────────────────────
+  'patterns-01': {
+    intro: {
+      fr: [
+        'Un triangle symétrique est une figure de consolidation où plus hauts descendants et plus bas ascendants convergent. Le prix se comprime — on attend une cassure dans la direction de la tendance précédente.',
+        'Mécanique : la compression représente une indécision résolue par les fondamentaux ou un événement extérieur. La cassure libère l’énergie accumulée.',
+        'Stratégie : entrer à la cassure (idéalement avec volume) ou attendre le retest de la ligne cassée. La cible classique est la hauteur maximale du triangle, projetée depuis le point de cassure.',
+      ],
+      en: [
+        'A symmetrical triangle is a consolidation pattern where descending highs and ascending lows converge. Price compresses — expect a breakout in the direction of the preceding trend.',
+        'Mechanics: compression represents indecision resolved by fundamentals or external event. The breakout releases accumulated energy.',
+        'Strategy: enter on breakout (ideally with volume) or wait for retest of the broken line. Classic target: maximum triangle height projected from the breakout point.',
+      ],
+    },
+    drill: { prompt: { fr: 'Cassure haussière d’un triangle symétrique sans volume. Action :', en: 'Bullish breakout of a symmetrical triangle without volume. Action:' }, options: { fr: ['Attendre la confirmation', 'Acheter direct', 'Vendre'], en: ['Wait for confirmation', 'Buy immediately', 'Sell'] }, correct: 0, rationale: { fr: 'Sans volume = faux signal probable.', en: 'No volume = likely fake.' } },
+    quiz: [
+      { q: { fr: 'Triangle symétrique = :', en: 'Symmetrical triangle = :' }, options: { fr: ['Plus hauts descendants + plus bas ascendants', 'Plus hauts ascendants', 'Plat'], en: ['Descending highs + ascending lows', 'Ascending highs', 'Flat'] }, correct: 0, rationale: { fr: 'Convergence.', en: 'Convergence.' } },
+      { q: { fr: 'Cible classique projetée depuis :', en: 'Classic target projected from:' }, options: { fr: ['Point de cassure, hauteur du triangle', 'Sommet du triangle', 'Plancher du triangle'], en: ['Breakout point, triangle height', 'Triangle top', 'Triangle bottom'] }, correct: 0, rationale: { fr: 'Measured move.', en: 'Measured move.' } },
+      { q: { fr: 'Direction de cassure attendue :', en: 'Expected breakout direction:' }, options: { fr: ['Celle de la tendance précédente', 'Toujours haussière', 'Aléatoire'], en: ['Of the preceding trend', 'Always bullish', 'Random'] }, correct: 0, rationale: { fr: 'Continuation par défaut.', en: 'Continuation by default.' } },
+    ],
+  },
+
+  'patterns-02': {
+    intro: {
+      fr: [
+        'Triangle ascendant : résistance horizontale + plus bas ascendants. Les acheteurs poussent de plus en plus haut tandis que la résistance tient. Figure haussière forte.',
+        'Lecture : les vendeurs s’épuisent à défendre la résistance. Plus le triangle dure (avec plusieurs touches), plus la cassure haussière est probable.',
+        'Stratégie : entrée à la cassure de la résistance horizontale, stop sous le dernier plus bas ascendant. La cible est la hauteur du triangle projetée vers le haut.',
+      ],
+      en: [
+        'Ascending triangle: horizontal resistance + ascending lows. Buyers push higher and higher while resistance holds. Strong bullish pattern.',
+        'Reading: sellers wear out defending the resistance. The longer the triangle lasts (with multiple touches), the more likely the bullish breakout.',
+        'Strategy: entry at horizontal resistance break, stop below last ascending low. Target = triangle height projected upward.',
+      ],
+    },
+    drill: { prompt: { fr: 'Stop logique sur entrée long après cassure :', en: 'Logical stop on long entry after breakout:' }, options: { fr: ['Sous le dernier plus bas ascendant', 'Au milieu', 'Loin sous le triangle'], en: ['Below last ascending low', 'At midpoint', 'Far below triangle'] }, correct: 0, rationale: { fr: 'Invalidation logique.', en: 'Logical invalidation.' } },
+    quiz: [
+      { q: { fr: 'Triangle ascendant est :', en: 'Ascending triangle is:' }, options: { fr: ['Haussier', 'Baissier', 'Neutre'], en: ['Bullish', 'Bearish', 'Neutral'] }, correct: 0, rationale: { fr: 'Acheteurs en contrôle.', en: 'Buyers in control.' } },
+      { q: { fr: 'Élément du haut du triangle :', en: 'Top element of the triangle:' }, options: { fr: ['Résistance horizontale', 'Pente descendante', 'Plat baissier'], en: ['Horizontal resistance', 'Descending slope', 'Bearish flat'] }, correct: 0, rationale: { fr: 'Définition.', en: 'Definition.' } },
+      { q: { fr: 'Plus le triangle dure, plus :', en: 'The longer the triangle, the:' }, options: { fr: ['La cassure est probable', 'Le signal s’affaiblit', 'Aucun effet'], en: ['More likely the breakout', 'Weaker the signal', 'No effect'] }, correct: 0, rationale: { fr: 'Compression d’énergie.', en: 'Energy compression.' } },
+    ],
+  },
+
+  'patterns-03': {
+    intro: {
+      fr: [
+        'Triangle descendant : support horizontal + plus hauts descendants. Miroir du triangle ascendant. Vendeurs en contrôle, acheteurs s’épuisent à défendre le support.',
+        'Cassure baissière du support attendue. Entrée short à la cassure, stop au-dessus du dernier plus haut descendant, cible = hauteur du triangle vers le bas.',
+        'Attention : sur les paires de devises majeures, les triangles descendants sont parfois trompeurs car la banque centrale peut intervenir pour défendre un niveau. À combiner avec un contexte fondamental cohérent.',
+      ],
+      en: [
+        'Descending triangle: horizontal support + descending highs. Mirror of ascending triangle. Sellers in control, buyers exhaust defending the support.',
+        'Expected bearish break of support. Short entry at break, stop above last descending high, target = triangle height downward.',
+        'Caution: on major currency pairs, descending triangles are sometimes misleading because the central bank can intervene to defend a level. Combine with coherent fundamental context.',
+      ],
+    },
+    drill: { prompt: { fr: 'Triangle descendant sur EUR/USD avec BCE qui défend le 1.05. Vous :', en: 'Descending triangle on EUR/USD with ECB defending 1.05. You:' }, options: { fr: ['Restez prudent', 'Shortez agressif', 'Doublez la taille'], en: ['Stay cautious', 'Short aggressively', 'Double size'] }, correct: 0, rationale: { fr: 'Intervention possible.', en: 'Intervention possible.' } },
+    quiz: [
+      { q: { fr: 'Triangle descendant est :', en: 'Descending triangle is:' }, options: { fr: ['Baissier', 'Haussier', 'Neutre'], en: ['Bearish', 'Bullish', 'Neutral'] }, correct: 0, rationale: { fr: 'Sellers en contrôle.', en: 'Sellers in control.' } },
+      { q: { fr: 'Stop sur short :', en: 'Stop on short:' }, options: { fr: ['Au-dessus du dernier plus haut descendant', 'À mid-triangle', 'Loin au-dessus'], en: ['Above last descending high', 'At mid-triangle', 'Far above'] }, correct: 0, rationale: { fr: 'Invalidation.', en: 'Invalidation.' } },
+      { q: { fr: 'Risque particulier forex :', en: 'Specific forex risk:' }, options: { fr: ['Intervention banque centrale', 'Spread géant', 'Pas de cassure'], en: ['Central bank intervention', 'Giant spread', 'No breakout'] }, correct: 0, rationale: { fr: 'Politique monétaire.', en: 'Monetary policy.' } },
+    ],
+  },
+
+  'patterns-04': {
+    intro: {
+      fr: [
+        'Tête-épaules : figure de retournement majeure en haut d’une tendance haussière. Trois sommets : épaule gauche, tête (plus haut), épaule droite (plus basse que la tête). La ligne de cou (neckline) connecte les deux creux entre les épaules.',
+        'Mécanique : la tendance haussière perd de la force. La tête est le dernier sursaut. L’épaule droite, plus basse, confirme l’essoufflement. La cassure de la neckline déclenche le retournement.',
+        'Entrée : sur cassure de la neckline avec volume. Stop au-dessus de l’épaule droite. Cible : projection de la distance tête-neckline depuis le point de cassure. Une des figures les plus fiables historiquement.',
+      ],
+      en: [
+        'Head and shoulders: major reversal pattern at the top of an uptrend. Three peaks: left shoulder, head (highest), right shoulder (lower than head). The neckline connects the two troughs between shoulders.',
+        'Mechanics: uptrend losing steam. The head is the last burst. The lower right shoulder confirms exhaustion. Neckline break triggers the reversal.',
+        'Entry: on neckline break with volume. Stop above right shoulder. Target: project head-to-neckline distance from break point. One of the most historically reliable patterns.',
+      ],
+    },
+    drill: { prompt: { fr: 'Cassure neckline d’une tête-épaules. Cible :', en: 'H&S neckline break. Target:' }, options: { fr: ['Distance tête-neckline projetée', 'Pivot quotidien', 'Aléatoire'], en: ['Head-to-neckline distance projected', 'Daily pivot', 'Random'] }, correct: 0, rationale: { fr: 'Measured move.', en: 'Measured move.' } },
+    quiz: [
+      { q: { fr: 'Tête-épaules est :', en: 'H&S is:' }, options: { fr: ['Retournement majeur', 'Continuation', 'Range'], en: ['Major reversal', 'Continuation', 'Range'] }, correct: 0, rationale: { fr: 'Top of trend.', en: 'Top of trend.' } },
+      { q: { fr: 'Stop logique :', en: 'Logical stop:' }, options: { fr: ['Au-dessus de l’épaule droite', 'Au-dessus de la tête', 'Très loin'], en: ['Above right shoulder', 'Above head', 'Far'] }, correct: 0, rationale: { fr: 'Invalidation immédiate.', en: 'Immediate invalidation.' } },
+      { q: { fr: 'L’épaule droite est :', en: 'Right shoulder is:' }, options: { fr: ['Plus basse que la tête', 'Plus haute', 'Égale'], en: ['Lower than head', 'Higher', 'Equal'] }, correct: 0, rationale: { fr: 'Signature d’essoufflement.', en: 'Exhaustion signature.' } },
+    ],
+  },
+
+  'patterns-05': {
+    intro: {
+      fr: [
+        'Tête-épaules inversée : miroir parfait au creux d’une tendance baissière. Trois creux : épaule gauche, tête (plus bas), épaule droite (moins basse). Neckline au-dessus.',
+        'Mécanique : capitulation des vendeurs. La cassure haussière de la neckline lance le nouveau cycle haussier.',
+        'Entrée long sur cassure, stop sous épaule droite, cible = distance tête-neckline projetée vers le haut. Excellent setup en début de tendance majeure.',
+      ],
+      en: [
+        'Inverse head and shoulders: perfect mirror at the bottom of a downtrend. Three troughs: left shoulder, head (lowest), right shoulder (less low). Neckline above.',
+        'Mechanics: seller capitulation. Bullish neckline break launches the new bullish cycle.',
+        'Long entry on break, stop below right shoulder, target = head-to-neckline distance projected up. Excellent setup at the start of a major trend.',
+      ],
+    },
+    drill: { prompt: { fr: 'Tête-épaules inversée sur SPX en mars 2020. Vous :', en: 'Inverse H&S on SPX March 2020. You:' }, options: { fr: ['Long sur cassure neckline', 'Short sur tête', 'Attendez encore'], en: ['Long on neckline break', 'Short on head', 'Wait more'] }, correct: 0, rationale: { fr: 'Setup textbook fin de baisse.', en: 'Textbook end-of-fall setup.' } },
+    quiz: [
+      { q: { fr: 'Apparition de la figure :', en: 'Pattern appears at:' }, options: { fr: ['Bas de tendance baissière', 'Top haussier', 'Middle of range'], en: ['Bottom of downtrend', 'Bullish top', 'Range middle'] }, correct: 0, rationale: { fr: 'Symétrique au H&S classique.', en: 'Mirror of classic H&S.' } },
+      { q: { fr: 'Stop sur long :', en: 'Stop on long:' }, options: { fr: ['Sous épaule droite', 'Sous la tête', 'Loin'], en: ['Below right shoulder', 'Below head', 'Far'] }, correct: 0, rationale: { fr: 'Invalidation logique.', en: 'Logical invalidation.' } },
+      { q: { fr: 'Bonne période pour cette figure :', en: 'Good moment for this pattern:' }, options: { fr: ['Début de nouvelle tendance', 'Range pur', 'Fin de tendance'], en: ['Start of new trend', 'Pure range', 'End of trend'] }, correct: 0, rationale: { fr: 'Retournement.', en: 'Reversal.' } },
+    ],
+  },
+
+  'patterns-06': {
+    intro: {
+      fr: [
+        'Drapeau haussier (bull flag) : pause de consolidation dans une tendance haussière. Après une montée verticale (« hampe »), le prix consolide légèrement en baisse ou plat (« drapeau ») avant de repartir.',
+        'Caractéristiques : la hampe doit être nette et puissante. Le drapeau doit être court (10-20 bougies max) et avoir une légère pente baissière ou être quasi horizontal. Volume diminue dans le drapeau, augmente à la cassure.',
+        'Stratégie : entrée à la cassure haussière du drapeau, stop sous le plus bas du drapeau, cible = hauteur de la hampe projetée depuis le point de cassure.',
+      ],
+      en: [
+        'Bull flag: consolidation pause in an uptrend. After a vertical move ("pole"), price consolidates slightly down or flat ("flag") before resuming.',
+        'Characteristics: the pole must be clean and powerful. The flag must be short (10-20 candles max) with slight downward slope or near horizontal. Volume drops in the flag, rises at breakout.',
+        'Strategy: entry at bullish breakout of flag, stop below flag low, target = pole height projected from breakout.',
+      ],
+    },
+    drill: { prompt: { fr: 'Drapeau qui dure 50 bougies. Vous :', en: 'Flag lasting 50 candles. You:' }, options: { fr: ['Pas un vrai drapeau, ignorer', 'Trader quand même', 'Doubler la taille'], en: ['Not a real flag, skip', 'Trade anyway', 'Double size'] }, correct: 0, rationale: { fr: 'Trop long = autre figure.', en: 'Too long = different pattern.' } },
+    quiz: [
+      { q: { fr: 'Bull flag est :', en: 'Bull flag is:' }, options: { fr: ['Continuation haussière', 'Retournement', 'Range neutre'], en: ['Bullish continuation', 'Reversal', 'Neutral range'] }, correct: 0, rationale: { fr: 'Pause dans la hausse.', en: 'Pause in the rally.' } },
+      { q: { fr: 'Cible classique :', en: 'Classic target:' }, options: { fr: ['Hauteur de la hampe projetée', 'Aucune', 'Plus haut historique'], en: ['Pole height projected', 'None', 'All-time high'] }, correct: 0, rationale: { fr: 'Measured move.', en: 'Measured move.' } },
+      { q: { fr: 'Volume dans le drapeau :', en: 'Volume in the flag:' }, options: { fr: ['Diminue', 'Augmente', 'Indifférent'], en: ['Decreases', 'Increases', 'Indifferent'] }, correct: 0, rationale: { fr: 'Consolidation = repos.', en: 'Consolidation = rest.' } },
+    ],
+  },
+
+  'patterns-07': {
+    intro: {
+      fr: [
+        'Drapeau baissier (bear flag) : miroir parfait du bull flag dans une tendance baissière. Hampe baissière + drapeau légèrement haussier ou plat + cassure baissière.',
+        'Trade : short à la cassure basse du drapeau, stop au-dessus du plus haut du drapeau, cible = hauteur de la hampe projetée vers le bas.',
+        'Drapeaux haussiers ET baissiers ont historiquement un taux de succès >70 % quand les critères stricts sont respectés. C’est l’une des figures les plus fiables pour le trader pratique.',
+      ],
+      en: [
+        'Bear flag: perfect mirror of bull flag in a downtrend. Bearish pole + slightly bullish or flat flag + bearish break.',
+        'Trade: short at the low break of the flag, stop above flag high, target = pole height projected downward.',
+        'Bull AND bear flags historically have a >70% success rate when strict criteria are respected. One of the most reliable patterns for the practical trader.',
+      ],
+    },
+    drill: { prompt: { fr: 'Taux de succès des drapeaux quand bien identifiés :', en: 'Flag success rate when correctly identified:' }, options: { fr: ['~70 %', '~30 %', '~99 %'], en: ['~70%', '~30%', '~99%'] }, correct: 0, rationale: { fr: 'Données empiriques.', en: 'Empirical data.' } },
+    quiz: [
+      { q: { fr: 'Bear flag = :', en: 'Bear flag = :' }, options: { fr: ['Continuation baissière', 'Retournement haussier', 'Range'], en: ['Bearish continuation', 'Bullish reversal', 'Range'] }, correct: 0, rationale: { fr: 'Pause dans la baisse.', en: 'Pause in the fall.' } },
+      { q: { fr: 'Stop sur short en bear flag :', en: 'Stop on short in bear flag:' }, options: { fr: ['Au-dessus du plus haut du drapeau', 'Sous la hampe', 'Au pivot'], en: ['Above flag high', 'Below pole', 'At pivot'] }, correct: 0, rationale: { fr: 'Invalidation logique.', en: 'Logical invalidation.' } },
+      { q: { fr: 'Cible bear flag :', en: 'Bear flag target:' }, options: { fr: ['Hauteur hampe projetée vers le bas', 'Hauteur drapeau', 'Aucune'], en: ['Pole height projected down', 'Flag height', 'None'] }, correct: 0, rationale: { fr: 'Measured move.', en: 'Measured move.' } },
+    ],
+  },
+
+  'patterns-08': {
+    intro: {
+      fr: [
+        'Wedge (biseau) : deux lignes de tendance convergentes mais inclinées dans la même direction. Rising wedge (les deux montent) = signal baissier. Falling wedge (les deux descendent) = signal haussier.',
+        'Différent du triangle : un triangle a une ligne horizontale ou ses lignes pointent dans des directions opposées. Le wedge est plus subtil — c’est un essoufflement.',
+        'Cassure : généralement à l’opposé de la direction du wedge. Rising wedge en tendance haussière = cassure baissière probable (retournement).',
+      ],
+      en: [
+        'Wedge: two converging trendlines but sloped the same direction. Rising wedge (both ascending) = bearish signal. Falling wedge (both descending) = bullish signal.',
+        'Different from triangle: a triangle has a horizontal line or its lines point in opposite directions. The wedge is subtler — it is exhaustion.',
+        'Breakout: usually opposite the wedge direction. Rising wedge in uptrend = likely bearish break (reversal).',
+      ],
+    },
+    drill: { prompt: { fr: 'Rising wedge en tendance haussière. Cassure probable :', en: 'Rising wedge in uptrend. Likely breakout:' }, options: { fr: ['Baissière (retournement)', 'Haussière', 'Aucune'], en: ['Bearish (reversal)', 'Bullish', 'None'] }, correct: 0, rationale: { fr: 'Essoufflement déguisé.', en: 'Disguised exhaustion.' } },
+    quiz: [
+      { q: { fr: 'Falling wedge = :', en: 'Falling wedge = :' }, options: { fr: ['Signal haussier', 'Baissier', 'Neutre'], en: ['Bullish signal', 'Bearish', 'Neutral'] }, correct: 0, rationale: { fr: 'Cassure haussière probable.', en: 'Bullish break likely.' } },
+      { q: { fr: 'Différence triangle/wedge :', en: 'Triangle vs wedge:' }, options: { fr: ['Wedge incliné dans même direction', 'Identique', 'Wedge = plat'], en: ['Wedge tilted same direction', 'Identical', 'Wedge = flat'] }, correct: 0, rationale: { fr: 'Inclinaison conjointe.', en: 'Joint slope.' } },
+      { q: { fr: 'Mécanique du wedge :', en: 'Wedge mechanics:' }, options: { fr: ['Essoufflement', 'Force progressive', 'Aléatoire'], en: ['Exhaustion', 'Progressive force', 'Random'] }, correct: 0, rationale: { fr: 'Compression directionnelle.', en: 'Directional compression.' } },
+    ],
+  },
+
+  'patterns-09': {
+    intro: {
+      fr: [
+        'Double top : deux sommets quasi identiques séparés par un creux. Figure classique de retournement baissier. Le marché teste deux fois un niveau de résistance et échoue.',
+        'Double bottom : miroir au creux. Deux plus bas quasi identiques séparés par un sommet = signal haussier.',
+        'Confirmation : cassure de la ligne médiane (entre les deux sommets/bottoms) déclenche le signal. Cible : distance entre les sommets et la ligne médiane projetée. Stop juste au-dessus des sommets (ou sous les bottoms).',
+      ],
+      en: [
+        'Double top: two near-identical peaks separated by a trough. Classic bearish reversal pattern. The market tests resistance twice and fails.',
+        'Double bottom: mirror at the trough. Two near-identical lows separated by a peak = bullish signal.',
+        'Confirmation: break of the midline (between the two peaks/bottoms) triggers the signal. Target: distance from peaks to midline projected. Stop just above peaks (or below bottoms).',
+      ],
+    },
+    drill: { prompt: { fr: 'Double top sur le SPX à 5300. Confirmation par :', en: 'Double top on SPX at 5300. Confirmed by:' }, options: { fr: ['Cassure ligne médiane', 'Troisième touche', 'Aucune'], en: ['Midline break', 'Third touch', 'None'] }, correct: 0, rationale: { fr: 'Validation classique.', en: 'Classic validation.' } },
+    quiz: [
+      { q: { fr: 'Double bottom est :', en: 'Double bottom is:' }, options: { fr: ['Haussier', 'Baissier', 'Neutre'], en: ['Bullish', 'Bearish', 'Neutral'] }, correct: 0, rationale: { fr: 'Retournement de bas.', en: 'Bottom reversal.' } },
+      { q: { fr: 'Cible projetée depuis :', en: 'Target projected from:' }, options: { fr: ['Sommets vs ligne médiane', 'Pic intermédiaire', 'Plus haut historique'], en: ['Peaks vs midline', 'Intermediate peak', 'All-time high'] }, correct: 0, rationale: { fr: 'Measured move.', en: 'Measured move.' } },
+      { q: { fr: 'Stop sur short double top :', en: 'Stop on double top short:' }, options: { fr: ['Au-dessus des sommets', 'Au creux médian', 'Très loin'], en: ['Above peaks', 'At mid-trough', 'Very far'] }, correct: 0, rationale: { fr: 'Invalidation logique.', en: 'Logical invalidation.' } },
+    ],
+  },
+
+  'patterns-10': {
+    intro: {
+      fr: [
+        'Coupe & anse (cup and handle) : figure haussière de continuation. Le « cup » est un arrondi en U sur quelques semaines/mois. L’« handle » est une petite consolidation baissière à droite du cup, avant la cassure.',
+        'Originaire des actions (William O’Neil), s’applique aussi aux indices et au forex sur des unités longues (4H/1D).',
+        'Cassure haussière du handle = signal. Cible = profondeur du cup projetée au-dessus. Setup à fort R:R mais demande de la patience — le cup peut durer plusieurs mois.',
+      ],
+      en: [
+        'Cup and handle: bullish continuation pattern. The "cup" is a U-shape over weeks/months. The "handle" is a small bearish consolidation right of the cup, before breakout.',
+        'Originated in stocks (William O’Neil), also applies to indices and forex on long units (4H/1D).',
+        'Bullish breakout of the handle = signal. Target = cup depth projected upward. High R:R setup but requires patience — the cup can last several months.',
+      ],
+    },
+    drill: { prompt: { fr: 'Cup qui dure 3 mois + handle 2 semaines. Vous :', en: 'Cup lasting 3 months + 2-week handle. You:' }, options: { fr: ['Attendre la cassure du handle', 'Acheter mi-cup', 'Vendre le handle'], en: ['Wait for handle break', 'Buy mid-cup', 'Sell the handle'] }, correct: 0, rationale: { fr: 'Patience disciplinée.', en: 'Disciplined patience.' } },
+    quiz: [
+      { q: { fr: 'Cup and handle est :', en: 'Cup and handle is:' }, options: { fr: ['Continuation haussière', 'Retournement baissier', 'Neutre'], en: ['Bullish continuation', 'Bearish reversal', 'Neutral'] }, correct: 0, rationale: { fr: 'Pause avant la suite.', en: 'Pause before continuation.' } },
+      { q: { fr: 'Cible cup :', en: 'Cup target:' }, options: { fr: ['Profondeur projetée vers le haut', 'Largeur', 'Aucune'], en: ['Depth projected up', 'Width', 'None'] }, correct: 0, rationale: { fr: 'Measured move.', en: 'Measured move.' } },
+      { q: { fr: 'Outil temporel idéal :', en: 'Ideal timeframe:' }, options: { fr: ['4H / 1D', '1 min', '1 mois exact'], en: ['4H / 1D', '1 min', 'Exact 1 month'] }, correct: 0, rationale: { fr: 'Patience demandée.', en: 'Patience required.' } },
+    ],
+  },
+
+  'patterns-11': {
+    intro: {
+      fr: [
+        'Quand une figure échoue, c’est souvent un signal plus puissant que la figure elle-même. Un échec de tête-épaules (le prix repasse au-dessus de la tête) = signal haussier fort.',
+        'Mécanique : les traders ayant pris la figure à face valeur sont piégés. Leur sortie alimente le mouvement opposé. C’est le piège classique du trader « technique pure ».',
+        'Stratégie : surveillez les « failures ». Un drapeau qui casse à l’opposé, un double top qui repasse au-dessus, un triangle qui rebrousse — chacun est une opportunité asymétrique à contre-courant.',
+      ],
+      en: [
+        'When a pattern fails, it is often a more powerful signal than the pattern itself. A failed H&S (price climbs back above the head) = strong bullish signal.',
+        'Mechanics: traders who took the pattern at face value are trapped. Their exit fuels the opposite move. Classic trap for the "pure technical" trader.',
+        'Strategy: watch for "failures". A flag that breaks the opposite way, a double top that comes back above, a triangle that reverses — each is an asymmetric counter-trend opportunity.',
+      ],
+    },
+    drill: { prompt: { fr: 'Tête-épaules échoue, prix repasse au-dessus de la tête :', en: 'H&S fails, price returns above head:' }, options: { fr: ['Signal haussier puissant', 'Confirmation baissière', 'Range'], en: ['Powerful bullish signal', 'Bearish confirmation', 'Range'] }, correct: 0, rationale: { fr: 'Piège retournement.', en: 'Reversal trap.' } },
+    quiz: [
+      { q: { fr: 'Pourquoi l’échec est-il puissant :', en: 'Why is failure powerful:' }, options: { fr: ['Pièges les traders techniques', 'Aucune raison', 'Hasard'], en: ['Traps technical traders', 'No reason', 'Chance'] }, correct: 0, rationale: { fr: 'Liquidité forcée.', en: 'Forced liquidity.' } },
+      { q: { fr: 'Stratégie sur figure échouée :', en: 'Failed-pattern strategy:' }, options: { fr: ['Trader à contre-courant', 'Confirmer la figure', 'Sortir et oublier'], en: ['Trade counter-trend', 'Confirm the pattern', 'Exit and forget'] }, correct: 0, rationale: { fr: 'Asymétrie inversée.', en: 'Inverted asymmetry.' } },
+      { q: { fr: 'Type de trader piégé :', en: 'Type of trader trapped:' }, options: { fr: ['Technique pure sans contexte', 'Macro', 'Fondamental'], en: ['Pure technical without context', 'Macro', 'Fundamental'] }, correct: 0, rationale: { fr: 'Lecture mécanique.', en: 'Mechanical reading.' } },
+    ],
+  },
+
+  'patterns-12': {
+    intro: {
+      fr: [
+        'Le pattern Gartley est la première figure harmonique formalisée (H.M. Gartley, 1935). Forme un « M » ou « W » avec des ratios Fibonacci précis : AB = 0.618 XA, BC = 0.382-0.886 AB, CD = 1.272-1.618 BC, D au niveau 0.786 de XA.',
+        'Mécanique : le point D est la zone d’entrée potentielle. Si tous les ratios sont respectés à ±5 %, c’est un Gartley valide. Stop juste au-delà de X, cible souvent A.',
+        'Avantages : entrée précise, stop logique, taux de succès historique 60-70 %. Inconvénient : demande de l’entraînement à mesurer les ratios. Beaucoup d’outils TradingView dessinent automatiquement les harmoniques.',
+      ],
+      en: [
+        'The Gartley pattern is the first formalised harmonic figure (H.M. Gartley, 1935). Forms an "M" or "W" with precise Fibonacci ratios: AB = 0.618 XA, BC = 0.382-0.886 AB, CD = 1.272-1.618 BC, D at the 0.786 level of XA.',
+        'Mechanics: point D is the potential entry zone. If all ratios are respected to ±5%, it is a valid Gartley. Stop just beyond X, target often A.',
+        'Edges: precise entry, logical stop, 60-70% historical success rate. Drawback: requires training to measure ratios. Many TradingView tools auto-draw harmonics.',
+      ],
+    },
+    drill: { prompt: { fr: 'Sur un Gartley bullish, D se trouve à :', en: 'On a bullish Gartley, D is at:' }, options: { fr: ['0.786 de XA', '0.5 de XA', '1.0 de XA'], en: ['0.786 of XA', '0.5 of XA', '1.0 of XA'] }, correct: 0, rationale: { fr: 'Ratio Gartley classique.', en: 'Classic Gartley ratio.' } },
+    quiz: [
+      { q: { fr: 'Inventeur du Gartley :', en: 'Gartley inventor:' }, options: { fr: ['H.M. Gartley (1935)', 'Fibonacci', 'Elliott'], en: ['H.M. Gartley (1935)', 'Fibonacci', 'Elliott'] }, correct: 0, rationale: { fr: 'Pattern éponyme.', en: 'Eponymous pattern.' } },
+      { q: { fr: 'Stop logique :', en: 'Logical stop:' }, options: { fr: ['Au-delà de X', 'À B', 'Loin'], en: ['Beyond X', 'At B', 'Far'] }, correct: 0, rationale: { fr: 'Invalidation harmonique.', en: 'Harmonic invalidation.' } },
+      { q: { fr: 'Tolérance sur ratios :', en: 'Ratio tolerance:' }, options: { fr: ['±5 %', '0 % strict', '±20 %'], en: ['±5%', '0% strict', '±20%'] }, correct: 0, rationale: { fr: 'Tolérance pratique.', en: 'Practical tolerance.' } },
+    ],
+  },
+
+  'patterns-13': {
+    intro: {
+      fr: [
+        'Le papillon (butterfly, Bryce Gilmore et Larry Pesavento) ressemble au Gartley mais le point D va PLUS LOIN que X. Ratios : AB = 0.786 XA, CD = 1.618-2.618 BC, D au niveau 1.27-1.618 de XA.',
+        'Le butterfly capture une extension au-delà du début du mouvement. C’est un retournement plus violent que le Gartley — entrée plus tardive, mais asymétrie souvent meilleure.',
+        'Utilisez le butterfly quand le marché casse un swing low (ou high) précédent et fait une extension Fibonacci. C’est souvent un point de retournement clé sur les paires majeures et les indices.',
+      ],
+      en: [
+        'The butterfly (Bryce Gilmore and Larry Pesavento) resembles the Gartley but point D extends FURTHER than X. Ratios: AB = 0.786 XA, CD = 1.618-2.618 BC, D at 1.27-1.618 of XA.',
+        'The butterfly captures an extension beyond the move’s starting point. A more violent reversal than the Gartley — later entry, but often better asymmetry.',
+        'Use butterfly when the market breaks a previous swing low (or high) and makes a Fib extension. Often a key reversal point on major pairs and indices.',
+      ],
+    },
+    drill: { prompt: { fr: 'Différence Gartley vs butterfly :', en: 'Gartley vs butterfly:' }, options: { fr: ['Butterfly étend au-delà de X', 'Identique', 'Butterfly plus court'], en: ['Butterfly extends beyond X', 'Identical', 'Butterfly shorter'] }, correct: 0, rationale: { fr: 'Extension Fib.', en: 'Fib extension.' } },
+    quiz: [
+      { q: { fr: 'Point D du butterfly :', en: 'Butterfly D point:' }, options: { fr: ['1.27-1.618 de XA', '0.5 de XA', '0.786 de XA'], en: ['1.27-1.618 of XA', '0.5 of XA', '0.786 of XA'] }, correct: 0, rationale: { fr: 'Au-delà du départ.', en: 'Past the start.' } },
+      { q: { fr: 'Pesavento est connu pour :', en: 'Pesavento known for:' }, options: { fr: ['Formaliser les harmoniques', 'Inventer le doji', 'Banques centrales'], en: ['Formalising harmonics', 'Inventing doji', 'Central banks'] }, correct: 0, rationale: { fr: 'Auteur clé.', en: 'Key author.' } },
+      { q: { fr: 'Le butterfly est utile pour :', en: 'Butterfly useful for:' }, options: { fr: ['Retournements violents', 'Range pur', 'Trend infinie'], en: ['Violent reversals', 'Pure range', 'Infinite trend'] }, correct: 0, rationale: { fr: 'Extension épuisée.', en: 'Exhausted extension.' } },
+    ],
+  },
+
+  'patterns-14': {
+    intro: {
+      fr: [
+        'La chauve-souris (bat pattern, Scott Carney) est un autre harmonique avec ratios spécifiques : AB = 0.382-0.5 XA, BC = 0.382-0.886 AB, CD = 1.618-2.618 BC, D au niveau 0.886 de XA.',
+        'Le bat est un peu moins extensif que le Gartley mais avec une zone D plus profonde. Il offre souvent les meilleurs ratios R:R des harmoniques.',
+        'Pratique : repérez d’abord une jambe XA. Si la pull-back AB s’arrête à 0.5 max, c’est un bat candidat. Le suivi CD jusqu’au 0.886 finalise la figure.',
+      ],
+      en: [
+        'The bat pattern (Scott Carney) is another harmonic with specific ratios: AB = 0.382-0.5 XA, BC = 0.382-0.886 AB, CD = 1.618-2.618 BC, D at 0.886 of XA.',
+        'The bat is slightly less extensive than the Gartley but with a deeper D zone. Often offers the best R:R ratios among harmonics.',
+        'Practice: spot XA leg first. If pull-back AB stops at 0.5 max, it is a bat candidate. Tracking CD to 0.886 finalises the pattern.',
+      ],
+    },
+    drill: { prompt: { fr: 'D du bat est à :', en: 'Bat D is at:' }, options: { fr: ['0.886 de XA', '0.786 de XA', '1.0 de XA'], en: ['0.886 of XA', '0.786 of XA', '1.0 of XA'] }, correct: 0, rationale: { fr: 'Ratio spécifique bat.', en: 'Specific bat ratio.' } },
+    quiz: [
+      { q: { fr: 'Carney a formalisé :', en: 'Carney formalised:' }, options: { fr: ['Le bat pattern', 'Le doji', 'Le RSI'], en: ['Bat pattern', 'Doji', 'RSI'] }, correct: 0, rationale: { fr: 'Auteur dédié.', en: 'Dedicated author.' } },
+      { q: { fr: 'Avantage du bat :', en: 'Bat advantage:' }, options: { fr: ['Bons R:R', 'Plus rapide', 'Aucune asymétrie'], en: ['Good R:R', 'Faster', 'No asymmetry'] }, correct: 0, rationale: { fr: 'Zone D profonde.', en: 'Deep D zone.' } },
+      { q: { fr: 'AB du bat :', en: 'Bat AB:' }, options: { fr: ['0.382-0.5 XA', '0.618 XA', '1.0 XA'], en: ['0.382-0.5 XA', '0.618 XA', '1.0 XA'] }, correct: 0, rationale: { fr: 'Pull-back partiel.', en: 'Partial pull-back.' } },
+    ],
+  },
+
+  'patterns-15': {
+    intro: {
+      fr: [
+        'Le crabe (Scott Carney) est l’harmonique le plus extensif. D pointe loin au-delà de X — à 1.618 de XA. Demande des extensions Fib énormes : CD = 2.618-3.618 BC.',
+        'Le crabe capture les retournements de toute fin de tendance. Quand vous voyez un crabe valide, c’est généralement le sommet (ou creux) d’un cycle de plusieurs semaines/mois.',
+        'Avantage : entrées rarissimes mais très asymétriques. Inconvénient : difficile à identifier, demande de la patience. Les outils TradingView aident énormément.',
+      ],
+      en: [
+        'The crab (Scott Carney) is the most extensive harmonic. D points far beyond X — at 1.618 of XA. Requires huge Fib extensions: CD = 2.618-3.618 BC.',
+        'The crab catches end-of-trend reversals. When you see a valid crab, it is usually the top (or bottom) of a multi-week/month cycle.',
+        'Edge: very rare but highly asymmetric entries. Drawback: hard to spot, requires patience. TradingView tools help a lot.',
+      ],
+    },
+    drill: { prompt: { fr: 'D du crabe est à :', en: 'Crab D is at:' }, options: { fr: ['1.618 de XA', '0.786 de XA', '0.5 de XA'], en: ['1.618 of XA', '0.786 of XA', '0.5 of XA'] }, correct: 0, rationale: { fr: 'Extension maximale.', en: 'Maximum extension.' } },
+    quiz: [
+      { q: { fr: 'Le crabe est :', en: 'The crab is:' }, options: { fr: ['Le plus extensif des harmoniques', 'Le plus court', 'Identique au Gartley'], en: ['Most extensive harmonic', 'Shortest', 'Same as Gartley'] }, correct: 0, rationale: { fr: 'Définition.', en: 'Definition.' } },
+      { q: { fr: 'Quand apparaît le crabe :', en: 'When does the crab appear:' }, options: { fr: ['Fin de tendance majeure', 'Pleine tendance', 'Aucun moment'], en: ['End of major trend', 'Middle of trend', 'No moment'] }, correct: 0, rationale: { fr: 'Retournement exhausté.', en: 'Exhausted reversal.' } },
+      { q: { fr: 'CD du crabe :', en: 'Crab CD:' }, options: { fr: ['2.618-3.618 BC', '1.0 BC', '0.5 BC'], en: ['2.618-3.618 BC', '1.0 BC', '0.5 BC'] }, correct: 0, rationale: { fr: 'Énorme extension.', en: 'Huge extension.' } },
+    ],
+  },
+
+  'patterns-16': {
+    intro: {
+      fr: [
+        'Three drives : trois impulsions successives qui forment des sommets (ou creux) avec extensions Fibonacci progressives. Chaque drive monte (ou descend) un peu plus haut (ou bas) que le précédent, à des ratios précis.',
+        'Mécanique : signal de retournement majeur. Les trois drives représentent un épuisement maximal — le marché a fait trois tentatives, à chaque fois plus difficiles. La quatrième est presque toujours un échec.',
+        'Stratégie : entrée à contre-courant après la troisième impulsion, idéalement à confluence avec une extension Fib 1.618 ou 1.272. Stop au-delà de la dernière impulsion, cible = premier drive ou plus.',
+      ],
+      en: [
+        'Three drives: three successive impulses forming peaks (or troughs) with progressive Fibonacci extensions. Each drive rises (or falls) slightly higher (or lower) than the previous, at precise ratios.',
+        'Mechanics: major reversal signal. The three drives represent maximum exhaustion — the market tried three times, each more difficult. The fourth almost always fails.',
+        'Strategy: counter-trend entry after the third impulse, ideally in confluence with a 1.618 or 1.272 Fib extension. Stop beyond last impulse, target = first drive or further.',
+      ],
+    },
+    drill: { prompt: { fr: 'Trois sommets successifs avec extensions Fib croissantes :', en: 'Three successive highs with growing Fib extensions:' }, options: { fr: ['Three drives baissier', 'Continuation haussière', 'Range'], en: ['Bearish three drives', 'Bullish continuation', 'Range'] }, correct: 0, rationale: { fr: 'Épuisement formalisé.', en: 'Formalised exhaustion.' } },
+    quiz: [
+      { q: { fr: 'Three drives = :', en: 'Three drives = :' }, options: { fr: ['Retournement majeur', 'Continuation forte', 'Range'], en: ['Major reversal', 'Strong continuation', 'Range'] }, correct: 0, rationale: { fr: 'Trois tentatives épuisées.', en: 'Three exhausted attempts.' } },
+      { q: { fr: 'Ratios typiques :', en: 'Typical ratios:' }, options: { fr: ['1.272 / 1.618 entre impulsions', '0.5', 'Aucun'], en: ['1.272 / 1.618 between impulses', '0.5', 'None'] }, correct: 0, rationale: { fr: 'Fibonacci appliqué.', en: 'Fibonacci applied.' } },
+      { q: { fr: 'Stop logique :', en: 'Logical stop:' }, options: { fr: ['Au-delà de la dernière impulsion', 'Au début', 'Aléatoire'], en: ['Beyond last impulse', 'At start', 'Random'] }, correct: 0, rationale: { fr: 'Invalidation = continuation.', en: 'Invalidation = continuation.' } },
+    ],
+  },
+
+  'patterns-17': {
+    intro: {
+      fr: [
+        'Exercice pratique : ouvrez un graphique 4H de votre paire favorite, sur les 6 derniers mois. Identifiez 5 figures différentes : triangle, drapeau, double top/bottom, tête-épaules, et un harmonique (Gartley ou butterfly).',
+        'Pour chacune, marquez : la zone d’entrée idéale, le stop logique, la cible projetée, et la durée de la consolidation. Journalisez vos observations.',
+        'Une fois fini, comparez avec d’autres traders publics sur TradingView. Vous verrez si vos identifications convergent. C’est la meilleure façon de calibrer votre œil.',
+      ],
+      en: [
+        'Practical drill: open a 4H chart of your favourite pair, last 6 months. Identify 5 different patterns: triangle, flag, double top/bottom, head & shoulders, and a harmonic (Gartley or butterfly).',
+        'For each, mark: ideal entry zone, logical stop, projected target, and consolidation duration. Journal your observations.',
+        'Once done, compare with other public traders on TradingView. You will see if your identifications converge. The best way to calibrate your eye.',
+      ],
+    },
+    drill: { prompt: { fr: 'Combien de figures différentes dans l’exercice :', en: 'How many different patterns in the drill:' }, options: { fr: ['Cinq', 'Une', 'Vingt'], en: ['Five', 'One', 'Twenty'] }, correct: 0, rationale: { fr: 'Échantillon utile.', en: 'Useful sample.' } },
+    quiz: [
+      { q: { fr: 'Outil temporel :', en: 'Timeframe:' }, options: { fr: ['4H sur 6 mois', '1 min sur 1 jour', '1 mois sur 10 ans'], en: ['4H over 6 months', '1 min over 1 day', '1 month over 10 years'] }, correct: 0, rationale: { fr: 'Granularité adaptée.', en: 'Right granularity.' } },
+      { q: { fr: 'Étape projet :', en: 'Project step:' }, options: { fr: ['Entrée, stop, cible, durée', 'Acheter direct', 'Vendre'], en: ['Entry, stop, target, duration', 'Buy direct', 'Sell'] }, correct: 0, rationale: { fr: 'Cadrage complet.', en: 'Complete framing.' } },
+      { q: { fr: 'Comparer avec autres :', en: 'Compare with others:' }, options: { fr: ['Calibre l’œil', 'Inutile', 'Distrait'], en: ['Calibrates the eye', 'Useless', 'Distracting'] }, correct: 0, rationale: { fr: 'Validation croisée.', en: 'Cross-validation.' } },
+    ],
+  },
+
+  'patterns-18': {
+    intro: {
+      fr: [
+        'Point de contrôle figures. Trois acquis : les classiques (triangles, drapeaux, doubles, tête-épaules), les harmoniques (Gartley, butterfly, bat, crabe, three drives), et la lecture des échecs (failures = signaux puissants à contre-courant).',
+        'Si une famille reste floue, refaites la leçon. La piste suivante (Analyse fondamentale) suppose que vous savez identifier une figure et raisonner sur le risque/rendement avant d’entrer.',
+        'Bonus : pendant 30 séances, tenez un journal exclusif des figures que vous avez identifiées. Notez chaque sortie : la figure a-t-elle marché, échoué, ou n’a-t-elle jamais été validée ? C’est la meilleure école.',
+      ],
+      en: [
+        'Patterns checkpoint. Three things to lock in: classics (triangles, flags, doubles, head & shoulders), harmonics (Gartley, butterfly, bat, crab, three drives), and reading failures (failures = powerful counter-trend signals).',
+        'If any family is fuzzy, retake the lesson. The next track (Fundamental analysis) assumes you can spot a pattern and reason on risk/reward before entry.',
+        'Bonus: for 30 sessions, keep an exclusive journal of patterns you identified. Note each outcome: did it work, fail, or never validate? The best school.',
+      ],
+    },
+    drill: { prompt: { fr: 'Bonus pratique :', en: 'Practical bonus:' }, options: { fr: ['Journal de figures sur 30 séances', 'Lire 50 livres', 'Suivre Twitter'], en: ['Pattern journal over 30 sessions', 'Read 50 books', 'Follow Twitter'] }, correct: 0, rationale: { fr: 'Construction d’œil.', en: 'Eye building.' } },
+    quiz: [
+      { q: { fr: 'Famille des harmoniques :', en: 'Harmonics family:' }, options: { fr: ['Gartley, butterfly, bat, crabe, three drives', 'Triangles seuls', 'Doubles seuls'], en: ['Gartley, butterfly, bat, crab, three drives', 'Triangles alone', 'Doubles alone'] }, correct: 0, rationale: { fr: 'Liste complète.', en: 'Complete list.' } },
+      { q: { fr: 'Lecture d’un failure :', en: 'Failure reading:' }, options: { fr: ['Signal puissant à contre-courant', 'À ignorer', 'Mauvais signe'], en: ['Powerful counter-trend signal', 'Ignore', 'Bad sign'] }, correct: 0, rationale: { fr: 'Piège retournement.', en: 'Reversal trap.' } },
+      { q: { fr: 'Piste suivante :', en: 'Next track:' }, options: { fr: ['Analyse fondamentale', 'Crypto', 'Marathon'], en: ['Fundamental analysis', 'Crypto', 'Marathon'] }, correct: 0, rationale: { fr: 'Cohérence cursus.', en: 'Curriculum consistency.' } },
+    ],
+  },
 };
 
 // ─── Placeholder generator ─────────────────────────────────────────────────
