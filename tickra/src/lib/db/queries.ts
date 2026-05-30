@@ -210,4 +210,66 @@ export async function recordFeedback(args: {
   return !error;
 }
 
+// ─── Personalised 14-day plan ────────────────────────────────────────────
+
+export type PlanEntry = { day_index: number; lesson_id: string };
+
+export async function getUserPlan(email: string): Promise<PlanEntry[]> {
+  const db = await getDb();
+  if (!db) return [];
+  const { data, error } = await db
+    .from('tickra_user_plan')
+    .select('day_index, lesson_id')
+    .eq('email', email)
+    .order('day_index', { ascending: true });
+  if (error || !data) return [];
+  return data as PlanEntry[];
+}
+
+export async function setUserPlan(email: string, entries: PlanEntry[]): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  await ensureUser(email);
+  await db.from('tickra_user_plan').delete().eq('email', email);
+  if (entries.length === 0) return true;
+  const rows = entries.map((e) => ({ email, day_index: e.day_index, lesson_id: e.lesson_id }));
+  const { error } = await db.from('tickra_user_plan').insert(rows);
+  return !error;
+}
+
+// ─── Notifications log ───────────────────────────────────────────────────
+
+export async function recordNotification(email: string, kind: string): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db
+    .from('tickra_notifications')
+    .upsert({ email, kind, sent_at: new Date().toISOString() }, { onConflict: 'email,kind' });
+}
+
+export async function lastNotificationAt(email: string, kind: string): Promise<number | null> {
+  const db = await getDb();
+  if (!db) return null;
+  const { data, error } = await db
+    .from('tickra_notifications')
+    .select('sent_at')
+    .eq('email', email)
+    .eq('kind', kind)
+    .maybeSingle();
+  if (error || !data) return null;
+  return new Date(data.sent_at).getTime();
+}
+
+export async function listUsersForDailyNotifications(): Promise<Array<{ email: string; plan: string | null }>> {
+  const db = await getDb();
+  if (!db) return [];
+  const { data, error } = await db
+    .from('tickra_users')
+    .select('email, plan')
+    .order('created_at', { ascending: false })
+    .limit(5000);
+  if (error || !data) return [];
+  return data as Array<{ email: string; plan: string | null }>;
+}
+
 export { isDbConfigured };
