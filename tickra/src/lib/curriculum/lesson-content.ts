@@ -3920,6 +3920,596 @@ const seeded: Seed = {
       { q: { fr: 'Piste suivante :', en: 'Next track:' }, options: { fr: ['Analyse fondamentale', 'Crypto', 'Marathon'], en: ['Fundamental analysis', 'Crypto', 'Marathon'] }, correct: 0, rationale: { fr: 'Cohérence cursus.', en: 'Curriculum consistency.' } },
     ],
   },
+
+  // ─── Analyse fondamentale (fundamentals) ────────────────────────────────
+  'fundamentals-01': {
+    intro: {
+      fr: [
+        'L’analyse fondamentale étudie les forces économiques, monétaires et géopolitiques qui font bouger les prix. C’est l’opposé de l’analyse technique — vous regardez le moteur, pas le tableau de bord.',
+        'Macro vs micro : la macro étudie les pays, les banques centrales, les agrégats économiques (PIB, inflation, emploi). La micro étudie les entreprises, leurs bilans, leurs résultats. Sur le forex, vous êtes 100 % macro.',
+        'Important : 80 % des mouvements forex sur les paires majeures viennent des fondamentaux à long terme. La technique optimise l’entrée mais ne change pas la direction principale.',
+      ],
+      en: [
+        'Fundamental analysis studies the economic, monetary, and geopolitical forces that move prices. The opposite of technical analysis — you look at the engine, not the dashboard.',
+        'Macro vs micro: macro studies countries, central banks, economic aggregates (GDP, inflation, employment). Micro studies companies, balance sheets, earnings. On forex, you are 100% macro.',
+        'Important: 80% of major-pair forex moves come from long-term fundamentals. Technicals optimise the entry but do not change the main direction.',
+      ],
+    },
+    drill: { prompt: { fr: 'Sur EUR/USD, l’analyse principale est :', en: 'On EUR/USD, the main analysis is:' }, options: { fr: ['Macro', 'Micro entreprise', 'Aucune'], en: ['Macro', 'Company micro', 'None'] }, correct: 0, rationale: { fr: 'Pas d’actions à analyser.', en: 'No company shares to read.' } },
+    quiz: [
+      { q: { fr: '80 % des mouvements forex à long terme viennent de :', en: '80% of long-term forex moves come from:' }, options: { fr: ['Fondamentaux', 'Technique pure', 'Hasard'], en: ['Fundamentals', 'Pure technicals', 'Randomness'] }, correct: 0, rationale: { fr: 'Le pourquoi des tendances.', en: 'The why behind trends.' } },
+      { q: { fr: 'La macro étudie :', en: 'Macro studies:' }, options: { fr: ['Pays et agrégats', 'Bilans d’entreprise', 'Charts uniquement'], en: ['Countries and aggregates', 'Company balance sheets', 'Charts only'] }, correct: 0, rationale: { fr: 'Échelle nationale et globale.', en: 'National and global scale.' } },
+      { q: { fr: 'La technique :', en: 'Technicals:' }, options: { fr: ['Optimise l’entrée', 'Détermine la direction', 'Remplace la macro'], en: ['Optimise entry', 'Set direction', 'Replace macro'] }, correct: 0, rationale: { fr: 'Outil complémentaire.', en: 'Complementary tool.' } },
+    ],
+  },
+
+  'fundamentals-02': {
+    intro: {
+      fr: [
+        'Les banques centrales sont les acteurs les plus puissants du forex. La FED (États-Unis), la BCE (zone euro), la BoJ (Japon), la BoE (Royaume-Uni) prennent les décisions de politique monétaire qui font ou défont les tendances.',
+        'Outils principaux : taux directeur (le coût de l’argent), quantitative easing (achat d’actifs pour injecter de la liquidité), forward guidance (communication sur les intentions futures).',
+        'Quand une BC monte ses taux, sa devise s’apprécie généralement — les capitaux affluent pour profiter du meilleur rendement. Inversement quand elle baisse. C’est la mécanique #1 du forex.',
+      ],
+      en: [
+        'Central banks are the most powerful actors in forex. The FED (US), ECB (eurozone), BoJ (Japan), BoE (UK) make the monetary-policy decisions that build or break trends.',
+        'Main tools: policy rate (the cost of money), quantitative easing (asset purchases to inject liquidity), forward guidance (communication about future intentions).',
+        'When a CB hikes rates, its currency usually appreciates — capital flows in for the higher yield. The reverse when it cuts. This is the #1 mechanic of forex.',
+      ],
+    },
+    drill: { prompt: { fr: 'FED monte ses taux. EUR/USD probable :', en: 'FED hikes rates. Likely EUR/USD:' }, options: { fr: ['Baisse (USD plus fort)', 'Hausse', 'Inchangé'], en: ['Down (stronger USD)', 'Up', 'Unchanged'] }, correct: 0, rationale: { fr: 'Différentiel de taux.', en: 'Rate differential.' } },
+    quiz: [
+      { q: { fr: 'La BC du Japon est :', en: 'Japan’s CB is:' }, options: { fr: ['BoJ', 'JCB', 'Nikkei'], en: ['BoJ', 'JCB', 'Nikkei'] }, correct: 0, rationale: { fr: 'Bank of Japan.', en: 'Bank of Japan.' } },
+      { q: { fr: 'QE = :', en: 'QE = :' }, options: { fr: ['Quantitative easing', 'Quick exit', 'Quarterly earnings'], en: ['Quantitative easing', 'Quick exit', 'Quarterly earnings'] }, correct: 0, rationale: { fr: 'Achat d’actifs.', en: 'Asset purchases.' } },
+      { q: { fr: 'Forward guidance sert à :', en: 'Forward guidance serves to:' }, options: { fr: ['Communiquer les intentions futures', 'Baisser le spread', 'Cacher les décisions'], en: ['Signal future intentions', 'Lower spreads', 'Hide decisions'] }, correct: 0, rationale: { fr: 'Influence les anticipations.', en: 'Shapes expectations.' } },
+    ],
+  },
+
+  'fundamentals-03': {
+    intro: {
+      fr: [
+        'Le taux d’intérêt directeur d’une banque centrale est le levier principal du forex. Différentiel de taux entre deux devises = principal driver de leur parité à moyen-long terme.',
+        'Exemple : si la FED a un taux à 5 % et la BCE à 4 %, le carry est en faveur du USD. Les investisseurs empruntent en EUR (taux faible) pour placer en USD (taux fort). USD se renforce face à EUR.',
+        'Attention à l’anticipation : le marché bouge AVANT la décision, pas après. Une hausse de taux déjà anticipée à 100 % n’aura aucun effet le jour de l’annonce. C’est la surprise qui crée le mouvement.',
+      ],
+      en: [
+        'A central bank’s policy interest rate is the main lever in forex. Rate differential between two currencies = main driver of their parity over medium-to-long term.',
+        'Example: if the FED is at 5% and the ECB at 4%, the carry favours USD. Investors borrow in EUR (low rate) to invest in USD (high rate). USD strengthens vs EUR.',
+        'Beware of anticipation: the market moves BEFORE the decision, not after. A rate hike already 100% priced in will have zero effect on announcement day. Surprise creates the move.',
+      ],
+    },
+    drill: { prompt: { fr: 'Une hausse de taux 100 % anticipée donne :', en: 'A 100% priced-in rate hike gives:' }, options: { fr: ['Peu ou pas de mouvement', 'Grosse hausse de la devise', 'Crash'], en: ['Little or no move', 'Big currency surge', 'Crash'] }, correct: 0, rationale: { fr: 'Effet déjà intégré.', en: 'Effect already priced.' } },
+    quiz: [
+      { q: { fr: 'Différentiel de taux haut en faveur du USD =' , en: 'High rate differential favouring USD =' }, options: { fr: ['USD se renforce', 'USD s’affaiblit', 'Aucun effet'], en: ['USD strengthens', 'USD weakens', 'No effect'] }, correct: 0, rationale: { fr: 'Carry trade.', en: 'Carry trade.' } },
+      { q: { fr: 'Le carry trade exploite :', en: 'Carry trade exploits:' }, options: { fr: ['Différentiel de taux', 'Spreads de spread', 'Volume tick'], en: ['Rate differential', 'Spread spreads', 'Tick volume'] }, correct: 0, rationale: { fr: 'Source de rendement classique.', en: 'Classic yield source.' } },
+      { q: { fr: 'Ce qui crée vraiment le mouvement :', en: 'What truly creates the move:' }, options: { fr: ['La surprise', 'L’annonce attendue', 'Le calendrier seul'], en: ['Surprise', 'Expected announcement', 'Calendar alone'] }, correct: 0, rationale: { fr: 'Le marché anticipe.', en: 'Markets anticipate.' } },
+    ],
+  },
+
+  'fundamentals-04': {
+    intro: {
+      fr: [
+        'L’IPC (Indice des Prix à la Consommation) mesure l’inflation. Une inflation élevée pousse la BC à monter les taux pour la calmer — donc devise plus forte. Inflation faible = pression à baisser les taux = devise plus faible.',
+        'Publié mensuellement. L’IPC US sort à 8h30 EST le 10-15 du mois. Plus important : l’IPC « core » qui exclut énergie et alimentation (trop volatiles). C’est ce que la FED regarde vraiment.',
+        'Lecture : 0.4 % attendu, 0.6 % publié → surprise haussière → USD se renforce instantanément. C’est l’une des news les plus tradées du calendrier économique.',
+      ],
+      en: [
+        'CPI (Consumer Price Index) measures inflation. High inflation pushes the CB to hike rates to cool it — so stronger currency. Low inflation = pressure to cut rates = weaker currency.',
+        'Released monthly. US CPI comes out 08:30 EST around the 10-15th of the month. More important: "core" CPI excluding energy and food (too volatile). That is what the FED really watches.',
+        'Reading: 0.4% expected, 0.6% printed → upside surprise → USD strengthens instantly. One of the most traded news on the economic calendar.',
+      ],
+    },
+    drill: { prompt: { fr: 'IPC core US > attendu. USD :', en: 'US core CPI > expected. USD:' }, options: { fr: ['Se renforce', 'S’affaiblit', 'Inchangé'], en: ['Strengthens', 'Weakens', 'Unchanged'] }, correct: 0, rationale: { fr: 'Anticipation de hausse de taux.', en: 'Rate hike expectation.' } },
+    quiz: [
+      { q: { fr: 'L’IPC core exclut :', en: 'Core CPI excludes:' }, options: { fr: ['Énergie et alimentation', 'Logement', 'Tout sauf services'], en: ['Energy and food', 'Housing', 'All except services'] }, correct: 0, rationale: { fr: 'Composants volatils.', en: 'Volatile components.' } },
+      { q: { fr: 'L’IPC US sort à :', en: 'US CPI prints at:' }, options: { fr: ['8h30 EST', '15h GMT', 'Soir'], en: ['08:30 EST', '15:00 GMT', 'Evening'] }, correct: 0, rationale: { fr: 'Convention horaire BLS.', en: 'BLS schedule.' } },
+      { q: { fr: 'Inflation forte → :', en: 'High inflation → :' }, options: { fr: ['Pression à monter les taux', 'Pression à baisser', 'Aucun effet'], en: ['Hike pressure', 'Cut pressure', 'No effect'] }, correct: 0, rationale: { fr: 'Mandat des BC.', en: 'CB mandate.' } },
+    ],
+  },
+
+  'fundamentals-05': {
+    intro: {
+      fr: [
+        'Le NFP (Non-Farm Payrolls) est LE rapport emploi US. Publié le premier vendredi du mois à 8h30 EST. Mesure le nombre d’emplois non agricoles créés/perdus le mois précédent.',
+        'Trois chiffres à regarder : le NFP lui-même (attendu vs publié), le taux de chômage, et la croissance des salaires (average hourly earnings). Les salaires sont devenus plus importants que le NFP car ils prédisent l’inflation future.',
+        'C’est la news la plus volatile du forex. Les spreads explosent, le slippage est garanti pendant les 5 premières minutes. Stratégie : soit ne pas trader, soit attendre 30 min après la publication pour entrer sur une cassure confirmée.',
+      ],
+      en: [
+        'NFP (Non-Farm Payrolls) is THE US employment report. Released the first Friday of the month at 08:30 EST. Measures non-farm jobs created/lost the previous month.',
+        'Three numbers to watch: NFP itself (expected vs actual), unemployment rate, and wage growth (average hourly earnings). Wages have become more important than NFP itself because they predict future inflation.',
+        'The most volatile news in forex. Spreads explode, slippage guaranteed in the first 5 minutes. Strategy: either skip trading or wait 30 min after the print for a confirmed breakout entry.',
+      ],
+    },
+    drill: { prompt: { fr: 'NFP juste publié. Vous voulez entrer immédiatement. Risque :', en: 'NFP just out. You want to enter immediately. Risk:' }, options: { fr: ['Spread + slippage énormes', 'Aucun', 'Pas de liquidité'], en: ['Huge spread + slippage', 'None', 'No liquidity'] }, correct: 0, rationale: { fr: 'Conditions chaotiques.', en: 'Chaotic conditions.' } },
+    quiz: [
+      { q: { fr: 'NFP publié :', en: 'NFP released:' }, options: { fr: ['1er vendredi du mois', 'Tous les mercredis', '15 du mois'], en: ['First Friday of month', 'Every Wednesday', '15th of month'] }, correct: 0, rationale: { fr: 'Convention BLS.', en: 'BLS convention.' } },
+      { q: { fr: 'Chiffre devenu plus important que NFP :', en: 'Number now more important than NFP:' }, options: { fr: ['Croissance des salaires', 'Taux chômage seul', 'Aucune'], en: ['Wage growth', 'Unemployment alone', 'None'] }, correct: 0, rationale: { fr: 'Prédicteur d’inflation.', en: 'Inflation predictor.' } },
+      { q: { fr: 'Stratégie raisonnable :', en: 'Reasonable strategy:' }, options: { fr: ['Attendre 30 min puis cassure', 'Trader immédiatement', 'Vendre tout'], en: ['Wait 30 min then breakout', 'Trade immediately', 'Sell everything'] }, correct: 0, rationale: { fr: 'Volatilité retombée.', en: 'Volatility settled.' } },
+    ],
+  },
+
+  'fundamentals-06': {
+    intro: {
+      fr: [
+        'Le PIB (GDP) mesure la richesse produite par un pays. Publié trimestriellement, en trois estimations (advance, second, final). Un PIB plus fort qu’attendu renforce la devise.',
+        'Le PMI (Purchasing Managers’ Index) est un sondage mensuel auprès des directeurs achats. Au-dessus de 50 = expansion économique. En-dessous = contraction. Publié dans la première semaine de chaque mois.',
+        'PMI manufacturier et services sont publiés séparément. Le PMI services est devenu plus important dans les économies développées (70 % du PIB en France, USA). Toujours regarder le détail : croissance, prix, emploi.',
+      ],
+      en: [
+        'GDP measures the wealth produced by a country. Released quarterly in three estimates (advance, second, final). Stronger-than-expected GDP strengthens the currency.',
+        'PMI (Purchasing Managers’ Index) is a monthly survey of purchasing directors. Above 50 = economic expansion. Below = contraction. Released in the first week of each month.',
+        'Manufacturing PMI and services PMI are released separately. Services PMI has become more important in developed economies (70% of GDP in France, US). Always check the detail: growth, prices, employment.',
+      ],
+    },
+    drill: { prompt: { fr: 'PMI services US à 48 :', en: 'US Services PMI at 48:' }, options: { fr: ['Contraction', 'Expansion', 'Neutre'], en: ['Contraction', 'Expansion', 'Neutral'] }, correct: 0, rationale: { fr: 'Sous 50.', en: 'Below 50.' } },
+    quiz: [
+      { q: { fr: 'Le PIB est publié :', en: 'GDP is released:' }, options: { fr: ['Trimestriellement', 'Hebdo', 'Annuel'], en: ['Quarterly', 'Weekly', 'Annual'] }, correct: 0, rationale: { fr: 'Cycle économique.', en: 'Economic cycle.' } },
+      { q: { fr: 'PMI > 50 = :', en: 'PMI > 50 = :' }, options: { fr: ['Expansion', 'Contraction', 'Stagnation'], en: ['Expansion', 'Contraction', 'Stagnation'] }, correct: 0, rationale: { fr: 'Seuil clé.', en: 'Key threshold.' } },
+      { q: { fr: 'PMI le plus regardé en économie développée :', en: 'Most watched PMI in developed economies:' }, options: { fr: ['Services', 'Manufacturier', 'Agricole'], en: ['Services', 'Manufacturing', 'Agricultural'] }, correct: 0, rationale: { fr: 'Poids dans le PIB.', en: 'GDP weight.' } },
+    ],
+  },
+
+  'fundamentals-07': {
+    intro: {
+      fr: [
+        'La balance commerciale = exports − imports. Un pays exportateur net (exports > imports) voit sa devise se renforcer car les acheteurs étrangers doivent acheter la devise pour payer.',
+        'Les pays exportateurs nets historiques : Allemagne, Chine, Japon. Pays importateurs nets : USA, Royaume-Uni. Cela explique pourquoi le yen reste solide même avec des taux à 0 — surplus commercial massif.',
+        'Publié mensuellement. Surveiller surtout les tendances pluri-mensuelles, pas le chiffre isolé. Une dégradation 3 mois consécutifs = signal de devise affaiblie à venir.',
+      ],
+      en: [
+        'Trade balance = exports − imports. A net exporter (exports > imports) sees its currency strengthen because foreign buyers must buy the currency to pay.',
+        'Historical net exporters: Germany, China, Japan. Net importers: USA, UK. Explains why the yen stays solid even with zero rates — massive trade surplus.',
+        'Released monthly. Mostly watch multi-month trends, not the isolated number. Three consecutive monthly deteriorations = upcoming weak-currency signal.',
+      ],
+    },
+    drill: { prompt: { fr: 'Balance commerciale qui se dégrade 3 mois d’affilée :', en: 'Trade balance worsening for 3 straight months:' }, options: { fr: ['Devise probablement plus faible à venir', 'Sans effet', 'Devise plus forte'], en: ['Likely weaker currency ahead', 'No effect', 'Stronger currency'] }, correct: 0, rationale: { fr: 'Tendance >> chiffre isolé.', en: 'Trend >> isolated print.' } },
+    quiz: [
+      { q: { fr: 'Pays exportateur net :', en: 'Net exporter country:' }, options: { fr: ['Allemagne', 'USA', 'UK'], en: ['Germany', 'USA', 'UK'] }, correct: 0, rationale: { fr: 'Surplus structurel.', en: 'Structural surplus.' } },
+      { q: { fr: 'Balance commerciale = :', en: 'Trade balance = :' }, options: { fr: ['Exports − imports', 'Imports − exports', 'GDP / inflation'], en: ['Exports − imports', 'Imports − exports', 'GDP / inflation'] }, correct: 0, rationale: { fr: 'Définition.', en: 'Definition.' } },
+      { q: { fr: 'Surplus → devise :', en: 'Surplus → currency:' }, options: { fr: ['Se renforce', 'S’affaiblit', 'Stagne'], en: ['Strengthens', 'Weakens', 'Stagnates'] }, correct: 0, rationale: { fr: 'Demande étrangère.', en: 'Foreign demand.' } },
+    ],
+  },
+
+  'fundamentals-08': {
+    intro: {
+      fr: [
+        'Les matières premières et certaines devises sont corrélées. CAD ↔ pétrole (Canada exportateur), AUD ↔ minerai de fer + or (Australie productrice), NZD ↔ produits laitiers, NOK ↔ pétrole, RUB ↔ pétrole + gaz.',
+        'Quand le pétrole monte 10 %, le CAD a tendance à se renforcer face au USD. C’est mécanique : plus de revenus pétroliers = plus de demande de CAD pour rapatrier les bénéfices.',
+        'Pour la suite : si vous anticipez une hausse du pétrole, préférez long CAD/JPY plutôt que long USD/CAD. La corrélation amplifie le mouvement.',
+      ],
+      en: [
+        'Commodities and certain currencies are correlated. CAD ↔ oil (Canada exporter), AUD ↔ iron ore + gold (Australia producer), NZD ↔ dairy products, NOK ↔ oil, RUB ↔ oil + gas.',
+        'When oil rises 10%, CAD tends to strengthen vs USD. Mechanical: more oil revenue = more CAD demand to repatriate profits.',
+        'For trade ideas: if you anticipate higher oil, prefer long CAD/JPY rather than long USD/CAD. Correlation amplifies the move.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous anticipez baisse pétrole. Trade le plus simple :', en: 'You expect oil to fall. Simplest trade:' }, options: { fr: ['Long USD/CAD', 'Long CAD/JPY', 'Short USD/CAD'], en: ['Long USD/CAD', 'Long CAD/JPY', 'Short USD/CAD'] }, correct: 0, rationale: { fr: 'CAD s’affaiblit avec pétrole.', en: 'CAD weakens with oil.' } },
+    quiz: [
+      { q: { fr: 'AUD est corrélée avec :', en: 'AUD correlates with:' }, options: { fr: ['Minerai de fer + or', 'Pétrole seul', 'Café'], en: ['Iron ore + gold', 'Oil only', 'Coffee'] }, correct: 0, rationale: { fr: 'Production australienne.', en: 'Aussie production.' } },
+      { q: { fr: 'NOK est corrélée avec :', en: 'NOK correlates with:' }, options: { fr: ['Pétrole', 'Soja', 'Café'], en: ['Oil', 'Soybeans', 'Coffee'] }, correct: 0, rationale: { fr: 'Mer du Nord.', en: 'North Sea.' } },
+      { q: { fr: 'Pétrole en hausse + long CAD/JPY = :', en: 'Oil rising + long CAD/JPY = :' }, options: { fr: ['Trade cohérent', 'Trade contradictoire', 'Hedge parfait'], en: ['Coherent trade', 'Contradictory', 'Perfect hedge'] }, correct: 0, rationale: { fr: 'CAD se renforce, JPY non.', en: 'CAD strong, JPY not.' } },
+    ],
+  },
+
+  'fundamentals-09': {
+    intro: {
+      fr: [
+        'La géopolitique est l’X-factor du forex. Une guerre, des sanctions, un risque politique majeur peuvent faire bouger une devise de 5-10 % en quelques jours, indépendamment des données économiques.',
+        'Les « safe havens » : USD, CHF, JPY, or. Quand le monde a peur, les capitaux se réfugient là. Inversement, les devises « risk-on » (AUD, NZD, EM currencies) chutent.',
+        'Stratégie pratique : tenir une watchlist des risques géopolitiques en cours. Quand un risque s’escalade soudainement, le mouvement est souvent une chasse aux safe havens qui dure plusieurs jours.',
+      ],
+      en: [
+        'Geopolitics is forex’s X-factor. A war, sanctions, a major political risk can move a currency 5-10% in days, regardless of economic data.',
+        'Safe havens: USD, CHF, JPY, gold. When the world panics, capital flees there. Conversely, "risk-on" currencies (AUD, NZD, EM currencies) fall.',
+        'Practical strategy: maintain a watchlist of ongoing geopolitical risks. When a risk escalates suddenly, the move is often a safe-haven rush lasting several days.',
+      ],
+    },
+    drill: { prompt: { fr: 'Guerre qui éclate au Moyen-Orient. Trade safe haven typique :', en: 'War erupts in Middle East. Typical safe-haven trade:' }, options: { fr: ['Long CHF/JPY ou or', 'Long AUD/USD', 'Short USD'], en: ['Long CHF/JPY or gold', 'Long AUD/USD', 'Short USD'] }, correct: 0, rationale: { fr: 'Fuite vers la sécurité.', en: 'Flight to safety.' } },
+    quiz: [
+      { q: { fr: 'Safe havens classiques :', en: 'Classic safe havens:' }, options: { fr: ['USD, CHF, JPY, or', 'AUD, NZD', 'BTC seul'], en: ['USD, CHF, JPY, gold', 'AUD, NZD', 'BTC alone'] }, correct: 0, rationale: { fr: 'Refuges historiques.', en: 'Historical refuges.' } },
+      { q: { fr: 'Risk-on signifie :', en: 'Risk-on means:' }, options: { fr: ['Appétit pour le risque', 'Aversion au risque', 'Aucun appétit'], en: ['Appetite for risk', 'Risk aversion', 'No appetite'] }, correct: 0, rationale: { fr: 'Termes de marché.', en: 'Market jargon.' } },
+      { q: { fr: 'Durée typique d’un mouvement géopolitique :', en: 'Typical geopolitical move duration:' }, options: { fr: ['Plusieurs jours', 'Heures', 'Mois'], en: ['Several days', 'Hours', 'Months'] }, correct: 0, rationale: { fr: 'Dépend de l’escalade.', en: 'Depends on escalation.' } },
+    ],
+  },
+
+  'fundamentals-10': {
+    intro: {
+      fr: [
+        'Le calendrier économique est l’outil #1 du trader fondamental. Il liste toutes les publications économiques majeures, leur impact attendu (faible/moyen/fort), le consensus, et la valeur précédente.',
+        'Sites de référence : ForexFactory, Investing.com, MyFXBook. Tous gratuits. À consulter chaque dimanche soir pour préparer la semaine.',
+        'Code des impacts : 3 étoiles (ou rouge) = haute volatilité, à respecter. 2 étoiles = moyen, à surveiller. 1 étoile = faible, à ignorer sauf si vous tradez la paire concernée intraday.',
+      ],
+      en: [
+        'The economic calendar is the #1 tool of a fundamental trader. Lists all major economic releases, expected impact (low/medium/high), consensus, and previous value.',
+        'Reference sites: ForexFactory, Investing.com, MyFXBook. All free. Check Sunday evening to prep the week.',
+        'Impact code: 3 stars (or red) = high volatility, must respect. 2 stars = medium, watch. 1 star = low, ignore unless you trade the pair intraday.',
+      ],
+    },
+    drill: { prompt: { fr: 'Calendrier annonce IPC US (3 étoiles) à 14h30. Vous tradez EUR/USD à 14h20. Action :', en: 'Calendar shows US CPI (3 stars) at 14:30. You trade EUR/USD at 14:20. Action:' }, options: { fr: ['Fermer ou réduire l’exposition', 'Doubler la position', 'Ignorer'], en: ['Close or reduce exposure', 'Double up', 'Ignore'] }, correct: 0, rationale: { fr: 'News à fort impact = volatilité.', en: 'High-impact news = volatility.' } },
+    quiz: [
+      { q: { fr: 'Outil de référence gratuit :', en: 'Free reference tool:' }, options: { fr: ['ForexFactory', 'Bloomberg pro', 'Reuters terminal'], en: ['ForexFactory', 'Bloomberg pro', 'Reuters terminal'] }, correct: 0, rationale: { fr: 'Standard retail.', en: 'Retail standard.' } },
+      { q: { fr: 'Trois étoiles = :', en: 'Three stars = :' }, options: { fr: ['Haute volatilité', 'Sans impact', 'Optionnel'], en: ['High volatility', 'No impact', 'Optional'] }, correct: 0, rationale: { fr: 'À respecter.', en: 'Must respect.' } },
+      { q: { fr: 'Quand préparer la semaine :', en: 'When to prep the week:' }, options: { fr: ['Dimanche soir', 'Lundi matin', 'Jeudi'], en: ['Sunday evening', 'Monday morning', 'Thursday'] }, correct: 0, rationale: { fr: 'Avant l’ouverture.', en: 'Before open.' } },
+    ],
+  },
+
+  'fundamentals-11': {
+    intro: {
+      fr: [
+        'Les événements à fort impact à connaître absolument : NFP (1er vendredi), FOMC (décision FED, ~8x/an), ECB Decision (~8x/an), BoE Decision (~8x/an), GDP US (trimestriel), CPI US (mensuel), Powell speech (variable).',
+        'Pour chacun, le pattern récurrent : volatilité explose dans les 5-15 min suivantes, spreads se rouvrent en 30-60 min, mouvement directionnel possible sur plusieurs heures à plusieurs jours.',
+        'Règle d’or : ne JAMAIS prendre une nouvelle position dans les 15 min précédant un événement 3 étoiles. Soit vous attendez, soit vous fermez vos positions ouvertes pour éviter le slippage.',
+      ],
+      en: [
+        'Must-know high-impact events: NFP (1st Friday), FOMC (FED decision, ~8x/year), ECB Decision (~8x/year), BoE Decision (~8x/year), US GDP (quarterly), US CPI (monthly), Powell speech (variable).',
+        'For each, recurring pattern: volatility explodes within 5-15 min, spreads re-open in 30-60 min, directional move possible over several hours to days.',
+        'Golden rule: NEVER take a new position in the 15 min before a 3-star event. Either wait, or close open positions to avoid slippage.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous avez un long ouvert avec FOMC dans 5 min. Action :', en: 'You have an open long with FOMC in 5 min. Action:' }, options: { fr: ['Fermer ou réduire fortement', 'Garder à fond', 'Doubler'], en: ['Close or reduce sharply', 'Hold all in', 'Double'] }, correct: 0, rationale: { fr: 'Slippage et volatilité énormes.', en: 'Huge slippage and volatility.' } },
+    quiz: [
+      { q: { fr: 'FOMC = :', en: 'FOMC = :' }, options: { fr: ['Décision FED', 'Indice européen', 'Banque japonaise'], en: ['FED decision', 'European index', 'Japanese bank'] }, correct: 0, rationale: { fr: 'Federal Open Market Committee.', en: 'Federal Open Market Committee.' } },
+      { q: { fr: 'Combien de FOMC par an :', en: 'How many FOMC per year:' }, options: { fr: ['~8', '~24', '~1'], en: ['~8', '~24', '~1'] }, correct: 0, rationale: { fr: 'Toutes les ~6 semaines.', en: 'Every ~6 weeks.' } },
+      { q: { fr: 'Délai sécurité avant news :', en: 'Safety window before news:' }, options: { fr: ['15 min', 'Aucun', '1 sec'], en: ['15 min', 'None', '1 sec'] }, correct: 0, rationale: { fr: 'Marge anti-volatilité.', en: 'Volatility margin.' } },
+    ],
+  },
+
+  'fundamentals-12': {
+    intro: {
+      fr: [
+        'Le carry trade fondamental : emprunter dans une devise à taux faible, placer dans une devise à taux fort. Vous gagnez le différentiel de taux chaque jour, en plus du mouvement potentiel de la paire.',
+        'Exemple : taux JPY 0.1 %, taux MXN 11 %. Long MXN/JPY = +10.9 %/an de carry. Sur 10 000 €, c’est 1 090 € de carry annuel — avant tout mouvement de prix.',
+        'Risque : quand le risk-off frappe, les carry trades se débouclent violemment. MXN/JPY peut perdre 15 % en quelques jours. Le carry est confortable jusqu’à ce que la trappe se referme.',
+      ],
+      en: [
+        'Fundamental carry trade: borrow in a low-rate currency, invest in a high-rate currency. You earn the rate differential every day, on top of any potential pair movement.',
+        'Example: JPY rate 0.1%, MXN rate 11%. Long MXN/JPY = +10.9% per year of carry. On €10,000, that is €1,090 of annual carry — before any price move.',
+        'Risk: when risk-off hits, carry trades unwind violently. MXN/JPY can lose 15% in days. The carry is comfortable until the trap snaps shut.',
+      ],
+    },
+    drill: { prompt: { fr: 'Risk-off soudain. Votre position long MXN/JPY :', en: 'Sudden risk-off. Your long MXN/JPY:' }, options: { fr: ['Risque de débouclage violent', 'Profite encore plus', 'Inchangée'], en: ['Risk of violent unwind', 'Gains even more', 'Unchanged'] }, correct: 0, rationale: { fr: 'Capitulation carry.', en: 'Carry capitulation.' } },
+    quiz: [
+      { q: { fr: 'Carry = :', en: 'Carry = :' }, options: { fr: ['Différentiel de taux capturé', 'Spread du broker', 'Pip value'], en: ['Captured rate differential', 'Broker spread', 'Pip value'] }, correct: 0, rationale: { fr: 'Source de yield.', en: 'Yield source.' } },
+      { q: { fr: 'Le risque principal :', en: 'Main risk:' }, options: { fr: ['Risk-off / unwind violent', 'Frais', 'Spread'], en: ['Risk-off / violent unwind', 'Fees', 'Spread'] }, correct: 0, rationale: { fr: 'Tail risk.', en: 'Tail risk.' } },
+      { q: { fr: 'Paire historique de carry :', en: 'Historical carry pair:' }, options: { fr: ['MXN/JPY ou TRY/JPY', 'EUR/USD', 'USD/CHF'], en: ['MXN/JPY or TRY/JPY', 'EUR/USD', 'USD/CHF'] }, correct: 0, rationale: { fr: 'EM vs JPY.', en: 'EM vs JPY.' } },
+    ],
+  },
+
+  'fundamentals-13': {
+    intro: {
+      fr: [
+        'Risk-on vs risk-off : les deux régimes globaux. Risk-on = appétit pour le risque, capitaux vers actions, EM currencies, crypto. Risk-off = aversion au risque, capitaux vers USD, CHF, JPY, or, bonds US.',
+        'Comment identifier le régime : regarder le S&P 500. En hausse + VIX faible (<15) = risk-on. En baisse + VIX haut (>25) = risk-off. C’est la première chose à vérifier chaque matin.',
+        'Application forex : en risk-on, privilégier longs sur AUD/USD, NZD/USD, EUR/USD. En risk-off, privilégier longs sur USD/JPY, USD/CHF, ou des shorts EUR/AUD.',
+      ],
+      en: [
+        'Risk-on vs risk-off: the two global regimes. Risk-on = risk appetite, capital flows to stocks, EM currencies, crypto. Risk-off = risk aversion, capital flows to USD, CHF, JPY, gold, US bonds.',
+        'How to spot the regime: look at the S&P 500. Rising + VIX low (<15) = risk-on. Falling + VIX high (>25) = risk-off. The first thing to check each morning.',
+        'Forex application: in risk-on, favour longs on AUD/USD, NZD/USD, EUR/USD. In risk-off, favour longs on USD/JPY, USD/CHF, or EUR/AUD shorts.',
+      ],
+    },
+    drill: { prompt: { fr: 'VIX à 30, SPX en baisse 2 % :', en: 'VIX at 30, SPX down 2%:' }, options: { fr: ['Risk-off, favoriser USD/JPY long', 'Risk-on, long AUD/USD', 'Neutre'], en: ['Risk-off, favour long USD/JPY', 'Risk-on, long AUD/USD', 'Neutral'] }, correct: 0, rationale: { fr: 'Régime aversion claire.', en: 'Clear aversion regime.' } },
+    quiz: [
+      { q: { fr: 'VIX faible (<15) signale :', en: 'Low VIX (<15) signals:' }, options: { fr: ['Risk-on', 'Risk-off', 'Crash'], en: ['Risk-on', 'Risk-off', 'Crash'] }, correct: 0, rationale: { fr: 'Calme = appétit.', en: 'Calm = appetite.' } },
+      { q: { fr: 'En risk-off, long sur :', en: 'In risk-off, long on:' }, options: { fr: ['USD/JPY, USD/CHF', 'AUD/USD', 'EM currencies'], en: ['USD/JPY, USD/CHF', 'AUD/USD', 'EM currencies'] }, correct: 0, rationale: { fr: 'Safe havens.', en: 'Safe havens.' } },
+      { q: { fr: 'Premier indicateur du matin :', en: 'First morning indicator:' }, options: { fr: ['S&P 500 + VIX', 'Pip value', 'Spread du broker'], en: ['S&P 500 + VIX', 'Pip value', 'Broker spread'] }, correct: 0, rationale: { fr: 'Régime global.', en: 'Global regime.' } },
+    ],
+  },
+
+  'fundamentals-14': {
+    intro: {
+      fr: [
+        'Lire un communiqué de banque centrale est un art. Trois éléments à décortiquer : la décision (taux maintenu/changé), le « statement » officiel (ton hawkish/dovish), la conférence de presse (signaux pour les prochaines décisions).',
+        'Hawkish = restrictif, BC veut combattre l’inflation, devise tend à se renforcer. Dovish = accommodant, BC veut soutenir l’économie, devise tend à s’affaiblir. Le ton du statement compte autant que la décision.',
+        'Mots-clés à repérer : « patient », « data-dependent » = dovish. « Vigilant », « committed to bringing inflation down » = hawkish. Avec l’expérience, vous identifiez le shift en quelques secondes.',
+      ],
+      en: [
+        'Reading a central bank statement is an art. Three things to dissect: the decision (rate held/changed), the official statement (hawkish/dovish tone), the press conference (signals for next decisions).',
+        'Hawkish = restrictive, CB wants to fight inflation, currency tends to strengthen. Dovish = accommodative, CB wants to support the economy, currency tends to weaken. Statement tone matters as much as the decision.',
+        'Keywords to spot: "patient", "data-dependent" = dovish. "Vigilant", "committed to bringing inflation down" = hawkish. With experience, you identify the shift in seconds.',
+      ],
+    },
+    drill: { prompt: { fr: 'BCE garde le taux mais ton très hawkish. EUR :', en: 'ECB holds rate but very hawkish tone. EUR:' }, options: { fr: ['Probable hausse', 'Probable baisse', 'Inchangé'], en: ['Likely up', 'Likely down', 'Unchanged'] }, correct: 0, rationale: { fr: 'Le ton compte.', en: 'Tone matters.' } },
+    quiz: [
+      { q: { fr: 'Hawkish = :', en: 'Hawkish = :' }, options: { fr: ['Restrictif', 'Accommodant', 'Neutre'], en: ['Restrictive', 'Accommodative', 'Neutral'] }, correct: 0, rationale: { fr: 'Combat l’inflation.', en: 'Fights inflation.' } },
+      { q: { fr: '« Data-dependent » est plutôt :', en: '"Data-dependent" is rather:' }, options: { fr: ['Dovish', 'Hawkish', 'Neutre'], en: ['Dovish', 'Hawkish', 'Neutral'] }, correct: 0, rationale: { fr: 'Attentisme.', en: 'Wait-and-see.' } },
+      { q: { fr: 'Trois éléments à analyser :', en: 'Three elements to analyse:' }, options: { fr: ['Décision, statement, conférence', 'Décision seule', 'Conférence seule'], en: ['Decision, statement, press conf', 'Decision alone', 'Press conf alone'] }, correct: 0, rationale: { fr: 'Lecture complète.', en: 'Complete reading.' } },
+    ],
+  },
+
+  'fundamentals-15': {
+    intro: {
+      fr: [
+        'Exercice pratique : ouvrez ForexFactory et préparez votre semaine. Identifiez 3 événements 3 étoiles, notez l’heure, le consensus, la valeur précédente.',
+        'Pour chaque événement, demandez-vous : quelle paire sera impactée ? Quelle direction si surprise haussière ? baissière ? Marquez vos zones d’entrée potentielles 30 min après.',
+        'Puis revenez en fin de semaine : la news a-t-elle été surprise ? Le marché a-t-il bougé comme attendu ? Cinquante itérations construisent un véritable instinct macro.',
+      ],
+      en: [
+        'Practical drill: open ForexFactory and prep your week. Identify 3 three-star events, note the time, consensus, previous value.',
+        'For each event, ask: which pair will be impacted? Which direction if upside surprise? downside? Mark potential entry zones 30 min after.',
+        'Then return at week’s end: was the news a surprise? Did the market move as expected? Fifty iterations build real macro instinct.',
+      ],
+    },
+    drill: { prompt: { fr: 'Combien d’itérations pour vrai instinct macro :', en: 'How many iterations for real macro instinct:' }, options: { fr: ['~50', '~3', '~1000'], en: ['~50', '~3', '~1000'] }, correct: 0, rationale: { fr: 'Échantillon utile.', en: 'Useful sample.' } },
+    quiz: [
+      { q: { fr: 'Trois étoiles dans l’exercice :', en: 'Three stars in the drill:' }, options: { fr: ['Haute volatilité prioritaire', 'À ignorer', 'Faible impact'], en: ['High volatility priority', 'Ignore', 'Low impact'] }, correct: 0, rationale: { fr: 'Focus sur ce qui compte.', en: 'Focus on what matters.' } },
+      { q: { fr: 'Revue en fin de semaine :', en: 'End-of-week review:' }, options: { fr: ['Comparer attendu vs réalisé', 'Oublier', 'Lire seulement'], en: ['Compare expected vs actual', 'Forget', 'Read only'] }, correct: 0, rationale: { fr: 'Boucle d’apprentissage.', en: 'Learning loop.' } },
+      { q: { fr: 'Outil de référence :', en: 'Reference tool:' }, options: { fr: ['ForexFactory', 'Twitter random', 'Aucun'], en: ['ForexFactory', 'Random Twitter', 'None'] }, correct: 0, rationale: { fr: 'Standard pro.', en: 'Pro standard.' } },
+    ],
+  },
+
+  'fundamentals-16': {
+    intro: {
+      fr: [
+        'Point de contrôle fondamentaux. Trois acquis : comprendre la mécanique des taux et des banques centrales (différentiel + hawkish/dovish), savoir lire les indicateurs majeurs (IPC, NFP, PIB, PMI), maîtriser le calendrier économique et l’hygiène anti-news.',
+        'Si une notion est floue, refaites la leçon. La piste suivante (Sessions & instruments) suppose que vous savez identifier le régime macro avant de trader une session.',
+        'Bonus : pendant 4 semaines, journalisez chaque vendredi votre lecture macro pour la semaine suivante. Vous verrez votre précision s’améliorer rapidement — c’est le travail invisible des bons traders.',
+      ],
+      en: [
+        'Fundamentals checkpoint. Three things to lock in: understand rate and central-bank mechanics (differential + hawkish/dovish), read major indicators (CPI, NFP, GDP, PMI), master the economic calendar and anti-news hygiene.',
+        'If anything is fuzzy, retake the lesson. The next track (Sessions & instruments) assumes you identify the macro regime before trading a session.',
+        'Bonus: for 4 weeks, every Friday journal your macro read for the next week. You will see your accuracy improve fast — the invisible work of good traders.',
+      ],
+    },
+    drill: { prompt: { fr: 'Bonus quatre semaines :', en: 'Four-week bonus:' }, options: { fr: ['Lecture macro hebdo dans le journal', 'Lire Twitter', 'Trader plus'], en: ['Weekly macro read in journal', 'Read Twitter', 'Trade more'] }, correct: 0, rationale: { fr: 'Pratique réflexive.', en: 'Reflective practice.' } },
+    quiz: [
+      { q: { fr: 'Trois acquis fondamentaux :', en: 'Three fundamental skills:' }, options: { fr: ['Taux, indicateurs, calendrier', 'Charts seuls', 'Twitter'], en: ['Rates, indicators, calendar', 'Charts only', 'Twitter'] }, correct: 0, rationale: { fr: 'Pilier complet.', en: 'Complete pillar.' } },
+      { q: { fr: 'Si une notion floue :', en: 'If a notion is fuzzy:' }, options: { fr: ['Refaire la leçon', 'Forcer', 'Ignorer'], en: ['Retake lesson', 'Force', 'Ignore'] }, correct: 0, rationale: { fr: 'Consolidation.', en: 'Consolidation.' } },
+      { q: { fr: 'Piste suivante :', en: 'Next track:' }, options: { fr: ['Sessions & instruments', 'Crypto seul', 'PIB Tunisie'], en: ['Sessions & instruments', 'Crypto only', 'Tunisia GDP'] }, correct: 0, rationale: { fr: 'Cohérence cursus.', en: 'Curriculum consistency.' } },
+    ],
+  },
+
+  // ─── Sessions & instruments (sessions) ──────────────────────────────────
+  'sessions-01': {
+    intro: {
+      fr: [
+        'Le forex se trade 24/5 mais chaque heure n’a pas le même comportement. Trois sessions principales : Asie (Tokyo, 00h-09h GMT), Londres (08h-17h GMT), New York (13h-22h GMT). Ces fenêtres se chevauchent par moments.',
+        'La session asiatique est calme, peu de volume hors USD/JPY et AUD/JPY. La session de Londres est la plus liquide — 35 % du volume mondial. La session de New York concentre la liquidité USD et les news américaines.',
+        'Règle utile : pour un trader européen, la fenêtre 13h-17h GMT (overlap Londres-NY) est la plus rentable. Plus de volume = mouvements plus propres, spreads serrés.',
+      ],
+      en: [
+        'Forex trades 24/5 but every hour has different behaviour. Three main sessions: Asia (Tokyo, 00h-09h GMT), London (08h-17h GMT), New York (13h-22h GMT). These windows overlap at moments.',
+        'The Asian session is calm, low volume except USD/JPY and AUD/JPY. The London session is most liquid — 35% of global volume. The New York session concentrates USD liquidity and US news.',
+        'Useful rule: for a European trader, the 13h-17h GMT window (London-NY overlap) is most profitable. More volume = cleaner moves, tight spreads.',
+      ],
+    },
+    drill: { prompt: { fr: 'Meilleure fenêtre pour un trader européen :', en: 'Best window for a European trader:' }, options: { fr: ['13h-17h GMT (overlap)', '23h GMT', '02h GMT'], en: ['13h-17h GMT (overlap)', '23h GMT', '02h GMT'] }, correct: 0, rationale: { fr: 'Liquidité max.', en: 'Max liquidity.' } },
+    quiz: [
+      { q: { fr: 'Session la plus liquide :', en: 'Most liquid session:' }, options: { fr: ['Londres', 'Asie', 'Sydney seul'], en: ['London', 'Asia', 'Sydney alone'] }, correct: 0, rationale: { fr: '35 % du volume.', en: '35% of volume.' } },
+      { q: { fr: 'Session asiatique active surtout sur :', en: 'Asian session active mostly on:' }, options: { fr: ['USD/JPY, AUD/JPY', 'EUR/GBP', 'GBP/CAD'], en: ['USD/JPY, AUD/JPY', 'EUR/GBP', 'GBP/CAD'] }, correct: 0, rationale: { fr: 'Paires asiatiques.', en: 'Asian pairs.' } },
+      { q: { fr: 'Le forex est ouvert :', en: 'Forex is open:' }, options: { fr: ['24/5', '24/7', '12/5'], en: ['24/5', '24/7', '12/5'] }, correct: 0, rationale: { fr: 'Fermé week-end.', en: 'Closed weekends.' } },
+    ],
+  },
+
+  'sessions-02': {
+    intro: {
+      fr: [
+        'Le recouvrement Londres-NY (13h-17h GMT) concentre 50 % du volume forex mondial. Sur ces 4 heures, vous avez les deux plus grosses places de marché actives simultanément.',
+        'Résultat : volatilité maximale, spreads les plus serrés de la journée, mouvements directionnels clairs. C’est la fenêtre préférée des traders professionnels.',
+        'À l’inverse, le recouvrement Asie-Londres (07h-09h GMT) est plus calme mais peut produire des breakouts intéressants sur les pairs JPY et AUD quand Londres ouvre.',
+      ],
+      en: [
+        'The London-NY overlap (13h-17h GMT) concentrates 50% of global forex volume. Over these 4 hours, you have the two largest market venues active simultaneously.',
+        'Result: max volatility, tightest spreads of the day, clean directional moves. The favourite window of professional traders.',
+        'Conversely, the Asia-London overlap (07h-09h GMT) is calmer but can produce interesting breakouts on JPY and AUD pairs when London opens.',
+      ],
+    },
+    drill: { prompt: { fr: 'Volume forex sur l’overlap Londres-NY :', en: 'Forex volume on London-NY overlap:' }, options: { fr: ['~50 % du global', '~10 %', '~5 %'], en: ['~50% of global', '~10%', '~5%'] }, correct: 0, rationale: { fr: 'Deux centres actifs.', en: 'Two active centres.' } },
+    quiz: [
+      { q: { fr: 'L’overlap Londres-NY dure :', en: 'London-NY overlap lasts:' }, options: { fr: ['4 heures (13-17 GMT)', '12 heures', '1 heure'], en: ['4 hours (13-17 GMT)', '12 hours', '1 hour'] }, correct: 0, rationale: { fr: 'Fenêtre limitée.', en: 'Limited window.' } },
+      { q: { fr: 'Overlap Asie-Londres bon pour :', en: 'Asia-London overlap good for:' }, options: { fr: ['Breakouts JPY/AUD', 'EUR/USD seul', 'Rien'], en: ['JPY/AUD breakouts', 'EUR/USD only', 'Nothing'] }, correct: 0, rationale: { fr: 'Transition de sessions.', en: 'Session transition.' } },
+      { q: { fr: 'Spread sur l’overlap principal :', en: 'Spread on main overlap:' }, options: { fr: ['Le plus serré', 'Le plus large', 'Indifférent'], en: ['Tightest', 'Widest', 'Indifferent'] }, correct: 0, rationale: { fr: 'Liquidité maximale.', en: 'Max liquidity.' } },
+    ],
+  },
+
+  'sessions-03': {
+    intro: {
+      fr: [
+        'À chaque session sa paire idéale. Asie : USD/JPY, AUD/JPY, NZD/JPY (sessions Tokyo et Sydney). Londres : EUR/USD, GBP/USD, EUR/GBP, USD/CHF (paires européennes). NY : tout ce qui contient USD, surtout EUR/USD, USD/CAD, USD/MXN.',
+        'Pourquoi ? Chaque session a ses participants. Les market makers japonais animent USD/JPY de 00h à 09h GMT. Les banques londoniennes pilotent EUR/USD. Les corporates US poussent USD/CAD en NY.',
+        'Stratégie : tradez seulement les paires correspondant à la session ouverte. Vous évitez les heures creuses où le spread mange votre R:R.',
+      ],
+      en: [
+        'Each session has its ideal pair. Asia: USD/JPY, AUD/JPY, NZD/JPY (Tokyo and Sydney). London: EUR/USD, GBP/USD, EUR/GBP, USD/CHF (European pairs). NY: anything with USD, especially EUR/USD, USD/CAD, USD/MXN.',
+        'Why? Each session has its participants. Japanese market makers drive USD/JPY from 00h-09h GMT. London banks drive EUR/USD. US corporates push USD/CAD in NY.',
+        'Strategy: only trade pairs matching the active session. You avoid quiet hours where the spread eats your R:R.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous voulez trader EUR/GBP. Meilleure session :', en: 'You want to trade EUR/GBP. Best session:' }, options: { fr: ['Londres', 'Asie', 'NY seul'], en: ['London', 'Asia', 'NY alone'] }, correct: 0, rationale: { fr: 'Paire européenne.', en: 'European pair.' } },
+    quiz: [
+      { q: { fr: 'En session asiatique, paire idéale :', en: 'In Asian session, ideal pair:' }, options: { fr: ['USD/JPY', 'EUR/GBP', 'USD/CAD'], en: ['USD/JPY', 'EUR/GBP', 'USD/CAD'] }, correct: 0, rationale: { fr: 'JPY = Japon.', en: 'JPY = Japan.' } },
+      { q: { fr: 'Pourquoi adapter la paire à la session :', en: 'Why match pair to session:' }, options: { fr: ['Spread + liquidité', 'Esthétique', 'Aucune raison'], en: ['Spread + liquidity', 'Aesthetics', 'No reason'] }, correct: 0, rationale: { fr: 'Coût réel.', en: 'Real cost.' } },
+      { q: { fr: 'USD/CAD pousse surtout en :', en: 'USD/CAD mainly active in:' }, options: { fr: ['NY', 'Asie', 'Aucune'], en: ['NY', 'Asia', 'None'] }, correct: 0, rationale: { fr: 'Acteurs nord-américains.', en: 'NA actors.' } },
+    ],
+  },
+
+  'sessions-04': {
+    intro: {
+      fr: [
+        'La clôture du vendredi (22h GMT) et l’ouverture du dimanche (22h GMT) créent des gaps potentiels. Pendant le week-end, des événements géopolitiques ou économiques peuvent décaler les prix significativement.',
+        'Risque pratique : si vous tenez une position le week-end, vous prenez le risque d’ouvrir lundi avec un gap. Les stops ne s’exécutent pas le week-end — vous pouvez perdre bien plus que prévu.',
+        'Règle simple : fermez (ou réduisez) vos positions avant la clôture du vendredi sauf si vous tenez du swing long-terme avec une marge de sécurité énorme.',
+      ],
+      en: [
+        'Friday close (22h GMT) and Sunday open (22h GMT) create potential gaps. Over the weekend, geopolitical or economic events can move prices significantly.',
+        'Practical risk: if you hold a position over the weekend, you risk opening Monday with a gap. Stops do not execute over the weekend — you can lose far more than expected.',
+        'Simple rule: close (or reduce) positions before Friday close unless you hold long-term swing with massive safety margin.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous tenez un long avec stop serré le vendredi soir :', en: 'You hold a long with tight stop Friday evening:' }, options: { fr: ['Réduire ou fermer', 'Garder en l’état', 'Doubler'], en: ['Reduce or close', 'Hold as is', 'Double up'] }, correct: 0, rationale: { fr: 'Risque de gap.', en: 'Gap risk.' } },
+    quiz: [
+      { q: { fr: 'Le forex ouvre le dimanche à :', en: 'Forex opens Sunday at:' }, options: { fr: ['22h GMT', '00h GMT', '08h GMT'], en: ['22h GMT', '00h GMT', '08h GMT'] }, correct: 0, rationale: { fr: 'Sydney open.', en: 'Sydney open.' } },
+      { q: { fr: 'Pendant le week-end, stops :', en: 'Over the weekend, stops:' }, options: { fr: ['Ne s’exécutent pas', 'S’exécutent en continu', 'Sont annulés'], en: ['Do not execute', 'Execute continuously', 'Cancel'] }, correct: 0, rationale: { fr: 'Marché fermé.', en: 'Market closed.' } },
+      { q: { fr: 'Position week-end recommandée :', en: 'Recommended weekend position:' }, options: { fr: ['Réduite avec marge', 'Maximum levier', 'Aléatoire'], en: ['Reduced with margin', 'Max leverage', 'Random'] }, correct: 0, rationale: { fr: 'Gestion du risque gap.', en: 'Gap risk management.' } },
+    ],
+  },
+
+  'sessions-05': {
+    intro: {
+      fr: [
+        'Les jours fériés font chuter la liquidité du forex. Thanksgiving (4e jeudi de novembre), 4 juillet, Noël, Nouvel An, Pâques, Golden Week au Japon — autant de moments où les spreads s’élargissent et les mouvements deviennent erratiques.',
+        'Pendant un férié US, USD a peu de volume — paires comme USD/JPY peuvent stagner toute la séance. Pendant Golden Week japonaise, USD/JPY peut faire des moves bizarres car les market makers sont absents.',
+        'Règle : consultez le calendrier des fériés en début de mois. Pendant les fériés majeurs, réduisez la taille des positions de 50 % ou trade-half de votre routine.',
+      ],
+      en: [
+        'Holidays crash forex liquidity. Thanksgiving (4th Thursday of November), July 4th, Christmas, New Year, Easter, Japanese Golden Week — moments when spreads widen and moves become erratic.',
+        'During a US holiday, USD has low volume — pairs like USD/JPY can stagnate all session. During Japanese Golden Week, USD/JPY can make strange moves because market makers are absent.',
+        'Rule: check the holiday calendar at the start of the month. During major holidays, reduce position sizing by 50% or trade half your usual routine.',
+      ],
+    },
+    drill: { prompt: { fr: 'Thanksgiving aujourd’hui. Vous tradez normalement EUR/USD. Action :', en: 'Thanksgiving today. You normally trade EUR/USD. Action:' }, options: { fr: ['Réduire taille ou skip', 'Doubler', 'Trader plus paires'], en: ['Reduce size or skip', 'Double up', 'Trade more pairs'] }, correct: 0, rationale: { fr: 'Liquidité réduite.', en: 'Reduced liquidity.' } },
+    quiz: [
+      { q: { fr: 'Golden Week impacte surtout :', en: 'Golden Week mostly impacts:' }, options: { fr: ['USD/JPY', 'EUR/GBP', 'USD/CAD'], en: ['USD/JPY', 'EUR/GBP', 'USD/CAD'] }, correct: 0, rationale: { fr: 'Japonais absents.', en: 'Japanese absent.' } },
+      { q: { fr: 'Pendant un férié, spreads :', en: 'During a holiday, spreads:' }, options: { fr: ['S’élargissent', 'Se resserrent', 'Inchangés'], en: ['Widen', 'Tighten', 'Unchanged'] }, correct: 0, rationale: { fr: 'Moins de market makers.', en: 'Fewer market makers.' } },
+      { q: { fr: 'Pour gérer un férié :', en: 'To manage a holiday:' }, options: { fr: ['Réduire la taille de 50 %', 'Tout fermer', 'Doubler'], en: ['Reduce size by 50%', 'Close everything', 'Double up'] }, correct: 0, rationale: { fr: 'Adaptation prudente.', en: 'Cautious adaptation.' } },
+    ],
+  },
+
+  'sessions-06': {
+    intro: {
+      fr: [
+        'L’or (XAU/USD) est l’instrument refuge par excellence. Acheté en risk-off, vendu en risk-on. Très liquide, spread serré sur les brokers réputés, mouvements clairs.',
+        'L’or réagit fortement aux taux réels (taux nominal − inflation). Taux réels en baisse = or en hausse. La FED qui dovish pousse l’or, hawkish le fait baisser.',
+        'À surveiller : la corrélation négative avec le USD (DXY). Or fait souvent l’inverse du DXY. Si vous tradez l’or, regardez toujours le DXY pour confirmer.',
+      ],
+      en: [
+        'Gold (XAU/USD) is THE refuge instrument. Bought in risk-off, sold in risk-on. Very liquid, tight spread on reputable brokers, clean moves.',
+        'Gold reacts strongly to real rates (nominal rate − inflation). Falling real rates = rising gold. A dovish FED pushes gold, hawkish drops it.',
+        'Watch: negative correlation with USD (DXY). Gold often does the opposite of DXY. If you trade gold, always check DXY for confirmation.',
+      ],
+    },
+    drill: { prompt: { fr: 'FED dovish surprise. Or probable :', en: 'Dovish FED surprise. Likely gold:' }, options: { fr: ['Hausse', 'Baisse', 'Inchangé'], en: ['Up', 'Down', 'Unchanged'] }, correct: 0, rationale: { fr: 'Taux réels en baisse.', en: 'Real rates down.' } },
+    quiz: [
+      { q: { fr: 'Or est corrélé négativement à :', en: 'Gold is negatively correlated to:' }, options: { fr: ['USD (DXY)', 'EUR', 'GBP'], en: ['USD (DXY)', 'EUR', 'GBP'] }, correct: 0, rationale: { fr: 'Coût d’opportunité USD.', en: 'USD opportunity cost.' } },
+      { q: { fr: 'Or réagit aux taux :', en: 'Gold reacts to:' }, options: { fr: ['Réels (nominal - inflation)', 'Nominal seul', 'Aucun'], en: ['Real (nominal - inflation)', 'Nominal alone', 'None'] }, correct: 0, rationale: { fr: 'Théorie classique.', en: 'Classic theory.' } },
+      { q: { fr: 'L’or en risk-off :', en: 'Gold in risk-off:' }, options: { fr: ['Monte (refuge)', 'Baisse', 'Stagne'], en: ['Up (refuge)', 'Down', 'Stagnant'] }, correct: 0, rationale: { fr: 'Fuite vers la sécurité.', en: 'Flight to safety.' } },
+    ],
+  },
+
+  'sessions-07': {
+    intro: {
+      fr: [
+        'Indices : S&P 500 (SPX/SPY/ES), Nasdaq 100 (NDX/NQ), Dow Jones (DJI/YM). Ils représentent les grandes capitalisations US. Tradés très liquidement, particulièrement pendant la session NY (13h30-21h GMT).',
+        'Le SPX est l’indice de référence du « risk-on / risk-off ». Quand il monte, c’est risk-on global. Quand il chute, c’est risk-off. Premier indicateur à consulter chaque matin.',
+        'Le Nasdaq est plus volatile que le SPX car concentré en tech (Apple, Microsoft, Nvidia, etc.). Le DJI est le plus stable, peu utilisé en trading actif.',
+      ],
+      en: [
+        'Indices: S&P 500 (SPX/SPY/ES), Nasdaq 100 (NDX/NQ), Dow Jones (DJI/YM). They represent large US caps. Traded very liquidly, especially during NY session (13:30-21:00 GMT).',
+        'The SPX is the benchmark for "risk-on / risk-off". When it rises, global risk-on. When it falls, risk-off. First indicator to check each morning.',
+        'The Nasdaq is more volatile than SPX because concentrated in tech (Apple, Microsoft, Nvidia, etc.). The DJI is the most stable, rarely used in active trading.',
+      ],
+    },
+    drill: { prompt: { fr: 'Vous voulez maximum volatilité tech :', en: 'You want max tech volatility:' }, options: { fr: ['Nasdaq', 'DJI', 'SPX'], en: ['Nasdaq', 'DJI', 'SPX'] }, correct: 0, rationale: { fr: 'Concentration tech.', en: 'Tech concentration.' } },
+    quiz: [
+      { q: { fr: 'Référence risk-on/off :', en: 'Risk-on/off benchmark:' }, options: { fr: ['SPX', 'DJI', 'Nasdaq'], en: ['SPX', 'DJI', 'Nasdaq'] }, correct: 0, rationale: { fr: 'Indice large.', en: 'Broad index.' } },
+      { q: { fr: 'Session active pour indices US :', en: 'Active session for US indices:' }, options: { fr: ['NY', 'Asie', 'Sydney'], en: ['NY', 'Asia', 'Sydney'] }, correct: 0, rationale: { fr: 'Wall Street ouvre.', en: 'Wall Street opens.' } },
+      { q: { fr: 'Le plus volatile :', en: 'Most volatile:' }, options: { fr: ['Nasdaq', 'SPX', 'DJI'], en: ['Nasdaq', 'SPX', 'DJI'] }, correct: 0, rationale: { fr: 'Tech amplifie.', en: 'Tech amplifies.' } },
+    ],
+  },
+
+  'sessions-08': {
+    intro: {
+      fr: [
+        'Pétrole : WTI (West Texas Intermediate, référence US) et Brent (référence européenne). Spread WTI-Brent généralement 2-5 $/baril. Tradé sur les futures (CL pour WTI, BZ pour Brent).',
+        'Drivers : décisions OPEC+, stocks hebdomadaires US (EIA, mercredi 14h30 GMT), tensions Moyen-Orient, demande chinoise. Volatilité forte — peut faire 3-5 % en une séance sur news.',
+        'À surveiller : le rapport hebdomadaire EIA chaque mercredi à 14h30 GMT. Une surprise haussière (stocks plus élevés qu’attendu) fait chuter le pétrole instantanément.',
+      ],
+      en: [
+        'Oil: WTI (West Texas Intermediate, US benchmark) and Brent (European benchmark). WTI-Brent spread usually $2-5/barrel. Traded on futures (CL for WTI, BZ for Brent).',
+        'Drivers: OPEC+ decisions, US weekly stocks (EIA, Wednesday 14:30 GMT), Middle East tensions, Chinese demand. High volatility — can move 3-5% in a session on news.',
+        'Watch: weekly EIA report every Wednesday at 14:30 GMT. An upside surprise (higher stocks than expected) drops oil instantly.',
+      ],
+    },
+    drill: { prompt: { fr: 'EIA stocks pétrole publiés mercredi, +5M barils vs +1M attendu :', en: 'EIA oil stocks Wednesday, +5M barrels vs +1M expected:' }, options: { fr: ['Pétrole baisse', 'Pétrole monte', 'Inchangé'], en: ['Oil falls', 'Oil rises', 'Unchanged'] }, correct: 0, rationale: { fr: 'Plus d’offre, prix baisse.', en: 'More supply, lower price.' } },
+    quiz: [
+      { q: { fr: 'WTI vs Brent : référence US :', en: 'WTI vs Brent: US reference:' }, options: { fr: ['WTI', 'Brent', 'Aucun'], en: ['WTI', 'Brent', 'None'] }, correct: 0, rationale: { fr: 'West Texas.', en: 'West Texas.' } },
+      { q: { fr: 'OPEC+ décisions affectent surtout :', en: 'OPEC+ decisions mostly affect:' }, options: { fr: ['Le pétrole', 'L’or', 'Le DJI'], en: ['Oil', 'Gold', 'DJI'] }, correct: 0, rationale: { fr: 'Cartel offre.', en: 'Supply cartel.' } },
+      { q: { fr: 'EIA publie :', en: 'EIA releases:' }, options: { fr: ['Mercredi 14h30 GMT', 'Vendredi 8h30 GMT', 'Lundi minuit'], en: ['Wednesday 14:30 GMT', 'Friday 08:30 GMT', 'Monday midnight'] }, correct: 0, rationale: { fr: 'Convention horaire.', en: 'Schedule.' } },
+    ],
+  },
+
+  'sessions-09': {
+    intro: {
+      fr: [
+        'Crypto vs forex : différences fondamentales. Crypto 24/7 (jamais fermé), volatilité 3-10x supérieure, pas de banque centrale (sauf via la régulation), spreads variables selon la plateforme, levier généralement plus limité chez les brokers régulés.',
+        'BTC et ETH dominent (60-70 % de la cap totale). Corrélation avec le SPX en mode risk-on/off (positive sur les phases de risque). Mais aussi mouvements idiosyncratiques (halving Bitcoin, news Coinbase, etc.).',
+        'Pour le débutant : évitez les altcoins exotiques (volatilité ingérable). Préférez BTC ou ETH, sur un broker régulé, levier max 1:5. Le crypto demande une psychologie différente du forex.',
+      ],
+      en: [
+        'Crypto vs forex: fundamental differences. Crypto 24/7 (never closed), 3-10x more volatile, no central bank (except via regulation), variable spreads by platform, leverage usually more limited at regulated brokers.',
+        'BTC and ETH dominate (60-70% of total cap). Correlation with SPX in risk-on/off mode (positive in risk phases). But also idiosyncratic moves (Bitcoin halving, Coinbase news, etc.).',
+        'For beginners: avoid exotic altcoins (unmanageable volatility). Prefer BTC or ETH on a regulated broker, max 1:5 leverage. Crypto demands a different psychology than forex.',
+      ],
+    },
+    drill: { prompt: { fr: 'Débutant crypto raisonnable :', en: 'Reasonable crypto beginner:' }, options: { fr: ['BTC sur broker régulé, levier limité', 'Altcoin exotique, levier max', 'Yield farming'], en: ['BTC on regulated broker, limited leverage', 'Exotic altcoin, max leverage', 'Yield farming'] }, correct: 0, rationale: { fr: 'Garde-fous.', en: 'Guardrails.' } },
+    quiz: [
+      { q: { fr: 'Crypto est ouvert :', en: 'Crypto is open:' }, options: { fr: ['24/7', '24/5', '12/7'], en: ['24/7', '24/5', '12/7'] }, correct: 0, rationale: { fr: 'Jamais de fermeture.', en: 'Never closes.' } },
+      { q: { fr: 'BTC + ETH représentent :', en: 'BTC + ETH represent:' }, options: { fr: ['60-70 % de la cap totale', '20 %', '95 %'], en: ['60-70% of total cap', '20%', '95%'] }, correct: 0, rationale: { fr: 'Domination historique.', en: 'Historical dominance.' } },
+      { q: { fr: 'Volatilité crypto vs forex :', en: 'Crypto volatility vs forex:' }, options: { fr: ['3-10x supérieure', 'Identique', 'Inférieure'], en: ['3-10x higher', 'Same', 'Lower'] }, correct: 0, rationale: { fr: 'Échelle de mouvement.', en: 'Move scale.' } },
+    ],
+  },
+
+  'sessions-10': {
+    intro: {
+      fr: [
+        'Les obligations (bonds) sont les titres de dette émis par les États ou entreprises. En forex, on regarde surtout les bonds 10 ans US et allemands car ils signalent les attentes de taux.',
+        'Le rendement (yield) du 10 ans US monte → marché anticipe des taux plus hauts → USD se renforce généralement. Inversement le yield baisse → USD s’affaiblit.',
+        'Outil pratique : Tradez en regardant le yield différentiel (10 ans US − 10 ans DE). En hausse → favorise USD. En baisse → favorise EUR. Excellent indicateur d’avance pour EUR/USD.',
+      ],
+      en: [
+        'Bonds are debt securities issued by governments or companies. In forex, we mostly watch US and German 10-year bonds because they signal rate expectations.',
+        'US 10-year yield rises → market expects higher rates → USD generally strengthens. Conversely yield falls → USD weakens.',
+        'Practical tool: trade by watching the yield differential (US 10y − DE 10y). Rising → favours USD. Falling → favours EUR. Excellent leading indicator for EUR/USD.',
+      ],
+    },
+    drill: { prompt: { fr: 'Yield 10 ans US monte fortement, 10 ans DE stable. EUR/USD :', en: 'US 10y yield rises sharply, DE 10y stable. EUR/USD:' }, options: { fr: ['Probable baisse', 'Hausse', 'Stagnation'], en: ['Likely down', 'Up', 'Stagnant'] }, correct: 0, rationale: { fr: 'Différentiel pro-USD.', en: 'Differential pro-USD.' } },
+    quiz: [
+      { q: { fr: 'Indicateur clé pour EUR/USD :', en: 'Key indicator for EUR/USD:' }, options: { fr: ['Yield différentiel 10y US-DE', 'Pip value EUR', 'Spread broker'], en: ['10y US-DE yield differential', 'EUR pip value', 'Broker spread'] }, correct: 0, rationale: { fr: 'Avance directionnelle.', en: 'Leading direction.' } },
+      { q: { fr: 'Bonds = :', en: 'Bonds = :' }, options: { fr: ['Titres de dette', 'Actions', 'Cryptos'], en: ['Debt securities', 'Stocks', 'Crypto'] }, correct: 0, rationale: { fr: 'Définition.', en: 'Definition.' } },
+      { q: { fr: 'Yield US qui baisse :', en: 'Falling US yield:' }, options: { fr: ['USD tend à s’affaiblir', 'USD se renforce', 'Aucun effet'], en: ['USD tends weaker', 'USD stronger', 'No effect'] }, correct: 0, rationale: { fr: 'Mécanique standard.', en: 'Standard mechanic.' } },
+    ],
+  },
+
+  'sessions-11': {
+    intro: {
+      fr: [
+        'Exercice pratique : classez 5 instruments selon leur volatilité quotidienne attendue. Par exemple : EUR/USD (faible), USD/JPY (moyen), gold (moyen-fort), Nasdaq (fort), BTC (très fort).',
+        'Pour chacun, notez l’ATR (Average True Range) quotidien sur 14 jours. C’est votre référence pour calibrer votre stop loss et votre take profit.',
+        'Règle : votre stop doit toujours être au moins 1 ATR (ou plus selon votre stratégie). Sinon, vous serez stoppé par le bruit du marché, sans rapport avec votre setup.',
+      ],
+      en: [
+        'Practical drill: rank 5 instruments by expected daily volatility. For example: EUR/USD (low), USD/JPY (medium), gold (medium-high), Nasdaq (high), BTC (very high).',
+        'For each, note the daily ATR (Average True Range) over 14 days. That is your reference to calibrate stop loss and take profit.',
+        'Rule: your stop must always be at least 1 ATR (or more depending on strategy). Otherwise market noise will take you out, unrelated to your setup.',
+      ],
+    },
+    drill: { prompt: { fr: 'Stop trop serré sur Nasdaq (ATR élevé) :', en: 'Stop too tight on Nasdaq (high ATR):' }, options: { fr: ['Stoppé par bruit', 'Trade parfait', 'Aucun risque'], en: ['Stopped by noise', 'Perfect trade', 'No risk'] }, correct: 0, rationale: { fr: 'Le bruit suit l’ATR.', en: 'Noise follows ATR.' } },
+    quiz: [
+      { q: { fr: 'ATR mesure :', en: 'ATR measures:' }, options: { fr: ['La volatilité moyenne', 'Le volume', 'Le spread'], en: ['Average volatility', 'Volume', 'Spread'] }, correct: 0, rationale: { fr: 'Référence range.', en: 'Range reference.' } },
+      { q: { fr: 'Stop minimum recommandé :', en: 'Recommended min stop:' }, options: { fr: ['1 ATR', '1 pip', '50 ATR'], en: ['1 ATR', '1 pip', '50 ATR'] }, correct: 0, rationale: { fr: 'Marge anti-bruit.', en: 'Anti-noise margin.' } },
+      { q: { fr: 'Instrument le plus volatil :', en: 'Most volatile instrument:' }, options: { fr: ['BTC', 'EUR/USD', 'USD/JPY'], en: ['BTC', 'EUR/USD', 'USD/JPY'] }, correct: 0, rationale: { fr: 'Crypto >> forex.', en: 'Crypto >> forex.' } },
+    ],
+  },
+
+  'sessions-12': {
+    intro: {
+      fr: [
+        'Point de contrôle sessions. Trois acquis : comprendre les sessions et leurs paires associées, gérer les fenêtres à fort impact (overlap, news, fériés), savoir lire la corrélation entre instruments (or, indices, bonds, pétrole, crypto).',
+        'Si une notion est floue, refaites la leçon. La piste suivante (Stratégies de tendance) suppose que vous savez QUAND et QUOI trader en fonction de la session et de l’instrument.',
+        'Bonus : pendant 2 semaines, journalisez chaque jour quelle session vous tradez, quels instruments, et combien de pips/dollars vous gagnez ou perdez. Vous découvrirez votre profil naturel — c’est la base pour spécialiser votre routine.',
+      ],
+      en: [
+        'Sessions checkpoint. Three things to lock in: understand sessions and their associated pairs, manage high-impact windows (overlap, news, holidays), read correlations between instruments (gold, indices, bonds, oil, crypto).',
+        'If any notion is fuzzy, retake the lesson. The next track (Trend strategies) assumes you know WHEN and WHAT to trade based on session and instrument.',
+        'Bonus: for 2 weeks, journal each day which session you trade, which instruments, and how many pips/dollars you gain or lose. You will discover your natural profile — the base to specialise your routine.',
+      ],
+    },
+    drill: { prompt: { fr: 'Bonus pratique sur 2 semaines :', en: 'Practical bonus over 2 weeks:' }, options: { fr: ['Journal sessions + instruments + P&L', 'Lire Twitter', 'Trader plus'], en: ['Journal sessions + instruments + P&L', 'Read Twitter', 'Trade more'] }, correct: 0, rationale: { fr: 'Découverte du profil.', en: 'Profile discovery.' } },
+    quiz: [
+      { q: { fr: 'Trois acquis sessions :', en: 'Three session skills:' }, options: { fr: ['Sessions, fenêtres impact, corrélations', 'Charts seuls', 'Twitter'], en: ['Sessions, impact windows, correlations', 'Charts only', 'Twitter'] }, correct: 0, rationale: { fr: 'Pilier complet.', en: 'Complete pillar.' } },
+      { q: { fr: 'Piste suivante :', en: 'Next track:' }, options: { fr: ['Stratégies de tendance', 'Crypto seul', 'PIB Tunisie'], en: ['Trend strategies', 'Crypto only', 'Tunisia GDP'] }, correct: 0, rationale: { fr: 'Cohérence cursus.', en: 'Curriculum consistency.' } },
+      { q: { fr: 'Si une notion floue :', en: 'If a notion is fuzzy:' }, options: { fr: ['Refaire la leçon', 'Forcer', 'Ignorer'], en: ['Retake lesson', 'Force', 'Ignore'] }, correct: 0, rationale: { fr: 'Consolidation.', en: 'Consolidation.' } },
+    ],
+  },
 };
 
 // ─── Placeholder generator ─────────────────────────────────────────────────
