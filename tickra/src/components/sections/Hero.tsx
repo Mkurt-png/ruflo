@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, PlayCircle } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
@@ -8,6 +9,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { CandlestickChart } from '@/components/hero/CandlestickChart';
 import { HeroVideoTrigger } from './HeroVideo';
 import { fadeUp, easeOutExpo } from '@/lib/motion';
+import { getHeroCtaVariant, getHeroCtaLabel, trackHeroCta, type HeroCtaVariant } from '@/lib/ab/hero-cta';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -16,6 +18,15 @@ type Props = { dict: Dictionary; locale: Locale };
 export function Hero({ dict, locale }: Props) {
   const t = dict.hero;
   const [line1, line2] = t.title;
+  // TICKRA-PHASE-1.7: A/B test the hero CTA copy. Variant is stable per
+  // visitor via localStorage. Track impression + click via Plausible.
+  const [ctaVariant, setCtaVariant] = useState<HeroCtaVariant>('control');
+  useEffect(() => {
+    const v = getHeroCtaVariant();
+    setCtaVariant(v);
+    trackHeroCta('view', v);
+  }, []);
+  const primaryCtaLabel = getHeroCtaLabel(ctaVariant, locale);
 
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden border-b border-line">
@@ -59,8 +70,12 @@ export function Hero({ dict, locale }: Props) {
             custom={3}
             className="mt-10 flex flex-wrap items-center gap-3"
           >
-            <Button href={`/${locale}/onboarding`} size="lg">
-              {t.primaryCta}
+            <Button
+              href={`/${locale}/onboarding`}
+              size="lg"
+              onClick={() => trackHeroCta('click', ctaVariant)}
+            >
+              {primaryCtaLabel}
               <ArrowUpRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
             </Button>
             <Button href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`} variant="ghost" size="lg">

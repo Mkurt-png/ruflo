@@ -18,6 +18,7 @@ import { DailyChallenge } from './DailyChallenge';
 import { DailyQuests } from './DailyQuests';
 import { XpBadge } from './XpBadge';
 import { CommunityPanel } from './CommunityPanel';
+import { ReviewBanner } from './ReviewBanner';
 import { ExportProgress } from './ExportProgress';
 import { ImportProgress } from './ImportProgress';
 import { CurriculumHeatmap } from './CurriculumHeatmap';
@@ -155,6 +156,11 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
             </Link>
           </div>
         </article>
+
+        {/* TICKRA-PHASE-1.5: prominent banner when spaced-rep reviews are due. */}
+        <div className="mt-3">
+          <ReviewBanner locale={locale} />
+        </div>
 
         {/* TICKRA-SPRINT-C: XP badge surfaces level + progress at a glance. */}
         <div className="mt-3">
