@@ -8,10 +8,11 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TRACKS, getTrack, lessonGlobalIndex } from '@/lib/curriculum/data';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
 import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
 import { LessonPreviewPopover } from '@/components/learn/LessonPreviewPopover';
 import { LessonLockBadge } from '@/components/learn/LessonLockBadge';
-import { Info } from 'lucide-react';
+import { CalendarClock, Info } from 'lucide-react';
 
 type Params = { locale: string; track: string };
 
@@ -77,6 +78,13 @@ export default async function TrackPage({ params }: { params: Params }) {
                       globalIndex={lessonGlobalIndex(track.slug, lesson.slug)}
                       locale={locale}
                     />
+                    {/* TICKRA-PHASE-1.2: "Bientôt" badge on unseeded lessons. */}
+                    {!isSeeded(lesson.id) ? (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-line bg-canvas px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+                        <CalendarClock aria-hidden className="h-3 w-3" strokeWidth={2} />
+                        {locale === 'fr' ? 'Bientôt' : 'Soon'}
+                      </span>
+                    ) : null}
                   </Link>
                   <span className="col-span-3 flex items-center justify-end gap-3 md:col-span-3">
                     <LessonPreviewPopover

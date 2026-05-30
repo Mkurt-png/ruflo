@@ -8,6 +8,7 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { PricingTable } from '@/components/pricing/PricingTable';
 import { PricingCompare } from '@/components/pricing/PricingCompare';
+import { PricingReassurance } from '@/components/pricing/PricingReassurance';
 import { TrustBar } from '@/components/pricing/TrustBar';
 
 export const metadata = { title: 'Tarifs · Tickra' };
@@ -40,6 +41,13 @@ export default async function PricingPage({ params }: { params: { locale: string
         <section className="border-b border-line bg-elevated">
           <Container as="div" className="py-16 md:py-20">
             <TrustBar dict={dict} />
+          </Container>
+        </section>
+
+        {/* TICKRA-PHASE-1.3: financial reassurance + pricing FAQ. */}
+        <section className="border-b border-line">
+          <Container as="div" className="py-20 md:py-24">
+            <PricingReassurance locale={params.locale} />
           </Container>
         </section>
 

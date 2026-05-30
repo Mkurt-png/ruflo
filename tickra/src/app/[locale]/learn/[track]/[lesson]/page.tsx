@@ -5,12 +5,13 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { TRACKS, getLesson, getNeighbours, lessonGlobalIndex, totalLessons } from '@/lib/curriculum/data';
-import { getLessonContent } from '@/lib/curriculum/lesson-content';
+import { getLessonContent, isSeeded } from '@/lib/curriculum/lesson-content';
 import { LessonRunner } from '@/components/learn/LessonRunner';
 import { LessonNotes } from '@/components/learn/LessonNotes';
 import { LessonFeedback } from '@/components/learn/LessonFeedback';
 import { PrefetchNeighbours } from '@/components/learn/PrefetchNeighbours';
 import { LessonGate } from '@/components/learn/LessonGate';
+import { ComingSoonCard } from '@/components/learn/ComingSoonCard';
 
 type Params = { locale: string; track: string; lesson: string };
 
@@ -51,6 +52,9 @@ export default async function LessonPage({
   const globalIndex = lessonGlobalIndex(track.slug, lesson.slug);
   const dict = await getDictionary(locale);
   const reviewMode = searchParams?.mode === 'review';
+  // TICKRA-PHASE-1.2: hide unseeded lessons behind a "coming soon" card so we
+  // never show varied-but-generic placeholder content.
+  const seeded = isSeeded(lesson.id);
 
   // Entitlement: free unlocks the first N lessons (computed client-side
   // because cookies() is not available during static generation).
@@ -75,29 +79,41 @@ export default async function LessonPage({
       <main id="main">
         <section className="border-b border-line">
           <Container as="div" className="py-16 md:py-24">
-            <LessonGate
-              locale={locale}
-              globalIndex={globalIndex}
-              freeLessonHref={fallbackFreeHref}
-              unlockedMain={
-                <LessonRunner
-                  locale={locale}
-                  track={track}
-                  lesson={lesson}
-                  content={content}
-                  next={neighbours.next}
-                  globalIndex={globalIndex}
-                  total={totalLessons()}
-                  reviewMode={reviewMode}
-                />
-              }
-              unlockedExtras={
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <LessonNotes lessonId={lesson.id} locale={locale} />
-                  <LessonFeedback lessonId={lesson.id} locale={locale} />
-                </div>
-              }
-            />
+            {seeded ? (
+              <LessonGate
+                locale={locale}
+                globalIndex={globalIndex}
+                freeLessonHref={fallbackFreeHref}
+                unlockedMain={
+                  <LessonRunner
+                    locale={locale}
+                    track={track}
+                    lesson={lesson}
+                    content={content}
+                    next={neighbours.next}
+                    globalIndex={globalIndex}
+                    total={totalLessons()}
+                    reviewMode={reviewMode}
+                  />
+                }
+                unlockedExtras={
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <LessonNotes lessonId={lesson.id} locale={locale} />
+                    <LessonFeedback lessonId={lesson.id} locale={locale} />
+                  </div>
+                }
+              />
+            ) : (
+              <ComingSoonCard
+                locale={locale}
+                trackHref={`/${locale}/learn/${track.slug}`}
+                prevHref={
+                  neighbours.prev
+                    ? `/${locale}/learn/${neighbours.prev.trackSlug}/${neighbours.prev.lesson.slug}`
+                    : null
+                }
+              />
+            )}
           </Container>
         </section>
       </main>
