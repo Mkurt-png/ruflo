@@ -76,10 +76,14 @@ body {
     inset: -10% -5% auto auto;
     width: clamp(280px, 56vw, 720px);
     height: clamp(280px, 56vw, 720px);
+    /* TICKRA-DESIGN: deeper, more saturated hero aurora — adds a third
+       mint glow and bumps opacity so the gradient actually catches the eye
+       instead of looking washed out. */
     background:
-      radial-gradient(closest-side at 35% 35%, rgb(var(--accent) / 0.55), transparent 70%),
-      radial-gradient(closest-side at 70% 60%, rgb(var(--glow) / 0.45), transparent 70%);
-    filter: blur(60px);
+      radial-gradient(closest-side at 35% 35%, rgb(var(--accent) / 0.85), transparent 72%),
+      radial-gradient(closest-side at 70% 60%, rgb(var(--glow) / 0.7), transparent 72%),
+      radial-gradient(closest-side at 50% 90%, rgb(var(--up) / 0.35), transparent 72%);
+    filter: blur(70px);
     pointer-events: none;
     z-index: 0;
     border-radius: 9999px;
@@ -90,6 +94,9 @@ body {
     inset: auto auto -10% -10%;
     width: clamp(220px, 44vw, 560px);
     height: clamp(220px, 44vw, 560px);
+    background:
+      radial-gradient(closest-side at 30% 70%, rgb(var(--brand) / 0.55), transparent 72%),
+      radial-gradient(closest-side at 70% 30%, rgb(var(--up) / 0.4), transparent 72%);
     animation-direction: alternate-reverse;
     animation-duration: 22s;
   }

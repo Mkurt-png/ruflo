@@ -2,11 +2,31 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Mail, AlertTriangle } from 'lucide-react';
+import { ArrowRight, Mail, AlertTriangle, RotateCcw } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { GoogleButton } from './GoogleButton';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
+
+// TICKRA-FIX: human-readable messages per backend error code.
+const errorCopy: Record<string, { fr: string; en: string }> = {
+  expired:        { fr: 'Le lien a expiré. Demandez-en un nouveau.',          en: 'The link expired. Request a new one.' },
+  bad_signature:  { fr: 'Lien invalide ou modifié. Redemandez un lien.',      en: 'Invalid or tampered link. Request a new one.' },
+  malformed_token:{ fr: 'Lien incomplet. Redemandez un lien.',                en: 'Incomplete link. Request a new one.' },
+  bad_encoding:   { fr: 'Lien incomplet. Redemandez un lien.',                en: 'Incomplete link. Request a new one.' },
+  bad_payload:    { fr: 'Lien incomplet. Redemandez un lien.',                en: 'Incomplete link. Request a new one.' },
+  missing_token:  { fr: 'Lien manquant. Redemandez un lien depuis le formulaire.', en: 'Missing token. Request a new link from the form.' },
+  not_configured: { fr: 'Connexion temporairement indisponible. Réessayez.', en: 'Sign-in temporarily unavailable. Try again.' },
+  invalid:        { fr: 'Lien invalide. Redemandez un lien.',                 en: 'Invalid link. Request a new one.' },
+  invalid_state:  { fr: 'Session OAuth invalide. Réessayez.',                 en: 'Invalid OAuth state. Try again.' },
+  oauth_not_configured: { fr: 'Google sign-in non configuré.',                en: 'Google sign-in not configured.' },
+};
+
+function describe(err: string, locale: Locale): string {
+  const entry = errorCopy[err];
+  if (!entry) return err.replace(/_/g, ' ');
+  return entry[locale];
+}
 
 export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const t = dict.signin;
@@ -49,12 +69,28 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
       <p className="mt-4 text-[15.5px] leading-relaxed text-muted">{t.subtitle}</p>
 
       {oauthError ? (
-        <div className="mt-6 flex items-start gap-3 rounded-sm border border-down/40 bg-down/10 p-4">
-          <AlertTriangle aria-hidden className="mt-0.5 h-4 w-4 flex-shrink-0 text-down" strokeWidth={1.75} />
-          <p className="text-[13.5px] leading-relaxed text-ink">
-            {locale === 'fr' ? 'Échec de la connexion' : 'Sign-in failed'} ·{' '}
-            <span className="font-mono text-[12px] text-down">{oauthError}</span>
-          </p>
+        <div className="mt-6 flex flex-col gap-3 rounded-sm border border-down/40 bg-down/10 p-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle aria-hidden className="mt-0.5 h-4 w-4 flex-shrink-0 text-down" strokeWidth={1.75} />
+            <p className="text-[13.5px] leading-relaxed text-ink">
+              {describe(oauthError, locale)}
+            </p>
+          </div>
+          {/* TICKRA-FIX: most magic-link failures (expired/Gmail-prefetch) are
+              fixed by sending a fresh link. Surface a one-tap retry button. */}
+          {oauthError !== 'oauth_not_configured' ? (
+            <button
+              type="button"
+              onClick={() => {
+                setOauthError(null);
+                document.getElementById('email')?.focus();
+              }}
+              className="inline-flex h-9 w-fit items-center gap-2 rounded-full bg-ink px-4 text-[12.5px] font-medium text-canvas hover:brightness-110"
+            >
+              <RotateCcw aria-hidden className="h-3 w-3" strokeWidth={2} />
+              {locale === 'fr' ? 'Recevoir un nouveau lien' : 'Send a new link'}
+            </button>
+          ) : null}
         </div>
       ) : null}
 

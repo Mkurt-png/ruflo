@@ -25,41 +25,47 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(A, B);
 }
 
+// TICKRA-FIX: granular error codes so the signin page can show a human
+// message + a "resend link" button on failure, instead of a generic "invalid".
+const fail = (locale: 'fr' | 'en', reason: string, url: URL) =>
+  NextResponse.redirect(new URL(`/${locale}/signin?error=${encodeURIComponent(reason)}`, url));
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const token = url.searchParams.get('token');
   const locale = url.searchParams.get('locale') === 'fr' ? 'fr' : 'en';
   const secret = process.env.AUTH_SIGNING_SECRET;
 
-  const homeRedirect = NextResponse.redirect(new URL(`/${locale}/signin?error=invalid`, url));
-
-  if (!token || !secret) return homeRedirect;
+  if (!secret) return fail(locale, 'not_configured', url);
+  if (!token) return fail(locale, 'missing_token', url);
 
   const parts = token.split('.');
-  if (parts.length !== 2) return homeRedirect;
+  if (parts.length !== 2) return fail(locale, 'malformed_token', url);
   const [encodedPayload, sig] = parts;
 
   let payload: string;
   try {
     payload = Buffer.from(encodedPayload, 'base64url').toString('utf8');
   } catch {
-    return homeRedirect;
+    return fail(locale, 'bad_encoding', url);
   }
 
   const expected = sign(payload, secret);
-  if (!safeEqual(expected, sig)) return homeRedirect;
+  if (!safeEqual(expected, sig)) return fail(locale, 'bad_signature', url);
 
   // Magic-link payload is `<email>.<expiresAt>.<nonce>`. Emails contain dots,
   // so naive split('.') breaks. Pop the trailing two fields instead.
   const payloadParts = payload.split('.');
-  if (payloadParts.length < 3) return homeRedirect;
+  if (payloadParts.length < 3) return fail(locale, 'bad_payload', url);
   const nonce = payloadParts.pop();
   const expiresAtStr = payloadParts.pop();
   const email = payloadParts.join('.');
   const expiresAt = Number(expiresAtStr);
-  if (!email || !nonce || !Number.isFinite(expiresAt)) return homeRedirect;
-  if (Date.now() / 1000 > expiresAt) {
-    return NextResponse.redirect(new URL(`/${locale}/signin?error=expired`, url));
+  if (!email || !nonce || !Number.isFinite(expiresAt)) return fail(locale, 'bad_payload', url);
+  // TICKRA-FIX: 30s clock-skew tolerance — some servers run slightly ahead
+  // and tripped "expired" right at the boundary on first click.
+  if (Date.now() / 1000 > expiresAt + 30) {
+    return fail(locale, 'expired', url);
   }
 
   // Persist the user row immediately so it appears in Supabase as soon as

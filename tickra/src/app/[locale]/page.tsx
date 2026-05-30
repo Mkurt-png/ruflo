@@ -15,6 +15,7 @@ import { Metrics } from '@/components/sections/Metrics';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { BuiltBy } from '@/components/sections/BuiltBy';
 import { Pricing } from '@/components/sections/Pricing';
+import { SimulatorShowcase } from '@/components/sections/SimulatorShowcase';
 import { Community } from '@/components/sections/Community';
 import { Roadmap } from '@/components/sections/Roadmap';
 import { WallOfWins } from '@/components/sections/WallOfWins';
@@ -45,6 +46,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <Testimonials dict={dict} />
         <BuiltBy dict={dict} />
         <Pricing dict={dict} locale={params.locale} />
+        {/* TICKRA-FEATURE: simulator showcase teasing the Pro paper-trading tool. */}
+        <SimulatorShowcase locale={params.locale} />
         <Community dict={dict} locale={params.locale} />
         <Roadmap dict={dict} />
         {/* TICKRA-PHASE-4: anonymised weekly wall-of-wins, transparent stats. */}
