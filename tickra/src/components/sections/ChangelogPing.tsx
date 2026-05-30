@@ -8,8 +8,8 @@ import { Container } from '@/components/ui/Container';
 import type { Locale } from '@/lib/i18n/config';
 
 const LAST_UPDATE = {
-  fr: '29 mai 2026',
-  en: 'May 29, 2026',
+  fr: '30 mai 2026',
+  en: 'May 30, 2026',
 };
 
 const copy = {
