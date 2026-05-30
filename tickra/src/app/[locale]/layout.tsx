@@ -13,6 +13,7 @@ import { CommandPalette } from '@/components/site/CommandPalette';
 import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
 import { InstallPrompt } from '@/components/site/InstallPrompt';
 import { MobileStickyCta } from '@/components/site/MobileStickyCta';
+import { AskTickra } from '@/components/ai/AskTickra';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -76,6 +77,8 @@ export default async function LocaleLayout({
           href={`/${locale}/onboarding`}
           label={dict.stickyCta.label}
         />
+        {/* TICKRA-PHASE-2.1: floating IA assistant. Hidden on signin/onboarding/welcome. */}
+        <AskTickra locale={locale} />
         <Analytics />
         <CookieBanner
           locale={locale}
