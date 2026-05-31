@@ -35,20 +35,34 @@ function authorise(req: Request): boolean {
 type Contact = { email: string; first_name?: string; unsubscribed?: boolean };
 
 async function listAudienceContacts(audienceId: string): Promise<Contact[]> {
+  // TICKRA-FIX: previously returned only Resend's first page; anyone beyond
+  // ~100 contacts never got the reminder. We try cursor-based pagination
+  // (when Resend's SDK exposes it) and fall back to single-page otherwise.
   try {
     const { Resend } = await import('resend');
     const resend = new Resend(process.env.RESEND_API_KEY!);
-    const res = await resend.contacts.list({ audienceId });
-    if (res.error) return [];
     type ResendContact = { email?: string; first_name?: string; unsubscribed?: boolean };
-    const data = (res.data as { data?: ResendContact[] } | null)?.data ?? [];
-    return data
-      .filter((c) => Boolean(c.email))
-      .map((c) => ({
-        email: c.email!,
-        first_name: c.first_name,
-        unsubscribed: Boolean(c.unsubscribed),
-      }));
+    type ListBody = { data?: ResendContact[]; has_more?: boolean; next?: string } | null;
+    const out: Contact[] = [];
+    let cursor: string | undefined;
+    for (let page = 0; page < 50; page += 1) {
+      const args = (cursor ? { audienceId, cursor } : { audienceId }) as { audienceId: string };
+      const res = await resend.contacts.list(args);
+      if (res.error) break;
+      const body = res.data as ListBody;
+      const data = body?.data ?? [];
+      for (const c of data) {
+        if (!c.email) continue;
+        out.push({
+          email: c.email,
+          first_name: c.first_name,
+          unsubscribed: Boolean(c.unsubscribed),
+        });
+      }
+      if (!body?.has_more || !body?.next) break;
+      cursor = body.next;
+    }
+    return out;
   } catch {
     return [];
   }

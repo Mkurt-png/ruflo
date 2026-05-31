@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { ensureUser, isDbConfigured } from '@/lib/db/queries';
+import { consumeMagicNonce, ensureUser, isDbConfigured } from '@/lib/db/queries';
+
+export const dynamic = 'force-dynamic';
 
 // GET /api/auth/callback?token=…&locale=fr|en
 // Verifies the magic-link token issued by /api/auth/magic-link, sets a session
@@ -68,9 +70,17 @@ export async function GET(req: Request) {
     return fail(locale, 'expired', url);
   }
 
-  // Persist the user row immediately so it appears in Supabase as soon as
-  // someone signs in. Fire-and-forget — login still succeeds even if it fails.
+  // TICKRA-FIX(security): consume the nonce once. If the row was already
+  // marked used (replay), or doesn't exist (e.g. Gmail mailscanner already
+  // tripped it), refuse to log in. When DB is not configured we fall back
+  // to the previous best-effort behaviour so the auth flow still works in
+  // dev — but in production with DB the nonce is single-use.
   if (isDbConfigured()) {
+    const consumed = await consumeMagicNonce(nonce, email);
+    if (!consumed) {
+      return fail(locale, 'expired', url);
+    }
+    // Now safe to ensure the user row.
     ensureUser(email).catch(() => {
       /* swallow */
     });

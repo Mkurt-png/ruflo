@@ -234,7 +234,15 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
       if (submitted || state.status !== 'active') return;
       setSubmitted(true);
       const elapsed = Date.now() - questionStartRef.current;
-      const safeAnswer = Number.isInteger(answer) && answer >= 0 ? answer : 0;
+      // TICKRA-FIX: -1 is a valid sentinel meaning "no answer" (timeout).
+      // Was being coerced to 0 ("option A"), accidentally correct ~25% of
+      // the time. Now we pass -1 through; the server accepts it and the
+      // scoring treats it as a wrong answer with no speed bonus.
+      const safeAnswer = answer === -1
+        ? -1
+        : Number.isInteger(answer) && answer >= 0
+        ? answer
+        : -1;
       try {
         const res = await fetch(`/api/battle/${state.id}`, {
           method: 'POST',
@@ -291,19 +299,13 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
         <div className="mt-6 flex items-center gap-2">
           <input
             readOnly
+            aria-label={locale === 'fr' ? 'Lien d’invitation' : 'Invite link'}
             value={inviteUrl}
             onFocus={(e) => e.currentTarget.select()}
             className="w-full flex-1 truncate rounded-md border border-line bg-canvas px-3 py-2 font-mono text-xs text-ink"
           />
-          <button
-            type="button"
-            onClick={() => {
-              void navigator.clipboard?.writeText(inviteUrl);
-            }}
-            className="rounded-md border border-line bg-canvas px-3 py-2 text-xs font-medium text-ink hover:bg-surface"
-          >
-            {locale === 'fr' ? 'Copier' : 'Copy'}
-          </button>
+          {/* TICKRA-FIX(UX): copy state feedback like BattleJoin. */}
+          <CopyButton text={inviteUrl} locale={locale} />
         </div>
       </div>
     );
@@ -477,6 +479,24 @@ function ScoreCard({
       <p className="mt-1 font-display text-3xl font-medium text-ink">{value}</p>
       {sub ? <p className="mt-1 text-xs text-muted">{sub}</p> : null}
     </div>
+  );
+}
+
+// TICKRA-FIX(UX): copy button with 1.5s "Copied" feedback, mirrors BattleJoin.
+function CopyButton({ text, locale }: { text: string; locale: Locale }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        void navigator.clipboard?.writeText(text);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1500);
+      }}
+      className="rounded-md border border-line bg-canvas px-3 py-2 text-xs font-medium text-ink hover:bg-surface"
+    >
+      {copied ? (locale === 'fr' ? 'Copié' : 'Copied') : locale === 'fr' ? 'Copier' : 'Copy'}
+    </button>
   );
 }
 

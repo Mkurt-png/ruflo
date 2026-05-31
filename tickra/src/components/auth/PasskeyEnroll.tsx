@@ -192,7 +192,7 @@ export default function PasskeyEnroll({ locale = 'en', initialPasskeys }: Props)
           type="button"
           onClick={enroll}
           disabled={busy}
-          className="inline-flex h-10 items-center justify-center rounded-full border border-line bg-surface px-4 text-sm font-medium text-ink transition-colors hover:border-ink disabled:opacity-60"
+          className="inline-flex h-12 items-center gap-2 rounded-full bg-ink px-5 text-sm font-medium tracking-tight text-canvas transition-all hover:-translate-y-0.5 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {busy ? t.enrolling : t.enroll}
         </button>

@@ -272,4 +272,83 @@ export async function listUsersForDailyNotifications(): Promise<Array<{ email: s
   return data as Array<{ email: string; plan: string | null }>;
 }
 
+// ─── Magic-link nonces ───────────────────────────────────────────────────
+
+export async function recordMagicNonce(
+  email: string,
+  nonce: string,
+  expiresAt: number,
+): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  const { error } = await db.from('tickra_magic_nonces').insert({
+    nonce,
+    email,
+    expires_at: new Date(expiresAt * 1000).toISOString(),
+  });
+  return !error;
+}
+
+// Consume returns true exactly once per nonce, false on every other call
+// (including replays, expired, or unknown nonces).
+export async function consumeMagicNonce(
+  nonce: string,
+  email: string,
+): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  const { data, error } = await db
+    .from('tickra_magic_nonces')
+    .update({ used_at: new Date().toISOString() })
+    .eq('nonce', nonce)
+    .eq('email', email)
+    .is('used_at', null)
+    .gt('expires_at', new Date().toISOString())
+    .select('nonce')
+    .maybeSingle();
+  if (error || !data) return false;
+  return true;
+}
+
+// ─── Stripe event idempotency ─────────────────────────────────────────────
+// One row per processed event.id so retries are no-ops.
+
+export async function alreadyProcessedStripeEvent(eventId: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) return false;
+  const { data } = await db
+    .from('tickra_stripe_events')
+    .select('id')
+    .eq('id', eventId)
+    .maybeSingle();
+  return Boolean(data);
+}
+
+export async function markStripeEventProcessed(eventId: string, type: string): Promise<void> {
+  const db = await getDb();
+  if (!db) return;
+  await db.from('tickra_stripe_events').upsert({ id: eventId, type }, { onConflict: 'id' });
+}
+
+// ─── User update (non-creating) ───────────────────────────────────────────
+// Webhook should never CREATE a row from Stripe data alone — only UPDATE
+// existing users. This avoids "gift-pwn" where an attacker provides a
+// victim's email at checkout and creates a Pro row for them.
+
+export async function updateExistingUser(
+  email: string,
+  patch: Partial<TickraUser>,
+): Promise<{ updated: boolean }> {
+  const db = await getDb();
+  if (!db) return { updated: false };
+  const { data, error } = await db
+    .from('tickra_users')
+    .update(patch)
+    .eq('email', email)
+    .select('email')
+    .maybeSingle();
+  if (error || !data) return { updated: false };
+  return { updated: true };
+}
+
 export { isDbConfigured };

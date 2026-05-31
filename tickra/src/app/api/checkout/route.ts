@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server';
+import { getSession } from '@/lib/auth/session';
+import { ensureUser, isDbConfigured } from '@/lib/db/queries';
+
+export const dynamic = 'force-dynamic';
 
 // POST /api/checkout
-// Body: { plan: 'pro' | 'lifetime', cycle?: 'monthly' | 'annual', email?: string, locale?: 'fr' | 'en' }
+// Body: { plan: 'pro' | 'lifetime', cycle?: 'monthly' | 'annual', locale?: 'fr' | 'en' }
+//
+// TICKRA-FIX(security): no longer accepts `email` from the body — we use the
+// session email so an attacker can't pre-fill a victim's address (which
+// previously led to victims receiving Stripe receipts + a Pro row created
+// in their name).
 //
 // Env required to activate:
 //   STRIPE_SECRET_KEY              sk_live_… or sk_test_…
@@ -29,10 +38,16 @@ function resolvePrice(plan: Plan, cycle: Cycle): { price: string; mode: 'subscri
 }
 
 export async function POST(req: Request) {
+  // TICKRA-FIX(security): require an authenticated user. Was unauthenticated
+  // (anyone could create Stripe sessions on behalf of any email).
+  const session = getSession();
+  if (!session) {
+    return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
+  }
+
   const body = (await req.json().catch(() => null)) as {
     plan?: Plan;
     cycle?: Cycle;
-    email?: string;
     locale?: 'fr' | 'en';
   } | null;
 
@@ -41,6 +56,14 @@ export async function POST(req: Request) {
   }
   const cycle: Cycle = body.cycle === 'annual' ? 'annual' : 'monthly';
   const locale = body.locale === 'fr' ? 'fr' : 'en';
+
+  // Make sure the user row exists before Stripe fires the webhook — the
+  // webhook now only UPDATES existing rows, it never creates them.
+  if (isDbConfigured()) {
+    await ensureUser(session.email).catch(() => {
+      /* swallow */
+    });
+  }
 
   const secret = process.env.STRIPE_SECRET_KEY;
   if (!secret) {
@@ -65,10 +88,10 @@ export async function POST(req: Request) {
     const { default: Stripe } = await import('stripe');
     const stripe = new Stripe(secret);
 
-    const session = await stripe.checkout.sessions.create({
+    const checkoutSession = await stripe.checkout.sessions.create({
       mode: resolved.mode,
       line_items: [{ price: resolved.price, quantity: 1 }],
-      customer_email: body.email,
+      customer_email: session.email,
       success_url: `${siteUrl}/${locale}/welcome?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/${locale}/pricing?checkout=cancelled`,
       allow_promotion_codes: true,
@@ -81,15 +104,14 @@ export async function POST(req: Request) {
       metadata: { plan: body.plan, cycle, locale },
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ url: checkoutSession.url });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error';
-    // Echo the message in the response so the front-end toast can show
-    // exactly what Stripe complained about — much faster to diagnose than
-    // a generic "stripe error".
+    // TICKRA-FIX(security): log the full Stripe error server-side but only
+    // surface a generic message to the client (was echoing internals).
     console.error('[checkout] stripe error', message);
     return NextResponse.json(
-      { error: 'stripe_error', detail: message, hint: message },
+      { error: 'stripe_error', hint: 'checkout temporarily unavailable' },
       { status: 502 },
     );
   }

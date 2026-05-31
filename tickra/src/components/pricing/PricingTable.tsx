@@ -25,7 +25,7 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ plan: planId, cycle, locale, email: user?.email }),
+        body: JSON.stringify({ plan: planId, cycle, locale }),
       });
       const data = (await res.json()) as { url?: string; error?: string; hint?: string };
       if (data.url) {

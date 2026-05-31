@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
-import { updateUser, getUserByStripeCustomer } from '@/lib/db/queries';
+import {
+  updateUser,
+  getUserByStripeCustomer,
+  alreadyProcessedStripeEvent,
+  markStripeEventProcessed,
+  updateExistingUser,
+} from '@/lib/db/queries';
 import { sendEmail, FROM } from '@/lib/email/resend';
 import { SITE_URL } from '@/lib/site-url';
 
@@ -72,6 +78,12 @@ export async function POST(req: Request) {
 
     const event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
 
+    // TICKRA-FIX(security): Stripe retries — drop duplicate event.id so
+    // we don't re-apply state transitions on a flaky network.
+    if (await alreadyProcessedStripeEvent(event.id)) {
+      return NextResponse.json({ received: true, idempotent: true });
+    }
+
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
@@ -85,7 +97,10 @@ export async function POST(req: Request) {
         if (plan) patch.plan = plan;
         if (cycle) patch.cycle = cycle === 'monthly' || cycle === 'annual' ? cycle : null;
         if (plan === 'lifetime') patch.cycle = 'once';
-        await updateUser(email, patch);
+        // TICKRA-FIX(security): UPDATE only — never create a user row from
+        // a Stripe webhook. /api/checkout now requires an authenticated
+        // session, so the row must already exist.
+        await updateExistingUser(email, patch);
 
         // Fire-and-forget welcome email (Resend). Locale is stored in
         // metadata at checkout time so we can localise.
@@ -119,7 +134,7 @@ export async function POST(req: Request) {
         const periodEndSeconds =
           (sub.items?.data?.[0] as { current_period_end?: number } | undefined)?.current_period_end ??
           null;
-        await updateUser(email, {
+        await updateExistingUser(email, {
           plan: sub.status === 'active' || sub.status === 'trialing' ? 'pro' : 'free',
           current_period_end: periodEndSeconds ? new Date(periodEndSeconds * 1000).toISOString() : null,
         });
@@ -129,7 +144,7 @@ export async function POST(req: Request) {
         const sub = event.data.object;
         const email = await emailForCustomer(typeof sub.customer === 'string' ? sub.customer : null);
         if (!email) break;
-        await updateUser(email, { plan: 'free', current_period_end: null });
+        await updateExistingUser(email, { plan: 'free', current_period_end: null });
         break;
       }
       case 'invoice.payment_failed': {
@@ -140,6 +155,9 @@ export async function POST(req: Request) {
       default:
         break;
     }
+
+    // Mark this event processed (idempotency log).
+    await markStripeEventProcessed(event.id, event.type);
 
     return NextResponse.json({ received: true });
   } catch (err) {

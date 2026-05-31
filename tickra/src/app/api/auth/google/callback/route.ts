@@ -66,7 +66,12 @@ export async function GET(req: Request) {
       headers: { authorization: `Bearer ${tokenJson.access_token}` },
     });
     if (!userRes.ok) return fail('userinfo_failed');
-    const user = (await userRes.json()) as { email?: string };
+    // TICKRA-FIX(security): UserInfo returns whatever Google says — but we
+    // must also confirm the email is verified, otherwise an attacker with a
+    // misconfigured external IdP federation could hand us an email that they
+    // don't actually own. `email_verified` is a documented Google field.
+    const user = (await userRes.json()) as { email?: string; email_verified?: boolean };
+    if (!user.email_verified) return fail('email_not_verified');
     userEmail = user.email ?? null;
   } catch {
     return fail('oauth_network_error');

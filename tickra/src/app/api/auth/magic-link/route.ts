@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createHmac, randomBytes } from 'node:crypto';
 import { FROM, sendEmail } from '@/lib/email/resend';
+import { isDbConfigured, recordMagicNonce } from '@/lib/db/queries';
+
+export const dynamic = 'force-dynamic';
 
 // POST /api/auth/magic-link   { email, locale? }
 //
@@ -43,6 +46,14 @@ export async function POST(req: Request) {
   const payload = `${email}.${expiresAt}.${nonce}`;
   const sig = sign(payload, secret);
   const token = `${Buffer.from(payload).toString('base64url')}.${sig}`;
+
+  // TICKRA-FIX(security): persist the nonce so the callback can mark it
+  // consumed (single-use). Without DB this gracefully no-ops — the
+  // callback's consume returns false, which we treat as replay-safe only
+  // when DB is configured. See callback route comment.
+  if (isDbConfigured()) {
+    await recordMagicNonce(email, nonce, expiresAt);
+  }
 
   const url = `${siteUrl}/api/auth/callback?token=${encodeURIComponent(token)}&locale=${locale}`;
 

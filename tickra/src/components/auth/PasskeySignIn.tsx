@@ -81,8 +81,11 @@ export default function PasskeySignIn({ locale = 'en', redirectTo }: Props) {
         return;
       }
       const { options } = (await optsRes.json()) as { options: { allowCredentials?: unknown[] } };
+      // TICKRA-FIX(security): when there are no registered passkeys for
+      // this email, fall through to the generic failure rather than telling
+      // the attacker "no passkey for this email" (which leaks user existence).
       if (!options.allowCredentials || options.allowCredentials.length === 0) {
-        setError(t.noCredentials);
+        setError(t.failed);
         return;
       }
 
@@ -114,8 +117,12 @@ export default function PasskeySignIn({ locale = 'en', redirectTo }: Props) {
 
   return (
     <form onSubmit={submit} className="space-y-3">
-      <label className="block text-sm font-medium text-ink">{t.title}</label>
+      {/* TICKRA-FIX(a11y): label bound to input via htmlFor/id. */}
+      <label htmlFor="passkey-email" className="block text-sm font-medium text-ink">
+        {t.title}
+      </label>
       <input
+        id="passkey-email"
         type="email"
         inputMode="email"
         autoComplete="username webauthn"
