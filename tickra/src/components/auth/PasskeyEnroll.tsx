@@ -84,10 +84,22 @@ export default function PasskeyEnroll({ locale = 'en', initialPasskeys }: Props)
   }, []);
 
   const refresh = useCallback(async () => {
-    // We don't expose a dedicated GET endpoint; reading via register-options
-    // would set a challenge cookie, which we don't want. So we rely on
-    // optimistic list updates from add/remove actions instead.
+    try {
+      const r = await fetch('/api/auth/webauthn/list', { cache: 'no-store' });
+      if (!r.ok) return;
+      const data = (await r.json()) as { passkeys?: PasskeySummary[] };
+      if (data.passkeys) setList(data.passkeys);
+    } catch {
+      /* swallow */
+    }
   }, []);
+
+  // TICKRA-FIX: fetch the list on mount if not provided by the server.
+  useEffect(() => {
+    if (!initialPasskeys || initialPasskeys.length === 0) {
+      refresh();
+    }
+  }, [initialPasskeys, refresh]);
 
   const enroll = useCallback(async () => {
     setBusy(true);

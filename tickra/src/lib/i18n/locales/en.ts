@@ -12,6 +12,7 @@ const en = {
     about: 'About',
     simulator: 'Simulator',
     communityLink: 'Community',
+    battle: 'Battle',
   },
   hero: {
     eyebrow: 'A structured path · From candle 1',

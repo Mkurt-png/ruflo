@@ -93,6 +93,7 @@ export function MobileMenu({ dict, locale, links }: Props) {
                   </p>
                   {[
                     { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
+                    { href: `/${locale}/battle`, label: dict.nav.battle },
                     { href: `/${locale}/community`, label: dict.nav.communityLink },
                     { href: `/${locale}/editorial`, label: dict.nav.editorial },
                     { href: `/${locale}/glossary`, label: dict.nav.glossary },

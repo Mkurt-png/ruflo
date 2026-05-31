@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { AlertTriangle, Check, CreditCard, Download, ExternalLink, Key, LogOut, Save, Shield, User } from 'lucide-react';
 import { toast } from '@/components/site/ToastProvider';
 import { cn } from '@/lib/cn';
+import PasskeyEnroll from '@/components/auth/PasskeyEnroll';
 
 type Locale = 'fr' | 'en';
 
@@ -421,6 +422,11 @@ export function SettingsPanel({ locale, email }: { locale: Locale; email: string
               {t.managePassword}
               <ExternalLink aria-hidden className="h-3.5 w-3.5" strokeWidth={1.6} />
             </a>
+          </div>
+
+          {/* TICKRA-PHASE-2.7: Passkeys (Web Authn) — biometric login. */}
+          <div className="rounded-sm border border-line bg-canvas p-4">
+            <PasskeyEnroll locale={locale} />
           </div>
 
           <ActionRow>

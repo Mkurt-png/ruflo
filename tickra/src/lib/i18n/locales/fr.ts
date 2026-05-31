@@ -12,6 +12,7 @@ const fr = {
     about: 'À propos',
     simulator: 'Simulateur',
     communityLink: 'Communauté',
+    battle: 'Battle',
   },
   hero: {
     eyebrow: 'Un parcours structuré · Depuis la bougie 1',

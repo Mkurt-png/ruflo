@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Mail, AlertTriangle, RotateCcw } from 'lucide-react';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { GoogleButton } from './GoogleButton';
+import PasskeySignIn from './PasskeySignIn';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -142,6 +143,15 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
             <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
           </button>
           </form>
+          {/* TICKRA-PHASE-2.7: Passkeys (Web Authn) — biometric sign-in. */}
+          <div className="my-7 flex items-center gap-4">
+            <span aria-hidden className="h-px flex-1 bg-line" />
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-subtle">
+              {locale === 'fr' ? 'ou via passkey' : 'or via passkey'}
+            </span>
+            <span aria-hidden className="h-px flex-1 bg-line" />
+          </div>
+          <PasskeySignIn locale={locale} />
         </>
       )}
 
