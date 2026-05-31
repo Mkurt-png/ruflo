@@ -59,7 +59,13 @@ export async function POST() {
 
   const battle = await createBattle(session.email, questions);
   if (!battle) {
-    return NextResponse.json({ error: 'create_failed' }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'create_failed',
+        hint: 'Migration 006_battles.sql may not be applied yet. See server logs.',
+      },
+      { status: 500 },
+    );
   }
 
   return NextResponse.json({ id: battle.id, joinUrl: `/battle/${battle.id}` });

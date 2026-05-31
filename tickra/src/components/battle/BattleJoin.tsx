@@ -61,8 +61,32 @@ export function BattleJoin(props: Props) {
     setErr(null);
     try {
       const res = await fetch('/api/battle/create', { method: 'POST' });
-      const data = await res.json();
+      const data = (await res.json().catch(() => null)) as { id?: string; error?: string } | null;
       if (!res.ok) {
+        // TICKRA-FIX: surface the real backend reason so we can diagnose.
+        const reason = data?.error ?? 'unknown';
+        const human =
+          reason === 'pro_required'
+            ? props.locale === 'fr'
+              ? 'Réservé aux abonnés Pro/Lifetime.'
+              : 'Pro/Lifetime only.'
+            : reason === 'unauthorized'
+            ? props.locale === 'fr'
+              ? 'Connectez-vous.'
+              : 'Sign in first.'
+            : reason === 'db_unavailable'
+            ? props.locale === 'fr'
+              ? 'Base indisponible. Réessayez plus tard.'
+              : 'DB unavailable. Try later.'
+            : reason === 'no_content'
+            ? props.locale === 'fr'
+              ? 'Pas de questions disponibles.'
+              : 'No questions available.'
+            : `${t.error} (${reason})`;
+        setErr(human);
+        return;
+      }
+      if (!data?.id) {
         setErr(t.error);
         return;
       }

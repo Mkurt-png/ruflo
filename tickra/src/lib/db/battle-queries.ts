@@ -56,7 +56,13 @@ export async function createBattle(
     })
     .select('*')
     .single();
-  if (error || !data) return null;
+  if (error || !data) {
+    // TICKRA-FIX: log the real Supabase error so we can debug. Common causes:
+    // table missing, pgcrypto extension not enabled (gen_random_uuid), RLS
+    // policy misconfigured, jsonb column mismatch.
+    if (error) console.error('[createBattle] supabase error', error);
+    return null;
+  }
   return data as Battle;
 }
 

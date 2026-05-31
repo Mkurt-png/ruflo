@@ -2,21 +2,27 @@
 
 // TICKRA-SPRINT-B: TradingView advanced-chart embed (free, no API key).
 // Re-mounts the script when the symbol changes so the chart hot-swaps.
+// TICKRA-FIX: detect when the iframe never paints (ad-blocker, CSP, etc.)
+// and surface a fallback instead of an eternal spinner.
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { AlertTriangle } from 'lucide-react';
 
 export function TradingViewWidget({ symbol }: { symbol: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
     const container = ref.current;
     if (!container) return;
     container.innerHTML = '';
+    setBlocked(false);
 
     const script = document.createElement('script');
     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
     script.async = true;
     script.type = 'text/javascript';
+    script.onerror = () => setBlocked(true);
     script.innerHTML = JSON.stringify({
       autosize: true,
       symbol,
@@ -38,14 +44,42 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
     });
     container.appendChild(script);
 
+    // Fallback: if no iframe has been injected in 8s, assume blocked.
+    const t = window.setTimeout(() => {
+      const hasIframe = container.querySelector('iframe');
+      if (!hasIframe) setBlocked(true);
+    }, 8000);
+
     return () => {
+      window.clearTimeout(t);
       container.innerHTML = '';
     };
   }, [symbol]);
 
   return (
-    <div className="tradingview-widget-container h-[420px] w-full" ref={ref}>
+    <div className="relative tradingview-widget-container h-[420px] w-full" ref={ref}>
       <div className="tradingview-widget-container__widget h-full w-full" />
+      {blocked ? (
+        <div className="absolute inset-0 flex items-center justify-center bg-canvas/95 p-6 text-center">
+          <div>
+            <AlertTriangle aria-hidden className="mx-auto h-6 w-6 text-down" strokeWidth={1.75} />
+            <p className="mt-3 text-sm text-ink">
+              Le graphique TradingView n’a pas pu charger.
+            </p>
+            <p className="mt-1 text-xs text-muted">
+              Souvent un bloqueur de publicité ou une restriction réseau. Désactivez-le pour ce site, ou ouvrez TradingView directement.
+            </p>
+            <a
+              href={`https://www.tradingview.com/chart/?symbol=${encodeURIComponent(symbol)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex h-9 items-center rounded-full bg-ink px-4 text-xs font-medium text-canvas hover:brightness-110"
+            >
+              Ouvrir sur TradingView
+            </a>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
