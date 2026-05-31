@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createHmac } from 'node:crypto';
 import { ensureUser, isDbConfigured } from '@/lib/db/queries';
+import { attachReferrer } from '@/lib/db/referral-queries';
+
+const REF_COOKIE = 'tickra-ref';
 
 // GET /api/auth/google/callback?code=…&state=…
 //
@@ -88,6 +91,14 @@ export async function GET(req: Request) {
     });
   }
 
+  // Referral wiring: consume tickra-ref cookie (set by /[locale]/r/[slug]).
+  // Wait on ensureUser before attach so the FK resolves.
+  const refSlug = parseCookie(cookie, REF_COOKIE);
+  if (refSlug && isDbConfigured()) {
+    await ensureUser(userEmail).catch(() => undefined);
+    await attachReferrer(userEmail, refSlug).catch(() => undefined);
+  }
+
   // Set the same signed session cookie as the magic-link flow.
   const sessionPayload = `${userEmail}.${Math.floor(Date.now() / 1000) + COOKIE_TTL_SECONDS}`;
   const sig = sign(sessionPayload, signingSecret);
@@ -106,6 +117,10 @@ export async function GET(req: Request) {
     path: '/api/auth/google',
     maxAge: 0,
   });
+  // Clear referral cookie once consumed.
+  if (refSlug) {
+    redirect.cookies.set(REF_COOKIE, '', { path: '/', maxAge: 0 });
+  }
   return redirect;
 }
 

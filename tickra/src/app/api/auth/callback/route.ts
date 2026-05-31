@@ -1,6 +1,18 @@
 import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { consumeMagicNonce, ensureUser, isDbConfigured } from '@/lib/db/queries';
+import { attachReferrer } from '@/lib/db/referral-queries';
+
+const REF_COOKIE = 'tickra-ref';
+
+function readCookie(header: string | null, name: string): string | null {
+  if (!header) return null;
+  for (const part of header.split(';')) {
+    const [k, ...v] = part.trim().split('=');
+    if (k === name) return decodeURIComponent(v.join('='));
+  }
+  return null;
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -86,6 +98,15 @@ export async function GET(req: Request) {
     });
   }
 
+  // Referral wiring: if a tickra-ref cookie is present, attach inviter to
+  // this (potentially brand-new) user once. Ensure the user row exists first
+  // so the FK in tickra_referrals resolves.
+  const refSlug = readCookie(req.headers.get('cookie'), REF_COOKIE);
+  if (refSlug && isDbConfigured()) {
+    await ensureUser(email).catch(() => undefined);
+    await attachReferrer(email, refSlug).catch(() => undefined);
+  }
+
   // Set a signed session marker. Replace with a real session ID from your store.
   const sessionPayload = `${email}.${Math.floor(Date.now() / 1000) + COOKIE_TTL_SECONDS}`;
   const sessionSig = sign(sessionPayload, secret);
@@ -101,5 +122,9 @@ export async function GET(req: Request) {
     path: '/',
     maxAge: COOKIE_TTL_SECONDS,
   });
+  // Clear referral cookie once consumed.
+  if (refSlug) {
+    redirect.cookies.set(REF_COOKIE, '', { path: '/', maxAge: 0 });
+  }
   return redirect;
 }

@@ -3,15 +3,18 @@
 // TICKRA-SPRINT-B: Paper-trading simulator — gated to Pro/Lifetime users.
 // Self-contained client app:
 //  - TradingView widget for the chart (free embed, no API key).
-//  - Virtual balance + open/closed positions persisted in localStorage so the
-//    user keeps state across sessions until we wire a Supabase table.
+//  - Virtual balance + open/closed positions persisted server-side via the
+//    /api/sim/* routes so the same account follows the user across devices.
+//    localStorage is still used as a write-through optimistic cache to keep
+//    the UI snappy between server round-trips.
 //  - Synthetic price walk per open position so P&L moves realistically without
-//    needing a market-data subscription.
+//    needing a market-data subscription. Every 1.2s the client batches the
+//    latest prices (and any TP/SL closes) up to /api/sim/trade `tick`.
 //
 // Buy/Sell flow: pick symbol, size in lots, stop loss in pips, take profit in
 // pips → opens a position. Auto-closes when SL or TP is hit.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowDownRight, ArrowUpRight, Lock, RotateCcw, TrendingDown, TrendingUp, X } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
@@ -85,6 +88,60 @@ function saveState(s: State): void {
 
 function uid(): string {
   return Math.random().toString(36).slice(2, 10);
+}
+
+// Wire response from /api/sim/state and /api/sim/trade. Matches Position /
+// ClosedPosition exactly except `symbol` is a plain string on the wire.
+type WireState = {
+  balance: number;
+  open: Array<Omit<Position, 'symbol'> & { symbol: string }>;
+  closed: Array<Omit<ClosedPosition, 'symbol'> & { symbol: string }>;
+};
+
+function isKnownSymbol(s: string): s is SymbolKey {
+  return s in SYMBOLS;
+}
+
+function normalizeWire(w: WireState): State {
+  const open: Position[] = w.open
+    .filter((p) => isKnownSymbol(p.symbol))
+    .map((p) => ({ ...p, symbol: p.symbol as SymbolKey }));
+  const closed: ClosedPosition[] = w.closed
+    .filter((c) => isKnownSymbol(c.symbol))
+    .map((c) => ({ ...c, symbol: c.symbol as SymbolKey }));
+  return { balance: w.balance, open, closed };
+}
+
+async function fetchServerState(): Promise<State | null> {
+  try {
+    const res = await fetch('/api/sim/state', { cache: 'no-store' });
+    if (!res.ok) return null;
+    const w = (await res.json()) as WireState;
+    return normalizeWire(w);
+  } catch {
+    return null;
+  }
+}
+
+async function postTrade(body: unknown): Promise<State | null> {
+  try {
+    const res = await fetch('/api/sim/trade', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      // 409 (already-closed) still returns a state for reconciliation.
+      const data = (await res.json().catch(() => null)) as { state?: WireState } | null;
+      if (data?.state) return normalizeWire(data.state);
+      return null;
+    }
+    const data = (await res.json()) as { state?: WireState };
+    if (!data.state) return null;
+    return normalizeWire(data.state);
+  } catch {
+    return null;
+  }
 }
 
 function pnlOf(p: Position): number {
@@ -179,15 +236,48 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
   const [stopPips, setStopPips] = useState<number>(20);
   const [tpPips, setTpPips] = useState<number>(40);
 
+  // Guards concurrent tick posts — if a tick request is still in flight, skip
+  // the next interval rather than pile up requests on a slow connection.
+  const tickInFlight = useRef(false);
+
+  // Optimistic-cache → server-of-record hydration. Show whatever we have in
+  // localStorage immediately, then reconcile with /api/sim/state once it
+  // returns. If the server says something different, the server wins.
   useEffect(() => {
-    setState(loadState());
+    let cancelled = false;
+    const cached = loadState();
+    setState(cached);
     setHydrated(true);
+    (async () => {
+      const server = await fetchServerState();
+      if (cancelled || !server) return;
+      setState(server);
+      saveState(server);
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Synthetic price walk + TP/SL check every 1.2s.
+  // Optimistic: we update React state immediately so the UI feels live, then
+  // batch the price updates (+ any TP/SL-triggered closes) up to the server
+  // via /api/sim/trade `tick`. The server reply replaces local state so a
+  // second device sees the same balance and history.
   useEffect(() => {
     if (!hydrated) return;
     const id = setInterval(() => {
+      // Build the optimistic next state synchronously so React renders
+      // immediately, and capture the diff we need to send to the server.
+      let updates: Array<{ id: string; current: number }> = [];
+      let closedByTpSl: Array<{
+        id: string;
+        closeReason: 'tp' | 'sl';
+        pnl: number;
+        current: number;
+        closedAt: number;
+      }> = [];
+
       setState((prev) => {
         let balance = prev.balance;
         const stillOpen: Position[] = [];
@@ -204,13 +294,18 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
           if (moveFromEntryPips >= next.tpPips) {
             const pnl = next.tpPips * meta.pipValuePerLot * next.size;
             balance += pnl;
-            newlyClosed.push({ ...next, closedAt: Date.now(), closeReason: 'tp', pnl });
+            const closedAt = Date.now();
+            newlyClosed.push({ ...next, closedAt, closeReason: 'tp', pnl });
+            closedByTpSl.push({ id: next.id, closeReason: 'tp', pnl, current: next.current, closedAt });
           } else if (moveFromEntryPips <= -next.stopPips) {
             const pnl = -next.stopPips * meta.pipValuePerLot * next.size;
             balance += pnl;
-            newlyClosed.push({ ...next, closedAt: Date.now(), closeReason: 'sl', pnl });
+            const closedAt = Date.now();
+            newlyClosed.push({ ...next, closedAt, closeReason: 'sl', pnl });
+            closedByTpSl.push({ id: next.id, closeReason: 'sl', pnl, current: next.current, closedAt });
           } else {
             stillOpen.push(next);
+            updates.push({ id: next.id, current: next.current });
           }
         }
 
@@ -228,6 +323,21 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
         if (newlyClosed.length || stillOpen.length) saveState(out);
         return out;
       });
+
+      // Skip if there's nothing to send, or if a prior tick is still in flight.
+      if (updates.length === 0 && closedByTpSl.length === 0) return;
+      if (tickInFlight.current) return;
+      tickInFlight.current = true;
+      void postTrade({ action: 'tick', updates, closedByTpSl })
+        .then((server) => {
+          if (server) {
+            setState(server);
+            saveState(server);
+          }
+        })
+        .finally(() => {
+          tickInFlight.current = false;
+        });
     }, 1200);
     return () => clearInterval(id);
   }, [hydrated]);
@@ -255,6 +365,8 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
 
   const openTrade = (side: Side) => {
     const entry = symbolMeta.price + (Math.random() - 0.5) * 4 * symbolMeta.pip;
+    // Optimistic id — the server will issue the real UUID and we'll reconcile
+    // it when the response comes back.
     const pos: Position = {
       id: uid(),
       symbol,
@@ -271,13 +383,30 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
       saveState(out);
       return out;
     });
+    void postTrade({
+      action: 'open',
+      symbol,
+      side,
+      size,
+      entry,
+      stopPips,
+      tpPips,
+    }).then((server) => {
+      if (server) {
+        setState(server);
+        saveState(server);
+      }
+    });
   };
 
   const closeManual = (id: string) => {
+    let pnl = 0;
+    let current = 0;
     setState((prev) => {
       const p = prev.open.find((x) => x.id === id);
       if (!p) return prev;
-      const pnl = pnlOf(p);
+      pnl = pnlOf(p);
+      current = p.current;
       const closed: ClosedPosition = { ...p, closedAt: Date.now(), closeReason: 'manual', pnl };
       const out: State = {
         balance: prev.balance + pnl,
@@ -290,12 +419,35 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
       window.dispatchEvent(new Event('tickra-xp-changed'));
       return out;
     });
+    // The optimistic id may be a local `uid()` from before the server reply
+    // landed. In that case the server will return 409 and the reconciliation
+    // state will simply re-add the open trade for us. Once the server-issued
+    // UUID is in state, subsequent close calls will succeed.
+    void postTrade({
+      action: 'close',
+      id,
+      closeReason: 'manual',
+      pnl,
+      current,
+      closedAt: Date.now(),
+    }).then((server) => {
+      if (server) {
+        setState(server);
+        saveState(server);
+      }
+    });
   };
 
   const reset = () => {
     if (!window.confirm(t.resetConfirm)) return;
     setState(INITIAL);
     saveState(INITIAL);
+    void postTrade({ action: 'reset' }).then((server) => {
+      if (server) {
+        setState(server);
+        saveState(server);
+      }
+    });
   };
 
   if (!ready) return <div className="h-[60vh]" aria-hidden />;

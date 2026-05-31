@@ -18,6 +18,7 @@ import { DailyChallenge } from './DailyChallenge';
 import { DailyQuests } from './DailyQuests';
 import { XpBadge } from './XpBadge';
 import { CommunityPanel } from './CommunityPanel';
+import { ReferralCard } from './ReferralCard';
 import { ReviewBanner } from './ReviewBanner';
 import { WeeklyPlan } from './WeeklyPlan';
 import { ExportProgress } from './ExportProgress';
@@ -181,6 +182,11 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
         {/* TICKRA-PHASE-4: community CTA + charter link. */}
         <div className="mt-3">
           <CommunityPanel locale={locale} />
+        </div>
+
+        {/* TICKRA-PHASE-4: referral program — Pro+ gets a unique invite link. */}
+        <div className="mt-3">
+          <ReferralCard locale={locale} />
         </div>
 
         <div className="mt-3">

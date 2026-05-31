@@ -5,7 +5,9 @@ import {
   alreadyProcessedStripeEvent,
   markStripeEventProcessed,
   updateExistingUser,
+  getUser,
 } from '@/lib/db/queries';
+import { markReferralConverted } from '@/lib/db/referral-queries';
 import { sendEmail, FROM } from '@/lib/email/resend';
 import { SITE_URL } from '@/lib/site-url';
 
@@ -102,6 +104,21 @@ export async function POST(req: Request) {
         // session, so the row must already exist.
         await updateExistingUser(email, patch);
 
+        // Referral conversion: if this user was invited and the referral
+        // is still pending, flip it to converted (which also credits the
+        // inviter +30 reward_days_pending). Idempotent via the
+        // alreadyProcessedStripeEvent guard above + markReferralConverted's
+        // status='pending' filter.
+        try {
+          const user = await getUser(email);
+          const referredBy = (user as { referred_by_slug?: string | null } | null)?.referred_by_slug;
+          if (referredBy) {
+            await markReferralConverted(email);
+          }
+        } catch {
+          /* swallow — never fail the webhook on referral wiring */
+        }
+
         // Fire-and-forget welcome email (Resend). Locale is stored in
         // metadata at checkout time so we can localise.
         const meta = session.metadata as Record<string, string | undefined> | null;
@@ -138,6 +155,17 @@ export async function POST(req: Request) {
           plan: sub.status === 'active' || sub.status === 'trialing' ? 'pro' : 'free',
           current_period_end: periodEndSeconds ? new Date(periodEndSeconds * 1000).toISOString() : null,
         });
+
+        // TODO(referral/phase-4): apply reward_days_pending + welcome_bonus_pending
+        // to the Stripe subscription. Two viable implementations once Live mode is on:
+        //   1) stripe.customers.createBalanceTransaction(customerId, {
+        //        amount: -(days * dailyPriceCents), currency: 'cad'
+        //      }) — credits the next invoice. Simplest, no period math.
+        //   2) Extend current_period_end via the subscription's trial_end /
+        //      proration_behavior=none on the next renewal item update.
+        // For v1 we only RECORD the credit (already stored on the user row) and
+        // surface it to the user via ReferralCard. Do NOT zero the counters here
+        // until we actually apply them to billing — otherwise the credit is lost.
         break;
       }
       case 'customer.subscription.deleted': {
