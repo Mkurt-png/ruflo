@@ -57,7 +57,11 @@ export async function POST(req: Request) {
   }
   const quota = await consumeAiQuota(email, plan);
   if (!quota.ok) {
-    return NextResponse.json({ error: 'quota_exceeded' }, { status: 429 });
+    if (quota.reason === 'quota_exceeded') {
+      return NextResponse.json({ error: 'quota_exceeded' }, { status: 429 });
+    }
+    // db_unavailable → fail closed instead of granting unlimited calls.
+    return NextResponse.json({ error: 'db_unavailable' }, { status: 503 });
   }
 
   // Build the system prompt with optional context.

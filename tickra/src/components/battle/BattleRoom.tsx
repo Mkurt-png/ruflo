@@ -105,13 +105,24 @@ async function getRealtimeClient() {
 export function BattleRoom({ locale, viewerEmail, initial }: Props) {
   const t = copy[locale];
   const router = useRouter();
-  const [state, setState] = useState<BattleState>(initial);
+  const [state, setStateRaw] = useState<BattleState>(initial);
   const [pendingAnswer, setPendingAnswer] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(QUESTION_MS);
   const [realtimeOk, setRealtimeOk] = useState(false);
+  // Keep statusRef in sync with state on every set.
+  const setState = useCallback((next: BattleState | ((prev: BattleState) => BattleState)) => {
+    setStateRaw((prev) => {
+      const out = typeof next === 'function' ? (next as (p: BattleState) => BattleState)(prev) : next;
+      statusRef.current = out.status;
+      return out;
+    });
+  }, []);
   const questionStartRef = useRef<number>(Date.now());
   const lastIndexRef = useRef<number>(initial.currentIndex);
+  // TICKRA-FIX: ref kept in sync with state.status so the poll interval
+  // sees current status instead of a stale closure.
+  const statusRef = useRef<BattleState['status']>(initial.status);
 
   const isHost = state.hostEmail === viewerEmail;
   const youKey = isHost ? 'hostAnswers' : 'guestAnswers';
@@ -185,9 +196,10 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
       } else {
         setRealtimeOk(false);
       }
-      // Always poll lightly as safety net (2s).
+      // TICKRA-FIX: read status through a ref to avoid the stale closure
+      // bug where the poll kept ticking forever after `finished`.
       pollTimer = setInterval(() => {
-        if (state.status !== 'finished') void refresh();
+        if (statusRef.current !== 'finished') void refresh();
       }, 2000);
     })();
 

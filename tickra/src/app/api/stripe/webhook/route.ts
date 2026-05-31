@@ -102,6 +102,20 @@ export async function POST(req: Request) {
         const sub = event.data.object;
         const email = await emailForCustomer(typeof sub.customer === 'string' ? sub.customer : null);
         if (!email) break;
+        // TICKRA-FIX(security): only grant Pro if the subscription's price
+        // matches one of our configured Pro price IDs. Was over-granting Pro
+        // on any active subscription tied to the customer (incl. trials, gift
+        // products, anything else they ever bought).
+        const priceId =
+          (sub.items?.data?.[0] as { price?: { id?: string } } | undefined)?.price?.id ?? null;
+        const expected = [
+          process.env.STRIPE_PRICE_PRO_MONTHLY,
+          process.env.STRIPE_PRICE_PRO_ANNUAL,
+        ].filter(Boolean) as string[];
+        if (priceId && !expected.includes(priceId)) {
+          // Not our Pro price → ignore. Don't change the user's plan.
+          break;
+        }
         const periodEndSeconds =
           (sub.items?.data?.[0] as { current_period_end?: number } | undefined)?.current_period_end ??
           null;

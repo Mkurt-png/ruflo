@@ -133,7 +133,7 @@ export default function PasskeySignIn({ locale = 'en', redirectTo }: Props) {
         {busy ? t.submitting : t.submit}
       </button>
       {!supported ? <p className="text-xs text-muted">{t.unsupported}</p> : null}
-      {error ? <p className="text-xs text-red-600">{error}</p> : null}
+      {error ? <p className="text-xs text-down">{error}</p> : null}
     </form>
   );
 }

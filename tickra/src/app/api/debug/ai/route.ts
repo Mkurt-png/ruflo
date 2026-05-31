@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { completeChat } from '@/lib/ai/client';
+import { isDebugAuthorised } from '@/lib/debug/gate';
 
 // Per-request: env vars change between deploys.
 export const dynamic = 'force-dynamic';
@@ -7,7 +8,11 @@ export const dynamic = 'force-dynamic';
 // GET /api/debug/ai
 // Real probe: sends a tiny 1-token request to Anthropic and returns the
 // exact result so we can diagnose configuration issues. Leaks no key.
-export async function GET() {
+// TICKRA-FIX(security): gated — production callers must present
+// `x-debug-token: $DEBUG_TOKEN` (otherwise anyone could burn the budget).
+export async function GET(req: Request) {
+  const gate = isDebugAuthorised(req);
+  if (!gate.ok) return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   const present = typeof process.env.ANTHROPIC_API_KEY === 'string';
   const model = process.env.ANTHROPIC_MODEL ?? 'claude-3-5-haiku-20241022';
   const keyPrefix = present

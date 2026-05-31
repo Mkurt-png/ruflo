@@ -10,22 +10,21 @@ import { LessonRunner } from '@/components/learn/LessonRunner';
 import { LessonNotes } from '@/components/learn/LessonNotes';
 import { LessonFeedback } from '@/components/learn/LessonFeedback';
 import { PrefetchNeighbours } from '@/components/learn/PrefetchNeighbours';
-import { LessonGate } from '@/components/learn/LessonGate';
+import { PaywallCard } from '@/components/learn/PaywallCard';
 import { ComingSoonCard } from '@/components/learn/ComingSoonCard';
+import { getCurrentPlan } from '@/lib/auth/server-plan';
+import { isLessonUnlocked } from '@/lib/curriculum/entitlement';
+
+// TICKRA-FIX(security): server-render only — was leaking full Pro lesson
+// content into the SSR payload for unauthenticated users (paywall was client-
+// only). Forcing dynamic so cookies() is available and we can gate server-side.
+export const dynamic = 'force-dynamic';
 
 type Params = { locale: string; track: string; lesson: string };
 
-export async function generateStaticParams() {
-  const params: Params[] = [];
-  for (const l of locales) {
-    for (const t of TRACKS) {
-      for (const lsn of t.lessons) {
-        params.push({ locale: l, track: t.slug, lesson: lsn.slug });
-      }
-    }
-  }
-  return params;
-}
+// TICKRA-FIX(security): no static params — paywalled pages must be SSR per
+// request to read the session cookie. `locales` import kept for future use.
+void locales;
 
 export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
@@ -47,17 +46,18 @@ export default async function LessonPage({
   const found = getLesson(params.track, params.lesson);
   if (!found) notFound();
   const { track, lesson } = found;
-  const content = getLessonContent(track, lesson);
   const neighbours = getNeighbours(track.slug, lesson.slug);
   const globalIndex = lessonGlobalIndex(track.slug, lesson.slug);
   const dict = await getDictionary(locale);
   const reviewMode = searchParams?.mode === 'review';
-  // TICKRA-PHASE-1.2: hide unseeded lessons behind a "coming soon" card so we
-  // never show varied-but-generic placeholder content.
   const seeded = isSeeded(lesson.id);
 
-  // Entitlement: free unlocks the first N lessons (computed client-side
-  // because cookies() is not available during static generation).
+  // TICKRA-FIX(security): server-side entitlement check — Pro lesson content
+  // is never serialised into the payload for non-paying users.
+  const { email, plan } = await getCurrentPlan();
+  const unlocked = isLessonUnlocked(globalIndex, plan);
+  const content = unlocked ? getLessonContent(track, lesson) : null;
+
   const firstFreeLesson = TRACKS[0]?.lessons[0];
   const fallbackFreeHref = firstFreeLesson
     ? `/${locale}/learn/${TRACKS[0].slug}/${firstFreeLesson.slug}`
@@ -79,31 +79,7 @@ export default async function LessonPage({
       <main id="main">
         <section className="border-b border-line">
           <Container as="div" className="py-16 md:py-24">
-            {seeded ? (
-              <LessonGate
-                locale={locale}
-                globalIndex={globalIndex}
-                freeLessonHref={fallbackFreeHref}
-                unlockedMain={
-                  <LessonRunner
-                    locale={locale}
-                    track={track}
-                    lesson={lesson}
-                    content={content}
-                    next={neighbours.next}
-                    globalIndex={globalIndex}
-                    total={totalLessons()}
-                    reviewMode={reviewMode}
-                  />
-                }
-                unlockedExtras={
-                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                    <LessonNotes lessonId={lesson.id} locale={locale} />
-                    <LessonFeedback lessonId={lesson.id} locale={locale} />
-                  </div>
-                }
-              />
-            ) : (
+            {!seeded ? (
               <ComingSoonCard
                 locale={locale}
                 trackHref={`/${locale}/learn/${track.slug}`}
@@ -113,6 +89,29 @@ export default async function LessonPage({
                     : null
                 }
               />
+            ) : !unlocked || !content ? (
+              <PaywallCard
+                locale={locale}
+                signedIn={Boolean(email)}
+                freeLessonHref={fallbackFreeHref}
+              />
+            ) : (
+              <>
+                <LessonRunner
+                  locale={locale}
+                  track={track}
+                  lesson={lesson}
+                  content={content}
+                  next={neighbours.next}
+                  globalIndex={globalIndex}
+                  total={totalLessons()}
+                  reviewMode={reviewMode}
+                />
+                <div className="mt-12 grid grid-cols-1 gap-3 md:mt-16 md:grid-cols-2">
+                  <LessonNotes lessonId={lesson.id} locale={locale} />
+                  <LessonFeedback lessonId={lesson.id} locale={locale} />
+                </div>
+              </>
             )}
           </Container>
         </section>

@@ -77,6 +77,16 @@ export function AskTickra({ locale }: { locale: Locale }) {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, pending]);
 
+  // TICKRA-FIX(UX): close on Escape while the panel is open.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
   // Hide on signin/onboarding/welcome to avoid covering critical CTAs.
   const hidden =
     pathname.includes('/signin') ||
@@ -152,8 +162,19 @@ export function AskTickra({ locale }: { locale: Locale }) {
 
       {/* Panel */}
       {open ? (
-        <div className="fixed inset-0 z-50 flex items-end justify-end bg-ink/40 backdrop-blur-sm md:items-end md:p-6">
-          <div className="flex h-full w-full flex-col rounded-t-sm border border-line bg-surface text-ink shadow-2xl md:h-[640px] md:max-h-[80vh] md:w-[440px] md:rounded-sm">
+        // TICKRA-FIX(UX): backdrop click closes; Escape closes via effect below.
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-end bg-ink/40 backdrop-blur-sm md:items-end md:p-6"
+          onClick={() => setOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="flex h-full w-full flex-col rounded-t-sm border border-line bg-surface text-ink shadow-2xl md:h-[640px] md:max-h-[80vh] md:w-[440px] md:rounded-sm"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t.title}
+          >
             <header className="flex items-center justify-between border-b border-line px-5 py-4">
               <div>
                 <div className="inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">

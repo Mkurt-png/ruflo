@@ -94,9 +94,14 @@ export async function generateRegistrationOptions(args: {
   if (!mod) return null;
   const { rpID, rpName } = getRpConfig();
 
-  // userID for WebAuthn must be a stable opaque byte sequence per user. The
-  // email is stable enough for our use case; we hash-free encode it.
-  const userID = new TextEncoder().encode(args.email);
+  // TICKRA-FIX: WebAuthn requires userID ≤ 64 bytes. Long emails would
+  // silently break before. Hash the lowercased email to a stable 32-byte
+  // buffer so any length email works and casing collisions don't create
+  // distinct user handles on the authenticator.
+  const { createHash } = await import('node:crypto');
+  const userID = new Uint8Array(
+    createHash('sha256').update(args.email.toLowerCase()).digest(),
+  );
 
   const options = await mod.generateRegistrationOptions({
     rpName,

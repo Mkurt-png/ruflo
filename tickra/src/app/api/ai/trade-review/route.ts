@@ -99,7 +99,10 @@ export async function POST(req: Request) {
   }
   const quota = await consumeAiQuota(session.email, plan);
   if (!quota.ok) {
-    return NextResponse.json({ error: 'quota_exceeded' }, { status: 429 });
+    if (quota.reason === 'quota_exceeded') {
+      return NextResponse.json({ error: 'quota_exceeded' }, { status: 429 });
+    }
+    return NextResponse.json({ error: 'db_unavailable' }, { status: 503 });
   }
 
   const result = await completeChat(systemPrompt(locale), [

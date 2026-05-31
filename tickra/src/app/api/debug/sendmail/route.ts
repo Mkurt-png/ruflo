@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server';
 import { sendEmail, FROM } from '@/lib/email/resend';
+import { isDebugAuthorised } from '@/lib/debug/gate';
 
 // Per-request: never cached.
 export const dynamic = 'force-dynamic';
 
 // GET /api/debug/sendmail?to=you@example.com
-// Tries to send a tiny test email via Resend and returns the FULL result so we
-// can see whether the failure is sandbox restrictions, quota, or env vars.
-// Safe to keep public for now — leaks no secrets.
+// TICKRA-FIX(security): gated — was a "spam any address through our Resend"
+// vulnerability. Production callers need `x-debug-token: $DEBUG_TOKEN`.
 export async function GET(req: Request) {
+  const gate = isDebugAuthorised(req);
+  if (!gate.ok) return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   const url = new URL(req.url);
   const to = url.searchParams.get('to') ?? '';
   if (!to.includes('@')) {

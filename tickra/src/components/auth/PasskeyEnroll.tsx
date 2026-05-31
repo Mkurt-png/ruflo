@@ -198,8 +198,8 @@ export default function PasskeyEnroll({ locale = 'en', initialPasskeys }: Props)
         </button>
       )}
 
-      {message ? <p className="text-sm text-emerald-600">{message}</p> : null}
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {message ? <p className="text-sm text-up">{message}</p> : null}
+      {error ? <p className="text-sm text-down">{error}</p> : null}
 
       <ul className="space-y-2">
         {list.length === 0 ? (
@@ -225,7 +225,7 @@ export default function PasskeyEnroll({ locale = 'en', initialPasskeys }: Props)
                 type="button"
                 onClick={() => remove(pk.credential_id)}
                 disabled={removingId === pk.credential_id}
-                className="shrink-0 text-xs font-medium text-red-600 hover:underline disabled:opacity-60"
+                className="shrink-0 text-xs font-medium text-down hover:underline disabled:opacity-60"
               >
                 {removingId === pk.credential_id ? t.removing : t.remove}
               </button>

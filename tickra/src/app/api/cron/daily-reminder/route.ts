@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { FROM, sendEmail } from '@/lib/email/resend';
+import { isDbConfigured, lastNotificationAt, recordNotification } from '@/lib/db/queries';
 
 // GET /api/cron/daily-reminder
 //
@@ -71,10 +72,23 @@ export async function GET(req: Request) {
 
   let sent = 0;
   let failed = 0;
+  let skipped = 0;
+
+  // TICKRA-FIX: per-user idempotence — only send if 20h+ since last send to
+  // the same address. Prevents duplicate emails if the cron fires twice or
+  // is manually triggered the same day.
+  const dbReady = isDbConfigured();
+  const NEARLY_DAY = 20 * 60 * 60 * 1000;
 
   for (const c of active) {
-    // Naive locale guess from common French-speaking TLDs. Replace with a real
-    // preference column when you wire the DB.
+    if (dbReady) {
+      const last = await lastNotificationAt(c.email, 'daily_reminder');
+      if (last && Date.now() - last < NEARLY_DAY) {
+        skipped += 1;
+        continue;
+      }
+    }
+
     const locale: 'fr' | 'en' = /\.(fr|be|ca)$/i.test(c.email) ? 'fr' : 'en';
     const resumeUrl = `${siteUrl}/${locale}/learn`;
     const subject = locale === 'fr' ? SUBJECT_FR : SUBJECT_EN;
@@ -86,9 +100,20 @@ export async function GET(req: Request) {
       : `${greeting}\n\nTen minutes is enough for one lesson. Pick up where you left off:\n${resumeUrl}\n\n— Tickra`;
 
     const r = await sendEmail({ from: FROM, to: c.email, subject, text: body });
-    if (r.ok && 'delivered' in r && r.delivered) sent += 1;
-    else failed += 1;
+    if (r.ok && 'delivered' in r && r.delivered) {
+      sent += 1;
+      if (dbReady) await recordNotification(c.email, 'daily_reminder');
+    } else {
+      failed += 1;
+    }
   }
 
-  return NextResponse.json({ ok: true, audienceSize: contacts.length, active: active.length, sent, failed });
+  return NextResponse.json({
+    ok: true,
+    audienceSize: contacts.length,
+    active: active.length,
+    sent,
+    failed,
+    skipped,
+  });
 }

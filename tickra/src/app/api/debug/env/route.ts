@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
+import { isDebugAuthorised } from '@/lib/debug/gate';
 
 // Per-request: env vars can change between deploys.
 export const dynamic = 'force-dynamic';
 
 // GET /api/_debug/env
-// Returns presence + length only — never the actual values. Safe to leave
-// public for quick diagnostics; remove once everything is wired and verified.
+// TICKRA-FIX(security): gated — production callers need x-debug-token.
 
 function info(name: string) {
   const v = process.env[name];
@@ -16,7 +16,9 @@ function info(name: string) {
   };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  const gate = isDebugAuthorised(req);
+  if (!gate.ok) return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   return NextResponse.json({
     runtime: process.env.VERCEL ? 'vercel' : 'local',
     vercelEnv: process.env.VERCEL_ENV ?? null,

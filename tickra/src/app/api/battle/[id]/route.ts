@@ -12,8 +12,27 @@ export const dynamic = 'force-dynamic';
 
 type Params = { params: { id: string } };
 
-function publicShape(battle: Awaited<ReturnType<typeof getBattle>>) {
-  if (!battle) return null;
+const QUESTION_MAX_MS = 25_000; // 20s window + 5s clock-skew clamp
+
+// TICKRA-FIX(security): two layers of redaction on GET.
+//  1. Anonymous callers (no session) get a tiny "exists?" shape only.
+//  2. Even host/guest get `questions` with `correct` and `rationale` stripped
+//     while the battle is still active. Only after `finished` do we send the
+//     full payload (for review). This closes the answer-key leak.
+type Battle = NonNullable<Awaited<ReturnType<typeof getBattle>>>;
+type Question = Battle['questions'][number];
+
+function stripQuestions(qs: Question[]) {
+  return qs.map((q) => {
+    const { correct: _correct, rationale: _rationale, ...rest } = q as Question & {
+      correct?: number;
+      rationale?: unknown;
+    };
+    return rest;
+  });
+}
+
+function fullShape(battle: Battle) {
   return {
     id: battle.id,
     hostEmail: battle.host_email,
@@ -32,13 +51,50 @@ function publicShape(battle: Awaited<ReturnType<typeof getBattle>>) {
   };
 }
 
+function activeShape(battle: Battle) {
+  return {
+    ...fullShape(battle),
+    questions: stripQuestions(battle.questions),
+  };
+}
+
+function anonymousShape(battle: Battle) {
+  return {
+    id: battle.id,
+    status: battle.status,
+    hostEmail: null,
+    guestEmail: null,
+    currentIndex: 0,
+    questions: [] as Question[],
+    hostAnswers: [],
+    guestAnswers: [],
+    hostTimes: [],
+    guestTimes: [],
+    scores: { host: 0, guest: 0 },
+  };
+}
+
 export async function GET(_req: NextRequest, { params }: Params) {
   if (!isDbConfigured()) {
     return NextResponse.json({ error: 'db_unavailable' }, { status: 503 });
   }
   const battle = await getBattle(params.id);
   if (!battle) return NextResponse.json({ error: 'not_found' }, { status: 404 });
-  return NextResponse.json({ battle: publicShape(battle) });
+
+  const session = getSession();
+  if (!session) {
+    // Anonymous → only "exists?"  to allow showing the join landing.
+    return NextResponse.json({ battle: anonymousShape(battle) });
+  }
+  const isParticipant =
+    battle.host_email === session.email || battle.guest_email === session.email;
+  if (!isParticipant) {
+    return NextResponse.json({ battle: anonymousShape(battle) });
+  }
+  if (battle.status === 'finished') {
+    return NextResponse.json({ battle: fullShape(battle) });
+  }
+  return NextResponse.json({ battle: activeShape(battle) });
 }
 
 export async function POST(req: NextRequest, { params }: Params) {
@@ -63,7 +119,7 @@ export async function POST(req: NextRequest, { params }: Params) {
     }
     const battle = await joinBattle(params.id, session.email);
     if (!battle) return NextResponse.json({ error: 'join_failed' }, { status: 400 });
-    return NextResponse.json({ battle: publicShape(battle) });
+    return NextResponse.json({ battle: activeShape(battle) });
   }
 
   if (action === 'answer') {
@@ -79,11 +135,32 @@ export async function POST(req: NextRequest, { params }: Params) {
     }
     const index = Number(body.index);
     const answer = Number(body.answer);
-    const timeMs = Math.max(0, Number(body.timeMs ?? 0));
-    if (!Number.isInteger(index) || index < 0) {
+    // TICKRA-FIX: clamp timeMs to [0, QUESTION_MAX_MS] so a malicious client
+    // can't claim `timeMs: 0` to always win the speed tie-breaker.
+    const timeMs = Math.min(
+      QUESTION_MAX_MS,
+      Math.max(0, Number(body.timeMs ?? 0)),
+    );
+    if (!Number.isInteger(index) || index < 0 || index >= battle.questions.length) {
       return NextResponse.json({ error: 'invalid_index' }, { status: 400 });
     }
-    if (!Number.isInteger(answer) || answer < 0) {
+    // TICKRA-FIX(security): reject out-of-range answer indices. A timeout
+    // sentinel `-1` is accepted and recorded as "no answer".
+    const isSentinel = answer === -1;
+    const question = battle.questions[index];
+    // options is { fr, en }; either array length is fine for bounds.
+    const optionCount =
+      question && typeof question === 'object' && 'options' in question
+        ? Math.max(
+            Array.isArray((question as { options?: { fr?: unknown[] } }).options?.fr)
+              ? (question as { options: { fr: unknown[] } }).options.fr.length
+              : 0,
+            Array.isArray((question as { options?: { en?: unknown[] } }).options?.en)
+              ? (question as { options: { en: unknown[] } }).options.en.length
+              : 0,
+          )
+        : 0;
+    if (!isSentinel && (!Number.isInteger(answer) || answer < 0 || answer >= optionCount)) {
       return NextResponse.json({ error: 'invalid_answer' }, { status: 400 });
     }
     const updated = await submitAnswer(
@@ -94,7 +171,9 @@ export async function POST(req: NextRequest, { params }: Params) {
       timeMs,
     );
     if (!updated) return NextResponse.json({ error: 'submit_failed' }, { status: 500 });
-    return NextResponse.json({ battle: publicShape(updated) });
+    return NextResponse.json({
+      battle: updated.status === 'finished' ? fullShape(updated) : activeShape(updated),
+    });
   }
 
   return NextResponse.json({ error: 'unknown_action' }, { status: 400 });
