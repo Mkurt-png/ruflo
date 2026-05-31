@@ -10,6 +10,11 @@ import {
 import { markReferralConverted } from '@/lib/db/referral-queries';
 import { sendEmail, FROM } from '@/lib/email/resend';
 import { SITE_URL } from '@/lib/site-url';
+import {
+  postDiscord,
+  formatSale,
+  formatReferralConversion,
+} from '@/lib/notify/discord';
 
 function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
   const planName = plan === 'lifetime' ? 'Tickra Lifetime' : 'Tickra Pro';
@@ -109,14 +114,34 @@ export async function POST(req: Request) {
         // inviter +30 reward_days_pending). Idempotent via the
         // alreadyProcessedStripeEvent guard above + markReferralConverted's
         // status='pending' filter.
+        let inviteeDisplayName: string | null = null;
         try {
           const user = await getUser(email);
+          inviteeDisplayName = (user as { display_name?: string | null } | null)?.display_name ?? null;
           const referredBy = (user as { referred_by_slug?: string | null } | null)?.referred_by_slug;
           if (referredBy) {
             await markReferralConverted(email);
+            // Fire-and-forget Discord ping on referral conversion. Inviter
+            // display name is not trivially available without an extra lookup
+            // by slug — leave null so the formatter falls back to "An
+            // apprentice". Privacy-safe either way.
+            postDiscord(
+              'signups',
+              formatReferralConversion({
+                inviterDisplayName: null,
+                inviteeDisplayName,
+              }),
+            ).catch(() => undefined);
           }
         } catch {
           /* swallow — never fail the webhook on referral wiring */
+        }
+
+        // Fire-and-forget Discord ping on Pro/Lifetime upgrade.
+        if (plan === 'pro' || plan === 'lifetime') {
+          postDiscord('sales', formatSale({ plan, displayName: inviteeDisplayName })).catch(
+            () => undefined,
+          );
         }
 
         // Fire-and-forget welcome email (Resend). Locale is stored in

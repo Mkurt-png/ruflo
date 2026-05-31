@@ -2,6 +2,7 @@
 // All access funnels through the service-role client; RLS blocks anon/auth.
 
 import { getDb } from './supabase';
+import { postDiscord, formatBattleResult, obfuscate } from '@/lib/notify/discord';
 
 // Shape of a quiz question persisted inside a battle. Frozen at create-time
 // so both players see the exact same set even if seed content changes later.
@@ -174,7 +175,33 @@ export async function finishBattle(id: string): Promise<Battle | null> {
     .select('*')
     .single();
   if (error || !data) return null;
-  return data as Battle;
+  const battle = data as Battle;
+
+  // Fire-and-forget Discord ping on battle completion. Anonymized winner —
+  // never emit raw emails. Tie if scores are equal.
+  try {
+    const scores = computeScores(battle);
+    let winner: string;
+    if (scores.host > scores.guest) {
+      winner = obfuscate(battle.host_email);
+    } else if (scores.guest > scores.host) {
+      winner = obfuscate(battle.guest_email ?? battle.host_email);
+    } else {
+      winner = 'tie';
+    }
+    postDiscord(
+      'battles',
+      formatBattleResult({
+        winner,
+        hostScore: scores.host,
+        guestScore: scores.guest,
+      }),
+    ).catch(() => undefined);
+  } catch {
+    /* swallow — never fail the battle write on notify errors */
+  }
+
+  return battle;
 }
 
 // Score helper: 1 point per correct + 0.1 bonus for the faster correct

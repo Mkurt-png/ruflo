@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createHmac } from 'node:crypto';
 import { ensureUser, isDbConfigured } from '@/lib/db/queries';
 import { attachReferrer } from '@/lib/db/referral-queries';
+import { postDiscord, formatSignup } from '@/lib/notify/discord';
 
 const REF_COOKIE = 'tickra-ref';
 
@@ -49,6 +50,7 @@ export async function GET(req: Request) {
 
   // Exchange code for token.
   let userEmail: string | null = null;
+  let userDisplayName: string | null = null;
   try {
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
       method: 'POST',
@@ -73,9 +75,10 @@ export async function GET(req: Request) {
     // must also confirm the email is verified, otherwise an attacker with a
     // misconfigured external IdP federation could hand us an email that they
     // don't actually own. `email_verified` is a documented Google field.
-    const user = (await userRes.json()) as { email?: string; email_verified?: boolean };
+    const user = (await userRes.json()) as { email?: string; email_verified?: boolean; name?: string };
     if (!user.email_verified) return fail('email_not_verified');
     userEmail = user.email ?? null;
+    userDisplayName = user.name ?? null;
   } catch {
     return fail('oauth_network_error');
   }
@@ -85,10 +88,17 @@ export async function GET(req: Request) {
   // Persist the user row immediately so it appears in Supabase as soon as
   // someone signs in. Fire-and-forget — no need to block the redirect on it.
   if (isDbConfigured()) {
-    ensureUser(userEmail).catch(() => {
-      /* swallow — login still succeeds, the row will be created on the next
-         /api/me/profile or /api/progress write. */
-    });
+    ensureUser(userEmail)
+      .then(() => {
+        // Fire-and-forget Discord ping on signup (upsert means we always fire;
+        // channel mods can dedupe). Display name from Google userinfo when
+        // available, anonymous fallback otherwise — never emit the email.
+        postDiscord('signups', formatSignup({ displayName: userDisplayName })).catch(() => undefined);
+      })
+      .catch(() => {
+        /* swallow — login still succeeds, the row will be created on the next
+           /api/me/profile or /api/progress write. */
+      });
   }
 
   // Referral wiring: consume tickra-ref cookie (set by /[locale]/r/[slug]).

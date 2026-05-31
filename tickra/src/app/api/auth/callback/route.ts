@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { consumeMagicNonce, ensureUser, isDbConfigured } from '@/lib/db/queries';
 import { attachReferrer } from '@/lib/db/referral-queries';
+import { postDiscord, formatSignup } from '@/lib/notify/discord';
 
 const REF_COOKIE = 'tickra-ref';
 
@@ -93,9 +94,16 @@ export async function GET(req: Request) {
       return fail(locale, 'expired', url);
     }
     // Now safe to ensure the user row.
-    ensureUser(email).catch(() => {
-      /* swallow */
-    });
+    ensureUser(email)
+      .then(() => {
+        // Fire-and-forget Discord ping on signup. ensureUser is an upsert and
+        // doesn't surface created-vs-found, so we always fire and rely on the
+        // channel mods to dedupe — per spec.
+        postDiscord('signups', formatSignup({ displayName: null })).catch(() => undefined);
+      })
+      .catch(() => {
+        /* swallow */
+      });
   }
 
   // Referral wiring: if a tickra-ref cookie is present, attach inviter to
