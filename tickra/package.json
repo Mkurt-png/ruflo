@@ -10,6 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@simplewebauthn/browser": "^11.0.0",
+    "@simplewebauthn/server": "^11.0.0",
     "@supabase/supabase-js": "^2.106.1",
     "framer-motion": "11.11.9",
     "lucide-react": "0.453.0",
