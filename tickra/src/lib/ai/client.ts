@@ -4,12 +4,15 @@
 //
 // Env required to activate:
 //   ANTHROPIC_API_KEY     sk-ant-…
-//   ANTHROPIC_MODEL       (optional) defaults to a cheap Haiku
+//   ANTHROPIC_MODEL       (optional) defaults to a widely-available Haiku
 //
 // Without ANTHROPIC_API_KEY, the wrapper returns a not_configured error so
 // the front-end can show a graceful fallback ("AI is currently offline").
 
-const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+// TICKRA-FIX: default to the publicly available Haiku 3.5 (every account has
+// access, ~$0.001/question). Override with ANTHROPIC_MODEL env var to switch
+// to a newer/larger model once your account has access.
+const DEFAULT_MODEL = 'claude-3-5-haiku-20241022';
 
 export type AiMessage = { role: 'user' | 'assistant'; content: string };
 
