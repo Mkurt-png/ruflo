@@ -8,6 +8,7 @@
 // All public-key + credential-id encoding is base64url throughout.
 
 import { cookies } from 'next/headers';
+import { createHmac } from 'node:crypto';
 
 export const CHALLENGE_COOKIE = 'tickra-webauthn-challenge';
 const CHALLENGE_TTL_SECONDS = 5 * 60; // 5 minutes — generous for slow USB keys
@@ -285,10 +286,9 @@ export function buildSessionCookieValue(email: string, ttlSeconds: number): {
 } | null {
   const secret = process.env.AUTH_SIGNING_SECRET;
   if (!secret) return null;
-  // Inline imports to keep the module tree-shakeable on the client side guards.
-  // We're in a server module; require('node:crypto') is safe.
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { createHmac } = require('node:crypto') as typeof import('node:crypto');
+  // TICKRA-FIX(build): was using `require` with an eslint-disable comment
+  // for a rule the project's eslint config doesn't define, which broke the
+  // Vercel build. Plain top-level import is cleaner and tree-shakes fine.
   const payload = `${email}.${Math.floor(Date.now() / 1000) + ttlSeconds}`;
   const sig = createHmac('sha256', secret).update(payload).digest('base64url');
   const value = `${Buffer.from(payload).toString('base64url')}.${sig}`;
