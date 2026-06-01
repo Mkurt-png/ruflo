@@ -3,46 +3,47 @@
 @tailwind utilities;
 
 /*
- * Tickra · Pastel "soft tech" palette.
+ * Tickra · Premium Navy palette (Option B — site-wide).
  *
- * Light mode  = warm cream + deep indigo ink + lavender accent.
- *               Replaces pure black with #1B1D33 for a softer, modern feel.
- * Dark mode   = midnight indigo + warm cream text + lighter lavender accent.
+ * Light mode  = warm off-white surface + ink-near-black text + accent-blue.
+ * Dark mode   = deep navy + warm off-white text + accent-blue.
  *
- * Two new tokens added since the audit:
- *   --accent      lavender pop, used for highlights and subtle backgrounds
- *   --glow        warm pastel glow for ambient blurs (Hero aurora, focus rings)
+ * CSS variables drive every component (bg-canvas, text-ink, text-brand…).
+ * Refactoring lives here — JSX is untouched. The dedicated `navy-*`,
+ * `accent-blue`, `success`, `danger` Tailwind tokens (declared in
+ * tailwind.config.ts) are used directly by the landing redesign and remain
+ * authoritative there.
  */
 
 :root {
-  --canvas:   250 247 242;   /* warm cream */
-  --surface:  255 255 255;
-  --elevated: 246 240 232;   /* slightly warmer surface */
-  --ink:       27  29  51;   /* deep indigo (softer than pure black) */
-  --muted:    111 106 133;   /* warm slate-violet */
-  --subtle:   154 149 174;
-  --line:     232 222 207;   /* warm beige separator */
-  --brand:    124  92 217;   /* lavender pop */
-  --accent:   217 184 240;   /* pastel lavender (backgrounds + glows) */
-  --glow:     255 217 196;   /* warm peach (ambient gradient layer) */
-  --up:        93 191 161;   /* soft mint */
-  --down:     228 139 122;   /* warm coral */
+  --canvas:   248 247 244;   /* surface-warm #F8F7F4 */
+  --surface:  255 255 255;   /* card white */
+  --elevated: 241 240 237;   /* surface-muted #F1F0ED */
+  --ink:       28  25  23;   /* text-primary #1C1917 */
+  --muted:     87  83  78;   /* text-secondary #57534E */
+  --subtle:   168 162 158;   /* text-muted #A8A29E */
+  --line:     229 229 228;   /* warm neutral border */
+  --brand:     37  99 235;   /* accent-blue #2563EB */
+  --accent:   219 234 254;   /* accent-blue tint for soft backgrounds */
+  --glow:      30  58  95;   /* navy-800 for ambient navy glow */
+  --up:         5 150 105;   /* success #059669 */
+  --down:     220  38  38;   /* danger #DC2626 */
   color-scheme: light;
 }
 
 html.dark {
-  --canvas:    21  23  42;   /* midnight indigo */
-  --surface:   29  31  54;
-  --elevated:  38  40  66;
-  --ink:      242 235 224;   /* warm off-white */
-  --muted:    168 162 189;
-  --subtle:   111 106 133;
-  --line:      46  48  74;
-  --brand:    180 154 240;   /* lighter lavender for dark backgrounds */
-  --accent:   154 122 217;
-  --glow:     116  88 168;
-  --up:       109 217 184;
-  --down:     244 168 154;
+  --canvas:    13  20  33;   /* navy-950 */
+  --surface:   26  46  74;   /* navy-900 */
+  --elevated:  30  58  95;   /* navy-800 */
+  --ink:      245 245 244;   /* text-inverse */
+  --muted:    203 213 225;   /* slate-300 */
+  --subtle:   148 163 184;   /* slate-400 */
+  --line:      42  74 115;   /* navy-700 */
+  --brand:     96 165 250;   /* lighter accent-blue for dark backgrounds */
+  --accent:    30  58  95;   /* navy-800 tint for soft surfaces */
+  --glow:      96 165 250;   /* glow tracks the brand tone */
+  --up:        16 185 129;   /* success bright */
+  --down:     248 113 113;   /* danger bright */
   color-scheme: dark;
 }
 
