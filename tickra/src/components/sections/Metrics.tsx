@@ -69,13 +69,14 @@ export function Metrics({ dict }: Props) {
 function AnimatedMetric({ value, started }: { value: string; started: boolean }) {
   // Find first numeric run (with optional , and .)
   const match = value.match(/^([\d.,]+)(.*)$/);
-  if (!match) return <>{value}</>;
-  const numericRaw = match[1];
-  const suffix = match[2];
+  const numericRaw = match?.[1] ?? '0';
+  const suffix = match?.[2] ?? '';
   const targetNumber = parseFloat(numericRaw.replace(/,/g, ''));
   const hasDecimal = numericRaw.includes('.');
   const hasComma = numericRaw.includes(',');
+  // Hook must run unconditionally — rules-of-hooks.
   const animated = useCountUp(targetNumber, 1400, started);
+  if (!match) return <>{value}</>;
 
   const display = hasDecimal
     ? animated.toFixed(1)
