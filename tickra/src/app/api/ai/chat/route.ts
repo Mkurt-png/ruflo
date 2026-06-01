@@ -77,7 +77,7 @@ export async function POST(req: Request) {
   if (!result.ok) {
     if (result.reason === 'not_configured') {
       return NextResponse.json(
-        { error: 'ai_not_configured', hint: 'Set ANTHROPIC_API_KEY in the env to enable chat.' },
+        { error: 'ai_not_configured', hint: 'Set GROQ_API_KEY (preferred) or ANTHROPIC_API_KEY in the env to enable chat.' },
         { status: 501 },
       );
     }
