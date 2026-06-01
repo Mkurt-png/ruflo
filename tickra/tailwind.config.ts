@@ -18,6 +18,30 @@ const config: Config = {
         glow: 'rgb(var(--glow) / <alpha-value>)',
         up: 'rgb(var(--up) / <alpha-value>)',
         down: 'rgb(var(--down) / <alpha-value>)',
+        // TICKRA-REDESIGN: Premium Navy palette for the landing redesign.
+        // Scoped to landing sections; rest of app keeps the existing tokens above.
+        navy: {
+          950: '#0D1421',
+          900: '#1A2E4A',
+          800: '#1E3A5F',
+          700: '#2A4A73',
+          600: '#3A5A88',
+        },
+        'accent-blue': {
+          DEFAULT: '#2563EB',
+          hover: '#1D4ED8',
+        },
+        success: '#059669',
+        warning: '#D97706',
+        danger: '#DC2626',
+        gold: '#F0B429',
+        'surface-warm': '#F8F7F4',
+        'surface-card': '#FFFFFF',
+        'surface-muted': '#F1F0ED',
+        'text-primary': '#1C1917',
+        'text-secondary': '#57534E',
+        'text-muted': '#A8A29E',
+        'text-inverse': '#F5F5F4',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
