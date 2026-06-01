@@ -22,6 +22,7 @@ export type TickraUser = {
   avatar_url?: string | null;
   locale?: 'fr' | 'en' | null;
   theme?: 'light' | 'dark' | null;
+  weekly_digest_opt_in?: boolean | null;
 };
 
 export type ProgressRow = { lesson_id: string; completed_at: string };

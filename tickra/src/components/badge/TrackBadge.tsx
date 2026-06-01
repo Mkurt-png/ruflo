@@ -78,10 +78,12 @@ type BadgeCardProps = {
   level: BadgeLevel;
   issuedAt?: Date;
   certUrl: string;
+  /** Optional URL to the print-ready certificate page (e.g. /[locale]/certificate/[trackSlug]). */
+  printUrl?: string;
   locale?: string;
 };
 
-export function BadgeCard({ trackName, level, issuedAt, certUrl, locale = 'en' }: BadgeCardProps) {
+export function BadgeCard({ trackName, level, issuedAt, certUrl, printUrl, locale = 'en' }: BadgeCardProps) {
   const date = issuedAt ?? new Date();
   const linkedIn = buildLinkedInShareUrl({
     trackName,
@@ -111,15 +113,25 @@ export function BadgeCard({ trackName, level, issuedAt, certUrl, locale = 'en' }
           {level}
         </span>
       </div>
-      <Link
-        href={linkedIn}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="shrink-0 inline-flex items-center gap-1.5 border border-accent-blue text-accent-blue hover:bg-accent-blue hover:text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
-      >
-        <Linkedin aria-hidden className="h-3.5 w-3.5" />
-        Add to LinkedIn
-      </Link>
+      <div className="shrink-0 flex flex-col gap-2">
+        <Link
+          href={linkedIn}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 border border-accent-blue text-accent-blue hover:bg-accent-blue hover:text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+        >
+          <Linkedin aria-hidden className="h-3.5 w-3.5" />
+          Add to LinkedIn
+        </Link>
+        {printUrl && (
+          <Link
+            href={printUrl}
+            className="inline-flex items-center justify-center border border-gray-200 text-text-primary hover:bg-gray-50 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors"
+          >
+            {locale === 'fr' ? 'Imprimer le certificat' : 'Print certificate'}
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

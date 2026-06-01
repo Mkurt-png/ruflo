@@ -20,6 +20,7 @@ import { XpBadge } from './XpBadge';
 import { CommunityPanel } from './CommunityPanel';
 import { ReferralCard } from './ReferralCard';
 import { SharePanel } from './SharePanel';
+import { DigestToggle } from './DigestToggle';
 import { ReviewBanner } from './ReviewBanner';
 import { WeeklyPlan } from './WeeklyPlan';
 import { ExportProgress } from './ExportProgress';
@@ -193,6 +194,11 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
         {/* Public share profile — Pro+ flex page at /u/<slug>. */}
         <div className="mt-3">
           <SharePanel locale={locale} />
+        </div>
+
+        {/* TICKRA-PHASE-4: weekly Sunday digest opt-in. Default ON server-side. */}
+        <div className="mt-3 rounded-2xl border border-line bg-surface px-5">
+          <DigestToggle initialOptIn={true} locale={locale} />
         </div>
 
         <div className="mt-3">

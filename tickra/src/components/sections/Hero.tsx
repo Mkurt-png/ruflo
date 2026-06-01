@@ -48,7 +48,7 @@ export function Hero({ dict, locale }: Props) {
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <Link
-              href={`/${locale}/onboarding`}
+              href={`/${locale}/placement`}
               onClick={() => trackHeroCta('click', ctaVariant)}
               className="inline-flex items-center justify-center bg-accent-blue hover:bg-accent-blue-hover text-white px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200"
             >
