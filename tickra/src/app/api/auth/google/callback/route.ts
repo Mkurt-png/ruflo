@@ -3,6 +3,7 @@ import { createHmac } from 'node:crypto';
 import { ensureUser, isDbConfigured } from '@/lib/db/queries';
 import { attachReferrer } from '@/lib/db/referral-queries';
 import { postDiscord, formatSignup } from '@/lib/notify/discord';
+import { getSession } from '@/lib/auth/session';
 
 const REF_COOKIE = 'tickra-ref';
 
@@ -46,7 +47,22 @@ export async function GET(req: Request) {
   // Verify state matches the cookie we set.
   const cookie = req.headers.get('cookie') ?? '';
   const cookieState = parseCookie(cookie, STATE_COOKIE);
-  if (!cookieState || cookieState !== state) return fail('invalid_state');
+  if (!cookieState || cookieState !== state) {
+    // TICKRA-FIX: if the user already has a valid Tickra session, the OAuth
+    // flow is redundant — just send them home instead of surfacing a scary
+    // "invalid_state" error. This covers the case where the state cookie
+    // got dropped (browser quirk, narrow path, multiple tabs) but the user
+    // actually IS authenticated.
+    const existing = getSession();
+    if (existing) {
+      const ok = NextResponse.redirect(new URL(`/${locale}/learn?session=success`, url));
+      ok.cookies.set(STATE_COOKIE, '', { path: '/', maxAge: 0 });
+      // Also clear the legacy narrow-path cookie in case it's still around.
+      ok.cookies.set(STATE_COOKIE, '', { path: '/api/auth/google', maxAge: 0 });
+      return ok;
+    }
+    return fail('invalid_state');
+  }
 
   // Exchange code for token.
   let userEmail: string | null = null;
@@ -122,11 +138,11 @@ export async function GET(req: Request) {
     path: '/',
     maxAge: COOKIE_TTL_SECONDS,
   });
-  // Clear the state cookie.
-  redirect.cookies.set(STATE_COOKIE, '', {
-    path: '/api/auth/google',
-    maxAge: 0,
-  });
+  // Clear the state cookie. We clear BOTH the new path '/' and the legacy
+  // narrow path '/api/auth/google' so stale cookies from old deploys don't
+  // linger in the browser's cookie jar.
+  redirect.cookies.set(STATE_COOKIE, '', { path: '/', maxAge: 0 });
+  redirect.cookies.set(STATE_COOKIE, '', { path: '/api/auth/google', maxAge: 0 });
   // Clear referral cookie once consumed.
   if (refSlug) {
     redirect.cookies.set(REF_COOKIE, '', { path: '/', maxAge: 0 });
