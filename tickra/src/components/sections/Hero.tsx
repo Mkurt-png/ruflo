@@ -1,25 +1,20 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, PlayCircle } from 'lucide-react';
-import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
-import { Eyebrow } from '@/components/ui/Eyebrow';
-import { CandlestickChart } from '@/components/hero/CandlestickChart';
-import { HeroVideoTrigger } from './HeroVideo';
-import { fadeUp, easeOutExpo } from '@/lib/motion';
+import { AnimatedCandleChart } from '@/components/ui/AnimatedCandleChart';
 import { getHeroCtaVariant, getHeroCtaLabel, trackHeroCta, type HeroCtaVariant } from '@/lib/ab/hero-cta';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
 type Props = { dict: Dictionary; locale: Locale };
 
+// TICKRA-REDESIGN: Premium Navy hero — navy-900 bg, two-col, accent-blue CTA.
 export function Hero({ dict, locale }: Props) {
   const t = dict.hero;
   const [line1, line2] = t.title;
-  // TICKRA-PHASE-1.7: A/B test the hero CTA copy. Variant is stable per
-  // visitor via localStorage. Track impression + click via Plausible.
+  const emphasis = t.titleEm;
+
   const [ctaVariant, setCtaVariant] = useState<HeroCtaVariant>('control');
   useEffect(() => {
     const v = getHeroCtaVariant();
@@ -29,119 +24,65 @@ export function Hero({ dict, locale }: Props) {
   const primaryCtaLabel = getHeroCtaLabel(ctaVariant, locale);
 
   return (
-    <section aria-labelledby="hero-title" className="relative overflow-hidden border-b border-line">
-      {/* TICKRA-DESIGN: trading-screen grid texture behind hero. */}
-      <span aria-hidden className="absolute inset-0 tickra-grid opacity-70" />
-      <span aria-hidden className="aurora" />
-      <span aria-hidden className="aurora aurora--lt" />
-      <Container as="div" className="relative z-10 grid grid-cols-12 gap-x-6 gap-y-16 pb-24 pt-16 md:pb-32 md:pt-24">
-        <div className="col-span-12 lg:col-span-6 xl:col-span-5">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <Eyebrow>{t.eyebrow}</Eyebrow>
-          </motion.div>
+    <section
+      aria-labelledby="hero-title"
+      className="relative bg-navy-900 min-h-screen w-full overflow-hidden"
+    >
+      <div className="relative z-10 mx-auto w-full max-w-container px-6 md:px-10 grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 py-20 lg:py-28 items-center">
+        {/* Left column (60%) */}
+        <div className="lg:col-span-3">
+          <span className="inline-block bg-navy-800 text-accent-blue text-xs font-medium px-3 py-1 rounded-full">
+            {t.eyebrow}
+          </span>
 
-          <motion.h1
+          <h1
             id="hero-title"
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={1}
-            className="mt-8 font-display text-display-xl font-medium text-balance text-ink"
+            className="text-white text-3xl md:text-5xl font-medium leading-tight mt-6"
           >
             {line1}
             <br />
-            {renderEm(line2, t.titleEm)}
-          </motion.h1>
+            {renderEm(line2, emphasis)}
+          </h1>
 
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={2}
-            className="mt-8 max-w-xl text-[17px] leading-relaxed text-muted md:text-lg text-pretty"
-          >
-            {t.body}
-          </motion.p>
+          <p className="text-text-inverse/70 text-lg max-w-xl mt-4">{t.body}</p>
 
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={3}
-            className="mt-10 flex flex-wrap items-center gap-3"
-          >
-            <Button
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            <Link
               href={`/${locale}/onboarding`}
-              size="lg"
               onClick={() => trackHeroCta('click', ctaVariant)}
+              className="inline-flex items-center justify-center bg-accent-blue hover:bg-accent-blue-hover text-white px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200"
             >
-              {primaryCtaLabel}
-              <ArrowUpRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
-            </Button>
-            <Button href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`} variant="ghost" size="lg">
-              <PlayCircle aria-hidden className="h-4 w-4" strokeWidth={1.5} />
+              {primaryCtaLabel} <span aria-hidden className="ml-1">→</span>
+            </Link>
+            <Link
+              href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`}
+              className="inline-flex items-center justify-center border border-white/30 text-white/80 hover:bg-white/10 px-6 py-3 rounded-lg text-base transition-colors duration-200"
+            >
               {t.secondaryCta}
-            </Button>
-            <HeroVideoTrigger
-              label={locale === 'fr' ? 'Voir la démo (45 s)' : 'Watch the demo (45 s)'}
-              closeLabel={locale === 'fr' ? 'Fermer' : 'Close'}
-            />
-          </motion.div>
+            </Link>
+          </div>
 
-          <motion.dl
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={4}
-            className="mt-14 grid max-w-xl grid-cols-3 gap-x-6 border-t border-line pt-8"
-          >
+          <dl className="flex flex-wrap gap-8 mt-12">
             {t.stats.map((s) => (
               <div key={s.label}>
-                <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                  {s.label}
-                </dt>
-                <dd className="mt-2 font-display text-2xl font-medium tracking-tight text-ink md:text-3xl">
-                  {s.value}
-                </dd>
+                <dt className="text-white text-3xl md:text-4xl font-medium">{s.value}</dt>
+                <dd className="text-white/50 text-sm mt-1">{s.label}</dd>
               </div>
             ))}
-          </motion.dl>
+          </dl>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2, ease: easeOutExpo }}
-          className="relative col-span-12 lg:col-span-6 xl:col-span-7"
-        >
-          <div className="relative">
-            <div
-              aria-hidden
-              className="absolute -inset-x-4 -top-4 hidden h-16 border-l border-t border-line lg:block"
-            />
-            {/* TICKRA-DESIGN: slight tilt + soft shadow gives the chart card a "product shot" feel without an external image. */}
-            <div className="relative rounded-sm border border-line bg-surface p-6 shadow-[0_30px_60px_-25px_rgba(27,29,51,0.25)] transition-transform duration-500 ease-out md:p-8 lg:-rotate-[1.5deg] lg:hover:rotate-0">
-              <div className="mb-5 flex items-baseline justify-between border-b border-line pb-4">
-                <div className="flex items-baseline gap-3">
-                  <span className="font-display text-xl font-medium tracking-tight">EUR/USD</span>
-                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-                    Spot · 1H
-                  </span>
-                </div>
-                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
-                  Lesson 04 / 222
-                </span>
-              </div>
-              <CandlestickChart caption={t.chartCaption} />
+        {/* Right column (40%) — desktop only */}
+        <div className="hidden lg:block lg:col-span-2">
+          <div className="bg-navy-800/80 rounded-xl p-4 shadow-2xl border border-white/5">
+            <div className="text-accent-blue text-xs font-medium">Lesson 04 / 222</div>
+            <div className="mt-3">
+              <AnimatedCandleChart />
             </div>
-
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -bottom-6 -right-6 hidden h-24 w-24 border border-ink lg:block"
-            />
+            <div className="text-white/50 text-xs mt-2">{t.chartCaption ?? 'EUR/USD · 1H · +0.21%'}</div>
           </div>
-        </motion.div>
-      </Container>
+        </div>
+      </div>
     </section>
   );
 }
@@ -155,8 +96,7 @@ function renderEm(line: string, emphasis: string) {
   return (
     <>
       {before}
-      {/* TICKRA-DESIGN: animated gradient on the emphasised word ("institutionnel"). */}
-      <span className="font-display italic title-shimmer">{match}</span>
+      <span className="text-accent-blue">{match}</span>
       {after}
     </>
   );

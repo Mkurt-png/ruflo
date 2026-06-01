@@ -1,16 +1,15 @@
 import Link from 'next/link';
-import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
 import { LocaleSwitcher } from './LocaleSwitcher';
-import { ThemeToggle } from './ThemeToggle';
 import { MobileMenu } from './MobileMenu';
 import { UserMenu } from './UserMenu';
 import { ExploreMenu } from './ExploreMenu';
+import { ScrollProgressBar } from './ScrollProgressBar';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
 type Props = { dict: Dictionary; locale: Locale };
 
+// TICKRA-REDESIGN: Premium Navy navbar — navy-950 sticky + scroll progress + accent-blue CTA.
 export function Navbar({ dict, locale }: Props) {
   const links = [
     { href: `/${locale}/learn`, label: dict.nav.learn },
@@ -18,9 +17,6 @@ export function Navbar({ dict, locale }: Props) {
     { href: `/${locale}/pricing`, label: dict.nav.pricing },
   ];
 
-  // TICKRA-DESIGN: surface secondary discovery pages from the navbar
-  // instead of leaving them buried in the footer only.
-  // TICKRA-SPRINT-B: simulator entry exposed here too (Pro-gated inside).
   const exploreItems = [
     { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
     { href: `/${locale}/battle`, label: dict.nav.battle },
@@ -31,18 +27,21 @@ export function Navbar({ dict, locale }: Props) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/80 bg-canvas/80 backdrop-blur-md">
-      <Container as="div" className="flex h-16 items-center justify-between">
-        <Link href={`/${locale}`} aria-label="Tickra" className="flex items-center gap-2.5">
+    <header className="sticky top-0 z-40 bg-navy-950/95 backdrop-blur-sm border-b border-white/10">
+      <div className="relative mx-auto w-full max-w-container px-6 md:px-10 flex h-16 items-center justify-between">
+        <Link href={`/${locale}`} aria-label="Tickra" className="flex items-center gap-2.5 text-white">
           <Logo />
-          <span className="text-[15px] font-semibold tracking-tight">Tickra</span>
+          <span className="text-[15px] font-medium tracking-tight">Tickra</span>
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-8">
             {links.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="text-sm text-muted transition-colors hover:text-ink">
+                <Link
+                  href={l.href}
+                  className="text-sm text-white/70 hover:text-white transition-colors"
+                >
                   {l.label}
                 </Link>
               </li>
@@ -54,37 +53,28 @@ export function Navbar({ dict, locale }: Props) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <CommandHint />
           <div className="hidden sm:block">
             <LocaleSwitcher current={locale} label={dict.locale.switch} />
           </div>
-          <ThemeToggle labelLight={dict.theme.light} labelDark={dict.theme.dark} />
           <UserMenu
             locale={locale}
             signInLabel={dict.nav.signIn}
             accountLabel={locale === 'fr' ? 'Mon compte' : 'My account'}
           />
           <div className="hidden md:block">
-            <Button href={`/${locale}/onboarding`}>{dict.nav.getStarted}</Button>
+            <Link
+              href={`/${locale}/onboarding`}
+              className="inline-flex items-center bg-accent-blue text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-accent-blue-hover transition-colors"
+            >
+              {dict.nav.getStarted}
+            </Link>
           </div>
           <MobileMenu dict={dict} locale={locale} links={links} />
         </div>
-      </Container>
-    </header>
-  );
-}
 
-function CommandHint() {
-  // Visual hint — does not need to be a real button, the global ⌘K listener
-  // in CommandPalette handles the actual open. Hidden on mobile for room.
-  return (
-    <span
-      aria-hidden
-      className="hidden h-9 items-center gap-1.5 rounded-full border border-line bg-surface px-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted md:inline-flex"
-    >
-      <kbd className="font-mono text-[11px]">⌘</kbd>
-      <kbd className="font-mono text-[11px]">K</kbd>
-    </span>
+        <ScrollProgressBar />
+      </div>
+    </header>
   );
 }
 

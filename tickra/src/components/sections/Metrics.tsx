@@ -1,62 +1,116 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Container } from '@/components/ui/Container';
-import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
-import { ActiveNowLine } from './ActiveNowLine';
-import { fadeUp } from '@/lib/motion';
+import { useEffect, useRef, useState } from 'react';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 
-export function Metrics({ dict }: { dict: Dictionary }) {
-  const t = dict.metrics;
-  return (
-    <section aria-labelledby="metrics-title" className="relative overflow-hidden border-b border-line bg-ink text-canvas">
-      {/* TICKRA-DESIGN: trading-screen grid on the dark metrics band. */}
-      <span aria-hidden className="absolute inset-0 tickra-grid opacity-40" />
-      <Container as="div" className="relative py-24 md:py-32">
-        <div id="metrics-title" className="grid grid-cols-12 gap-x-6 gap-y-6">
-          <div className="col-span-12 lg:col-span-5">
-            <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-canvas/60">
-              <span aria-hidden className="inline-block h-px w-8 bg-canvas/80" />
-              {t.eyebrow}
-            </span>
-            <h2 className="mt-6 font-display text-display-lg font-medium tracking-tight text-balance">
-              {t.title}
-            </h2>
-          </div>
-          <p className="col-span-12 max-w-xl text-pretty text-[17px] leading-relaxed text-canvas/70 lg:col-span-6 lg:col-start-7 lg:mt-12">
-            {t.body}
-          </p>
-        </div>
+type Props = { dict: Dictionary };
 
-        <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden border-t border-canvas/15 bg-canvas/15 sm:grid-cols-4">
-          {t.items.map((m, i) => (
-            <motion.div
-              key={m.label}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-60px' }}
-              variants={fadeUp}
-              custom={i}
-              className="flex flex-col bg-ink p-8 md:p-10"
-            >
-              <dt className="font-mono text-[11px] uppercase tracking-[0.22em] text-canvas/60">
-                {m.label}
-              </dt>
-              <dd className="mt-6 font-display text-5xl font-medium tracking-tight md:text-6xl">
-                <AnimatedNumber value={m.value} />
+// TICKRA-REDESIGN: Dark stats section with CountUp.
+export function Metrics({ dict }: Props) {
+  const t = dict.metrics;
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setStarted(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={ref}
+      aria-labelledby="metrics-title"
+      className="bg-navy-900 text-white py-24 px-6"
+    >
+      <div className="mx-auto w-full max-w-container">
+        <h2
+          id="metrics-title"
+          className="text-white text-4xl font-medium text-center"
+        >
+          {t.title}
+        </h2>
+        <p className="text-white/60 text-lg text-center mt-3 mb-16 max-w-2xl mx-auto">{t.body}</p>
+
+        <dl className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          {t.items.map((m) => (
+            <div key={m.label} className="text-center">
+              <dt className="sr-only">{m.label}</dt>
+              <dd className="text-5xl font-medium text-white">
+                <AnimatedMetric value={m.value} started={started} />
               </dd>
-            </motion.div>
+              <div aria-hidden className="text-sm text-white/50 text-center mt-2">
+                {m.label}
+              </div>
+            </div>
           ))}
         </dl>
 
-        {/* TICKRA-IMPROVEMENT: live "X learners studying right now" pulse line. */}
-        <ActiveNowLine label={t.activeNowLabel} />
-
-        <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.22em] text-canvas/45">
-          {t.footnote}
-        </p>
-      </Container>
+        <p className="text-white/30 text-xs text-center mt-12">{t.footnote}</p>
+      </div>
     </section>
   );
+}
+
+// Parses a value string like "12,400+", "92%", "4.8 / 5", "67"
+// and animates the leading numeric part.
+function AnimatedMetric({ value, started }: { value: string; started: boolean }) {
+  // Find first numeric run (with optional , and .)
+  const match = value.match(/^([\d.,]+)(.*)$/);
+  if (!match) return <>{value}</>;
+  const numericRaw = match[1];
+  const suffix = match[2];
+  const targetNumber = parseFloat(numericRaw.replace(/,/g, ''));
+  const hasDecimal = numericRaw.includes('.');
+  const hasComma = numericRaw.includes(',');
+  const animated = useCountUp(targetNumber, 1400, started);
+
+  const display = hasDecimal
+    ? animated.toFixed(1)
+    : hasComma
+      ? Math.floor(animated).toLocaleString('en-US')
+      : Math.floor(animated).toString();
+
+  return (
+    <>
+      {display}
+      {suffix}
+    </>
+  );
+}
+
+function useCountUp(target: number, duration: number, started: boolean): number {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!started) return;
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const t = Math.min(1, elapsed / duration);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - t, 3);
+      setValue(eased * target);
+      if (t < 1) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        setValue(target);
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, duration, started]);
+  return value;
 }

@@ -25,6 +25,8 @@ import { Newsletter } from '@/components/sections/Newsletter';
 import { CtaFinal } from '@/components/sections/CtaFinal';
 import { Footer } from '@/components/sections/Footer';
 import { HomeJsonLd } from '@/components/seo/HomeJsonLd';
+import { PublicQuizSection } from '@/components/landing/PublicQuizSection';
+import { EditorialPreview } from '@/components/landing/EditorialPreview';
 // TICKRA-PHASE-6: MobileStickyCta now mounted globally in the layout.
 
 export default async function HomePage({ params }: { params: { locale: string } }) {
@@ -40,6 +42,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         {/* TICKRA-IMPROVEMENT: <PressStrip /> hidden until real article links exist. */}
         <Method dict={dict} />
         <BentoFeatures dict={dict} />
+        <PublicQuizSection locale={params.locale} />
         <CurriculumPreview dict={dict} locale={params.locale} />
         <WhyNotYoutube dict={dict} />
         <Metrics dict={dict} />
@@ -54,6 +57,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         <WallOfWins locale={params.locale} />
         {/* TICKRA-IMPROVEMENT: small "last product update" proof-of-life line. */}
         <ChangelogPing locale={params.locale} />
+        <EditorialPreview locale={params.locale} />
         <Faq dict={dict} />
         <Newsletter dict={dict} locale={params.locale} />
         <CtaFinal dict={dict} locale={params.locale} />
