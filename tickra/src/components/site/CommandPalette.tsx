@@ -48,6 +48,14 @@ const staticPages = {
     { id: 'me', label: 'Mon compte', href: '/me', group: 'page' as const },
     { id: 'settings', label: 'Paramètres', href: '/me/settings', group: 'page' as const },
     { id: 'diploma', label: 'Diplôme', href: '/diploma', group: 'page' as const },
+    // TICKRA-PHASE-5: surfaces récentes accessibles via Cmd+K.
+    { id: 'review', label: 'Révision (cartes du jour)', href: '/review', group: 'page' as const },
+    { id: 'journal', label: 'Journal de trading', href: '/journal', group: 'page' as const },
+    { id: 'achievements', label: 'Succès', href: '/achievements', group: 'page' as const },
+    { id: 'leaderboard', label: 'Classement', href: '/leaderboard', group: 'page' as const },
+    { id: 'placement', label: 'Test de niveau', href: '/placement', group: 'page' as const },
+    { id: 'battle', label: 'Battle', href: '/battle', group: 'page' as const },
+    { id: 'simulator', label: 'Simulateur', href: '/me/simulator', group: 'page' as const },
   ],
   en: [
     { id: 'home', label: 'Home', href: '/', group: 'page' as const },
@@ -63,6 +71,13 @@ const staticPages = {
     { id: 'me', label: 'My account', href: '/me', group: 'page' as const },
     { id: 'settings', label: 'Settings', href: '/me/settings', group: 'page' as const },
     { id: 'diploma', label: 'Diploma', href: '/diploma', group: 'page' as const },
+    { id: 'review', label: 'Review (today’s cards)', href: '/review', group: 'page' as const },
+    { id: 'journal', label: 'Trade journal', href: '/journal', group: 'page' as const },
+    { id: 'achievements', label: 'Achievements', href: '/achievements', group: 'page' as const },
+    { id: 'leaderboard', label: 'Leaderboard', href: '/leaderboard', group: 'page' as const },
+    { id: 'placement', label: 'Placement test', href: '/placement', group: 'page' as const },
+    { id: 'battle', label: 'Battle', href: '/battle', group: 'page' as const },
+    { id: 'simulator', label: 'Simulator', href: '/me/simulator', group: 'page' as const },
   ],
 };
 
