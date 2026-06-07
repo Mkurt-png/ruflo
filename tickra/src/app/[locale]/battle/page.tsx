@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { BattleJoin } from '@/components/battle/BattleJoin';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Battle · Tickra' };
@@ -31,7 +32,17 @@ export default async function BattleHubPage({ params }: { params: { locale: stri
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Pro' : 'Pro'} title={title} body={body} />
         <section className="border-b border-line">
-          <Container as="div" className="py-20 md:py-28">
+          <Container as="div" className="py-12 md:py-16">
+            <KpiStrip
+              className="mb-6"
+              items={[
+                { label: locale === 'fr' ? 'Questions' : 'Questions', value: '5', tone: 'brand' },
+                { label: locale === 'fr' ? 'Timer' : 'Timer', value: '60s', hint: locale === 'fr' ? '/ question' : '/ question' },
+                { label: locale === 'fr' ? 'Joueurs' : 'Players', value: '2', hint: '1v1' },
+                { label: locale === 'fr' ? 'Format' : 'Format', value: locale === 'fr' ? 'BO5' : 'BO5', tone: 'up' },
+              ]}
+              trailing={<LivePulse label={locale === 'fr' ? 'salons ouverts' : 'rooms open'} />}
+            />
             <BattleJoin locale={locale} mode="create" />
           </Container>
         </section>

@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import type { Locale } from '@/lib/i18n/config';
 import type { Grade } from '@/lib/learning/sm2';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export type ReviewCard = {
   lessonId: string;
@@ -56,10 +57,22 @@ export function ReviewSession({ cards, locale }: Props) {
   const [revealed, setRevealed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
+  const startRef = useRef<number>(Date.now());
+
+  useEffect(() => {
+    const id = window.setInterval(() => setElapsed(Math.floor((Date.now() - startRef.current) / 1000)), 1000);
+    return () => window.clearInterval(id);
+  }, []);
 
   const card = cards[index];
   const total = cards.length;
   const finished = index >= total;
+  const graded = index;
+  const accuracy = graded > 0 ? Math.round((correctCount / graded) * 100) : 0;
+  const mm = String(Math.floor(elapsed / 60)).padStart(2, '0');
+  const ss = String(elapsed % 60).padStart(2, '0');
 
   const isCorrect = useMemo(
     () => (card && chosen !== null ? chosen === card.correct : null),
@@ -78,6 +91,7 @@ export function ReviewSession({ cards, locale }: Props) {
       });
       if (!r.ok) throw new Error('failed');
       // Advance to next card.
+      if (isCorrect === true) setCorrectCount((c) => c + 1);
       setIndex((i) => i + 1);
       setChosen(null);
       setRevealed(false);
@@ -88,18 +102,39 @@ export function ReviewSession({ cards, locale }: Props) {
     }
   }
 
+  const headerStrip = (
+    <KpiStrip
+      className="mb-4"
+      items={[
+        { label: locale === 'fr' ? 'Carte' : 'Card', value: `${Math.min(index + 1, total)}`, hint: `/ ${total}`, tone: 'brand' },
+        { label: locale === 'fr' ? 'Temps' : 'Time', value: `${mm}:${ss}` },
+        { label: locale === 'fr' ? 'Précision' : 'Accuracy', value: `${accuracy}%`, tone: accuracy >= 70 ? 'up' : accuracy === 0 ? 'neutral' : 'down' },
+        { label: locale === 'fr' ? 'Notées' : 'Graded', value: String(graded) },
+      ]}
+      trailing={<LivePulse label={locale === 'fr' ? 'session' : 'session'} />}
+    />
+  );
+
   if (finished) {
     return (
-      <div className="rounded-2xl border border-line bg-surface p-8 text-center">
-        <p className="font-display text-2xl font-medium text-ink">{t.done}</p>
-        <p className="mt-2 text-sm text-muted">{t.doneBody}</p>
+      <div className="space-y-4">
+        {headerStrip}
+        <div className="rounded-2xl border border-line bg-surface p-8 text-center">
+          <p className="font-display text-2xl font-medium text-ink">{t.done}</p>
+          <p className="mt-2 text-sm text-muted">{t.doneBody}</p>
+          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+            {graded} {locale === 'fr' ? 'cartes en' : 'cards in'} {mm}:{ss} · {accuracy}% {locale === 'fr' ? 'de réussite' : 'accuracy'}
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-line bg-surface p-6 md:p-8">
-      <div className="flex items-center justify-between">
+    <div>
+      {headerStrip}
+      <div className="rounded-2xl border border-line bg-surface p-6 md:p-8">
+        <div className="flex items-center justify-between">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">
           {t.progress(index, total)}
         </p>
@@ -183,6 +218,7 @@ export function ReviewSession({ cards, locale }: Props) {
           {busy ? <p className="mt-2 text-xs text-muted">{t.syncing}</p> : null}
         </div>
       )}
+      </div>
     </div>
   );
 }
