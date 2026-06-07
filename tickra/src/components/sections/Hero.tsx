@@ -1,15 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { AnimatedCandleChart } from '@/components/ui/AnimatedCandleChart';
 import { getHeroCtaVariant, getHeroCtaLabel, trackHeroCta, type HeroCtaVariant } from '@/lib/ab/hero-cta';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
+const Hero3D = dynamic(() => import('./Hero3D').then((m) => m.Hero3D), {
+  ssr: false,
+  loading: () => <div className="w-full h-full min-h-[420px]" aria-hidden />,
+});
+
 type Props = { dict: Dictionary; locale: Locale };
 
-// TICKRA-REDESIGN: Premium Navy hero — navy-900 bg, two-col, accent-blue CTA.
+// TICKRA-REDESIGN: Robinhood/Public.com — black bg, vivid green accent, 3D hero scene.
 export function Hero({ dict, locale }: Props) {
   const t = dict.hero;
   const [line1, line2] = t.title;
@@ -26,37 +31,47 @@ export function Hero({ dict, locale }: Props) {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative bg-navy-900 min-h-screen w-full overflow-hidden"
+      className="relative bg-black text-white min-h-screen w-full overflow-hidden"
     >
+      {/* Subtle radial green glow behind */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{
+          background:
+            'radial-gradient(circle at 70% 40%, rgba(0,230,118,0.15), transparent 60%)',
+        }}
+      />
+
       <div className="relative z-10 mx-auto w-full max-w-container px-6 md:px-10 grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 py-20 lg:py-28 items-center">
         {/* Left column (60%) */}
         <div className="lg:col-span-3">
-          <span className="inline-block bg-navy-800 text-accent-blue text-xs font-medium px-3 py-1 rounded-full">
+          <span className="inline-block bg-white/5 text-brand text-xs font-medium px-3 py-1 rounded-full border border-brand/30">
             {t.eyebrow}
           </span>
 
           <h1
             id="hero-title"
-            className="text-white text-3xl md:text-5xl font-medium leading-tight mt-6"
+            className="text-white text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] mt-6"
           >
             {line1}
             <br />
             {renderEm(line2, emphasis)}
           </h1>
 
-          <p className="text-text-inverse/70 text-lg max-w-xl mt-4">{t.body}</p>
+          <p className="text-white/70 text-lg max-w-xl mt-6">{t.body}</p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <Link
               href={`/${locale}/placement`}
               onClick={() => trackHeroCta('click', ctaVariant)}
-              className="inline-flex items-center justify-center bg-accent-blue hover:bg-accent-blue-hover text-white px-6 py-3 rounded-lg text-base font-medium transition-colors duration-200"
+              className="inline-flex items-center justify-center bg-brand hover:bg-brand/90 text-black px-6 py-3 rounded-lg text-base font-semibold transition-colors duration-200"
             >
               {primaryCtaLabel} <span aria-hidden className="ml-1">→</span>
             </Link>
             <Link
               href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`}
-              className="inline-flex items-center justify-center border border-white/30 text-white/80 hover:bg-white/10 px-6 py-3 rounded-lg text-base transition-colors duration-200"
+              className="inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-lg text-base transition-colors duration-200"
             >
               {t.secondaryCta}
             </Link>
@@ -65,21 +80,17 @@ export function Hero({ dict, locale }: Props) {
           <dl className="flex flex-wrap gap-8 mt-12">
             {t.stats.map((s) => (
               <div key={s.label}>
-                <dt className="text-white text-3xl md:text-4xl font-medium">{s.value}</dt>
+                <dt className="text-brand text-3xl md:text-4xl font-bold">{s.value}</dt>
                 <dd className="text-white/50 text-sm mt-1">{s.label}</dd>
               </div>
             ))}
           </dl>
         </div>
 
-        {/* Right column (40%) — desktop only */}
+        {/* Right column (40%) — 3D scene, desktop only */}
         <div className="hidden lg:block lg:col-span-2">
-          <div className="bg-navy-800/80 rounded-xl p-4 shadow-2xl border border-white/5">
-            <div className="text-accent-blue text-xs font-medium">Lesson 04 / 222</div>
-            <div className="mt-3">
-              <AnimatedCandleChart />
-            </div>
-            <div className="text-white/50 text-xs mt-2">{t.chartCaption ?? 'EUR/USD · 1H · +0.21%'}</div>
+          <div className="relative w-full aspect-square">
+            <Hero3D />
           </div>
         </div>
       </div>
@@ -96,7 +107,7 @@ function renderEm(line: string, emphasis: string) {
   return (
     <>
       {before}
-      <span className="text-accent-blue">{match}</span>
+      <span className="text-brand">{match}</span>
       {after}
     </>
   );
