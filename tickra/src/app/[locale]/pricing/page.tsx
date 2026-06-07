@@ -10,6 +10,8 @@ import { PricingTable } from '@/components/pricing/PricingTable';
 import { PricingCompare } from '@/components/pricing/PricingCompare';
 import { PricingReassurance } from '@/components/pricing/PricingReassurance';
 import { TrustBar } from '@/components/pricing/TrustBar';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 
 export const metadata = { title: 'Tarifs · Tickra' };
 
@@ -31,6 +33,18 @@ export default async function PricingPage({ params }: { params: { locale: string
             <p className="mt-6 max-w-2xl text-pretty text-[17px] leading-relaxed text-muted md:text-lg">
               {t.body}
             </p>
+          </Container>
+
+          <Container as="div" className="pb-6">
+            <KpiStrip
+              items={[
+                { label: params.locale === 'fr' ? 'Pistes' : 'Tracks', value: String(TRACKS.length), tone: 'brand' },
+                { label: params.locale === 'fr' ? 'Leçons' : 'Lessons', value: String(totalLessons()) },
+                { label: params.locale === 'fr' ? 'Garantie' : 'Guarantee', value: '14d', tone: 'up', hint: params.locale === 'fr' ? 'remboursé' : 'refund' },
+                { label: params.locale === 'fr' ? 'Sans engagement' : 'Cancel anytime', value: '✓', tone: 'up' },
+              ]}
+              trailing={<LivePulse label={params.locale === 'fr' ? 'paiement sécurisé' : 'secure checkout'} />}
+            />
           </Container>
 
           <Container as="div" className="pb-20 md:pb-28">
