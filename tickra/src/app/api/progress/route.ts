@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
-import { isDbConfigured, listProgress, listMistakes, markComplete } from '@/lib/db/queries';
+import { isDbConfigured, listProgress, listMistakes, markComplete, getUser } from '@/lib/db/queries';
+import { buildSnapshot, evaluateAll } from '@/lib/achievements/catalog';
+import { recordUnlocks } from '@/lib/db/achievements-queries';
+import { notifyAchievements } from '@/lib/achievements/notify';
 
 // GET  /api/progress    → { completed, mistakes, configured }
 // POST /api/progress    body { lessonId } → marks complete server-side
@@ -56,5 +59,28 @@ export async function POST(req: Request) {
   }
 
   const ok = await markComplete(session.email, body.lessonId);
-  return NextResponse.json({ ok: true, persisted: ok, lessonId: body.lessonId });
+
+  // TICKRA-PHASE-5C: post-write achievement evaluation. Fire-and-forget so
+  // a webhook hiccup doesn't break the user's lesson-complete flow.
+  let unlocked: string[] = [];
+  if (ok) {
+    try {
+      const [progress, mistakes, user] = await Promise.all([
+        listProgress(session.email),
+        listMistakes(session.email),
+        getUser(session.email),
+      ]);
+      const snapshot = buildSnapshot({ progress, mistakes });
+      const earned = evaluateAll(snapshot);
+      const fresh = await recordUnlocks(session.email, earned);
+      unlocked = fresh;
+      if (fresh.length > 0) {
+        notifyAchievements(fresh, user?.display_name ?? null).catch(() => undefined);
+      }
+    } catch {
+      /* swallow — achievement check is best-effort */
+    }
+  }
+
+  return NextResponse.json({ ok: true, persisted: ok, lessonId: body.lessonId, unlocked });
 }

@@ -22,6 +22,7 @@ export function Navbar({ dict, locale }: Props) {
     { href: `/${locale}/battle`, label: dict.nav.battle },
     { href: `/${locale}/leaderboard`, label: locale === 'fr' ? 'Classement' : 'Leaderboard' },
     { href: `/${locale}/journal`, label: locale === 'fr' ? 'Journal' : 'Journal' },
+    { href: `/${locale}/achievements`, label: locale === 'fr' ? 'Succès' : 'Achievements' },
     { href: `/${locale}/community`, label: dict.nav.communityLink },
     { href: `/${locale}/editorial`, label: dict.nav.editorial },
     { href: `/${locale}/glossary`, label: dict.nav.glossary },
