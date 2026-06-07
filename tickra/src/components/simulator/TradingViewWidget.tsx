@@ -44,14 +44,30 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
     });
     container.appendChild(script);
 
-    // Fallback: if no iframe has been injected in 8s, assume blocked.
-    const t = window.setTimeout(() => {
+    // Fallback: TradingView spins forever when its CDN is blocked. Check
+    // early at 4s (no iframe = blocked) and late at 8s (iframe present but
+    // empty = also blocked).
+    const tEarly = window.setTimeout(() => {
       const hasIframe = container.querySelector('iframe');
       if (!hasIframe) setBlocked(true);
+    }, 4000);
+    const tLate = window.setTimeout(() => {
+      const iframe = container.querySelector('iframe') as HTMLIFrameElement | null;
+      if (!iframe) {
+        setBlocked(true);
+        return;
+      }
+      try {
+        const body = iframe.contentDocument?.body;
+        if (!body || body.innerHTML.length === 0) setBlocked(true);
+      } catch {
+        /* cross-origin iframe — can't introspect, assume it's fine */
+      }
     }, 8000);
 
     return () => {
-      window.clearTimeout(t);
+      window.clearTimeout(tEarly);
+      window.clearTimeout(tLate);
       container.innerHTML = '';
     };
   }, [symbol]);
