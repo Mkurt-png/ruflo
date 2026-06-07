@@ -3,6 +3,7 @@ import { isLocale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Hero } from '@/components/sections/Hero';
+import { MarketTicker } from '@/components/sections/MarketTicker';
 // TICKRA-IMPROVEMENT: press-strip removed until real article URLs are available.
 // To re-enable: uncomment the import + the <PressStrip /> below <Hero /> once
 // real hrefs are wired in `src/components/sections/PressStrip.tsx`.
@@ -39,6 +40,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <Hero dict={dict} locale={params.locale} />
+        {/* Live market ticker tape — synthetic prices, broker-platform feel. */}
+        <MarketTicker />
         {/* TICKRA-IMPROVEMENT: <PressStrip /> hidden until real article links exist. */}
         <Method dict={dict} />
         <BentoFeatures dict={dict} />
