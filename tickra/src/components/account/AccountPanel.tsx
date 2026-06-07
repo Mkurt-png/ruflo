@@ -30,6 +30,8 @@ import { ShareProfile } from './ShareProfile';
 import { WhatsNewBanner } from './WhatsNewBanner';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+import { getReviewQueue, dueNow } from '@/lib/progress/review';
 
 type Locale = 'fr' | 'en';
 
@@ -112,9 +114,25 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
     if (window.confirm(t.resetConfirm)) reset();
   };
 
+  const queue = ready ? getReviewQueue(state.mistakes) : [];
+  const due = dueNow(queue).length;
+  const pct = Math.round(ratio * 100);
+
   return (
     <div className="grid grid-cols-12 gap-x-6 gap-y-10">
       <FirstRunTour locale={locale} />
+
+      <div className="col-span-12">
+        <KpiStrip
+          items={[
+            { label: locale === 'fr' ? 'Progression' : 'Progress', value: `${pct}%`, tone: pct >= 50 ? 'up' : 'brand' },
+            { label: locale === 'fr' ? 'Leçons' : 'Lessons', value: `${completedCount}`, hint: `/ ${total}` },
+            { label: locale === 'fr' ? 'Pistes' : 'Tracks', value: `${startedTracks}`, hint: `/ ${TRACKS.length}` },
+            { label: locale === 'fr' ? 'À réviser' : 'Due now', value: String(due), tone: due > 0 ? 'down' : 'neutral' },
+          ]}
+          trailing={<LivePulse label={locale === 'fr' ? 'session active' : 'active'} />}
+        />
+      </div>
 
       <div className="col-span-12">
         <WhatsNewBanner locale={locale} />

@@ -5,9 +5,10 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
-import { totalLessons } from '@/lib/curriculum/data';
+import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 import { LessonResumeCard } from '@/components/learn/LessonResumeCard';
 import { TrackFilter } from '@/components/learn/TrackFilter';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const metadata = { title: 'Apprendre · Tickra' };
 
@@ -29,7 +30,17 @@ export default async function LearnPage({ params }: { params: { locale: string }
         <PageHero eyebrow={locale === 'fr' ? 'Apprendre' : 'Learn'} title={title} body={body} />
 
         <section className="border-b border-line">
-          <Container as="div" className="pb-12 pt-12 md:pb-16 md:pt-16">
+          <Container as="div" className="pb-12 pt-8 md:pb-16 md:pt-10">
+            <KpiStrip
+              className="mb-6"
+              items={[
+                { label: 'Tracks', value: String(TRACKS.length), tone: 'brand' },
+                { label: 'Lessons', value: String(totalLessons()) },
+                { label: 'Levels', value: '4', hint: locale === 'fr' ? 'fondations → maîtrise' : 'foundations → mastery' },
+                { label: 'Daily', value: '10 min', tone: 'up' },
+              ]}
+              trailing={<LivePulse label={locale === 'fr' ? 'en direct' : 'live'} />}
+            />
             <LessonResumeCard locale={locale} />
           </Container>
         </section>
