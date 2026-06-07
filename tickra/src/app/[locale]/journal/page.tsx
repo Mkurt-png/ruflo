@@ -6,6 +6,7 @@ import { listTrades } from '@/lib/db/journal-queries';
 import { Navbar } from '@/components/nav/Navbar';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { JournalApp } from '@/components/journal/JournalApp';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,12 +49,32 @@ export default async function JournalPage({ params }: { params: { locale: string
             </a>
           </div>
         ) : (
-          <JournalApp
-            initialTrades={await listTrades(session.email)}
-            locale={locale}
-          />
+          <ProJournal email={session.email} locale={locale} />
         )}
       </main>
+    </>
+  );
+}
+
+async function ProJournal({ email, locale }: { email: string; locale: Locale }) {
+  const trades = await listTrades(email);
+  const closed = trades.filter((t) => typeof t.pnl === 'number');
+  const wins = closed.filter((t) => (t.pnl ?? 0) > 0).length;
+  const winRate = closed.length ? Math.round((wins / closed.length) * 100) : 0;
+  const net = closed.reduce((acc, t) => acc + (t.pnl ?? 0), 0);
+  return (
+    <>
+      <KpiStrip
+        className="mb-6"
+        items={[
+          { label: locale === 'fr' ? 'Trades' : 'Trades', value: String(trades.length), tone: 'brand' },
+          { label: locale === 'fr' ? 'Clôturés' : 'Closed', value: String(closed.length) },
+          { label: locale === 'fr' ? 'Win rate' : 'Win rate', value: `${winRate}%`, tone: winRate >= 50 ? 'up' : winRate > 0 ? 'down' : 'neutral' },
+          { label: 'P&L', value: `${net >= 0 ? '+' : ''}${net.toFixed(0)}`, tone: net >= 0 ? 'up' : 'down', hint: 'USD' },
+        ]}
+        trailing={<LivePulse label={locale === 'fr' ? 'journal' : 'journal'} />}
+      />
+      <JournalApp initialTrades={trades} locale={locale} />
     </>
   );
 }

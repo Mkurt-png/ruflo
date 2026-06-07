@@ -6,6 +6,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { getWeeklyLeaderboard, type LeaderboardEntry } from '@/lib/db/leaderboard-queries';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 // TODO i18n — leaderboard copy is English-only for now (Phase 4A).
 export const metadata = { title: 'Weekly leaderboard · Tickra' };
@@ -37,7 +38,18 @@ export default async function LeaderboardPage({ params }: { params: { locale: st
         </section>
 
         <section>
-          <Container as="div" className="py-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Container as="div" className="py-8">
+            <KpiStrip
+              items={[
+                { label: 'Top XP', value: String(topXp[0]?.xp ?? 0), tone: 'brand' },
+                { label: 'Top Streak', value: `${topStreak[0]?.streak ?? 0}d`, tone: 'up' },
+                { label: 'Ranked', value: String(topXp.length + topStreak.length) },
+                { label: 'Window', value: '7d', hint: 'rolling' },
+              ]}
+              trailing={<LivePulse label="weekly" />}
+            />
+          </Container>
+          <Container as="div" className="pb-16 grid grid-cols-1 md:grid-cols-2 gap-8">
             <LeaderboardColumn
               title="Top XP this week"
               metric="xp"

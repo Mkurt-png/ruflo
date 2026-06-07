@@ -11,6 +11,7 @@ import {
 import { listUnlocked, recordUnlocks } from '@/lib/db/achievements-queries';
 import { Navbar } from '@/components/nav/Navbar';
 import { getDictionary } from '@/lib/i18n/dictionaries';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
 
@@ -60,10 +61,18 @@ export default async function AchievementsPage({ params }: { params: { locale: s
             {t.title}
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-muted">{t.body}</p>
-          <p className="mt-3 font-mono text-xs text-muted">
-            {totalUnlocked} / {ACHIEVEMENTS.length} {t.unlockedLabel}
-          </p>
         </header>
+
+        <KpiStrip
+          className="mb-8"
+          items={[
+            { label: locale === 'fr' ? 'Débloqués' : 'Unlocked', value: String(totalUnlocked), tone: 'brand', hint: `/ ${ACHIEVEMENTS.length}` },
+            { label: locale === 'fr' ? 'Restants' : 'Locked', value: String(ACHIEVEMENTS.length - totalUnlocked) },
+            { label: locale === 'fr' ? 'Progression' : 'Progress', value: `${Math.round((totalUnlocked / Math.max(1, ACHIEVEMENTS.length)) * 100)}%`, tone: totalUnlocked > 0 ? 'up' : 'neutral' },
+            { label: locale === 'fr' ? 'Total' : 'Total', value: String(ACHIEVEMENTS.length) },
+          ]}
+          trailing={<LivePulse label={locale === 'fr' ? 'à jour' : 'synced'} />}
+        />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {ACHIEVEMENTS.map((a) => {
