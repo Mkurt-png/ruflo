@@ -36,9 +36,11 @@ export function ReviewBanner({ locale }: { locale: Locale }) {
   const due = dueNow(queue);
   if (due.length === 0) return null;
 
-  // Open the first due lesson straight away in review mode.
-  const first = due[0];
-  const href = `/${locale}/learn/${first.track.slug}/${first.lesson.slug}?mode=review`;
+  // TICKRA-PHASE-5A: open the dedicated SM-2 review session at /review,
+  // which renders a flashcard-style flow with grade buttons. Keeps the
+  // banner's count derived from the local mistake set so it shows up even
+  // before the server has any SRS state.
+  const href = `/${locale}/review`;
 
   return (
     <article className="overflow-hidden rounded-sm border border-brand/40 bg-gradient-to-r from-brand/15 to-accent/15 p-5 md:p-6">
