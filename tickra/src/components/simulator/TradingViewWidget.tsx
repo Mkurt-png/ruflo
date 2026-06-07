@@ -43,16 +43,19 @@ type ToolId =
 type Timeframe = '1m' | '5m' | '15m' | '1h' | '4h' | '1d';
 type IndicatorId = 'MA' | 'BOLL' | 'VOL' | 'MACD' | 'RSI';
 
-const SYMBOL_PROFILE: Record<string, { base: number; vol: number; decimals: number }> = {
-  'FX:EURUSD':       { base: 1.0850, vol: 0.0008, decimals: 5 },
-  'FX:GBPUSD':       { base: 1.2700, vol: 0.0010, decimals: 5 },
-  'FX:USDJPY':       { base: 156.50, vol: 0.18,   decimals: 3 },
-  'OANDA:XAUUSD':    { base: 2340.0, vol: 6.0,    decimals: 2 },
-  'TVC:GOLD':        { base: 2340.0, vol: 6.0,    decimals: 2 },
-  'COINBASE:BTCUSD': { base: 67000,  vol: 700,    decimals: 1 },
-  'BITSTAMP:BTCUSD': { base: 67000,  vol: 700,    decimals: 1 },
-  'TVC:SPX':         { base: 5300.0, vol: 18.0,   decimals: 2 },
-  'SP:SPX':          { base: 5300.0, vol: 18.0,   decimals: 2 },
+// Per-symbol baseline + average true range at a 1h candle (realistic-ish).
+// Body amplitude is derived from `atr`, not from a per-tick noise — this is
+// what makes the candles look real instead of a flat line.
+const SYMBOL_PROFILE: Record<string, { base: number; atr: number; decimals: number }> = {
+  'FX:EURUSD':       { base: 1.0850, atr: 0.0030, decimals: 5 }, // ~30 pips ATR(1h)
+  'FX:GBPUSD':       { base: 1.2700, atr: 0.0040, decimals: 5 },
+  'FX:USDJPY':       { base: 156.50, atr: 0.50,   decimals: 3 },
+  'OANDA:XAUUSD':    { base: 2340.0, atr: 9.0,    decimals: 2 },
+  'TVC:GOLD':        { base: 2340.0, atr: 9.0,    decimals: 2 },
+  'COINBASE:BTCUSD': { base: 67000,  atr: 900,    decimals: 1 },
+  'BITSTAMP:BTCUSD': { base: 67000,  atr: 900,    decimals: 1 },
+  'TVC:SPX':         { base: 5300.0, atr: 24.0,   decimals: 2 },
+  'SP:SPX':          { base: 5300.0, atr: 24.0,   decimals: 2 },
 };
 
 const TF_TO_MS: Record<Timeframe, number> = {
@@ -64,14 +67,14 @@ const TF_TO_MS: Record<Timeframe, number> = {
   '1d': 86_400_000,
 };
 
-// Volatility scales with timeframe — a 1d candle moves more than a 1m one.
+// ATR multiplier per timeframe (sqrt-of-time scaling, capped).
 const TF_VOL_MULT: Record<Timeframe, number> = {
-  '1m': 0.25,
-  '5m': 0.5,
-  '15m': 0.75,
-  '1h': 1,
-  '4h': 1.8,
-  '1d': 3,
+  '1m':  0.20,
+  '5m':  0.40,
+  '15m': 0.65,
+  '1h':  1.0,
+  '4h':  2.0,
+  '1d':  4.5,
 };
 
 function mulberry32(seed: number) {
@@ -89,9 +92,17 @@ function profileFor(symbol: string) {
   return SYMBOL_PROFILE[symbol] ?? SYMBOL_PROFILE['FX:EURUSD'];
 }
 
-function buildSeries(symbol: string, tf: Timeframe, count = 280): KLineData[] {
+// Box-Muller approximation via uniform pairs — gives a roughly Gaussian
+// distribution so candle bodies look natural (most are small, some are big).
+function gaussian(rand: () => number): number {
+  const u = Math.max(1e-9, rand());
+  const v = rand();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+function buildSeries(symbol: string, tf: Timeframe, count = 220): KLineData[] {
   const profile = profileFor(symbol);
-  const vol = profile.vol * TF_VOL_MULT[tf];
+  const atr = profile.atr * TF_VOL_MULT[tf];
   const rand = mulberry32(
     (symbol + ':' + tf)
       .split('')
@@ -101,20 +112,37 @@ function buildSeries(symbol: string, tf: Timeframe, count = 280): KLineData[] {
   let close = profile.base;
   const now = Date.now();
   const step = TF_TO_MS[tf];
+
+  // Underlying trend regimes — flips every ~30-60 bars so we get visible
+  // up-legs / down-legs / consolidations like a real market.
+  let trendBars = 0;
+  let trend = 0; // bias per bar, in price units
+  const newTrend = () => {
+    trendBars = 30 + Math.floor(rand() * 30);
+    const dir = rand() < 0.5 ? -1 : 1;
+    trend = dir * atr * (0.05 + rand() * 0.12); // 5–17% of ATR per bar
+  };
+  newTrend();
+
   for (let i = count - 1; i >= 0; i -= 1) {
-    const drift = (rand() - 0.5) * vol * 1.6;
+    if (trendBars-- <= 0) newTrend();
+
+    // Body: trend + Gaussian noise ~ N(trend, atr * 0.5)
+    const body = trend + gaussian(rand) * atr * 0.45;
     const open = close;
-    const high = Math.max(open, open + drift) + rand() * vol * 0.7;
-    const low = Math.min(open, open + drift) - rand() * vol * 0.7;
-    close = open + drift;
-    bars.push({
-      timestamp: now - i * step,
-      open,
-      high,
-      low,
-      close,
-      volume: Math.round(rand() * 8000 + 1500),
-    });
+    close = open + body;
+
+    // Wicks: half-normal magnitude, ~30-60% of ATR
+    const wickHi = Math.abs(gaussian(rand)) * atr * 0.35;
+    const wickLo = Math.abs(gaussian(rand)) * atr * 0.35;
+    const high = Math.max(open, close) + wickHi;
+    const low = Math.min(open, close) - wickLo;
+
+    // Volume correlates with body magnitude (bigger moves = more volume).
+    const bodyAbs = Math.abs(body) / atr;
+    const volume = Math.round(2000 + bodyAbs * 6000 + rand() * 2500);
+
+    bars.push({ timestamp: now - i * step, open, high, low, close, volume });
   }
   return bars;
 }
@@ -309,7 +337,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
     const liveTick = window.setInterval(() => {
       const last = lastBarRef.current;
       if (!last) return;
-      const noise = (Math.random() - 0.5) * profile.vol * TF_VOL_MULT[timeframe] * 0.4;
+      const noise = (Math.random() - 0.5) * profile.atr * TF_VOL_MULT[timeframe] * 0.18;
       const close = last.close + noise;
       const next: KLineData = {
         ...last,
@@ -488,7 +516,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
       </div>
 
       {/* ─── Chart canvas ─────────────────────────────────────────────── */}
-      <div ref={ref} className="h-[520px] w-full" />
+      <div ref={ref} className="h-[640px] w-full" />
     </div>
   );
 }
