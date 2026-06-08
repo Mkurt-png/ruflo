@@ -5,6 +5,8 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { getHeroCtaVariant, getHeroCtaLabel, trackHeroCta, type HeroCtaVariant } from '@/lib/ab/hero-cta';
 import { CountUpStat } from '@/components/ui/CountUpStat';
+import { CursorGlow } from '@/components/fx/CursorGlow';
+import { ShimmerButton } from '@/components/fx/ShimmerButton';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -43,6 +45,9 @@ export function Hero({ dict, locale }: Props) {
             'radial-gradient(circle at 70% 40%, rgba(0,230,118,0.15), transparent 60%)',
         }}
       />
+      {/* Cursor-following brand glow + tactile noise grain. */}
+      <CursorGlow />
+      <div aria-hidden className="pointer-events-none absolute inset-0 noise opacity-[0.35]" />
 
       <div className="relative z-10 mx-auto w-full max-w-container px-6 md:px-10 grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 py-20 lg:py-28 items-center">
         {/* Left column (60%) */}
@@ -63,14 +68,13 @@ export function Hero({ dict, locale }: Props) {
           <p className="text-white/70 text-lg max-w-xl mt-6">{t.body}</p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            <Link
+            <ShimmerButton
               href={`/${locale}/placement`}
               onClick={() => trackHeroCta('click', ctaVariant)}
-              className="group inline-flex items-center justify-center bg-brand hover:bg-brand/90 text-black px-6 py-3 rounded-lg text-base font-semibold shadow-[0_0_0_0_rgba(0,210,106,0)] hover:shadow-[0_0_28px_0_rgba(0,210,106,0.35)] hover:-translate-y-0.5 transition-all duration-200"
             >
               {primaryCtaLabel}
               <span aria-hidden className="ml-1 transition-transform duration-200 group-hover:translate-x-1">→</span>
-            </Link>
+            </ShimmerButton>
             <Link
               href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`}
               className="inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-lg text-base transition-colors duration-200"
@@ -111,7 +115,7 @@ function renderEm(line: string, emphasis: string) {
   return (
     <>
       {before}
-      <span className="text-brand">{match}</span>
+      <span className="holo-text">{match}</span>
       {after}
     </>
   );
