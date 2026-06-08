@@ -817,8 +817,10 @@ const fr = {
       {
         title: 'Légal',
         links: [
+          { label: 'Mentions légales', href: '/mentions-legales' },
           { label: 'CGU', href: '/terms' },
           { label: 'Confidentialité', href: '/privacy' },
+          { label: 'Cookies', href: '/cookies' },
           { label: 'Avertissement risque', href: '/risk' },
         ],
       },
