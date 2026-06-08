@@ -10,8 +10,8 @@ import { PageHero } from '@/components/ui/PageHero';
 import { AccountPanel } from '@/components/account/AccountPanel';
 import dynamic from 'next/dynamic';
 
-const TradingGlobe3D = dynamic(
-  () => import('@/components/sections/TradingGlobe3D').then((m) => m.TradingGlobe3D),
+const PortfolioStats3D = dynamic(
+  () => import('@/components/sections/PortfolioStats3D').then((m) => m.PortfolioStats3D),
   { ssr: false, loading: () => <div className="w-full h-[320px]" aria-hidden /> },
 );
 
@@ -36,7 +36,9 @@ export default async function MePage({ params }: { params: { locale: string } })
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Compte' : 'Account'} title={title} body={body} />
 
-        {/* Futuristic 3D trading globe — signals "your trading universe". */}
+        {/* Personal stats column — circular histogram of bars pulsing
+            around a central glow pillar. Different scene from the
+            landing globe so each surface gets its own visual. */}
         <section className="relative bg-black text-white border-b border-white/10 overflow-hidden">
           <div
             aria-hidden
@@ -50,19 +52,19 @@ export default async function MePage({ params }: { params: { locale: string } })
             <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
               <div className="md:col-span-1">
                 <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-brand">
-                  {locale === 'fr' ? 'Votre univers' : 'Your universe'}
+                  {locale === 'fr' ? 'Votre progression' : 'Your progress'}
                 </span>
                 <h2 className="mt-3 font-display text-3xl md:text-4xl font-medium tracking-tight">
-                  {locale === 'fr' ? 'Connecté à tous les marchés.' : 'Wired into every market.'}
+                  {locale === 'fr' ? 'Vos stats, en colonne.' : 'Your stats, stacked.'}
                 </h2>
                 <p className="mt-3 text-[14px] text-white/60 max-w-sm">
                   {locale === 'fr'
-                    ? 'Simulateur, journal, battles : chaque action que vous faites alimente vos stats.'
-                    : 'Simulator, journal, battles: every action you take feeds into your stats.'}
+                    ? 'Chaque leçon, chaque trade, chaque battle alimente la colonne. La hauteur, c’est vous.'
+                    : 'Every lesson, every trade, every battle feeds the column. The height is you.'}
                 </p>
               </div>
               <div className="md:col-span-2">
-                <TradingGlobe3D height={360} />
+                <PortfolioStats3D height={360} />
               </div>
             </div>
           </div>
