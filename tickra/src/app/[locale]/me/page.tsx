@@ -8,6 +8,12 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { AccountPanel } from '@/components/account/AccountPanel';
+import dynamic from 'next/dynamic';
+
+const TradingGlobe3D = dynamic(
+  () => import('@/components/sections/TradingGlobe3D').then((m) => m.TradingGlobe3D),
+  { ssr: false, loading: () => <div className="w-full h-[320px]" aria-hidden /> },
+);
 
 export const metadata = { title: 'Mon compte · Tickra' };
 
@@ -29,6 +35,39 @@ export default async function MePage({ params }: { params: { locale: string } })
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Compte' : 'Account'} title={title} body={body} />
+
+        {/* Futuristic 3D trading globe — signals "your trading universe". */}
+        <section className="relative bg-black text-white border-b border-white/10 overflow-hidden">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-50"
+            style={{
+              background:
+                'radial-gradient(circle at 50% 50%, rgba(0,230,118,0.10), transparent 65%)',
+            }}
+          />
+          <div className="relative z-10 mx-auto w-full max-w-container px-6 md:px-10 py-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
+              <div className="md:col-span-1">
+                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-brand">
+                  {locale === 'fr' ? 'Votre univers' : 'Your universe'}
+                </span>
+                <h2 className="mt-3 font-display text-3xl md:text-4xl font-medium tracking-tight">
+                  {locale === 'fr' ? 'Connecté à tous les marchés.' : 'Wired into every market.'}
+                </h2>
+                <p className="mt-3 text-[14px] text-white/60 max-w-sm">
+                  {locale === 'fr'
+                    ? 'Simulateur, journal, battles : chaque action que vous faites alimente vos stats.'
+                    : 'Simulator, journal, battles: every action you take feeds into your stats.'}
+                </p>
+              </div>
+              <div className="md:col-span-2">
+                <TradingGlobe3D height={360} />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">
             <AccountPanel locale={locale} email={session.email} />

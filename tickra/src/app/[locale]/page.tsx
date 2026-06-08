@@ -4,6 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Hero } from '@/components/sections/Hero';
 import { MarketTicker } from '@/components/sections/MarketTicker';
+import { TradingUniverseSection } from '@/components/sections/TradingUniverseSection';
 // TICKRA-IMPROVEMENT: press-strip removed until real article URLs are available.
 // To re-enable: uncomment the import + the <PressStrip /> below <Hero /> once
 // real hrefs are wired in `src/components/sections/PressStrip.tsx`.
@@ -45,6 +46,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
         {/* TICKRA-IMPROVEMENT: <PressStrip /> hidden until real article links exist. */}
         <Method dict={dict} />
         <BentoFeatures dict={dict} />
+        <TradingUniverseSection locale={params.locale} />
         <PublicQuizSection locale={params.locale} />
         <CurriculumPreview dict={dict} locale={params.locale} />
         <WhyNotYoutube dict={dict} />
