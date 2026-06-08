@@ -8,6 +8,12 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { BattleJoin } from '@/components/battle/BattleJoin';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+import dynamic from 'next/dynamic';
+
+const BattleArena3D = dynamic(
+  () => import('@/components/sections/BattleArena3D').then((m) => m.BattleArena3D),
+  { ssr: false, loading: () => <div className="w-full h-[460px]" aria-hidden /> },
+);
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Battle · Tickra' };
@@ -31,6 +37,23 @@ export default async function BattleHubPage({ params }: { params: { locale: stri
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Pro' : 'Pro'} title={title} body={body} />
+
+        {/* Futuristic duel arena — two glowing avatars facing off across
+            an energy beam with travelling pulses. */}
+        <section className="relative bg-black text-white border-b border-white/10 overflow-hidden">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-55"
+            style={{
+              background:
+                'radial-gradient(ellipse at 30% 50%, rgba(0,230,118,0.12), transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(255,99,102,0.10), transparent 60%)',
+            }}
+          />
+          <div className="relative z-10 mx-auto w-full max-w-container px-6 md:px-10 py-10">
+            <BattleArena3D height={420} />
+          </div>
+        </section>
+
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-16">
             <KpiStrip
