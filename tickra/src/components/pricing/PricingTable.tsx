@@ -80,9 +80,11 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
               custom={i}
               className={cn(
                 'relative flex flex-col rounded-sm p-8 transition-transform duration-200 ease-out md:p-10',
-                // TICKRA-DESIGN: Pro plan = ink card + glassy halo + brand ring + scale.
+                // TICKRA-DESIGN: Pro plan = ink card + brand halo glow + brand ring + scale.
+                // shadow-glow-xl wraps the card in an 80px brand-coloured halo that
+                // catches the eye without breaking the layout (no border tricks).
                 highlighted
-                  ? 'border border-ink bg-ink text-canvas shadow-[0_22px_60px_-22px_rgba(124,92,217,0.55)] ring-2 ring-brand lg:scale-[1.04]'
+                  ? 'border border-ink bg-ink text-canvas shadow-glow-xl ring-2 ring-brand lg:scale-[1.04]'
                   : 'glass text-ink',
               )}
             >
