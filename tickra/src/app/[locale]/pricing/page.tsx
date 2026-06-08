@@ -10,6 +10,7 @@ import { PricingTable } from '@/components/pricing/PricingTable';
 import { PricingCompare } from '@/components/pricing/PricingCompare';
 import { PricingReassurance } from '@/components/pricing/PricingReassurance';
 import { TrustBar } from '@/components/pricing/TrustBar';
+import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 
@@ -72,6 +73,14 @@ export default async function PricingPage({ params }: { params: { locale: string
         </section>
 
         <Faq dict={dict} />
+
+        {/* AMF-aware risk warning — must appear on any surface that
+            discusses paid market education to stay defensible. */}
+        <section className="border-b border-line bg-elevated/40">
+          <Container as="div" className="py-12 md:py-16">
+            <RiskDisclosure locale={params.locale} />
+          </Container>
+        </section>
       </main>
       <Footer dict={dict} locale={params.locale} />
     </>
