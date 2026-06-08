@@ -16,6 +16,7 @@ import { easeOutExpo } from '@/lib/motion';
 import { cn } from '@/lib/cn';
 import type { LessonContent } from '@/lib/curriculum/lesson-content';
 import type { LessonMeta, TrackMeta } from '@/lib/curriculum/data';
+import { shuffleWithCorrect } from '@/lib/curriculum/shuffle';
 
 type Locale = 'fr' | 'en';
 
@@ -107,17 +108,31 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
   const [drillRevealed, setDrillRevealed] = useState(false);
 
   const intro = content.intro[locale];
-  const drillOptions = content.drill.options[locale];
   const drillPrompt = content.drill.prompt[locale];
   const drillRationale = content.drill.rationale[locale];
 
   const currentQuiz = content.quiz[quizIndex];
-  const quizOptions = currentQuiz.options[locale];
   const quizQuestion = currentQuiz.q[locale];
   const quizRationale = currentQuiz.rationale[locale];
 
-  const drillCorrect = drillChoice === content.drill.correct;
-  const quizCorrect = quizChoice === currentQuiz.correct;
+  // Shuffle options deterministically per (lesson, question, locale) so the
+  // correct answer doesn't always land on A. Seed is stable across renders.
+  const drillShuffled = useMemo(
+    () => shuffleWithCorrect(content.drill.options[locale], content.drill.correct, `${lesson.id}|drill|${locale}`),
+    [content.drill.options, content.drill.correct, lesson.id, locale],
+  );
+  const drillOptions = drillShuffled.options;
+  const drillCorrectIdx = drillShuffled.correct;
+
+  const quizShuffled = useMemo(
+    () => shuffleWithCorrect(currentQuiz.options[locale], currentQuiz.correct, `${lesson.id}|quiz|${quizIndex}|${locale}`),
+    [currentQuiz.options, currentQuiz.correct, lesson.id, quizIndex, locale],
+  );
+  const quizOptions = quizShuffled.options;
+  const quizCorrectIdx = quizShuffled.correct;
+
+  const drillCorrect = drillChoice === drillCorrectIdx;
+  const quizCorrect = quizChoice === quizCorrectIdx;
 
   const onSubmitDrill = () => {
     if (drillChoice === null) return;
@@ -304,7 +319,7 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
                       <OptionButton
                         active={drillChoice === i}
                         revealed={drillRevealed}
-                        correct={i === content.drill.correct}
+                        correct={i === drillCorrectIdx}
                         onClick={() => !drillRevealed && setDrillChoice(i)}
                       >
                         {opt}
@@ -372,7 +387,7 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
                       <OptionButton
                         active={quizChoice === i}
                         revealed={quizRevealed}
-                        correct={i === currentQuiz.correct}
+                        correct={i === quizCorrectIdx}
                         onClick={() => !quizRevealed && setQuizChoice(i)}
                       >
                         {opt}
