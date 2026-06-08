@@ -14,6 +14,7 @@ import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
 import { InstallPrompt } from '@/components/site/InstallPrompt';
 import { MobileStickyCta } from '@/components/site/MobileStickyCta';
 import { AskTickra } from '@/components/ai/AskTickra';
+import { ExitIntentModal } from '@/components/site/ExitIntentModal';
 import { OrganizationJsonLd } from '@/components/seo/OrganizationJsonLd';
 import '../globals.css';
 
@@ -91,6 +92,9 @@ export default async function LocaleLayout({
           reject={dict.cookies.reject}
           learnMore={dict.cookies.learnMore}
         />
+        {/* Lead capture on exit intent — one-shot per session, never on
+            in-funnel surfaces (signin/onboarding/learn/me). */}
+        <ExitIntentModal locale={locale} />
       </body>
     </html>
   );
