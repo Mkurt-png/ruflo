@@ -14,6 +14,7 @@ import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
 import { InstallPrompt } from '@/components/site/InstallPrompt';
 import { MobileStickyCta } from '@/components/site/MobileStickyCta';
 import { AskTickra } from '@/components/ai/AskTickra';
+import { OrganizationJsonLd } from '@/components/seo/OrganizationJsonLd';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -57,6 +58,8 @@ export default async function LocaleLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* Global Organization JSON-LD — helps Google rich results + LLM citations. */}
+        <OrganizationJsonLd />
       </head>
       <body className="min-h-screen font-sans antialiased">
         <a

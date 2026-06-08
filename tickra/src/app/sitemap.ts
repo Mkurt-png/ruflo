@@ -22,6 +22,8 @@ const routes = [
   { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/risk', changeFrequency: 'yearly' as const, priority: 0.2 },
+  { path: '/mentions-legales', changeFrequency: 'yearly' as const, priority: 0.2 },
+  { path: '/cookies', changeFrequency: 'yearly' as const, priority: 0.2 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
