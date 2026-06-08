@@ -8,9 +8,9 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { BattleJoin } from '@/components/battle/BattleJoin';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 
-const BattleArena3D = dynamic(
+const BattleArena3D = nextDynamic(
   () => import('@/components/sections/BattleArena3D').then((m) => m.BattleArena3D),
   { ssr: false, loading: () => <div className="w-full h-[460px]" aria-hidden /> },
 );
