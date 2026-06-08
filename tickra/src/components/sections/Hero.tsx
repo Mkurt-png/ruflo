@@ -4,6 +4,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { getHeroCtaVariant, getHeroCtaLabel, trackHeroCta, type HeroCtaVariant } from '@/lib/ab/hero-cta';
+import { CountUpStat } from '@/components/ui/CountUpStat';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -65,9 +66,10 @@ export function Hero({ dict, locale }: Props) {
             <Link
               href={`/${locale}/placement`}
               onClick={() => trackHeroCta('click', ctaVariant)}
-              className="inline-flex items-center justify-center bg-brand hover:bg-brand/90 text-black px-6 py-3 rounded-lg text-base font-semibold transition-colors duration-200"
+              className="group inline-flex items-center justify-center bg-brand hover:bg-brand/90 text-black px-6 py-3 rounded-lg text-base font-semibold shadow-[0_0_0_0_rgba(0,210,106,0)] hover:shadow-[0_0_28px_0_rgba(0,210,106,0.35)] hover:-translate-y-0.5 transition-all duration-200"
             >
-              {primaryCtaLabel} <span aria-hidden className="ml-1">→</span>
+              {primaryCtaLabel}
+              <span aria-hidden className="ml-1 transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
             <Link
               href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`}
@@ -80,7 +82,9 @@ export function Hero({ dict, locale }: Props) {
           <dl className="flex flex-wrap gap-8 mt-12">
             {t.stats.map((s) => (
               <div key={s.label}>
-                <dt className="text-brand text-3xl md:text-4xl font-bold">{s.value}</dt>
+                <dt className="text-brand text-3xl md:text-4xl font-bold">
+                  <CountUpStat value={s.value} />
+                </dt>
                 <dd className="text-white/50 text-sm mt-1">{s.label}</dd>
               </div>
             ))}
