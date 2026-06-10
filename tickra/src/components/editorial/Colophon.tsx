@@ -17,10 +17,10 @@ export function Colophon({ locale }: Props) {
   return (
     <section
       aria-labelledby="colophon"
-      className="relative bg-black text-white border-t border-white/[0.06]"
+      className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08]"
     >
       <div className="ed-section px-8 md:px-16">
-        <span className="ed-tag text-white/40">
+        <span className="ed-tag text-black/50">
           {locale === 'fr' ? 'Salle 07 — Colophon' : 'Room 07 — Colophon'}
         </span>
 
@@ -29,7 +29,7 @@ export function Colophon({ locale }: Props) {
         </h2>
 
         <p
-          className="mt-20 md:mt-32 ed-display text-white max-w-[1280px] text-balance"
+          className="mt-20 md:mt-32 ed-display text-[#0E0E0E] max-w-[1280px] text-balance"
           style={{ fontSize: 'clamp(40px, 6.4vw, 96px)', lineHeight: 1 }}
         >
           {closing}
@@ -37,14 +37,14 @@ export function Colophon({ locale }: Props) {
 
         <div className="mt-28 md:mt-40 grid grid-cols-12 gap-x-6 items-end">
           <div className="col-span-12 md:col-span-6">
-            <span className="ed-tag text-white/35">
+            <span className="ed-tag text-black/45">
               {locale === 'fr' ? 'Tickra · Paris · 2026' : 'Tickra · Paris · 2026'}
             </span>
           </div>
           <div className="col-span-12 md:col-span-6 md:text-right mt-10 md:mt-0">
             <Link
               href={`/${locale}/onboarding`}
-              className="ed-display text-white hover:text-white/85 transition-colors"
+              className="ed-display text-[#0E0E0E] hover:text-black/80 transition-colors"
               style={{ fontSize: 'clamp(36px, 4vw, 64px)', lineHeight: 1, letterSpacing: '-0.02em' }}
             >
               {locale === 'fr' ? 'Entrer →' : 'Enter →'}

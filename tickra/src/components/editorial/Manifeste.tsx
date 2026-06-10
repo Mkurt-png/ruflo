@@ -28,12 +28,12 @@ export function Manifeste({ locale }: Props) {
   return (
     <section
       aria-labelledby="manifeste"
-      className="relative bg-black text-white overflow-hidden border-t border-white/[0.06]"
+      className="relative bg-[#F4F1EA] text-[#0E0E0E] overflow-hidden border-t border-black/[0.08]"
     >
       <div className="ed-section relative">
         {/* Room caption */}
         <div className="px-8 md:px-16">
-          <span className="ed-tag text-white/40">{room}</span>
+          <span className="ed-tag text-black/50">{room}</span>
         </div>
 
         {/* Heading line — tiny next to the text, a colophon. */}
@@ -44,11 +44,11 @@ export function Manifeste({ locale }: Props) {
         <div className="mt-16 md:mt-24 grid grid-cols-12 gap-x-6 px-8 md:px-16">
           {items.map((line, i) => (
             <article key={i} className="col-span-12 lg:col-span-9 grid grid-cols-12 gap-x-6 mb-16 md:mb-24 last:mb-0">
-              <span className="col-span-2 md:col-span-1 ed-tag text-white/30 tabular-nums pt-3">
+              <span className="col-span-2 md:col-span-1 ed-tag text-black/40 tabular-nums pt-3">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <p
-                className="col-span-10 md:col-span-11 font-display text-white/85 text-balance"
+                className="col-span-10 md:col-span-11 font-display text-black/80 text-balance"
                 style={{ fontSize: 'clamp(22px, 3.2vw, 44px)', lineHeight: 1.18, letterSpacing: '-0.012em' }}
               >
                 {line}
@@ -59,7 +59,7 @@ export function Manifeste({ locale }: Props) {
 
         {/* Right vertical rail */}
         <div className="hidden lg:flex absolute top-0 bottom-0 right-8 items-center">
-          <span className="ed-vrail text-white/30">
+          <span className="ed-vrail text-black/40">
             {locale === 'fr' ? 'Quatre énoncés · Lecture libre' : 'Four statements · Free reading'}
           </span>
         </div>

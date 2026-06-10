@@ -28,7 +28,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
     <>
       <HomeJsonLd dict={dict} locale={locale} />
       <Navbar dict={dict} locale={locale} />
-      <main id="main" className="bg-black">
+      <main id="main" className="bg-[#F4F1EA]">
         <Overture locale={locale} />
         <Manifeste locale={locale} />
         <Archive locale={locale} />

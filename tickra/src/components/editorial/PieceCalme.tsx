@@ -15,11 +15,11 @@ export function PieceCalme({ locale }: Props) {
   return (
     <section
       aria-labelledby="piece-calme"
-      className="relative bg-black text-white border-t border-white/[0.06]"
+      className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08]"
     >
       <div className="relative" style={{ paddingTop: 'clamp(160px, 24vh, 280px)', paddingBottom: 'clamp(160px, 24vh, 280px)' }}>
         <div className="px-8 md:px-16">
-          <span className="ed-tag text-white/35">
+          <span className="ed-tag text-black/45">
             {locale === 'fr' ? 'Salle 03 — La pièce calme' : 'Room 03 — The quiet room'}
           </span>
         </div>
@@ -30,16 +30,16 @@ export function PieceCalme({ locale }: Props) {
 
         <div className="mt-24 md:mt-40 mx-auto max-w-[1080px] px-8 md:px-16">
           <p
-            className="ed-display text-white/85"
+            className="ed-display text-black/80"
             style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', lineHeight: 1.34, letterSpacing: '-0.012em' }}
           >
             {locale === 'fr' ? FR : EN}
           </p>
           <div className="mt-16 flex items-center gap-6">
-            <span className="ed-tag text-white/35">
+            <span className="ed-tag text-black/45">
               {locale === 'fr' ? '— Note pour la pratique' : '— Note to practice'}
             </span>
-            <span aria-hidden className="h-px w-24 bg-white/15" />
+            <span aria-hidden className="h-px w-24 bg-black/15" />
           </div>
         </div>
       </div>

@@ -31,21 +31,21 @@ export function Methode({ locale }: Props) {
   return (
     <section
       aria-labelledby="methode"
-      className="relative bg-black text-white border-t border-white/[0.06]"
+      className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08]"
     >
       <div className="ed-section grid grid-cols-12 gap-x-6 px-8 md:px-16">
         <aside className="col-span-12 lg:col-span-3 mb-12 lg:mb-0">
-          <span className="ed-tag text-white/40">
+          <span className="ed-tag text-black/50">
             {locale === 'fr' ? 'Salle 05 — La méthode' : 'Room 05 — The method'}
           </span>
           <h2
             id="methode"
-            className="mt-8 ed-display text-white"
+            className="mt-8 ed-display text-[#0E0E0E]"
             style={{ fontSize: 'clamp(40px, 5.4vw, 84px)' }}
           >
             {locale === 'fr' ? 'En cinq.' : 'In five.'}
           </h2>
-          <p className="mt-10 text-white/45 text-[13.5px] leading-relaxed max-w-[280px]">
+          <p className="mt-10 text-black/55 text-[13.5px] leading-relaxed max-w-[280px]">
             {locale === 'fr'
               ? 'Cinq phrases que l’on dit à voix haute avant chaque séance. Quatre suffisent ; cinq protègent.'
               : 'Five lines we say out loud before each session. Four suffice; five protect.'}
@@ -55,19 +55,19 @@ export function Methode({ locale }: Props) {
         <ol className="col-span-12 lg:col-span-9 space-y-6 md:space-y-10">
           {beats.map((b, i) => (
             <li key={i} className="grid grid-cols-12 gap-x-4 items-baseline">
-              <span className="col-span-2 md:col-span-1 ed-tag text-white/30 tabular-nums pt-3">
+              <span className="col-span-2 md:col-span-1 ed-tag text-black/40 tabular-nums pt-3">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <p
                 className="col-span-10 md:col-span-11 ed-head"
                 style={{
                   fontSize: 'clamp(28px, 4.6vw, 64px)',
-                  color: b.em ? 'rgb(255,255,255)' : 'rgba(255,255,255,0.65)',
+                  color: b.em ? 'rgb(14,14,14)' : 'rgba(0,0,0,0.62)',
                   fontStyle: b.em ? 'italic' : 'normal',
                 }}
               >
-                <span className="text-white">{b.lead}</span>
-                <span className="text-white/60">{b.tail}</span>
+                <span className="text-[#0E0E0E]">{b.lead}</span>
+                <span className="text-black/60">{b.tail}</span>
               </p>
             </li>
           ))}
