@@ -11,6 +11,7 @@ import { PricingCompare } from '@/components/pricing/PricingCompare';
 import { PricingReassurance } from '@/components/pricing/PricingReassurance';
 import { TrustBar } from '@/components/pricing/TrustBar';
 import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
+import { FaqJsonLd } from '@/components/seo/FaqJsonLd';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 
@@ -23,6 +24,7 @@ export default async function PricingPage({ params }: { params: { locale: string
 
   return (
     <>
+      <FaqJsonLd entries={dict.faq.items} />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <section className="border-b border-line">

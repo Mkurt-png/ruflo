@@ -4510,6 +4510,244 @@ const seeded: Seed = {
       { q: { fr: 'Si une notion floue :', en: 'If a notion is fuzzy:' }, options: { fr: ['Refaire la leçon', 'Forcer', 'Ignorer'], en: ['Retake lesson', 'Force', 'Ignore'] }, correct: 0, rationale: { fr: 'Consolidation.', en: 'Consolidation.' } },
     ],
   },
+
+  // ─── Psychologie — 10 leçons seedées ──────────────────────────────────
+  // La piste la plus alignée avec la voix éditoriale Tickra : peu de
+  // figures, beaucoup de phrases, chaque leçon centrée sur un biais
+  // précis et un exercice court à coucher dans le journal.
+  'psy-01': {
+    intro: {
+      fr: [
+        'La psychologie du trading n’est pas une science de l’optimisme. C’est une science du silence : reconnaître ce que l’on ressent sans laisser ce ressenti écrire l’ordre à votre place.',
+        'Avant toute figure, deux questions : « Qu’est-ce que je crois savoir maintenant que je ne savais pas ce matin ? » et « Si la réponse est “rien”, pourquoi est-ce que je clique ? ».',
+      ],
+      en: [
+        'Trading psychology is not a science of optimism. It is a science of silence: recognising what you feel without letting the feeling write the order for you.',
+        'Before any pattern, two questions: "What do I know now that I did not at sunrise?" and "If the answer is nothing, why am I clicking?".',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Après deux trades gagnants d’affilée, vous ressentez :', en: 'After two consecutive winning trades, you feel:' },
+      options: {
+        fr: ['Une envie d’augmenter la taille du prochain', 'Le besoin de relire le journal', 'Un calme inhabituel'],
+        en: ['An urge to size up on the next trade', 'A need to reread the journal', 'An unusual calm'],
+      },
+      correct: 0,
+      rationale: { fr: 'Le biais d’escalade est le plus banal et le plus coûteux. La réponse correcte est : reconnaître l’envie, ne pas la suivre.', en: 'Escalation bias is the most ordinary and the most expensive. The correct move: recognise the urge, do not act on it.' },
+    },
+    quiz: [
+      { q: { fr: 'Le silence en trading est :', en: 'Trading silence is:' }, options: { fr: ['Un outil', 'Une faiblesse', 'Un défaut'], en: ['A tool', 'A weakness', 'A flaw'] }, correct: 0, rationale: { fr: 'Outil de discipline.', en: 'A discipline tool.' } },
+      { q: { fr: 'L’escalade après gain est :', en: 'Escalation after a win is:' }, options: { fr: ['Un biais à nommer', 'Une stratégie', 'Une prime'], en: ['A bias to name', 'A strategy', 'A bonus'] }, correct: 0, rationale: { fr: 'Le nommer, c’est commencer à le défaire.', en: 'Naming it begins to defuse it.' } },
+      { q: { fr: 'Bonne question avant l’ordre :', en: 'Good pre-order question:' }, options: { fr: ['Qu’ai-je appris depuis ce matin ?', 'Combien je gagne si ça monte ?', 'Qui regarde mon trade ?'], en: ['What have I learned since sunrise?', 'How much do I make if it rises?', 'Who is watching my trade?'] }, correct: 0, rationale: { fr: 'Pose la décision sur du savoir.', en: 'Anchors the decision in knowledge.' } },
+    ],
+  },
+  'psy-02': {
+    intro: {
+      fr: [
+        'Le FOMO — la peur de manquer — est l’unique biais qui se déguise en analyse. Quand vous vous entendez dire « il faut entrer maintenant ou jamais », vous ne lisez plus le marché : vous écrivez à sa place.',
+        'L’antidote n’est pas la patience abstraite. C’est une règle écrite à l’avance : « si la figure n’est pas confirmée à la clôture, je ne touche pas ».',
+      ],
+      en: [
+        'FOMO — the fear of missing out — is the one bias that disguises itself as analysis. When you hear yourself say "it’s now or never", you no longer read the market: you write for it.',
+        'The antidote is not abstract patience. It is a written rule: "if the pattern is not confirmed at close, I do not touch".',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Le bon antidote au FOMO est :', en: 'The right antidote to FOMO is:' },
+      options: { fr: ['Une règle écrite avant la séance', 'Un screenshot', 'Plus de café'], en: ['A rule written before session', 'A screenshot', 'More coffee'] },
+      correct: 0,
+      rationale: { fr: 'La règle écrite tient debout là où l’instinct cède.', en: 'A written rule holds where instinct breaks.' },
+    },
+    quiz: [
+      { q: { fr: 'FOMO se déguise en :', en: 'FOMO disguises itself as:' }, options: { fr: ['Analyse', 'Bruit', 'Volume'], en: ['Analysis', 'Noise', 'Volume'] }, correct: 0, rationale: { fr: 'C’est le piège.', en: 'That’s the trap.' } },
+      { q: { fr: 'Signal d’alerte FOMO :', en: 'FOMO alarm phrase:' }, options: { fr: ['« maintenant ou jamais »', '« stop au point bas »', '« je laisse courir »'], en: ['"now or never"', '"stop at the low"', '"let it run"'] }, correct: 0, rationale: { fr: 'Phrase rouge.', en: 'Red phrase.' } },
+      { q: { fr: 'Confirmation utile :', en: 'Useful confirmation:' }, options: { fr: ['Clôture de la bougie', 'Retweet', 'Notification broker'], en: ['Candle close', 'Retweet', 'Broker push'] }, correct: 0, rationale: { fr: 'Clôture = preuve.', en: 'Close = evidence.' } },
+    ],
+  },
+  'psy-03': {
+    intro: {
+      fr: [
+        'Le revenge trading est le rite des perdants pressés : reperdre vite pour effacer la perte précédente. Il a un signe avant-coureur — la phrase « celui-là, je le récupère ».',
+        'Règle : après une perte, on ne rentre pas dans les 30 minutes suivantes. On écrit dans le journal ce que la perte enseigne. Si rien, on ferme la plateforme.',
+      ],
+      en: [
+        'Revenge trading is the rite of impatient losers: lose fast to erase the prior loss. It announces itself with the phrase "I’ll win this one back".',
+        'Rule: after a loss, no entry in the next 30 minutes. Write what the loss teaches in the journal. If nothing, close the platform.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Après une perte, la première action est :', en: 'After a loss, the first action is:' },
+      options: { fr: ['Noter ce que la perte enseigne', 'Doubler la taille', 'Changer de paire'], en: ['Write what the loss teaches', 'Double the size', 'Switch pair'] },
+      correct: 0,
+      rationale: { fr: 'Sans note, on répète.', en: 'No note, you repeat.' },
+    },
+    quiz: [
+      { q: { fr: 'Revenge trading vient :', en: 'Revenge trading comes from:' }, options: { fr: ['Du besoin d’effacer une perte', 'D’un signal', 'D’une note d’analyste'], en: ['The need to erase a loss', 'A signal', 'An analyst note'] }, correct: 0, rationale: { fr: 'Réaction, pas analyse.', en: 'Reaction, not analysis.' } },
+      { q: { fr: 'Délai conseillé après perte :', en: 'Suggested delay after a loss:' }, options: { fr: ['Trente minutes', 'Trente secondes', 'Aucun'], en: ['Thirty minutes', 'Thirty seconds', 'None'] }, correct: 0, rationale: { fr: 'Le temps de respirer.', en: 'Time to breathe.' } },
+      { q: { fr: 'Signe de revenge :', en: 'Revenge signal:' }, options: { fr: ['« je le récupère »', '« je passe »', '« j’attends la clôture »'], en: ['"I’ll win this back"', '"I pass"', '"I wait for close"'] }, correct: 0, rationale: { fr: 'Phrase d’alerte.', en: 'Alarm phrase.' } },
+    ],
+  },
+  'psy-04': {
+    intro: {
+      fr: [
+        'L’ennui est le métier. Les traders qui durent passent l’essentiel de leur temps à attendre que la figure se forme. Ceux qui sautent disparaissent.',
+        'Si une séance se solde par zéro trade, ce n’est pas une séance manquée — c’est une séance réussie. Le journal note : « aucun setup. Discipline respectée ».',
+      ],
+      en: [
+        'Boredom is the work. Traders who last spend most of their time waiting for the pattern to form. Those who jump disappear.',
+        'A zero-trade session is not a failed session — it is a successful one. The journal writes: "no setup. Discipline kept".',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Une séance sans trade est :', en: 'A no-trade session is:' },
+      options: { fr: ['Un succès si la discipline est tenue', 'Un échec', 'Un avertissement'], en: ['A success if discipline holds', 'A failure', 'A warning'] },
+      correct: 0,
+      rationale: { fr: 'L’abstention est une décision.', en: 'Abstention is a decision.' },
+    },
+    quiz: [
+      { q: { fr: 'L’ennui en trading est :', en: 'Boredom in trading is:' }, options: { fr: ['Le métier', 'Un défaut', 'Une raison de quitter'], en: ['The work', 'A flaw', 'A reason to quit'] }, correct: 0, rationale: { fr: 'Métier de patience.', en: 'A patience craft.' } },
+      { q: { fr: 'Séance sans setup :', en: 'No-setup session:' }, options: { fr: ['Zéro trade', 'Trade au hasard', 'Doubler la taille'], en: ['Zero trades', 'Random trade', 'Double size'] }, correct: 0, rationale: { fr: 'Pas de setup = pas d’entrée.', en: 'No setup = no entry.' } },
+      { q: { fr: 'Journal après séance vide :', en: 'Journal after empty session:' }, options: { fr: ['« discipline tenue »', '« raté »', 'rien'], en: ['"discipline kept"', '"missed"', 'nothing'] }, correct: 0, rationale: { fr: 'Marque la réussite.', en: 'Marks the win.' } },
+    ],
+  },
+  'psy-05': {
+    intro: {
+      fr: [
+        'Le biais de confirmation : ne voir, sur le graphique, que ce qui confirme la thèse déjà formée. Le remède est simple : avant d’entrer, écrire la phrase qui ferait sortir.',
+        'Si vous ne pouvez pas écrire cette phrase, c’est que la thèse n’est pas falsifiable. Et une thèse non falsifiable n’est pas une thèse — c’est une opinion.',
+      ],
+      en: [
+        'Confirmation bias: seeing on the chart only what confirms the thesis already formed. Cure: before entering, write the sentence that would make you exit.',
+        'If you cannot write that sentence, the thesis isn’t falsifiable. And a non-falsifiable thesis is not a thesis — it’s an opinion.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Avant d’entrer, on écrit :', en: 'Before entering, you write:' },
+      options: { fr: ['La phrase qui ferait sortir', 'Le P&L espéré', 'Le ticker'], en: ['The sentence that would make you exit', 'The expected P&L', 'The ticker'] },
+      correct: 0,
+      rationale: { fr: 'Falsifiabilité = trade.', en: 'Falsifiability = trade.' },
+    },
+    quiz: [
+      { q: { fr: 'Biais de confirmation :', en: 'Confirmation bias:' }, options: { fr: ['Voir ce qui rassure', 'Voir ce qui dérange', 'Tout voir'], en: ['Seeing what reassures', 'Seeing what disturbs', 'Seeing all'] }, correct: 0, rationale: { fr: 'Vision sélective.', en: 'Selective vision.' } },
+      { q: { fr: 'Une thèse de trade doit être :', en: 'A trade thesis must be:' }, options: { fr: ['Falsifiable', 'Inattaquable', 'Optimiste'], en: ['Falsifiable', 'Bulletproof', 'Optimistic'] }, correct: 0, rationale: { fr: 'Sinon = opinion.', en: 'Else = opinion.' } },
+      { q: { fr: 'Phrase à écrire avant l’ordre :', en: 'Sentence to write before order:' }, options: { fr: ['Celle qui ferait sortir', 'Celle qui ferait gagner', 'Aucune'], en: ['The one that exits', 'The one that wins', 'None'] }, correct: 0, rationale: { fr: 'L’invalidation est cardinale.', en: 'Invalidation is central.' } },
+    ],
+  },
+  'psy-06': {
+    intro: {
+      fr: [
+        'Le sunk cost — la perte que l’on refuse d’acter parce qu’elle a déjà coûté. Tenir une position perdante « parce qu’elle va revenir » est la version trader de l’addiction au passé.',
+        'Règle de cœur : un stop n’est pas une suggestion. Quand il est touché, la perte est déjà payée. Ce qui se passe ensuite est un nouveau trade.',
+      ],
+      en: [
+        'Sunk cost — the loss you refuse to book because it already cost. Holding a losing position "because it will come back" is the trader version of past addiction.',
+        'Bedrock rule: a stop is not a suggestion. When it’s touched, the loss is paid. What happens next is a new trade.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Stop touché signifie :', en: 'Stop hit means:' },
+      options: { fr: ['La perte est payée, le trade est clos', 'Attendre', 'Doubler'], en: ['Loss is paid, trade is closed', 'Wait', 'Double'] },
+      correct: 0,
+      rationale: { fr: 'Sortie = sortie.', en: 'Exit = exit.' },
+    },
+    quiz: [
+      { q: { fr: 'Sunk cost :', en: 'Sunk cost:' }, options: { fr: ['Refuser d’acter la perte', 'Sortir vite', 'Stop large'], en: ['Refuse to book the loss', 'Exit fast', 'Wide stop'] }, correct: 0, rationale: { fr: 'Définition.', en: 'By definition.' } },
+      { q: { fr: 'Un stop est :', en: 'A stop is:' }, options: { fr: ['Un engagement', 'Une suggestion', 'Un signal'], en: ['A commitment', 'A suggestion', 'A signal'] }, correct: 0, rationale: { fr: 'Contrat avec soi.', en: 'Contract with self.' } },
+      { q: { fr: 'Après stop touché :', en: 'After stop hit:' }, options: { fr: ['Nouvelle décision indépendante', 'Reprise immédiate', 'Plainte'], en: ['New independent decision', 'Immediate reentry', 'Complaint'] }, correct: 0, rationale: { fr: 'Pas de fusion mentale.', en: 'No mental fusion.' } },
+    ],
+  },
+  'psy-07': {
+    intro: {
+      fr: [
+        'Le sommeil prédit la qualité d’une séance mieux que le sentiment de marché. Un trader fatigué prend des décisions de joueur ; un trader reposé prend des décisions de méthode.',
+        'Règle simple : moins de six heures de sommeil = pas de trade direct, sauf scénario écrit la veille.',
+      ],
+      en: [
+        'Sleep predicts session quality better than market sentiment. A tired trader plays; a rested trader executes a method.',
+        'Simple rule: under six hours of sleep = no live trade unless the scenario was written the day before.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Moins de six heures de sommeil =', en: 'Under six hours of sleep =' },
+      options: { fr: ['Pas de trade improvisé', 'Plus de café', 'Doubler la taille'], en: ['No improvised trade', 'More coffee', 'Double size'] },
+      correct: 0,
+      rationale: { fr: 'Discipline physiologique.', en: 'Physiological discipline.' },
+    },
+    quiz: [
+      { q: { fr: 'Sommeil et trading :', en: 'Sleep and trading:' }, options: { fr: ['Prédicteur de qualité', 'Sans impact', 'Indicateur tardif'], en: ['Quality predictor', 'No impact', 'Lagging signal'] }, correct: 0, rationale: { fr: 'Études RH + études trading.', en: 'Both HR and trading studies.' } },
+      { q: { fr: 'Trader fatigué :', en: 'Tired trader:' }, options: { fr: ['Joueur', 'Méthodique', 'Concentré'], en: ['Player', 'Methodical', 'Focused'] }, correct: 0, rationale: { fr: 'Comportement de joueur.', en: 'Gambler behaviour.' } },
+      { q: { fr: 'Exception au sommeil court :', en: 'Exception to short sleep:' }, options: { fr: ['Scénario écrit la veille', 'Aucune', 'Bonus rare'], en: ['Scenario written the day before', 'None', 'Rare bonus'] }, correct: 0, rationale: { fr: 'Discipline écrite.', en: 'Written discipline.' } },
+    ],
+  },
+  'psy-08': {
+    intro: {
+      fr: [
+        'La taille de position est le seul levier que vous contrôlez avec certitude. Le marché décide du sens ; vous décidez du montant qui peut être perdu.',
+        'Première règle, écrite en lettres capitales dans le journal : « jamais plus de 1 % du capital par trade ».',
+      ],
+      en: [
+        'Position size is the only lever you control with certainty. The market decides direction; you decide what may be lost.',
+        'First rule, written in caps in the journal: "never more than 1% of capital per trade".',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Perte maximale par trade :', en: 'Max loss per trade:' },
+      options: { fr: ['1 % du capital', '10 % du capital', '50 % du capital'], en: ['1% of capital', '10% of capital', '50% of capital'] },
+      correct: 0,
+      rationale: { fr: 'Survie d’abord.', en: 'Survival first.' },
+    },
+    quiz: [
+      { q: { fr: 'Levier contrôlé :', en: 'Lever you control:' }, options: { fr: ['La taille de position', 'La direction du marché', 'Les nouvelles'], en: ['Position size', 'Market direction', 'The news'] }, correct: 0, rationale: { fr: 'Seul vrai contrôle.', en: 'Only real control.' } },
+      { q: { fr: 'Plafond conseillé :', en: 'Suggested cap:' }, options: { fr: ['1 % par trade', '20 % par trade', 'Aucun'], en: ['1% per trade', '20% per trade', 'None'] }, correct: 0, rationale: { fr: 'Standard d’apprentissage.', en: 'Learning standard.' } },
+      { q: { fr: 'Une mauvaise taille vient de :', en: 'Bad sizing comes from:' }, options: { fr: ['L’émotion', 'Le calcul', 'La règle'], en: ['Emotion', 'Math', 'Rule'] }, correct: 0, rationale: { fr: 'Émotion floute le calcul.', en: 'Emotion blurs math.' } },
+    ],
+  },
+  'psy-09': {
+    intro: {
+      fr: [
+        'Le ratio risque/rendement n’est pas un nombre — c’est un récit. « Je perds X si j’ai tort, je gagne au moins 2X si j’ai raison » est une phrase écrite avant l’ordre, pas un résultat lu après.',
+        'Si vous ne pouvez pas finir cette phrase à voix haute, l’ordre n’est pas prêt à partir.',
+      ],
+      en: [
+        'Risk/reward is not a number — it is a story. "I lose X if wrong, I make at least 2X if right" is a sentence written before the order, not a number read after.',
+        'If you cannot say that sentence out loud, the order is not ready to go.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Le risk/reward s’écrit :', en: 'Risk/reward is written:' },
+      options: { fr: ['Avant l’ordre', 'Après la sortie', 'Le lendemain'], en: ['Before the order', 'After the exit', 'The next day'] },
+      correct: 0,
+      rationale: { fr: 'Décision = prospective.', en: 'Decision = forward.' },
+    },
+    quiz: [
+      { q: { fr: 'Le R/R est :', en: 'R/R is:' }, options: { fr: ['Un récit', 'Une statistique', 'Un signal'], en: ['A story', 'A statistic', 'A signal'] }, correct: 0, rationale: { fr: 'Phrase, pas chiffre.', en: 'Sentence, not number.' } },
+      { q: { fr: 'Minimum sain :', en: 'Healthy minimum:' }, options: { fr: ['Gain ≥ 2× perte', 'Gain = perte', 'Gain ≥ 0,5× perte'], en: ['Gain ≥ 2× loss', 'Gain = loss', 'Gain ≥ 0.5× loss'] }, correct: 0, rationale: { fr: 'Asymétrie favorable.', en: 'Favourable asymmetry.' } },
+      { q: { fr: 'Test de prêt :', en: 'Readiness test:' }, options: { fr: ['Dire le R/R à voix haute', 'Lire un tweet', 'Regarder le chart'], en: ['Say R/R out loud', 'Read a tweet', 'Look at chart'] }, correct: 0, rationale: { fr: 'Parler = clarifier.', en: 'Saying = clarifying.' } },
+    ],
+  },
+  'psy-10': {
+    intro: {
+      fr: [
+        'Le journal de trading est l’unique salle de sport psychologique. Il ne sert pas à comptabiliser les gains — il sert à confronter le trader d’aujourd’hui à celui d’hier.',
+        'Trois lignes après chaque trade : la décision prise, l’émotion ressentie au moment de cliquer, la phrase à reprendre la prochaine fois. Pas une de plus.',
+      ],
+      en: [
+        'The trading journal is the only psychological gym. It is not for counting gains — it is for confronting today’s trader with yesterday’s.',
+        'Three lines after each trade: the decision taken, the emotion felt at the click, the sentence to bring back next time. Not one more.',
+      ],
+    },
+    drill: {
+      prompt: { fr: 'Le journal sert à :', en: 'The journal serves to:' },
+      options: { fr: ['Se confronter à soi', 'Compter les gains', 'Impressionner'], en: ['Confront oneself', 'Count gains', 'Impress'] },
+      correct: 0,
+      rationale: { fr: 'Outil de discipline.', en: 'Discipline tool.' },
+    },
+    quiz: [
+      { q: { fr: 'Trois entrées par trade :', en: 'Three lines per trade:' }, options: { fr: ['Décision, émotion, phrase de retour', 'Heure, P&L, ticker', 'Aucune'], en: ['Decision, emotion, return-sentence', 'Time, P&L, ticker', 'None'] }, correct: 0, rationale: { fr: 'Format Tickra.', en: 'Tickra format.' } },
+      { q: { fr: 'Fréquence d’écriture :', en: 'Writing cadence:' }, options: { fr: ['Après chaque trade', 'Une fois par mois', 'Jamais'], en: ['After each trade', 'Once a month', 'Never'] }, correct: 0, rationale: { fr: 'Régularité = mémoire.', en: 'Regularity = memory.' } },
+      { q: { fr: 'Objectif du journal :', en: 'Journal goal:' }, options: { fr: ['Ne pas répéter', 'Faire joli', 'Partager'], en: ['Not to repeat', 'Look nice', 'Share'] }, correct: 0, rationale: { fr: 'Correction du double.', en: 'Pattern correction.' } },
+    ],
+  },
 };
 
 // ─── Placeholder generator ─────────────────────────────────────────────────

@@ -12,6 +12,7 @@ import { isSeeded } from '@/lib/curriculum/lesson-content';
 import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
 import { LessonPreviewPopover } from '@/components/learn/LessonPreviewPopover';
 import { LessonLockBadge } from '@/components/learn/LessonLockBadge';
+import { CourseJsonLd } from '@/components/seo/CourseJsonLd';
 import { CalendarClock, Info } from 'lucide-react';
 
 type Params = { locale: string; track: string };
@@ -40,6 +41,7 @@ export default async function TrackPage({ params }: { params: Params }) {
 
   return (
     <>
+      <CourseJsonLd track={track} locale={locale} />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <section className="border-b border-line">
