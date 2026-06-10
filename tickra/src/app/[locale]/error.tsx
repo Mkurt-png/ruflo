@@ -1,75 +1,80 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { RefreshCw, ArrowRight } from 'lucide-react';
-import { Container } from '@/components/ui/Container';
+import { useEffect } from 'react';
 
-const copy = {
-  fr: {
-    title: 'Quelque chose s’est cassé.',
-    body:
-      'Une erreur inattendue est survenue. L’équipe Tickra a été notifiée. Vous pouvez réessayer ou revenir à l’accueil.',
-    retry: 'Réessayer',
-    home: 'Retour à l’accueil',
-  },
-  en: {
-    title: 'Something broke.',
-    body:
-      'An unexpected error occurred. The Tickra team has been notified. You can retry or go back home.',
-    retry: 'Retry',
-    home: 'Back to home',
-  },
-};
+// Editorial 500 — when something crashes server-side or on a route
+// boundary. Same paper register as 404. Logs the error once (placeholder
+// for a Sentry hook when the team wires one) and gives the user a single
+// dignified way out.
 
-export default function Error({
+export default function GlobalError({
   error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const pathname = usePathname() ?? '';
-  const locale: 'fr' | 'en' = pathname.startsWith('/fr') ? 'fr' : 'en';
-  const t = useMemo(() => copy[locale], [locale]);
-
   useEffect(() => {
-    // Wire to your error reporter (Sentry, etc.) when configured.
-    console.error('[tickra] route error', error);
+    // Sentry / monitoring hook would go here. For now, dev console only.
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.error('[tickra] route error', error);
+    }
   }, [error]);
 
   return (
-    <main className="flex min-h-[60vh] items-center">
-      <Container as="div" className="py-24">
-        <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">500</span>
-        <h1 className="mt-6 max-w-2xl font-display text-display-md font-medium tracking-tight text-balance text-ink">
-          {t.title}
-        </h1>
-        <p className="mt-4 max-w-md text-[16px] leading-relaxed text-muted">{t.body}</p>
-        {error.digest ? (
-          <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
-            ref: {error.digest}
+    <main className="min-h-screen w-full bg-[#F4F1EA] text-[#0E0E0E] flex flex-col">
+      <header className="px-6 md:px-16 pt-10 flex items-start justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
+          Tickra · Service technique
+        </span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+          500 / Erreur serveur
+        </span>
+      </header>
+
+      <section className="flex-1 grid grid-cols-12 gap-x-6 items-center px-6 md:px-16">
+        <div className="col-span-12 lg:col-span-9">
+          <p
+            className="font-display italic font-light text-[#0E0E0E]"
+            style={{ fontSize: 'clamp(48px, 10vw, 144px)', lineHeight: 0.86, letterSpacing: '-0.035em' }}
+          >
+            La salle <br className="hidden md:block" />
+            est fermée.
           </p>
-        ) : null}
-        <div className="mt-10 flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={reset}
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90"
-          >
-            <RefreshCw aria-hidden className="h-4 w-4" strokeWidth={1.75} />
-            {t.retry}
-          </button>
-          <Link
-            href={`/${locale}`}
-            className="inline-flex h-12 items-center gap-2 rounded-full border border-line px-6 text-[15px] font-medium tracking-tight text-ink transition-colors hover:border-ink"
-          >
-            {t.home}
-            <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
-          </Link>
+          <p className="mt-10 max-w-md text-[15px] leading-relaxed text-black/65">
+            Quelque chose s’est interrompu côté serveur. L’incident a été noté.
+            On peut tenter d’ouvrir à nouveau, ou revenir au catalogue.
+          </p>
+          {error?.digest ? (
+            <p className="mt-6 font-mono text-[11px] text-black/40 tabular-nums">
+              Référence · {error.digest}
+            </p>
+          ) : null}
+          <div className="mt-12 flex flex-wrap gap-8">
+            <button
+              type="button"
+              onClick={reset}
+              className="font-mono text-[11px] uppercase tracking-[0.34em] text-[#0E0E0E] underline underline-offset-4 hover:text-black/80 transition-colors"
+            >
+              Tenter à nouveau
+            </button>
+            <Link
+              href="/fr"
+              className="font-mono text-[11px] uppercase tracking-[0.34em] text-black/65 hover:text-[#0E0E0E] transition-colors"
+            >
+              Retour au catalogue
+            </Link>
+          </div>
         </div>
-      </Container>
+      </section>
+
+      <footer className="px-6 md:px-16 pb-10">
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+          Folio 500
+        </span>
+      </footer>
     </main>
   );
 }

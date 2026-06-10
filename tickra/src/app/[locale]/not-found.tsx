@@ -1,42 +1,50 @@
-'use client';
-
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Container } from '@/components/ui/Container';
 
-const copy = {
-  fr: {
-    title: 'Cette page n’existe pas.',
-    body: 'Le lien que vous avez suivi est cassé, ou la page a été déplacée.',
-    home: 'Retour à l’accueil',
-  },
-  en: {
-    title: 'This page does not exist.',
-    body: 'The link you followed is broken, or the page has moved.',
-    home: 'Back to home',
-  },
-};
+// Editorial 404 — matches the landing's ivory paper register. No mascot,
+// no oversized brand, just a folio number, a quiet line, and one link
+// back. The page is intentionally locale-agnostic because it can be
+// reached from anywhere in the app.
 
 export default function NotFound() {
-  const pathname = usePathname() ?? '';
-  const locale: 'fr' | 'en' = pathname.startsWith('/fr') ? 'fr' : 'en';
-  const t = copy[locale];
-
   return (
-    <main className="flex min-h-[60vh] items-center">
-      <Container as="div" className="py-24">
-        <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">404</span>
-        <h1 className="mt-6 max-w-2xl font-display text-display-md font-medium tracking-tight text-balance text-ink">
-          {t.title}
-        </h1>
-        <p className="mt-4 max-w-md text-[16px] leading-relaxed text-muted">{t.body}</p>
+    <main className="min-h-screen w-full bg-[#F4F1EA] text-[#0E0E0E] flex flex-col">
+      <header className="px-6 md:px-16 pt-10 flex items-start justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
+          Tickra · Service du catalogue
+        </span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+          404 / Page introuvable
+        </span>
+      </header>
+
+      <section className="flex-1 grid grid-cols-12 gap-x-6 items-center px-6 md:px-16">
+        <div className="col-span-12 lg:col-span-9">
+          <p
+            className="font-display italic font-light text-[#0E0E0E]"
+            style={{ fontSize: 'clamp(48px, 10vw, 144px)', lineHeight: 0.86, letterSpacing: '-0.035em' }}
+          >
+            La salle <br className="hidden md:block" />
+            n’existe pas.
+          </p>
+          <p className="mt-10 max-w-md text-[15px] leading-relaxed text-black/65">
+            L’adresse demandée ne figure pas au catalogue, ou a été retirée des cimaises.
+            Aucun mal — le fonds principal reste accessible.
+          </p>
+        </div>
+      </section>
+
+      <footer className="px-6 md:px-16 pb-10 flex items-end justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+          Folio 404
+        </span>
         <Link
-          href={`/${locale}`}
-          className="mt-10 inline-flex h-12 w-fit items-center justify-center rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90"
+          href="/fr"
+          className="font-display italic text-[#0E0E0E] hover:text-black/80 transition-colors"
+          style={{ fontSize: 'clamp(28px, 3.4vw, 48px)', lineHeight: 1, letterSpacing: '-0.02em' }}
         >
-          {t.home}
+          Retour au catalogue →
         </Link>
-      </Container>
+      </footer>
     </main>
   );
 }
