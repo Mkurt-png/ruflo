@@ -2,72 +2,43 @@ import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
-import { Hero } from '@/components/sections/Hero';
-import { MarketTicker } from '@/components/sections/MarketTicker';
-import { TradingUniverseSection } from '@/components/sections/TradingUniverseSection';
-// TICKRA-IMPROVEMENT: press-strip removed until real article URLs are available.
-// To re-enable: uncomment the import + the <PressStrip /> below <Hero /> once
-// real hrefs are wired in `src/components/sections/PressStrip.tsx`.
-// import { PressStrip } from '@/components/sections/PressStrip';
-import { Method } from '@/components/sections/Method';
-import { BentoFeatures } from '@/components/sections/BentoFeatures';
-import { CurriculumPreview } from '@/components/sections/CurriculumPreview';
-import { WhyNotYoutube } from '@/components/sections/WhyNotYoutube';
-import { Metrics } from '@/components/sections/Metrics';
-import { Testimonials } from '@/components/sections/Testimonials';
-import { BuiltBy } from '@/components/sections/BuiltBy';
-import { Pricing } from '@/components/sections/Pricing';
-import { SimulatorShowcase } from '@/components/sections/SimulatorShowcase';
-import { Community } from '@/components/sections/Community';
-import { Roadmap } from '@/components/sections/Roadmap';
-import { WallOfWins } from '@/components/sections/WallOfWins';
-import { ChangelogPing } from '@/components/sections/ChangelogPing';
-import { Faq } from '@/components/sections/Faq';
-import { Newsletter } from '@/components/sections/Newsletter';
-import { CtaFinal } from '@/components/sections/CtaFinal';
 import { Footer } from '@/components/sections/Footer';
 import { HomeJsonLd } from '@/components/seo/HomeJsonLd';
-import { PublicQuizSection } from '@/components/landing/PublicQuizSection';
-import { EditorialPreview } from '@/components/landing/EditorialPreview';
-// TICKRA-PHASE-6: MobileStickyCta now mounted globally in the layout.
+import { Overture } from '@/components/editorial/Overture';
+import { Manifeste } from '@/components/editorial/Manifeste';
+import { Archive } from '@/components/editorial/Archive';
+import { PieceCalme } from '@/components/editorial/PieceCalme';
+import { Epreuve } from '@/components/editorial/Epreuve';
+import { Methode } from '@/components/editorial/Methode';
+import { LePari } from '@/components/editorial/LePari';
+import { Colophon } from '@/components/editorial/Colophon';
+
+// Landing recomposed as an editorial sequence — seven "rooms" instead of
+// the canonical Hero/Features/Testimonials stack. Underlying functionality
+// (auth, routing, curriculum, pricing, quiz, account) is untouched; this
+// file only changes the surface composition. The previous landing is kept
+// at /[locale]/page.legacy.tsx.bak so nothing is destroyed.
 
 export default async function HomePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const dict = await getDictionary(params.locale);
+  const locale = params.locale;
 
   return (
     <>
-      <HomeJsonLd dict={dict} locale={params.locale} />
-      <Navbar dict={dict} locale={params.locale} />
-      <main id="main">
-        <Hero dict={dict} locale={params.locale} />
-        {/* Live market ticker tape — synthetic prices, broker-platform feel. */}
-        <MarketTicker />
-        {/* TICKRA-IMPROVEMENT: <PressStrip /> hidden until real article links exist. */}
-        <Method dict={dict} />
-        <BentoFeatures dict={dict} />
-        <TradingUniverseSection locale={params.locale} />
-        <PublicQuizSection locale={params.locale} />
-        <CurriculumPreview dict={dict} locale={params.locale} />
-        <WhyNotYoutube dict={dict} />
-        <Metrics dict={dict} />
-        <Testimonials dict={dict} />
-        <BuiltBy dict={dict} />
-        <Pricing dict={dict} locale={params.locale} />
-        {/* TICKRA-FEATURE: simulator showcase teasing the Pro paper-trading tool. */}
-        <SimulatorShowcase locale={params.locale} />
-        <Community dict={dict} locale={params.locale} />
-        <Roadmap dict={dict} />
-        {/* TICKRA-PHASE-4: anonymised weekly wall-of-wins, transparent stats. */}
-        <WallOfWins locale={params.locale} />
-        {/* TICKRA-IMPROVEMENT: small "last product update" proof-of-life line. */}
-        <ChangelogPing locale={params.locale} />
-        <EditorialPreview locale={params.locale} />
-        <Faq dict={dict} />
-        <Newsletter dict={dict} locale={params.locale} />
-        <CtaFinal dict={dict} locale={params.locale} />
+      <HomeJsonLd dict={dict} locale={locale} />
+      <Navbar dict={dict} locale={locale} />
+      <main id="main" className="bg-black">
+        <Overture locale={locale} />
+        <Manifeste locale={locale} />
+        <Archive locale={locale} />
+        <PieceCalme locale={locale} />
+        <Epreuve locale={locale} />
+        <Methode locale={locale} />
+        <LePari locale={locale} />
+        <Colophon locale={locale} />
       </main>
-      <Footer dict={dict} locale={params.locale} />
+      <Footer dict={dict} locale={locale} />
     </>
   );
 }

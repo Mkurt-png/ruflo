@@ -1,0 +1,45 @@
+/* Editorial layer — appended to globals.css via a JSX import.
+   Pure utility classes for the new landing composition. Black-dominant,
+   typography-driven. No effects spam. */
+
+/* Issue-style overline. */
+.ed-tag {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+/* Editorial serif display, used for the very large heads. */
+.ed-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  line-height: 0.84;
+  font-feature-settings: "ss01" on;
+}
+
+/* Tight headline serif for mid-size statements. */
+.ed-head {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Vertical rail label (rotated). */
+.ed-vrail {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* Soft horizontal hairline rules — used as section separators. */
+.ed-rule { height: 1px; background: rgba(255,255,255,0.08); width: 100%; }
+
+/* Generous section padding helper. */
+.ed-section { padding-top: clamp(120px, 18vh, 220px); padding-bottom: clamp(120px, 18vh, 220px); }

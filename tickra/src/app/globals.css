@@ -287,3 +287,39 @@ body {
     animation: none;
   }
 }
+
+/* ─── Editorial layer ───
+   Utility classes for the redesigned landing composition. Black-dominant,
+   typography-driven. Lives outside @layer utilities so the cascade is
+   straightforward and easy to override at the page level. */
+.ed-tag {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+.ed-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.04em;
+  line-height: 0.84;
+}
+.ed-head {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.ed-vrail {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+.ed-section {
+  padding-top: clamp(120px, 18vh, 220px);
+  padding-bottom: clamp(120px, 18vh, 220px);
+}
