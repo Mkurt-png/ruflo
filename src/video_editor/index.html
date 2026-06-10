@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VidEdit — Montage Vidéo YouTube</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── Loading overlay (FFmpeg init) ──────────────────────────────────── -->
+<div id="loading-overlay" class="overlay">
+  <div class="overlay-card">
+    <div class="spinner"></div>
+    <h2>Chargement de FFmpeg…</h2>
+    <p id="loading-msg">Initialisation du moteur vidéo</p>
+  </div>
+</div>
+
+<!-- ── Export modal ───────────────────────────────────────────────────── -->
+<div id="export-modal" class="overlay hidden">
+  <div class="overlay-card wide">
+    <h2>Exporter la vidéo</h2>
+    <div class="export-options">
+      <label>Résolution
+        <select id="export-resolution">
+          <option value="1920x1080">1080p (YouTube recommandé)</option>
+          <option value="2560x1440">1440p (2K)</option>
+          <option value="3840x2160">2160p (4K)</option>
+          <option value="1280x720">720p</option>
+        </select>
+      </label>
+      <label>Format
+        <select id="export-format">
+          <option value="mp4">MP4 (H.264)</option>
+          <option value="webm">WebM (VP9)</option>
+        </select>
+      </label>
+      <label>Qualité CRF
+        <input type="range" id="export-crf" min="15" max="35" value="23" />
+        <span id="crf-value">23</span>
+      </label>
+    </div>
+    <div id="export-progress-wrap" class="hidden">
+      <div class="progress-bar">
+        <div id="export-progress-bar" class="progress-fill"></div>
+      </div>
+      <p id="export-status">Encodage en cours…</p>
+    </div>
+    <div class="modal-actions">
+      <button id="btn-export-cancel" class="btn btn-secondary">Annuler</button>
+      <button id="btn-export-start" class="btn btn-primary btn-red">
+        ▶ Exporter
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Text overlay modal ─────────────────────────────────────────────── -->
+<div id="text-modal" class="overlay hidden">
+  <div class="overlay-card">
+    <h2>Ajouter un texte</h2>
+    <label>Texte <input type="text" id="text-input" placeholder="Ton titre ici…" /></label>
+    <label>Taille <input type="range" id="text-size" min="12" max="120" value="48" /></label>
+    <label>Couleur <input type="color" id="text-color" value="#ffffff" /></label>
+    <label>Position
+      <select id="text-position">
+        <option value="top">En haut</option>
+        <option value="center" selected>Centre</option>
+        <option value="bottom">En bas</option>
+      </select>
+    </label>
+    <label>Durée (sec) <input type="number" id="text-duration" value="3" min="1" max="60" /></label>
+    <div class="modal-actions">
+      <button id="btn-text-cancel" class="btn btn-secondary">Annuler</button>
+      <button id="btn-text-add" class="btn btn-primary">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Navbar ─────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <span class="logo">🎬 VidEdit</span>
+    <span class="tagline">Montage YouTube Pro</span>
+  </div>
+  <div class="navbar-center">
+    <button class="btn-nav" id="btn-undo" title="Annuler (Ctrl+Z)">↩</button>
+    <button class="btn-nav" id="btn-redo" title="Refaire (Ctrl+Y)">↪</button>
+    <span class="separator"></span>
+    <button class="btn-nav" id="btn-split" title="Couper le clip à la position actuelle (S)">✂</button>
+    <button class="btn-nav" id="btn-delete-clip" title="Supprimer le clip sélectionné (Del)">🗑</button>
+    <span class="separator"></span>
+    <button class="btn-nav" id="btn-add-text" title="Ajouter un titre/texte">T</button>
+    <button class="btn-nav" id="btn-zoom-in" title="Zoom +">🔍+</button>
+    <button class="btn-nav" id="btn-zoom-out" title="Zoom −">🔍−</button>
+  </div>
+  <div class="navbar-right">
+    <span id="project-duration">00:00:00</span>
+    <button class="btn btn-primary btn-red" id="btn-open-export">
+      ↑ Exporter
+    </button>
+  </div>
+</nav>
+
+<!-- ── Main editor area ───────────────────────────────────────────────── -->
+<div class="editor-layout">
+
+  <!-- Media library -->
+  <aside class="panel media-panel">
+    <div class="panel-header">
+      <span>Médias</span>
+      <button class="btn-icon" id="btn-import" title="Importer des fichiers">＋</button>
+    </div>
+    <div class="media-drop-zone" id="media-drop-zone">
+      <span>Glisser-déposer<br/>ou cliquer pour importer</span>
+    </div>
+    <div class="media-list" id="media-list"></div>
+    <input type="file" id="file-input" multiple accept="video/*,audio/*,image/*" hidden />
+  </aside>
+
+  <!-- Preview player -->
+  <section class="preview-section">
+    <div class="preview-container">
+      <video id="preview-video" muted></video>
+      <canvas id="preview-canvas"></canvas>
+      <div class="preview-placeholder" id="preview-placeholder">
+        <span>Importez une vidéo pour commencer</span>
+      </div>
+    </div>
+    <div class="playback-controls">
+      <span id="time-current">00:00:00</span>
+      <button class="btn-ctrl" id="btn-rewind" title="Retour au début">⏮</button>
+      <button class="btn-ctrl btn-play" id="btn-play" title="Lecture / Pause (Espace)">▶</button>
+      <button class="btn-ctrl" id="btn-forward" title="Avancer 5s">⏩</button>
+      <span id="time-total">00:00:00</span>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="1" title="Volume" />
+      <span class="vol-icon">🔊</span>
+    </div>
+  </section>
+
+  <!-- Tools panel -->
+  <aside class="panel tools-panel">
+    <div class="panel-header"><span>Propriétés</span></div>
+    <div id="clip-properties" class="properties-empty">
+      <span>Sélectionne un clip</span>
+    </div>
+    <div id="clip-props-form" class="clip-props hidden">
+      <label>Vitesse
+        <input type="range" id="prop-speed" min="0.25" max="4" step="0.25" value="1" />
+        <span id="prop-speed-val">1×</span>
+      </label>
+      <label>Volume
+        <input type="range" id="prop-volume" min="0" max="2" step="0.05" value="1" />
+        <span id="prop-volume-val">100%</span>
+      </label>
+      <label>Opacité
+        <input type="range" id="prop-opacity" min="0" max="1" step="0.05" value="1" />
+        <span id="prop-opacity-val">100%</span>
+      </label>
+      <div class="prop-row">
+        <button class="btn btn-sm btn-secondary" id="prop-btn-split">✂ Couper</button>
+        <button class="btn btn-sm btn-danger" id="prop-btn-delete">🗑 Supprimer</button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ── Timeline section ───────────────────────────────────────────────── -->
+<div class="timeline-section">
+  <div class="timeline-toolbar">
+    <div class="track-headers">
+      <div class="track-header-label"></div>
+      <div class="track-header-row">
+        <div class="track-header">🎥 Vidéo 1</div>
+        <div class="track-header">🔊 Audio 1</div>
+        <div class="track-header">💬 Textes</div>
+      </div>
+    </div>
+  </div>
+  <div class="timeline-scroll-wrap" id="timeline-scroll-wrap">
+    <canvas id="timeline-canvas"></canvas>
+  </div>
+</div>
+
+<script src="js/processor.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
