@@ -19,7 +19,7 @@ export function Colophon({ locale }: Props) {
       aria-labelledby="colophon"
       className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08]"
     >
-      <div className="ed-section px-8 md:px-16">
+      <div className="ed-section px-6 md:px-16">
         <span className="ed-tag text-black/50">
           {locale === 'fr' ? 'Salle 07 — Colophon' : 'Room 07 — Colophon'}
         </span>

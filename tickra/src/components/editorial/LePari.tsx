@@ -16,7 +16,7 @@ export function LePari({ locale }: Props) {
       aria-labelledby="le-pari"
       className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08]"
     >
-      <div className="ed-section px-8 md:px-16">
+      <div className="ed-section px-6 md:px-16">
         <span className="ed-tag text-black/50">{room}</span>
         <h2 id="le-pari" className="sr-only">
           {locale === 'fr' ? 'Tarifs' : 'Pricing'}

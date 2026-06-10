@@ -17,7 +17,7 @@ export function Epreuve({ locale }: Props) {
       className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08] overflow-hidden"
     >
       <div className="ed-section">
-        <div className="px-8 md:px-16">
+        <div className="px-6 md:px-16">
           <span className="ed-tag text-black/50">{room}</span>
         </div>
 
@@ -26,20 +26,20 @@ export function Epreuve({ locale }: Props) {
         </h2>
 
         {/* Asymmetric composition — first line top-left, second line offset right */}
-        <div className="mt-20 md:mt-32 px-8 md:px-16">
+        <div className="mt-20 md:mt-32 px-6 md:px-16">
           <p
             className="ed-display text-[#0E0E0E]"
             style={{ fontSize: 'clamp(48px, 9vw, 140px)' }}
           >
             <span className="block">{locale === 'fr' ? 'Cinq questions.' : 'Five questions.'}</span>
             <span
-              className="block pl-[18%] mt-2 md:mt-4"
+              className="block pl-[10%] md:pl-[18%] mt-2 md:mt-4"
               style={{ color: 'rgba(0,0,0,0.55)' }}
             >
               {locale === 'fr' ? 'Dix minutes.' : 'Ten minutes.'}
             </span>
             <span
-              className="block pl-[36%] mt-2 md:mt-4"
+              className="block pl-[22%] md:pl-[36%] mt-2 md:mt-4"
               style={{ color: 'rgba(0,0,0,0.45)' }}
             >
               {locale === 'fr' ? 'Aucune triche.' : 'No second guesses.'}
@@ -48,7 +48,7 @@ export function Epreuve({ locale }: Props) {
         </div>
 
         {/* Footnote-style detail */}
-        <div className="mt-24 md:mt-40 px-8 md:px-16 grid grid-cols-12 gap-x-6 items-baseline">
+        <div className="mt-24 md:mt-40 px-6 md:px-16 grid grid-cols-12 gap-x-6 items-baseline">
           <p className="col-span-12 md:col-span-7 lg:col-span-6 text-black/55 text-[15px] leading-relaxed">
             {locale === 'fr'
               ? 'Une seule passe. Le résultat ne se note pas — il s’écrit dans le journal. La piste qui suit dépend de la phrase que tu te diras après la dernière question.'

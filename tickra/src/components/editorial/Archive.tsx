@@ -25,7 +25,7 @@ export function Archive({ locale }: Props) {
     >
       <div className="ed-section">
         {/* Header strip — caption + a single numeric anchor */}
-        <header className="px-8 md:px-16 flex items-end justify-between gap-12">
+        <header className="px-6 md:px-16 flex items-end justify-between gap-12">
           <div>
             <span className="ed-tag text-black/50">
               {locale === 'fr' ? 'Salle 02 — Archive' : 'Room 02 — Archive'}
@@ -57,7 +57,7 @@ export function Archive({ locale }: Props) {
               >
                 <Link
                   href={`/${locale}/learn/${track.slug}`}
-                  className="group block px-8 md:px-16 py-6 md:py-8 grid grid-cols-12 gap-x-6 items-baseline transition-colors hover:bg-black/[0.03]"
+                  className="group block px-6 md:px-16 py-6 md:py-8 grid grid-cols-12 gap-x-6 items-baseline transition-colors hover:bg-black/[0.03]"
                 >
                   <span className="col-span-2 md:col-span-1 ed-tag text-black/45 tabular-nums">
                     {String(i + 1).padStart(2, '0')}
@@ -83,7 +83,7 @@ export function Archive({ locale }: Props) {
                 {isOn && (
                   <div
                     aria-hidden
-                    className="hidden lg:grid px-8 md:px-16 pb-10 grid-cols-12 gap-x-6 -mt-2"
+                    className="hidden lg:grid px-6 md:px-16 pb-10 grid-cols-12 gap-x-6 -mt-2"
                   >
                     <ol className="col-start-2 col-span-9 grid grid-cols-2 gap-x-12 gap-y-2 text-black/55 text-[13.5px] tabular-nums leading-tight">
                       {track.lessons.slice(0, 8).map((l, k) => (
@@ -108,7 +108,7 @@ export function Archive({ locale }: Props) {
         </ol>
 
         {/* End-of-list signature */}
-        <footer className="px-8 md:px-16 mt-10 flex items-center justify-between">
+        <footer className="px-6 md:px-16 mt-10 flex items-center justify-between">
           <span className="ed-tag text-black/45 tabular-nums">Fin de l’index</span>
           <Link
             href={`/${locale}/learn`}

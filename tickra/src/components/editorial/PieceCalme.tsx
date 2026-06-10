@@ -18,7 +18,7 @@ export function PieceCalme({ locale }: Props) {
       className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08]"
     >
       <div className="relative" style={{ paddingTop: 'clamp(160px, 24vh, 280px)', paddingBottom: 'clamp(160px, 24vh, 280px)' }}>
-        <div className="px-8 md:px-16">
+        <div className="px-6 md:px-16">
           <span className="ed-tag text-black/45">
             {locale === 'fr' ? 'Salle 03 — La pièce calme' : 'Room 03 — The quiet room'}
           </span>
@@ -28,7 +28,7 @@ export function PieceCalme({ locale }: Props) {
           {locale === 'fr' ? 'Psychologie' : 'Psychology'}
         </h2>
 
-        <div className="mt-24 md:mt-40 mx-auto max-w-[1080px] px-8 md:px-16">
+        <div className="mt-24 md:mt-40 mx-auto max-w-[1080px] px-6 md:px-16">
           <p
             className="ed-display text-black/80"
             style={{ fontSize: 'clamp(26px, 3.4vw, 46px)', lineHeight: 1.34, letterSpacing: '-0.012em' }}

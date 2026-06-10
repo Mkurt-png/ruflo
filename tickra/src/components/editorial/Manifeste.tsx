@@ -32,7 +32,7 @@ export function Manifeste({ locale }: Props) {
     >
       <div className="ed-section relative">
         {/* Room caption */}
-        <div className="px-8 md:px-16">
+        <div className="px-6 md:px-16">
           <span className="ed-tag text-black/50">{room}</span>
         </div>
 
@@ -41,7 +41,7 @@ export function Manifeste({ locale }: Props) {
           {locale === 'fr' ? 'Manifeste' : 'Manifesto'}
         </h2>
 
-        <div className="mt-16 md:mt-24 grid grid-cols-12 gap-x-6 px-8 md:px-16">
+        <div className="mt-16 md:mt-24 grid grid-cols-12 gap-x-6 px-6 md:px-16">
           {items.map((line, i) => (
             <article key={i} className="col-span-12 lg:col-span-9 grid grid-cols-12 gap-x-6 mb-16 md:mb-24 last:mb-0">
               <span className="col-span-2 md:col-span-1 ed-tag text-black/40 tabular-nums pt-3">

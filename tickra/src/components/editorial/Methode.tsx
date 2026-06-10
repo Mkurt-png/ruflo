@@ -33,7 +33,7 @@ export function Methode({ locale }: Props) {
       aria-labelledby="methode"
       className="relative bg-[#F4F1EA] text-[#0E0E0E] border-t border-black/[0.08]"
     >
-      <div className="ed-section grid grid-cols-12 gap-x-6 px-8 md:px-16">
+      <div className="ed-section grid grid-cols-12 gap-x-6 px-6 md:px-16">
         <aside className="col-span-12 lg:col-span-3 mb-12 lg:mb-0">
           <span className="ed-tag text-black/50">
             {locale === 'fr' ? 'Salle 05 — La méthode' : 'Room 05 — The method'}

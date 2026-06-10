@@ -25,7 +25,7 @@ export function Overture({ locale }: Props) {
       <div aria-hidden className="pointer-events-none absolute top-0 bottom-0 right-[8.33%] w-px bg-black/[0.08]" />
 
       {/* Top row — mono captions at the extremities */}
-      <header className="absolute top-10 left-0 right-0 px-8 md:px-16 flex items-start justify-between">
+      <header className="absolute top-10 left-0 right-0 px-6 md:px-16 flex items-start justify-between">
         <span className="ed-tag text-black/55">{overline}</span>
         <span className="ed-tag text-black/50 tabular-nums">{issue}</span>
       </header>
