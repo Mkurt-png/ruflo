@@ -18,6 +18,7 @@ export function Navbar({ dict, locale }: Props) {
   ];
 
   const exploreItems = [
+    { href: `/${locale}/criee`, label: locale === 'fr' ? 'La Criée' : 'La Criée' },
     { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
     { href: `/${locale}/battle`, label: dict.nav.battle },
     { href: `/${locale}/leaderboard`, label: locale === 'fr' ? 'Classement' : 'Leaderboard' },

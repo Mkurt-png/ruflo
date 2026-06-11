@@ -8,6 +8,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { AccountPanel } from '@/components/account/AccountPanel';
+import { CoteTicker } from '@/components/account/CoteTicker';
 import dynamic from 'next/dynamic';
 
 const PortfolioStats3D = dynamic(
@@ -68,6 +69,15 @@ export default async function MePage({ params }: { params: { locale: string } })
               </div>
             </div>
           </div>
+        </section>
+
+        {/* TICKRA-COTE: une note unique remplace l'écran de stats. Tout
+            ce qui suit reste accessible mais cette cotation est le
+            premier objet vu en arrivant sur le compte. */}
+        <section className="border-b border-line">
+          <Container as="div" className="py-12 md:py-16">
+            <CoteTicker locale={locale} />
+          </Container>
         </section>
 
         <section className="border-b border-line">
