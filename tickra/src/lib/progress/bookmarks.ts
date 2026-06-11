@@ -1,8 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { scopedKey, SCOPE_EVENT } from './scope';
 
-const STORAGE_KEY = 'tickra-bookmarks-v1';
+const BASE_KEY = 'tickra-bookmarks-v1';
+const STORAGE_KEY = () => scopedKey(BASE_KEY);
 const SYNCED_KEY = 'tickra-bookmarks-server-synced-v1';
 
 export type BookmarksState = {
@@ -14,7 +16,7 @@ const empty: BookmarksState = { bookmarks: {} };
 function read(): BookmarksState {
   if (typeof window === 'undefined') return empty;
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(STORAGE_KEY());
     if (!raw) return empty;
     const parsed = JSON.parse(raw) as BookmarksState;
     if (!parsed?.bookmarks) return empty;
@@ -27,7 +29,7 @@ function read(): BookmarksState {
 function write(state: BookmarksState) {
   if (typeof window === 'undefined') return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    window.localStorage.setItem(STORAGE_KEY(), JSON.stringify(state));
   } catch {
     /* ignore */
   }
@@ -49,9 +51,11 @@ export function useBookmarks() {
     setState(read());
     setReady(true);
     const onStorage = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY) setState(read());
+      if (e.key === STORAGE_KEY()) setState(read());
     };
     window.addEventListener('storage', onStorage);
+    const onScope = () => setState(read());
+    window.addEventListener(SCOPE_EVENT, onScope);
 
     let cancelled = false;
     (async () => {
@@ -83,6 +87,7 @@ export function useBookmarks() {
 
     return () => {
       window.removeEventListener('storage', onStorage);
+      window.removeEventListener(SCOPE_EVENT, onScope);
       cancelled = true;
     };
   }, []);

@@ -4,7 +4,10 @@
 // quest, closing a simulator trade. Levels scale gently (100 XP each for the
 // first 5, then 150, 200, 250…) so the early levels feel quick to reach.
 
-const STORAGE_KEY = 'tickra-xp-v1';
+import { scopedKey } from './scope';
+
+const BASE_KEY = 'tickra-xp-v1';
+const STORAGE_KEY = () => scopedKey(BASE_KEY);
 
 export type XpState = {
   total: number;
@@ -17,7 +20,7 @@ const empty: XpState = { total: 0, daily: {} };
 export function readXp(): XpState {
   if (typeof window === 'undefined') return empty;
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(STORAGE_KEY());
     if (!raw) return empty;
     const parsed = JSON.parse(raw) as XpState;
     if (typeof parsed?.total !== 'number') return empty;
@@ -30,7 +33,7 @@ export function readXp(): XpState {
 export function writeXp(state: XpState): void {
   if (typeof window === 'undefined') return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    window.localStorage.setItem(STORAGE_KEY(), JSON.stringify(state));
   } catch {
     /* ignore */
   }

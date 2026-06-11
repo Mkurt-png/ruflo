@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { NotebookPen, Check } from 'lucide-react';
+import { scopedKey } from '@/lib/progress/scope';
 
 type Locale = 'fr' | 'en';
 
@@ -27,7 +28,7 @@ const copy = {
 
 export function LessonNotes({ lessonId, locale }: { lessonId: string; locale: Locale }) {
   const t = copy[locale];
-  const key = STORAGE_PREFIX + lessonId;
+  const key = scopedKey(STORAGE_PREFIX + lessonId);
   const [value, setValue] = useState('');
   const [saved, setSaved] = useState(true);
   const debounceRef = useRef<number | null>(null);

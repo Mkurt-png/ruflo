@@ -1,8 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { scopedKey, SCOPE_EVENT } from './scope';
 
-const STORAGE_KEY = 'tickra-progress-v1';
+const BASE_KEY = 'tickra-progress-v1';
+const STORAGE_KEY = () => scopedKey(BASE_KEY);
 const SERVER_SYNCED_KEY = 'tickra-progress-server-synced-v1';
 
 export type Mistake = {
@@ -21,7 +23,7 @@ const empty: ProgressState = { completed: {}, mistakes: {} };
 function read(): ProgressState {
   if (typeof window === 'undefined') return empty;
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(STORAGE_KEY());
     if (!raw) return empty;
     const parsed = JSON.parse(raw) as ProgressState;
     if (!parsed || typeof parsed !== 'object' || !parsed.completed) return empty;
@@ -34,7 +36,7 @@ function read(): ProgressState {
 function write(state: ProgressState) {
   if (typeof window === 'undefined') return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    window.localStorage.setItem(STORAGE_KEY(), JSON.stringify(state));
   } catch {
     /* quota or private mode — silently degrade */
   }
@@ -74,9 +76,14 @@ export function useProgress() {
 
     // Cross-tab sync.
     const onStorage = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY) setState(read());
+      if (e.key === STORAGE_KEY()) setState(read());
     };
     window.addEventListener('storage', onStorage);
+
+    // Account change (sign-in / sign-out) — keys are per-account, so a
+    // scope switch means a different bucket: re-read.
+    const onScope = () => setState(read());
+    window.addEventListener(SCOPE_EVENT, onScope);
 
     // Server sync — only the first time per session so we don't fight
     // optimistic local writes.
@@ -113,6 +120,7 @@ export function useProgress() {
 
     return () => {
       window.removeEventListener('storage', onStorage);
+      window.removeEventListener(SCOPE_EVENT, onScope);
       cancelled = true;
     };
   }, []);

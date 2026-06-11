@@ -4,6 +4,7 @@ import { Download } from 'lucide-react';
 import { useProgress } from '@/lib/progress/hook';
 import { useBookmarks } from '@/lib/progress/bookmarks';
 import { toast } from '@/components/site/ToastProvider';
+import { getScopeId } from '@/lib/progress/scope';
 
 type Locale = 'fr' | 'en';
 
@@ -25,13 +26,19 @@ const copy = {
 const NOTE_PREFIX = 'tickra-note:';
 
 function collectNotes(): Record<string, string> {
+  // Only export the current account's notes. Anonymous notes have no
+  // "::" scope suffix; signed-in notes end with "::<scope>".
   const out: Record<string, string> = {};
   try {
+    const scope = getScopeId();
+    const suffix = scope === 'anon' ? '' : `::${scope}`;
     for (let i = 0; i < window.localStorage.length; i++) {
       const k = window.localStorage.key(i);
       if (!k || !k.startsWith(NOTE_PREFIX)) continue;
+      if (suffix === '' && k.includes('::')) continue;
+      if (suffix !== '' && !k.endsWith(suffix)) continue;
       const v = window.localStorage.getItem(k);
-      if (v) out[k.slice(NOTE_PREFIX.length)] = v;
+      if (v) out[k.slice(NOTE_PREFIX.length, suffix ? -suffix.length : undefined)] = v;
     }
   } catch {
     /* ignore */

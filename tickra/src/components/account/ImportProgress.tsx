@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { Upload } from 'lucide-react';
 import { toast } from '@/components/site/ToastProvider';
+import { scopedKey } from '@/lib/progress/scope';
 
 type Locale = 'fr' | 'en';
 
@@ -62,27 +63,27 @@ export function ImportProgress({ locale }: { locale: Locale }) {
         return;
       }
       // Merge progress
-      const existingProgressRaw = window.localStorage.getItem(PROGRESS_KEY);
+      const existingProgressRaw = window.localStorage.getItem(scopedKey(PROGRESS_KEY));
       const existingProgress = existingProgressRaw ? JSON.parse(existingProgressRaw) : {};
       const mergedProgress = {
         completed: mergeRecords(existingProgress.completed, data.completed),
         mistakes: mergeRecords(existingProgress.mistakes, data.mistakes),
       };
-      window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(mergedProgress));
+      window.localStorage.setItem(scopedKey(PROGRESS_KEY), JSON.stringify(mergedProgress));
 
       // Merge bookmarks
-      const existingBookmarksRaw = window.localStorage.getItem(BOOKMARKS_KEY);
+      const existingBookmarksRaw = window.localStorage.getItem(scopedKey(BOOKMARKS_KEY));
       const existingBookmarks = existingBookmarksRaw ? JSON.parse(existingBookmarksRaw) : { bookmarks: {} };
       const mergedBookmarks = {
         bookmarks: mergeRecords(existingBookmarks.bookmarks, data.bookmarks),
       };
-      window.localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(mergedBookmarks));
+      window.localStorage.setItem(scopedKey(BOOKMARKS_KEY), JSON.stringify(mergedBookmarks));
 
       // Merge notes (key by lessonId, store as raw string)
       if (data.notes) {
         for (const [lessonId, body] of Object.entries(data.notes)) {
           if (typeof body === 'string') {
-            window.localStorage.setItem(NOTE_PREFIX + lessonId, body);
+            window.localStorage.setItem(scopedKey(NOTE_PREFIX + lessonId), body);
           }
         }
       }
