@@ -83,6 +83,15 @@ const WINGS: Wing[] = [
           en: 'Every word in a lesson opens to its definition, on click.',
         },
       },
+      {
+        slug: 'cercle',
+        title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+        caption: {
+          fr: 'Chaque semaine, la Lettre d’un autre lecteur. Sans messagerie, sans visage.',
+          en: 'Each week, another reader’s Letter. No messaging, no face.',
+        },
+        signed: true,
+      },
     ],
   },
   {
