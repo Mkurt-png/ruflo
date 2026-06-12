@@ -25,6 +25,8 @@ export function Navbar({ dict, locale }: Props) {
     { href: `/${locale}/journal`, label: locale === 'fr' ? 'Journal' : 'Journal' },
     { href: `/${locale}/lettre`, label: locale === 'fr' ? 'La Lettre' : 'The Letter' },
     { href: `/${locale}/survie`, label: locale === 'fr' ? 'Survie' : 'Survival' },
+    { href: `/${locale}/refus`, label: locale === 'fr' ? 'Le Refus' : 'The Refusal' },
+    { href: `/${locale}/erratum`, label: locale === 'fr' ? 'L’Erratum' : 'The Erratum' },
     { href: `/${locale}/achievements`, label: locale === 'fr' ? 'Succès' : 'Achievements' },
     { href: `/${locale}/community`, label: dict.nav.communityLink },
     { href: `/${locale}/editorial`, label: dict.nav.editorial },
