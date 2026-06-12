@@ -10,7 +10,7 @@ import { Footer } from '@/components/sections/Footer';
 // activé quand la migration commerciale sera prête ; la candor note
 // le dit.
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400;
 export const metadata = {
   title: 'L’Édition Lifetime · Tickra',
   description:
@@ -78,13 +78,13 @@ export default async function EditionPage({ params }: { params: { locale: string
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
               {locale === 'fr' ? 'En préparation' : 'In preparation'}
             </span>
           </header>
 
           <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <p
+            <h1
               className="font-display italic font-light text-[#0E0E0E]"
               style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
             >
@@ -93,7 +93,7 @@ export default async function EditionPage({ params }: { params: { locale: string
               <span className="text-black/55">{t.head2}</span>
               <br />
               <span className="text-black/35">{t.head3}</span>
-            </p>
+            </h1>
           </div>
 
           <p
@@ -105,7 +105,7 @@ export default async function EditionPage({ params }: { params: { locale: string
         </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45 border-t border-black/15 pt-10">
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65 border-t border-black/15 pt-10">
             {t.contents}
           </p>
           <ol className="mt-6 space-y-5">
@@ -125,7 +125,7 @@ export default async function EditionPage({ params }: { params: { locale: string
           </ol>
 
           <div className="mt-16 border-t border-black/15 pt-6 flex flex-wrap items-baseline justify-between gap-4">
-            <p className="font-mono text-[10.5px] leading-relaxed text-black/45 max-w-[480px]">
+            <p className="font-mono text-[10.5px] leading-relaxed text-black/65 max-w-[480px]">
               {t.candor}
             </p>
             <Link

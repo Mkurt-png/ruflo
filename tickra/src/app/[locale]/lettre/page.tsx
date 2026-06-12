@@ -11,7 +11,7 @@ import { LettrePanel } from '@/components/lettre/LettrePanel';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 export const metadata = editorialMeta({
   slug: 'lettre',
   title: 'La Lettre du dimanche',
@@ -36,7 +36,7 @@ export default async function LettrePage({ params }: { params: { locale: string 
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {locale === 'fr' ? 'La Lettre — bilan hebdomadaire' : 'The Letter — weekly digest'}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
               {locale === 'fr' ? 'Lecture · ~10 min' : 'Read · ~10 min'}
             </span>
           </header>

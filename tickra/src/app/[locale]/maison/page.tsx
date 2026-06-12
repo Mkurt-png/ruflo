@@ -14,7 +14,7 @@ import { Footer } from '@/components/sections/Footer';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400;
 export const metadata = editorialMeta({
   slug: 'maison',
   title: 'La Maison',
@@ -289,14 +289,14 @@ export default async function MaisonPage({ params }: { params: { locale: string 
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
               {total} {locale === 'fr' ? 'pièces · ' : 'rooms · '}
               {WINGS.length} {locale === 'fr' ? 'ailes' : 'wings'}
             </span>
           </header>
 
           <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <p
+            <h1
               className="font-display italic font-light text-[#0E0E0E]"
               style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
             >
@@ -305,7 +305,7 @@ export default async function MaisonPage({ params }: { params: { locale: string 
               <span className="text-black/55">{t.head2}</span>
               <br />
               <span className="text-black/35">{t.head3}</span>
-            </p>
+            </h1>
           </div>
 
           <p
@@ -328,7 +328,7 @@ export default async function MaisonPage({ params }: { params: { locale: string 
                   >
                     {wing.title[locale]}
                   </h2>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45 tabular-nums">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65 tabular-nums">
                     {wing.rooms.length}
                   </span>
                 </div>
@@ -348,7 +348,7 @@ export default async function MaisonPage({ params }: { params: { locale: string 
                             {room.title[locale]}
                           </span>
                           {room.signed && (
-                            <span className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-black/45">
+                            <span className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-black/65">
                               {t.signedNote}
                             </span>
                           )}
@@ -368,7 +368,7 @@ export default async function MaisonPage({ params }: { params: { locale: string 
           </div>
 
           <footer className="mt-24 border-t border-black/15 pt-6">
-            <p className="font-mono text-[10.5px] leading-relaxed text-black/45 max-w-[640px]">
+            <p className="font-mono text-[10.5px] leading-relaxed text-black/65 max-w-[640px]">
               {t.footer}
             </p>
           </footer>

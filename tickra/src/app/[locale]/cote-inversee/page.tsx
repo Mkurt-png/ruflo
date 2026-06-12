@@ -12,7 +12,7 @@ import { Footer } from '@/components/sections/Footer';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 export const metadata = editorialMeta({
   slug: 'cote-inversee',
   title: 'La Cote inversée',
@@ -136,13 +136,13 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
               {EDITIONS.length} {locale === 'fr' ? 'éditions' : 'editions'}
             </span>
           </header>
 
           <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <p
+            <h1
               className="font-display italic font-light text-[#0E0E0E]"
               style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
             >
@@ -151,7 +151,7 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
               <span className="text-black/55">{t.head2}</span>
               <br />
               <span className="text-black/35">{t.head3}</span>
-            </p>
+            </h1>
           </div>
 
           <p
@@ -182,7 +182,7 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
 
               <div className="mt-8 grid gap-x-12 gap-y-8 md:grid-cols-[200px_1fr] items-baseline">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
                     {t.score}
                   </p>
                   <p
@@ -202,7 +202,7 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
                 </div>
 
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
                     {t.parts}
                   </p>
                   <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 max-w-[420px]">
@@ -228,7 +228,7 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
               </div>
 
               <div className="mt-10">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45">
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
                   {t.note}
                 </p>
                 <p
@@ -242,7 +242,7 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
           ))}
 
           <footer className="mt-24 border-t border-black/15 pt-6">
-            <p className="font-mono text-[10.5px] leading-relaxed text-black/45 max-w-[640px]">
+            <p className="font-mono text-[10.5px] leading-relaxed text-black/65 max-w-[640px]">
               {t.footer}
             </p>
           </footer>

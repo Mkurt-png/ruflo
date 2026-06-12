@@ -12,7 +12,7 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // needed. Four components, four lines, one note about how the
 // reading is bounded.
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400;
 export const metadata = editorialMeta({
   slug: 'method',
   title: 'La Méthode',
@@ -134,13 +134,13 @@ export default async function MethodPage({ params }: { params: { locale: string 
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
               {locale === 'fr' ? 'Plafond' : 'Cap'} {CAP.toFixed(1)}
             </span>
           </header>
 
           <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <p
+            <h1
               className="font-display italic font-light text-[#0E0E0E]"
               style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
             >
@@ -149,7 +149,7 @@ export default async function MethodPage({ params }: { params: { locale: string 
               <span className="text-black/55">{t.head2}</span>
               <br />
               <span className="text-black/35">{t.head3}</span>
-            </p>
+            </h1>
           </div>
 
           <p

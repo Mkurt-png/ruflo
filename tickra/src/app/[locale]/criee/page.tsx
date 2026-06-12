@@ -40,7 +40,7 @@ export default async function CrieePage({ params }: { params: { locale: string }
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {locale === 'fr' ? 'La Criée — séance d’ouverture' : 'La Criée — opening session'}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
               {formattedDate}
             </span>
           </header>

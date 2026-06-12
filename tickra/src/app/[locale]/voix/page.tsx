@@ -12,7 +12,7 @@ import { VOIX } from '@/lib/tickra/voix';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 export const metadata = editorialMeta({
   slug: 'voix',
   title: 'Les Voix',
@@ -82,13 +82,13 @@ export default async function VoixPage({ params }: { params: { locale: string } 
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
               {VOIX.length} {locale === 'fr' ? 'voix' : 'voices'}
             </span>
           </header>
 
           <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <p
+            <h1
               className="font-display italic font-light text-[#0E0E0E]"
               style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
             >
@@ -97,7 +97,7 @@ export default async function VoixPage({ params }: { params: { locale: string } 
               <span className="text-black/55">{t.head2}</span>
               <br />
               <span className="text-black/35">{t.head3}</span>
-            </p>
+            </h1>
           </div>
 
           <p
@@ -122,7 +122,7 @@ export default async function VoixPage({ params }: { params: { locale: string } 
                   >
                     {v.pseudonym}
                   </span>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-black/45 tabular-nums">
+                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-black/65 tabular-nums">
                     {formatDate(v.date, locale)} · {v.city[locale]} · {v.craft[locale]}
                   </p>
                 </div>
@@ -132,7 +132,7 @@ export default async function VoixPage({ params }: { params: { locale: string } 
               </header>
 
               {!v.audioUrl && (
-                <p className="mt-6 font-mono text-[10.5px] uppercase tracking-[0.28em] text-black/45">
+                <p className="mt-6 font-mono text-[10.5px] uppercase tracking-[0.28em] text-black/65">
                   {t.audioMissing}
                 </p>
               )}
@@ -163,7 +163,7 @@ export default async function VoixPage({ params }: { params: { locale: string } 
           ))}
 
           <footer className="mt-24 border-t border-black/15 pt-6">
-            <p className="font-mono text-[10.5px] leading-relaxed text-black/45 max-w-[640px]">
+            <p className="font-mono text-[10.5px] leading-relaxed text-black/65 max-w-[640px]">
               {t.footer}
             </p>
           </footer>

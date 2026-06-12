@@ -37,7 +37,7 @@ export default async function SurviePage({ params }: { params: { locale: string 
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {locale === 'fr' ? 'Le Calculateur — entrée du carnet' : 'The Calculator — ledger entry'}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
               {locale === 'fr' ? 'Local · navigateur' : 'Local · browser'}
             </span>
           </header>

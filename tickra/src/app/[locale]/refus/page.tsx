@@ -11,7 +11,7 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // A manifesto by negation, in the editorial register. Static content,
 // no logic, no progress — defines the brand by what it refuses.
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400;
 export const metadata = editorialMeta({
   slug: 'refus',
   title: 'Le Refus',
@@ -68,13 +68,13 @@ export default async function RefusPage({ params }: { params: { locale: string }
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
               {locale === 'fr' ? 'Permanent' : 'Permanent'}
             </span>
           </header>
 
           <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <p
+            <h1
               className="font-display italic font-light text-[#0E0E0E]"
               style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
             >
@@ -83,7 +83,7 @@ export default async function RefusPage({ params }: { params: { locale: string }
               <span className="text-black/55">{t.head2}</span>
               <br />
               <span className="text-black/35">{t.head3}</span>
-            </p>
+            </h1>
           </div>
 
           <p
@@ -123,7 +123,7 @@ export default async function RefusPage({ params }: { params: { locale: string }
           </ol>
 
           <footer className="mt-24 border-t border-black/15 pt-6">
-            <p className="font-mono text-[10.5px] leading-relaxed text-black/45 max-w-[640px]">
+            <p className="font-mono text-[10.5px] leading-relaxed text-black/65 max-w-[640px]">
               {t.footer}
             </p>
           </footer>

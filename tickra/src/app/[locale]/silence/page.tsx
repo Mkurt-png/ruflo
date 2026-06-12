@@ -14,7 +14,7 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // modals, badge animations, confetti, streak fireworks. Pairs with
 // /refus (what we won't build) and /erratum (what we got wrong).
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400;
 export const metadata = editorialMeta({
   slug: 'silence',
   title: 'Le Silence éditorial',
@@ -209,13 +209,13 @@ export default async function SilencePage({ params }: { params: { locale: string
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
               {t.counters(BANISHED.length)}
             </span>
           </header>
 
           <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <p
+            <h1
               className="font-display italic font-light text-[#0E0E0E]"
               style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
             >
@@ -224,7 +224,7 @@ export default async function SilencePage({ params }: { params: { locale: string
               <span className="text-black/55">{t.head2}</span>
               <br />
               <span className="text-black/35">{t.head3}</span>
-            </p>
+            </h1>
           </div>
 
           <p
@@ -247,10 +247,11 @@ export default async function SilencePage({ params }: { params: { locale: string
                 </span>
                 <div>
                   <h2
-                    className="font-display italic text-[#0E0E0E] line-through decoration-black/25 decoration-1"
+                    className="font-display italic text-[#0E0E0E]"
                     style={{ fontSize: 'clamp(24px, 3vw, 34px)', letterSpacing: '-0.018em', lineHeight: 1.1 }}
+                    aria-label={locale === 'fr' ? `Banni : ${b.pattern[locale]}` : `Banished: ${b.pattern[locale]}`}
                   >
-                    {b.pattern[locale]}
+                    <del className="decoration-black/25 decoration-1">{b.pattern[locale]}</del>
                   </h2>
                   <p
                     className="mt-5 font-display leading-relaxed text-[#0E0E0E]/80 max-w-[640px]"
@@ -259,7 +260,7 @@ export default async function SilencePage({ params }: { params: { locale: string
                     {b.why[locale]}
                   </p>
                   <div className="mt-5 border-l border-black/15 pl-5">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
                       {t.instead}
                     </span>
                     <p
@@ -277,7 +278,7 @@ export default async function SilencePage({ params }: { params: { locale: string
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <div className="border-t border-black/15 pt-10 flex flex-wrap items-baseline justify-between gap-4">
-            <p className="font-mono text-[10.5px] leading-relaxed text-black/45 max-w-[480px]">
+            <p className="font-mono text-[10.5px] leading-relaxed text-black/65 max-w-[480px]">
               {t.footer}
             </p>
             <div className="flex gap-6">

@@ -104,7 +104,7 @@ export default async function VeilleePage({ params }: { params: { locale: string
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {t.eyebrow}
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
+            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
               {state.phase === 'reading' && `${t.inSession} · ${state.lineIndex + 1}/${state.totalLines}`}
               {state.phase === 'opening' && t.openingLabel}
               {state.phase === 'closing' && t.closingLabel}
@@ -130,7 +130,7 @@ export default async function VeilleePage({ params }: { params: { locale: string
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           {state.phase === 'before' && (
             <div className="border-t border-black/15 pt-12">
-              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45">
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
                 {t.before}
               </p>
               <p
@@ -160,8 +160,8 @@ export default async function VeilleePage({ params }: { params: { locale: string
           )}
 
           {state.phase === 'reading' && (
-            <div className="border-t border-black/15 pt-12">
-              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/45 tabular-nums">
+            <div className="border-t border-black/15 pt-12" aria-live="polite" aria-atomic="true">
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65 tabular-nums">
                 {String(state.lineIndex + 1).padStart(2, '0')} / {String(state.totalLines).padStart(2, '0')}
               </p>
               <p
@@ -199,12 +199,13 @@ export default async function VeilleePage({ params }: { params: { locale: string
           )}
 
           <footer className="mt-24 border-t border-black/15 pt-6 flex items-baseline justify-between gap-4">
-            <p className="font-mono text-[10.5px] leading-relaxed text-black/45 max-w-[480px]">
+            <p className="font-mono text-[10.5px] leading-relaxed text-black/65 max-w-[480px]">
               {t.note}
             </p>
             <a
-              href="."
-              className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55 hover:text-black/90"
+              href={`/${locale}/veillee`}
+              aria-label={t.refresh}
+              className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55 hover:text-black/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black/80"
             >
               {t.refresh} →
             </a>
