@@ -9,6 +9,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { AccountPanel } from '@/components/account/AccountPanel';
 import { CoteTicker } from '@/components/account/CoteTicker';
+import { RituelBanner } from '@/components/rituel/RituelBanner';
 import dynamic from 'next/dynamic';
 
 const PortfolioStats3D = dynamic(
@@ -76,6 +77,8 @@ export default async function MePage({ params }: { params: { locale: string } })
             premier objet vu en arrivant sur le compte. */}
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-16">
+            <RituelBanner locale={locale} />
+            <div className="mt-10" />
             <CoteTicker locale={locale} />
           </Container>
         </section>
