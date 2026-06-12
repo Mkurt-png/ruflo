@@ -7,6 +7,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { JournalApp } from '@/components/journal/JournalApp';
 import { GreffierPanel } from '@/components/journal/GreffierPanel';
+import { AutopsiePanel } from '@/components/journal/AutopsiePanel';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
@@ -77,6 +78,7 @@ async function ProJournal({ email, locale }: { email: string; locale: Locale }) 
       />
       <JournalApp initialTrades={trades} locale={locale} />
       <GreffierPanel trades={trades} locale={locale} />
+      <AutopsiePanel trades={trades} locale={locale} />
     </>
   );
 }
