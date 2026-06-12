@@ -125,9 +125,16 @@ const PARTNER_LETTERS: { fr: string[]; en: string[] }[] = [
   },
 ];
 
+// Salt prevents identical-email-across-deployments linkability and
+// raises the brute-force bar against the small 300-bucket pseudonym
+// space. djb2 stays — the pseudonym is editorial, not auth — but
+// the salt anchors it to this app instance.
+const CERCLE_SALT = process.env.NEXT_PUBLIC_CERCLE_SALT ?? 'tickra-cercle-v1';
+
 function djb2(s: string): number {
   let h = 5381;
-  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0;
+  const salted = CERCLE_SALT + s;
+  for (let i = 0; i < salted.length; i++) h = ((h << 5) + h + salted.charCodeAt(i)) >>> 0;
   return h;
 }
 

@@ -72,7 +72,10 @@ export function MurSilence({
         const raw = window.localStorage.getItem(scopedKey(OVERRIDE_BASE));
         if (!raw) return setOverrideUntil(null);
         const n = parseInt(raw, 10);
-        if (!Number.isFinite(n) || n <= Date.now()) {
+        // Cap at 24h ahead so a tampered far-future timestamp cannot
+        // silently disable the wall forever.
+        const max = Date.now() + 24 * 60 * 60_000;
+        if (!Number.isFinite(n) || n <= Date.now() || n > max) {
           setOverrideUntil(null);
         } else {
           setOverrideUntil(n);
