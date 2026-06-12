@@ -13,8 +13,9 @@ type Props = {
   className?: string;
 } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'children' | 'className'>;
 
+// TICKRA-DESIGN: micro-interaction baseline — buttons get a smooth transform + brightness pop.
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas';
+  'inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-[color,background-color,transform,filter,box-shadow] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas';
 
 const sizes: Record<Size, string> = {
   md: 'h-10 px-4 text-sm',
@@ -22,7 +23,8 @@ const sizes: Record<Size, string> = {
 };
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-ink text-canvas hover:bg-ink/90',
+  primary:
+    'bg-ink text-canvas hover:bg-ink/90 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 glow-soft',
   ghost: 'border border-line text-ink hover:border-ink hover:bg-ink hover:text-canvas',
 };
 

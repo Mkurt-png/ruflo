@@ -1,122 +1,107 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowUpRight, PlayCircle } from 'lucide-react';
-import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
-import { Eyebrow } from '@/components/ui/Eyebrow';
-import { CandlestickChart } from '@/components/hero/CandlestickChart';
-import { fadeUp, easeOutExpo } from '@/lib/motion';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { getHeroCtaVariant, getHeroCtaLabel, trackHeroCta, type HeroCtaVariant } from '@/lib/ab/hero-cta';
+import { CountUpStat } from '@/components/ui/CountUpStat';
+import { CursorGlow } from '@/components/fx/CursorGlow';
+import { ShimmerButton } from '@/components/fx/ShimmerButton';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
+const Hero3D = dynamic(() => import('./Hero3D').then((m) => m.Hero3D), {
+  ssr: false,
+  loading: () => <div className="w-full h-full min-h-[420px]" aria-hidden />,
+});
+
 type Props = { dict: Dictionary; locale: Locale };
 
+// TICKRA-REDESIGN: Robinhood/Public.com — black bg, vivid green accent, 3D hero scene.
 export function Hero({ dict, locale }: Props) {
   const t = dict.hero;
   const [line1, line2] = t.title;
+  const emphasis = t.titleEm;
+
+  const [ctaVariant, setCtaVariant] = useState<HeroCtaVariant>('control');
+  useEffect(() => {
+    const v = getHeroCtaVariant();
+    setCtaVariant(v);
+    trackHeroCta('view', v);
+  }, []);
+  const primaryCtaLabel = getHeroCtaLabel(ctaVariant, locale);
 
   return (
-    <section aria-labelledby="hero-title" className="relative overflow-hidden border-b border-line">
-      <Container as="div" className="relative grid grid-cols-12 gap-x-6 gap-y-16 pb-24 pt-16 md:pb-32 md:pt-24">
-        <div className="col-span-12 lg:col-span-6 xl:col-span-5">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <Eyebrow>{t.eyebrow}</Eyebrow>
-          </motion.div>
+    <section
+      aria-labelledby="hero-title"
+      className="relative bg-black text-white min-h-screen w-full overflow-hidden"
+    >
+      {/* Subtle radial green glow behind */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{
+          background:
+            'radial-gradient(circle at 70% 40%, rgba(0,230,118,0.15), transparent 60%)',
+        }}
+      />
+      {/* Cursor-following brand glow + tactile noise grain. */}
+      <CursorGlow />
+      <div aria-hidden className="pointer-events-none absolute inset-0 noise opacity-[0.35]" />
 
-          <motion.h1
+      <div className="relative z-10 mx-auto w-full max-w-container px-6 md:px-10 grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-12 py-20 lg:py-28 items-center">
+        {/* Left column (60%) */}
+        <div className="lg:col-span-3">
+          <span className="inline-block bg-white/5 text-brand text-xs font-medium px-3 py-1 rounded-full border border-brand/30">
+            {t.eyebrow}
+          </span>
+
+          <h1
             id="hero-title"
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={1}
-            className="mt-8 font-display text-display-xl font-medium text-balance text-ink"
+            className="text-white text-6xl md:text-8xl font-bold tracking-tight leading-[0.95] mt-6"
           >
             {line1}
             <br />
-            {renderEm(line2, t.titleEm)}
-          </motion.h1>
+            {renderEm(line2, emphasis)}
+          </h1>
 
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={2}
-            className="mt-8 max-w-xl text-[17px] leading-relaxed text-muted md:text-lg text-pretty"
-          >
-            {t.body}
-          </motion.p>
+          <p className="text-white/70 text-lg max-w-xl mt-6">{t.body}</p>
 
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={3}
-            className="mt-10 flex flex-wrap items-center gap-3"
-          >
-            <Button href={`/${locale}/onboarding`} size="lg">
-              {t.primaryCta}
-              <ArrowUpRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
-            </Button>
-            <Button href={`/${locale}/lesson/japanese-candles`} variant="ghost" size="lg">
-              <PlayCircle aria-hidden className="h-4 w-4" strokeWidth={1.5} />
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            <ShimmerButton
+              href={`/${locale}/placement`}
+              onClick={() => trackHeroCta('click', ctaVariant)}
+            >
+              {primaryCtaLabel}
+              <span aria-hidden className="ml-1 transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </ShimmerButton>
+            <Link
+              href={`/${locale}/learn/japanese-candles/01-anatomy-of-a-candle`}
+              className="inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 px-6 py-3 rounded-lg text-base transition-colors duration-200"
+            >
               {t.secondaryCta}
-            </Button>
-          </motion.div>
+            </Link>
+          </div>
 
-          <motion.dl
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            custom={4}
-            className="mt-14 grid max-w-xl grid-cols-3 gap-x-6 border-t border-line pt-8"
-          >
+          <dl className="flex flex-wrap gap-8 mt-12">
             {t.stats.map((s) => (
               <div key={s.label}>
-                <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
-                  {s.label}
+                <dt className="text-brand text-3xl md:text-4xl font-bold">
+                  <CountUpStat value={s.value} />
                 </dt>
-                <dd className="mt-2 font-display text-2xl font-medium tracking-tight text-ink md:text-3xl">
-                  {s.value}
-                </dd>
+                <dd className="text-white/50 text-sm mt-1">{s.label}</dd>
               </div>
             ))}
-          </motion.dl>
+          </dl>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.2, ease: easeOutExpo }}
-          className="relative col-span-12 lg:col-span-6 xl:col-span-7"
-        >
-          <div className="relative">
-            <div
-              aria-hidden
-              className="absolute -inset-x-4 -top-4 hidden h-16 border-l border-t border-line lg:block"
-            />
-            <div className="relative rounded-sm border border-line bg-surface p-6 md:p-8">
-              <div className="mb-5 flex items-baseline justify-between border-b border-line pb-4">
-                <div className="flex items-baseline gap-3">
-                  <span className="font-display text-xl font-medium tracking-tight">EUR/USD</span>
-                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-                    Spot · 1H
-                  </span>
-                </div>
-                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
-                  Lesson 04 / 127
-                </span>
-              </div>
-              <CandlestickChart caption={t.chartCaption} />
-            </div>
-
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -bottom-6 -right-6 hidden h-24 w-24 border border-ink lg:block"
-            />
+        {/* Right column (40%) — 3D scene, desktop only */}
+        <div className="hidden lg:block lg:col-span-2">
+          <div className="relative w-full aspect-square">
+            <Hero3D />
           </div>
-        </motion.div>
-      </Container>
+        </div>
+      </div>
     </section>
   );
 }
@@ -130,7 +115,7 @@ function renderEm(line: string, emphasis: string) {
   return (
     <>
       {before}
-      <span className="font-display italic text-muted">{match}</span>
+      <span className="holo-text">{match}</span>
       {after}
     </>
   );

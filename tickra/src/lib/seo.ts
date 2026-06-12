@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import type { Locale } from '@/lib/i18n/config';
-
-const SITE_URL = 'https://tickra.com';
-const SITE_NAME = 'Tickra';
+import { SITE_URL, SITE_NAME } from '@/lib/site-url';
 
 const copy: Record<Locale, { title: string; description: string }> = {
   en: {

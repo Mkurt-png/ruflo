@@ -130,8 +130,29 @@ function BentoStreak() {
         ))}
       </ul>
       <p className="mt-6 text-[13px] text-muted">
+        <FreezeTooltip />
         <span className="text-ink">Freeze used Saturday.</span> Streak preserved.
       </p>
     </div>
+  );
+}
+
+function FreezeTooltip() {
+  return (
+    <span className="relative mr-2 inline-flex group">
+      <span
+        aria-label="What is a freeze?"
+        tabIndex={0}
+        className="inline-flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-line text-[10px] font-medium text-muted transition-colors hover:border-ink hover:text-ink focus-visible:border-ink focus-visible:text-ink focus-visible:outline-none"
+      >
+        ?
+      </span>
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 w-56 -translate-x-1/2 rounded-sm border border-line bg-surface p-3 text-[12px] leading-relaxed text-muted opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+      >
+        A freeze keeps your streak when you miss a day. One free every 7 days.
+      </span>
+    </span>
   );
 }
