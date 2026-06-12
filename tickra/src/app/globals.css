@@ -335,3 +335,37 @@ html.tickra-night body {
 html.tickra-night .bg-\[\#F4F1EA\] {
   background-color: #ECE5D6;
 }
+
+/* Mode Manuscrit — alternate reading register. Same ivory paper, but
+   the typography shifts toward a hand-set look (slightly tighter
+   leading, optical italics for headings, ruled underline accents on
+   editorial headers). Persisted per-account via ManuscritToggle. */
+html.tickra-manuscrit {
+  --tickra-manuscrit-ink: #1a1a18;
+  --tickra-manuscrit-paper: #F1ECDC;
+}
+html.tickra-manuscrit body {
+  background-color: var(--tickra-manuscrit-paper);
+}
+html.tickra-manuscrit .bg-\[\#F4F1EA\] {
+  background-color: var(--tickra-manuscrit-paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    rgba(20, 40, 90, 0.06) 31px,
+    rgba(20, 40, 90, 0.06) 32px
+  );
+}
+html.tickra-manuscrit .font-display {
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+html.tickra-manuscrit h1.font-display,
+html.tickra-manuscrit h2.font-display,
+html.tickra-manuscrit h3.font-display {
+  text-decoration: underline;
+  text-decoration-color: rgba(20, 40, 90, 0.18);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}

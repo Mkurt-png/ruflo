@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { LocaleSwitcher } from './LocaleSwitcher';
+import { ManuscritToggle } from '@/components/site/ManuscritToggle';
 import { MobileMenu } from './MobileMenu';
 import { UserMenu } from './UserMenu';
 import { ExploreMenu } from './ExploreMenu';
@@ -29,6 +30,7 @@ export function Navbar({ dict, locale }: Props) {
     { href: `/${locale}/erratum`, label: locale === 'fr' ? 'L’Erratum' : 'The Erratum' },
     { href: `/${locale}/almanach`, label: locale === 'fr' ? 'L’Almanach' : 'The Almanac' },
     { href: `/${locale}/annuaire`, label: locale === 'fr' ? 'L’Annuaire' : 'The Index' },
+    { href: `/${locale}/voix`, label: locale === 'fr' ? 'Les Voix' : 'The Voices' },
     { href: `/${locale}/cote-inversee`, label: locale === 'fr' ? 'Cote inversée' : 'Inverted Score' },
     { href: `/${locale}/achievements`, label: locale === 'fr' ? 'Succès' : 'Achievements' },
     { href: `/${locale}/community`, label: dict.nav.communityLink },
@@ -64,6 +66,9 @@ export function Navbar({ dict, locale }: Props) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <div className="hidden sm:block">
+            <ManuscritToggle locale={locale} />
+          </div>
           <div className="hidden sm:block">
             <LocaleSwitcher current={locale} label={dict.locale.switch} />
           </div>
