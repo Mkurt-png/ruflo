@@ -6,6 +6,7 @@ import { listTrades } from '@/lib/db/journal-queries';
 import { Navbar } from '@/components/nav/Navbar';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { JournalApp } from '@/components/journal/JournalApp';
+import { GreffierPanel } from '@/components/journal/GreffierPanel';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
@@ -75,6 +76,7 @@ async function ProJournal({ email, locale }: { email: string; locale: Locale }) 
         trailing={<LivePulse label={locale === 'fr' ? 'journal' : 'journal'} />}
       />
       <JournalApp initialTrades={trades} locale={locale} />
+      <GreffierPanel trades={trades} locale={locale} />
     </>
   );
 }
