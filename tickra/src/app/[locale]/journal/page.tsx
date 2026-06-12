@@ -8,6 +8,8 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { JournalApp } from '@/components/journal/JournalApp';
 import { GreffierPanel } from '@/components/journal/GreffierPanel';
 import { AutopsiePanel } from '@/components/journal/AutopsiePanel';
+import { MurSilence } from '@/components/journal/MurSilence';
+import { readSilence } from '@/lib/tickra/silence';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
@@ -64,8 +66,9 @@ async function ProJournal({ email, locale }: { email: string; locale: Locale }) 
   const wins = closed.filter((t) => (t.pnl ?? 0) > 0).length;
   const winRate = closed.length ? Math.round((wins / closed.length) * 100) : 0;
   const net = closed.reduce((acc, t) => acc + (t.pnl ?? 0), 0);
+  const silence = readSilence(trades);
   return (
-    <>
+    <MurSilence silence={silence} locale={locale}>
       <KpiStrip
         className="mb-6"
         items={[
@@ -79,7 +82,7 @@ async function ProJournal({ email, locale }: { email: string; locale: Locale }) 
       <JournalApp initialTrades={trades} locale={locale} />
       <GreffierPanel trades={trades} locale={locale} />
       <AutopsiePanel trades={trades} locale={locale} />
-    </>
+    </MurSilence>
   );
 }
 
