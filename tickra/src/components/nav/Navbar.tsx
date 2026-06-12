@@ -33,6 +33,7 @@ export function Navbar({ dict, locale }: Props) {
     { href: `/${locale}/voix`, label: locale === 'fr' ? 'Les Voix' : 'The Voices' },
     { href: `/${locale}/veillee`, label: locale === 'fr' ? 'La Veillée' : 'The Vigil' },
     { href: `/${locale}/etages`, label: locale === 'fr' ? 'Les Étages' : 'The Floors' },
+    { href: `/${locale}/lexique`, label: locale === 'fr' ? 'Le Lexique' : 'The Lexicon' },
     { href: `/${locale}/cote-inversee`, label: locale === 'fr' ? 'Cote inversée' : 'Inverted Score' },
     { href: `/${locale}/achievements`, label: locale === 'fr' ? 'Succès' : 'Achievements' },
     { href: `/${locale}/community`, label: dict.nav.communityLink },
