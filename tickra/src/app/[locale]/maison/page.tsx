@@ -136,6 +136,14 @@ const WINGS: Wing[] = [
         },
       },
       {
+        slug: 'silence',
+        title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+        caption: {
+          fr: 'Les patterns d’UI bannis : pastilles, confettis, pop-ups de niveaux.',
+          en: 'Banished UI patterns: red dots, confetti, level-up popups.',
+        },
+      },
+      {
         slug: 'etages',
         title: { fr: 'Les Étages', en: 'The Floors' },
         caption: {
