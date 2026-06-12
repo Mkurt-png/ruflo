@@ -12,6 +12,7 @@ import { TRACKS } from '@/lib/curriculum/data';
 // data. Useful as a memory palace and as a long-tail SEO map.
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const metadata = editorialMeta({
@@ -99,6 +100,14 @@ export default async function AnnuairePage({ params }: { params: { locale: strin
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="annuaire"
+        title={locale === 'fr' ? 'L’Annuaire' : 'The Index'}
+        description={locale === 'fr'
+          ? 'L’index alphabétique de toutes les leçons publiées.'
+          : 'The alphabetical index of every lesson published.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

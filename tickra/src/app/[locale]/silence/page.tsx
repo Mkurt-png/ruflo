@@ -6,6 +6,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/silence — Le Silence éditorial. A second manifesto, this
 // one about the UI itself. Lists every gamified pattern Tickra
@@ -191,6 +192,14 @@ export default async function SilencePage({ params }: { params: { locale: string
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="silence"
+        title={locale === 'fr' ? 'Le Silence éditorial' : 'The Editorial Silence'}
+        description={locale === 'fr'
+          ? 'Les patterns d’UI que Tickra ne déploiera pas.'
+          : 'UI patterns Tickra will not display.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

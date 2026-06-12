@@ -14,6 +14,7 @@ import { GLOSSARY } from '@/lib/curriculum/glossary';
 // the editor places <Term> inside a lesson or an editorial page.
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const metadata = editorialMeta({
@@ -85,6 +86,14 @@ export default async function LexiquePage({ params }: { params: { locale: string
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="lexique"
+        title={locale === 'fr' ? 'Le Lexique vivant' : 'The Living Lexicon'}
+        description={locale === 'fr'
+          ? 'Chaque mot d’une leçon s’ouvre sur sa définition, au clic.'
+          : 'Every word in a lesson opens to its definition, on click.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

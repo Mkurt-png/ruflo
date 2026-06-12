@@ -12,6 +12,7 @@ import { Footer } from '@/components/sections/Footer';
 // scrolling through a menu.
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const metadata = editorialMeta({
@@ -271,6 +272,14 @@ export default async function MaisonPage({ params }: { params: { locale: string 
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="maison"
+        title={locale === 'fr' ? 'La Maison' : 'The House'}
+        description={locale === 'fr'
+          ? 'Plan de la maison Tickra : toutes les pièces éditoriales sur une page.'
+          : 'Plan of the Tickra house: every editorial room on one page.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

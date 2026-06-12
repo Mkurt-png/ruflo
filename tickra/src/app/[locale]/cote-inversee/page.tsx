@@ -10,6 +10,7 @@ import { Footer } from '@/components/sections/Footer';
 // Static editorial register, signed by date.
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const metadata = editorialMeta({
@@ -118,6 +119,14 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="cote-inversee"
+        title={locale === 'fr' ? 'La Cote inversée' : 'The Inverted Score'}
+        description={locale === 'fr'
+          ? 'L’éditeur publie sa propre Cote chaque mois, même formule.'
+          : 'The editor publishes their own Score monthly, same formula.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

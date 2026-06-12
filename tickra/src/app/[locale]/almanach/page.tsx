@@ -12,6 +12,7 @@ import { getCrieeForDate } from '@/lib/tickra/criee';
 // the daily card from the date seed.
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const metadata = editorialMeta({
@@ -81,6 +82,14 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="almanach"
+        title={locale === 'fr' ? 'L’Almanach' : 'The Almanac'}
+        description={locale === 'fr'
+          ? 'L’archive de l’année : une ligne par Criée passée.'
+          : 'The year’s archive: one line per past Criée.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

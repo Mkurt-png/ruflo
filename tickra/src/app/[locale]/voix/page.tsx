@@ -10,6 +10,7 @@ import { VOIX } from '@/lib/tickra/voix';
 // publishes the audio URL whenever the recording is up.
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const metadata = editorialMeta({
@@ -64,6 +65,14 @@ export default async function VoixPage({ params }: { params: { locale: string } 
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="voix"
+        title={locale === 'fr' ? 'Les Voix' : 'The Voices'}
+        description={locale === 'fr'
+          ? 'Une voix par mois. Entretiens anonymes avec des traders en activité.'
+          : 'One voice per month. Anonymous interviews with working traders.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

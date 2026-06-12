@@ -11,6 +11,7 @@ import { Footer } from '@/components/sections/Footer';
 // only at the end. The story of the building, before the bill.
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const dynamic = 'force-dynamic';
 export const metadata = editorialMeta({
@@ -134,6 +135,14 @@ export default async function EtagesPage({ params }: { params: { locale: string 
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="etages"
+        title={locale === 'fr' ? 'Les Étages' : 'The Floors'}
+        description={locale === 'fr'
+          ? 'Trois étages, pas trois colonnes. La maison plutôt que le tarif.'
+          : 'Three floors, not three columns. The house before the bill.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

@@ -5,6 +5,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/erratum — L'Erratum. Public log of the editor's
 // mistakes, grouped by year. Nothing is removed; the page only
@@ -65,6 +66,14 @@ export default async function ErratumPage({ params }: { params: { locale: string
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="erratum"
+        title={locale === 'fr' ? 'L’Erratum' : 'The Erratum'}
+        description={locale === 'fr'
+          ? 'Journal public des erreurs de Tickra. Rien n’est effacé.'
+          : 'Public log of Tickra’s mistakes. Nothing is erased.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

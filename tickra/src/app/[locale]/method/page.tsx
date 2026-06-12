@@ -5,6 +5,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/method — Audit page for the Cote formula. Referenced
 // from /cote-inversee. Editorial register, no math beyond what is
@@ -116,6 +117,14 @@ export default async function MethodPage({ params }: { params: { locale: string 
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="method"
+        title={locale === 'fr' ? 'La Méthode' : 'The Method'}
+        description={locale === 'fr'
+          ? 'La formule de la Cote, en quatre composantes.'
+          : 'The Score formula, in four components.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"

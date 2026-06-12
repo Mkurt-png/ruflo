@@ -5,6 +5,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { REFUSALS } from '@/lib/tickra/refus';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/refus — Le Refus. Ten things Tickra will never build.
 // A manifesto by negation, in the editorial register. Static content,
@@ -50,6 +51,14 @@ export default async function RefusPage({ params }: { params: { locale: string }
   return (
     <>
       <Navbar dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="refus"
+        title={locale === 'fr' ? 'Le Refus' : 'The Refusal'}
+        description={locale === 'fr'
+          ? 'Dix choses que Tickra ne construira jamais. Un manifeste par la négation.'
+          : 'Ten things Tickra will never build. A manifesto by negation.'}
+        locale={locale}
+      />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
           className="relative px-6 md:px-16"
