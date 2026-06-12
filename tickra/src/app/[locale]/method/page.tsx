@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
+import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 // /[locale]/method — Audit page for the Cote formula. Referenced
 // from /cote-inversee. Editorial register, no math beyond what is
@@ -11,11 +12,12 @@ import { Footer } from '@/components/sections/Footer';
 // reading is bounded.
 
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'La Méthode · Tickra',
+export const metadata = editorialMeta({
+  slug: 'method',
+  title: 'La Méthode',
   description:
     'La formule de la Cote, à l’air libre : régularité, précision, honnêteté, révision. Chaque composante en une phrase.',
-};
+});
 
 const COPY = {
   fr: {

@@ -11,12 +11,15 @@ import { Footer } from '@/components/sections/Footer';
 // archives / manifestos) so the reader can find a calm room without
 // scrolling through a menu.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'La Maison · Tickra',
+export const metadata = editorialMeta({
+  slug: 'maison',
+  title: 'La Maison',
   description:
     'Plan de la maison Tickra : toutes les pièces éditoriales sur une seule page. Rituels, lectures, archives, manifestes.',
-};
+});
 
 type Room = {
   slug: string;

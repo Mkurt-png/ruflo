@@ -9,12 +9,15 @@ import { LettrePanel } from '@/components/lettre/LettrePanel';
 // composed locally from the reader's progress. Ivory paper register,
 // no network, no charts.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'La Lettre du dimanche · Tickra',
+export const metadata = editorialMeta({
+  slug: 'lettre',
+  title: 'La Lettre du dimanche',
   description:
     'Un bilan hebdomadaire éditorial, calculé localement à partir de votre progression. Lecture calme, dix minutes.',
-};
+});
 
 export default async function LettrePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

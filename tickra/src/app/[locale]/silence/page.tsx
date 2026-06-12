@@ -5,6 +5,8 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 // /[locale]/silence — Le Silence éditorial. A second manifesto, this
 // one about the UI itself. Lists every gamified pattern Tickra
 // refuses to display: red dots, unread counts, congratulatory
@@ -12,11 +14,12 @@ import { Footer } from '@/components/sections/Footer';
 // /refus (what we won't build) and /erratum (what we got wrong).
 
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'Le Silence éditorial · Tickra',
+export const metadata = editorialMeta({
+  slug: 'silence',
+  title: 'Le Silence éditorial',
   description:
     'Les patterns d’UI que Tickra ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
-};
+});
 
 type Banished = {
   id: string;

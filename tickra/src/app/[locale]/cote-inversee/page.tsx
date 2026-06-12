@@ -9,12 +9,15 @@ import { Footer } from '@/components/sections/Footer';
 // formula a reader's account would use, on the same sample window.
 // Static editorial register, signed by date.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'La Cote inversée · Tickra',
+export const metadata = editorialMeta({
+  slug: 'cote-inversee',
+  title: 'La Cote inversée',
   description:
     'Tous les mois, l’éditeur publie sa propre Cote, calculée avec la même formule que la vôtre. Transparence radicale.',
-};
+});
 
 type Edition = {
   month: string; // ISO YYYY-MM

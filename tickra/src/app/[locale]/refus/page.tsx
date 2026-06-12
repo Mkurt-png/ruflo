@@ -4,17 +4,19 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { REFUSALS } from '@/lib/tickra/refus';
+import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 // /[locale]/refus — Le Refus. Ten things Tickra will never build.
 // A manifesto by negation, in the editorial register. Static content,
 // no logic, no progress — defines the brand by what it refuses.
 
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'Le Refus · Tickra',
+export const metadata = editorialMeta({
+  slug: 'refus',
+  title: 'Le Refus',
   description:
     'Dix choses que Tickra ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
-};
+});
 
 const COPY = {
   fr: {

@@ -10,12 +10,15 @@ import { Footer } from '@/components/sections/Footer';
 // Pure editorial register, links the reader down toward /pricing
 // only at the end. The story of the building, before the bill.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'Les Étages · Tickra',
+export const metadata = editorialMeta({
+  slug: 'etages',
+  title: 'Les Étages',
   description:
     'Trois étages, pas trois colonnes : le rez-de-chaussée gratuit, l’atelier Pro, le bureau Lifetime. La pricing card, à la fin.',
-};
+});
 
 type Etage = {
   level: number;

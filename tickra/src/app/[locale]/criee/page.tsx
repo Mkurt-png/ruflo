@@ -10,12 +10,15 @@ import { CrieeCard } from '@/components/criee/CrieeCard';
 // for every visitor that day, that disappears at midnight UTC and is
 // replaced by tomorrow's. Editorial register, ivory paper.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'La Criée · Tickra',
+export const metadata = editorialMeta({
+  slug: 'criee',
+  title: 'La Criée',
   description:
     'Une question, choisie pour le jour. La même pour tout le monde. Cinq minutes, dix au plus.',
-};
+});
 
 export default async function CrieePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

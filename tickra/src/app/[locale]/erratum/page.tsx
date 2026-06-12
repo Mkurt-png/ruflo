@@ -4,17 +4,19 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
+import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 // /[locale]/erratum — L'Erratum. Public log of the editor's
 // mistakes, grouped by year. Nothing is removed; the page only
 // grows. If trust matters more than image, this page should exist.
 
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'L’Erratum · Tickra',
+export const metadata = editorialMeta({
+  slug: 'erratum',
+  title: 'L’Erratum',
   description:
     'Journal public des erreurs de Tickra : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
-};
+});
 
 const COPY = {
   fr: {

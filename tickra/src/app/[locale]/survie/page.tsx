@@ -10,12 +10,15 @@ import { SurvieCalculator } from '@/components/survie/SurvieCalculator';
 // no leaderboard, no upsell. Just the numbers that decide whether the
 // account survives.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'Le Calculateur de survie · Tickra',
+export const metadata = editorialMeta({
+  slug: 'survie',
+  title: 'Le Calculateur de survie',
   description:
     'Taille de position, R-multiple, pertes consécutives jusqu’au demi-compte. Le calcul d’entrée de carnet, en silence.',
-};
+});
 
 export default async function SurviePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

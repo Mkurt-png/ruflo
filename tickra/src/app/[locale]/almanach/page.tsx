@@ -11,12 +11,15 @@ import { getCrieeForDate } from '@/lib/tickra/criee';
 // Server component: each entry is just the deterministic compute of
 // the daily card from the date seed.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'L’Almanach · Tickra',
+export const metadata = editorialMeta({
+  slug: 'almanach',
+  title: 'L’Almanach',
   description:
     'L’archive de l’année : une ligne par Criée passée, dans l’ordre où elles ont été posées.',
-};
+});
 
 const COPY = {
   fr: {

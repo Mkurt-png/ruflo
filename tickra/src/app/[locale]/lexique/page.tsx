@@ -13,12 +13,15 @@ import { GLOSSARY } from '@/lib/curriculum/glossary';
 // is the entry-point and the proof; the actual usage lives wherever
 // the editor places <Term> inside a lesson or an editorial page.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'Le Lexique vivant · Tickra',
+export const metadata = editorialMeta({
+  slug: 'lexique',
+  title: 'Le Lexique vivant',
   description:
     'Chaque mot d’une leçon peut s’ouvrir : définition, et un lien vers le glossaire. Pas de tooltip qui flotte — un geste choisi.',
-};
+});
 
 const COPY = {
   fr: {

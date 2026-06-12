@@ -12,12 +12,15 @@ import { pairFor } from '@/lib/tickra/cercle';
 // service is built, the partner is drawn deterministically from a
 // seed list of hand-written letters. The page says so plainly.
 
+import { editorialMeta } from '@/lib/seo/editorial-meta';
+
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'Le Cercle de relecture · Tickra',
+export const metadata = editorialMeta({
+  slug: 'cercle',
+  title: 'Le Cercle de relecture',
   description:
     'Chaque dimanche, un autre lecteur, lu en silence. Deux Lettres échangées, sans messagerie, sans visage.',
-};
+});
 
 const COPY = {
   fr: {
