@@ -24,6 +24,29 @@ const routes = [
   { path: '/risk', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/mentions-legales', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/cookies', changeFrequency: 'yearly' as const, priority: 0.2 },
+  // The editorial cluster — rooms of La Maison
+  { path: '/maison', changeFrequency: 'weekly' as const, priority: 0.85 },
+  { path: '/criee', changeFrequency: 'daily' as const, priority: 0.8 },
+  { path: '/lettre', changeFrequency: 'weekly' as const, priority: 0.7 },
+  { path: '/veillee', changeFrequency: 'weekly' as const, priority: 0.7 },
+  { path: '/voix', changeFrequency: 'monthly' as const, priority: 0.65 },
+  { path: '/lexique', changeFrequency: 'monthly' as const, priority: 0.6 },
+  { path: '/cercle', changeFrequency: 'weekly' as const, priority: 0.55 },
+  { path: '/almanach', changeFrequency: 'daily' as const, priority: 0.7 },
+  { path: '/annuaire', changeFrequency: 'weekly' as const, priority: 0.75 },
+  { path: '/refus', changeFrequency: 'yearly' as const, priority: 0.6 },
+  { path: '/erratum', changeFrequency: 'monthly' as const, priority: 0.55 },
+  { path: '/cote-inversee', changeFrequency: 'monthly' as const, priority: 0.6 },
+  { path: '/silence', changeFrequency: 'yearly' as const, priority: 0.55 },
+  { path: '/etages', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/method', changeFrequency: 'monthly' as const, priority: 0.65 },
+  { path: '/survie', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/journal', changeFrequency: 'weekly' as const, priority: 0.55 },
+  // Preparation pages
+  { path: '/bureau-partage', changeFrequency: 'monthly' as const, priority: 0.45 },
+  { path: '/edition-lifetime', changeFrequency: 'monthly' as const, priority: 0.5 },
+  { path: '/institutionnel', changeFrequency: 'monthly' as const, priority: 0.45 },
+  { path: '/mecenat', changeFrequency: 'monthly' as const, priority: 0.45 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

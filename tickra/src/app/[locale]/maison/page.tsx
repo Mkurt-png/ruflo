@@ -26,7 +26,7 @@ type Room = {
 };
 
 type Wing = {
-  id: 'rituels' | 'lectures' | 'archives' | 'manifestes' | 'outils';
+  id: 'rituels' | 'lectures' | 'archives' | 'manifestes' | 'outils' | 'attente';
   title: { fr: string; en: string };
   rooms: Room[];
 };
@@ -153,6 +153,14 @@ const WINGS: Wing[] = [
         },
       },
       {
+        slug: 'method',
+        title: { fr: 'La Méthode', en: 'The Method' },
+        caption: {
+          fr: 'La formule de la Cote, à l’air libre, en quatre lignes.',
+          en: 'The Score formula, in the open, in four lines.',
+        },
+      },
+      {
         slug: 'etages',
         title: { fr: 'Les Étages', en: 'The Floors' },
         caption: {
@@ -182,6 +190,44 @@ const WINGS: Wing[] = [
           en: 'The trading register, the Autopsy, the Wall of Silence.',
         },
         signed: true,
+      },
+    ],
+  },
+  {
+    id: 'attente',
+    title: { fr: 'En préparation', en: 'In preparation' },
+    rooms: [
+      {
+        slug: 'bureau-partage',
+        title: { fr: 'Le Bureau partagé', en: 'The Shared Desk' },
+        caption: {
+          fr: 'Publier une journée de journal en lecture seule. Protocole, sans serveur encore.',
+          en: 'Publish a day of your journal read-only. Protocol, server pending.',
+        },
+      },
+      {
+        slug: 'edition-lifetime',
+        title: { fr: 'L’Édition Lifetime', en: 'The Lifetime Edition' },
+        caption: {
+          fr: 'Le livret postal annuel des membres Lifetime. Brochure du sommaire.',
+          en: 'The annual postal booklet for Lifetime members. Tentative contents.',
+        },
+      },
+      {
+        slug: 'institutionnel',
+        title: { fr: 'L’Institutionnel', en: 'The Institutional' },
+        caption: {
+          fr: 'Tickra pour les desks et prop-firms. Sur conversation.',
+          en: 'Tickra for desks and prop firms. On conversation.',
+        },
+      },
+      {
+        slug: 'mecenat',
+        title: { fr: 'Le Mécénat', en: 'The Patronage' },
+        caption: {
+          fr: 'Offrir un mois Pro anonyme à un inconnu. Activation Stripe en attente.',
+          en: 'Anonymously gift one Pro month to a stranger. Stripe activation pending.',
+        },
       },
     ],
   },
