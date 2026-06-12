@@ -369,3 +369,64 @@ html.tickra-manuscrit h3.font-display {
   text-underline-offset: 6px;
   text-decoration-thickness: 1px;
 }
+
+/* Reduced motion: respect users who asked the OS to slow things down.
+   The Heure du papier candle transition gets cancelled; any motion
+   on editorial pages stops. */
+@media (prefers-reduced-motion: reduce) {
+  html.tickra-night body {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print stylesheet — Tickra is editorial; it should print like one.
+   Strip navbar/footer, force ivory paper, keep the serif italic, drop
+   shadows and dotted underlines that don't ink well. */
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #000 !important;
+  }
+  header[class*="sticky"],
+  nav[aria-label="Primary"],
+  footer[class*="bg-canvas"],
+  [class*="ScrollProgressBar"],
+  .print\:hidden {
+    display: none !important;
+  }
+  main {
+    padding-top: 24pt !important;
+    padding-bottom: 24pt !important;
+  }
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555;
+  }
+  /* Don't print the URL annotation for in-page anchors */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after {
+    content: "";
+  }
+  /* Editorial italic headlines print smaller but preserved */
+  .font-display {
+    font-family: 'Times New Roman', serif !important;
+  }
+  /* Avoid page breaks inside list items and headings */
+  h1, h2, h3,
+  ol li, ul li {
+    page-break-inside: avoid;
+  }
+  /* Hide all client-only widgets */
+  button {
+    display: none !important;
+  }
+}
