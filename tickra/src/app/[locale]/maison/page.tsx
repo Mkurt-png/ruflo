@@ -118,6 +118,14 @@ const WINGS: Wing[] = [
           en: 'The alphabetical index of every lesson published.',
         },
       },
+      {
+        slug: 'recherche',
+        title: { fr: 'La Recherche', en: 'The Search' },
+        caption: {
+          fr: 'Une boîte vide qui cherche dans les leçons, le glossaire et les pièces. Local.',
+          en: 'An empty box that searches lessons, glossary and rooms. Local.',
+        },
+      },
     ],
   },
   {
