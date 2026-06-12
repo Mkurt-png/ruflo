@@ -28,6 +28,7 @@ export function Navbar({ dict, locale }: Props) {
     { href: `/${locale}/refus`, label: locale === 'fr' ? 'Le Refus' : 'The Refusal' },
     { href: `/${locale}/erratum`, label: locale === 'fr' ? 'L’Erratum' : 'The Erratum' },
     { href: `/${locale}/almanach`, label: locale === 'fr' ? 'L’Almanach' : 'The Almanac' },
+    { href: `/${locale}/annuaire`, label: locale === 'fr' ? 'L’Annuaire' : 'The Index' },
     { href: `/${locale}/cote-inversee`, label: locale === 'fr' ? 'Cote inversée' : 'Inverted Score' },
     { href: `/${locale}/achievements`, label: locale === 'fr' ? 'Succès' : 'Achievements' },
     { href: `/${locale}/community`, label: dict.nav.communityLink },

@@ -15,6 +15,7 @@ import { InstallPrompt } from '@/components/site/InstallPrompt';
 import { MobileStickyCta } from '@/components/site/MobileStickyCta';
 import { AskTickra } from '@/components/ai/AskTickra';
 import { ScopeSync } from '@/components/site/ScopeSync';
+import { HeurePapier } from '@/components/site/HeurePapier';
 import { ExitIntentModal } from '@/components/site/ExitIntentModal';
 import { OrganizationJsonLd } from '@/components/seo/OrganizationJsonLd';
 import '../globals.css';
@@ -77,6 +78,7 @@ export default async function LocaleLayout({
             signed-in account so two accounts on one browser don't share
             a progression. */}
         <ScopeSync />
+        <HeurePapier />
         <CommandPalette locale={locale} />
         {/* TICKRA-PHASE-6: install offline support + show "Add to home screen" prompt. */}
         <ServiceWorkerRegister />

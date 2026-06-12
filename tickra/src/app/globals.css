@@ -323,3 +323,15 @@ body {
   padding-top: clamp(120px, 18vh, 220px);
   padding-bottom: clamp(120px, 18vh, 220px);
 }
+
+/* L'Heure du papier — between 22:00 and 06:00 local time, the entire
+   site dims to a candle-warm register. Discourages late-night
+   trading by literally going to sleep. Toggled by the HeurePapier
+   client component on the documentElement. */
+html.tickra-night body {
+  filter: brightness(0.86) sepia(0.18) hue-rotate(-6deg);
+  transition: filter 1.2s ease;
+}
+html.tickra-night .bg-\[\#F4F1EA\] {
+  background-color: #ECE5D6;
+}
