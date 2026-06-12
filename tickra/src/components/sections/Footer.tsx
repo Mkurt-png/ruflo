@@ -27,9 +27,43 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           </div>
         </div>
 
+        <div className="col-span-12 lg:col-span-7">
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+            {locale === 'fr' ? 'La Maison — pièces éditoriales' : 'La Maison — editorial rooms'}
+          </h3>
+          <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3">
+            {[
+              { href: `/${locale}/criee`, label: locale === 'fr' ? 'La Criée' : 'La Criée' },
+              { href: `/${locale}/lettre`, label: locale === 'fr' ? 'La Lettre' : 'The Letter' },
+              { href: `/${locale}/veillee`, label: locale === 'fr' ? 'La Veillée' : 'The Vigil' },
+              { href: `/${locale}/voix`, label: locale === 'fr' ? 'Les Voix' : 'The Voices' },
+              { href: `/${locale}/refus`, label: locale === 'fr' ? 'Le Refus' : 'The Refusal' },
+              { href: `/${locale}/erratum`, label: locale === 'fr' ? 'L’Erratum' : 'The Erratum' },
+              { href: `/${locale}/almanach`, label: locale === 'fr' ? 'L’Almanach' : 'The Almanac' },
+              { href: `/${locale}/annuaire`, label: locale === 'fr' ? 'L’Annuaire' : 'The Index' },
+              { href: `/${locale}/survie`, label: locale === 'fr' ? 'Le Calculateur' : 'The Calculator' },
+            ].map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className="text-[14.5px] text-ink transition-colors hover:text-muted"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href={`/${locale}/maison`}
+            className="mt-6 inline-block font-mono text-[10px] uppercase tracking-[0.28em] text-muted hover:text-ink"
+          >
+            {locale === 'fr' ? 'Plan complet · La Maison →' : 'Full plan · The House →'}
+          </Link>
+        </div>
+
         <nav
           aria-label="Footer"
-          className="col-span-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:col-span-7"
+          className="col-span-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3"
         >
           {t.columns.map((col) => (
             <div key={col.title}>
