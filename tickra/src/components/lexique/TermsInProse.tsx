@@ -51,9 +51,14 @@ export function TermsInProse({
 }) {
   const text = children;
   const haystackLower = stripAccents(text);
+  // Match the term in the page's locale plus the other locale's
+  // spelling: an English jargon word ("stop-loss") inside French
+  // prose, or a French formal name ("biais d'ancrage") inside English
+  // prose, both still get the popover.
+  const other: Locale = locale === 'fr' ? 'en' : 'fr';
   const needles = GLOSSARY.flatMap((g) => [
     stripAccents(g.term[locale]),
-    stripAccents(g.term.fr === g.term.en ? g.term.fr : g.term[locale]),
+    stripAccents(g.term[other]),
   ]).filter((s, i, a) => s.length >= 3 && a.indexOf(s) === i);
   const matches = findFirstNonOverlapping(haystackLower, needles);
   if (matches.length === 0) return <>{text}</>;
