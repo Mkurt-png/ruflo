@@ -6,6 +6,7 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/silence — Le Silence éditorial. A second manifesto, this
 // one about the UI itself. Lists every gamified pattern Tickra
@@ -206,6 +207,11 @@ export default async function SilencePage({ params }: { params: { locale: string
         head={[t.head1, t.head2, t.head3]}
         intro={t.intro}
       >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'On écrit en lettres. Pas en pastilles.' : 'We write in letters. Not in dots.'}
+          </Pull>
+        </section>
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-16">
           <ol className="space-y-16">
             {BANISHED.map((b, i) => (

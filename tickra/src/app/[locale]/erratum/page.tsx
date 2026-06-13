@@ -6,6 +6,7 @@ import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/erratum — L'Erratum. Public log of the editor's
 // mistakes, grouped by year. Nothing is removed; the page only
@@ -81,6 +82,11 @@ export default async function ErratumPage({ params }: { params: { locale: string
         head={[t.head1, t.head2, t.head3]}
         intro={t.intro}
       >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'Rien n’est effacé ; tout est daté.' : 'Nothing is erased; everything is dated.'}
+          </Pull>
+        </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           {years.map(({ year, items }) => (

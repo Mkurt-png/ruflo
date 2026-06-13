@@ -6,6 +6,7 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/method — Audit page for the Cote formula. Referenced
 // from /cote-inversee. Editorial register, no math beyond what is
@@ -132,6 +133,11 @@ export default async function MethodPage({ params }: { params: { locale: string 
         head={[t.head1, t.head2, t.head3]}
         intro={t.intro}
       >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'La Cote peut baisser. C’est voulu.' : 'The Score can fall. By design.'}
+          </Pull>
+        </section>
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <ol className="space-y-14">
             {PARTS.map((p, i) => (

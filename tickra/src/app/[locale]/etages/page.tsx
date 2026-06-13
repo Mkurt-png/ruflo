@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/etages — L'Étage Pro. Re-narrates Tickra's three tiers
 // as floors of a building rather than columns of a pricing card.
@@ -150,6 +151,11 @@ export default async function EtagesPage({ params }: { params: { locale: string 
         head={[t.head1, t.head2, t.head3]}
         intro={t.intro}
       >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'La maison plutôt que les colonnes.' : 'The house, not the columns.'}
+          </Pull>
+        </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           {[...ETAGES].reverse().map((e, i) => (

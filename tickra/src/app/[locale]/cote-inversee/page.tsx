@@ -3,6 +3,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/cote-inversee — La Cote inversée. Once a month, the
 // editor publishes their own composite score, computed with the same
@@ -134,6 +135,11 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
         head={[t.head1, t.head2, t.head3]}
         intro={t.intro}
       >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'Demander aux lecteurs ce qu’ils ratent — et le faire en premier.' : 'Asking readers what they miss — and doing it first.'}
+          </Pull>
+        </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           {EDITIONS.map((ed, i) => (
