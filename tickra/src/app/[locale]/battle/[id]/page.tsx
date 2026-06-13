@@ -11,7 +11,11 @@ import { BattleRoom } from '@/components/battle/BattleRoom';
 import { BattleJoin } from '@/components/battle/BattleJoin';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle · Tickra' };
+export const metadata = {
+  title: 'Battle · Tickra',
+  // Live duel rooms are ephemeral and user-specific — never index.
+  robots: { index: false, follow: false },
+};
 
 export default async function BattleRoomPage({
   params,

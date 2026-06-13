@@ -11,7 +11,11 @@ import { verifyCertificate } from '@/lib/db/verify-queries';
 
 // TODO i18n — verify page copy is English-only for now (Phase 4D).
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Verify · Tickra' };
+export const metadata = {
+  title: 'Verify · Tickra',
+  // Per-user verification URL — never index.
+  robots: { index: false, follow: false },
+};
 
 type Params = { locale: string; userId: string; trackId: string };
 
