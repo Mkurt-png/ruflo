@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -9,11 +10,18 @@ import { ShimmerButton } from '@/components/fx/ShimmerButton';
 import { MagneticTilt } from '@/components/fx/MagneticTilt';
 import { CursorGlow } from '@/components/fx/CursorGlow';
 
-export const metadata = {
-  title: 'Brand · Tickra',
-  // Internal style guide — discoverable by team, not crawled.
-  robots: { index: false, follow: false },
-};
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'brand',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Marque' : 'Brand',
+    description:
+      params.locale === 'fr'
+        ? 'Le manuel de marque Tickra : palette, typographie, voix.'
+        : 'Tickra’s brand manual: palette, typography, voice.',
+  });
+}
 
 // /brand — visual style guide. Shows palette, type ramp, signature effects
 // and the building blocks every section reuses. Acts as a QA surface for

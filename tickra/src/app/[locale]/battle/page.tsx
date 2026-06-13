@@ -1,5 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { getCurrentPlan } from '@/lib/auth/server-plan';
 import { Navbar } from '@/components/nav/Navbar';
@@ -16,7 +17,18 @@ const BattleArena3D = nextDynamic(
 );
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'battle',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Battle' : 'Battle',
+    description:
+      params.locale === 'fr'
+        ? 'Le mode duel de Tickra — face à face hebdomadaire, anonyme.'
+        : 'Tickra’s duel mode — weekly anonymous head-to-head.',
+  });
+}
 
 export default async function BattleHubPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

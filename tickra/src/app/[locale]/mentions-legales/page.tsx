@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -7,7 +8,18 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
 
-export const metadata = { title: 'Mentions légales · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'mentions-legales',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Mentions légales' : 'Legal Notice',
+    description:
+      params.locale === 'fr'
+        ? 'Mentions légales et informations sur l’éditeur de Tickra.'
+        : 'Legal notice and information about Tickra’s publisher.',
+  });
+}
 
 // FR-mandatory Mentions légales page (LCEN 2004-575, art. 6-III).
 // Hardcoded copy (not in dict) because it's France-specific legal text;

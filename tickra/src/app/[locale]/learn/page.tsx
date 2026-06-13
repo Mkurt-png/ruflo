@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -10,7 +11,18 @@ import { LessonResumeCard } from '@/components/learn/LessonResumeCard';
 import { TrackFilter } from '@/components/learn/TrackFilter';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
-export const metadata = { title: 'Apprendre · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'learn',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Apprendre' : 'Learn',
+    description:
+      params.locale === 'fr'
+        ? 'Le cursus de trading Tickra — pistes, leçons et exercices à votre rythme.'
+        : 'Tickra’s trading curriculum — tracks, lessons and exercises at your pace.',
+  });
+}
 
 export default async function LearnPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
