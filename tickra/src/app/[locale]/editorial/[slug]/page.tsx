@@ -49,12 +49,23 @@ export async function generateMetadata({ params }: { params: Params }) {
   return {
     title: `${post.title} · Tickra`,
     description: post.excerpt,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      // Declare both translations + x-default so Google can serve the
+      // right locale to each search audience. Matches the convention
+      // editorialMeta uses for the rest of the cluster.
+      languages: {
+        'fr-FR': `${SITE_URL}/fr/editorial/${params.slug}`,
+        'en-GB': `${SITE_URL}/en/editorial/${params.slug}`,
+        'x-default': `${SITE_URL}/fr/editorial/${params.slug}`,
+      },
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
       url: `${SITE_URL}${canonical}`,
+      locale: params.locale === 'fr' ? 'fr_FR' : 'en_GB',
     },
   };
 }
