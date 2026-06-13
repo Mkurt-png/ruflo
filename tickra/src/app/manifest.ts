@@ -10,7 +10,10 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: 'Tickra',
     description:
       'La maison éditoriale du trading. Une Criée par jour, une Lettre par dimanche, un Lexique qui s’ouvre au clic.',
-    start_url: '/fr/maison',
+    // Locale-neutral start: the middleware routes /maison to the
+    // reader's preferred locale (cookie or Accept-Language) so EN
+    // PWA users land on /en/maison without an extra hop they'd see.
+    start_url: '/maison',
     scope: '/',
     display: 'standalone',
     background_color: '#F4F1EA',
@@ -27,28 +30,28 @@ export default function manifest(): MetadataRoute.Manifest {
         name: 'La Maison',
         short_name: 'Maison',
         description: 'Le catalogue des pièces',
-        url: '/fr/maison',
+        url: '/maison',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
       {
         name: 'La Criée du jour',
         short_name: 'Criée',
         description: 'La question d’aujourd’hui',
-        url: '/fr/criee',
+        url: '/criee',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
       {
         name: 'La Lettre du dimanche',
         short_name: 'Lettre',
         description: 'Votre semaine, en trois colonnes',
-        url: '/fr/lettre',
+        url: '/lettre',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
       {
         name: 'Le Lexique vivant',
         short_name: 'Lexique',
         description: 'Les mots qui s’ouvrent au clic',
-        url: '/fr/lexique',
+        url: '/lexique',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
     ],
