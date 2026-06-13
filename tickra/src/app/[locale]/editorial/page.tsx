@@ -8,36 +8,19 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
-import { SITE_URL } from '@/lib/site-url';
+import { pageMeta } from '@/lib/seo/page-meta';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
-  const title = params.locale === 'fr' ? 'Éditorial · Tickra' : 'Editorial · Tickra';
-  const description =
-    params.locale === 'fr'
-      ? 'Le journal éditorial : longues lectures, méthode, et carnets de bord.'
-      : 'The editorial journal: long reads, method, and field notes.';
-  const canonical = `/${params.locale}/editorial`;
-  return {
-    title,
-    description,
-    alternates: {
-      canonical,
-      languages: {
-        'fr-FR': `${SITE_URL}/fr/editorial`,
-        'en-GB': `${SITE_URL}/en/editorial`,
-        'x-default': `${SITE_URL}/fr/editorial`,
-      },
-    },
-    openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}${canonical}`,
-      siteName: 'Tickra',
-      type: 'website',
-      locale: params.locale === 'fr' ? 'fr_FR' : 'en_GB',
-    },
-  };
+  return pageMeta({
+    slug: 'editorial',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Éditorial' : 'Editorial',
+    description:
+      params.locale === 'fr'
+        ? 'Le journal éditorial : longues lectures, méthode, et carnets de bord.'
+        : 'The editorial journal: long reads, method, and field notes.',
+  });
 }
 
 export default async function EditorialPage({ params }: { params: { locale: string } }) {

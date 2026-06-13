@@ -5,8 +5,20 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { pageMeta } from '@/lib/seo/page-meta';
 
-export const metadata = { title: 'Journal des versions · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'changelog',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Journal des versions' : 'Changelog',
+    description:
+      params.locale === 'fr'
+        ? 'Ce qui a changé sur Tickra, semaine après semaine.'
+        : 'What changed on Tickra, week after week.',
+  });
+}
 
 export default async function ChangelogPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
