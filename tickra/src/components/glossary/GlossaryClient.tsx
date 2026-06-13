@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import { GLOSSARY, categoryLabel, tagsFor, tagLabel, type GlossaryTerm } from '@/lib/curriculum/glossary';
 import { cn } from '@/lib/cn';
@@ -14,6 +14,21 @@ const noResult = { fr: 'Aucun terme ne correspond.', en: 'No term matches.' };
 export function GlossaryClient({ locale }: { locale: Locale }) {
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState<Cat>('all');
+
+  // If the reader deep-linked from <Term> (eg. /fr/glossary#stop-loss),
+  // the active filter may hide the target. Reset to 'all' on mount and
+  // re-scroll the matching <li> into view once it's rendered.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.location.hash) return;
+    setCat('all');
+    setQuery('');
+    const id = window.location.hash.slice(1);
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      el?.scrollIntoView({ block: 'start' });
+    });
+  }, []);
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(GLOSSARY.map((g) => g.category)));
