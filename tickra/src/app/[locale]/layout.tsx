@@ -80,7 +80,7 @@ export default async function LocaleLayout({
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-canvas"
         >
-          Skip to content
+          {locale === 'fr' ? 'Aller au contenu' : 'Skip to content'}
         </a>
         <ThemeProvider>
           <ToastProvider>{children}</ToastProvider>
