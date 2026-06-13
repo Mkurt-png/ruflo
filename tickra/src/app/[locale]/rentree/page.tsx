@@ -3,6 +3,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { CarnetClient } from '@/components/carnet/CarnetClient';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 // /[locale]/rentree — Le Carnet d'absence. Refonte du Rituel de
@@ -50,6 +51,35 @@ export default async function RentreePage({ params }: { params: { locale: string
       intro={t.intro}
     >
       <CarnetClient locale={locale} />
+      <ReadNext
+        locale={locale}
+        rooms={[
+          {
+            slug: 'criee',
+            title: { fr: 'La Criée', en: 'The Criée' },
+            caption: {
+              fr: 'La question d’aujourd’hui — celle que vous n’avez pas ratée.',
+              en: 'Today’s question — the one you did not miss.',
+            },
+          },
+          {
+            slug: 'lettre',
+            title: { fr: 'La Lettre du dimanche', en: 'The Sunday Letter' },
+            caption: {
+              fr: 'Le bilan de la semaine, prêt à être lu calmement.',
+              en: 'This week’s digest, ready to read.',
+            },
+          },
+          {
+            slug: 'survie',
+            title: { fr: 'Le Calculateur de survie', en: 'The Survival Calculator' },
+            caption: {
+              fr: 'Avant le prochain ordre : l’arithmétique d’entrée du carnet.',
+              en: 'Before the next order: the ledger-entry arithmetic.',
+            },
+          },
+        ]}
+      />
     </EditorialFrame>
   );
 }

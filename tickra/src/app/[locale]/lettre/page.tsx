@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { LettrePanel } from '@/components/lettre/LettrePanel';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
@@ -45,6 +46,35 @@ export default async function LettrePage({ params }: { params: { locale: string 
       head={t.head}
     >
       <LettrePanel locale={locale} />
+      <ReadNext
+        locale={locale}
+        rooms={[
+          {
+            slug: 'rentree',
+            title: { fr: 'Le Carnet d’absence', en: 'The Absence Register' },
+            caption: {
+              fr: 'Si vous revenez après plusieurs Lettres ratées.',
+              en: 'If you return after missing several Letters.',
+            },
+          },
+          {
+            slug: 'cercle',
+            title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+            caption: {
+              fr: 'La Lettre d’un autre lecteur, en silence.',
+              en: 'Another reader’s Letter, in silence.',
+            },
+          },
+          {
+            slug: 'veillee',
+            title: { fr: 'La Veillée', en: 'The Vigil' },
+            caption: {
+              fr: 'La lecture commune du dimanche soir.',
+              en: 'The shared Sunday-evening reading.',
+            },
+          },
+        ]}
+      />
     </EditorialFrame>
   );
 }
