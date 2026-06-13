@@ -18,6 +18,25 @@ type Props = {
 
 type CtaResolved = { href: string; label: string };
 
+// Editorial rooms get the Silence rule: no popping CTA on the page.
+// The catalogue, the manifestos, the calculator and the registers each
+// have their own quiet "Lire la suite" affordances; a black pill at
+// the bottom of an ivory page reads as an interruption.
+const EDITORIAL_SEGMENTS = new Set([
+  'maison', 'criee', 'lettre', 'veillee', 'voix', 'lexique', 'cercle',
+  'almanach', 'annuaire', 'recherche', 'rentree', 'random',
+  'refus', 'erratum', 'silence', 'cote-inversee', 'method', 'etages',
+  'survie', 'journal', 'bureau-partage', 'edition-lifetime',
+  'institutionnel', 'mecenat',
+]);
+
+function isEditorialPath(pathname: string): boolean {
+  const segs = pathname.split('/').filter(Boolean);
+  // /{locale}/{room}[/...]
+  if (segs.length < 2) return false;
+  return EDITORIAL_SEGMENTS.has(segs[1]);
+}
+
 function resolve(pathname: string, fallback: Props): CtaResolved {
   // pathname always starts with /{locale}
   const segs = pathname.split('/').filter(Boolean);
@@ -68,6 +87,9 @@ export function MobileStickyCta({ href, label }: Props) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Honour the editorial silence: no pill on Maison and her rooms.
+  if (isEditorialPath(pathname)) return null;
 
   const cta = resolve(pathname, { href, label });
 
