@@ -1,9 +1,21 @@
 import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { LegalPage } from '@/components/legal/LegalPage';
 
-export const metadata = { title: 'Confidentialité · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'privacy',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Confidentialité' : 'Privacy',
+    description:
+      params.locale === 'fr'
+        ? 'Comment Tickra traite vos données — sobrement, et avec une politique d’effacement publique.'
+        : 'How Tickra handles your data — sparingly, with a public deletion policy.',
+  });
+}
 
 export default async function PrivacyPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

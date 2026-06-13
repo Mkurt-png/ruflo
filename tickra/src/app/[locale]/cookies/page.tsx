@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -7,7 +8,18 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
 
-export const metadata = { title: 'Politique cookies · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'cookies',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Cookies' : 'Cookies',
+    description:
+      params.locale === 'fr'
+        ? 'La politique cookies de Tickra : ce qu’on dépose, ce qu’on ne dépose pas, comment refuser.'
+        : 'Tickra’s cookie policy: what we drop, what we don’t, how to refuse.',
+  });
+}
 
 const COPY = {
   fr: {
