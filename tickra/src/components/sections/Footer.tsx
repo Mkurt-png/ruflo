@@ -19,7 +19,10 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             <Logo />
             <span className="text-[15px] font-semibold tracking-tight">Tickra</span>
           </Link>
-          <p className="mt-6 max-w-xs font-display text-xl font-medium leading-snug tracking-tight text-balance text-ink">
+          <p
+            className="mt-6 max-w-xs font-display italic leading-snug tracking-tight text-balance text-[#0E0E0E]"
+            style={{ fontSize: 'clamp(18px, 1.8vw, 22px)', letterSpacing: '-0.01em' }}
+          >
             {t.tagline}
           </p>
           <div className="mt-10">
