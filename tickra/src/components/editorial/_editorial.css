@@ -38,8 +38,5 @@
   text-transform: uppercase;
 }
 
-/* Soft horizontal hairline rules — used as section separators. */
-.ed-rule { height: 1px; background: rgba(255,255,255,0.08); width: 100%; }
-
 /* Generous section padding helper. */
 .ed-section { padding-top: clamp(120px, 18vh, 220px); padding-bottom: clamp(120px, 18vh, 220px); }
