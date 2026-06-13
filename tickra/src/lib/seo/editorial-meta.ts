@@ -80,6 +80,8 @@ export function editorialMeta({
       card: 'summary_large_image',
       title,
       description,
+      site: '@tickra',
+      creator: '@tickra',
       images: [ogImage],
     },
   };
