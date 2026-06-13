@@ -23,6 +23,14 @@ export async function GET(req: Request) {
   const title = clamp(searchParams.get('title') ?? 'Tickra', 64);
   const eyebrow = clamp(searchParams.get('eyebrow') ?? '', 64);
   const locale = (searchParams.get('locale') ?? 'fr').toLowerCase();
+  // Optional dedication — when someone shares a page from inside
+  // Tickra with their handle in the URL (?for=hamza), the share card
+  // surfaces a small "pour Hamza" / "for Hamza" line beneath the
+  // title. Sanitized to <= 32 chars to keep the card calm.
+  const forName = clamp((searchParams.get('for') ?? '').replace(/[^\p{L}\p{N}\s'.-]/gu, ''), 32);
+  const dedication = forName
+    ? (locale === 'fr' ? `Pour ${forName}.` : `For ${forName}.`)
+    : '';
   const footer = locale === 'fr' ? 'Tickra · La Maison' : 'Tickra · The House';
 
   return new ImageResponse(
@@ -72,15 +80,33 @@ export async function GET(req: Request) {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            fontSize: 116,
-            lineHeight: 0.98,
-            letterSpacing: '-0.035em',
-            fontStyle: 'italic',
-            fontWeight: 300,
+            gap: 18,
             maxWidth: 1040,
           }}
         >
-          <span>{title}</span>
+          <span
+            style={{
+              fontSize: 116,
+              lineHeight: 0.98,
+              letterSpacing: '-0.035em',
+              fontStyle: 'italic',
+              fontWeight: 300,
+            }}
+          >
+            {title}
+          </span>
+          {dedication && (
+            <span
+              style={{
+                fontSize: 28,
+                letterSpacing: '-0.015em',
+                fontStyle: 'italic',
+                color: 'rgba(0,0,0,0.55)',
+              }}
+            >
+              {dedication}
+            </span>
+          )}
         </div>
 
         {/* Bottom rule + footer */}
