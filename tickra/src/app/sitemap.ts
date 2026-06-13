@@ -44,11 +44,10 @@ const routes = [
   { path: '/method', changeFrequency: 'monthly' as const, priority: 0.65 },
   { path: '/survie', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/journal', changeFrequency: 'weekly' as const, priority: 0.55 },
-  // Preparation pages
-  { path: '/bureau-partage', changeFrequency: 'monthly' as const, priority: 0.45 },
-  { path: '/edition-lifetime', changeFrequency: 'monthly' as const, priority: 0.5 },
   { path: '/institutionnel', changeFrequency: 'monthly' as const, priority: 0.45 },
-  { path: '/mecenat', changeFrequency: 'monthly' as const, priority: 0.45 },
+  // Candor-stub rooms (/bureau-partage, /edition-lifetime, /mecenat) are
+  // intentionally absent: they emit `robots: noindex, follow` until the
+  // service behind them ships. They stay linkable from /maison.
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

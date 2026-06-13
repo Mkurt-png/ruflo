@@ -17,6 +17,12 @@ export type EditorialMetaInput = {
   locale?: 'fr' | 'en';
   /** Optional editorial eyebrow shown on the share-card mono caption. */
   eyebrow?: string;
+  /**
+   * When true, the room is a candor-stub: published but not finished.
+   * Emits `robots: noindex, follow` so crawlers don't dilute the catalog
+   * with hollow pages. The room stays linkable from /maison.
+   */
+  draft?: boolean;
 };
 
 export function editorialMeta({
@@ -25,6 +31,7 @@ export function editorialMeta({
   description,
   locale = 'fr',
   eyebrow,
+  draft = false,
 }: EditorialMetaInput): Metadata {
   const path = slug.startsWith('/') ? slug : `/${slug}`;
   const url = `${SITE_URL}/${locale}${path}`;
@@ -47,6 +54,7 @@ export function editorialMeta({
   return {
     title: `${title} · Tickra`,
     description,
+    ...(draft && { robots: { index: false, follow: true } }),
     alternates: {
       canonical: url,
       languages,

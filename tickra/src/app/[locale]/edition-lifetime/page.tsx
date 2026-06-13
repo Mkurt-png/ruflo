@@ -14,6 +14,7 @@ export const metadata = {
   title: 'L’Édition Lifetime · Tickra',
   description:
     'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.',
+  robots: { index: false, follow: true },
 };
 
 const COPY = {

@@ -13,6 +13,7 @@ export const metadata = {
   title: 'Le Mécénat · Tickra',
   description:
     'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.',
+  robots: { index: false, follow: true },
 };
 
 const COPY = {

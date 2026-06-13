@@ -14,6 +14,7 @@ export const metadata = {
   title: 'Le Bureau partagé · Tickra',
   description:
     'Publier une journée de votre journal en lecture seule, annotée d’une ligne. Pas de DM, pas de likes — une page typographique.',
+  robots: { index: false, follow: true },
 };
 
 const COPY = {
