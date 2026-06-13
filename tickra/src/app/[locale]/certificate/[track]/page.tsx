@@ -10,12 +10,6 @@ import { TrackCertificate } from '@/components/account/TrackCertificate';
 
 type Params = { locale: string; track: string };
 
-// Certificate URLs are per-user achievement pages — never index.
-export const metadata = {
-  title: 'Certificate · Tickra',
-  robots: { index: false, follow: false },
-};
-
 export async function generateStaticParams() {
   const out: Params[] = [];
   for (const l of locales) for (const t of TRACKS) out.push({ locale: l, track: t.slug });
@@ -25,8 +19,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
   const tr = getTrack(params.track);
-  if (!tr) return {};
-  return { title: `${tr.title[params.locale as Locale]} · Certificat · Tickra` };
+  if (!tr) return { robots: { index: false, follow: false } };
+  return {
+    title: `${tr.title[params.locale as Locale]} · Certificat · Tickra`,
+    // Per-user achievement page — never indexable.
+    robots: { index: false, follow: false },
+  };
 }
 
 export default async function TrackCertificatePage({ params }: { params: Params }) {

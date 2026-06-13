@@ -1,6 +1,22 @@
 import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getSession } from '@/lib/auth/session';
+
+// Per-user achievement board — gated by getSession, never indexable.
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'achievements',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Réussites' : 'Achievements',
+    description:
+      params.locale === 'fr'
+        ? 'Vos jalons de lecture et d’apprentissage. Calculé localement.'
+        : 'Your reading and learning milestones. Computed locally.',
+    noindex: true,
+  });
+}
 import { isDbConfigured, listProgress, listMistakes } from '@/lib/db/queries';
 import {
   ACHIEVEMENTS,

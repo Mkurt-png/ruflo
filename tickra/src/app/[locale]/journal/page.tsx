@@ -1,6 +1,24 @@
 import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getSession } from '@/lib/auth/session';
+
+// Per-user trading journal — gated by getSession, never indexable.
+// robots.ts already disallows /journal; the explicit noindex closes
+// the loop and emits a description for browser tabs.
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'journal',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Journal' : 'Journal',
+    description:
+      params.locale === 'fr'
+        ? 'Votre journal de trading — entrées, observations du Greffier, autopsie.'
+        : 'Your trading journal — entries, Registrar notes, autopsy.',
+    noindex: true,
+  });
+}
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { listTrades } from '@/lib/db/journal-queries';
 import { Navbar } from '@/components/nav/Navbar';
