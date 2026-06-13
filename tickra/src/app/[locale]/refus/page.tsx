@@ -6,6 +6,7 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/refus — Le Refus. Ten things Tickra will never build.
 // A manifesto by negation, in the editorial register. Static content,
@@ -64,6 +65,13 @@ export default async function RefusPage({ params }: { params: { locale: string }
         head={t.head}
         intro={t.intro}
       >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr'
+              ? 'Un site se définit autant par ce qu’il refuse que par ce qu’il publie.'
+              : 'A site is defined as much by what it refuses as by what it publishes.'}
+          </Pull>
+        </section>
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <ol className="space-y-16">
             {REFUSALS.map((r, i) => (
