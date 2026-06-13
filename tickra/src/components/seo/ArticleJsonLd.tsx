@@ -23,6 +23,7 @@ export function ArticleJsonLd({ url, title, description, date, author, image, lo
     publisher: {
       '@type': 'Organization',
       name: 'Tickra',
+      url: SITE_URL,
       logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.svg` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
