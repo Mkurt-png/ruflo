@@ -13,6 +13,7 @@
 import { useEffect, useState } from 'react';
 import { X, Sparkles } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
+import { isEditorialPath } from '@/lib/editorial/routes';
 
 const COPY = {
   fr: {
@@ -47,6 +48,8 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (PATHS_TO_HIDE.some((p) => window.location.pathname.includes(p))) return;
+    // Editorial silence: never pop a modal on a reading room.
+    if (isEditorialPath(window.location.pathname)) return;
     if (sessionStorage.getItem('tickra_exit_seen') === '1') return;
     if (localStorage.getItem('tickra_exit_dismissed') === '1') return;
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
