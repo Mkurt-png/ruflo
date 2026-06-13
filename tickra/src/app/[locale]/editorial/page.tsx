@@ -7,6 +7,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 
 export const metadata = { title: 'Éditorial · Tickra' };
 
@@ -17,6 +18,15 @@ export default async function EditorialPage({ params }: { params: { locale: stri
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${params.locale}` },
+          {
+            name: params.locale === 'fr' ? 'Éditorial' : 'Editorial',
+            path: `/${params.locale}/editorial`,
+          },
+        ]}
+      />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <PageHero title={t.title} body={t.subtitle} eyebrow="Editorial" />
