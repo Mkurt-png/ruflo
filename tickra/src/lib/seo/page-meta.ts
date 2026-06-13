@@ -20,14 +20,29 @@ export type PageMetaInput = {
   locale: Locale;
   /** OG type — defaults to 'website'. Set 'article' for long-form. */
   ogType?: 'website' | 'article';
+  /**
+   * When true, emits `robots: noindex, follow`. Use for auth/private
+   * surfaces (/signin, /welcome, /me) and any page that should resolve
+   * but not be indexed. Hreflang is still emitted so the language
+   * matrix stays consistent.
+   */
+  noindex?: boolean;
 };
 
-export function pageMeta({ slug, title, description, locale, ogType = 'website' }: PageMetaInput): Metadata {
+export function pageMeta({
+  slug,
+  title,
+  description,
+  locale,
+  ogType = 'website',
+  noindex = false,
+}: PageMetaInput): Metadata {
   const path = slug.startsWith('/') ? slug : `/${slug}`;
   const canonical = `/${locale}${path}`;
   return {
     title: `${title} · ${SITE_NAME}`,
     description,
+    ...(noindex && { robots: { index: false, follow: true } }),
     alternates: {
       canonical,
       languages: {
