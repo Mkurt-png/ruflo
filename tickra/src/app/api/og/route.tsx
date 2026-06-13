@@ -22,7 +22,11 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const title = clamp(searchParams.get('title') ?? 'Tickra', 64);
   const eyebrow = clamp(searchParams.get('eyebrow') ?? '', 64);
-  const locale = (searchParams.get('locale') ?? 'fr').toLowerCase();
+  const rawLocale = (searchParams.get('locale') ?? 'fr').toLowerCase();
+  // Strict allowlist: anything outside fr/en falls back to fr so a typo
+  // (or a crawler probing odd query strings) doesn't render a mixed
+  // half-English card.
+  const locale = rawLocale === 'en' ? 'en' : 'fr';
   // Optional dedication — when someone shares a page from inside
   // Tickra with their handle in the URL (?for=hamza), the share card
   // surfaces a small "pour Hamza" / "for Hamza" line beneath the
