@@ -17,6 +17,14 @@ const copy: Record<Locale, { title: string; description: string }> = {
 
 export function buildMetadata(locale: Locale): Metadata {
   const { title, description } = copy[locale];
+  // Build a root share card via /api/og so the homepage gets the same
+  // editorial preview every editorial room already enjoys.
+  const ogParams = new URLSearchParams({
+    title: locale === 'fr' ? 'La maison éditoriale du trading' : 'The editorial house of trading',
+    eyebrow: locale === 'fr' ? 'Tickra · La Maison' : 'Tickra · The House',
+    locale,
+  });
+  const ogImage = `${SITE_URL}/api/og?${ogParams.toString()}`;
   return {
     metadataBase: new URL(SITE_URL),
     title: { default: title, template: `%s · ${SITE_NAME}` },
@@ -41,8 +49,9 @@ export function buildMetadata(locale: Locale): Metadata {
       title,
       description,
       locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
-    twitter: { card: 'summary_large_image', title, description, creator: '@tickra' },
+    twitter: { card: 'summary_large_image', title, description, creator: '@tickra', images: [ogImage] },
     robots: {
       index: true,
       follow: true,
