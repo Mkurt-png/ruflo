@@ -1,9 +1,15 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
 // Editorial 404 — matches the landing's ivory paper register. No mascot,
 // no oversized brand, just a folio number, a quiet line, and one link
 // back. The page is intentionally locale-agnostic because it can be
 // reached from anywhere in the app.
+
+export const metadata: Metadata = {
+  title: 'Page introuvable · Tickra',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
