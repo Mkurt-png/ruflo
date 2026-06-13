@@ -2,8 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 
 // /[locale]/maison — La Maison. A single index of every editorial
 // piece Tickra has built. The Navbar will stay slim; this page
@@ -279,7 +278,6 @@ export default async function MaisonPage({ params }: { params: { locale: string 
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="maison"
         title={locale === 'fr' ? 'La Maison' : 'The House'}
@@ -288,41 +286,14 @@ export default async function MaisonPage({ params }: { params: { locale: string 
           : 'Plan of the Tickra house: every editorial room on one page.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {total} {locale === 'fr' ? 'pièces · ' : 'rooms · '}
-              {WINGS.length} {locale === 'fr' ? 'ailes' : 'wings'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
-        </section>
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={`${total} ${locale === 'fr' ? 'pièces · ' : 'rooms · '}${WINGS.length} ${locale === 'fr' ? 'ailes' : 'wings'}`}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
 
         <section className="mx-auto max-w-[1100px] px-6 md:px-16 pb-32">
           <div className="grid gap-x-16 gap-y-16 md:grid-cols-2">
@@ -381,8 +352,7 @@ export default async function MaisonPage({ params }: { params: { locale: string 
             </p>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+      </EditorialFrame>
     </>
   );
 }
