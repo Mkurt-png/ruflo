@@ -134,6 +134,14 @@ const WINGS: Wing[] = [
           en: 'An empty box that searches lessons, glossary and rooms. Local.',
         },
       },
+      {
+        slug: 'random',
+        title: { fr: 'Une pièce au hasard', en: 'A room at random' },
+        caption: {
+          fr: 'Le tirage uniforme parmi les vingt-deux pièces, candor-stubs inclus.',
+          en: 'A uniform draw among the twenty-two rooms, candor-stubs included.',
+        },
+      },
     ],
   },
   {
