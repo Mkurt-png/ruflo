@@ -64,6 +64,12 @@ export function buildMetadata(locale: Locale): Metadata {
       follow: true,
       googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
     },
-    icons: { icon: '/favicon.svg' },
+    icons: {
+      icon: '/favicon.svg',
+      // iOS home-screen icon — uses the same vector for now. Newer iOS
+      // (16.4+) supports SVG; older iOS will fall back to a screenshot.
+      apple: '/favicon.svg',
+      shortcut: '/favicon.svg',
+    },
   };
 }
