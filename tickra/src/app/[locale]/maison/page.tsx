@@ -12,6 +12,7 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 
 export const revalidate = 86400;
 export const metadata = editorialMeta({
@@ -302,6 +303,15 @@ export default async function MaisonPage({ params }: { params: { locale: string 
           ? 'Plan de la maison Tickra : toutes les pièces éditoriales sur une page.'
           : 'Plan of the Tickra house: every editorial room on one page.'}
         locale={locale}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${locale}` },
+          {
+            name: locale === 'fr' ? 'La Maison' : 'The House',
+            path: `/${locale}/maison`,
+          },
+        ]}
       />
       <EditorialFrame
         dict={dict}
