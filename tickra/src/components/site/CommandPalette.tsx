@@ -58,6 +58,7 @@ const staticPages = {
     { id: 'simulator', label: 'Simulateur', href: '/me/simulator', group: 'page' as const },
     // La Maison — pièces éditoriales
     { id: 'maison',          label: 'La Maison · plan',         href: '/maison',           group: 'page' as const, hint: 'Plan d’ensemble' },
+    { id: 'rentree',         label: 'Le Carnet d’absence',      href: '/rentree',          group: 'page' as const, hint: 'Ce qui s’est passé sans vous' },
     { id: 'criee',           label: 'La Criée',                 href: '/criee',            group: 'page' as const, hint: 'Question du jour' },
     { id: 'lettre',          label: 'La Lettre du dimanche',    href: '/lettre',           group: 'page' as const, hint: 'Bilan hebdomadaire' },
     { id: 'veillee',         label: 'La Veillée',               href: '/veillee',          group: 'page' as const, hint: 'Dimanche 21 h UTC' },
@@ -102,6 +103,7 @@ const staticPages = {
     { id: 'simulator', label: 'Simulator', href: '/me/simulator', group: 'page' as const },
     // La Maison — editorial rooms
     { id: 'maison',          label: 'The House · map',          href: '/maison',           group: 'page' as const, hint: 'Full plan' },
+    { id: 'rentree',         label: 'The Absence Register',     href: '/rentree',          group: 'page' as const, hint: 'What happened without you' },
     { id: 'criee',           label: 'The Criée',                href: '/criee',            group: 'page' as const, hint: 'Question of the day' },
     { id: 'lettre',          label: 'The Sunday Letter',        href: '/lettre',           group: 'page' as const, hint: 'Weekly digest' },
     { id: 'veillee',         label: 'The Vigil',                href: '/veillee',          group: 'page' as const, hint: 'Sunday 21:00 UTC' },

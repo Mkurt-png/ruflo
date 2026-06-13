@@ -64,6 +64,15 @@ const WINGS: Wing[] = [
           en: 'Thirty minutes, Sunday 21:00 UTC, one sentence per minute, read together.',
         },
       },
+      {
+        slug: 'rentree',
+        title: { fr: 'Le Carnet d’absence', en: 'The Absence Register' },
+        caption: {
+          fr: 'Ce qui s’est passé sans vous. Calculé chez vous.',
+          en: 'What happened without you. Computed in your browser.',
+        },
+        signed: true,
+      },
     ],
   },
   {
