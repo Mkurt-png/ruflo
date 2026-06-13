@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { getCrieeForDate } from '@/lib/tickra/criee';
 import { CrieeCard } from '@/components/criee/CrieeCard';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
@@ -52,6 +53,35 @@ export default async function CrieePage({ params }: { params: { locale: string }
       <div className="px-6 md:px-16 pb-32">
         <CrieeCard card={card} locale={locale} />
       </div>
+      <ReadNext
+        locale={locale}
+        rooms={[
+          {
+            slug: 'almanach',
+            title: { fr: 'L’Almanach', en: 'The Almanac' },
+            caption: {
+              fr: 'Toutes les Criées de l’année — celle d’hier y est déjà.',
+              en: 'Every Criée of the year — yesterday’s is already there.',
+            },
+          },
+          {
+            slug: 'method',
+            title: { fr: 'La Méthode', en: 'The Method' },
+            caption: {
+              fr: 'Comment la question du jour est calculée.',
+              en: 'How the day’s question is computed.',
+            },
+          },
+          {
+            slug: 'erratum',
+            title: { fr: 'L’Erratum', en: 'The Erratum' },
+            caption: {
+              fr: 'Les Criées mal posées, datées et corrigées en public.',
+              en: 'Mis-posed Criées, dated and corrected in the open.',
+            },
+          },
+        ]}
+      />
     </EditorialFrame>
   );
 }
