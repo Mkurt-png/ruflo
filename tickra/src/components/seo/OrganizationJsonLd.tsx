@@ -14,7 +14,7 @@ export function OrganizationJsonLd() {
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.svg`,
     description:
-      'Plateforme de formation au trading et à l’analyse des marchés financiers. Cursus structuré, 10 minutes par jour, vrais graphiques.',
+      'Maison éditoriale de trading. Une Criée chaque jour, une Lettre chaque dimanche, un Lexique vivant — métier enseigné comme un livre, sans fanfare.',
     foundingDate: '2025',
     founders: [{ '@type': 'Person', name: 'Hamza Kurt' }],
     address: {
@@ -50,10 +50,21 @@ export function OrganizationJsonLd() {
     ],
   };
 
+  // Mirror the defence-in-depth escape used by EditorialJsonLd: even
+  // though every field above is currently a string literal, this block
+  // is mounted on every page and any future caller adding user-derived
+  // content shouldn't be able to break out of the <script>.
+  const json = JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/[\u2028]/g, '\\u2028')
+    .replace(/[\u2029]/g, '\\u2029');
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: json }}
     />
   );
 }
