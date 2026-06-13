@@ -4,7 +4,11 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    // Tree-shake icon and motion libraries — lucide-react alone exports
+    // 1,000+ icons and we pull a handful per page; framer-motion ships
+    // a few dozen helpers we likewise sample. Adds three's drei wrapper
+    // for the same reason (only used on a couple of routes).
+    optimizePackageImports: ['lucide-react', 'framer-motion', '@react-three/drei'],
   },
   async headers() {
     const securityHeaders = [
