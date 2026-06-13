@@ -35,6 +35,7 @@ const routes = [
   { path: '/almanach', changeFrequency: 'daily' as const, priority: 0.7 },
   { path: '/annuaire', changeFrequency: 'weekly' as const, priority: 0.75 },
   { path: '/recherche', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/rentree', changeFrequency: 'weekly' as const, priority: 0.55 },
   { path: '/refus', changeFrequency: 'yearly' as const, priority: 0.6 },
   { path: '/erratum', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/cote-inversee', changeFrequency: 'monthly' as const, priority: 0.6 },

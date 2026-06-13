@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { Term } from '@/components/lexique/Term';
+import { TermsInProse } from '@/components/lexique/TermsInProse';
 import { GLOSSARY } from '@/lib/curriculum/glossary';
 
 // /[locale]/lexique — Le Lexique vivant. Showcase of the inline
@@ -133,6 +134,27 @@ export default async function LexiquePage({ params }: { params: { locale: string
                 {t.demoSLAfter}
               </li>
             </ol>
+          </div>
+
+          <div className="mt-16 border-t border-black/15 pt-12">
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
+              {locale === 'fr' ? 'Sans encapsulation manuelle' : 'Without manual wrapping'}
+            </p>
+            <p
+              className="mt-3 font-display leading-relaxed text-[#0E0E0E]/80 max-w-[680px]"
+              style={{ fontSize: 'clamp(18px, 1.9vw, 22px)', lineHeight: 1.5 }}
+            >
+              <TermsInProse locale={locale}>
+                {locale === 'fr'
+                  ? 'Quand le doji apparaît près d’un support, la mèche du marteau pose la question : qui tient ? Le break of structure se trouve plus loin ; le stop-loss vit au-dessus de la dernière bougie.'
+                  : 'When the doji appears near a support, the wick of the hammer asks: who holds? The break of structure is further out; the stop-loss sits above the last candle.'}
+              </TermsInProse>
+            </p>
+            <p className="mt-3 font-mono text-[10.5px] text-black/55">
+              {locale === 'fr'
+                ? 'Les pointillés sont posés automatiquement par <TermsInProse>.'
+                : 'Dotted underlines placed automatically by <TermsInProse>.'}
+            </p>
           </div>
 
           <div className="mt-16 border-t border-black/15 pt-12">
