@@ -6,6 +6,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { GlossaryClient } from '@/components/glossary/GlossaryClient';
+import { GlossaryJsonLd } from '@/components/seo/GlossaryJsonLd';
 import { GLOSSARY } from '@/lib/curriculum/glossary';
 
 export const metadata = { title: 'Glossaire · Tickra' };
@@ -23,6 +24,7 @@ export default async function GlossaryPage({ params }: { params: { locale: strin
 
   return (
     <>
+      <GlossaryJsonLd locale={locale} />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Référence' : 'Reference'} title={title} body={body} />
