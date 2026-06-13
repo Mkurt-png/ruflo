@@ -61,10 +61,20 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
 
   const payload = [organization, course, faq, product];
 
+  // Defence-in-depth escape: blocks </script> breakouts and the
+  // U+2028/U+2029 line separators that JSON.stringify alone won't
+  // escape but which break a <script> block in older parsers.
+  const json = JSON.stringify(payload)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/[\u2028]/g, '\\u2028')
+    .replace(/[\u2029]/g, '\\u2029');
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(payload) }}
+      dangerouslySetInnerHTML={{ __html: json }}
     />
   );
 }
