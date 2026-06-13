@@ -80,23 +80,31 @@ export function InstallPrompt({ locale }: { locale: Locale }) {
 
   return (
     <div className="pointer-events-none fixed inset-x-3 bottom-3 z-50 flex justify-center md:bottom-6">
-      <div className="pointer-events-auto flex w-full max-w-md items-start gap-3 rounded-sm border border-line bg-surface p-4 shadow-[0_18px_40px_-18px_rgba(27,29,51,0.35)]">
-        <Download aria-hidden className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand" strokeWidth={1.75} />
+      <div className="pointer-events-auto flex w-full max-w-md items-start gap-4 border border-black/15 bg-[#F4F1EA] p-5 text-[#0E0E0E] shadow-[0_18px_40px_-18px_rgba(14,14,14,0.35)]">
+        <Download aria-hidden className="mt-1 h-4 w-4 flex-shrink-0 text-[#0E0E0E]/75" strokeWidth={1.5} />
         <div className="min-w-0 flex-1">
-          <p className="font-display text-[14.5px] font-medium tracking-tight text-ink">{t.title}</p>
-          <p className="mt-1 text-[13px] leading-relaxed text-muted">{t.body}</p>
-          <div className="mt-3 flex items-center gap-2">
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55">
+            Tickra · Installation
+          </p>
+          <p
+            className="mt-2 font-display italic text-[#0E0E0E]"
+            style={{ fontSize: '20px', lineHeight: 1.15, letterSpacing: '-0.01em' }}
+          >
+            {t.title}
+          </p>
+          <p className="mt-2 text-[13.5px] leading-relaxed text-black/70">{t.body}</p>
+          <div className="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-2">
             <button
               type="button"
               onClick={install}
-              className="inline-flex h-9 items-center rounded-full bg-ink px-4 text-[12.5px] font-medium tracking-tight text-canvas hover:brightness-110"
+              className="font-mono text-[10.5px] uppercase tracking-[0.34em] text-[#0E0E0E] underline underline-offset-4 hover:text-black/70 transition-colors"
             >
-              {t.install}
+              {t.install} →
             </button>
             <button
               type="button"
               onClick={dismiss}
-              className="inline-flex h-9 items-center rounded-full border border-line px-3 text-[12.5px] text-muted hover:border-ink hover:text-ink"
+              className="font-mono text-[10.5px] uppercase tracking-[0.28em] text-black/55 hover:text-[#0E0E0E] transition-colors"
             >
               {t.later}
             </button>
@@ -106,9 +114,9 @@ export function InstallPrompt({ locale }: { locale: Locale }) {
           type="button"
           onClick={dismiss}
           aria-label={t.later}
-          className="text-muted hover:text-ink"
+          className="text-black/55 hover:text-[#0E0E0E] transition-colors"
         >
-          <X className="h-4 w-4" strokeWidth={1.75} />
+          <X className="h-4 w-4" strokeWidth={1.5} />
         </button>
       </div>
     </div>
