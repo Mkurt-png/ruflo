@@ -65,15 +65,18 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               exit={{ y: 8, opacity: 0 }}
               transition={{ duration: 0.35, ease: easeOutExpo }}
               role="status"
-              className="pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-sm border border-line bg-surface p-4 shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+              className="pointer-events-auto flex w-full max-w-sm items-start gap-3 border border-black/15 bg-[#F4F1EA] p-4 text-[#0E0E0E] shadow-[0_18px_40px_-18px_rgba(14,14,14,0.35)]"
             >
               <Glyph tone={t.tone ?? 'default'} />
               <div className="min-w-0 flex-1">
-                <div className="font-display text-[15px] font-medium tracking-tight text-ink">
+                <div
+                  className="font-display italic text-[#0E0E0E]"
+                  style={{ fontSize: '16px', lineHeight: 1.2, letterSpacing: '-0.01em' }}
+                >
                   {t.title}
                 </div>
                 {t.body ? (
-                  <p className="mt-1 text-[13.5px] leading-relaxed text-muted">{t.body}</p>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-black/70">{t.body}</p>
                 ) : null}
               </div>
             </motion.div>
@@ -85,27 +88,24 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 }
 
 function Glyph({ tone }: { tone: 'default' | 'success' | 'error' }) {
+  // Editorial glyphs: a small square mark in ink, not a colored pill.
+  // Success and error read in the same paper register; tone is carried
+  // by the symbol, not by red/green colour.
   if (tone === 'success') {
     return (
-      <span
-        aria-hidden
-        className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-up text-canvas"
-      >
-        <Check className="h-3 w-3" strokeWidth={2.5} />
+      <span aria-hidden className="mt-1 flex h-4 w-4 flex-shrink-0 items-center justify-center border border-[#0E0E0E] text-[#0E0E0E]">
+        <Check className="h-2.5 w-2.5" strokeWidth={2} />
       </span>
     );
   }
   if (tone === 'error') {
     return (
-      <span
-        aria-hidden
-        className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-down text-canvas"
-      >
-        <X className="h-3 w-3" strokeWidth={2.5} />
+      <span aria-hidden className="mt-1 flex h-4 w-4 flex-shrink-0 items-center justify-center border border-[#0E0E0E] text-[#0E0E0E]">
+        <X className="h-2.5 w-2.5" strokeWidth={2} />
       </span>
     );
   }
-  return <span aria-hidden className="mt-0.5 h-5 w-5 flex-shrink-0 rounded-full border border-line" />;
+  return <span aria-hidden className="mt-1 h-4 w-4 flex-shrink-0 border border-black/30" />;
 }
 
 export function useToast() {
