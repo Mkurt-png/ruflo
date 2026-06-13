@@ -4,6 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { getCrieeForDate } from '@/lib/tickra/criee';
 import { CrieeCard } from '@/components/criee/CrieeCard';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
@@ -53,6 +54,11 @@ export default async function CrieePage({ params }: { params: { locale: string }
           : 'One question, chosen for the day, identical for everyone.'}
         locale={locale}
         dateModified={`${card.date}T00:00:00.000Z`}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="criee"
+        title={{ fr: 'La Criée', en: 'La Criée' }}
       />
       <EditorialFrame
       dict={dict}

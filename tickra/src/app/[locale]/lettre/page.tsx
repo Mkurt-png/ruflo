@@ -4,6 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { LettrePanel } from '@/components/lettre/LettrePanel';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
@@ -47,6 +48,11 @@ export default async function LettrePage({ params }: { params: { locale: string 
           ? 'Bilan hebdomadaire, calculé localement à partir de votre progression.'
           : 'Weekly digest computed locally from your progress.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="lettre"
+        title={{ fr: 'La Lettre du dimanche', en: 'The Sunday Letter' }}
       />
       <EditorialFrame
       dict={dict}
