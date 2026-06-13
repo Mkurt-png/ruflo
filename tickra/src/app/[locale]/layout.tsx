@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/lib/theme/ThemeProvider';
@@ -41,6 +42,16 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   if (!isLocale(params.locale)) return {};
   return buildMetadata(params.locale);
 }
+
+// Tells the browser chrome (mobile status bar, PWA chrome, Safari) to
+// paint in the editorial palette: ivory in light mode, ink in dark.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F4F1EA' },
+    { media: '(prefers-color-scheme: dark)', color: '#0E0E0E' },
+  ],
+  colorScheme: 'light dark',
+};
 
 export default async function LocaleLayout({
   children,

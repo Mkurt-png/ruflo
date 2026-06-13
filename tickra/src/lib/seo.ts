@@ -4,14 +4,14 @@ import { SITE_URL, SITE_NAME } from '@/lib/site-url';
 
 const copy: Record<Locale, { title: string; description: string }> = {
   en: {
-    title: 'Tickra — Learn the markets, candle by candle',
+    title: 'Tickra — the editorial house of trading',
     description:
-      'A structured trading curriculum, from your first Japanese candle to institutional‑grade decision making. Ten‑minute lessons, real charts, daily streaks.',
+      'A daily Criée, a Sunday Letter, a living Lexicon. Trading taught as a craft — slow, written, without fanfare.',
   },
   fr: {
-    title: 'Tickra — Apprenez les marchés, bougie après bougie',
+    title: 'Tickra — la maison éditoriale du trading',
     description:
-      "Un parcours de trading structuré, de votre première bougie japonaise jusqu'à la prise de décision institutionnelle. Leçons de dix minutes, vrais graphiques, streaks quotidiens.",
+      'Une Criée chaque jour, une Lettre chaque dimanche, un Lexique qui s’ouvre au clic. Le trading enseigné comme un métier — lent, écrit, sans fanfare.',
   },
 };
 
