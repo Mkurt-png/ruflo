@@ -1,5 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { getSession } from '@/lib/auth/session';
 import { Navbar } from '@/components/nav/Navbar';
@@ -8,7 +9,19 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { SettingsPanel } from '@/components/account/SettingsPanel';
 
-export const metadata = { title: 'Paramètres · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'me/settings',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Paramètres' : 'Settings',
+    description:
+      params.locale === 'fr'
+        ? 'Vos préférences de compte — langue, thème, confidentialité.'
+        : 'Your account preferences — language, theme, privacy.',
+    noindex: true,
+  });
+}
 
 export default async function SettingsPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

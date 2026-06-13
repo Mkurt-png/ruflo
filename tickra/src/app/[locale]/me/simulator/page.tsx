@@ -1,5 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { getSession } from '@/lib/auth/session';
 import { Navbar } from '@/components/nav/Navbar';
@@ -9,7 +10,19 @@ import { PageHero } from '@/components/ui/PageHero';
 import { SimulatorApp } from '@/components/simulator/SimulatorApp';
 import { FlashCrashMode } from '@/components/simulator/FlashCrashMode';
 
-export const metadata = { title: 'Simulateur · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'me/simulator',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Simulateur' : 'Simulator',
+    description:
+      params.locale === 'fr'
+        ? 'Le simulateur de trading Tickra — paper-trading sur des marchés réels, en local.'
+        : 'Tickra’s trading simulator — paper trading on real markets, local.',
+    noindex: true,
+  });
+}
 
 export default async function SimulatorPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
