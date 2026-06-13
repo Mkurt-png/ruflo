@@ -88,10 +88,23 @@ export function AskTickra({ locale }: { locale: Locale }) {
   }, [open]);
 
   // Hide on signin/onboarding/welcome to avoid covering critical CTAs.
+  // Also stay silent on the editorial cluster: the Maison is a reading
+  // surface, not a Q&A surface — a floating chat bubble there reads
+  // like the popups /silence bans.
+  const editorialSegments = new Set([
+    'maison', 'criee', 'lettre', 'veillee', 'voix', 'lexique', 'cercle',
+    'almanach', 'annuaire', 'recherche', 'rentree', 'random',
+    'refus', 'erratum', 'silence', 'cote-inversee', 'method', 'etages',
+    'survie', 'journal', 'bureau-partage', 'edition-lifetime',
+    'institutionnel', 'mecenat',
+  ]);
+  const segs = pathname.split('/').filter(Boolean);
+  const onEditorial = segs.length >= 2 && editorialSegments.has(segs[1]);
   const hidden =
     pathname.includes('/signin') ||
     pathname.includes('/onboarding') ||
-    pathname.includes('/welcome');
+    pathname.includes('/welcome') ||
+    onEditorial;
   if (hidden) return null;
   if (!ready) return null;
 
