@@ -15,10 +15,13 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: { params: Params }) {
   const payload = decodeShare(params.token);
-  if (!payload) return {};
+  if (!payload) return { robots: { index: false, follow: false } };
   return {
     title: `${payload.n} · Tickra`,
     description: `${payload.l} lessons, ${payload.t} tracks, ${payload.s}-day streak on Tickra.`,
+    // Per-user share tokens: never indexable but social previews should
+    // still render (the OG remains intact).
+    robots: { index: false, follow: false },
   };
 }
 
