@@ -23,6 +23,7 @@ export function GlossaryJsonLd({ locale }: { locale: Locale }) {
     description: setDescription,
     url,
     inLanguage,
+    numberOfItems: GLOSSARY.length,
     hasDefinedTerm: GLOSSARY.map((entry) => ({
       '@type': 'DefinedTerm',
       name: entry.term[locale],
