@@ -8,6 +8,7 @@ import { getSession } from '@/lib/auth/session';
 import { pairFor } from '@/lib/tickra/cercle';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 // /[locale]/cercle — Le Cercle de relecture. Each ISO week, the
 // reader is paired with another voice. Until the server matching
@@ -74,6 +75,11 @@ export default async function CerclePage({ params }: { params: { locale: string 
           ? 'Chaque semaine, une lettre d’un autre lecteur, en silence.'
           : 'Each week, a letter from another reader, in silence.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="cercle"
+        title={{ fr: 'Le Cercle de relecture', en: 'The Reading Circle' }}
       />
       <EditorialFrame
       dict={dict}

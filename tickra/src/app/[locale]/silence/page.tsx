@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { Pull } from '@/components/editorial/Pull';
@@ -198,6 +199,11 @@ export default async function SilencePage({ params }: { params: { locale: string
           ? 'Les patterns d’UI que Tickra ne déploiera pas.'
           : 'UI patterns Tickra will not display.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="silence"
+        title={{ fr: 'Le Silence éditorial', en: 'The Editorial Silence' }}
       />
       <EditorialFrame
         dict={dict}

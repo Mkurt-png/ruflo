@@ -14,6 +14,7 @@ import { getCrieeForDate } from '@/lib/tickra/criee';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
 export const metadata = editorialMeta({
@@ -89,6 +90,11 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
           ? 'L’archive de l’année : une ligne par Criée passée.'
           : 'The year’s archive: one line per past Criée.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="almanach"
+        title={{ fr: 'L’Almanach', en: 'The Almanac' }}
       />
       <EditorialFrame
         dict={dict}

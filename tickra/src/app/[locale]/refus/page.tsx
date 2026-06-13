@@ -4,6 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { REFUSALS } from '@/lib/tickra/refus';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { Pull } from '@/components/editorial/Pull';
@@ -56,6 +57,11 @@ export default async function RefusPage({ params }: { params: { locale: string }
           ? 'Dix choses que Tickra ne construira jamais. Un manifeste par la négation.'
           : 'Ten things Tickra will never build. A manifesto by negation.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="refus"
+        title={{ fr: 'Le Refus', en: 'The Refusal' }}
       />
       <EditorialFrame
         dict={dict}

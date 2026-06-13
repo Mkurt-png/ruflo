@@ -12,6 +12,7 @@ import { Pull } from '@/components/editorial/Pull';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
 export const metadata = editorialMeta({
@@ -126,6 +127,11 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
           ? 'L’éditeur publie sa propre Cote chaque mois, même formule.'
           : 'The editor publishes their own Score monthly, same formula.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="cote-inversee"
+        title={{ fr: 'La Cote inversée', en: 'The Inverted Score' }}
       />
       <EditorialFrame
         dict={dict}

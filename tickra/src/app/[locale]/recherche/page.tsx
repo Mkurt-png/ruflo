@@ -7,6 +7,7 @@ import { RechercheClient } from '@/components/recherche/RechercheClient';
 import { SEARCH_INDEX } from '@/lib/tickra/recherche-index';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 86400;
 export const metadata = editorialMeta({
@@ -46,6 +47,11 @@ export default async function RecherchePage({ params }: { params: { locale: stri
           ? 'Une boîte vide qui cherche dans les leçons, le glossaire et les pièces.'
           : 'An empty box that searches lessons, glossary and rooms.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="recherche"
+        title={{ fr: 'La Recherche', en: 'The Search' }}
       />
       <Navbar dict={dict} locale={locale} />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">

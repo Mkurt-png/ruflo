@@ -16,6 +16,7 @@ import { GLOSSARY } from '@/lib/curriculum/glossary';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
 export const metadata = editorialMeta({
@@ -93,6 +94,11 @@ export default async function LexiquePage({ params }: { params: { locale: string
           ? 'Chaque mot d’une leçon s’ouvre sur sa définition, au clic.'
           : 'Every word in a lesson opens to its definition, on click.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="lexique"
+        title={{ fr: 'Le Lexique vivant', en: 'The Living Lexicon' }}
       />
       <EditorialFrame
         dict={dict}

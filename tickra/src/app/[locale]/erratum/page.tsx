@@ -5,6 +5,7 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { Pull } from '@/components/editorial/Pull';
 
@@ -73,6 +74,11 @@ export default async function ErratumPage({ params }: { params: { locale: string
           ? 'Journal public des erreurs de Tickra. Rien n’est effacé.'
           : 'Public log of Tickra’s mistakes. Nothing is erased.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="erratum"
+        title={{ fr: 'L’Erratum', en: 'The Erratum' }}
       />
       <EditorialFrame
         dict={dict}

@@ -12,6 +12,7 @@ import { VOIX } from '@/lib/tickra/voix';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
 export const metadata = editorialMeta({
@@ -72,6 +73,11 @@ export default async function VoixPage({ params }: { params: { locale: string } 
           ? 'Une voix par mois. Entretiens anonymes avec des traders en activité.'
           : 'One voice per month. Anonymous interviews with working traders.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="voix"
+        title={{ fr: 'Les Voix', en: 'The Voices' }}
       />
       <EditorialFrame
         dict={dict}

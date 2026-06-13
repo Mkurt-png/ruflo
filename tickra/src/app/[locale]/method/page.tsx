@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { Pull } from '@/components/editorial/Pull';
@@ -124,6 +125,11 @@ export default async function MethodPage({ params }: { params: { locale: string 
           ? 'La formule de la Cote, en quatre composantes.'
           : 'The Score formula, in four components.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="method"
+        title={{ fr: 'La Méthode', en: 'The Method' }}
       />
       <EditorialFrame
         dict={dict}

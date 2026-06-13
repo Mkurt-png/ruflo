@@ -13,6 +13,7 @@ import { Pull } from '@/components/editorial/Pull';
 
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 86400;
 export const metadata = editorialMeta({
@@ -142,6 +143,11 @@ export default async function EtagesPage({ params }: { params: { locale: string 
           ? 'Trois étages, pas trois colonnes. La maison plutôt que le tarif.'
           : 'Three floors, not three columns. The house before the bill.'}
         locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="etages"
+        title={{ fr: 'Les Étages', en: 'The Floors' }}
       />
       <EditorialFrame
         dict={dict}
