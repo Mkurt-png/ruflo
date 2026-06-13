@@ -1,12 +1,24 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PlacementTest } from '@/components/placement/PlacementTest';
 
-export const metadata = { title: 'Test de placement · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'placement',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Test de placement' : 'Placement Test',
+    description:
+      params.locale === 'fr'
+        ? 'Évaluation rapide pour orienter vers la bonne piste du cursus.'
+        : 'Quick assessment to route you to the right curriculum track.',
+  });
+}
 
 export default async function PlacementPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

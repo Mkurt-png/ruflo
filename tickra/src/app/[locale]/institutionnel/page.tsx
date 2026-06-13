@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
@@ -9,11 +10,18 @@ import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 // Brochure d'un futur abonnement pour prop-firms / desks.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'L’Abonnement institutionnel · Tickra',
-  description:
-    'Tickra pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.',
-};
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'institutionnel',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'L’Abonnement institutionnel' : 'The Institutional Subscription',
+    description:
+      params.locale === 'fr'
+        ? 'Tickra pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.'
+        : 'Tickra for desks and prop firms: collective Registrar, team-wide Silence Wall, weekly register audit.',
+  });
+}
 
 const COPY = {
   fr: {
