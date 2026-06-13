@@ -2,6 +2,8 @@
 // FAQ-snippet eligibility in Google. Safe to mount on any page that
 // already shows the same Q&A in plain HTML (Google requires both).
 
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
+
 export type FaqEntry = { q: string; a: string };
 
 export function FaqJsonLd({ entries }: { entries: ReadonlyArray<FaqEntry> }) {
@@ -18,7 +20,7 @@ export function FaqJsonLd({ entries }: { entries: ReadonlyArray<FaqEntry> }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
     />
   );
 }

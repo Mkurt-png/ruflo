@@ -1,4 +1,5 @@
 import { SITE_URL } from '@/lib/site-url';
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 import type { TrackMeta } from '@/lib/curriculum/data';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -32,7 +33,7 @@ export function CourseJsonLd({ track, locale }: { track: TrackMeta; locale: Loca
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
     />
   );
 }

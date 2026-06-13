@@ -1,4 +1,5 @@
 import { SITE_URL } from '@/lib/site-url';
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 
 // Organization JSON-LD — global, mounted in the locale layout so it
 // appears on every page. Tells Google / LLMs who Tickra SAS is, where it
@@ -50,21 +51,10 @@ export function OrganizationJsonLd() {
     ],
   };
 
-  // Mirror the defence-in-depth escape used by EditorialJsonLd: even
-  // though every field above is currently a string literal, this block
-  // is mounted on every page and any future caller adding user-derived
-  // content shouldn't be able to break out of the <script>.
-  const json = JSON.stringify(data)
-    .replace(/</g, '\\u003c')
-    .replace(/>/g, '\\u003e')
-    .replace(/&/g, '\\u0026')
-    .replace(/[\u2028]/g, '\\u2028')
-    .replace(/[\u2029]/g, '\\u2029');
-
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: json }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
     />
   );
 }

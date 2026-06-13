@@ -9,6 +9,7 @@ type Props = {
 };
 
 import { SITE_URL } from '@/lib/site-url';
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 
 export function ArticleJsonLd({ url, title, description, date, author, image, locale }: Props) {
   const payload = {
@@ -30,7 +31,7 @@ export function ArticleJsonLd({ url, title, description, date, author, image, lo
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(payload) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(payload) }}
     />
   );
 }
