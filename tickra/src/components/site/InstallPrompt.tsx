@@ -4,7 +4,9 @@
 // when the browser is eligible. Dismissable; remembered for 30 days.
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Download, X } from 'lucide-react';
+import { isEditorialPath } from '@/lib/editorial/routes';
 
 type Locale = 'fr' | 'en';
 
@@ -46,11 +48,16 @@ function isDismissed(): boolean {
 
 export function InstallPrompt({ locale }: { locale: Locale }) {
   const t = copy[locale];
+  const pathname = usePathname() ?? '/';
   const [evt, setEvt] = useState<BeforeInstallPromptEvent | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (isDismissed()) return;
+    // Editorial silence: do not bind beforeinstallprompt while the
+    // reader is on a Maison room — re-visit anywhere else and it'll
+    // be offered then.
+    if (isEditorialPath(pathname)) return;
     const handler = (e: Event) => {
       e.preventDefault();
       setEvt(e as BeforeInstallPromptEvent);
@@ -58,7 +65,7 @@ export function InstallPrompt({ locale }: { locale: Locale }) {
     };
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
+  }, [pathname]);
 
   const dismiss = () => {
     try {
