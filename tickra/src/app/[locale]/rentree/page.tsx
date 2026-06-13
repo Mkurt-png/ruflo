@@ -5,6 +5,7 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { CarnetClient } from '@/components/carnet/CarnetClient';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/rentree — Le Carnet d'absence. Refonte du Rituel de
 // rentrée en page dédiée. Le banner sur /me reste l'entrée ; cette
@@ -42,6 +43,15 @@ export default async function RentreePage({ params }: { params: { locale: string
   const t = COPY[locale];
 
   return (
+    <>
+      <EditorialJsonLd
+        slug="rentree"
+        title={locale === 'fr' ? 'Le Carnet d’absence' : 'The Absence Register'}
+        description={locale === 'fr'
+          ? 'Ce qui s’est passé sans vous, calculé chez vous, sans honte.'
+          : 'What happened without you, computed in your browser, without shame.'}
+        locale={locale}
+      />
     <EditorialFrame
       dict={dict}
       locale={locale}
@@ -81,5 +91,6 @@ export default async function RentreePage({ params }: { params: { locale: string
         ]}
       />
     </EditorialFrame>
+    </>
   );
 }

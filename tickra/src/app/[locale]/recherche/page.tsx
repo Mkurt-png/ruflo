@@ -6,6 +6,7 @@ import { Footer } from '@/components/sections/Footer';
 import { RechercheClient } from '@/components/recherche/RechercheClient';
 import { SEARCH_INDEX } from '@/lib/tickra/recherche-index';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 86400;
 export const metadata = editorialMeta({
@@ -38,6 +39,14 @@ export default async function RecherchePage({ params }: { params: { locale: stri
 
   return (
     <>
+      <EditorialJsonLd
+        slug="recherche"
+        title={locale === 'fr' ? 'La Recherche' : 'The Search'}
+        description={locale === 'fr'
+          ? 'Une boîte vide qui cherche dans les leçons, le glossaire et les pièces.'
+          : 'An empty box that searches lessons, glossary and rooms.'}
+        locale={locale}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
