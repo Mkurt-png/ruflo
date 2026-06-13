@@ -28,7 +28,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         </div>
 
         <div className="col-span-12 lg:col-span-7">
-          <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          <h3 className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
             {locale === 'fr' ? 'La Maison — pièces éditoriales' : 'La Maison — editorial rooms'}
           </h3>
           <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3">
@@ -49,7 +49,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="text-[14.5px] text-ink transition-colors hover:text-muted"
+                  className="text-[14.5px] text-[#0E0E0E] transition-colors hover:text-black/60"
                 >
                   {l.label}
                 </Link>
@@ -58,7 +58,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           </ul>
           <Link
             href={`/${locale}/maison`}
-            className="mt-6 inline-block font-mono text-[10px] uppercase tracking-[0.28em] text-muted hover:text-ink"
+            className="mt-6 inline-block font-mono text-[10px] uppercase tracking-[0.34em] text-black/55 hover:text-[#0E0E0E] transition-colors"
           >
             {locale === 'fr' ? 'Plan complet · La Maison →' : 'Full plan · The House →'}
           </Link>
@@ -70,7 +70,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         >
           {t.columns.map((col) => (
             <div key={col.title}>
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+              <h3 className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
                 {col.title}
               </h3>
               <ul className="mt-5 space-y-3">
@@ -78,7 +78,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
                   <li key={l.href}>
                     <Link
                       href={resolve(l.href)}
-                      className="text-[14.5px] text-ink transition-colors hover:text-muted"
+                      className="text-[14.5px] text-[#0E0E0E] transition-colors hover:text-black/60"
                     >
                       {l.label}
                     </Link>
@@ -93,10 +93,10 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           <QuoteOfTheDay locale={locale} />
         </div>
 
-        <div className="col-span-12 mt-4 border-t border-line pt-8">
-          <p className="max-w-3xl text-[12.5px] leading-relaxed text-muted">{t.risk}</p>
-          <p className="mt-4 max-w-3xl text-[12px] leading-relaxed text-subtle">{t.legal}</p>
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.18em] text-subtle">
+        <div className="col-span-12 mt-4 border-t border-black/15 pt-8">
+          <p className="max-w-3xl text-[12.5px] leading-relaxed text-black/65">{t.risk}</p>
+          <p className="mt-4 max-w-3xl text-[12px] leading-relaxed text-black/50">{t.legal}</p>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.34em] text-black/50">
             <span>
               {t.copyright.replace('2026', String(year))}
             </span>
