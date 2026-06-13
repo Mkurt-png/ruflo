@@ -5,6 +5,7 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { ReadNext } from '@/components/editorial/ReadNext';
 
 // /[locale]/erratum — L'Erratum. Public log of the editor's
 // mistakes, grouped by year. Nothing is removed; the page only
@@ -136,6 +137,35 @@ export default async function ErratumPage({ params }: { params: { locale: string
             </p>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Ce que nous n’avons jamais voulu construire.',
+                en: 'What we never wanted to build.',
+              },
+            },
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'La formule de la Cote, à l’air libre, dans tous ses détails.',
+                en: 'The Score formula, in the open, with every detail.',
+              },
+            },
+            {
+              slug: 'silence',
+              title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+              caption: {
+                fr: 'Les patterns d’UI qu’on a bannis avant qu’ils n’arrivent.',
+                en: 'UI patterns banned before they arrived.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );

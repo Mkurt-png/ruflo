@@ -5,6 +5,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 
 // /[locale]/silence — Le Silence éditorial. A second manifesto, this
 // one about the UI itself. Lists every gamified pattern Tickra
@@ -267,6 +268,35 @@ export default async function SilencePage({ params }: { params: { locale: string
             </div>
           </div>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Les features mères de ces patterns. Bannies ailleurs.',
+                en: 'The mother features of these patterns. Banned elsewhere.',
+              },
+            },
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'La seule mesure qu’on accepte : la Cote, écrite à l’air libre.',
+                en: 'The only metric we accept: the Score, in the open.',
+              },
+            },
+            {
+              slug: 'etages',
+              title: { fr: 'Les Étages', en: 'The Floors' },
+              caption: {
+                fr: 'La maison plutôt que les colonnes. Le calme avant le tarif.',
+                en: 'The house before the columns. Calm before the bill.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );

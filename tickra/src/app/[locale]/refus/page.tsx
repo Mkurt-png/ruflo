@@ -5,6 +5,7 @@ import { REFUSALS } from '@/lib/tickra/refus';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 
 // /[locale]/refus — Le Refus. Ten things Tickra will never build.
 // A manifesto by negation, in the editorial register. Static content,
@@ -97,6 +98,35 @@ export default async function RefusPage({ params }: { params: { locale: string }
             </p>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'silence',
+              title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+              caption: {
+                fr: 'Ce que l’interface ne fera pas — pendant qu’on y est.',
+                en: 'What the interface will not do — while we are at it.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Les lignes que nous avons franchies, et corrigées en public.',
+                en: 'The lines we crossed, and corrected in public.',
+              },
+            },
+            {
+              slug: 'cote-inversee',
+              title: { fr: 'La Cote inversée', en: 'The Inverted Score' },
+              caption: {
+                fr: 'L’éditeur qui se note avec la même formule que vous.',
+                en: 'The editor scoring themselves with the reader’s formula.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );
