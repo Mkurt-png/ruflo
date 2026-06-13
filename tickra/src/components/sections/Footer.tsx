@@ -42,6 +42,9 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
               { href: `/${locale}/almanach`, label: locale === 'fr' ? 'L’Almanach' : 'The Almanac' },
               { href: `/${locale}/annuaire`, label: locale === 'fr' ? 'L’Annuaire' : 'The Index' },
               { href: `/${locale}/survie`, label: locale === 'fr' ? 'Le Calculateur' : 'The Calculator' },
+              { href: `/${locale}/lexique`, label: locale === 'fr' ? 'Le Lexique' : 'The Lexicon' },
+              { href: `/${locale}/rentree`, label: locale === 'fr' ? 'Le Carnet d’absence' : 'The Register' },
+              { href: `/${locale}/silence`, label: locale === 'fr' ? 'Le Silence' : 'The Silence' },
             ].map((l) => (
               <li key={l.href}>
                 <Link
