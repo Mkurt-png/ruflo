@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -10,7 +11,18 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { CandlestickChart } from '@/components/hero/CandlestickChart';
 
-export const metadata = { title: 'Leçon — Bougies japonaises · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'lesson/japanese-candles',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Leçon — Bougies japonaises' : 'Lesson — Japanese candles',
+    description:
+      params.locale === 'fr'
+        ? 'Aperçu d’une leçon Tickra : lire une bougie japonaise — corps, mèches, signal.'
+        : 'Preview of a Tickra lesson: reading a Japanese candle — body, wicks, signal.',
+  });
+}
 
 export default async function LessonPreviewPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
