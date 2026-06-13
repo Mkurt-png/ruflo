@@ -12,7 +12,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const resolve = (href: string) => (href.startsWith('#') ? `/${locale}${href}` : `/${locale}${href}`);
 
   return (
-    <footer className="bg-canvas">
+    <footer className="bg-[#F4F1EA] text-[#0E0E0E]">
       <Container as="div" className="grid grid-cols-12 gap-x-6 gap-y-12 pb-12 pt-24 md:pb-16 md:pt-32">
         <div className="col-span-12 lg:col-span-5">
           <Link href={`/${locale}`} aria-label="Tickra" className="inline-flex items-center gap-2.5">
