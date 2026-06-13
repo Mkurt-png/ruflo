@@ -10,6 +10,7 @@ import { ArrowUp, Loader2, MessageSquareText, Sparkles, X } from 'lucide-react';
 import { useUser } from '@/lib/auth/useUser';
 import { TRACKS } from '@/lib/curriculum/data';
 import { cn } from '@/lib/cn';
+import { isEditorialPath } from '@/lib/editorial/routes';
 
 type Locale = 'fr' | 'en';
 
@@ -91,20 +92,11 @@ export function AskTickra({ locale }: { locale: Locale }) {
   // Also stay silent on the editorial cluster: the Maison is a reading
   // surface, not a Q&A surface — a floating chat bubble there reads
   // like the popups /silence bans.
-  const editorialSegments = new Set([
-    'maison', 'criee', 'lettre', 'veillee', 'voix', 'lexique', 'cercle',
-    'almanach', 'annuaire', 'recherche', 'rentree', 'random',
-    'refus', 'erratum', 'silence', 'cote-inversee', 'method', 'etages',
-    'survie', 'journal', 'bureau-partage', 'edition-lifetime',
-    'institutionnel', 'mecenat',
-  ]);
-  const segs = pathname.split('/').filter(Boolean);
-  const onEditorial = segs.length >= 2 && editorialSegments.has(segs[1]);
   const hidden =
     pathname.includes('/signin') ||
     pathname.includes('/onboarding') ||
     pathname.includes('/welcome') ||
-    onEditorial;
+    isEditorialPath(pathname);
   if (hidden) return null;
   if (!ready) return null;
 

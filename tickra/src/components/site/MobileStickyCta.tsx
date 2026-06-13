@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { easeOutExpo } from '@/lib/motion';
+import { isEditorialPath } from '@/lib/editorial/routes';
 
 type Props = {
   href: string;
@@ -17,25 +18,6 @@ type Props = {
 };
 
 type CtaResolved = { href: string; label: string };
-
-// Editorial rooms get the Silence rule: no popping CTA on the page.
-// The catalogue, the manifestos, the calculator and the registers each
-// have their own quiet "Lire la suite" affordances; a black pill at
-// the bottom of an ivory page reads as an interruption.
-const EDITORIAL_SEGMENTS = new Set([
-  'maison', 'criee', 'lettre', 'veillee', 'voix', 'lexique', 'cercle',
-  'almanach', 'annuaire', 'recherche', 'rentree', 'random',
-  'refus', 'erratum', 'silence', 'cote-inversee', 'method', 'etages',
-  'survie', 'journal', 'bureau-partage', 'edition-lifetime',
-  'institutionnel', 'mecenat',
-]);
-
-function isEditorialPath(pathname: string): boolean {
-  const segs = pathname.split('/').filter(Boolean);
-  // /{locale}/{room}[/...]
-  if (segs.length < 2) return false;
-  return EDITORIAL_SEGMENTS.has(segs[1]);
-}
 
 function resolve(pathname: string, fallback: Props): CtaResolved {
   // pathname always starts with /{locale}
