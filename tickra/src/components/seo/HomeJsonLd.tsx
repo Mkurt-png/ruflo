@@ -26,10 +26,12 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
   const course = {
     '@context': 'https://schema.org',
     '@type': 'Course',
-    name: 'Tickra — Trading curriculum',
+    name: locale === 'fr' ? 'Tickra — école de trading' : 'Tickra — trading school',
     description: dict.hero.body,
     provider: { '@type': 'Organization', name: 'Tickra', sameAs: SITE_URL },
-    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-US',
+    // Match the en-GB hreflang used elsewhere on the site so search
+    // engines see one consistent language matrix.
+    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
     educationalLevel: 'Beginner to Advanced',
     url,
   };

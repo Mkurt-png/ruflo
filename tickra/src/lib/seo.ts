@@ -40,7 +40,7 @@ export function buildMetadata(locale: Locale): Metadata {
       siteName: SITE_NAME,
       title,
       description,
-      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
     },
     twitter: { card: 'summary_large_image', title, description, creator: '@tickra' },
     robots: {

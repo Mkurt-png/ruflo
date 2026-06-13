@@ -14,7 +14,7 @@ export function CourseJsonLd({ track, locale }: { track: TrackMeta; locale: Loca
     name: track.title[locale],
     description: track.summary[locale],
     url: `${SITE_URL}/${locale}/learn/${track.slug}`,
-    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-US',
+    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
     provider: {
       '@type': 'Organization',
       name: 'Tickra',

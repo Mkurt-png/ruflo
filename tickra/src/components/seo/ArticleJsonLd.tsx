@@ -26,7 +26,7 @@ export function ArticleJsonLd({ url, title, description, date, author, image, lo
       logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.svg` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
-    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-US',
+    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
   };
   return (
     <script
