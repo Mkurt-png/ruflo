@@ -3,6 +3,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { readVeillee, readingLine } from '@/lib/tickra/veillee';
 
 // /[locale]/veillee — La Veillée. Sunday 21:00 UTC, 30 minutes,
@@ -211,6 +212,35 @@ export default async function VeilleePage({ params }: { params: { locale: string
             </a>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'lettre',
+              title: { fr: 'La Lettre du dimanche', en: 'The Sunday Letter' },
+              caption: {
+                fr: 'Ce que la semaine vous a écrit, en trois colonnes.',
+                en: 'What the week wrote to you, in three columns.',
+              },
+            },
+            {
+              slug: 'cercle',
+              title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+              caption: {
+                fr: 'La Lettre d’un autre lecteur, en silence.',
+                en: 'Another reader’s Letter, in silence.',
+              },
+            },
+            {
+              slug: 'almanach',
+              title: { fr: 'L’Almanach', en: 'The Almanac' },
+              caption: {
+                fr: 'Les Criées que la Veillée n’a pas lues.',
+                en: 'The Criées the Vigil did not read.',
+              },
+            },
+          ]}
+        />
       </main>
       <Footer dict={dict} locale={locale} />
     </>
