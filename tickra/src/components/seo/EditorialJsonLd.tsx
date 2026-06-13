@@ -26,11 +26,17 @@ export function EditorialJsonLd({
   const path = slug.startsWith('/') ? slug : `/${slug}`;
   const url = `${SITE_URL}/${locale}${path}`;
   const now = new Date().toISOString();
+  // Article schema needs an image for rich-result eligibility. Point
+  // at the same /api/og card the OG/Twitter cards already use so the
+  // preview stays consistent across surfaces.
+  const ogParams = new URLSearchParams({ title, locale });
+  const image = `${SITE_URL}/api/og?${ogParams.toString()}`;
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: title,
     description,
+    image: [image],
     inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
     url,
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
@@ -46,6 +52,10 @@ export function EditorialJsonLd({
       '@type': 'Organization',
       name: 'Tickra',
       url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/favicon.svg`,
+      },
     },
   };
 
