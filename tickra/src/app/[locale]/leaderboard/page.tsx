@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -9,7 +10,18 @@ import { getWeeklyLeaderboard, type LeaderboardEntry } from '@/lib/db/leaderboar
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 // TODO i18n — leaderboard copy is English-only for now (Phase 4A).
-export const metadata = { title: 'Weekly leaderboard · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'leaderboard',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Tableau' : 'Leaderboard',
+    description:
+      params.locale === 'fr'
+        ? 'Le tableau hebdomadaire des lecteurs les plus assidus, anonymisé.'
+        : 'Weekly board of the most consistent readers, anonymised.',
+  });
+}
 export const dynamic = 'force-dynamic';
 
 export default async function LeaderboardPage({ params }: { params: { locale: string } }) {

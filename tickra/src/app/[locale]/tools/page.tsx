@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -10,7 +11,18 @@ import { PageHero } from '@/components/ui/PageHero';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 
-export const metadata = { title: 'Outils · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'tools',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Outils' : 'Tools',
+    description:
+      params.locale === 'fr'
+        ? 'Calculs et fiches pratiques pour la séance — risk, sizing, post-mortem.'
+        : 'Calculators and worksheets for the trading day — risk, sizing, post-mortem.',
+  });
+}
 
 const copy = {
   fr: {

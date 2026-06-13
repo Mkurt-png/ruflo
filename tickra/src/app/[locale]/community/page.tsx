@@ -2,13 +2,25 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowUpRight, Calendar, ShieldCheck } from 'lucide-react';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 
-export const metadata = { title: 'Communauté · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'community',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Communauté' : 'Community',
+    description:
+      params.locale === 'fr'
+        ? 'Cercles, lectures partagées, événements — comment les lecteurs de Tickra se croisent.'
+        : 'Circles, shared readings, events — how Tickra readers cross paths.',
+  });
+}
 
 export default async function CommunityPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
