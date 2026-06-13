@@ -34,6 +34,13 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
     inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
     educationalLevel: 'Beginner to Advanced',
     url,
+    // Google requires hasCourseInstance for Course rich results; without
+    // it the schema is parsed but no card renders.
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'online',
+      courseWorkload: 'PT10M', // ten minutes per day, the editorial cadence
+    },
   };
 
   const faq = {
