@@ -25,7 +25,14 @@ export function buildMetadata(locale: Locale): Metadata {
     formatDetection: { email: false, telephone: false, address: false },
     alternates: {
       canonical: `/${locale}`,
-      languages: { en: '/en', fr: '/fr' },
+      // Match the hreflang convention used by editorialMeta — explicit
+      // language-region tags plus an x-default that points at the
+      // French version (Tickra's primary tongue).
+      languages: {
+        'fr-FR': '/fr',
+        'en-GB': '/en',
+        'x-default': '/fr',
+      },
     },
     openGraph: {
       type: 'website',
