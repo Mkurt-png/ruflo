@@ -15,7 +15,7 @@ import { LePari } from '@/components/editorial/LePari';
 import { Colophon } from '@/components/editorial/Colophon';
 import { Bureau } from '@/components/bureau/Bureau';
 
-// Landing recomposed as an editorial sequence — seven "rooms" instead of
+// Landing recomposed as an editorial sequence — eight "rooms" instead of
 // the canonical Hero/Features/Testimonials stack. When the reader is
 // signed in, the home becomes Le Bureau — their personal desk for the
 // day. Anonymous visitors still get the editorial composition.
