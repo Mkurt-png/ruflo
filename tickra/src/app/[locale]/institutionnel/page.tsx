@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 // /[locale]/institutionnel — Le tier institutionnel. Stub honnête.
 // Brochure d'un futur abonnement pour prop-firms / desks.
@@ -61,6 +62,11 @@ export default async function InstitutionnelPage({ params }: { params: { locale:
 
   return (
     <>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="institutionnel"
+        title={{ fr: 'L’Institutionnel', en: 'The Institutional' }}
+      />
       <EditorialFrame
         dict={dict}
         locale={locale}
