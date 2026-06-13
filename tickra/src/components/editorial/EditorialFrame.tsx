@@ -40,6 +40,7 @@ export function EditorialFrame({
       <Navbar dict={dict} locale={locale} />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
+          aria-label={eyebrow}
           className="relative px-6 md:px-16"
           style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
         >
