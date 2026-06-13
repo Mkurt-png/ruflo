@@ -129,6 +129,14 @@ export async function GET(req: Request) {
         </div>
       </div>
     ),
-    { ...SIZE },
+    {
+      ...SIZE,
+      headers: {
+        // The card is a deterministic function of (title, eyebrow, locale, for).
+        // Crawlers fetch the same URL repeatedly when a link is shared widely;
+        // a long edge cache + SWR keeps Vercel cheap and the preview instant.
+        'Cache-Control': 'public, immutable, max-age=86400, stale-while-revalidate=604800',
+      },
+    },
   );
 }
