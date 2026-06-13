@@ -1,6 +1,6 @@
 // EditorialFrame — the shared shell for editorial pages.
 //
-// Sixteen editorial rooms repeat the same outer pattern: ivory main,
+// Every editorial room repeats the same outer pattern: ivory main,
 // header with eyebrow + status badge, h1 triptych, intro paragraph.
 // EditorialFrame extracts that pattern so a new editorial page is a
 // 30-line file instead of 150, and any future tweak to the editorial
