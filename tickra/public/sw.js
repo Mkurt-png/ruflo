@@ -7,12 +7,22 @@
 //
 // Cache name bumps invalidate the previous SW cache on next install.
 
-const CACHE = 'tickra-v1';
+const CACHE = 'tickra-v2';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE).then((c) =>
-      c.addAll(['/', '/fr', '/en', '/manifest.webmanifest', '/favicon.svg']),
+      // Pre-cache the editorial entry points so the home screen and
+      // the catalog room are openable offline after one warm visit.
+      c.addAll([
+        '/',
+        '/fr',
+        '/en',
+        '/fr/maison',
+        '/en/maison',
+        '/manifest.webmanifest',
+        '/favicon.svg',
+      ]),
     ),
   );
   self.skipWaiting();
