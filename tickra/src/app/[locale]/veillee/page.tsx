@@ -4,6 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { readVeillee, readingLine } from '@/lib/tickra/veillee';
 
 // /[locale]/veillee — La Veillée. Sunday 21:00 UTC, 30 minutes,
@@ -95,6 +96,14 @@ export default async function VeilleePage({ params }: { params: { locale: string
 
   return (
     <>
+      <EditorialJsonLd
+        slug="veillee"
+        title={locale === 'fr' ? 'La Veillée' : 'The Vigil'}
+        description={locale === 'fr'
+          ? 'Une lecture collective, trente minutes, le dimanche soir à 21 h UTC.'
+          : 'A collective reading, thirty minutes, Sunday evening at 21:00 UTC.'}
+        locale={locale}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section

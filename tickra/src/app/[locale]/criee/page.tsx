@@ -3,6 +3,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { getCrieeForDate } from '@/lib/tickra/criee';
 import { CrieeCard } from '@/components/criee/CrieeCard';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
@@ -43,7 +44,17 @@ export default async function CrieePage({ params }: { params: { locale: string }
   );
 
   return (
-    <EditorialFrame
+    <>
+      <EditorialJsonLd
+        slug="criee"
+        title={locale === 'fr' ? 'La Criée' : 'La Criée'}
+        description={locale === 'fr'
+          ? 'Une question, choisie pour le jour, identique pour tout le monde.'
+          : 'One question, chosen for the day, identical for everyone.'}
+        locale={locale}
+        dateModified={`${card.date}T00:00:00.000Z`}
+      />
+      <EditorialFrame
       dict={dict}
       locale={locale}
       eyebrow={t.eyebrow}
@@ -83,5 +94,6 @@ export default async function CrieePage({ params }: { params: { locale: string }
         ]}
       />
     </EditorialFrame>
+    </>
   );
 }

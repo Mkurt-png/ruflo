@@ -3,6 +3,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { LettrePanel } from '@/components/lettre/LettrePanel';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
@@ -38,7 +39,16 @@ export default async function LettrePage({ params }: { params: { locale: string 
   const t = COPY[locale];
 
   return (
-    <EditorialFrame
+    <>
+      <EditorialJsonLd
+        slug="lettre"
+        title={locale === 'fr' ? 'La Lettre du dimanche' : 'The Sunday Letter'}
+        description={locale === 'fr'
+          ? 'Bilan hebdomadaire, calculé localement à partir de votre progression.'
+          : 'Weekly digest computed locally from your progress.'}
+        locale={locale}
+      />
+      <EditorialFrame
       dict={dict}
       locale={locale}
       eyebrow={t.eyebrow}
@@ -76,5 +86,6 @@ export default async function LettrePage({ params }: { params: { locale: string 
         ]}
       />
     </EditorialFrame>
+    </>
   );
 }
