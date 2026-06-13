@@ -3,6 +3,7 @@
 // register : pastille mono « Suivant », trois lignes serif italiques
 // avec une caption sobre. Aucun algo, juste la curation éditoriale.
 
+import { useId } from 'react';
 import Link from 'next/link';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -31,14 +32,15 @@ export function ReadNext({
   rooms: ReadNextRoom[];
 }) {
   const t = COPY[locale];
+  const headingId = useId();
   return (
     <section
-      aria-labelledby="read-next"
+      aria-labelledby={headingId}
       className="mx-auto max-w-[920px] px-6 md:px-16 pb-32"
     >
       <header className="border-t border-black/15 pt-10">
         <p
-          id="read-next"
+          id={headingId}
           className="font-mono text-[10px] uppercase tracking-[0.32em] text-black/65"
         >
           {t.eyebrow}
