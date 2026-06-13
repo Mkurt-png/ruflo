@@ -66,7 +66,11 @@ export function GlossaryClient({ locale }: { locale: Locale }) {
       ) : (
         <ul className="mt-12 divide-y divide-line border-y border-line">
           {results.map((g) => (
-            <li key={g.term.en} className="grid grid-cols-12 gap-x-6 gap-y-3 py-7 md:py-8">
+            <li
+              key={g.term.en}
+              id={encodeURIComponent(g.term[locale])}
+              className="grid grid-cols-12 gap-x-6 gap-y-3 py-7 md:py-8 scroll-mt-24"
+            >
               <div className="col-span-12 md:col-span-4">
                 <h2 className="font-display text-xl font-medium tracking-tight text-ink md:text-2xl">
                   {g.term[locale]}
