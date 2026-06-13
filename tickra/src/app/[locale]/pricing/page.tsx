@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -15,7 +16,18 @@ import { FaqJsonLd } from '@/components/seo/FaqJsonLd';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 
-export const metadata = { title: 'Tarifs · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'pricing',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Tarifs' : 'Pricing',
+    description:
+      params.locale === 'fr'
+        ? 'Trois plans simples — Gratuit, Pro, À vie. Pas d’engagement, pas de mensualités cachées.'
+        : 'Three simple plans — Free, Pro, Lifetime. No commitment, no hidden fees.',
+  });
+}
 
 export default async function PricingPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

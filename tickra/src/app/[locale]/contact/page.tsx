@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -7,7 +8,18 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { ContactForm } from '@/components/contact/ContactForm';
 
-export const metadata = { title: 'Contact · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'contact',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Contact' : 'Contact',
+    description:
+      params.locale === 'fr'
+        ? 'Comment nous écrire — support, presse, partenariats.'
+        : 'How to reach us — support, press, partnerships.',
+  });
+}
 
 export default async function ContactPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
