@@ -1,16 +1,26 @@
 import { ImageResponse } from 'next/og';
 import { isLocale } from '@/lib/i18n/config';
-import { getDictionary } from '@/lib/i18n/dictionaries';
+
+// File-based opengraph-image — Next.js mounts this at /{locale}/opengraph-image
+// and uses it as the default OG image for the locale's root. Matches the
+// editorial register served by /api/og (ivory paper, italic title, mono
+// eyebrow + footer) so the homepage share card lives in the same world
+// as every editorial room.
 
 export const runtime = 'edge';
-export const alt = 'Tickra — Learn the markets, candle by candle';
+export const alt = 'Tickra — la maison éditoriale du trading';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function OgImage({ params }: { params: { locale: string } }) {
-  const locale = isLocale(params.locale) ? params.locale : 'en';
-  const dict = await getDictionary(locale);
-  const [line1, line2] = dict.hero.title;
+  const locale = isLocale(params.locale) ? params.locale : 'fr';
+  const eyebrow = locale === 'fr' ? 'Tickra · La Maison' : 'Tickra · The House';
+  const title = locale === 'fr' ? 'La maison éditoriale du trading.' : 'The editorial house of trading.';
+  const sub =
+    locale === 'fr'
+      ? 'Une Criée, une Lettre, un Lexique.'
+      : 'A Criée, a Letter, a Lexicon.';
+  const footRight = locale === 'fr' ? 'Lecture · 10 min' : 'Read · 10 min';
 
   return new ImageResponse(
     (
@@ -18,8 +28,8 @@ export default async function OgImage({ params }: { params: { locale: string } }
         style={{
           width: '100%',
           height: '100%',
-          background: 'rgb(248, 247, 243)',
-          color: 'rgb(10, 10, 12)',
+          background: '#F4F1EA',
+          color: '#0E0E0E',
           padding: '72px 80px',
           display: 'flex',
           flexDirection: 'column',
@@ -30,40 +40,56 @@ export default async function OgImage({ params }: { params: { locale: string } }
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
-            gap: 14,
-            fontSize: 22,
-            letterSpacing: '-0.01em',
+            flexDirection: 'column',
+            gap: 18,
           }}
         >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgb(10,10,12)" strokeWidth="1.75">
-            <rect x="4" y="9" width="3" height="10" />
-            <line x1="5.5" y1="5" x2="5.5" y2="9" />
-            <line x1="5.5" y1="19" x2="5.5" y2="22" />
-            <rect x="10.5" y="5" width="3" height="13" fill="rgb(10,10,12)" />
-            <line x1="12" y1="2" x2="12" y2="5" />
-            <line x1="12" y1="18" x2="12" y2="22" />
-            <rect x="17" y="11" width="3" height="7" />
-            <line x1="18.5" y1="7" x2="18.5" y2="11" />
-            <line x1="18.5" y1="18" x2="18.5" y2="21" />
-          </svg>
-          <span style={{ fontWeight: 600 }}>Tickra</span>
+          <div
+            style={{
+              borderTop: '1px solid rgba(0,0,0,0.18)',
+              paddingTop: 14,
+              fontSize: 14,
+              letterSpacing: '0.32em',
+              textTransform: 'uppercase',
+              color: 'rgba(0,0,0,0.55)',
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+            }}
+          >
+            {eyebrow}
+          </div>
         </div>
 
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            gap: 8,
-            fontSize: 84,
-            lineHeight: 1.02,
-            letterSpacing: '-0.035em',
-            fontWeight: 500,
-            maxWidth: 980,
+            gap: 16,
           }}
         >
-          <span>{line1}</span>
-          <span style={{ color: 'rgb(92, 92, 100)', fontStyle: 'italic' }}>{line2}</span>
+          <div
+            style={{
+              fontSize: 88,
+              lineHeight: 1.02,
+              letterSpacing: '-0.035em',
+              fontStyle: 'italic',
+              fontWeight: 300,
+              maxWidth: 1040,
+            }}
+          >
+            {title}
+          </div>
+          <div
+            style={{
+              fontSize: 30,
+              lineHeight: 1.15,
+              letterSpacing: '-0.01em',
+              color: 'rgba(0,0,0,0.65)',
+              fontStyle: 'italic',
+              maxWidth: 1040,
+            }}
+          >
+            {sub}
+          </div>
         </div>
 
         <div
@@ -71,14 +97,17 @@ export default async function OgImage({ params }: { params: { locale: string } }
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: 18,
-            color: 'rgb(92, 92, 100)',
-            letterSpacing: '0.16em',
+            borderTop: '1px solid rgba(0,0,0,0.18)',
+            paddingTop: 14,
+            fontSize: 14,
+            letterSpacing: '0.28em',
             textTransform: 'uppercase',
+            color: 'rgba(0,0,0,0.45)',
+            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
           }}
         >
-          <span>222 lessons · 15 tracks · 10 min/day</span>
-          <span>tickra.com</span>
+          <span>{locale === 'fr' ? 'Tickra · Maison éditoriale' : 'Tickra · Editorial House'}</span>
+          <span>{footRight}</span>
         </div>
       </div>
     ),
