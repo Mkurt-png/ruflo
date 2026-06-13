@@ -43,7 +43,10 @@ const routes = [
   { path: '/etages', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/method', changeFrequency: 'monthly' as const, priority: 0.65 },
   { path: '/survie', changeFrequency: 'monthly' as const, priority: 0.7 },
-  { path: '/journal', changeFrequency: 'weekly' as const, priority: 0.55 },
+  // /journal is intentionally absent: robots.ts disallows it as a
+  // private working surface; emitting it in the sitemap would
+  // contradict that signal and trigger 'sitemap'd URL is blocked'
+  // warnings in Search Console.
   { path: '/institutionnel', changeFrequency: 'monthly' as const, priority: 0.45 },
   // Candor-stub rooms (/bureau-partage, /edition-lifetime, /mecenat) are
   // intentionally absent: they emit `robots: noindex, follow` until the
