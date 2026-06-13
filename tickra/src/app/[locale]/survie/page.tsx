@@ -5,6 +5,7 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { SurvieCalculator } from '@/components/survie/SurvieCalculator';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/survie — Le Calculateur de survie. A single page that does
 // the pre-trade arithmetic in the editorial register. No SaaS card,
@@ -41,6 +42,15 @@ export default async function SurviePage({ params }: { params: { locale: string 
   const t = COPY[locale];
 
   return (
+    <>
+      <EditorialJsonLd
+        slug="survie"
+        title={locale === 'fr' ? 'Le Calculateur de survie' : 'The Survival Calculator'}
+        description={locale === 'fr'
+          ? 'Avant le prochain ordre : l’arithmétique de l’entrée, en clair.'
+          : 'Before the next order: the arithmetic of an entry, in the open.'}
+        locale={locale}
+      />
     <EditorialFrame
       dict={dict}
       locale={locale}
@@ -80,5 +90,6 @@ export default async function SurviePage({ params }: { params: { locale: string 
         ]}
       />
     </EditorialFrame>
+    </>
   );
 }

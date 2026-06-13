@@ -7,6 +7,7 @@ import { ReadNext } from '@/components/editorial/ReadNext';
 import { getSession } from '@/lib/auth/session';
 import { pairFor } from '@/lib/tickra/cercle';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/cercle — Le Cercle de relecture. Each ISO week, the
 // reader is paired with another voice. Until the server matching
@@ -65,7 +66,16 @@ export default async function CerclePage({ params }: { params: { locale: string 
   const partnerLines = pair.letter[locale];
 
   return (
-    <EditorialFrame
+    <>
+      <EditorialJsonLd
+        slug="cercle"
+        title={locale === 'fr' ? 'Le Cercle de relecture' : 'The Reading Circle'}
+        description={locale === 'fr'
+          ? 'Chaque semaine, une lettre d’un autre lecteur, en silence.'
+          : 'Each week, a letter from another reader, in silence.'}
+        locale={locale}
+      />
+      <EditorialFrame
       dict={dict}
       locale={locale}
       eyebrow={`${t.eyebrow} · ${pair.week}`}
@@ -193,5 +203,6 @@ export default async function CerclePage({ params }: { params: { locale: string 
         ]}
       />
     </EditorialFrame>
+    </>
   );
 }
