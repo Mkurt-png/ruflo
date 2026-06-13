@@ -18,12 +18,16 @@ const COPY = {
     dismiss: 'Refermer',
     open: 'Ouvrir une leçon',
     learnHref: 'learn',
+    carnet: 'Voir le carnet complet',
+    carnetHref: 'rentree',
   },
   en: {
     eyebrow: 'The Ritual — return',
     dismiss: 'Close',
     open: 'Open a lesson',
     learnHref: 'learn',
+    carnet: 'See the full register',
+    carnetHref: 'rentree',
   },
 } as const;
 
@@ -121,10 +125,16 @@ export function RituelBanner({ locale }: { locale: Locale }) {
         ))}
       </ol>
 
-      <div className="mt-10">
+      <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
+        <a
+          href={`/${locale}/${t.carnetHref}`}
+          className="inline-flex h-10 items-center rounded-full border border-black/70 px-5 font-mono text-[11px] uppercase tracking-[0.22em] text-[#0E0E0E] hover:bg-[#0E0E0E] hover:text-[#F4F1EA] transition-colors"
+        >
+          {t.carnet} →
+        </a>
         <a
           href={`/${locale}/${t.learnHref}`}
-          className="inline-flex h-10 items-center rounded-full border border-black/70 px-5 font-mono text-[11px] uppercase tracking-[0.22em] text-[#0E0E0E] hover:bg-[#0E0E0E] hover:text-[#F4F1EA] transition-colors"
+          className="inline-flex h-10 items-center font-mono text-[11px] uppercase tracking-[0.22em] text-black/65 hover:text-black/90 transition-colors"
         >
           {t.open}
         </a>
