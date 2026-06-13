@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 import { getCrieeForDate } from '@/lib/tickra/criee';
 
 // /[locale]/almanach — the year's archive. One line per past Criée
@@ -97,6 +98,14 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
         head={[t.head1, t.head2, t.head3]}
         intro={t.intro}
       >
+
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr'
+              ? 'Une seule page par année. Une seule ligne par jour.'
+              : 'One page per year. One line per day.'}
+          </Pull>
+        </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <ol className="divide-y divide-black/12 border-y border-black/15">

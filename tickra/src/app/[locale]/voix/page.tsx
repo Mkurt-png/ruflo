@@ -3,6 +3,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 import { VOIX } from '@/lib/tickra/voix';
 
 // /[locale]/voix — Les Voix. Monthly interview series with anonymous
@@ -80,6 +81,13 @@ export default async function VoixPage({ params }: { params: { locale: string } 
         head={[t.head1, t.head2, t.head3]}
         intro={t.intro}
       >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr'
+              ? 'Une voix, un mois. Sous pseudonyme, sans grand récit.'
+              : 'One voice, one month. Under pseudonym, without grand story.'}
+          </Pull>
+        </section>
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           {VOIX.map((v, i) => (
             <article
