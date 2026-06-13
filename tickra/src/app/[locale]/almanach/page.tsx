@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { getCrieeForDate } from '@/lib/tickra/criee';
 
 // /[locale]/almanach — the year's archive. One line per past Criée
@@ -139,6 +140,35 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
             </p>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'criee',
+              title: { fr: 'La Criée', en: 'The Criée' },
+              caption: {
+                fr: 'La question d’aujourd’hui — encore lisible.',
+                en: 'Today’s question — still readable.',
+              },
+            },
+            {
+              slug: 'annuaire',
+              title: { fr: 'L’Annuaire', en: 'The Index' },
+              caption: {
+                fr: 'L’index alphabétique de toutes les leçons.',
+                en: 'The alphabetical index of every lesson.',
+              },
+            },
+            {
+              slug: 'recherche',
+              title: { fr: 'La Recherche', en: 'The Search' },
+              caption: {
+                fr: 'Une boîte vide pour chercher partout.',
+                en: 'An empty box to search anywhere.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );

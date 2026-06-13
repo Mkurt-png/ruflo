@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { TRACKS } from '@/lib/curriculum/data';
 
 // /[locale]/annuaire — the phonebook. One alphabetical index of
@@ -159,6 +160,35 @@ export default async function AnnuairePage({ params }: { params: { locale: strin
             </p>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'almanach',
+              title: { fr: 'L’Almanach', en: 'The Almanac' },
+              caption: {
+                fr: 'Les Criées de l’année, sur une seule page.',
+                en: 'The year’s Criées, on one page.',
+              },
+            },
+            {
+              slug: 'lexique',
+              title: { fr: 'Le Lexique vivant', en: 'The Living Lexicon' },
+              caption: {
+                fr: 'Les mots qui s’ouvrent au clic.',
+                en: 'Words that open on click.',
+              },
+            },
+            {
+              slug: 'recherche',
+              title: { fr: 'La Recherche', en: 'The Search' },
+              caption: {
+                fr: 'Boîte vide qui parcourt tout.',
+                en: 'Empty box across everything.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );

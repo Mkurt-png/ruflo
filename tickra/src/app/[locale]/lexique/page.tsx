@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { Term } from '@/components/lexique/Term';
 import { TermsInProse } from '@/components/lexique/TermsInProse';
 import { GLOSSARY } from '@/lib/curriculum/glossary';
@@ -189,6 +190,35 @@ export default async function LexiquePage({ params }: { params: { locale: string
             </Link>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'annuaire',
+              title: { fr: 'L’Annuaire', en: 'The Index' },
+              caption: {
+                fr: 'L’index alphabétique des leçons.',
+                en: 'The alphabetical lesson index.',
+              },
+            },
+            {
+              slug: 'recherche',
+              title: { fr: 'La Recherche', en: 'The Search' },
+              caption: {
+                fr: 'Pour chercher dans les leçons et le glossaire.',
+                en: 'To search lessons and the glossary.',
+              },
+            },
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'Le mot Cote a sa propre fiche, ici.',
+                en: 'The Score formula, defined.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );
