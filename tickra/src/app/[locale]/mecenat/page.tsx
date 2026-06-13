@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 
@@ -9,12 +10,19 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 // en attente.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'Le Mécénat · Tickra',
-  description:
-    'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.',
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'mecenat',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Le Mécénat' : 'The Patronage',
+    description:
+      params.locale === 'fr'
+        ? 'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.'
+        : 'Offer a Pro month to an unknown reader. Anonymous, distributed by the editor, no thanks, no quid pro quo.',
+    noindex: true,
+  });
+}
 
 const COPY = {
   fr: {

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 
@@ -10,12 +11,19 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 // le dit.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'L’Édition Lifetime · Tickra',
-  description:
-    'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.',
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'edition-lifetime',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'L’Édition Lifetime' : 'The Lifetime Edition',
+    description:
+      params.locale === 'fr'
+        ? 'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.'
+        : 'Once a year, Lifetime members receive a printed booklet of their year — Score, trades, chosen Criées, New Year Letter.',
+    noindex: true,
+  });
+}
 
 const COPY = {
   fr: {

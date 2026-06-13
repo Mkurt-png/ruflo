@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 
@@ -10,12 +11,19 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 // La candor note dit pourquoi, et où l'on en est.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'Le Bureau partagé · Tickra',
-  description:
-    'Publier une journée de votre journal en lecture seule, annotée d’une ligne. Pas de DM, pas de likes — une page typographique.',
-  robots: { index: false, follow: true },
-};
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'bureau-partage',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Le Bureau partagé' : 'The Shared Desk',
+    description:
+      params.locale === 'fr'
+        ? 'Publier une journée de votre journal en lecture seule, annotée d’une ligne. Pas de DM, pas de likes — une page typographique.'
+        : 'Publish a single journal day read-only, annotated in one line. No DMs, no likes — a typographic page.',
+    noindex: true,
+  });
+}
 
 const COPY = {
   fr: {
