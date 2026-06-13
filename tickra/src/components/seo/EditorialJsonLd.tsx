@@ -25,7 +25,6 @@ export function EditorialJsonLd({
 }) {
   const path = slug.startsWith('/') ? slug : `/${slug}`;
   const url = `${SITE_URL}/${locale}${path}`;
-  const now = new Date().toISOString();
   // Article schema needs an image for rich-result eligibility. Point
   // at the same /api/og card the OG/Twitter cards already use so the
   // preview stays consistent across surfaces.
@@ -41,7 +40,11 @@ export function EditorialJsonLd({
     url,
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     datePublished: datePublished ?? '2026-01-01T00:00:00.000Z',
-    dateModified: dateModified ?? now,
+    // When the caller doesn't pass an explicit dateModified, fall back
+    // to datePublished rather than Date.now(). The latter changed on
+    // every ISR revalidation and made Google's "page was updated"
+    // heuristic fire even when the content was identical.
+    dateModified: dateModified ?? datePublished ?? '2026-01-01T00:00:00.000Z',
     isAccessibleForFree: true,
     author: {
       '@type': 'Organization',
