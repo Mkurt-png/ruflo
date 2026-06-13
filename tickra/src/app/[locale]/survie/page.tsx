@@ -12,7 +12,10 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // no leaderboard, no upsell. Just the numbers that decide whether the
 // account survives.
 
-export const dynamic = 'force-dynamic';
+// Static: the calculator is a client island, the surrounding prose is
+// fixed. ISR for 24h is plenty — when the editor publishes a copy
+// tweak it'll re-render on the next request.
+export const revalidate = 86400;
 export const metadata = editorialMeta({
   slug: 'survie',
   title: 'Le Calculateur de survie',

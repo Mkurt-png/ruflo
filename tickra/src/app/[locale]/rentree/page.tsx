@@ -11,7 +11,11 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // rentrée en page dédiée. Le banner sur /me reste l'entrée ; cette
 // page est la lecture longue de ce qui s'est passé sans le lecteur.
 
-export const dynamic = 'force-dynamic';
+// Static: CarnetClient is a client island that computes the carnet
+// from localStorage; the page shell is fixed prose. ISR keeps the
+// editor in control of the surrounding copy without re-rendering on
+// every visit.
+export const revalidate = 86400;
 export const metadata = editorialMeta({
   slug: 'rentree',
   title: 'Le Carnet d’absence',
