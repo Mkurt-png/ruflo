@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 
 // /[locale]/etages — L'Étage Pro. Re-narrates Tickra's three tiers
 // as floors of a building rather than columns of a pricing card.
@@ -213,6 +214,35 @@ export default async function EtagesPage({ params }: { params: { locale: string 
             </Link>
           </div>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Ce que ces étages n’hébergeront jamais.',
+                en: 'What these floors will never host.',
+              },
+            },
+            {
+              slug: 'silence',
+              title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+              caption: {
+                fr: 'L’UI commune aux trois étages, sans pastilles.',
+                en: 'The shared UI across the three floors, without dots.',
+              },
+            },
+            {
+              slug: 'mecenat',
+              title: { fr: 'Le Mécénat', en: 'The Patronage' },
+              caption: {
+                fr: 'Un autre étage, payé pour un inconnu.',
+                en: 'Another floor, paid for a stranger.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );

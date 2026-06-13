@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 
 // /[locale]/cote-inversee — La Cote inversée. Once a month, the
 // editor publishes their own composite score, computed with the same
@@ -219,6 +220,35 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
             </p>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'La formule exacte que cette page applique à l’éditeur.',
+                en: 'The exact formula this page applies to the editor.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Quand l’éditeur se trompe, c’est ici qu’on le sait.',
+                en: 'When the editor errs, you read it here.',
+              },
+            },
+            {
+              slug: 'voix',
+              title: { fr: 'Les Voix', en: 'The Voices' },
+              caption: {
+                fr: 'D’autres lectures de leur propre cote, à voix anonyme.',
+                en: 'Other readings of one’s own score, in anonymous voices.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );

@@ -5,6 +5,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 
 // /[locale]/method — Audit page for the Cote formula. Referenced
 // from /cote-inversee. Editorial register, no math beyond what is
@@ -201,6 +202,35 @@ export default async function MethodPage({ params }: { params: { locale: string 
             </Link>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'cote-inversee',
+              title: { fr: 'La Cote inversée', en: 'The Inverted Score' },
+              caption: {
+                fr: 'L’éditeur publie sa propre Cote chaque mois.',
+                en: 'The editor publishes their own Score monthly.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Les ajustements de formule sont consignés ici.',
+                en: 'Formula adjustments are logged here.',
+              },
+            },
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Ce que la Cote ne récompensera jamais.',
+                en: 'What the Score will never reward.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );

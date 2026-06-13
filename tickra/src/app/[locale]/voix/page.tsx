@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { VOIX } from '@/lib/tickra/voix';
 
 // /[locale]/voix — Les Voix. Monthly interview series with anonymous
@@ -139,6 +140,35 @@ export default async function VoixPage({ params }: { params: { locale: string } 
             </p>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'lettre',
+              title: { fr: 'La Lettre du dimanche', en: 'The Sunday Letter' },
+              caption: {
+                fr: 'Une voix à soi-même, chaque semaine.',
+                en: 'A voice to oneself, each week.',
+              },
+            },
+            {
+              slug: 'cercle',
+              title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+              caption: {
+                fr: 'Une voix à un inconnu, en silence.',
+                en: 'A voice to a stranger, in silence.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Quand les voix se trompent, l’éditeur le note.',
+                en: 'When voices err, the editor notes it.',
+              },
+            },
+          ]}
+        />
       </EditorialFrame>
     </>
   );
