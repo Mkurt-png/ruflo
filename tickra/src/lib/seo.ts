@@ -49,6 +49,7 @@ export function buildMetadata(locale: Locale): Metadata {
       title,
       description,
       locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
       images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
