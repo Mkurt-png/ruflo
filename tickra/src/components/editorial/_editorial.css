@@ -1,6 +1,7 @@
 /* Editorial layer — appended to globals.css via a JSX import.
-   Pure utility classes for the new landing composition. Black-dominant,
-   typography-driven. No effects spam. */
+   Pure utility classes for the editorial composition. Ivory paper
+   (#F4F1EA) with ink (#0E0E0E) typography, italic Fraunces display,
+   mono JetBrains captions. No effects spam. */
 
 /* Issue-style overline. */
 .ed-tag {
