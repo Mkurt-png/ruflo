@@ -2,6 +2,16 @@ import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { pageMeta } from '@/lib/seo/page-meta';
 import { getSession } from '@/lib/auth/session';
+import { getUser, isDbConfigured } from '@/lib/db/queries';
+import { listTrades } from '@/lib/db/journal-queries';
+import { Navbar } from '@/components/nav/Navbar';
+import { getDictionary } from '@/lib/i18n/dictionaries';
+import { JournalApp } from '@/components/journal/JournalApp';
+import { GreffierPanel } from '@/components/journal/GreffierPanel';
+import { AutopsiePanel } from '@/components/journal/AutopsiePanel';
+import { MurSilence } from '@/components/journal/MurSilence';
+import { readSilence } from '@/lib/tickra/silence';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 // Per-user trading journal — gated by getSession, never indexable.
 // robots.ts already disallows /journal; the explicit noindex closes
@@ -20,16 +30,6 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     noindex: true,
   });
 }
-import { getUser, isDbConfigured } from '@/lib/db/queries';
-import { listTrades } from '@/lib/db/journal-queries';
-import { Navbar } from '@/components/nav/Navbar';
-import { getDictionary } from '@/lib/i18n/dictionaries';
-import { JournalApp } from '@/components/journal/JournalApp';
-import { GreffierPanel } from '@/components/journal/GreffierPanel';
-import { AutopsiePanel } from '@/components/journal/AutopsiePanel';
-import { MurSilence } from '@/components/journal/MurSilence';
-import { readSilence } from '@/lib/tickra/silence';
-import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
 

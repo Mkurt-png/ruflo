@@ -2,6 +2,17 @@ import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { pageMeta } from '@/lib/seo/page-meta';
 import { getSession } from '@/lib/auth/session';
+import { isDbConfigured, listProgress, listMistakes } from '@/lib/db/queries';
+import {
+  ACHIEVEMENTS,
+  buildSnapshot,
+  evaluateAll,
+  type AchievementTone,
+} from '@/lib/achievements/catalog';
+import { listUnlocked, recordUnlocks } from '@/lib/db/achievements-queries';
+import { Navbar } from '@/components/nav/Navbar';
+import { getDictionary } from '@/lib/i18n/dictionaries';
+import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 // Per-user achievement board — gated by getSession, never indexable.
 export async function generateMetadata({ params }: { params: { locale: string } }) {
@@ -18,17 +29,6 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     noindex: true,
   });
 }
-import { isDbConfigured, listProgress, listMistakes } from '@/lib/db/queries';
-import {
-  ACHIEVEMENTS,
-  buildSnapshot,
-  evaluateAll,
-  type AchievementTone,
-} from '@/lib/achievements/catalog';
-import { listUnlocked, recordUnlocks } from '@/lib/db/achievements-queries';
-import { Navbar } from '@/components/nav/Navbar';
-import { getDictionary } from '@/lib/i18n/dictionaries';
-import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 export const dynamic = 'force-dynamic';
 
