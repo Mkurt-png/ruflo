@@ -39,11 +39,12 @@ export function EditorialFrame({
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          aria-label={eyebrow}
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
+        <article>
+          <section
+            aria-label={eyebrow}
+            className="relative px-6 md:px-16"
+            style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
+          >
           <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
             <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
               {eyebrow}
@@ -76,9 +77,10 @@ export function EditorialFrame({
               {intro}
             </p>
           )}
-        </section>
+          </section>
 
-        {children}
+          {children}
+        </article>
       </main>
       <Footer dict={dict} locale={locale} />
     </>
