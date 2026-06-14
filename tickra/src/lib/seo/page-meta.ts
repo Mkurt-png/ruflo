@@ -58,6 +58,7 @@ export function pageMeta({
       siteName: SITE_NAME,
       type: ogType,
       locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
     },
   };
 }
