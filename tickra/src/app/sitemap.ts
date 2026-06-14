@@ -18,6 +18,8 @@ const routes = [
   { path: '/tools', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/changelog', changeFrequency: 'weekly' as const, priority: 0.4 },
   { path: '/community', changeFrequency: 'monthly' as const, priority: 0.5 },
+  // Marketing-grade sample lesson — public, indexable.
+  { path: '/lesson/japanese-candles', changeFrequency: 'yearly' as const, priority: 0.6 },
   // /signin removed — robots.ts disallows it; sitemap entry would
   // contradict the disallow and trigger Search Console warnings.
   { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
