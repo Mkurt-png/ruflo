@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.'
         : 'Offer a Pro month to an unknown reader. Anonymous, distributed by the editor, no thanks, no quid pro quo.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Mécénat' : 'Tickra · Patronage',
     noindex: true,
   });
 }

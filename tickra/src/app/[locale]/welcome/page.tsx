@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Bienvenue dans Tickra. La maison est ouverte.'
         : 'Welcome to Tickra. The house is open.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Bienvenue' : 'Tickra · Welcome',
     noindex: true,
   });
 }

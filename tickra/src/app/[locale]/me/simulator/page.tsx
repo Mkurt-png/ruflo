@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Le simulateur de trading Tickra — paper-trading sur des marchés réels, en local.'
         : 'Tickra’s trading simulator — paper trading on real markets, local.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Simulateur' : 'Tickra · Simulator',
     noindex: true,
   });
 }

@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Votre tableau de bord Tickra : progression, journal, paramètres.'
         : 'Your Tickra dashboard: progress, journal, settings.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Mon espace' : 'Tickra · My space',
     noindex: true,
   });
 }

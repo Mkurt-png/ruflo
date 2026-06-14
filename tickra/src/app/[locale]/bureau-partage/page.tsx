@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Publier une journée de votre journal en lecture seule, annotée d’une ligne. Pas de DM, pas de likes — une page typographique.'
         : 'Publish a single journal day read-only, annotated in one line. No DMs, no likes — a typographic page.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Bureau partagé' : 'Tickra · Shared Desk',
     noindex: true,
   });
 }

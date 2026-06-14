@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Vos préférences de compte — langue, thème, confidentialité.'
         : 'Your account preferences — language, theme, privacy.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Paramètres' : 'Tickra · Settings',
     noindex: true,
   });
 }

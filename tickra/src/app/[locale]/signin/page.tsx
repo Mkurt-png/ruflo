@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Connexion à votre compte Tickra.'
         : 'Sign in to your Tickra account.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Connexion' : 'Tickra · Sign in',
     noindex: true,
   });
 }

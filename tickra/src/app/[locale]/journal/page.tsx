@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Votre journal de trading — entrées, observations du Greffier, autopsie.'
         : 'Your trading journal — entries, Registrar notes, autopsy.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Journal' : 'Tickra · Journal',
     noindex: true,
   });
 }

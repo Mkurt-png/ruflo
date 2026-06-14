@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Vos jalons de lecture et d’apprentissage. Calculé localement.'
         : 'Your reading and learning milestones. Computed locally.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Réussites' : 'Tickra · Achievements',
     noindex: true,
   });
 }

@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.'
         : 'Once a year, Lifetime members receive a printed booklet of their year — Score, trades, chosen Criées, New Year Letter.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Édition Lifetime' : 'Tickra · Lifetime Edition',
     noindex: true,
   });
 }
