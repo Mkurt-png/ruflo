@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Évaluation rapide pour orienter vers la bonne piste du cursus.'
         : 'Quick assessment to route you to the right curriculum track.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Test de placement' : 'Tickra · Placement',
   });
 }
 

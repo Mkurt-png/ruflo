@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Le mode duel de Tickra — face à face hebdomadaire, anonyme.'
         : 'Tickra’s duel mode — weekly anonymous head-to-head.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Battle' : 'Tickra · Battle',
   });
 }
 

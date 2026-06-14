@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Le manuel de marque Tickra : palette, typographie, voix.'
         : 'Tickra’s brand manual: palette, typography, voice.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Marque' : 'Tickra · Brand',
   });
 }
 

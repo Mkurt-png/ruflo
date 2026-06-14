@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Tickra pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.'
         : 'Tickra for desks and prop firms: collective Registrar, team-wide Silence Wall, weekly register audit.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Institutionnel' : 'Tickra · Institutional',
   });
 }
 

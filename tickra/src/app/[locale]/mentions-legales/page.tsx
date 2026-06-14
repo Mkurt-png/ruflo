@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Mentions légales et informations sur l’éditeur de Tickra.'
         : 'Legal notice and information about Tickra’s publisher.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Mentions légales' : 'Tickra · Legal',
   });
 }
 

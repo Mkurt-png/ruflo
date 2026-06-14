@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Un test de quelques minutes qui choisit la piste où commencer.'
         : 'A few-minute test that picks the track where to start.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Test de niveau' : 'Tickra · Placement test',
   });
 }
 

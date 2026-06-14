@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Le cursus de trading Tickra — pistes, leçons et exercices à votre rythme.'
         : 'Tickra’s trading curriculum — tracks, lessons and exercises at your pace.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Apprendre' : 'Tickra · Learn',
   });
 }
 

@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Le tableau hebdomadaire des lecteurs les plus assidus, anonymisé.'
         : 'Weekly board of the most consistent readers, anonymised.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Tableau' : 'Tickra · Leaderboard',
   });
 }
 export const dynamic = 'force-dynamic';
