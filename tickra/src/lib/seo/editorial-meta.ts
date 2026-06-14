@@ -15,8 +15,9 @@ export type EditorialMetaInput = {
   description: string;
   /** Locale to anchor the canonical URL. Defaults to fr. */
   locale?: 'fr' | 'en';
-  /** Optional editorial eyebrow shown on the share-card mono caption. */
-  eyebrow?: string;
+  /** Optional eyebrow rendered on the /api/og share card mono caption.
+   * Matches the pageMeta API for cross-helper consistency. */
+  ogEyebrow?: string;
   /**
    * When true, the room is a candor-stub: published but not finished.
    * Emits `robots: noindex, follow` so crawlers don't dilute the catalog
@@ -30,7 +31,7 @@ export function editorialMeta({
   title,
   description,
   locale = 'fr',
-  eyebrow,
+  ogEyebrow,
   draft = false,
 }: EditorialMetaInput): Metadata {
   const path = slug.startsWith('/') ? slug : `/${slug}`;
@@ -49,7 +50,7 @@ export function editorialMeta({
     title,
     locale,
   });
-  if (eyebrow) ogParams.set('eyebrow', eyebrow);
+  if (ogEyebrow) ogParams.set('eyebrow', ogEyebrow);
   const ogImage = `${SITE_URL}/api/og?${ogParams.toString()}`;
   return {
     title: `${title} · Tickra`,
