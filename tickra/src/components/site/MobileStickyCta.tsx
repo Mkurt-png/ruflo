@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-6: contextual sticky CTA — auto-adjusts label + href based on
+// contextual sticky CTA — auto-adjusts label + href based on
 // where the user currently is. Default props are used as a fallback when no
 // rule matches (preserves home-page behaviour).
 

@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-1.5: surface due spaced-repetition reviews as a prominent
+// surface due spaced-repetition reviews as a prominent
 // banner on /me. Stays hidden when nothing is due so the dashboard remains
 // clean.
 
@@ -36,7 +36,7 @@ export function ReviewBanner({ locale }: { locale: Locale }) {
   const due = dueNow(queue);
   if (due.length === 0) return null;
 
-  // TICKRA-PHASE-5A: open the dedicated SM-2 review session at /review,
+  // open the dedicated SM-2 review session at /review,
   // which renders a flashcard-style flow with grade buttons. Keeps the
   // banner's count derived from the local mistake set so it shows up even
   // before the server has any SRS state.

@@ -48,7 +48,7 @@ const staticPages = {
     { id: 'me', label: 'Mon compte', href: '/me', group: 'page' as const },
     { id: 'settings', label: 'Paramètres', href: '/me/settings', group: 'page' as const },
     { id: 'diploma', label: 'Diplôme', href: '/diploma', group: 'page' as const },
-    // TICKRA-PHASE-5: surfaces récentes accessibles via Cmd+K.
+    // surfaces récentes accessibles via Cmd+K.
     { id: 'review', label: 'Révision (cartes du jour)', href: '/review', group: 'page' as const },
     { id: 'journal', label: 'Journal de trading', href: '/journal', group: 'page' as const },
     { id: 'achievements', label: 'Succès', href: '/achievements', group: 'page' as const },

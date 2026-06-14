@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-6: defer the "Add to home screen" prompt + show a small toast
+// defer the "Add to home screen" prompt + show a small toast
 // when the browser is eligible. Dismissable; remembered for 30 days.
 
 import { useEffect, useState } from 'react';
