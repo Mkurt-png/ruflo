@@ -65,7 +65,16 @@ export async function generateMetadata({ params }: { params: Params }) {
       description: post.excerpt,
       type: 'article',
       url: `${SITE_URL}${canonical}`,
+      siteName: 'Tickra',
       locale: params.locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: params.locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      site: '@tickra',
+      creator: '@tickra',
     },
   };
 }
