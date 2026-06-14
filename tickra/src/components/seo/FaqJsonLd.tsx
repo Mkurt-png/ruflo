@@ -25,4 +25,3 @@ export function FaqJsonLd({ entries }: { entries: ReadonlyArray<FaqEntry> }) {
   );
 }
 
-export default FaqJsonLd;

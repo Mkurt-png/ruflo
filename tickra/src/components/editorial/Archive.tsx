@@ -122,4 +122,3 @@ export function Archive({ locale }: Props) {
   );
 }
 
-export default Archive;

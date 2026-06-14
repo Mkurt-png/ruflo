@@ -38,4 +38,3 @@ export function CourseJsonLd({ track, locale }: { track: TrackMeta; locale: Loca
   );
 }
 
-export default CourseJsonLd;

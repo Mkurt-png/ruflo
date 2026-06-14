@@ -32,4 +32,3 @@ export function Pull({
   );
 }
 
-export default Pull;

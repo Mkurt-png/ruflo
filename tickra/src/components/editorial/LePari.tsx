@@ -80,4 +80,3 @@ function Foot({ index, label, value }: { index: string; label: string; value: st
   );
 }
 
-export default LePari;

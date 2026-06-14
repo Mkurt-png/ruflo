@@ -42,4 +42,3 @@ export function GlossaryJsonLd({ locale }: { locale: Locale }) {
   );
 }
 
-export default GlossaryJsonLd;

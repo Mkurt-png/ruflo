@@ -87,4 +87,3 @@ export function ReadNext({
   );
 }
 
-export default ReadNext;

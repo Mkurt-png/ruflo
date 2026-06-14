@@ -29,4 +29,3 @@ export function RoomBreadcrumb({
   );
 }
 
-export default RoomBreadcrumb;

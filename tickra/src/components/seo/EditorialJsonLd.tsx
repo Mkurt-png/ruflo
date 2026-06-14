@@ -70,4 +70,3 @@ export function EditorialJsonLd({
   );
 }
 
-export default EditorialJsonLd;

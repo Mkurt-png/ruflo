@@ -56,4 +56,3 @@ export function Colophon({ locale }: Props) {
   );
 }
 
-export default Colophon;

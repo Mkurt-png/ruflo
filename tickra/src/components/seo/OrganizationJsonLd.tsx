@@ -59,4 +59,3 @@ export function OrganizationJsonLd() {
   );
 }
 
-export default OrganizationJsonLd;

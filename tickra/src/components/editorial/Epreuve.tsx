@@ -66,4 +66,3 @@ export function Epreuve({ locale }: Props) {
   );
 }
 
-export default Epreuve;

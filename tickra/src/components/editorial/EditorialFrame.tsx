@@ -86,5 +86,3 @@ export function EditorialFrame({
     </>
   );
 }
-
-export default EditorialFrame;

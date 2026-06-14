@@ -47,4 +47,3 @@ export function PieceCalme({ locale }: Props) {
   );
 }
 
-export default PieceCalme;
