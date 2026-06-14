@@ -60,5 +60,15 @@ export function pageMeta({
       locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
       alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
     },
+    // Twitter cards: declare site + creator so the @tickra handle is
+    // attributed consistently across the catalogue. summary_large_image
+    // matches what editorialMeta and root buildMetadata declare.
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      site: '@tickra',
+      creator: '@tickra',
+    },
   };
 }
