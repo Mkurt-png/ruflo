@@ -15,6 +15,7 @@ import { ComingSoonCard } from '@/components/learn/ComingSoonCard';
 import { getCurrentPlan } from '@/lib/auth/server-plan';
 import { isLessonUnlocked } from '@/lib/curriculum/entitlement';
 import { SITE_URL } from '@/lib/site-url';
+import { LearningResourceJsonLd } from '@/components/seo/LearningResourceJsonLd';
 
 // server-render only — was leaking full Pro lesson
 // content into the SSR payload for unauthenticated users (paywall was client-
@@ -119,6 +120,18 @@ export default async function LessonPage({
 
   return (
     <>
+      <LearningResourceJsonLd
+        trackSlug={track.slug}
+        trackTitle={track.title[locale]}
+        lessonSlug={lesson.slug}
+        title={lesson.title[locale]}
+        description={
+          locale === 'fr'
+            ? `Leçon Tickra de la piste ${track.title[locale]}.`
+            : `Tickra lesson from the ${track.title[locale]} track.`
+        }
+        locale={locale}
+      />
       <PrefetchNeighbours hrefs={prefetchHrefs} />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
