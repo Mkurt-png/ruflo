@@ -10,6 +10,7 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { CandlestickChart } from '@/components/hero/CandlestickChart';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -32,6 +33,14 @@ export default async function LessonPreviewPage({ params }: { params: { locale: 
 
   return (
     <>
+      <EditorialJsonLd
+        slug="lesson/japanese-candles"
+        title={params.locale === 'fr' ? 'Leçon — Bougies japonaises' : 'Lesson — Japanese candles'}
+        description={params.locale === 'fr'
+          ? 'Aperçu d’une leçon Tickra : lire une bougie japonaise.'
+          : 'Preview of a Tickra lesson: reading a Japanese candle.'}
+        locale={params.locale}
+      />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <section className="border-b border-line">
