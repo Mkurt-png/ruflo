@@ -14,6 +14,7 @@ import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
 import { LessonPreviewPopover } from '@/components/learn/LessonPreviewPopover';
 import { LessonLockBadge } from '@/components/learn/LessonLockBadge';
 import { CourseJsonLd } from '@/components/seo/CourseJsonLd';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { CalendarClock, Info } from 'lucide-react';
 
 type Params = { locale: string; track: string };
@@ -82,6 +83,16 @@ export default async function TrackPage({ params }: { params: Params }) {
   return (
     <>
       <CourseJsonLd track={track} locale={locale} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${locale}` },
+          {
+            name: locale === 'fr' ? 'Apprendre' : 'Learn',
+            path: `/${locale}/learn`,
+          },
+          { name: track.title[locale], path: `/${locale}/learn/${track.slug}` },
+        ]}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <section className="border-b border-line">

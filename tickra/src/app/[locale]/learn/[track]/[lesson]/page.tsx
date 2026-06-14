@@ -16,6 +16,7 @@ import { getCurrentPlan } from '@/lib/auth/server-plan';
 import { isLessonUnlocked } from '@/lib/curriculum/entitlement';
 import { SITE_URL } from '@/lib/site-url';
 import { LearningResourceJsonLd } from '@/components/seo/LearningResourceJsonLd';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 
 // server-render only — was leaking full Pro lesson
 // content into the SSR payload for unauthenticated users (paywall was client-
@@ -131,6 +132,20 @@ export default async function LessonPage({
             : `Tickra lesson from the ${track.title[locale]} track.`
         }
         locale={locale}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${locale}` },
+          {
+            name: locale === 'fr' ? 'Apprendre' : 'Learn',
+            path: `/${locale}/learn`,
+          },
+          { name: track.title[locale], path: `/${locale}/learn/${track.slug}` },
+          {
+            name: lesson.title[locale],
+            path: `/${locale}/learn/${track.slug}/${lesson.slug}`,
+          },
+        ]}
       />
       <PrefetchNeighbours hrefs={prefetchHrefs} />
       <Navbar dict={dict} locale={locale} />
