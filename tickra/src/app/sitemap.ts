@@ -63,7 +63,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE}/${locale}${r.path}`,
       lastModified: now,
       changeFrequency: r.changeFrequency,
-      priority: locale === 'en' ? r.priority : r.priority * 0.9,
+      // Tickra is French-first (defaultLocale, x-default, manifest lang
+      // all point at fr). FR pages keep full priority; EN translations
+      // inherit a slight downweight as the secondary surface.
+      priority: locale === 'fr' ? r.priority : r.priority * 0.9,
     })),
   );
 
@@ -73,7 +76,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE}/${locale}/editorial/${slug}`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
-      priority: locale === 'en' ? 0.55 : 0.5,
+      priority: locale === 'fr' ? 0.55 : 0.5,
     }));
   });
 
@@ -83,7 +86,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${SITE}/${locale}/learn/${track.slug}`,
         lastModified: now,
         changeFrequency: 'monthly' as const,
-        priority: locale === 'en' ? 0.7 : 0.65,
+        priority: locale === 'fr' ? 0.7 : 0.65,
       },
       ...track.lessons.map((lesson) => ({
         url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
