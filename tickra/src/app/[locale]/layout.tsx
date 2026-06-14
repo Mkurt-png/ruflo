@@ -21,17 +21,28 @@ import { ExitIntentModal } from '@/components/site/ExitIntentModal';
 import { OrganizationJsonLd } from '@/components/seo/OrganizationJsonLd';
 import '../globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+// Tickra uses four Inter weights total (regular, medium, semibold, bold).
+// Pinning the request avoids fetching the eight-weight variable Inter
+// file Next would otherwise serve by default.
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
 const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-fraunces',
   display: 'swap',
   axes: ['opsz'],
 });
+// JetBrains Mono is only used for editorial captions / kbd / code at
+// regular weight. Pinning to 400 avoids the full eight-weight family.
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains',
   display: 'swap',
+  weight: ['400'],
 });
 
 export function generateStaticParams() {
