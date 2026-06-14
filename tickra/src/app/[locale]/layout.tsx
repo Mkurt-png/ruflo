@@ -67,6 +67,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
+      dir="ltr"
       suppressHydrationWarning
       className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}
     >
