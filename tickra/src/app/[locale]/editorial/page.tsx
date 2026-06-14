@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Le journal éditorial : longues lectures, méthode, et carnets de bord.'
         : 'The editorial journal: long reads, method, and field notes.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Éditorial' : 'Tickra · Editorial',
   });
 }
 

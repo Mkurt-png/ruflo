@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? `${GLOSSARY.length} termes essentiels du trading, classés par thème, définis sans jargon inventé.`
         : `${GLOSSARY.length} essential trading terms, sorted by theme, defined without invented jargon.`,
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Glossaire' : 'Tickra · Glossary',
   });
 }
 

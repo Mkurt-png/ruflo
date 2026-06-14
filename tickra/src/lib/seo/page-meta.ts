@@ -27,6 +27,14 @@ export type PageMetaInput = {
    * matrix stays consistent.
    */
   noindex?: boolean;
+  /**
+   * Optional eyebrow rendered on the /api/og share card. When set,
+   * pageMeta wires both OpenGraph and Twitter cards to the dynamic
+   * /api/og endpoint with this eyebrow plus the page title. When
+   * omitted, no share card is declared (Next.js falls back to any
+   * file-based opengraph-image.tsx in the same segment).
+   */
+  ogEyebrow?: string;
 };
 
 export function pageMeta({
@@ -36,9 +44,17 @@ export function pageMeta({
   locale,
   ogType = 'website',
   noindex = false,
+  ogEyebrow,
 }: PageMetaInput): Metadata {
   const path = slug.startsWith('/') ? slug : `/${slug}`;
   const canonical = `/${locale}${path}`;
+  const ogImage = ogEyebrow
+    ? `${SITE_URL}/api/og?${new URLSearchParams({
+        title,
+        eyebrow: ogEyebrow,
+        locale,
+      }).toString()}`
+    : undefined;
   return {
     title: `${title} · ${SITE_NAME}`,
     description,
@@ -59,6 +75,9 @@ export function pageMeta({
       type: ogType,
       locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
       alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      ...(ogImage && {
+        images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+      }),
     },
     // Twitter cards: declare site + creator so the @tickra handle is
     // attributed consistently across the catalogue. summary_large_image
@@ -69,6 +88,7 @@ export function pageMeta({
       description,
       site: '@tickra',
       creator: '@tickra',
+      ...(ogImage && { images: [ogImage] }),
     },
   };
 }
