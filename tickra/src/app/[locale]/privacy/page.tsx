@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Comment Tickra traite vos données — sobrement, et avec une politique d’effacement publique.'
         : 'How Tickra handles your data — sparingly, with a public deletion policy.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Confidentialité' : 'Tickra · Privacy',
   });
 }
 

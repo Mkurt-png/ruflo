@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Aperçu d’une leçon Tickra : lire une bougie japonaise — corps, mèches, signal.'
         : 'Preview of a Tickra lesson: reading a Japanese candle — body, wicks, signal.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Leçon' : 'Tickra · Lesson',
   });
 }
 

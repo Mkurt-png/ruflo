@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Les conditions générales d’utilisation de Tickra.'
         : 'Tickra’s general terms of use.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Conditions' : 'Tickra · Terms',
   });
 }
 

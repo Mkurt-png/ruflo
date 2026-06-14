@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'La politique cookies de Tickra : ce qu’on dépose, ce qu’on ne dépose pas, comment refuser.'
         : 'Tickra’s cookie policy: what we drop, what we don’t, how to refuse.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Cookies' : 'Tickra · Cookies',
   });
 }
 

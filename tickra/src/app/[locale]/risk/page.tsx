@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Avertissement sur les risques du trading. À lire avant tout ordre réel.'
         : 'Warning on trading risks. Read before any real order.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Risque' : 'Tickra · Risk',
   });
 }
 

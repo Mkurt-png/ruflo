@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'L’attestation Tickra : ce qu’elle dit, ce qu’elle ne dit pas.'
         : 'The Tickra certificate: what it says, what it doesn’t.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Diplôme' : 'Tickra · Diploma',
     // Per-user achievement page — gated by getSession; not indexable.
     noindex: true,
   });
