@@ -424,7 +424,7 @@ export function SettingsPanel({ locale, email }: { locale: Locale; email: string
             </a>
           </div>
 
-          {/* TICKRA-PHASE-2.7: Passkeys (Web Authn) — biometric login. */}
+          {/* Passkeys (Web Authn) — biometric login. */}
           <div className="rounded-sm border border-line bg-canvas p-4">
             <PasskeyEnroll locale={locale} />
           </div>

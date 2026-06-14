@@ -94,7 +94,7 @@ export default function PasskeyEnroll({ locale = 'en', initialPasskeys }: Props)
     }
   }, []);
 
-  // TICKRA-FIX: fetch the list on mount if not provided by the server.
+  // fetch the list on mount if not provided by the server.
   useEffect(() => {
     if (!initialPasskeys || initialPasskeys.length === 0) {
       refresh();

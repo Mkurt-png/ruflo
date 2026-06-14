@@ -39,7 +39,7 @@ export default async function CommunityPage({ params }: { params: { locale: stri
           body={t.body}
         />
 
-        {/* TICKRA-PHASE-4: Charter — the three non-negotiables. */}
+        {/* Charter — the three non-negotiables. */}
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">
             <div className="grid grid-cols-12 gap-x-6 gap-y-8">
@@ -73,7 +73,7 @@ export default async function CommunityPage({ params }: { params: { locale: stri
           </Container>
         </section>
 
-        {/* TICKRA-PHASE-4: Upcoming live sessions schedule. */}
+        {/* Upcoming live sessions schedule. */}
         <section className="border-b border-line bg-elevated">
           <Container as="div" className="py-20 md:py-28">
             <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">

@@ -5,7 +5,7 @@ import { isDebugAuthorised } from '@/lib/debug/gate';
 export const dynamic = 'force-dynamic';
 
 // GET /api/_debug/env
-// TICKRA-FIX(security): gated — production callers need x-debug-token.
+// gated — production callers need x-debug-token.
 
 function info(name: string) {
   const v = process.env[name];

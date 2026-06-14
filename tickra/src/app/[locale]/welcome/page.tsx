@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   });
 }
 
-// TICKRA-PHASE-1.1: focused first-action. One big primary CTA pointing at the
+// focused first-action. One big primary CTA pointing at the
 // user's recommended first lesson (from placement test). Secondary actions are
 // kept but visually downplayed so the choice paralysis disappears.
 const copy = {

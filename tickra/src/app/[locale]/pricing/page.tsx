@@ -74,7 +74,7 @@ export default async function PricingPage({ params }: { params: { locale: string
           </Container>
         </section>
 
-        {/* TICKRA-PHASE-1.3: financial reassurance + pricing FAQ. */}
+        {/* financial reassurance + pricing FAQ. */}
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-24">
             <PricingReassurance locale={params.locale} />

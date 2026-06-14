@@ -40,7 +40,7 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(A, B);
 }
 
-// TICKRA-FIX: granular error codes so the signin page can show a human
+// granular error codes so the signin page can show a human
 // message + a "resend link" button on failure, instead of a generic "invalid".
 const fail = (locale: 'fr' | 'en', reason: string, url: URL) =>
   NextResponse.redirect(new URL(`/${locale}/signin?error=${encodeURIComponent(reason)}`, url));
@@ -77,13 +77,13 @@ export async function GET(req: Request) {
   const email = payloadParts.join('.');
   const expiresAt = Number(expiresAtStr);
   if (!email || !nonce || !Number.isFinite(expiresAt)) return fail(locale, 'bad_payload', url);
-  // TICKRA-FIX: 30s clock-skew tolerance — some servers run slightly ahead
+  // 30s clock-skew tolerance — some servers run slightly ahead
   // and tripped "expired" right at the boundary on first click.
   if (Date.now() / 1000 > expiresAt + 30) {
     return fail(locale, 'expired', url);
   }
 
-  // TICKRA-FIX(security): consume the nonce once. If the row was already
+  // consume the nonce once. If the row was already
   // marked used (replay), or doesn't exist (e.g. Gmail mailscanner already
   // tripped it), refuse to log in. When DB is not configured we fall back
   // to the previous best-effort behaviour so the auth flow still works in

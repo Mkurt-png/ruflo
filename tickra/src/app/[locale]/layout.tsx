@@ -91,15 +91,15 @@ export default async function LocaleLayout({
         <ScopeSync />
         <HeurePapier />
         <CommandPalette locale={locale} />
-        {/* TICKRA-PHASE-6: install offline support + show "Add to home screen" prompt. */}
+        {/* install offline support + show "Add to home screen" prompt. */}
         <ServiceWorkerRegister />
         <InstallPrompt locale={locale} />
-        {/* TICKRA-PHASE-6: contextual mobile sticky CTA, available on every page. */}
+        {/* contextual mobile sticky CTA, available on every page. */}
         <MobileStickyCta
           href={`/${locale}/onboarding`}
           label={dict.stickyCta.label}
         />
-        {/* TICKRA-PHASE-2.1: floating IA assistant. Hidden on signin/onboarding/welcome. */}
+        {/* floating IA assistant. Hidden on signin/onboarding/welcome. */}
         <AskTickra locale={locale} />
         <Analytics />
         <CookieBanner

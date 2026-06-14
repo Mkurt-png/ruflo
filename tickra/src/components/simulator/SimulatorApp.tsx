@@ -660,7 +660,7 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
                         {c.pnl >= 0 ? '+' : ''}{fmtUsd(c.pnl)}
                       </span>
                     </div>
-                    {/* TICKRA-PHASE-2.2: AI Trade Coach review on demand. */}
+                    {/* AI Trade Coach review on demand. */}
                     <TradeCoach
                       locale={locale}
                       trade={{

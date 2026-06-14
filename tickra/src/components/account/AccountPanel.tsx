@@ -179,12 +179,12 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           </div>
         </article>
 
-        {/* TICKRA-PHASE-1.5: prominent banner when spaced-rep reviews are due. */}
+        {/* prominent banner when spaced-rep reviews are due. */}
         <div className="mt-3">
           <ReviewBanner locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-1.4: 14-day personalised plan, generated from placement. */}
+        {/* 14-day personalised plan, generated from placement. */}
         <div className="mt-3">
           <WeeklyPlan locale={locale} />
         </div>
@@ -199,12 +199,12 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <DailyQuests locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-4: community CTA + charter link. */}
+        {/* community CTA + charter link. */}
         <div className="mt-3">
           <CommunityPanel locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-4: referral program — Pro+ gets a unique invite link. */}
+        {/* referral program — Pro+ gets a unique invite link. */}
         <div className="mt-3">
           <ReferralCard locale={locale} />
         </div>
@@ -214,7 +214,7 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <SharePanel locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-4: weekly Sunday digest opt-in. Default ON server-side. */}
+        {/* weekly Sunday digest opt-in. Default ON server-side. */}
         <div className="mt-3 rounded-2xl border border-line bg-surface px-5">
           <DigestToggle initialOptIn={true} locale={locale} />
         </div>

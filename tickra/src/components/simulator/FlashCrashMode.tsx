@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-2.4: replay famous historical crashes candle-by-candle.
+// replay famous historical crashes candle-by-candle.
 // Educational mode — the user "lives" the event in real time (1 candle per
 // second) and can pause/resume. No real money. No real broker.
 

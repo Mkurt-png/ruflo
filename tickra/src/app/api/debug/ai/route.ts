@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 // Real probe: sends a tiny request to the active AI provider (Groq if
 // GROQ_API_KEY is set, else Anthropic) and returns the result so we can
 // diagnose config issues. Never leaks the key — only its prefix.
-// TICKRA-FIX(security): gated — production callers must present
+// gated — production callers must present
 // `x-debug-token: $DEBUG_TOKEN` (otherwise anyone could burn the budget).
 export async function GET(req: Request) {
   const gate = isDebugAuthorised(req);

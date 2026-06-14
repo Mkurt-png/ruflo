@@ -108,7 +108,7 @@ const IconMap = {
   lock: Lock,
 } as const;
 
-// TICKRA-PHASE-1.3: financial reassurance band — 14-day guarantee, Stripe
+// financial reassurance band — 14-day guarantee, Stripe
 // security, GDPR, cancel anytime — plus a short pricing FAQ. Lifted directly
 // above the comparison table to defuse hesitation before the user scrolls.
 export function PricingReassurance({ locale }: { locale: Locale }) {

@@ -9,7 +9,7 @@ import PasskeySignIn from './PasskeySignIn';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
-// TICKRA-FIX: human-readable messages per backend error code.
+// human-readable messages per backend error code.
 const errorCopy: Record<string, { fr: string; en: string }> = {
   expired:        { fr: 'Le lien a expiré. Demandez-en un nouveau.',          en: 'The link expired. Request a new one.' },
   bad_signature:  { fr: 'Lien invalide ou modifié. Redemandez un lien.',      en: 'Invalid or tampered link. Request a new one.' },
@@ -77,7 +77,7 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
               {describe(oauthError, locale)}
             </p>
           </div>
-          {/* TICKRA-FIX: most magic-link failures (expired/Gmail-prefetch) are
+          {/* most magic-link failures (expired/Gmail-prefetch) are
               fixed by sending a fresh link. Surface a one-tap retry button. */}
           {oauthError !== 'oauth_not_configured' ? (
             <button
@@ -143,7 +143,7 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
             <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
           </button>
           </form>
-          {/* TICKRA-PHASE-2.7: Passkeys (Web Authn) — biometric sign-in. */}
+          {/* Passkeys (Web Authn) — biometric sign-in. */}
           <div className="my-7 flex items-center gap-4">
             <span aria-hidden className="h-px flex-1 bg-line" />
             <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-subtle">

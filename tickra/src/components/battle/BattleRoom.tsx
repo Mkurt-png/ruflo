@@ -120,7 +120,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
   }, []);
   const questionStartRef = useRef<number>(Date.now());
   const lastIndexRef = useRef<number>(initial.currentIndex);
-  // TICKRA-FIX: ref kept in sync with state.status so the poll interval
+  // ref kept in sync with state.status so the poll interval
   // sees current status instead of a stale closure.
   const statusRef = useRef<BattleState['status']>(initial.status);
 
@@ -196,7 +196,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
       } else {
         setRealtimeOk(false);
       }
-      // TICKRA-FIX: read status through a ref to avoid the stale closure
+      // read status through a ref to avoid the stale closure
       // bug where the poll kept ticking forever after `finished`.
       pollTimer = setInterval(() => {
         if (statusRef.current !== 'finished') void refresh();
@@ -234,7 +234,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
       if (submitted || state.status !== 'active') return;
       setSubmitted(true);
       const elapsed = Date.now() - questionStartRef.current;
-      // TICKRA-FIX: -1 is a valid sentinel meaning "no answer" (timeout).
+      // -1 is a valid sentinel meaning "no answer" (timeout).
       // Was being coerced to 0 ("option A"), accidentally correct ~25% of
       // the time. Now we pass -1 through; the server accepts it and the
       // scoring treats it as a wrong answer with no speed bonus.
@@ -304,7 +304,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
             onFocus={(e) => e.currentTarget.select()}
             className="w-full flex-1 truncate rounded-md border border-line bg-canvas px-3 py-2 font-mono text-xs text-ink"
           />
-          {/* TICKRA-FIX(UX): copy state feedback like BattleJoin. */}
+          {/* copy state feedback like BattleJoin. */}
           <CopyButton text={inviteUrl} locale={locale} />
         </div>
       </div>
@@ -482,7 +482,7 @@ function ScoreCard({
   );
 }
 
-// TICKRA-FIX(UX): copy button with 1.5s "Copied" feedback, mirrors BattleJoin.
+// copy button with 1.5s "Copied" feedback, mirrors BattleJoin.
 function CopyButton({ text, locale }: { text: string; locale: Locale }) {
   const [copied, setCopied] = useState(false);
   return (

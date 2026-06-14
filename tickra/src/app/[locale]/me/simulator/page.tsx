@@ -49,7 +49,7 @@ export default async function SimulatorPage({ params }: { params: { locale: stri
           </Container>
         </section>
 
-        {/* TICKRA-PHASE-2.4: replay famous historical crashes for pedagogical value. */}
+        {/* replay famous historical crashes for pedagogical value. */}
         <section className="border-b border-line bg-elevated">
           <Container as="div" className="py-12 md:py-16">
             <FlashCrashMode locale={locale} />

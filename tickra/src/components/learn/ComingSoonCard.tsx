@@ -24,7 +24,7 @@ const copy = {
   },
 };
 
-// TICKRA-PHASE-1.2: shown when the visited lesson has no hand-written content
+// shown when the visited lesson has no hand-written content
 // yet. We refuse to show varied-but-generic placeholder content — better to be
 // honest about "coming soon" than to dilute the perceived quality.
 export function ComingSoonCard({

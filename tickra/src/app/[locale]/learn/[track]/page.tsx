@@ -80,7 +80,7 @@ export default async function TrackPage({ params }: { params: Params }) {
                       globalIndex={lessonGlobalIndex(track.slug, lesson.slug)}
                       locale={locale}
                     />
-                    {/* TICKRA-PHASE-1.2: "Bientôt" badge on unseeded lessons. */}
+                    {/* "Bientôt" badge on unseeded lessons. */}
                     {!isSeeded(lesson.id) ? (
                       <span className="inline-flex items-center gap-1 rounded-full border border-line bg-canvas px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
                         <CalendarClock aria-hidden className="h-3 w-3" strokeWidth={2} />

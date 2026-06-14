@@ -6,7 +6,7 @@ import { generatePlan } from '@/lib/curriculum/plan-generator';
 // Always read live cookies + DB.
 export const dynamic = 'force-dynamic';
 
-// TICKRA-PHASE-1.4: GET returns the user's plan, generating it on the fly if
+// GET returns the user's plan, generating it on the fly if
 // missing. POST { regenerate: true } forces a fresh generation based on the
 // latest placement_track.
 

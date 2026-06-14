@@ -1,4 +1,4 @@
-// TICKRA-PHASE-1.4: build a 14-day learning plan from the placement test
+// build a 14-day learning plan from the placement test
 // result. We walk the curriculum starting at the recommended track and pick
 // one SEEDED lesson per day (skipping placeholders so we never schedule
 // "coming soon" content). Order respects the natural curriculum sequence.

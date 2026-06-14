@@ -15,14 +15,14 @@ import { ComingSoonCard } from '@/components/learn/ComingSoonCard';
 import { getCurrentPlan } from '@/lib/auth/server-plan';
 import { isLessonUnlocked } from '@/lib/curriculum/entitlement';
 
-// TICKRA-FIX(security): server-render only — was leaking full Pro lesson
+// server-render only — was leaking full Pro lesson
 // content into the SSR payload for unauthenticated users (paywall was client-
 // only). Forcing dynamic so cookies() is available and we can gate server-side.
 export const dynamic = 'force-dynamic';
 
 type Params = { locale: string; track: string; lesson: string };
 
-// TICKRA-FIX(security): no static params — paywalled pages must be SSR per
+// no static params — paywalled pages must be SSR per
 // request to read the session cookie. `locales` import kept for future use.
 void locales;
 
@@ -52,7 +52,7 @@ export default async function LessonPage({
   const reviewMode = searchParams?.mode === 'review';
   const seeded = isSeeded(lesson.id);
 
-  // TICKRA-FIX(security): server-side entitlement check — Pro lesson content
+  // server-side entitlement check — Pro lesson content
   // is never serialised into the payload for non-paying users.
   const { email, plan } = await getCurrentPlan();
   const unlocked = isLessonUnlocked(globalIndex, plan);

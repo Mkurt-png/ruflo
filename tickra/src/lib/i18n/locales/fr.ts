@@ -617,7 +617,7 @@ const fr = {
     primary: 'Rejoindre la cohorte',
     secondary: 'Lire la charte',
     badge: 'Inclus dans Pro et À vie',
-    // TICKRA-PHASE-4: charter + live sessions used on /community page.
+    // charter + live sessions used on /community page.
     charterTitle: 'La charte Tickra',
     charterIntro: 'Trois règles qui rendent la cohorte vivable, et que personne ne contourne.',
     charterRules: [

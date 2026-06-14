@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-1.4: 14-day personal plan, built from the user's placement
+// 14-day personal plan, built from the user's placement
 // test. Shows today's lesson prominently + the next 6 days as a compact
 // vertical list. Generated once on the backend, regenerated on demand.
 

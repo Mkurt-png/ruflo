@@ -7,7 +7,7 @@ import { consumeAiQuota } from '@/lib/ai/quota';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// TICKRA-PHASE-2.2: Trade Coach.
+// Trade Coach.
 // POST body: {
 //   symbol, side, sizeLots, entry, exit, stopPips, tpPips, pnl, closeReason,
 //   locale?

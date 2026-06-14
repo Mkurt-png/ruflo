@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-2.1: floating AskTickra chat button + slide-in panel.
+// floating AskTickra chat button + slide-in panel.
 // Bottom-right on desktop, full-screen sheet on mobile. Lesson context is
 // auto-detected from the current URL when relevant.
 
@@ -78,7 +78,7 @@ export function AskTickra({ locale }: { locale: Locale }) {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, pending]);
 
-  // TICKRA-FIX(UX): close on Escape while the panel is open.
+  // close on Escape while the panel is open.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -167,7 +167,7 @@ export function AskTickra({ locale }: { locale: Locale }) {
 
       {/* Panel */}
       {open ? (
-        // TICKRA-FIX(UX): backdrop click closes; Escape closes via effect below.
+        // backdrop click closes; Escape closes via effect below.
         <div
           className="fixed inset-0 z-50 flex items-end justify-end bg-ink/40 backdrop-blur-sm md:items-end md:p-6"
           onClick={() => setOpen(false)}

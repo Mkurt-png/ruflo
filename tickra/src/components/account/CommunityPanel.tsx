@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-4: Pro-gated community CTA on /me.
+// Pro-gated community CTA on /me.
 // Discord/Circle URL comes from NEXT_PUBLIC_COMMUNITY_URL so it can be set
 // without redeploying code once the server is created.
 
