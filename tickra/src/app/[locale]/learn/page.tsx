@@ -10,6 +10,7 @@ import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 import { LessonResumeCard } from '@/components/learn/LessonResumeCard';
 import { TrackFilter } from '@/components/learn/TrackFilter';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+import { CourseListJsonLd } from '@/components/seo/CourseListJsonLd';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -38,6 +39,7 @@ export default async function LearnPage({ params }: { params: { locale: string }
 
   return (
     <>
+      <CourseListJsonLd tracks={TRACKS} locale={locale} />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Apprendre' : 'Learn'} title={title} body={body} />
