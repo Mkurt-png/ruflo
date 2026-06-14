@@ -105,6 +105,13 @@ export default async function EditorialArticlePage({ params }: { params: Params 
         description={post.excerpt}
         date={post.date}
         author={post.author}
+        // Custom share card per article via /api/og — same edge-cached
+        // endpoint editorial rooms use, ivory paper, italic title.
+        image={`${SITE_URL}/api/og?${new URLSearchParams({
+          title: post.title,
+          eyebrow: params.locale === 'fr' ? 'Tickra · Éditorial' : 'Tickra · Editorial',
+          locale: params.locale,
+        }).toString()}`}
         locale={params.locale}
       />
       <BreadcrumbJsonLd
