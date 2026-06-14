@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { isLocale, locales, type Locale } from '@/lib/i18n/config';
+import { SITE_URL } from '@/lib/site-url';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -29,7 +30,46 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
   const track = getTrack(params.track);
   if (!track) return {};
-  return { title: `${track.title[params.locale as Locale]} · Tickra` };
+  const locale = params.locale as Locale;
+  const title = track.title[locale];
+  const description = track.summary[locale];
+  const path = `/learn/${params.track}`;
+  const canonical = `/${locale}${path}`;
+  const ogImage = `${SITE_URL}/api/og?${new URLSearchParams({
+    title,
+    eyebrow: locale === 'fr' ? 'Tickra · Piste' : 'Tickra · Track',
+    locale,
+  }).toString()}`;
+  return {
+    title: `${title} · Tickra`,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        'fr-FR': `${SITE_URL}/fr${path}`,
+        'en-GB': `${SITE_URL}/en${path}`,
+        'x-default': `${SITE_URL}/fr${path}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: `${SITE_URL}${canonical}`,
+      siteName: 'Tickra',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      site: '@tickra',
+      creator: '@tickra',
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function TrackPage({ params }: { params: Params }) {
