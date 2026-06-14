@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Calculs et fiches pratiques pour la séance — risk, sizing, post-mortem.'
         : 'Calculators and worksheets for the trading day — risk, sizing, post-mortem.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Outils' : 'Tickra · Tools',
   });
 }
 

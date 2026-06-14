@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Tickra, sa maison, sa méthode, ses gens.'
         : 'Tickra, its house, its method, its people.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · À propos' : 'Tickra · About',
   });
 }
 

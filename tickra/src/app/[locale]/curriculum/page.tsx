@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Le plan complet du cursus Tickra : pistes, leçons, ordre de lecture.'
         : 'Tickra’s full curriculum plan: tracks, lessons, reading order.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Cursus' : 'Tickra · Curriculum',
   });
 }
 

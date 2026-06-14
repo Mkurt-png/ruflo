@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Ce qui a changé sur Tickra, semaine après semaine.'
         : 'What changed on Tickra, week after week.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Journal des versions' : 'Tickra · Changelog',
   });
 }
 

@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Trois plans simples — Gratuit, Pro, À vie. Pas d’engagement, pas de mensualités cachées.'
         : 'Three simple plans — Free, Pro, Lifetime. No commitment, no hidden fees.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Tarifs' : 'Tickra · Pricing',
   });
 }
 

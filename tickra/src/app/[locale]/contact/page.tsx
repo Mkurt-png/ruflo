@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Comment nous écrire — support, presse, partenariats.'
         : 'How to reach us — support, press, partnerships.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Contact' : 'Tickra · Contact',
   });
 }
 

@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       params.locale === 'fr'
         ? 'Cercles, lectures partagées, événements — comment les lecteurs de Tickra se croisent.'
         : 'Circles, shared readings, events — how Tickra readers cross paths.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Communauté' : 'Tickra · Community',
   });
 }
 
