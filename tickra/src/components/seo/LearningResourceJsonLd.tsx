@@ -54,7 +54,12 @@ export function LearningResourceJsonLd({
       name: 'Tickra',
       url: SITE_URL,
     },
-    isAccessibleForFree: false,
+    // isAccessibleForFree intentionally omitted. Declaring `false`
+    // without the Schema.org-required paywalled-content selectors
+    // (hasPart with cssSelector) makes Google's Article validator
+    // reject the whole resource. Leaving the field absent is the
+    // safest default until per-lesson entitlement is mapped to a
+    // proper paywall hasPart graph.
   };
   return (
     <script
