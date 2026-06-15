@@ -28,6 +28,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         ? 'Le mode duel de Tickra — face à face hebdomadaire, anonyme.'
         : 'Tickra’s duel mode — weekly anonymous head-to-head.',
     ogEyebrow: params.locale === 'fr' ? 'Tickra · Battle' : 'Tickra · Battle',
+    // Requires signin — page server-redirects to /signin?next=/battle for
+    // anonymous visitors, so Googlebot would index a redirect-loop URL.
+    // Keep it out of the index but allow follow so the link to /signin
+    // still passes signal.
+    noindex: true,
   });
 }
 
