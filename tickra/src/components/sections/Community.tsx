@@ -67,20 +67,27 @@ export function Community({ dict, locale }: { dict: Dictionary; locale: Locale }
           custom={1}
           className="col-span-12 lg:col-span-5 lg:col-start-8"
         >
-          <CohortPreview />
+          <CohortPreview locale={locale} />
         </motion.div>
       </Container>
     </section>
   );
 }
 
-function CohortPreview() {
-  const channels = [
-    { name: '# bougies‑japonaises', online: 42 },
-    { name: '# gestion‑du‑risque', online: 31 },
-    { name: '# volumes‑order‑flow', online: 18 },
-    { name: '# revue‑hebdo', online: 7 },
-  ];
+function CohortPreview({ locale }: { locale: Locale }) {
+  const channels = locale === 'fr'
+    ? [
+        { name: '# bougies‑japonaises', online: 42 },
+        { name: '# gestion‑du‑risque', online: 31 },
+        { name: '# volumes‑order‑flow', online: 18 },
+        { name: '# revue‑hebdo', online: 7 },
+      ]
+    : [
+        { name: '# japanese‑candles', online: 42 },
+        { name: '# risk‑management', online: 31 },
+        { name: '# volumes‑order‑flow', online: 18 },
+        { name: '# weekly‑review', online: 7 },
+      ];
   return (
     <div className="rounded-sm border border-line bg-surface p-6 md:p-8">
       <div className="flex items-center justify-between border-b border-line pb-4">
@@ -93,10 +100,10 @@ function CohortPreview() {
           </span>
           <div>
             <div className="font-display text-[15px] font-medium tracking-tight text-ink">
-              Tickra · Cohorte
+              {locale === 'fr' ? 'Tickra · Cohorte' : 'Tickra · Cohort'}
             </div>
             <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted">
-              98 en ligne · 1 247 membres
+              {locale === 'fr' ? '98 en ligne · 1 247 membres' : '98 online · 1,247 members'}
             </div>
           </div>
         </div>
@@ -119,10 +126,12 @@ function CohortPreview() {
 
       <div className="mt-6 border-t border-line pt-5">
         <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
-          Dernière revue · jeudi 19h
+          {locale === 'fr' ? 'Dernière revue · jeudi 19h' : 'Last review · Thursday 7pm'}
         </div>
         <p className="mt-2 text-[13.5px] leading-relaxed text-ink">
-          “Pourquoi mon stop a sauté trois fois cette semaine sur l’ES” — Léa M.
+          {locale === 'fr'
+            ? '“Pourquoi mon stop a sauté trois fois cette semaine sur l’ES” — Léa M.'
+            : '“Why my stop got hit three times this week on the ES” — Léa M.'}
         </p>
       </div>
     </div>
