@@ -54,6 +54,15 @@ export async function generateMetadata({ params }: { params: Params }) {
   // than 404ing a French slug under /en.
   const frSlug = translateArticleSlug(params.slug, params.locale, 'fr');
   const enSlug = translateArticleSlug(params.slug, params.locale, 'en');
+  // Share card via /api/og — same edge-cached endpoint editorial
+  // cluster rooms use. Without this in the OG/Twitter meta, social
+  // previews (Twitter, Discord, Slack, iMessage, LinkedIn) would
+  // render text only.
+  const ogImage = `${SITE_URL}/api/og?${new URLSearchParams({
+    title: post.title,
+    eyebrow: params.locale === 'fr' ? 'Tickra · Éditorial' : 'Tickra · Editorial',
+    locale: params.locale,
+  }).toString()}`;
   return {
     title: `${post.title} · Tickra`,
     description: post.excerpt,
@@ -76,6 +85,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       siteName: 'Tickra',
       locale: params.locale === 'fr' ? 'fr_FR' : 'en_GB',
       alternateLocale: params.locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
       // OG type:article requires published_time + authors for proper
       // social card previews and Facebook News Tab eligibility.
       ...(parseEditorialDate(post.date) && {
@@ -89,6 +99,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       description: post.excerpt,
       site: '@tickra',
       creator: '@tickra',
+      images: [ogImage],
     },
   };
 }
