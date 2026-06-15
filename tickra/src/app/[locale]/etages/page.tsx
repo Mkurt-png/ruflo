@@ -14,6 +14,7 @@ import { Pull } from '@/components/editorial/Pull';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { EtagesItemListJsonLd } from '@/components/seo/EtagesItemListJsonLd';
 
 export const revalidate = 86400;
 export const metadata = editorialMeta({
@@ -149,6 +150,16 @@ export default async function EtagesPage({ params }: { params: { locale: string 
         slug="etages"
         title={{ fr: 'Les Étages', en: 'The Floors' }}
       />
+      <EtagesItemListJsonLd
+        locale={locale}
+        entries={ETAGES.map((e) => ({
+          level: e.level,
+          anchor: `etage-${e.level}`,
+          name: e.name[locale],
+          role: e.role[locale],
+          ambience: e.ambience[locale],
+        }))}
+      />
       <EditorialFrame
         dict={dict}
         locale={locale}
@@ -167,7 +178,8 @@ export default async function EtagesPage({ params }: { params: { locale: string 
           {[...ETAGES].reverse().map((e, i) => (
             <article
               key={e.level}
-              className="border-t border-black/15 pt-12 mt-16 first:mt-0 first:border-0 first:pt-0"
+              id={`etage-${e.level}`}
+              className="border-t border-black/15 pt-12 mt-16 first:mt-0 first:border-0 first:pt-0 scroll-mt-24"
             >
               <header className="flex flex-wrap items-baseline justify-between gap-4">
                 <div>
