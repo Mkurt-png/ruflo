@@ -5,8 +5,9 @@
 // passed in via props (server -> client) so the page can build it
 // at request time.
 
-import { useDeferredValue, useMemo, useState } from 'react';
+import { useDeferredValue, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { type SearchEntry, normalizeQuery } from '@/lib/tickra/recherche-index';
 
 type Locale = 'fr' | 'en';
@@ -39,7 +40,18 @@ export function RechercheClient({
   index: SearchEntry[];
   locale: Locale;
 }) {
-  const [q, setQ] = useState('');
+  // Pre-fill from ?q= so the Google sitelinks search box (declared on
+  // the home WebSite schema) and any external referrer can land the
+  // reader on a result list immediately. Read once on mount only —
+  // subsequent typing owns the field.
+  const searchParams = useSearchParams();
+  const initialQ = searchParams?.get('q') ?? '';
+  const [q, setQ] = useState(initialQ);
+  useEffect(() => {
+    const next = searchParams?.get('q') ?? '';
+    if (next && next !== q) setQ(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
   const deferred = useDeferredValue(q);
   const t = COPY[locale];
 

@@ -23,6 +23,28 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
     ],
   };
 
+  // WebSite + potentialAction SearchAction enables Google's sitelinks
+  // search box: a search field rendered directly below the brand name
+  // in search results. The target template plugs the query into the
+  // existing /recherche page (a local-only search that already covers
+  // lessons, glossary and rooms).
+  const website = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Tickra',
+    url: SITE_URL,
+    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
+    publisher: { '@type': 'Organization', name: 'Tickra', url: SITE_URL },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${url}/recherche?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
   const course = {
     '@context': 'https://schema.org',
     '@type': 'Course',
@@ -69,7 +91,7 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
     })),
   };
 
-  const payload = [organization, course, faq, product];
+  const payload = [organization, website, course, faq, product];
 
   return (
     <script
