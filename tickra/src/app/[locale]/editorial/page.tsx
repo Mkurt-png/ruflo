@@ -8,6 +8,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
+import { EditorialItemListJsonLd } from '@/components/seo/EditorialItemListJsonLd';
 import { pageMeta } from '@/lib/seo/page-meta';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
@@ -39,6 +40,14 @@ export default async function EditorialPage({ params }: { params: { locale: stri
             path: `/${params.locale}/editorial`,
           },
         ]}
+      />
+      <EditorialItemListJsonLd
+        locale={params.locale}
+        entries={t.posts.map((p) => ({
+          slug: p.slug,
+          title: p.title,
+          excerpt: p.excerpt,
+        }))}
       />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
