@@ -114,7 +114,8 @@ export default async function VoixPage({ params }: { params: { locale: string } 
                     {v.pseudonym}
                   </span>
                   <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-black/65 tabular-nums">
-                    {formatDate(v.date, locale)} · {v.city[locale]} · {v.craft[locale]}
+                    <time dateTime={v.date}>{formatDate(v.date, locale)}</time>
+                    {' · '}{v.city[locale]}{' · '}{v.craft[locale]}
                   </p>
                 </div>
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55 tabular-nums">
