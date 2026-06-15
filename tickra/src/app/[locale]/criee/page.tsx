@@ -7,18 +7,20 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { getCrieeForDate } from '@/lib/tickra/criee';
 import { CrieeCard } from '@/components/criee/CrieeCard';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 
 // /[locale]/criee — the morning ritual room. A single page, identical
 // for every visitor that day, that disappears at midnight UTC and is
 // replaced by tomorrow's. Editorial register, ivory paper.
 
 export const dynamic = 'force-dynamic';
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'criee',
-  title: 'La Criée',
-  description:
-    'Une question, choisie pour le jour. La même pour tout le monde. Cinq minutes, dix au plus.',
+  title: { fr: 'La Criée', en: 'The Criée' },
+  description: {
+    fr: 'Une question, choisie pour le jour. La même pour tout le monde. Cinq minutes, dix au plus.',
+    en: 'One question, picked for the day. The same for everyone. Five minutes, ten at most.',
+  },
 });
 
 const COPY = {

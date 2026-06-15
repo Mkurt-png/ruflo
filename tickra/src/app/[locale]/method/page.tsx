@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
@@ -15,11 +15,13 @@ import { Pull } from '@/components/editorial/Pull';
 // reading is bounded.
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'method',
-  title: 'La Méthode',
-  description:
-    'La formule de la Cote, à l’air libre : régularité, précision, honnêteté, révision. Chaque composante en une phrase.',
+  title: { fr: 'La Méthode', en: 'The Method' },
+  description: {
+    fr: 'La formule de la Cote, à l’air libre : régularité, précision, honnêteté, révision. Chaque composante en une phrase.',
+    en: 'The Score formula, in the open: regularity, precision, honesty, revision. Each component in one line.',
+  },
 });
 
 const COPY = {

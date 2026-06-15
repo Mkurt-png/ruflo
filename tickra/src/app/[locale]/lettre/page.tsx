@@ -6,18 +6,20 @@ import { ReadNext } from '@/components/editorial/ReadNext';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { LettrePanel } from '@/components/lettre/LettrePanel';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 
 // /[locale]/lettre — La Lettre du dimanche. Editorial weekly digest
 // composed locally from the reader's progress. Ivory paper register,
 // no network, no charts.
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'lettre',
-  title: 'La Lettre du dimanche',
-  description:
-    'Un bilan hebdomadaire éditorial, calculé localement à partir de votre progression. Lecture calme, dix minutes.',
+  title: { fr: 'La Lettre du dimanche', en: 'The Sunday Letter' },
+  description: {
+    fr: 'Un bilan hebdomadaire éditorial, calculé localement à partir de votre progression. Lecture calme, dix minutes.',
+    en: 'An editorial weekly digest, computed locally from your progress. Calm reading, ten minutes.',
+  },
 });
 
 const COPY = {

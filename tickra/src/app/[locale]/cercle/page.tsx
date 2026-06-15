@@ -6,7 +6,7 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { getSession } from '@/lib/auth/session';
 import { pairFor } from '@/lib/tickra/cercle';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
@@ -16,11 +16,13 @@ import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 // seed list of hand-written letters. The page says so plainly.
 
 export const dynamic = 'force-dynamic';
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'cercle',
-  title: 'Le Cercle de relecture',
-  description:
-    'Chaque dimanche, un autre lecteur, lu en silence. Deux Lettres échangées, sans messagerie, sans visage.',
+  title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+  description: {
+    fr: 'Chaque dimanche, un autre lecteur, lu en silence. Deux Lettres échangées, sans messagerie, sans visage.',
+    en: 'Each Sunday, another reader, read in silence. Two Letters exchanged, no messaging, no face.',
+  },
 });
 
 const COPY = {

@@ -14,16 +14,18 @@ import { readVeillee, readingLine } from '@/lib/tickra/veillee';
 // No streaming, no chat, no participant list. The only synchrony is
 // the synchrony of reading.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'veillee',
-  title: 'La Veillée',
-  description:
-    'Dimanche, 21 h UTC. Une page, une phrase par minute, lue par tout le monde au même moment. Pas de vidéo, pas de chat.',
+  title: { fr: 'La Veillée', en: 'The Vigil' },
+  description: {
+    fr: 'Dimanche, 21 h UTC. Une page, une phrase par minute, lue par tout le monde au même moment. Pas de vidéo, pas de chat.',
+    en: 'Sunday, 21:00 UTC. One page, one sentence per minute, read by everyone at the same time. No video, no chat.',
+  },
 });
 
 const COPY = {

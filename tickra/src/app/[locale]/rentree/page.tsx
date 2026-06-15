@@ -4,7 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { CarnetClient } from '@/components/carnet/CarnetClient';
 import { ReadNext } from '@/components/editorial/ReadNext';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
@@ -17,11 +17,13 @@ import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 // editor in control of the surrounding copy without re-rendering on
 // every visit.
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'rentree',
-  title: 'Le Carnet d’absence',
-  description:
-    'Ce qui s’est passé sans vous : Criées ratées, Lettres non lues, erreurs en attente. Local. Rien envoyé.',
+  title: { fr: 'Le Carnet d’absence', en: 'The Absence Register' },
+  description: {
+    fr: 'Ce qui s’est passé sans vous : Criées ratées, Lettres non lues, erreurs en attente. Local. Rien envoyé.',
+    en: 'What happened without you: missed Criées, unread Letters, pending mistakes. Local. Nothing sent.',
+  },
 });
 
 const COPY = {

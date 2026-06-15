@@ -10,16 +10,18 @@ import { Pull } from '@/components/editorial/Pull';
 // formula a reader's account would use, on the same sample window.
 // Static editorial register, signed by date.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'cote-inversee',
-  title: 'La Cote inversée',
-  description:
-    'Tous les mois, l’éditeur publie sa propre Cote, calculée avec la même formule que la vôtre. Transparence radicale.',
+  title: { fr: 'La Cote inversée', en: 'The Inverted Score' },
+  description: {
+    fr: 'Tous les mois, l’éditeur publie sa propre Cote, calculée avec la même formule que la vôtre. Transparence radicale.',
+    en: 'Each month, the editor publishes their own Score, computed with the same formula yours uses. Radical transparency.',
+  },
 });
 
 type Edition = {

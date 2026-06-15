@@ -4,7 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { SurvieCalculator } from '@/components/survie/SurvieCalculator';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
@@ -17,11 +17,13 @@ import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 // fixed. ISR for 24h is plenty — when the editor publishes a copy
 // tweak it'll re-render on the next request.
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'survie',
-  title: 'Le Calculateur de survie',
-  description:
-    'Taille de position, R-multiple, pertes consécutives jusqu’au demi-compte. Le calcul d’entrée de carnet, en silence.',
+  title: { fr: 'Le Calculateur de survie', en: 'The Survival Calculator' },
+  description: {
+    fr: 'Taille de position, R-multiple, pertes consécutives jusqu’au demi-compte. Le calcul d’entrée de carnet, en silence.',
+    en: 'Position size, R-multiple, consecutive losses to the half-account. The opening-page arithmetic, in silence.',
+  },
 });
 
 const COPY = {

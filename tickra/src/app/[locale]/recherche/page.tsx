@@ -5,16 +5,18 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { RechercheClient } from '@/components/recherche/RechercheClient';
 import { SEARCH_INDEX } from '@/lib/tickra/recherche-index';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'recherche',
-  title: 'Recherche',
-  description:
-    'Une boîte de recherche. Leçons, pièces éditoriales, glossaire — tout est indexé localement, rien ne quitte votre navigateur.',
+  title: { fr: 'Recherche', en: 'Search' },
+  description: {
+    fr: 'Une boîte de recherche. Leçons, pièces éditoriales, glossaire — tout est indexé localement, rien ne quitte votre navigateur.',
+    en: 'A search box. Lessons, editorial rooms, glossary — all indexed locally, nothing leaves your browser.',
+  },
 });
 
 const COPY = {

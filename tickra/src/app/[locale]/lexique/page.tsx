@@ -14,16 +14,18 @@ import { GLOSSARY } from '@/lib/curriculum/glossary';
 // is the entry-point and the proof; the actual usage lives wherever
 // the editor places <Term> inside a lesson or an editorial page.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'lexique',
-  title: 'Le Lexique vivant',
-  description:
-    'Chaque mot d’une leçon peut s’ouvrir : définition, et un lien vers le glossaire. Pas de tooltip qui flotte — un geste choisi.',
+  title: { fr: 'Le Lexique vivant', en: 'The Living Lexicon' },
+  description: {
+    fr: 'Chaque mot d’une leçon peut s’ouvrir : définition, et un lien vers le glossaire. Pas de tooltip qui flotte — un geste choisi.',
+    en: 'Every word in a lesson can open: definition, and a link to the glossary. No floating tooltip — a chosen gesture.',
+  },
 });
 
 const COPY = {
