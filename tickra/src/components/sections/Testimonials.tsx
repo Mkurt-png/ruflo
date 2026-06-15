@@ -16,44 +16,32 @@ type Card = {
   joined: string;
 };
 
-// Hardcoded as per spec; falls back if dict mismatched.
-const CARDS: Card[] = [
-  {
-    name: 'Léa M.',
-    role: 'Junior analyst, Paris',
-    plan: 'Pro',
-    joined: 'Jan 2026',
-    quote:
-      'I spent two years on YouTube before realising I was learning nothing. Six weeks on Tickra and I finally have a method.',
-  },
-  {
-    name: 'Karim B.',
-    role: 'Engineer, Lyon',
-    plan: 'Lifetime',
-    joined: 'Feb 2026',
-    quote: 'The Risk Management track alone is worth the lifetime price.',
-  },
-  {
-    name: 'Sofia D.',
-    role: 'Independent trader, Brussels',
-    plan: 'Pro',
-    joined: 'Dec 2025',
-    quote:
-      'The decision journal showed me I always exit winning trades too early.',
-  },
-  {
-    name: 'Antoine R.',
-    role: 'Consultant, Bordeaux',
-    plan: 'Pro',
-    joined: 'Nov 2025',
-    quote:
-      'Ten minutes a day, no guilt. First time I hold a 60+ day streak.',
-  },
-];
+// Parse a dict meta string like "Pro · Inscrite janvier 2026" or
+// "Lifetime · Joined February 2026" into the Card shape the carousel
+// renders. The plan token is the first segment before ' · '; the
+// joined label is the rest. Lifetime/À vie both map to the Lifetime
+// badge tone.
+function dictItemToCard(item: { name: string; role: string; quote: string; meta: string }): Card {
+  const [planRaw, ...rest] = item.meta.split(' · ');
+  const joinedRaw = rest.join(' · ').trim();
+  const planLabel = planRaw?.toLowerCase() ?? '';
+  const plan: Plan = planLabel.startsWith('à vie') || planLabel.startsWith('lifetime') ? 'Lifetime' : 'Pro';
+  return {
+    name: item.name,
+    role: item.role,
+    quote: item.quote,
+    plan,
+    joined: joinedRaw || planRaw || '',
+  };
+}
 
-// TICKRA-REDESIGN: Auto-scrolling testimonials carousel.
+// TICKRA-REDESIGN: Auto-scrolling testimonials carousel. Reads
+// per-locale items from dict.testimonials.items so FR pages show
+// French quotes and EN pages show English ones; was previously
+// hardcoded to a single English CARDS array regardless of locale.
 export function Testimonials({ dict }: Props) {
   const t = dict.testimonials;
+  const cards: Card[] = t.items.map(dictItemToCard);
   const [index, setIndex] = useState(0);
   const [cardsVisible, setCardsVisible] = useState(1);
 
@@ -68,13 +56,13 @@ export function Testimonials({ dict }: Props) {
 
   useEffect(() => {
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % CARDS.length);
+      setIndex((i) => (i + 1) % cards.length);
     }, 5000);
     return () => clearInterval(id);
-  }, []);
+  }, [cards.length]);
 
-  const prev = () => setIndex((i) => (i - 1 + CARDS.length) % CARDS.length);
-  const next = () => setIndex((i) => (i + 1) % CARDS.length);
+  const prev = () => setIndex((i) => (i - 1 + cards.length) % cards.length);
+  const next = () => setIndex((i) => (i + 1) % cards.length);
 
   // Each card is (100% / cardsVisible) wide, gap of 1.25rem (gap-5).
   const translatePct = (100 / cardsVisible) * index;
@@ -124,7 +112,7 @@ export function Testimonials({ dict }: Props) {
                 transform: `translateX(calc(-${translatePct}% - ${index} * 1.25rem / ${cardsVisible}))`,
               }}
             >
-              {CARDS.map((c) => (
+              {cards.map((c) => (
                 <article
                   key={c.name}
                   className="bg-white rounded-xl p-6 border border-gray-100 flex flex-col shrink-0 w-full md:w-[calc((100%-3.75rem)/4)]"
