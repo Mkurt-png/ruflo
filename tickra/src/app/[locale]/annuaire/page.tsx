@@ -14,6 +14,7 @@ import { TRACKS } from '@/lib/curriculum/data';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { AnnuaireItemListJsonLd } from '@/components/seo/AnnuaireItemListJsonLd';
 
 export const revalidate = 3600;
 export const metadata = editorialMeta({
@@ -112,6 +113,10 @@ export default async function AnnuairePage({ params }: { params: { locale: strin
         locale={locale}
         slug="annuaire"
         title={{ fr: 'L’Annuaire', en: 'The Index' }}
+      />
+      <AnnuaireItemListJsonLd
+        locale={locale}
+        entries={rows.map((r) => ({ title: r.title, href: r.href, trackTitle: r.trackTitle }))}
       />
       <EditorialFrame
         dict={dict}
