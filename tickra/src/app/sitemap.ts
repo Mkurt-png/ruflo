@@ -56,8 +56,15 @@ const routes = [
   // service behind them ships. They stay linkable from /maison.
 ];
 
+// Pin lastModified at module load so a single deploy reports one
+// timestamp, and the next deploy reports the next one. Using
+// `new Date()` per request meant every URL's lastModified shifted
+// on every server invocation, which Google's freshness heuristic
+// reads as "the site changes every minute" — bad signal.
+const DEPLOY_TIME = new Date();
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const now = DEPLOY_TIME;
   const main = locales.flatMap((locale) =>
     routes.map((r) => ({
       url: `${SITE}/${locale}${r.path}`,
