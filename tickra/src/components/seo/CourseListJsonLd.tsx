@@ -1,6 +1,14 @@
 import { SITE_URL } from '@/lib/site-url';
 import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 import type { TrackMeta } from '@/lib/curriculum/data';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
+
+const LEVEL_LABEL: Record<TrackMeta['level'], string> = {
+  foundations: 'Beginner',
+  intermediate: 'Intermediate',
+  advanced: 'Advanced',
+  mastery: 'Expert',
+};
 
 // Schema.org ItemList of Courses — turns /learn into a machine-readable
 // catalogue of every curriculum track. Google can surface the list as a
@@ -38,8 +46,13 @@ export function CourseListJsonLd({ tracks, locale }: Props) {
           url: SITE_URL,
         },
         inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
-        educationalLevel: 'Beginner to Advanced',
-        numberOfCredits: track.lessons.length,
+        // Per-track educational level (was hardcoded to "Beginner to
+        // Advanced" for every track, which made all 15 tracks look
+        // identical to Google's Course indexer).
+        educationalLevel: LEVEL_LABEL[track.level],
+        // Count seeded lessons only; the unseeded placeholders are
+        // robots:noindex and don't represent real course content.
+        numberOfCredits: track.lessons.filter((l) => isSeeded(l.id)).length,
       },
     })),
   };
