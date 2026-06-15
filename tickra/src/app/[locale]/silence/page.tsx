@@ -5,6 +5,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { SilenceItemListJsonLd } from '@/components/seo/SilenceItemListJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { Pull } from '@/components/editorial/Pull';
@@ -205,6 +206,15 @@ export default async function SilencePage({ params }: { params: { locale: string
         slug="silence"
         title={{ fr: 'Le Silence éditorial', en: 'The Editorial Silence' }}
       />
+      <SilenceItemListJsonLd
+        locale={locale}
+        entries={BANISHED.map((b) => ({
+          id: b.id,
+          pattern: b.pattern[locale],
+          why: b.why[locale],
+          prose: b.prose[locale],
+        }))}
+      />
       <EditorialFrame
         dict={dict}
         locale={locale}
@@ -223,7 +233,8 @@ export default async function SilencePage({ params }: { params: { locale: string
             {BANISHED.map((b, i) => (
               <li
                 key={b.id}
-                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0"
+                id={b.id}
+                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0 scroll-mt-24"
               >
                 <span className="font-mono text-[11px] tracking-[0.22em] text-black/35 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
