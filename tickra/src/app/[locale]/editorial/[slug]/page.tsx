@@ -15,6 +15,7 @@ import { ArticleToc } from '@/components/editorial/ArticleToc';
 import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { SITE_URL } from '@/lib/site-url';
+import { translateArticleSlug } from '@/lib/editorial/slug-translation';
 
 type Params = { locale: string; slug: string };
 
@@ -46,6 +47,12 @@ export async function generateMetadata({ params }: { params: Params }) {
   const post = (dict.editorialArticles.posts as Record<string, Post>)[params.slug];
   if (!post) return {};
   const canonical = `/${params.locale}/editorial/${params.slug}`;
+  // FR and EN editorial slugs are different (lire-bougie-japonaise vs
+  // read-japanese-candle). Map both via translateArticleSlug so the
+  // hreflang alternates point at URLs that actually resolve, rather
+  // than 404ing a French slug under /en.
+  const frSlug = translateArticleSlug(params.slug, params.locale, 'fr');
+  const enSlug = translateArticleSlug(params.slug, params.locale, 'en');
   return {
     title: `${post.title} · Tickra`,
     description: post.excerpt,
@@ -55,9 +62,9 @@ export async function generateMetadata({ params }: { params: Params }) {
       // right locale to each search audience. Matches the convention
       // editorialMeta uses for the rest of the cluster.
       languages: {
-        'fr-FR': `${SITE_URL}/fr/editorial/${params.slug}`,
-        'en-GB': `${SITE_URL}/en/editorial/${params.slug}`,
-        'x-default': `${SITE_URL}/fr/editorial/${params.slug}`,
+        'fr-FR': `${SITE_URL}/fr/editorial/${frSlug}`,
+        'en-GB': `${SITE_URL}/en/editorial/${enSlug}`,
+        'x-default': `${SITE_URL}/fr/editorial/${frSlug}`,
       },
     },
     openGraph: {
