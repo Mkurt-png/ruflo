@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { GlossaryClient } from '@/components/glossary/GlossaryClient';
 import { GlossaryJsonLd } from '@/components/seo/GlossaryJsonLd';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 import { GLOSSARY } from '@/lib/curriculum/glossary';
 import { pageMeta } from '@/lib/seo/page-meta';
 
@@ -38,6 +39,11 @@ export default async function GlossaryPage({ params }: { params: { locale: strin
   return (
     <>
       <GlossaryJsonLd locale={locale} />
+      <PageBreadcrumb
+        locale={locale}
+        slug="glossary"
+        title={{ fr: 'Glossaire', en: 'Glossary' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Référence' : 'Reference'} title={title} body={body} />

@@ -10,6 +10,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -58,6 +59,11 @@ export default async function ToolsPage({ params }: { params: { locale: string }
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="tools"
+        title={{ fr: 'Outils', en: 'Tools' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={t.eyebrow} title={t.title} body={t.body} />

@@ -8,6 +8,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -31,6 +32,11 @@ export default async function CommunityPage({ params }: { params: { locale: stri
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="community"
+        title={{ fr: 'Communauté', en: 'Community' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero

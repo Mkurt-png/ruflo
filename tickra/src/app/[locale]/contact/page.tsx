@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { ContactForm } from '@/components/contact/ContactForm';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -29,6 +30,11 @@ export default async function ContactPage({ params }: { params: { locale: string
 
   return (
     <>
+      <PageBreadcrumb
+        locale={params.locale}
+        slug="contact"
+        title={{ fr: 'Contact', en: 'Contact' }}
+      />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <PageHero title={t.title} body={t.intro} eyebrow="Contact" />

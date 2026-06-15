@@ -10,6 +10,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { TrustBar } from '@/components/ui/TrustBar';
 import { ShimmerButton } from '@/components/fx/ShimmerButton';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -98,6 +99,11 @@ export default async function AboutPage({ params }: { params: { locale: string }
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="about"
+        title={{ fr: 'À propos', en: 'About' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero title={t.title} body={t.intro} eyebrow={dict.builtBy.eyebrow} />

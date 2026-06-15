@@ -9,6 +9,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 import { getLessonContent, isSeeded } from '@/lib/curriculum/lesson-content';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
@@ -61,6 +62,11 @@ export default async function CurriculumPage({ params }: { params: { locale: str
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="curriculum"
+        title={{ fr: 'Cursus', en: 'Curriculum' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={t.eyebrow} title={t.title} body={t.body} />

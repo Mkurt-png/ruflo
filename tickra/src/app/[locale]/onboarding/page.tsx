@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { PlacementTest } from '@/components/onboarding/PlacementTest';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -29,6 +30,11 @@ export default async function OnboardingPage({ params }: { params: { locale: str
 
   return (
     <>
+      <PageBreadcrumb
+        locale={params.locale}
+        slug="onboarding"
+        title={{ fr: 'Test de niveau', en: 'Placement Test' }}
+      />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <section className="border-b border-line">
