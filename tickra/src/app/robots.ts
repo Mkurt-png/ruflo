@@ -13,14 +13,19 @@ export default function robots(): MetadataRoute.Robots {
         // /onboarding is public and crawlable — it's the funnel entry
         // for new readers. /signin is the only auth surface we want to
         // keep out of indexes; everything else is genuinely private.
+        //
+        // Wildcards: every private page lives under /[locale]/ so the
+        // bare /journal etc. would never match. Use /*/<path> to cover
+        // /fr/<path> and /en/<path> in one rule, plus the bare prefix
+        // for any future non-locale route (e.g. /api).
         disallow: [
           '/api/',
-          '/signin',
-          '/welcome',
-          '/me',
-          '/me/',
-          '/journal',
-          '/share/',
+          '/*/signin',
+          '/*/welcome',
+          '/*/me',
+          '/*/me/',
+          '/*/journal',
+          '/*/share/',
         ],
       },
     ],
