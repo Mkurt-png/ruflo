@@ -46,6 +46,14 @@ export function EditorialJsonLd({
     // heuristic fire even when the content was identical.
     dateModified: dateModified ?? datePublished ?? '2026-01-01T00:00:00.000Z',
     isAccessibleForFree: true,
+    // Speakable spec: the editorial headline triptych and intro
+    // paragraph are designated as voice-assistant-readable. Selectors
+    // map to EditorialFrame's data-speakable attributes so they stay
+    // stable across visual restyles.
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['[data-speakable="headline"]', '[data-speakable="intro"]'],
+    },
     author: {
       '@type': 'Organization',
       name: 'Tickra',

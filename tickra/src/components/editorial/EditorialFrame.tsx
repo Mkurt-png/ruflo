@@ -58,6 +58,7 @@ export function EditorialFrame({
 
             <div className="mt-16 md:mt-24 max-w-[1100px]">
               <h1
+                data-speakable="headline"
                 className="font-display italic font-light text-[#0E0E0E]"
                 style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
               >
@@ -71,6 +72,7 @@ export function EditorialFrame({
 
             {intro && (
               <p
+                data-speakable="intro"
                 className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
                 style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
               >
