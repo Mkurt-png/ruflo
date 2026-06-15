@@ -35,17 +35,29 @@ export function AnnuaireItemListJsonLd({ entries, locale }: Props) {
     url,
     numberOfItems: entries.length,
     itemListOrder: 'https://schema.org/ItemListOrderAscending',
-    itemListElement: entries.map((entry, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'LearningResource',
-        name: entry.title,
-        url: `${SITE_URL}${entry.href}`,
-        inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
-        isPartOf: { '@type': 'Course', name: entry.trackTitle },
-      },
-    })),
+    itemListElement: entries.map((entry, i) => {
+      // entry.href is /<locale>/learn/<trackSlug>/<lessonSlug>; the
+      // parent Course URL is the same path with the lesson segment
+      // dropped. Surfacing the Course URL on isPartOf lets crawlers
+      // walk from a lesson back to its track without a second
+      // lookup, which strengthens the curriculum graph.
+      const courseHref = entry.href.split('/').slice(0, -1).join('/');
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'LearningResource',
+          name: entry.title,
+          url: `${SITE_URL}${entry.href}`,
+          inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
+          isPartOf: {
+            '@type': 'Course',
+            name: entry.trackTitle,
+            url: `${SITE_URL}${courseHref}`,
+          },
+        },
+      };
+    }),
   };
   return (
     <script
