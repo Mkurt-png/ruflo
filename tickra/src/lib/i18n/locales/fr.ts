@@ -80,6 +80,10 @@ const fr = {
         body: "Le moteur graphique en lequel vous avez déjà confiance, intégré à chaque leçon. Mêmes outils de dessin, mêmes données, zéro changement de contexte.",
       },
     },
+    streakDays: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
+    streakFreezeNote: 'Freeze utilisé samedi.',
+    streakPreservedNote: 'Streak préservé.',
+    freezeTooltipLabel: 'Qu’est-ce qu’un freeze ?',
   },
   metrics: {
     eyebrow: 'Sur le terrain',

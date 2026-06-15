@@ -60,7 +60,14 @@ export function BentoFeatures({ dict }: { dict: Dictionary }) {
                 </div>
 
                 {meta.visual === 'chart' ? <BentoChart /> : null}
-                {meta.visual === 'streak' ? <BentoStreak /> : null}
+                {meta.visual === 'streak' ? (
+                  <BentoStreak
+                    days={t.streakDays}
+                    freezeNote={t.streakFreezeNote}
+                    preservedNote={t.streakPreservedNote}
+                    freezeTooltipLabel={t.freezeTooltipLabel}
+                  />
+                ) : null}
               </motion.article>
             );
           })}
@@ -104,8 +111,17 @@ function BentoChart() {
   );
 }
 
-function BentoStreak() {
-  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+function BentoStreak({
+  days,
+  freezeNote,
+  preservedNote,
+  freezeTooltipLabel,
+}: {
+  days: readonly string[];
+  freezeNote: string;
+  preservedNote: string;
+  freezeTooltipLabel: string;
+}) {
   const status = [true, true, true, true, true, false, true];
   return (
     <div className="mt-10">
@@ -130,18 +146,18 @@ function BentoStreak() {
         ))}
       </ul>
       <p className="mt-6 text-[13px] text-muted">
-        <FreezeTooltip />
-        <span className="text-ink">Freeze used Saturday.</span> Streak preserved.
+        <FreezeTooltip label={freezeTooltipLabel} />
+        <span className="text-ink">{freezeNote}</span> {preservedNote}
       </p>
     </div>
   );
 }
 
-function FreezeTooltip() {
+function FreezeTooltip({ label }: { label: string }) {
   return (
     <span className="relative mr-2 inline-flex group">
       <span
-        aria-label="What is a freeze?"
+        aria-label={label}
         tabIndex={0}
         className="inline-flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-line text-[10px] font-medium text-muted transition-colors hover:border-ink hover:text-ink focus-visible:border-ink focus-visible:text-ink focus-visible:outline-none"
       >

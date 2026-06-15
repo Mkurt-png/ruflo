@@ -80,6 +80,10 @@ const en = {
         body: 'The chart engine you already trust, embedded in every lesson. Same drawing tools, same data, zero context switching.',
       },
     },
+    streakDays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    streakFreezeNote: 'Freeze used Saturday.',
+    streakPreservedNote: 'Streak preserved.',
+    freezeTooltipLabel: 'What is a freeze?',
   },
   metrics: {
     eyebrow: 'In the field',
