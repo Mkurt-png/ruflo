@@ -15,6 +15,7 @@ import { getCrieeForDate } from '@/lib/tickra/criee';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { AlmanachItemListJsonLd } from '@/components/seo/AlmanachItemListJsonLd';
 
 export const revalidate = 3600;
 export const metadata = editorialMeta({
@@ -95,6 +96,16 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
         locale={locale}
         slug="almanach"
         title={{ fr: 'L’Almanach', en: 'The Almanac' }}
+      />
+      <AlmanachItemListJsonLd
+        locale={locale}
+        year={now.getUTCFullYear()}
+        entries={entries.map((e) => ({
+          date: e.date,
+          question: e.question[locale],
+          lessonHref: `/${locale}/learn/${e.trackSlug}/${e.lessonSlug}`,
+          trackTitle: e.source.trackTitle[locale],
+        }))}
       />
       <EditorialFrame
         dict={dict}
