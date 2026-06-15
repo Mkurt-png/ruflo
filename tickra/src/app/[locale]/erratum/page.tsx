@@ -6,6 +6,7 @@ import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { ErratumItemListJsonLd } from '@/components/seo/ErratumItemListJsonLd';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { Pull } from '@/components/editorial/Pull';
 
@@ -80,6 +81,7 @@ export default async function ErratumPage({ params }: { params: { locale: string
         slug="erratum"
         title={{ fr: 'L’Erratum', en: 'The Erratum' }}
       />
+      <ErratumItemListJsonLd locale={locale} />
       <EditorialFrame
         dict={dict}
         locale={locale}
@@ -111,7 +113,7 @@ export default async function ErratumPage({ params }: { params: { locale: string
 
               <ol className="mt-10 space-y-14">
                 {items.map((e, i) => (
-                  <li key={e.id} className="grid grid-cols-[6ch_1fr] gap-x-6 items-baseline">
+                  <li key={e.id} id={e.id} className="grid grid-cols-[6ch_1fr] gap-x-6 items-baseline scroll-mt-24">
                     <span className="font-mono text-[10px] tracking-[0.18em] text-black/40 tabular-nums">
                       {String(i + 1).padStart(2, '0')}
                     </span>
