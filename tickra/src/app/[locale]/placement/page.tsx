@@ -6,6 +6,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PlacementTest } from '@/components/placement/PlacementTest';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -41,6 +42,11 @@ export default async function PlacementPage({ params }: { params: { locale: stri
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="placement"
+        title={{ fr: 'Test de placement', en: 'Placement Test' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <section className="border-b border-line">

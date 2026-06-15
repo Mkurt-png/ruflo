@@ -9,6 +9,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { ShimmerButton } from '@/components/fx/ShimmerButton';
 import { MagneticTilt } from '@/components/fx/MagneticTilt';
 import { CursorGlow } from '@/components/fx/CursorGlow';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -52,6 +53,11 @@ export default async function BrandPage({ params }: { params: { locale: string }
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="brand"
+        title={{ fr: 'Marque', en: 'Brand' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Design system' : 'Design system'} title={title} body={body} />
