@@ -36,6 +36,12 @@ export async function generateMetadata({ params }: { params: Params }) {
   const locale = params.locale as Locale;
   const title = found.lesson.title[locale];
   const trackTitle = found.track.title[locale];
+  // Unseeded lessons render a structured placeholder so the runtime
+  // never breaks, but Google's Helpful Content System treats thin
+  // placeholder pages as low-quality and may demote the whole site.
+  // Keep them reachable for navigation, but out of the index until
+  // they get real bodies in lesson-content.ts.
+  const seeded = isSeeded(found.lesson.id);
   const description = locale === 'fr'
     ? `${title} — leçon Tickra de la piste ${trackTitle}.`
     : `${title} — Tickra lesson from the ${trackTitle} track.`;
@@ -52,6 +58,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   return {
     title: `${title} · Tickra`,
     description,
+    ...(!seeded && { robots: { index: false, follow: true } }),
     alternates: {
       canonical,
       languages: {

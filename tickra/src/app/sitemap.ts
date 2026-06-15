@@ -3,6 +3,7 @@ import { locales } from '@/lib/i18n/config';
 import en from '@/lib/i18n/locales/en';
 import fr from '@/lib/i18n/locales/fr';
 import { TRACKS } from '@/lib/curriculum/data';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
 import { SITE_URL as SITE } from '@/lib/site-url';
 
 const routes = [
@@ -95,15 +96,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: 'monthly' as const,
         priority: locale === 'fr' ? 0.7 : 0.65,
       },
-      ...track.lessons.map((lesson) => ({
-        url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
-        lastModified: now,
-        changeFrequency: 'monthly' as const,
-        // FR is the primary locale (defaultLocale, x-default). EN
-        // translations inherit a slight downweight to match the
-        // pattern used for the main and track routes above.
-        priority: locale === 'fr' ? 0.5 : 0.45,
-      })),
+      // Only sitemap seeded lessons. Unseeded lessons render a
+      // structured placeholder and are tagged robots:noindex, so
+      // submitting them would contradict the per-page directive
+      // and trigger 'submitted URL marked noindex' warnings in
+      // Search Console.
+      ...track.lessons
+        .filter((lesson) => isSeeded(lesson.id))
+        .map((lesson) => ({
+          url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
+          lastModified: now,
+          changeFrequency: 'monthly' as const,
+          // FR is the primary locale (defaultLocale, x-default). EN
+          // translations inherit a slight downweight to match the
+          // pattern used for the main and track routes above.
+          priority: locale === 'fr' ? 0.5 : 0.45,
+        })),
     ]),
   );
 
