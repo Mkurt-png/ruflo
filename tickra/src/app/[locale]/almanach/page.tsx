@@ -142,7 +142,7 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
                     className="grid grid-cols-[10ch_1fr_auto] items-baseline gap-x-6 py-5 hover:bg-black/[0.02] -mx-3 px-3 transition-colors"
                   >
                     <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-black/55 tabular-nums">
-                      {dateLabel}
+                      <time dateTime={e.date}>{dateLabel}</time>
                       {isToday && (
                         <span className="ml-2 text-black/85">· {t.todayTag}</span>
                       )}

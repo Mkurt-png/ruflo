@@ -8,6 +8,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { ChangelogItemListJsonLd } from '@/components/seo/ChangelogItemListJsonLd';
 import { pageMeta } from '@/lib/seo/page-meta';
+import { parseEditorialDate } from '@/lib/editorial/date-parse';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -51,7 +52,10 @@ export default async function ChangelogPage({ params }: { params: { locale: stri
                 <li key={entry.version} className="grid grid-cols-12 gap-x-6 gap-y-4 py-10 md:py-14">
                   <div className="col-span-12 md:col-span-3">
                     <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-                      {entry.date}
+                      {(() => {
+                        const iso = parseEditorialDate(entry.date);
+                        return iso ? <time dateTime={iso}>{entry.date}</time> : entry.date;
+                      })()}
                     </div>
                     <div className="mt-3 font-display text-2xl font-medium tracking-tight text-ink">
                       {entry.version}

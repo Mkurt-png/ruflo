@@ -122,7 +122,7 @@ export default async function ErratumPage({ params }: { params: { locale: string
                     <div>
                       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                         <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55 tabular-nums">
-                          {e.date}
+                          <time dateTime={e.date}>{e.date}</time>
                         </span>
                         <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
                           · {t.scope[e.scope]}
