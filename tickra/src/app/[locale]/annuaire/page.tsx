@@ -5,6 +5,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { TRACKS } from '@/lib/curriculum/data';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
 
 // /[locale]/annuaire — the phonebook. One alphabetical index of
 // every lesson across every track, with the track label as the
@@ -58,6 +59,9 @@ type Row = {
   title: string;
   href: string;
   trackTitle: string;
+  /** Lesson id; used to filter unseeded entries out of the
+   * structured ItemList while keeping the visual index complete. */
+  lessonId: string;
 };
 
 function buildRows(locale: Locale): Row[] {
@@ -75,6 +79,7 @@ function buildRows(locale: Locale): Row[] {
         title,
         href: `/${locale}/learn/${track.slug}/${lesson.slug}`,
         trackTitle: track.title[locale],
+        lessonId: lesson.id,
       });
     }
   }
@@ -118,7 +123,14 @@ export default async function AnnuairePage({ params }: { params: { locale: strin
       />
       <AnnuaireItemListJsonLd
         locale={locale}
-        entries={rows.map((r) => ({ title: r.title, href: r.href, trackTitle: r.trackTitle }))}
+        // Skip unseeded lessons: the destination page noindexes itself
+        // until a real body lands, so listing them in the structured
+        // catalogue would waste crawl budget on guaranteed-noindex
+        // URLs. Visual rows below stay complete — readers see the
+        // full curriculum, crawlers see only the indexable subset.
+        entries={rows
+          .filter((r) => isSeeded(r.lessonId))
+          .map((r) => ({ title: r.title, href: r.href, trackTitle: r.trackTitle }))}
       />
       <EditorialFrame
         dict={dict}
