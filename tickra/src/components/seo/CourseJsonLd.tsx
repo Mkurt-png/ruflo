@@ -52,7 +52,13 @@ export function CourseJsonLd({ track, locale }: { track: TrackMeta; locale: Loca
     },
     learningResourceType: 'Course',
     isAccessibleForFree: true,
-    teaches: track.lessons.slice(0, 8).map((l) => l.title[locale]),
+    // teaches advertises a sample of what the course covers in search
+    // results. Prefer seeded lessons so we don't surface placeholder
+    // titles that won't link to real bodies.
+    teaches: track.lessons
+      .filter((l) => isSeeded(l.id))
+      .slice(0, 8)
+      .map((l) => l.title[locale]),
     // syllabusSections lets crawlers enumerate the curriculum without
     // crawling every lesson page. Each lesson becomes a Syllabus
     // entry pointing back to its canonical URL — but only when the
