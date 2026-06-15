@@ -18,6 +18,8 @@ import { listProgress } from '@/lib/db/queries';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
 import { deriveLevel } from '@/lib/progress/xp';
 import { SITE_URL } from '@/lib/site-url';
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 
 type Params = { locale: string; slug: string };
 
@@ -213,8 +215,36 @@ export default async function PublicProfilePage({ params }: { params: Params }) 
   const isPaid = user.plan === 'pro' || user.plan === 'lifetime';
   const total = totalLessons();
 
+  // Schema.org ProfilePage + Person — gives Google a clean signal that
+  // this URL is a public-profile page about a single Person, with the
+  // displayed name (which may be a pseudonym) as mainEntity.name. Stats
+  // are intentionally NOT serialised: they shift with progress and
+  // would otherwise trigger churn on every revalidation.
+  const profileSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    url: `${SITE_URL}/${locale}/u/${slug}`,
+    inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
+    mainEntity: {
+      '@type': 'Person',
+      name,
+      url: `${SITE_URL}/${locale}/u/${slug}`,
+      ...(user.avatar_url && { image: user.avatar_url }),
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(profileSchema) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${locale}` },
+          { name, path: `/${locale}/u/${slug}` },
+        ]}
+      />
       <Navbar dict={dict} locale={locale} />
       <main className="bg-canvas text-ink">
         <Container className="py-16 md:py-24">
