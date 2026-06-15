@@ -71,7 +71,7 @@ export function MobileMenu({ dict, locale, links }: Props) {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -8, opacity: 0 }}
               transition={{ duration: 0.35, ease: easeOutExpo }}
-              aria-label="Mobile primary"
+              aria-label={locale === 'fr' ? 'Navigation mobile' : 'Mobile primary'}
               className="flex h-full flex-col px-6 pb-12 pt-10"
             >
               <ul className="flex flex-col gap-2">

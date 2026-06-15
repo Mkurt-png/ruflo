@@ -42,7 +42,7 @@ export function Navbar({ dict, locale }: Props) {
           <span className="text-[15px] font-medium tracking-tight">Tickra</span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden md:block">
+        <nav aria-label={locale === 'fr' ? 'Navigation principale' : 'Primary'} className="hidden md:block">
           <ul className="flex items-center gap-8">
             {links.map((l) => (
               <li key={l.href}>

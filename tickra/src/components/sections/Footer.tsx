@@ -68,7 +68,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         </div>
 
         <nav
-          aria-label="Footer"
+          aria-label={locale === 'fr' ? 'Pied de page' : 'Footer'}
           className="col-span-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3"
         >
           {t.columns.map((col) => (
