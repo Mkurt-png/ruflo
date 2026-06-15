@@ -169,7 +169,15 @@ export default async function EditorialArticlePage({ params }: { params: Params 
 
               <Eyebrow>
                 <span>
-                  {post.date} · {post.readingTime} · {post.author}
+                  {/* Wrap the date in a semantic <time datetime>
+                      element so crawlers, assistive tech, and copy-to-
+                      clipboard tooling all get the ISO date alongside
+                      the human display string. */}
+                  {(() => {
+                    const iso = parseEditorialDate(post.date);
+                    return iso ? <time dateTime={iso}>{post.date}</time> : post.date;
+                  })()}
+                  {' · '}{post.readingTime}{' · '}{post.author}
                 </span>
               </Eyebrow>
 

@@ -9,6 +9,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { EditorialItemListJsonLd } from '@/components/seo/EditorialItemListJsonLd';
+import { parseEditorialDate } from '@/lib/editorial/date-parse';
 import { pageMeta } from '@/lib/seo/page-meta';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
@@ -70,7 +71,11 @@ export default async function EditorialPage({ params }: { params: { locale: stri
                   >
                     <div className="col-span-12 md:col-span-3">
                       <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-                        {post.date} · {post.readingTime}
+                        {(() => {
+                          const iso = parseEditorialDate(post.date);
+                          return iso ? <time dateTime={iso}>{post.date}</time> : post.date;
+                        })()}
+                        {' · '}{post.readingTime}
                       </div>
                     </div>
                     <div className="col-span-12 md:col-span-8 md:col-start-5">
