@@ -5,6 +5,7 @@ import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/institutionnel — Le tier institutionnel. Stub honnête.
 // Brochure d'un futur abonnement pour prop-firms / desks.
@@ -71,6 +72,16 @@ export default async function InstitutionnelPage({ params }: { params: { locale:
 
   return (
     <>
+      <EditorialJsonLd
+        slug="institutionnel"
+        title={locale === 'fr' ? 'L’Institutionnel' : 'The Institutional'}
+        description={
+          locale === 'fr'
+            ? 'Tickra pour les desks et prop-firms. Sur conversation.'
+            : 'Tickra for desks and prop firms. On conversation.'
+        }
+        locale={locale}
+      />
       <RoomBreadcrumb
         locale={locale}
         slug="institutionnel"
