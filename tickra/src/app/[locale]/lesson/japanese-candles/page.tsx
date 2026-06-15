@@ -11,6 +11,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { CandlestickChart } from '@/components/hero/CandlestickChart';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -40,6 +41,15 @@ export default async function LessonPreviewPage({ params }: { params: { locale: 
           ? 'Aperçu d’une leçon Tickra : lire une bougie japonaise.'
           : 'Preview of a Tickra lesson: reading a Japanese candle.'}
         locale={params.locale}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${params.locale}` },
+          {
+            name: params.locale === 'fr' ? 'Leçon — Bougies japonaises' : 'Lesson — Japanese candles',
+            path: `/${params.locale}/lesson/japanese-candles`,
+          },
+        ]}
       />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
