@@ -165,7 +165,18 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      // The /u profile renders bilingual content (stats labels switch
+      // per locale). Declare hreflang so Google serves /fr/u/foo to
+      // French queries and /en/u/foo to English ones, matching the
+      // rest of the site's language matrix.
+      languages: {
+        'fr-FR': `${SITE_URL}/fr/u/${params.slug}`,
+        'en-GB': `${SITE_URL}/en/u/${params.slug}`,
+        'x-default': `${SITE_URL}/fr/u/${params.slug}`,
+      },
+    },
     openGraph: {
       type: 'profile',
       url,
