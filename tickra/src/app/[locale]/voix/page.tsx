@@ -10,17 +10,19 @@ import { VOIX } from '@/lib/tickra/voix';
 // working traders. Editorial register. Static data file; the editor
 // publishes the audio URL whenever the recording is up.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { VoixItemListJsonLd } from '@/components/seo/VoixItemListJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'voix',
-  title: 'Les Voix',
-  description:
-    'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
+  title: { fr: 'Les Voix', en: 'The Voices' },
+  description: {
+    fr: 'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
+    en: 'One voice per month. Working traders, under pseudonym, telling their craft without grand story.',
+  },
 });
 
 const COPY = {

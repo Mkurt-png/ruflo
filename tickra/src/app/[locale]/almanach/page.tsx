@@ -12,17 +12,19 @@ import { getCrieeForDate } from '@/lib/tickra/criee';
 // Server component: each entry is just the deterministic compute of
 // the daily card from the date seed.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { AlmanachItemListJsonLd } from '@/components/seo/AlmanachItemListJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'almanach',
-  title: 'L’Almanach',
-  description:
-    'L’archive de l’année : une ligne par Criée passée, dans l’ordre où elles ont été posées.',
+  title: { fr: 'L’Almanach', en: 'The Almanac' },
+  description: {
+    fr: 'L’archive de l’année : une ligne par Criée passée, dans l’ordre où elles ont été posées.',
+    en: 'The year’s archive: one line per past Criée, in the order they were asked.',
+  },
 });
 
 const COPY = {

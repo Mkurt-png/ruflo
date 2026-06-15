@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { REFUSALS } from '@/lib/tickra/refus';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { RefusItemListJsonLd } from '@/components/seo/RefusItemListJsonLd';
@@ -15,11 +15,13 @@ import { Pull } from '@/components/editorial/Pull';
 // no logic, no progress — defines the brand by what it refuses.
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'refus',
-  title: 'Le Refus',
-  description:
-    'Dix choses que Tickra ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
+  title: { fr: 'Le Refus', en: 'The Refusal' },
+  description: {
+    fr: 'Dix choses que Tickra ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
+    en: 'Ten things Tickra will never build. A manifesto by negation, written to remove all ambiguity.',
+  },
 });
 
 const COPY = {

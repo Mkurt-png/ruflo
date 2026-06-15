@@ -3,7 +3,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { ErratumItemListJsonLd } from '@/components/seo/ErratumItemListJsonLd';
@@ -15,11 +15,13 @@ import { Pull } from '@/components/editorial/Pull';
 // grows. If trust matters more than image, this page should exist.
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'erratum',
-  title: 'L’Erratum',
-  description:
-    'Journal public des erreurs de Tickra : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
+  title: { fr: 'L’Erratum', en: 'The Erratum' },
+  description: {
+    fr: 'Journal public des erreurs de Tickra : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
+    en: 'Public log of Tickra’s mistakes: corrected lessons, mis-phrased Criées, adjusted formulas. Nothing is erased.',
+  },
 });
 
 const COPY = {

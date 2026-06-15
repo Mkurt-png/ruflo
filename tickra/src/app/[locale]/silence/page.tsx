@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { SilenceItemListJsonLd } from '@/components/seo/SilenceItemListJsonLd';
@@ -17,11 +17,13 @@ import { Pull } from '@/components/editorial/Pull';
 // /refus (what we won't build) and /erratum (what we got wrong).
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'silence',
-  title: 'Le Silence éditorial',
-  description:
-    'Les patterns d’UI que Tickra ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
+  title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+  description: {
+    fr: 'Les patterns d’UI que Tickra ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
+    en: 'UI patterns Tickra will not display: red dots, notification counters, confetti, flattering badges. The interface rule.',
+  },
 });
 
 type Banished = {

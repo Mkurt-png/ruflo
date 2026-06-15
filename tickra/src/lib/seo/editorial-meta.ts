@@ -5,6 +5,7 @@
 
 import type { Metadata } from 'next';
 import { SITE_URL } from '@/lib/site-url';
+import { isLocale, type Locale } from '@/lib/i18n/config';
 
 export type EditorialMetaInput = {
   /** Page slug relative to the locale prefix, e.g. "lettre". */
@@ -85,5 +86,42 @@ export function editorialMeta({
       creator: '@tickra',
       images: [ogImage],
     },
+  };
+}
+
+/**
+ * Locale-aware editorial metadata generator. Returns a Next.js
+ * generateMetadata function that picks the right title/description
+ * per locale and emits canonical + hreflang from editorialMeta.
+ *
+ * Replaces the broken `export const metadata = editorialMeta(...)`
+ * pattern, which ran once at build time with the default 'fr'
+ * locale — so /en/<page> canonicalised back to /fr/<page> and
+ * shipped a French title in <head> over English content.
+ */
+type Bi = { fr: string; en: string };
+
+export function editorialPageMeta(input: {
+  slug: string;
+  title: Bi;
+  description: Bi;
+  ogEyebrow?: Bi;
+  draft?: boolean;
+}) {
+  return async function generateMetadata({
+    params,
+  }: {
+    params: { locale: string };
+  }): Promise<Metadata> {
+    if (!isLocale(params.locale)) return {};
+    const locale: Locale = params.locale;
+    return editorialMeta({
+      slug: input.slug,
+      title: input.title[locale],
+      description: input.description[locale],
+      locale,
+      ogEyebrow: input.ogEyebrow?.[locale],
+      draft: input.draft,
+    });
   };
 }

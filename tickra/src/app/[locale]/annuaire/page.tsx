@@ -11,17 +11,19 @@ import { TRACKS } from '@/lib/curriculum/data';
 // source line. Pure server render from the existing curriculum
 // data. Useful as a memory palace and as a long-tail SEO map.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { AnnuaireItemListJsonLd } from '@/components/seo/AnnuaireItemListJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'annuaire',
-  title: 'L’Annuaire',
-  description:
-    'L’index alphabétique de toutes les leçons publiées sur Tickra. Une seule page, navigable au clavier, faite pour être lue lentement.',
+  title: { fr: 'L’Annuaire', en: 'The Index' },
+  description: {
+    fr: 'L’index alphabétique de toutes les leçons publiées sur Tickra. Une seule page, navigable au clavier, faite pour être lue lentement.',
+    en: 'The alphabetical index of every lesson published on Tickra. One page, keyboard-navigable, made to be read slowly.',
+  },
 });
 
 const COPY = {

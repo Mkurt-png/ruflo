@@ -11,17 +11,19 @@ import { Pull } from '@/components/editorial/Pull';
 // Pure editorial register, links the reader down toward /pricing
 // only at the end. The story of the building, before the bill.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { EtagesItemListJsonLd } from '@/components/seo/EtagesItemListJsonLd';
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'etages',
-  title: 'Les Étages',
-  description:
-    'Trois étages, pas trois colonnes : le rez-de-chaussée gratuit, l’atelier Pro, le bureau Lifetime. La pricing card, à la fin.',
+  title: { fr: 'Les Étages', en: 'The Floors' },
+  description: {
+    fr: 'Trois étages, pas trois colonnes : le rez-de-chaussée gratuit, l’atelier Pro, le bureau Lifetime. La pricing card, à la fin.',
+    en: 'Three floors, not three columns: the free ground floor, the Pro workshop, the Lifetime study. The pricing card, at the end.',
+  },
 });
 
 type Etage = {

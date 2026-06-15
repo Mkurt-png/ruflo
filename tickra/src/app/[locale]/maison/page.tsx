@@ -10,17 +10,19 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 // archives / manifestos) so the reader can find a calm room without
 // scrolling through a menu.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { MaisonItemListJsonLd } from '@/components/seo/MaisonItemListJsonLd';
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'maison',
-  title: 'La Maison',
-  description:
-    'Plan de la maison Tickra : toutes les pièces éditoriales sur une seule page. Rituels, lectures, archives, manifestes.',
+  title: { fr: 'La Maison', en: 'The House' },
+  description: {
+    fr: 'Plan de la maison Tickra : toutes les pièces éditoriales sur une seule page. Rituels, lectures, archives, manifestes.',
+    en: 'Plan of the Tickra house: every editorial room on one page. Rituals, readings, archives, manifestos.',
+  },
 });
 
 type Room = {
