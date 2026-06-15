@@ -274,7 +274,7 @@ export function CommandPalette({ locale }: Props) {
         <motion.div
           role="dialog"
           aria-modal="true"
-          aria-label="Command palette"
+          aria-label={locale === 'fr' ? 'Palette de commandes' : 'Command palette'}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

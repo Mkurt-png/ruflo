@@ -98,7 +98,7 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
           >
             <button
               type="button"
-              aria-label="Close"
+              aria-label={locale === 'fr' ? 'Fermer' : 'Close'}
               onClick={close}
               className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-elevated hover:text-ink"
             >
