@@ -2,6 +2,7 @@ import { SITE_URL } from '@/lib/site-url';
 import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 import type { TrackMeta } from '@/lib/curriculum/data';
 import type { Locale } from '@/lib/i18n/config';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
 
 // Course schema for a single track. Lets Google surface track pages as
 // rich Course results and gives LLM crawlers a clear declaration of the
@@ -53,14 +54,20 @@ export function CourseJsonLd({ track, locale }: { track: TrackMeta; locale: Loca
     isAccessibleForFree: true,
     teaches: track.lessons.slice(0, 8).map((l) => l.title[locale]),
     // syllabusSections lets crawlers enumerate the curriculum without
-    // crawling every lesson page. Each lesson becomes a Syllabus entry
-    // pointing back to its canonical URL.
-    syllabusSections: track.lessons.map((l, i) => ({
-      '@type': 'Syllabus',
-      name: l.title[locale],
-      position: i + 1,
-      url: `${SITE_URL}/${locale}/learn/${track.slug}/${l.slug}`,
-    })),
+    // crawling every lesson page. Each lesson becomes a Syllabus
+    // entry pointing back to its canonical URL — but only when the
+    // lesson is seeded. Unseeded lesson pages are robots:noindex
+    // until they get real bodies, so omitting them from the syllabus
+    // keeps the structured graph consistent with the per-page
+    // directives.
+    syllabusSections: track.lessons
+      .filter((l) => isSeeded(l.id))
+      .map((l, i) => ({
+        '@type': 'Syllabus',
+        name: l.title[locale],
+        position: i + 1,
+        url: `${SITE_URL}/${locale}/learn/${track.slug}/${l.slug}`,
+      })),
   };
 
   return (
