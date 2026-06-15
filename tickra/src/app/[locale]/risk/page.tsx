@@ -3,6 +3,7 @@ import { isLocale } from '@/lib/i18n/config';
 import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { LegalPage } from '@/components/legal/LegalPage';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -21,5 +22,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 export default async function RiskPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const dict = await getDictionary(params.locale);
-  return <LegalPage dict={dict} locale={params.locale} which="risk" />;
+  return (
+    <>
+      <PageBreadcrumb
+        locale={params.locale}
+        slug="risk"
+        title={{ fr: 'Risque', en: 'Risk' }}
+      />
+      <LegalPage dict={dict} locale={params.locale} which="risk" />
+    </>
+  );
 }

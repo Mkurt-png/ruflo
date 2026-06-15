@@ -7,6 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
 export async function generateMetadata({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) return {};
@@ -165,6 +166,11 @@ export default async function MentionsLegalesPage({ params }: { params: { locale
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="mentions-legales"
+        title={{ fr: 'Mentions légales', en: 'Legal Notice' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero title={t.title} meta={t.updated} eyebrow="Legal" />
