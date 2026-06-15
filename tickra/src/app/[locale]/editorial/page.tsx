@@ -47,6 +47,12 @@ export default async function EditorialPage({ params }: { params: { locale: stri
           slug: p.slug,
           title: p.title,
           excerpt: p.excerpt,
+          date: p.date,
+          // dict.editorial uses dict.editorial.posts[]; author lives on
+          // dict.editorialArticles.posts[slug]. The list page's dict
+          // type doesn't include author, so we leave it undefined here
+          // and let the per-article page emit author on its Article
+          // schema (where it does come from editorialArticles).
         }))}
       />
       <Navbar dict={dict} locale={params.locale} />
