@@ -13,6 +13,7 @@ import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
+import { MaisonItemListJsonLd } from '@/components/seo/MaisonItemListJsonLd';
 
 export const revalidate = 86400;
 export const metadata = editorialMeta({
@@ -312,6 +313,10 @@ export default async function MaisonPage({ params }: { params: { locale: string 
             path: `/${locale}/maison`,
           },
         ]}
+      />
+      <MaisonItemListJsonLd
+        locale={locale}
+        rooms={WINGS.flatMap((w) => w.rooms)}
       />
       <EditorialFrame
         dict={dict}
