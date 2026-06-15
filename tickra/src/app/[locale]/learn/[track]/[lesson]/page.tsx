@@ -131,6 +131,7 @@ export default async function LessonPage({
       <LearningResourceJsonLd
         trackSlug={track.slug}
         trackTitle={track.title[locale]}
+        trackLevel={track.level}
         lessonSlug={lesson.slug}
         title={lesson.title[locale]}
         description={

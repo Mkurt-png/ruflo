@@ -1,11 +1,19 @@
 import { SITE_URL } from '@/lib/site-url';
 import { safeJsonLd } from '@/lib/seo/safe-jsonld';
+import type { Level } from '@/lib/curriculum/data';
 
 // Schema.org LearningResource — the right type for a single curriculum
 // lesson nested under a Course (the track). Google can surface lessons
 // individually in education-rich-result panels, and LLM crawlers get a
 // clean signal that this is structured learning material, not arbitrary
 // blog content.
+
+const LEVEL_LABEL: Record<Level, string> = {
+  foundations: 'Beginner',
+  intermediate: 'Intermediate',
+  advanced: 'Advanced',
+  mastery: 'Expert',
+};
 
 type Props = {
   /** Slug of the parent track. Used to build the inCourse URL pointer. */
@@ -21,6 +29,8 @@ type Props = {
   locale: 'fr' | 'en';
   /** Optional estimated time in ISO-8601 duration. Defaults to 10 minutes. */
   timeRequired?: string;
+  /** Parent track's level. Maps to Schema.org educationalLevel. */
+  trackLevel?: Level;
 };
 
 export function LearningResourceJsonLd({
@@ -31,6 +41,7 @@ export function LearningResourceJsonLd({
   description,
   locale,
   timeRequired = 'PT10M',
+  trackLevel,
 }: Props) {
   const url = `${SITE_URL}/${locale}/learn/${trackSlug}/${lessonSlug}`;
   const courseUrl = `${SITE_URL}/${locale}/learn/${trackSlug}`;
@@ -42,7 +53,11 @@ export function LearningResourceJsonLd({
     url,
     inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
     learningResourceType: locale === 'fr' ? 'Leçon' : 'Lesson',
-    educationalLevel: 'Beginner to Advanced',
+    // Per-track level when supplied (foundations → Beginner, etc.).
+    // Falls back to the broad 'Beginner to Advanced' when the caller
+    // hasn't supplied a level — same default as before so existing
+    // callers don't regress while new ones can specialise.
+    educationalLevel: trackLevel ? LEVEL_LABEL[trackLevel] : 'Beginner to Advanced',
     timeRequired,
     isPartOf: {
       '@type': 'Course',
