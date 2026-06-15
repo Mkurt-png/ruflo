@@ -5,6 +5,7 @@ import { REFUSALS } from '@/lib/tickra/refus';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { RefusItemListJsonLd } from '@/components/seo/RefusItemListJsonLd';
 import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ReadNext } from '@/components/editorial/ReadNext';
 import { Pull } from '@/components/editorial/Pull';
@@ -63,6 +64,7 @@ export default async function RefusPage({ params }: { params: { locale: string }
         slug="refus"
         title={{ fr: 'Le Refus', en: 'The Refusal' }}
       />
+      <RefusItemListJsonLd locale={locale} />
       <EditorialFrame
         dict={dict}
         locale={locale}
@@ -83,7 +85,8 @@ export default async function RefusPage({ params }: { params: { locale: string }
             {REFUSALS.map((r, i) => (
               <li
                 key={r.id}
-                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0"
+                id={r.id}
+                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0 scroll-mt-24"
               >
                 <span className="font-mono text-[11px] tracking-[0.22em] text-black/35 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
