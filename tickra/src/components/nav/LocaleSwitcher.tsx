@@ -4,6 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useTransition } from 'react';
 import { locales, type Locale } from '@/lib/i18n/config';
 import { cn } from '@/lib/cn';
+import { translateArticleSlug } from '@/lib/editorial/slug-translation';
 
 type Props = { current: Locale; label: string };
 
@@ -21,6 +22,13 @@ export function LocaleSwitcher({ current, label }: Props) {
     });
     const segments = pathname.split('/');
     segments[1] = next;
+    // Editorial article slugs differ across locales
+    // (lire-bougie-japonaise vs read-japanese-candle), so a naive
+    // segment swap would land the reader on a 404. Translate the
+    // slug when on /<locale>/editorial/<slug>.
+    if (segments[2] === 'editorial' && segments[3]) {
+      segments[3] = translateArticleSlug(segments[3], current, next);
+    }
     startTransition(() => router.replace(segments.join('/') || `/${next}`));
   };
 
