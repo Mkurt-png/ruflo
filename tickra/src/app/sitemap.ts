@@ -92,7 +92,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
         lastModified: now,
         changeFrequency: 'monthly' as const,
-        priority: locale === 'en' ? 0.5 : 0.45,
+        // FR is the primary locale (defaultLocale, x-default). EN
+        // translations inherit a slight downweight to match the
+        // pattern used for the main and track routes above.
+        priority: locale === 'fr' ? 0.5 : 0.45,
       })),
     ]),
   );
