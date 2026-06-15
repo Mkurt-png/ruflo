@@ -1,5 +1,6 @@
 import { SITE_URL } from '@/lib/site-url';
 import { safeJsonLd } from '@/lib/seo/safe-jsonld';
+import { parseEditorialDate } from '@/lib/editorial/date-parse';
 
 // ChangelogItemList — emits a Schema.org ItemList of release notes
 // for /changelog. Each entry is a TechArticle describing one
@@ -31,25 +32,26 @@ export function ChangelogItemListJsonLd({ entries, locale }: Props) {
     url,
     numberOfItems: entries.length,
     itemListOrder: 'https://schema.org/ItemListOrderDescending',
-    itemListElement: entries.map((entry, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'TechArticle',
-        headline: `${entry.version} — ${entry.title}`,
-        // Editorial date label as-is; Schema doesn't require ISO when
-        // the field is `description`. Keeps the rendered page and the
-        // structured data in lockstep.
-        description: `${entry.date} · ${entry.items.join(' ')}`,
-        inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
-        url,
-        isPartOf: {
-          '@type': 'WebSite',
-          name: 'Tickra',
-          url: SITE_URL,
+    itemListElement: entries.map((entry, i) => {
+      const iso = parseEditorialDate(entry.date);
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'TechArticle',
+          headline: `${entry.version} — ${entry.title}`,
+          description: entry.items.join(' '),
+          inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
+          url,
+          ...(iso && { datePublished: iso }),
+          isPartOf: {
+            '@type': 'WebSite',
+            name: 'Tickra',
+            url: SITE_URL,
+          },
         },
-      },
-    })),
+      };
+    }),
   };
   return (
     <script
