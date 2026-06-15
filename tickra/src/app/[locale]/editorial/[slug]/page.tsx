@@ -16,6 +16,7 @@ import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { SITE_URL } from '@/lib/site-url';
 import { translateArticleSlug } from '@/lib/editorial/slug-translation';
+import { parseEditorialDate } from '@/lib/editorial/date-parse';
 
 type Params = { locale: string; slug: string };
 
@@ -75,6 +76,12 @@ export async function generateMetadata({ params }: { params: Params }) {
       siteName: 'Tickra',
       locale: params.locale === 'fr' ? 'fr_FR' : 'en_GB',
       alternateLocale: params.locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      // OG type:article requires published_time + authors for proper
+      // social card previews and Facebook News Tab eligibility.
+      ...(parseEditorialDate(post.date) && {
+        publishedTime: parseEditorialDate(post.date),
+      }),
+      authors: [post.author],
     },
     twitter: {
       card: 'summary_large_image',
@@ -110,7 +117,11 @@ export default async function EditorialArticlePage({ params }: { params: Params 
         url={url}
         title={post.title}
         description={post.excerpt}
-        date={post.date}
+        // post.date is a human display string ("18 mai 2026"); Schema.org
+        // datePublished must be ISO 8601. Parse first; on failure, fall
+        // back to a stable site-launch date so the schema still
+        // validates rather than shipping a malformed date.
+        date={parseEditorialDate(post.date) ?? '2026-01-01'}
         author={post.author}
         // Custom share card per article via /api/og — same edge-cached
         // endpoint editorial rooms use, ivory paper, italic title.
