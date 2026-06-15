@@ -194,6 +194,8 @@ export default async function EditorialArticlePage({ params }: { params: Params 
                   url={url}
                   copyLabel={shareCopy}
                   copiedLabel={copiedCopy}
+                  shareXLabel={params.locale === 'fr' ? 'Partager sur X' : 'Share on X'}
+                  shareLinkedInLabel={params.locale === 'fr' ? 'Partager sur LinkedIn' : 'Share on LinkedIn'}
                 />
               </div>
             </Container>
