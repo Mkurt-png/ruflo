@@ -90,7 +90,7 @@ export function Testimonials({ dict }: Props) {
         <div className="relative mt-12">
           <button
             type="button"
-            aria-label="Previous testimonial"
+            aria-label={t.prevLabel ?? 'Previous testimonial'}
             onClick={prev}
             className="absolute -left-2 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-navy-900/20 flex items-center justify-center text-navy-900 hover:bg-navy-900 hover:text-white transition-colors"
           >
@@ -98,7 +98,7 @@ export function Testimonials({ dict }: Props) {
           </button>
           <button
             type="button"
-            aria-label="Next testimonial"
+            aria-label={t.nextLabel ?? 'Next testimonial'}
             onClick={next}
             className="absolute -right-2 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-navy-900/20 flex items-center justify-center text-navy-900 hover:bg-navy-900 hover:text-white transition-colors"
           >

@@ -130,6 +130,8 @@ const en = {
     ],
     disclaimer: 'Learners verified by email. None were paid.',
     verifiedLabel: 'Verified profile',
+    prevLabel: 'Previous testimonial',
+    nextLabel: 'Next testimonial',
   },
   builtBy: {
     eyebrow: 'Built by',

@@ -130,6 +130,8 @@ const fr = {
     ],
     disclaimer: 'Apprenants vérifiés par email. Aucune rémunération.',
     verifiedLabel: 'Profil vérifié',
+    prevLabel: 'Témoignage précédent',
+    nextLabel: 'Témoignage suivant',
   },
   builtBy: {
     eyebrow: 'Conçu par',
