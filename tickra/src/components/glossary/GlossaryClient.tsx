@@ -77,7 +77,13 @@ export function GlossaryClient({ locale }: { locale: Locale }) {
       </div>
 
       {results.length === 0 ? (
-        <p className="mt-16 text-center text-[14.5px] text-muted">{noResult[locale]}</p>
+        <p
+          role="status"
+          aria-live="polite"
+          className="mt-16 text-center text-[14.5px] text-muted"
+        >
+          {noResult[locale]}
+        </p>
       ) : (
         <ul className="mt-12 divide-y divide-line border-y border-line">
           {results.map((g) => (
