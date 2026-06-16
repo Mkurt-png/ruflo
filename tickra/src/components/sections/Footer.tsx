@@ -36,7 +36,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
           </h3>
           <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3">
             {[
-              { href: `/${locale}/criee`, label: locale === 'fr' ? 'La Criée' : 'La Criée' },
+              { href: `/${locale}/criee`, label: 'La Criée' },
               { href: `/${locale}/lettre`, label: locale === 'fr' ? 'La Lettre' : 'The Letter' },
               { href: `/${locale}/veillee`, label: locale === 'fr' ? 'La Veillée' : 'The Vigil' },
               { href: `/${locale}/voix`, label: locale === 'fr' ? 'Les Voix' : 'The Voices' },

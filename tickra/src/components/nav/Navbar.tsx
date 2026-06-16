@@ -20,10 +20,10 @@ export function Navbar({ dict, locale }: Props) {
 
   const exploreItems = [
     { href: `/${locale}/maison`, label: locale === 'fr' ? 'La Maison · plan' : 'The House · plan' },
-    { href: `/${locale}/criee`, label: locale === 'fr' ? 'La Criée' : 'La Criée' },
+    { href: `/${locale}/criee`, label: 'La Criée' },
     { href: `/${locale}/lettre`, label: locale === 'fr' ? 'La Lettre' : 'The Letter' },
     { href: `/${locale}/veillee`, label: locale === 'fr' ? 'La Veillée' : 'The Vigil' },
-    { href: `/${locale}/journal`, label: locale === 'fr' ? 'Journal' : 'Journal' },
+    { href: `/${locale}/journal`, label: 'Journal' },
     { href: `/${locale}/survie`, label: locale === 'fr' ? 'Survie' : 'Survival' },
     { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
     { href: `/${locale}/battle`, label: dict.nav.battle },
