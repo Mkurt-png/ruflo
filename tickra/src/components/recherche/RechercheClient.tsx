@@ -101,6 +101,8 @@ export function RechercheClient({
 
       {showResults && results.length === 0 && (
         <p
+          role="status"
+          aria-live="polite"
           className="mt-16 font-display italic text-[#0E0E0E]/65 max-w-[640px]"
           style={{ fontSize: 'clamp(18px, 2vw, 24px)', lineHeight: 1.3 }}
         >
