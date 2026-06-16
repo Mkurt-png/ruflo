@@ -31,7 +31,11 @@ export function FooterNewsletter({ dict, locale }: { dict: Dictionary; locale: s
     <div>
       <h3 className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">{t.title}</h3>
       {sent ? (
-        <div className="mt-5 inline-flex items-center gap-2 border border-black/15 px-4 py-2 text-[13px] text-[#0E0E0E]">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mt-5 inline-flex items-center gap-2 border border-black/15 px-4 py-2 text-[13px] text-[#0E0E0E]"
+        >
           <Check aria-hidden className="h-3.5 w-3.5" strokeWidth={1.5} />
           {t.sent}
         </div>

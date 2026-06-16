@@ -231,7 +231,11 @@ export function AskTickra({ locale }: { locale: Locale }) {
               ))}
 
               {error ? (
-                <p className="rounded-sm border border-down/40 bg-down/10 p-3 text-[12.5px] text-ink">
+                <p
+                  role="alert"
+                  aria-live="assertive"
+                  className="rounded-sm border border-down/40 bg-down/10 p-3 text-[12.5px] text-ink"
+                >
                   {error}
                 </p>
               ) : null}

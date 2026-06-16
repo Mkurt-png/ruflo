@@ -148,7 +148,11 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
         <p className="mt-3 text-[14.5px] leading-relaxed text-muted">{t.body}</p>
 
         {sent ? (
-          <div className="mt-6 rounded-md border border-up/30 bg-up/10 px-4 py-3 text-[14px] text-up">
+          <div
+            role="status"
+            aria-live="polite"
+            className="mt-6 rounded-md border border-up/30 bg-up/10 px-4 py-3 text-[14px] text-up"
+          >
             {t.sent}
           </div>
         ) : (

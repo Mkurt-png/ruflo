@@ -48,7 +48,11 @@ export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string
             <PdfPreview />
 
             {sent ? (
-              <div className="mt-6 flex items-start gap-3 rounded-sm border border-line bg-elevated p-5">
+              <div
+                role="status"
+                aria-live="polite"
+                className="mt-6 flex items-start gap-3 rounded-sm border border-line bg-elevated p-5"
+              >
                 <Check
                   aria-hidden
                   className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink"
