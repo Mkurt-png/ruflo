@@ -576,12 +576,20 @@ function Field({
   onChange?: (v: string) => void;
   readOnly?: boolean;
 }) {
+  // Same htmlFor/id pairing the SelectField helper uses — derive a
+  // stable id from the label so screen readers can read the field name
+  // when the input is focused.
+  const id = `field-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   return (
     <div>
-      <label className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <label
+        htmlFor={id}
+        className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted"
+      >
         {label}
       </label>
       <input
+        id={id}
         type="text"
         value={value}
         readOnly={readOnly}
