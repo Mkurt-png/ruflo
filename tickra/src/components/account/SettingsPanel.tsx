@@ -607,12 +607,19 @@ function SelectField({
   onChange: (v: string) => void;
   options: { value: string; label: string }[];
 }) {
+  // Stable id derived from the label so the htmlFor/id pair binds the
+  // <label> to the <select> for screen readers (and HTML validity).
+  const id = `select-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   return (
     <div>
-      <label className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <label
+        htmlFor={id}
+        className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted"
+      >
         {label}
       </label>
       <select
+        id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="mt-2 block h-11 w-full rounded-sm border border-line bg-canvas px-3 text-[15px] text-ink focus-visible:border-ink focus-visible:outline-none"
