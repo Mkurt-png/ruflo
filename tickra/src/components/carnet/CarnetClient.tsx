@@ -70,14 +70,11 @@ export function CarnetClient({ locale }: { locale: Locale }) {
 
   const carnet: Carnet | null = useMemo(() => {
     if (!ready) return null;
-    return readCarnet(
-      {
-        completed: state.completed ?? {},
-        mistakes: state.mistakes ?? {},
-      },
-      locale,
-    );
-  }, [ready, state, locale]);
+    return readCarnet({
+      completed: state.completed ?? {},
+      mistakes: state.mistakes ?? {},
+    });
+  }, [ready, state]);
 
   if (!ready || !carnet) {
     return (

@@ -4,7 +4,6 @@
 
 import { getCrieeForDate } from '@/lib/tickra/criee';
 import { TRACKS } from '@/lib/curriculum/data';
-import type { Locale } from '@/lib/i18n/config';
 
 export type CarnetContext = {
   /** Lessons completed map (id → timestamp ms). */
@@ -72,7 +71,7 @@ function pickNext(completed: Record<string, number>): CarnetNext | null {
   return null;
 }
 
-export function readCarnet(ctx: CarnetContext, locale: Locale): Carnet {
+export function readCarnet(ctx: CarnetContext): Carnet {
   const now = ctx.now ?? Date.now();
   const last = latestActivity(ctx);
   const daysAway = last === 0 ? 0 : Math.floor((now - last) / DAY);

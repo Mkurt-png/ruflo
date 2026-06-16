@@ -39,7 +39,7 @@ function holdMinutes(opened: string, closed: string): number | null {
   return Math.round((c - o) / 60_000);
 }
 
-function formatHold(mins: number, locale: 'fr' | 'en'): string {
+function formatHold(mins: number): string {
   if (mins < HOUR) return `${mins} min`;
   const h = Math.floor(mins / HOUR);
   const m = mins % HOUR;
@@ -61,17 +61,15 @@ export function readTrade(trade: TradeRow): Autopsie | null {
   const lines: AutopsieLine[] = [];
 
   // 01 · Verdict — the bare facts.
-  const sideFr = trade.side === 'long' ? 'long' : 'short';
-  const sideEn = trade.side === 'long' ? 'long' : 'short';
-  const holdFr = hold !== null ? formatHold(hold, 'fr') : '—';
-  const holdEn = hold !== null ? formatHold(hold, 'en') : '—';
+  const side = trade.side === 'long' ? 'long' : 'short';
+  const holdStr = hold !== null ? formatHold(hold) : '—';
   const pnlStr = `${pnl >= 0 ? '+' : ''}${pnl.toFixed(0)}`;
   const rStr = r !== null && r !== 0 ? ` · R ${r >= 0 ? '+' : ''}${r.toFixed(1)}` : '';
   lines.push({
     id: 'verdict',
     text: {
-      fr: `${trade.pair} ${sideFr} · ${holdFr} en position · ${pnlStr}${rStr}.`,
-      en: `${trade.pair} ${sideEn} · held ${holdEn} · ${pnlStr}${rStr}.`,
+      fr: `${trade.pair} ${side} · ${holdStr} en position · ${pnlStr}${rStr}.`,
+      en: `${trade.pair} ${side} · held ${holdStr} · ${pnlStr}${rStr}.`,
     },
   });
 
