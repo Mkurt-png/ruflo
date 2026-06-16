@@ -89,6 +89,18 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
     setOpen(false);
   };
 
+  // Close on Escape while the modal is open — matches the keyboard
+  // contract used by AskTickra, HeroVideo, the lexique Term popover
+  // and the CommandPalette so the whole site behaves uniformly.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || pending) return;
