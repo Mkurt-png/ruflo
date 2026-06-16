@@ -133,7 +133,11 @@ export function CrieeCard({ card, locale }: { card: CrieeCardType; locale: Local
       )}
 
       {revealed && (
-        <footer className="mt-14 border-t border-black/[0.10] pt-10">
+        <footer
+          role="status"
+          aria-live="polite"
+          className="mt-14 border-t border-black/[0.10] pt-10"
+        >
           <p
             className={`font-display italic font-light ${correct ? 'text-[#0E0E0E]' : 'text-black/55'}`}
             style={{ fontSize: 'clamp(28px, 3.4vw, 44px)', lineHeight: 1.12 }}
