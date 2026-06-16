@@ -550,6 +550,8 @@ function FeedbackBox({
 }) {
   return (
     <div
+      role="status"
+      aria-live="polite"
       className={cn(
         'mt-8 rounded-sm border p-5',
         correct ? 'border-up/40 bg-up/5' : 'border-down/40 bg-down/5',
