@@ -60,6 +60,7 @@ export function MobileMenu({ dict, locale, links }: Props) {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
+            aria-label={locale === 'fr' ? 'Menu mobile' : 'Mobile menu'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
