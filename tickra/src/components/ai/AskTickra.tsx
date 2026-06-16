@@ -257,6 +257,8 @@ export function AskTickra({ locale }: { locale: Locale }) {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   rows={1}
+                  autoFocus
+                  aria-label={t.placeholder}
                   placeholder={t.placeholder}
                   className="min-h-[44px] flex-1 resize-none rounded-sm border border-line bg-canvas px-3 py-2 text-[14px] text-ink placeholder:text-subtle focus-visible:border-ink focus-visible:outline-none"
                   onKeyDown={(e) => {
