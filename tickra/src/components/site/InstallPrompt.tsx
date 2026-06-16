@@ -87,13 +87,18 @@ export function InstallPrompt({ locale }: { locale: Locale }) {
 
   return (
     <div className="pointer-events-none fixed inset-x-3 bottom-3 z-50 flex justify-center md:bottom-6">
-      <div className="pointer-events-auto flex w-full max-w-md items-start gap-4 border border-black/15 bg-[#F4F1EA] p-5 text-[#0E0E0E] shadow-[0_18px_40px_-18px_rgba(14,14,14,0.35)]">
+      <div
+        role="dialog"
+        aria-labelledby="install-prompt-title"
+        className="pointer-events-auto flex w-full max-w-md items-start gap-4 border border-black/15 bg-[#F4F1EA] p-5 text-[#0E0E0E] shadow-[0_18px_40px_-18px_rgba(14,14,14,0.35)]"
+      >
         <Download aria-hidden className="mt-1 h-4 w-4 flex-shrink-0 text-[#0E0E0E]/75" strokeWidth={1.5} />
         <div className="min-w-0 flex-1">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55">
             Tickra · Installation
           </p>
           <p
+            id="install-prompt-title"
             className="mt-2 font-display italic text-[#0E0E0E]"
             style={{ fontSize: '20px', lineHeight: 1.15, letterSpacing: '-0.01em' }}
           >
