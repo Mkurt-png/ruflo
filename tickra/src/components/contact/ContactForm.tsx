@@ -36,7 +36,11 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
 
   if (sent) {
     return (
-      <div className="flex items-start gap-3 rounded-sm border border-line bg-elevated p-6">
+      <div
+        role="status"
+        aria-live="polite"
+        className="flex items-start gap-3 rounded-sm border border-line bg-elevated p-6"
+      >
         <Check aria-hidden className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink" strokeWidth={1.75} />
         <p className="text-[15px] leading-relaxed text-ink">{t.sent}</p>
       </div>
