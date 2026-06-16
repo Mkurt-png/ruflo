@@ -660,6 +660,7 @@ function PrimaryButton({
       type="button"
       onClick={onClick}
       disabled={pending}
+      aria-busy={pending}
       className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-[14px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {children}

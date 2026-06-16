@@ -114,6 +114,7 @@ export function ImportProgress({ locale }: { locale: Locale }) {
         type="button"
         onClick={onPick}
         disabled={pending}
+        aria-busy={pending}
         className="mt-6 inline-flex h-11 items-center gap-2 rounded-full border border-line bg-canvas px-5 text-[14px] font-medium tracking-tight text-ink transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-60"
       >
         <Upload aria-hidden className="h-4 w-4" strokeWidth={1.75} />
