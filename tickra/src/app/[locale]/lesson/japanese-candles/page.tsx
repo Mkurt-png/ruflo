@@ -63,7 +63,7 @@ export default async function LessonPreviewPage({ params }: { params: { locale: 
                   {t.title}
                 </h1>
 
-                <nav aria-label="Lesson chapters" className="mt-8 flex flex-wrap gap-2">
+                <nav aria-label={params.locale === 'fr' ? 'Chapitres de la leçon' : 'Lesson chapters'} className="mt-8 flex flex-wrap gap-2">
                   {t.chapters.map((c, i) => (
                     <span
                       key={c}

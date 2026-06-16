@@ -225,7 +225,7 @@ export default async function EditorialArticlePage({ params }: { params: Params 
             <section className="border-b border-line">
               <Container as="div" className="py-16 md:py-20">
                 <nav
-                  aria-label="Article pagination"
+                  aria-label={params.locale === 'fr' ? 'Pagination des articles' : 'Article pagination'}
                   className="grid grid-cols-1 gap-3 md:grid-cols-2"
                 >
                   {prevSlug ? (
