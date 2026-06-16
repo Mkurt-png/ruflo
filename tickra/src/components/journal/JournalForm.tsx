@@ -189,7 +189,9 @@ export function JournalForm({ locale, initial, onSubmit }: Props) {
       </Field>
 
       <div className="md:col-span-2 flex items-center justify-between">
-        {err ? <p className="text-xs text-down">{err}</p> : <span />}
+        {err ? (
+          <p role="alert" aria-live="assertive" className="text-xs text-down">{err}</p>
+        ) : <span />}
         <button
           type="submit"
           disabled={busy}

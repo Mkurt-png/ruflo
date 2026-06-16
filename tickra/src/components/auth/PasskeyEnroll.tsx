@@ -198,8 +198,12 @@ export default function PasskeyEnroll({ locale = 'en', initialPasskeys }: Props)
         </button>
       )}
 
-      {message ? <p className="text-sm text-up">{message}</p> : null}
-      {error ? <p className="text-sm text-down">{error}</p> : null}
+      {message ? (
+        <p role="status" aria-live="polite" className="text-sm text-up">{message}</p>
+      ) : null}
+      {error ? (
+        <p role="alert" aria-live="assertive" className="text-sm text-down">{error}</p>
+      ) : null}
 
       <ul className="space-y-2">
         {list.length === 0 ? (
