@@ -261,7 +261,7 @@ export default async function PublicProfilePage({ params }: { params: Params }) 
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={user.avatar_url}
-                  alt=""
+                  alt={name}
                   className="h-20 w-20 rounded-full border border-line object-cover"
                 />
               ) : (
