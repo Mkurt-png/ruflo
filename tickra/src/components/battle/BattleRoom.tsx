@@ -428,7 +428,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
             {t.submit}
           </button>
         ) : (
-          <div className="mt-6 space-y-3">
+          <div role="status" aria-live="polite" className="mt-6 space-y-3">
             <p
               className={`font-mono text-[11px] uppercase tracking-[0.2em] ${
                 isCorrect ? 'text-up' : 'text-down'
