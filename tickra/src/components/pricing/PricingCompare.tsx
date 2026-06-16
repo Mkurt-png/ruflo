@@ -11,11 +11,12 @@ export function PricingCompare({ dict }: { dict: Dictionary }) {
         <table className="w-full min-w-[640px] border-collapse text-left">
           <thead>
             <tr className="border-b border-line">
-              <th className="py-5 pr-6 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+              <th scope="col" className="py-5 pr-6 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
                 &nbsp;
               </th>
               {t.plans.map((p) => (
                 <th
+                  scope="col"
                   key={p.id}
                   className="py-5 pr-6 font-display text-lg font-medium tracking-tight text-ink"
                 >
