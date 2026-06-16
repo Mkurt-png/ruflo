@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { isLocale, locales, type Locale } from '@/lib/i18n/config';
+import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -25,9 +25,8 @@ export const dynamic = 'force-dynamic';
 
 type Params = { locale: string; track: string; lesson: string };
 
-// no static params — paywalled pages must be SSR per
-// request to read the session cookie. `locales` import kept for future use.
-void locales;
+// no static params — paywalled pages must be SSR per request to read
+// the session cookie.
 
 export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
