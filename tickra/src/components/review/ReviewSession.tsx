@@ -185,7 +185,11 @@ export function ReviewSession({ cards, locale }: Props) {
         </button>
       ) : (
         <div className="mt-6">
-          <div className="rounded-xl border border-line bg-canvas p-4">
+          <div
+            role="status"
+            aria-live="polite"
+            className="rounded-xl border border-line bg-canvas p-4"
+          >
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-subtle">
               {t.rationale}
             </p>
