@@ -152,7 +152,7 @@ export default async function TrackPage({ params }: { params: Params }) {
                         <Info aria-hidden className="h-3.5 w-3.5" strokeWidth={1.6} />
                       </span>
                     </LessonPreviewPopover>
-                    <LessonCheckmark lessonId={lesson.id} />
+                    <LessonCheckmark lessonId={lesson.id} locale={locale} />
                     <Link
                       href={`/${locale}/learn/${track.slug}/${lesson.slug}`}
                       aria-label={locale === 'fr' ? 'Ouvrir' : 'Open'}

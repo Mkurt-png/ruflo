@@ -18,7 +18,7 @@ export function LessonToc({ phase, locale }: { phase: Phase; locale: Locale }) {
   const i = order.indexOf(phase);
 
   return (
-    <nav aria-label="Lesson progress" className="sticky top-24 hidden lg:block">
+    <nav aria-label={locale === 'fr' ? 'Progression de la leçon' : 'Lesson progress'} className="sticky top-24 hidden lg:block">
       <ol className="space-y-2 border-l border-line pl-5">
         {order.map((p, idx) => {
           const state =

@@ -56,6 +56,7 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
         labelMonthly={t.cycle.monthly}
         labelAnnual={t.cycle.annual}
         badge={t.annualBadge}
+        ariaLabel={locale === 'fr' ? 'Cycle de facturation' : 'Billing cycle'}
       />
 
       <div className="mt-12 grid grid-cols-1 gap-3 lg:grid-cols-3">
@@ -208,18 +209,20 @@ function CycleSwitch({
   labelMonthly,
   labelAnnual,
   badge,
+  ariaLabel,
 }: {
   cycle: Cycle;
   onChange: (c: Cycle) => void;
   labelMonthly: string;
   labelAnnual: string;
   badge: string;
+  ariaLabel: string;
 }) {
   return (
     <div className="flex items-center gap-4">
       <div
         role="tablist"
-        aria-label="Billing cycle"
+        aria-label={ariaLabel}
         className="inline-flex rounded-full border border-line bg-surface p-1"
       >
         <CycleButton active={cycle === 'monthly'} onClick={() => onChange('monthly')}>
