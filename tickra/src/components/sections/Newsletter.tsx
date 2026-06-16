@@ -83,6 +83,7 @@ export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string
                 <button
                   type="submit"
                   disabled={pending}
+                  aria-busy={pending}
                   className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {t.submit}
