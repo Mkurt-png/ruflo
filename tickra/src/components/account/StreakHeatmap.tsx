@@ -137,7 +137,6 @@ function dayKey(d: Date): string {
 
 function isNextDay(prev: string, next: string): boolean {
   const a = new Date(prev);
-  const b = new Date(next);
   a.setDate(a.getDate() + 1);
   return dayKey(a) === next;
 }

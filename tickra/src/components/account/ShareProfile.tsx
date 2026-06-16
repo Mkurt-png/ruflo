@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Check, Copy, Share2 } from 'lucide-react';
 import { useProgress } from '@/lib/progress/hook';
-import { TRACKS, totalLessons } from '@/lib/curriculum/data';
+import { TRACKS } from '@/lib/curriculum/data';
 import { encodeShare } from '@/lib/share/encode';
 import { toast } from '@/components/site/ToastProvider';
 

@@ -32,7 +32,6 @@ function authorise(req: Request): boolean {
   return got === `Bearer ${secret}`;
 }
 
-const ONE_DAY = 24 * 60 * 60 * 1000;
 const NEARLY_ONE_DAY = 20 * 60 * 60 * 1000;
 
 function lessonMeta(lessonId: string) {

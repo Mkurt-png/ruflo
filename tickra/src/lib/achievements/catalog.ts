@@ -23,16 +23,6 @@ export type Achievement = {
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-// Count distinct days the user completed something within `windowDays` of `now`.
-function distinctDaysWithin(s: Snapshot, windowDays: number): number {
-  const cutoff = s.now - windowDays * DAY_MS;
-  const set = new Set<string>();
-  for (const ts of Object.values(s.completedAt)) {
-    if (ts >= cutoff) set.add(new Date(ts).toISOString().slice(0, 10));
-  }
-  return set.size;
-}
-
 // Longest streak of consecutive days ending today (or yesterday).
 function currentStreak(s: Snapshot): number {
   const days = new Set<string>();

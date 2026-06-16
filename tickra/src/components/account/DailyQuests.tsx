@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Check, Sparkles, Trophy } from 'lucide-react';
 import { useProgress } from '@/lib/progress/hook';
-import { addXp, readXp } from '@/lib/progress/xp';
+import { addXp } from '@/lib/progress/xp';
 import { cn } from '@/lib/cn';
 
 type Locale = 'fr' | 'en';

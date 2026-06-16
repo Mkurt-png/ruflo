@@ -7,8 +7,6 @@ const STORAGE_KEY = 'tickra-ab-hero-cta';
 
 export type HeroCtaVariant = 'control' | 'free' | 'sample';
 
-const VARIANTS: HeroCtaVariant[] = ['control', 'free', 'sample'];
-
 export function getHeroCtaVariant(): HeroCtaVariant {
   if (typeof window === 'undefined') return 'control';
   try {
