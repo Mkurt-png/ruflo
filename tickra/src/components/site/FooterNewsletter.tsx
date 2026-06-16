@@ -53,6 +53,7 @@ export function FooterNewsletter({ dict, locale }: { dict: Dictionary; locale: s
           <button
             type="submit"
             disabled={pending}
+            aria-busy={pending}
             aria-label={t.submit}
             className="font-mono text-[10.5px] uppercase tracking-[0.34em] text-[#0E0E0E] hover:text-black/65 transition-colors disabled:cursor-not-allowed disabled:opacity-60 inline-flex items-center gap-1.5"
           >

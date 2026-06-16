@@ -181,6 +181,7 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
             <button
               type="submit"
               disabled={pending}
+              aria-busy={pending}
               className="inline-flex h-11 items-center justify-center rounded-md bg-brand px-5 text-[14px] font-medium text-black transition-opacity hover:opacity-95 disabled:opacity-60"
             >
               {t.submit}
