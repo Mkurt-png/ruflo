@@ -18,14 +18,13 @@ export function LessonLockBadge({
   const { plan, ready } = useUser();
   if (!ready) return null;
   if (isLessonUnlocked(globalIndex, plan)) return null;
-  const label = locale === 'fr' ? 'Pro' : 'Pro';
   return (
     <span
       aria-label={locale === 'fr' ? 'Leçon réservée à Pro' : 'Pro-only lesson'}
       className="inline-flex items-center gap-1 rounded-full border border-line bg-canvas px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted"
     >
       <Lock aria-hidden className="h-3 w-3" strokeWidth={2} />
-      {label}
+      Pro
     </span>
   );
 }

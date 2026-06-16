@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   return pageMeta({
     slug: 'contact',
     locale: params.locale,
-    title: params.locale === 'fr' ? 'Contact' : 'Contact',
+    title: 'Contact',
     description:
       params.locale === 'fr'
         ? 'Comment nous écrire — support, presse, partenariats.'
         : 'How to reach us — support, press, partnerships.',
-    ogEyebrow: params.locale === 'fr' ? 'Tickra · Contact' : 'Tickra · Contact',
+    ogEyebrow: 'Tickra · Contact',
   });
 }
 

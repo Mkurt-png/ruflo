@@ -219,7 +219,7 @@ export function LessonRunner({ locale, track, lesson, content, next, globalIndex
           locale === 'fr'
             ? `Leçon ${String(lesson.index).padStart(2, '0')} validée`
             : `Lesson ${String(lesson.index).padStart(2, '0')} complete`,
-        body: locale === 'fr' ? 'Streak +1' : 'Streak +1',
+        body: 'Streak +1',
       });
       setPhase('done');
     }

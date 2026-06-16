@@ -86,7 +86,7 @@ export default async function AchievementsPage({ params }: { params: { locale: s
             { label: locale === 'fr' ? 'Débloqués' : 'Unlocked', value: String(totalUnlocked), tone: 'brand', hint: `/ ${ACHIEVEMENTS.length}` },
             { label: locale === 'fr' ? 'Restants' : 'Locked', value: String(ACHIEVEMENTS.length - totalUnlocked) },
             { label: locale === 'fr' ? 'Progression' : 'Progress', value: `${Math.round((totalUnlocked / Math.max(1, ACHIEVEMENTS.length)) * 100)}%`, tone: totalUnlocked > 0 ? 'up' : 'neutral' },
-            { label: locale === 'fr' ? 'Total' : 'Total', value: String(ACHIEVEMENTS.length) },
+            { label: 'Total', value: String(ACHIEVEMENTS.length) },
           ]}
           trailing={<LivePulse label={locale === 'fr' ? 'à jour' : 'synced'} />}
         />

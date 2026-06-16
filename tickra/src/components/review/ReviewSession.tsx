@@ -111,7 +111,7 @@ export function ReviewSession({ cards, locale }: Props) {
         { label: locale === 'fr' ? 'Précision' : 'Accuracy', value: `${accuracy}%`, tone: accuracy >= 70 ? 'up' : accuracy === 0 ? 'neutral' : 'down' },
         { label: locale === 'fr' ? 'Notées' : 'Graded', value: String(graded) },
       ]}
-      trailing={<LivePulse label={locale === 'fr' ? 'session' : 'session'} />}
+      trailing={<LivePulse label="session" />}
     />
   );
 

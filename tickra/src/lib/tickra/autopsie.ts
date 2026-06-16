@@ -40,7 +40,7 @@ function holdMinutes(opened: string, closed: string): number | null {
 }
 
 function formatHold(mins: number, locale: 'fr' | 'en'): string {
-  if (mins < HOUR) return `${mins} ${locale === 'fr' ? 'min' : 'min'}`;
+  if (mins < HOUR) return `${mins} min`;
   const h = Math.floor(mins / HOUR);
   const m = mins % HOUR;
   if (m === 0) return `${h} h`;

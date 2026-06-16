@@ -91,12 +91,12 @@ async function ProJournal({ email, locale }: { email: string; locale: Locale }) 
       <KpiStrip
         className="mb-6"
         items={[
-          { label: locale === 'fr' ? 'Trades' : 'Trades', value: String(trades.length), tone: 'brand' },
+          { label: 'Trades', value: String(trades.length), tone: 'brand' },
           { label: locale === 'fr' ? 'Clôturés' : 'Closed', value: String(closed.length) },
-          { label: locale === 'fr' ? 'Win rate' : 'Win rate', value: `${winRate}%`, tone: winRate >= 50 ? 'up' : winRate > 0 ? 'down' : 'neutral' },
+          { label: 'Win rate', value: `${winRate}%`, tone: winRate >= 50 ? 'up' : winRate > 0 ? 'down' : 'neutral' },
           { label: 'P&L', value: `${net >= 0 ? '+' : ''}${net.toFixed(0)}`, tone: net >= 0 ? 'up' : 'down', hint: 'USD' },
         ]}
-        trailing={<LivePulse label={locale === 'fr' ? 'journal' : 'journal'} />}
+        trailing={<LivePulse label="journal" />}
       />
       <JournalApp initialTrades={trades} locale={locale} />
       <GreffierPanel trades={trades} locale={locale} />
