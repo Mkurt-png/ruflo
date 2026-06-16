@@ -91,7 +91,11 @@ export function RechercheClient({
         />
       </div>
 
-      <p className="mt-4 font-mono text-[10.5px] uppercase tracking-[0.28em] text-black/65 tabular-nums">
+      <p
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-4 font-mono text-[10.5px] uppercase tracking-[0.28em] text-black/65 tabular-nums"
+      >
         {showResults ? t.counts(results.length, index.length) : t.intro}
       </p>
 
