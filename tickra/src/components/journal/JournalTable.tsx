@@ -61,15 +61,15 @@ export function JournalTable({ trades, locale, onEdit, onDelete }: Props) {
       <table className="w-full text-sm">
         <thead className="bg-elevated text-xs uppercase tracking-wider text-subtle">
           <tr>
-            <th className="px-4 py-3 text-left">{t.pair}</th>
-            <th className="px-4 py-3 text-left">{t.side}</th>
-            <th className="px-4 py-3 text-right">{t.entry}</th>
-            <th className="px-4 py-3 text-right">{t.exit}</th>
-            <th className="px-4 py-3 text-right">{t.pnl}</th>
-            <th className="px-4 py-3 text-right">{t.r}</th>
-            <th className="px-4 py-3 text-left">{t.opened}</th>
-            <th className="px-4 py-3 text-left">{t.status}</th>
-            <th className="px-4 py-3 text-right">{t.actions}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.pair}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.side}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.entry}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.exit}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.pnl}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.r}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.opened}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.status}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.actions}</th>
           </tr>
         </thead>
         <tbody>
