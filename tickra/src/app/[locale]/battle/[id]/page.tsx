@@ -63,7 +63,7 @@ export default async function BattleRoomPage({
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero eyebrow={locale === 'fr' ? 'Pro · Battle' : 'Pro · Battle'} title={title} body={body} />
+        <PageHero eyebrow="Pro · Battle" title={title} body={body} />
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-20">
             {isParticipant ? (

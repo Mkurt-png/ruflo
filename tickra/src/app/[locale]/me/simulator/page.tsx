@@ -42,7 +42,7 @@ export default async function SimulatorPage({ params }: { params: { locale: stri
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero eyebrow={locale === 'fr' ? 'Pro · Lifetime' : 'Pro · Lifetime'} title={title} body={body} />
+        <PageHero eyebrow="Pro · Lifetime" title={title} body={body} />
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-16">
             <SimulatorApp locale={locale} />

@@ -60,7 +60,7 @@ export default async function BrandPage({ params }: { params: { locale: string }
       />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero eyebrow={locale === 'fr' ? 'Design system' : 'Design system'} title={title} body={body} />
+        <PageHero eyebrow="Design system" title={title} body={body} />
 
         {/* PALETTE */}
         <section className="border-b border-line">

@@ -54,7 +54,7 @@ export default async function BattleHubPage({ params }: { params: { locale: stri
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero eyebrow={locale === 'fr' ? 'Pro' : 'Pro'} title={title} body={body} />
+        <PageHero eyebrow="Pro" title={title} body={body} />
 
         {/* Futuristic duel arena — two glowing avatars facing off across
             an energy beam with travelling pulses. */}
