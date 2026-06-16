@@ -58,7 +58,7 @@ export default async function EditorialPage({ params }: { params: { locale: stri
       />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
-        <PageHero title={t.title} body={t.subtitle} eyebrow="Editorial" />
+        <PageHero title={t.title} body={t.subtitle} eyebrow={params.locale === 'fr' ? 'Éditorial' : 'Editorial'} />
 
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">

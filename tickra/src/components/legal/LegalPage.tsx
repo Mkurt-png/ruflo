@@ -23,7 +23,7 @@ export function LegalPage({
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero title={t.title} meta={t.updated} eyebrow="Legal" />
+        <PageHero title={t.title} meta={t.updated} eyebrow={locale === 'fr' ? 'Légal' : 'Legal'} />
         <section>
           <Container as="div" className="py-20 md:py-28">
             <div className="grid grid-cols-12 gap-x-6">

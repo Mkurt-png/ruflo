@@ -147,7 +147,7 @@ export default async function CookiesPage({ params }: { params: { locale: string
       />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero title={t.title} meta={t.updated} eyebrow="Legal" />
+        <PageHero title={t.title} meta={t.updated} eyebrow={locale === 'fr' ? 'Légal' : 'Legal'} />
         <section>
           <Container as="div" className="py-20 md:py-28">
             <div className="mx-auto max-w-3xl">

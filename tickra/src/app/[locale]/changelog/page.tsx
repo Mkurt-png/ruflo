@@ -43,7 +43,7 @@ export default async function ChangelogPage({ params }: { params: { locale: stri
       <ChangelogItemListJsonLd locale={params.locale} entries={t.entries} />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
-        <PageHero title={t.title} body={t.subtitle} eyebrow="Changelog" />
+        <PageHero title={t.title} body={t.subtitle} eyebrow={params.locale === 'fr' ? 'Journal des versions' : 'Changelog'} />
 
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">
