@@ -83,6 +83,18 @@ export function InstallPrompt({ locale }: { locale: Locale }) {
     dismiss();
   };
 
+  // Escape-to-dismiss — matches the keyboard contract every other
+  // prompt-style dialog uses (HeroVideo, AskTickra, Term, ExploreMenu,
+  // MobileMenu, CommandPalette, ExitIntentModal, FirstRunTour).
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [visible]);
+
   if (!visible) return null;
 
   return (
