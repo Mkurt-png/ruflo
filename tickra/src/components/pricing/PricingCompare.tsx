@@ -9,6 +9,7 @@ export function PricingCompare({ dict }: { dict: Dictionary }) {
 
       <div className="mt-16 overflow-x-auto">
         <table className="w-full min-w-[640px] border-collapse text-left">
+          <caption className="sr-only">{t.compare.title}</caption>
           <thead>
             <tr className="border-b border-line">
               <th scope="col" className="py-5 pr-6 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">

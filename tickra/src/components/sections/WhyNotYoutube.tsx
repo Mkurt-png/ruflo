@@ -17,9 +17,10 @@ export function WhyNotYoutube({ dict }: { dict: Dictionary }) {
 
         <div className="mt-20 overflow-x-auto">
           <table className="w-full min-w-[760px] border-collapse text-left">
+            <caption className="sr-only">{t.title}</caption>
             <thead>
               <tr className="border-b border-line">
-                <th className="py-5 pr-6 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+                <th scope="col" className="py-5 pr-6 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
                   &nbsp;
                 </th>
                 {t.columns.map((c, i) => (
