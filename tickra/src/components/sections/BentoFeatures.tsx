@@ -85,7 +85,7 @@ function BentoChart() {
     .join(' ');
   return (
     <div className="pointer-events-none mt-8 select-none">
-      <svg viewBox="0 0 100 50" preserveAspectRatio="none" className="h-24 w-full">
+      <svg aria-hidden viewBox="0 0 100 50" preserveAspectRatio="none" className="h-24 w-full">
         <motion.path
           d={d}
           fill="none"
