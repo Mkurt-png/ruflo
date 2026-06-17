@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NavLink } from '@/components/nav/NavLink';
 import { Container } from '@/components/ui/Container';
 import { FooterNewsletter } from '@/components/site/FooterNewsletter';
 import { QuoteOfTheDay } from '@/components/site/QuoteOfTheDay';
@@ -79,12 +80,12 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
               <ul className="mt-5 space-y-3">
                 {col.links.map((l) => (
                   <li key={l.href}>
-                    <Link
+                    <NavLink
                       href={resolve(l.href)}
-                      className="text-[14.5px] text-[#0E0E0E] transition-colors hover:text-black/60"
+                      className="text-[14.5px] text-[#0E0E0E] transition-colors hover:text-black/60 aria-[current=page]:underline aria-[current=page]:underline-offset-4"
                     >
                       {l.label}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
               </ul>
