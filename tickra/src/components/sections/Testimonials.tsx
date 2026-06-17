@@ -115,6 +115,7 @@ export function Testimonials({ dict }: Props) {
               {cards.map((c) => (
                 <article
                   key={c.name}
+                  aria-label={`${c.name} — ${c.role}`}
                   className="bg-white rounded-xl p-6 border border-gray-100 flex flex-col shrink-0 w-full md:w-[calc((100%-3.75rem)/4)]"
                 >
                   <header className="flex items-start gap-3">
