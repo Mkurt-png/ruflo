@@ -111,6 +111,7 @@ export function ShareProfile({ locale }: { locale: Locale }) {
             id="share-name"
             type="text"
             maxLength={32}
+            autoComplete="nickname"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder={t.namePlaceholder}
