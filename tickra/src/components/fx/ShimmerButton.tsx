@@ -52,8 +52,11 @@ export function ShimmerButton(props: Props) {
       </Link>
     );
   }
+  // Default type="button" so a ShimmerButton dropped inside a <form>
+  // doesn't accidentally submit it. Callers can still override.
+  const buttonRest = rest as ButtonProps;
   return (
-    <button className={`${base} ${toneClasses} ${className}`} {...(rest as ButtonProps)}>
+    <button type="button" className={`${base} ${toneClasses} ${className}`} {...buttonRest}>
       {Inner}
     </button>
   );
