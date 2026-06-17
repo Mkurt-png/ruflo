@@ -144,6 +144,8 @@ export function DailyChallenge({ locale }: { locale: Locale }) {
 
       {revealed ? (
         <motion.div
+          role="status"
+          aria-live="polite"
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: easeOutExpo }}
