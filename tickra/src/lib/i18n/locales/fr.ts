@@ -679,6 +679,8 @@ const fr = {
     submit: 'Recevoir le PDF',
     sent: 'Merci. Vérifiez votre boîte de réception dans une minute.',
     legal: 'Vos données sont traitées selon notre politique de confidentialité. Pas de revente, pas de spam.',
+    pdfFilename: '10-bougies-a-reconnaitre.pdf',
+    pdfMeta: '14 pages · 1.8 Mo · FR / EN',
   },
   pageHeaderInternal: {
     backHome: 'Retour à l’accueil',

@@ -679,6 +679,8 @@ const en = {
     submit: 'Send me the PDF',
     sent: 'Thanks. Check your inbox in a minute.',
     legal: 'Your data is handled per our Privacy policy. No reselling, no spam.',
+    pdfFilename: '10-candles-to-recognise.pdf',
+    pdfMeta: '14 pages · 1.8 MB · FR / EN',
   },
   pageHeaderInternal: {
     backHome: 'Back to home',

@@ -45,7 +45,7 @@ export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string
 
         <div className="col-span-12 lg:col-span-5 lg:col-start-8">
           <div className="rounded-sm border border-line bg-surface p-6 md:p-8">
-            <PdfPreview />
+            <PdfPreview filename={t.pdfFilename} meta={t.pdfMeta} />
 
             {sent ? (
               <div
@@ -102,7 +102,7 @@ export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string
   );
 }
 
-function PdfPreview() {
+function PdfPreview({ filename, meta }: { filename: string; meta: string }) {
   return (
     <div className="flex items-center gap-4 rounded-sm border border-line bg-canvas p-4">
       <span
@@ -113,10 +113,10 @@ function PdfPreview() {
       </span>
       <div className="min-w-0">
         <div className="truncate font-display text-[15px] font-medium tracking-tight text-ink">
-          10 candles to recognise.pdf
+          {filename}
         </div>
         <div className="mt-1 font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">
-          14 pages · 1.8 MB · FR / EN
+          {meta}
         </div>
       </div>
     </div>
