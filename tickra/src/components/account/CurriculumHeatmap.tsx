@@ -34,9 +34,9 @@ export function CurriculumHeatmap({ locale }: { locale: Locale }) {
   ) : 0;
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="curriculum-heatmap-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
-        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+        <h2 id="curriculum-heatmap-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
         <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
           {done} / {total} {t.completed}
         </div>
