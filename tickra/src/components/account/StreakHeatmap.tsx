@@ -82,7 +82,7 @@ export function StreakHeatmap({ locale }: { locale: Locale }) {
   }, [data.daysActive]);
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="streak-heatmap-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
         <div className="flex items-center gap-3">
           <Flame
@@ -90,9 +90,9 @@ export function StreakHeatmap({ locale }: { locale: Locale }) {
             className={cn('h-5 w-5', data.current > 0 ? 'text-down' : 'text-subtle')}
             strokeWidth={1.6}
           />
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          <h2 id="streak-heatmap-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
             {t.title}
-          </span>
+          </h2>
         </div>
         <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
           {t.last30}
