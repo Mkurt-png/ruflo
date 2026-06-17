@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NavLink } from './NavLink';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { ManuscritToggle } from '@/components/site/ManuscritToggle';
 import { MobileMenu } from './MobileMenu';
@@ -46,12 +47,12 @@ export function Navbar({ dict, locale }: Props) {
           <ul className="flex items-center gap-8">
             {links.map((l) => (
               <li key={l.href}>
-                <Link
+                <NavLink
                   href={l.href}
-                  className="text-sm text-white/70 hover:text-white transition-colors"
+                  className="text-sm text-white/70 hover:text-white transition-colors aria-[current=page]:text-white"
                 >
                   {l.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
             <li>
