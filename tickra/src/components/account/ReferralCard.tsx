@@ -83,10 +83,10 @@ export function ReferralCard({ locale }: { locale: Locale }) {
 
   if (status === 'loading') {
     return (
-      <article className="rounded-sm border border-line bg-surface p-6">
-        <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+        <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
-        </div>
+        </h2>
         <p role="status" aria-live="polite" aria-busy="true" className="mt-3 text-sm text-muted">
           {t.loading}
         </p>
@@ -96,10 +96,10 @@ export function ReferralCard({ locale }: { locale: Locale }) {
 
   if (status === 'error' || !data) {
     return (
-      <article className="rounded-sm border border-line bg-surface p-6">
-        <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+        <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
-        </div>
+        </h2>
         <p role="alert" className="mt-3 text-sm text-muted">
           {t.error}
         </p>
@@ -111,10 +111,10 @@ export function ReferralCard({ locale }: { locale: Locale }) {
   // accidentally surface invite links from non-paying users.
   if (data.plan === 'free') {
     return (
-      <article className="rounded-sm border border-line bg-surface p-6">
-        <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+        <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
-        </div>
+        </h2>
         <p className="mt-3 text-sm text-muted">{t.proOnly}</p>
       </article>
     );
@@ -136,10 +136,10 @@ export function ReferralCard({ locale }: { locale: Locale }) {
   };
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-6">
-      <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+    <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+      <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
         {t.eyebrow}
-      </div>
+      </h2>
       <h3 className="mt-3 font-display text-2xl font-medium tracking-tight text-ink">
         {t.title}
       </h3>
