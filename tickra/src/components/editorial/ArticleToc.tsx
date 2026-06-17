@@ -57,6 +57,7 @@ export function ArticleToc({ locale }: { locale: Locale }) {
           <li key={it.id}>
             <a
               href={`#${it.id}`}
+              aria-current={active === it.id ? 'location' : undefined}
               className={cn(
                 '-ml-[24px] inline-flex items-start gap-3 transition-colors',
                 active === it.id ? 'text-ink' : 'text-muted hover:text-ink',
