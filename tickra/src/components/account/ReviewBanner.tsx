@@ -43,7 +43,7 @@ export function ReviewBanner({ locale }: { locale: Locale }) {
   const href = `/${locale}/review`;
 
   return (
-    <article className="overflow-hidden rounded-sm border border-brand/40 bg-gradient-to-r from-brand/15 to-accent/15 p-5 md:p-6">
+    <article aria-labelledby="review-banner-title" className="overflow-hidden rounded-sm border border-brand/40 bg-gradient-to-r from-brand/15 to-accent/15 p-5 md:p-6">
       <div className="flex flex-wrap items-center gap-4">
         <span
           aria-hidden
@@ -52,9 +52,9 @@ export function ReviewBanner({ locale }: { locale: Locale }) {
           <RotateCcw className="h-4 w-4" strokeWidth={2} />
         </span>
         <div className="min-w-0 flex-1">
-          <div className="font-display text-lg font-medium tracking-tight text-ink">
+          <h2 id="review-banner-title" className="font-display text-lg font-medium tracking-tight text-ink">
             {due.length} {due.length > 1 ? t.many : t.one} · {t.label}
-          </div>
+          </h2>
           <p className="mt-1 text-[13.5px] leading-relaxed text-muted">{t.body}</p>
         </div>
         <Link
