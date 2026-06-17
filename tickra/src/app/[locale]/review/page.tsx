@@ -55,7 +55,7 @@ export default async function ReviewPage({ params }: { params: { locale: string 
   return (
     <>
       <Navbar dict={dict} locale={locale} />
-      <main className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
+      <main id="main" className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
         <header className="mb-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">
             {copy.eyebrow}
