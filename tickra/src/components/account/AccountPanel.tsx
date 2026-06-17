@@ -310,7 +310,9 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <button
             type="button"
             onClick={openPortal}
-            className="flex w-full items-center justify-between rounded-sm border border-line bg-surface p-6 text-left transition-colors hover:border-ink"
+            disabled={portalState === 'pending'}
+            aria-busy={portalState === 'pending'}
+            className="flex w-full items-center justify-between rounded-sm border border-line bg-surface p-6 text-left transition-colors hover:border-ink disabled:cursor-wait disabled:opacity-70"
           >
             <span className="flex items-center gap-3 text-[14.5px] text-ink">
               <CreditCard aria-hidden className="h-4 w-4" strokeWidth={1.75} />
@@ -320,12 +322,12 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           </button>
 
           {portalState === 'no_customer' ? (
-            <p className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
+            <p role="status" aria-live="polite" className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
               {t.billingNoCustomer}
             </p>
           ) : null}
           {portalState === 'not_configured' ? (
-            <p className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
+            <p role="status" aria-live="polite" className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
               {t.billingNotConfigured}
             </p>
           ) : null}
