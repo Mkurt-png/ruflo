@@ -12,11 +12,15 @@ export function NavLink({
   href,
   className,
   onClick,
+  role,
   children,
 }: {
   href: string;
   className?: string;
   onClick?: () => void;
+  /** Optional ARIA role passthrough (e.g. 'menuitem' inside an
+   * ExploreMenu role='menu'). */
+  role?: string;
   children: React.ReactNode;
 }) {
   const pathname = usePathname() ?? '';
@@ -28,6 +32,7 @@ export function NavLink({
       href={href}
       className={className}
       onClick={onClick}
+      role={role}
       aria-current={isCurrent ? 'page' : undefined}
     >
       {children}
