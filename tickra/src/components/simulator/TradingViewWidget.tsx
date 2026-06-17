@@ -590,7 +590,7 @@ function ToolButton({
       ? 'text-down hover:bg-down/10'
       : 'text-ink hover:bg-elevated';
   return (
-    <button type="button" onClick={onClick} className={`${base} ${styles}`} aria-pressed={active} title={label}>
+    <button type="button" onClick={onClick} className={`${base} ${styles}`} aria-pressed={active} aria-label={label} title={label}>
       <Icon className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
       <span className="hidden sm:inline">{label}</span>
     </button>
