@@ -48,7 +48,7 @@ export function JournalStats({ stats, curve, locale }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Stat label={t.winRate} value={pct(stats.winRate)} sub={`${stats.wins}/${stats.closedTrades}`} />
         <Stat label={t.pnl} value={fmt(stats.totalPnl)} valueClass={pnlClass} />
         <Stat label={t.expectancy} value={fmt(stats.expectancy)} />
@@ -60,7 +60,7 @@ export function JournalStats({ stats, curve, locale }: Props) {
           label={`${t.streakW} / ${t.streakL}`}
           value={`${stats.longestWinStreak} / ${stats.longestLossStreak}`}
         />
-      </div>
+      </dl>
 
       <div className="rounded-2xl border border-line bg-surface p-6">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">{t.curve}</p>
@@ -87,9 +87,11 @@ function Stat({
 }) {
   return (
     <div className="rounded-xl border border-line bg-surface p-4">
-      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-subtle">{label}</p>
-      <p className={`mt-2 font-display text-2xl font-medium ${valueClass}`}>{value}</p>
-      {sub ? <p className="mt-1 text-xs text-muted">{sub}</p> : null}
+      <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-subtle">{label}</dt>
+      <dd className={`mt-2 font-display text-2xl font-medium ${valueClass}`}>
+        {value}
+        {sub ? <span className="mt-1 block text-xs font-normal text-muted">{sub}</span> : null}
+      </dd>
     </div>
   );
 }
