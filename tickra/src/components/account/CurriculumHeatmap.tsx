@@ -11,11 +11,15 @@ const copy = {
     title: 'Carte du curriculum',
     subtitle: 'Une cellule par leçon, une ligne par piste. Noir = validé.',
     completed: 'validées',
+    doneSuffix: 'validée',
+    todoSuffix: 'à faire',
   },
   en: {
     title: 'Curriculum map',
     subtitle: 'One cell per lesson, one row per track. Black = done.',
     completed: 'completed',
+    doneSuffix: 'done',
+    todoSuffix: 'to do',
   },
 };
 
@@ -52,6 +56,7 @@ export function CurriculumHeatmap({ locale }: { locale: Locale }) {
                   <li
                     key={l.id}
                     title={`${String(l.index).padStart(2, '0')} · ${l.title[locale]}`}
+                    aria-label={`${String(l.index).padStart(2, '0')} · ${l.title[locale]} — ${isDone ? t.doneSuffix : t.todoSuffix}`}
                     className={cn(
                       'h-4 w-4 rounded-[2px]',
                       isDone ? 'bg-ink' : 'border border-line bg-canvas',
