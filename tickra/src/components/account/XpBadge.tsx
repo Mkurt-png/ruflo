@@ -35,12 +35,12 @@ export function XpBadge({ locale }: { locale: Locale }) {
   const lvl = deriveLevel(total);
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-5">
+    <article aria-labelledby="xp-badge-title" className="rounded-sm border border-line bg-surface p-5">
       <div className="flex items-center justify-between">
-        <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+        <h2 id="xp-badge-title" className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
           <Trophy aria-hidden className="h-3.5 w-3.5 text-brand" strokeWidth={1.75} />
           {t.level} {lvl.level}
-        </div>
+        </h2>
         <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle tabular-nums">
           {total} {t.xp}
         </div>
