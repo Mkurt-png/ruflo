@@ -534,8 +534,10 @@ function Section({
   children: React.ReactNode;
   danger?: boolean;
 }) {
+  const headingId = `settings-section-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   return (
     <article
+      aria-labelledby={headingId}
       className={cn(
         'rounded-sm border bg-surface p-7 md:p-9',
         danger ? 'border-down/40' : 'border-line',
@@ -552,9 +554,9 @@ function Section({
           {icon}
         </span>
         <div>
-          <div className={cn('font-display text-lg font-medium tracking-tight', danger ? 'text-down' : 'text-ink')}>
+          <h2 id={headingId} className={cn('font-display text-lg font-medium tracking-tight', danger ? 'text-down' : 'text-ink')}>
             {title}
-          </div>
+          </h2>
           {subtitle ? <div className="mt-1 max-w-2xl text-[13.5px] text-muted">{subtitle}</div> : null}
         </div>
       </header>

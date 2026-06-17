@@ -139,10 +139,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
       </div>
 
       <section className="col-span-12 lg:col-span-8">
-        <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
-          <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+        <article aria-labelledby="account-progress-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
+          <h2 id="account-progress-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
             {t.progress}
-          </div>
+          </h2>
           <div className="mt-5 flex items-baseline gap-3">
             <span className="font-display text-5xl font-medium tracking-tighter text-ink">
               {completedCount}
