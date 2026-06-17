@@ -290,7 +290,7 @@ export function CommandPalette({ locale }: Props) {
             onClick={(e) => e.stopPropagation()}
             className="mx-auto mt-[12vh] flex max-h-[70vh] w-[min(640px,calc(100%-2rem))] flex-col overflow-hidden rounded-sm border border-line bg-canvas shadow-[0_24px_80px_rgba(0,0,0,0.25)]"
           >
-            <div className="flex items-center gap-3 border-b border-line px-5">
+            <div className="flex items-center gap-3 border-b border-line px-5 transition-colors focus-within:border-ink">
               <Search aria-hidden className="h-4 w-4 text-muted" strokeWidth={1.6} />
               <input
                 ref={inputRef}
