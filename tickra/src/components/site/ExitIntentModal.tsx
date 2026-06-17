@@ -173,6 +173,8 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
               type="email"
               required
               autoFocus
+              autoComplete="email"
+              aria-label={t.placeholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t.placeholder}

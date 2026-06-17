@@ -44,6 +44,7 @@ export function FooterNewsletter({ dict, locale }: { dict: Dictionary; locale: s
           <input
             type="email"
             required
+            autoComplete="email"
             value={email}
             placeholder={t.placeholder}
             aria-label={t.placeholder}
