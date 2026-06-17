@@ -86,7 +86,7 @@ export function JournalTable({ trades, locale, onEdit, onDelete }: Props) {
                 <td className="px-4 py-3 text-right font-mono">{row.entry_price}</td>
                 <td className="px-4 py-3 text-right font-mono">{row.exit_price ?? '—'}</td>
                 <td className={`px-4 py-3 text-right font-mono ${pnlClass}`}>
-                  {pnl === null ? '—' : pnl.toLocaleString('en-US', { maximumFractionDigits: 2 })}
+                  {pnl === null ? '—' : pnl.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: 2 })}
                 </td>
                 <td className="px-4 py-3 text-right font-mono text-muted">
                   {row.risk_r === null ? '—' : `${row.risk_r}R`}
