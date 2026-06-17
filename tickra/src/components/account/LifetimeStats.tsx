@@ -60,10 +60,10 @@ export function LifetimeStats({ locale }: { locale: Locale }) {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-2 bg-surface p-5">
-      <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">{label}</span>
-      <span className="font-display text-3xl font-medium tracking-tight tabular-nums text-ink">
+      <dt className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">{label}</dt>
+      <dd className="font-display text-3xl font-medium tracking-tight tabular-nums text-ink">
         {value}
-      </span>
+      </dd>
     </div>
   );
 }
