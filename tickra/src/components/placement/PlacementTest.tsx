@@ -193,7 +193,7 @@ export function PlacementTest({ locale }: { locale: Locale }) {
   if (done && recommendation) {
     const recTitle = locale === 'fr' ? recommendation.titleFr : recommendation.titleEn;
     return (
-      <div className="rounded-xl border border-line bg-canvas p-8">
+      <div role="status" aria-live="polite" className="rounded-xl border border-line bg-canvas p-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.resultTitle}</p>
         <h2 className="mt-3 font-display text-2xl font-medium text-ink">{t.resultBody(score)}</h2>
         <p className="mt-4 text-base text-ink">{recTitle}</p>
