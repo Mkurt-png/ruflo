@@ -366,7 +366,11 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
         </p>
       </div>
 
-      <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-line">
+      {/* Decorative countdown — the adjacent "Time left: 12s" text label
+          is the accessible-name source. Marking the bar aria-hidden
+          avoids the screen-reader noise that a live progressbar would
+          cause as the value re-announces every render. */}
+      <div aria-hidden className="mt-3 h-1 w-full overflow-hidden rounded-full bg-line">
         <div
           className="h-full bg-brand transition-[width] duration-200"
           style={{ width: `${(timeLeft / QUESTION_MS) * 100}%` }}
