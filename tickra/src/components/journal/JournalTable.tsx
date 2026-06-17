@@ -27,6 +27,7 @@ const COPY = {
     del: 'Supprimer',
     confirm: 'Supprimer ce trade ?',
     empty: 'Aucun trade pour l’instant. Ajoutez votre premier ci-dessus.',
+    caption: 'Journal des trades',
   },
   en: {
     pair: 'Pair',
@@ -44,6 +45,7 @@ const COPY = {
     del: 'Delete',
     confirm: 'Delete this trade?',
     empty: 'No trade yet. Add your first one above.',
+    caption: 'Trade journal',
   },
 } as const;
 
@@ -59,6 +61,7 @@ export function JournalTable({ trades, locale, onEdit, onDelete }: Props) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
       <table className="w-full text-sm">
+        <caption className="sr-only">{t.caption}</caption>
         <thead className="bg-elevated text-xs uppercase tracking-wider text-subtle">
           <tr>
             <th scope="col" className="px-4 py-3 text-left">{t.pair}</th>
