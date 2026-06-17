@@ -203,7 +203,10 @@ function fmtVolume(n: number): string {
   return n.toFixed(0);
 }
 
-export function TradingViewWidget({ symbol }: { symbol: string }) {
+export function TradingViewWidget({ symbol, locale = 'en' }: { symbol: string; locale?: string }) {
+  const labels = locale === 'fr'
+    ? { price: 'Prix', live: 'En direct' }
+    : { price: 'Price', live: 'Live' };
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<Chart | null>(null);
   const lastBarRef = useRef<KLineData | null>(null);
@@ -428,7 +431,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-line bg-elevated/40 px-4 py-3">
         <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">Price</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">{labels.price}</span>
             <span className={cn('font-display text-2xl font-semibold tabular-nums', isUp ? 'text-up' : 'text-down')}>
               {snapshot ? fmtPrice(snapshot.close, decimals) : '—'}
             </span>
@@ -437,7 +440,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
                 {deltaSign}{fmtPrice(snapshot.delta, decimals)} ({deltaSign}{snapshot.deltaPct.toFixed(2)}%)
               </span>
             )}
-            <span className="ml-1 inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up" aria-label="live" />
+            <span className="ml-1 inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up" aria-label={labels.live} />
           </div>
           {displayBar && (
             <dl className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] tabular-nums">

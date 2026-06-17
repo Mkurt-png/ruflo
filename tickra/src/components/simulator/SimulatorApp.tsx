@@ -510,7 +510,7 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
               </button>
             ))}
           </div>
-          <TradingViewWidget symbol={symbolMeta.tv} />
+          <TradingViewWidget symbol={symbolMeta.tv} locale={locale} />
         </div>
 
         {/* ─── Trade panel ──────────────────────────────────────── */}
