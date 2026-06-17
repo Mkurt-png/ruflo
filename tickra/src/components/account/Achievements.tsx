@@ -9,8 +9,20 @@ import { cn } from '@/lib/cn';
 type Locale = 'fr' | 'en';
 
 const copy = {
-  fr: { title: 'Distinctions', subtitle: 'Débloquées au fil de votre progression.', counter: 'débloquées' },
-  en: { title: 'Achievements', subtitle: 'Unlocked as you progress.', counter: 'unlocked' },
+  fr: {
+    title: 'Distinctions',
+    subtitle: 'Débloquées au fil de votre progression.',
+    counter: 'débloquées',
+    unlockedSr: 'Débloquée',
+    lockedSr: 'Verrouillée',
+  },
+  en: {
+    title: 'Achievements',
+    subtitle: 'Unlocked as you progress.',
+    counter: 'unlocked',
+    unlockedSr: 'Unlocked',
+    lockedSr: 'Locked',
+  },
 };
 
 export function Achievements({ locale }: { locale: Locale }) {
@@ -54,6 +66,7 @@ export function Achievements({ locale }: { locale: Locale }) {
               )}
             </span>
             <div className="min-w-0 flex-1">
+              <span className="sr-only">{a.unlocked ? t.unlockedSr : t.lockedSr} — </span>
               <div
                 className={cn(
                   'font-display text-[15px] font-medium tracking-tight',
