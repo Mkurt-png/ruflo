@@ -140,7 +140,7 @@ export function PricingReassurance({ locale }: { locale: Locale }) {
                   aria-hidden
                   className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-line text-muted transition-transform group-open:rotate-45"
                 >
-                  <svg viewBox="0 0 16 16" className="h-2.5 w-2.5">
+                  <svg aria-hidden viewBox="0 0 16 16" className="h-2.5 w-2.5">
                     <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" strokeWidth="1.5" />
                     <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" strokeWidth="1.5" />
                   </svg>
