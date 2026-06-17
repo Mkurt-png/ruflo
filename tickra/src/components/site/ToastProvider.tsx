@@ -64,7 +64,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 8, opacity: 0 }}
               transition={{ duration: 0.35, ease: easeOutExpo }}
-              role="status"
+              role={t.tone === 'error' ? 'alert' : 'status'}
+              aria-live={t.tone === 'error' ? 'assertive' : 'polite'}
               className="pointer-events-auto flex w-full max-w-sm items-start gap-3 border border-black/15 bg-[#F4F1EA] p-4 text-[#0E0E0E] shadow-[0_18px_40px_-18px_rgba(14,14,14,0.35)]"
             >
               <Glyph tone={t.tone ?? 'default'} />
