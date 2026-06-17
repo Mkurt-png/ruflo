@@ -65,7 +65,12 @@ export function LessonNotes({ lessonId, locale }: { lessonId: string; locale: Lo
             {t.label}
           </div>
         </div>
-        <span className="inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
+        <span
+          role="status"
+          aria-live="polite"
+          aria-busy={!saved}
+          className="inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle"
+        >
           {saved ? <Check aria-hidden className="h-3 w-3" strokeWidth={2.5} /> : null}
           {saved ? t.saved : t.saving}
         </span>
