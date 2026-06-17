@@ -62,11 +62,11 @@ export function Bookmarks({ locale }: { locale: Locale }) {
   const filtered = trackFilter === 'all' ? items : items.filter((i) => i.track.slug === trackFilter);
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="bookmarks-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
         <div className="flex items-center gap-2.5">
           <Star aria-hidden className="h-4 w-4 text-ink" strokeWidth={1.6} />
-          <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+          <h2 id="bookmarks-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
         </div>
         {items.length > 0 ? (
           <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
