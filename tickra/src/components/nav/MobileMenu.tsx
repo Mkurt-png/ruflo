@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import { NavLink } from './NavLink';
 import { Menu, X } from 'lucide-react';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { easeOutExpo } from '@/lib/motion';
@@ -78,13 +79,13 @@ export function MobileMenu({ dict, locale, links }: Props) {
               <ul className="flex flex-col gap-2">
                 {links.map((l) => (
                   <li key={l.href}>
-                    <Link
+                    <NavLink
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="block py-3 font-display text-2xl font-medium tracking-tight text-ink transition-colors hover:text-muted"
+                      className="block py-3 font-display text-2xl font-medium tracking-tight text-ink transition-colors hover:text-muted aria-[current=page]:underline aria-[current=page]:underline-offset-4"
                     >
                       {l.label}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
                 {/* TICKRA-DESIGN: explore section in mobile menu — same surface as desktop dropdown. */}

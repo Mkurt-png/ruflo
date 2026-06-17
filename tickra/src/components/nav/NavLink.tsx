@@ -11,10 +11,12 @@ import { usePathname } from 'next/navigation';
 export function NavLink({
   href,
   className,
+  onClick,
   children,
 }: {
   href: string;
   className?: string;
+  onClick?: () => void;
   children: React.ReactNode;
 }) {
   const pathname = usePathname() ?? '';
@@ -25,6 +27,7 @@ export function NavLink({
     <Link
       href={href}
       className={className}
+      onClick={onClick}
       aria-current={isCurrent ? 'page' : undefined}
     >
       {children}
