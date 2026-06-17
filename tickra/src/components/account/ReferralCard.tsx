@@ -87,7 +87,9 @@ export function ReferralCard({ locale }: { locale: Locale }) {
         <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
         </div>
-        <p className="mt-3 text-sm text-muted">{t.loading}</p>
+        <p role="status" aria-live="polite" aria-busy="true" className="mt-3 text-sm text-muted">
+          {t.loading}
+        </p>
       </article>
     );
   }
@@ -98,7 +100,9 @@ export function ReferralCard({ locale }: { locale: Locale }) {
         <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
         </div>
-        <p className="mt-3 text-sm text-muted">{t.error}</p>
+        <p role="alert" className="mt-3 text-sm text-muted">
+          {t.error}
+        </p>
       </article>
     );
   }
