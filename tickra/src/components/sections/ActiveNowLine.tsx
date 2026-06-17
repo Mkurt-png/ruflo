@@ -32,7 +32,7 @@ export function ActiveNowLine({ label }: { label: string }) {
     >
       <span
         aria-hidden
-        className="inline-block h-2 w-2 flex-shrink-0 rounded-full bg-up animate-pulse"
+        className="inline-block h-2 w-2 flex-shrink-0 rounded-full bg-up animate-pulse motion-reduce:animate-none"
       />
       <span key={fadeKey} className="tabular-nums opacity-0 animate-[fadeIn_0.6s_ease-out_forwards]">
         {count}

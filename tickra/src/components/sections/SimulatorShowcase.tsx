@@ -148,7 +148,7 @@ export function SimulatorShowcase({ locale }: { locale: Locale }) {
                       </span>
                     </div>
                     <span className="inline-flex items-center gap-1 rounded-full bg-up/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-up">
-                      <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-up animate-pulse" />
+                      <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-up animate-pulse motion-reduce:animate-none" />
                       {t.chip}
                     </span>
                   </div>

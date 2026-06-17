@@ -472,7 +472,7 @@ export function TradingViewWidget({ symbol, locale = 'en' }: { symbol: string; l
                 {deltaSign}{fmtPrice(snapshot.delta, decimals)} ({deltaSign}{snapshot.deltaPct.toFixed(2)}%)
               </span>
             )}
-            <span className="ml-1 inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up" aria-label={labels.live} />
+            <span className="ml-1 inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up motion-reduce:animate-none" aria-label={labels.live} />
           </div>
           {displayBar && (
             <dl className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] tabular-nums">
