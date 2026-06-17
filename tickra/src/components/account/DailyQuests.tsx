@@ -181,7 +181,14 @@ export function DailyQuests({ locale }: { locale: Locale }) {
                   +{q.reward} XP
                 </span>
               </div>
-              <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line">
+              <div
+                role="progressbar"
+                aria-valuenow={Math.min(progress[q.metric], q.target)}
+                aria-valuemin={0}
+                aria-valuemax={q.target}
+                aria-label={q.label}
+                className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line"
+              >
                 <div
                   className={cn('h-full transition-all duration-500', claimed ? 'bg-up' : done ? 'bg-brand' : 'bg-muted/60')}
                   style={{ width: `${pct}%` }}
