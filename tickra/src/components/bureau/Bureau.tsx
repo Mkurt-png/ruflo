@@ -93,7 +93,7 @@ export function Bureau({ locale, email }: { locale: Locale; email: string }) {
         </header>
 
         <div className="mt-16 md:mt-20 max-w-[1100px]">
-          <p
+          <h1
             className="font-display italic font-light text-[#0E0E0E]"
             style={{ fontSize: 'clamp(40px, 6vw, 88px)', lineHeight: 0.98, letterSpacing: '-0.035em' }}
           >
@@ -102,7 +102,7 @@ export function Bureau({ locale, email }: { locale: Locale; email: string }) {
             <span className="text-black/55">{t.subOne}</span>
             <br />
             <span className="text-black/35">{t.subTwo}</span>
-          </p>
+          </h1>
         </div>
 
         {/* Five ledger entries */}
