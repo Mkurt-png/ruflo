@@ -69,7 +69,7 @@ export default async function AchievementsPage({ params }: { params: { locale: s
   return (
     <>
       <Navbar dict={dict} locale={locale} />
-      <main className="mx-auto w-full max-w-4xl px-6 py-12 md:py-16">
+      <main id="main" className="mx-auto w-full max-w-4xl px-6 py-12 md:py-16">
         <header className="mb-10">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">
             {t.eyebrow}

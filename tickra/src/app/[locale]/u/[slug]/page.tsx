@@ -246,7 +246,7 @@ export default async function PublicProfilePage({ params }: { params: Params }) 
         ]}
       />
       <Navbar dict={dict} locale={locale} />
-      <main className="bg-canvas text-ink">
+      <main id="main" className="bg-canvas text-ink">
         <Container className="py-16 md:py-24">
           {/* Hero */}
           <header className="rounded-sm border border-line bg-surface p-8 md:p-12">
