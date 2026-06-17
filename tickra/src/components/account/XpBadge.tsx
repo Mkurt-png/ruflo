@@ -10,8 +10,8 @@ import { deriveLevel, readXp } from '@/lib/progress/xp';
 type Locale = 'fr' | 'en';
 
 const copy = {
-  fr: { level: 'Niveau', xp: 'XP' },
-  en: { level: 'Level', xp: 'XP' },
+  fr: { level: 'Niveau', xp: 'XP', progressLabel: 'Progression vers le prochain niveau' },
+  en: { level: 'Level', xp: 'XP', progressLabel: 'Progress to next level' },
 };
 
 export function XpBadge({ locale }: { locale: Locale }) {
@@ -45,7 +45,14 @@ export function XpBadge({ locale }: { locale: Locale }) {
           {total} {t.xp}
         </div>
       </div>
-      <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line">
+      <div
+        role="progressbar"
+        aria-valuenow={lvl.intoLevel}
+        aria-valuemin={0}
+        aria-valuemax={lvl.needed}
+        aria-label={t.progressLabel}
+        className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-line"
+      >
         <div
           className="h-full bg-brand glow-brand transition-all duration-500"
           style={{ width: `${lvl.pct}%` }}
