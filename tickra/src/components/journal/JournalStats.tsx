@@ -34,8 +34,11 @@ const COPY = {
   },
 } as const;
 
-function fmt(n: number, digits = 2) {
-  return n.toLocaleString('en-US', { maximumFractionDigits: digits, minimumFractionDigits: 0 });
+function fmt(n: number, locale: Locale, digits = 2) {
+  return n.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    maximumFractionDigits: digits,
+    minimumFractionDigits: 0,
+  });
 }
 
 function pct(n: number) {
@@ -50,12 +53,12 @@ export function JournalStats({ stats, curve, locale }: Props) {
     <div className="space-y-6">
       <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Stat label={t.winRate} value={pct(stats.winRate)} sub={`${stats.wins}/${stats.closedTrades}`} />
-        <Stat label={t.pnl} value={fmt(stats.totalPnl)} valueClass={pnlClass} />
-        <Stat label={t.expectancy} value={fmt(stats.expectancy)} />
-        <Stat label={t.avgR} value={`${fmt(stats.avgR, 2)}R`} />
+        <Stat label={t.pnl} value={fmt(stats.totalPnl, locale)} valueClass={pnlClass} />
+        <Stat label={t.expectancy} value={fmt(stats.expectancy, locale)} />
+        <Stat label={t.avgR} value={`${fmt(stats.avgR, locale, 2)}R`} />
         <Stat label={t.trades} value={String(stats.totalTrades)} sub={`${stats.openTrades} open`} />
-        <Stat label={t.best} value={fmt(stats.bestTrade)} valueClass="text-up" />
-        <Stat label={t.worst} value={fmt(stats.worstTrade)} valueClass="text-down" />
+        <Stat label={t.best} value={fmt(stats.bestTrade, locale)} valueClass="text-up" />
+        <Stat label={t.worst} value={fmt(stats.worstTrade, locale)} valueClass="text-down" />
         <Stat
           label={`${t.streakW} / ${t.streakL}`}
           value={`${stats.longestWinStreak} / ${stats.longestLossStreak}`}
