@@ -19,6 +19,7 @@ import { ScopeSync } from '@/components/site/ScopeSync';
 import { HeurePapier } from '@/components/site/HeurePapier';
 import { ExitIntentModal } from '@/components/site/ExitIntentModal';
 import { OrganizationJsonLd } from '@/components/seo/OrganizationJsonLd';
+import { MotionConfig } from 'framer-motion';
 import '../globals.css';
 
 // Tickra uses four Inter weights total (regular, medium, semibold, bold).
@@ -95,7 +96,13 @@ export default async function LocaleLayout({
           {locale === 'fr' ? 'Aller au contenu' : 'Skip to content'}
         </a>
         <ThemeProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            {/* App-wide Framer Motion config: when the OS reports
+                prefers-reduced-motion, skip transforms and shorten
+                opacity transitions instead of running full slides
+                and scales. */}
+            <MotionConfig reducedMotion="user">{children}</MotionConfig>
+          </ToastProvider>
         </ThemeProvider>
         {/* Bind localStorage stores (progress/XP/bookmarks/notes) to the
             signed-in account so two accounts on one browser don't share
