@@ -53,9 +53,9 @@ export function EditorialPreview({ locale = 'en' }: Props) {
           {t.heading}
         </h2>
 
-        <article className="bg-white border border-gray-100 rounded-xl p-6 max-w-2xl mx-auto mt-8">
+        <article aria-labelledby="editorial-preview-card-title" className="bg-white border border-gray-100 rounded-xl p-6 max-w-2xl mx-auto mt-8">
           <p className="text-xs text-text-muted uppercase tracking-wide">{t.date}</p>
-          <h3 className="text-xl font-medium text-text-primary mt-2">{t.title}</h3>
+          <h3 id="editorial-preview-card-title" className="text-xl font-medium text-text-primary mt-2">{t.title}</h3>
           <p className="text-sm text-text-secondary mt-3 leading-relaxed">{t.excerpt}</p>
           <span className="bg-accent-blue/10 text-accent-blue text-xs rounded-full px-3 py-1 mt-4 inline-block">
             {t.related} : {t.relatedModule}
