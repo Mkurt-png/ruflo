@@ -118,9 +118,9 @@ export function NotificationOptin({ locale }: { locale: Locale }) {
       {state === 'unsupported' ? (
         <p className="mt-6 text-[13px] text-subtle">{t.unsupported}</p>
       ) : state === 'denied' ? (
-        <p className="mt-6 text-[13px] text-down">{t.denied}</p>
+        <p role="alert" className="mt-6 text-[13px] text-down">{t.denied}</p>
       ) : state === 'enabled' ? (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+        <div role="status" aria-live="polite" className="mt-6 flex flex-wrap items-center justify-between gap-3">
           <span className="inline-flex items-center gap-2 text-[13.5px] text-up">
             <Check aria-hidden className="h-3.5 w-3.5" strokeWidth={2} />
             {t.enabled}
