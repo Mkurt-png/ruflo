@@ -67,7 +67,7 @@ export function JournalStats({ stats, curve, locale }: Props) {
         {curve.length === 0 ? (
           <p className="mt-4 text-sm text-muted">{t.empty}</p>
         ) : (
-          <EquitySvg curve={curve} />
+          <EquitySvg curve={curve} ariaLabel={t.curve} />
         )}
       </div>
     </div>
@@ -96,7 +96,7 @@ function Stat({
 
 // Inline SVG equity curve — pure stroke path, auto-fit to viewBox.
 // Zero-line drawn for orientation; cumulative P&L plotted left→right.
-function EquitySvg({ curve }: { curve: EquityPoint[] }) {
+function EquitySvg({ curve, ariaLabel }: { curve: EquityPoint[]; ariaLabel: string }) {
   const W = 600;
   const H = 180;
   const PAD = 16;
@@ -123,7 +123,7 @@ function EquitySvg({ curve }: { curve: EquityPoint[] }) {
       viewBox={`0 0 ${W} ${H}`}
       className="mt-4 h-44 w-full"
       role="img"
-      aria-label="Equity curve"
+      aria-label={ariaLabel}
     >
       {/* Zero line */}
       <line
