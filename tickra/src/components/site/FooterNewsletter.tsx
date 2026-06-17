@@ -40,7 +40,7 @@ export function FooterNewsletter({ dict, locale }: { dict: Dictionary; locale: s
           {t.sent}
         </div>
       ) : (
-        <form onSubmit={onSubmit} className="mt-5 flex max-w-sm items-stretch gap-3 border-b border-black/25 pb-2">
+        <form onSubmit={onSubmit} className="mt-5 flex max-w-sm items-stretch gap-3 border-b border-black/25 pb-2 transition-colors focus-within:border-black/70">
           <input
             type="email"
             required

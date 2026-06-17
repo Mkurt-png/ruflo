@@ -78,7 +78,7 @@ export function RechercheClient({
 
   return (
     <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
-      <div className="border-b border-black/15 pb-2 mt-12">
+      <div className="border-b border-black/15 pb-2 mt-12 transition-colors focus-within:border-black/60">
         <input
           type="search"
           value={q}
