@@ -14,7 +14,7 @@
 // Buy/Sell flow: pick symbol, size in lots, stop loss in pips, take profit in
 // pips → opens a position. Auto-closes when SL or TP is hit.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowDownRight, ArrowUpRight, Lock, RotateCcw, TrendingDown, TrendingUp, X } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
@@ -702,10 +702,12 @@ function Stat({ label, value, tone, accent }: { label: string; value: string; to
 }
 
 function Field({ label, value, step, min, max, onChange }: { label: string; value: number; step: number; min?: number; max?: number; onChange: (v: number) => void }) {
+  const id = useId();
   return (
     <div>
-      <label className="block font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">{label}</label>
+      <label htmlFor={id} className="block font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">{label}</label>
       <input
+        id={id}
         type="number"
         value={value}
         step={step}
