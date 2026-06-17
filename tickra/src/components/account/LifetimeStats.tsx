@@ -45,8 +45,8 @@ export function LifetimeStats({ locale }: { locale: Locale }) {
   }, [state, ready]);
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
-      <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+    <article aria-labelledby="lifetime-stats-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
+      <h2 id="lifetime-stats-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
       <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-line md:grid-cols-4">
         <Stat label={t.lessons} value={String(stats.lessons)} />
         <Stat label={t.days} value={String(stats.days)} />
