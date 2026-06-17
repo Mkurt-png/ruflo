@@ -42,12 +42,12 @@ export function CommunityPanel({ locale }: { locale: Locale }) {
   const isPaid = plan === 'pro' || plan === 'lifetime';
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="community-panel-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
-        <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+        <h2 id="community-panel-title" className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
           <Users aria-hidden className="h-3.5 w-3.5" strokeWidth={1.75} />
           {t.eyebrow}
-        </span>
+        </h2>
         {!isPaid ? (
           <span className="inline-flex items-center gap-1 rounded-full border border-line bg-canvas px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
             <Lock className="h-3 w-3" strokeWidth={2} />

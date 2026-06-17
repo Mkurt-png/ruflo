@@ -151,14 +151,14 @@ export function DailyQuests({ locale }: { locale: Locale }) {
   };
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="daily-quests-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
         <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.eyebrow}</div>
         <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
           {Object.keys(qState.claimed).length} / {t.quests.length}
         </div>
       </div>
-      <h2 className="mt-3 font-display text-2xl font-medium tracking-tight text-balance text-ink">{t.title}</h2>
+      <h2 id="daily-quests-title" className="mt-3 font-display text-2xl font-medium tracking-tight text-balance text-ink">{t.title}</h2>
       <p className="mt-2 text-[14px] text-muted">{t.body}</p>
 
       <ul className="mt-7 space-y-3">
