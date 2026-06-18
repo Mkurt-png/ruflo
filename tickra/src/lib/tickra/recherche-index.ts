@@ -51,7 +51,10 @@ const ROOMS: Array<{
 ];
 
 function stripAccents(s: string): string {
-  return s.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  // Decompose, then drop combining diacritical marks (U+0300–U+036F).
+  // Written as explicit escapes — a literal combining-mark range is
+  // invisible in source and breaks silently if the file is re-encoded.
+  return s.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
 function compose(...parts: string[]): string {
