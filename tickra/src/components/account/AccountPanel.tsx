@@ -1,18 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowRight, CreditCard, GraduationCap, LogOut, RefreshCw } from 'lucide-react';
 import { useProgress } from '@/lib/progress/hook';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
-import { StreakHeatmap } from './StreakHeatmap';
-import { ActivityChart } from './ActivityChart';
-import { Achievements } from './Achievements';
-import { TrackCertificates } from './TrackCertificates';
-import { ReviewQueue } from './ReviewQueue';
-import { Bookmarks } from './Bookmarks';
-import { LifetimeStats } from './LifetimeStats';
-import { NotificationOptin } from './NotificationOptin';
 import { FirstRunTour } from './FirstRunTour';
 import { DailyChallenge } from './DailyChallenge';
 import { DailyQuests } from './DailyQuests';
@@ -23,14 +16,18 @@ import { SharePanel } from './SharePanel';
 import { DigestToggle } from './DigestToggle';
 import { ReviewBanner } from './ReviewBanner';
 import { WeeklyPlan } from './WeeklyPlan';
-import { ExportProgress } from './ExportProgress';
-import { ImportProgress } from './ImportProgress';
-import { CurriculumHeatmap } from './CurriculumHeatmap';
-import { ShareProfile } from './ShareProfile';
 import { WhatsNewBanner } from './WhatsNewBanner';
-import { PositionSizer } from '@/components/learn/PositionSizer';
-import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+
+// PERF: the ~14 below-the-fold dashboard panels live in one chunk that
+// loads on the client after hydration, keeping /me's First Load JS lean.
+const AccountPanelDeck = dynamic(
+  () => import('./AccountPanelDeck').then((m) => m.AccountPanelDeck),
+  {
+    ssr: false,
+    loading: () => <div aria-hidden className="mt-3 h-64 rounded-sm border border-line bg-surface" />,
+  },
+);
 import { getReviewQueue, dueNow } from '@/lib/progress/review';
 
 type Locale = 'fr' | 'en';
@@ -223,61 +220,9 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <DailyChallenge locale={locale} />
         </div>
 
-        <div className="mt-3">
-          <LifetimeStats locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <StreakHeatmap locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ActivityChart locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <CurriculumHeatmap locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <NotificationOptin locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ReviewQueue locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <Bookmarks locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <TrackCertificates locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <Achievements locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <PositionSizer locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ExpectancyCalculator locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ExportProgress locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ImportProgress locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ShareProfile locale={locale} />
-        </div>
+        {/* PERF: below-the-fold panels split into one lazily-loaded
+            chunk so they stay out of /me's First Load JS. */}
+        <AccountPanelDeck locale={locale} />
       </section>
 
       <aside className="col-span-12 lg:col-span-4">
