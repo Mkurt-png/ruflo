@@ -5,43 +5,102 @@ import Link from 'next/link';
 
 // TICKRA-REDESIGN: public, no-auth lesson taste — one candle, four options, instant feedback.
 
+type CandleType = 'bullish' | 'bearish' | 'doji';
+
 type CandleSpec = {
-  type: 'bullish' | 'bearish' | 'doji';
+  type: CandleType;
   correct: 'A' | 'B' | 'C' | 'D';
-  explanation: string;
 };
 
 const CANDLES: CandleSpec[] = [
-  {
-    type: 'bullish',
-    correct: 'A',
-    explanation:
-      'Long green body with the close well above the open. Buyers absorbed every dip and pushed price higher into the close — classic bullish control.',
-  },
-  {
-    type: 'bearish',
-    correct: 'B',
-    explanation:
-      'Long red body with the close well below the open. Sellers controlled the session from open to close — bearish pressure.',
-  },
-  {
-    type: 'doji',
-    correct: 'C',
-    explanation:
-      'Open and close are nearly identical with long wicks on both sides. Neither side won — this is a textbook indecision candle.',
-  },
+  { type: 'bullish', correct: 'A' },
+  { type: 'bearish', correct: 'B' },
+  { type: 'doji', correct: 'C' },
 ];
 
-const OPTIONS: { key: 'A' | 'B' | 'C' | 'D'; label: string }[] = [
-  { key: 'A', label: 'Bullish — buyers are in control' },
-  { key: 'B', label: 'Bearish — sellers are in control' },
-  { key: 'C', label: 'Indecision — no clear direction' },
-  { key: 'D', label: 'Gap up — market opened higher' },
-];
+type Copy = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  pair: string;
+  prompt: string;
+  options: Record<'A' | 'B' | 'C' | 'D', string>;
+  explanations: Record<CandleType, string>;
+  candleAria: Record<CandleType, string>;
+  correct: string;
+  notQuite: string;
+  continueLesson: string;
+  startLesson: string;
+  tryAnother: string;
+};
+
+const COPY: Record<'fr' | 'en', Copy> = {
+  fr: {
+    eyebrow: 'Essayez une vraie leçon Tickra',
+    title: 'Savez-vous lire cette bougie ?',
+    subtitle: 'Pas besoin de compte. Une question. Réponse immédiate.',
+    pair: 'EUR/USD · 1H',
+    prompt: 'Que dit cette bougie ?',
+    options: {
+      A: 'Haussière — les acheteurs contrôlent',
+      B: 'Baissière — les vendeurs contrôlent',
+      C: 'Indécision — pas de direction claire',
+      D: 'Gap haussier — ouverture en hausse',
+    },
+    explanations: {
+      bullish:
+        'Long corps vert avec une clôture bien au-dessus de l’ouverture. Les acheteurs ont absorbé chaque repli et poussé le prix jusqu’à la clôture — contrôle haussier classique.',
+      bearish:
+        'Long corps rouge avec une clôture bien en dessous de l’ouverture. Les vendeurs ont contrôlé la séance de l’ouverture à la clôture — pression baissière.',
+      doji: 'Ouverture et clôture quasi identiques avec de longues mèches des deux côtés. Aucun camp n’a gagné — c’est une bougie d’indécision typique.',
+    },
+    candleAria: {
+      bullish: 'Bougie haussière',
+      bearish: 'Bougie baissière',
+      doji: 'Bougie doji',
+    },
+    correct: '✓ Correct',
+    notQuite: 'Pas tout à fait.',
+    continueLesson: 'Passer à la leçon 04 →',
+    startLesson: 'Commencer par la leçon 01 →',
+    tryAnother: 'Essayer une autre bougie',
+  },
+  en: {
+    eyebrow: 'Try a real Tickra lesson',
+    title: 'Can you read this candle?',
+    subtitle: 'No account needed. One question. Instant feedback.',
+    pair: 'EUR/USD · 1H',
+    prompt: 'What does this candle tell you?',
+    options: {
+      A: 'Bullish — buyers are in control',
+      B: 'Bearish — sellers are in control',
+      C: 'Indecision — no clear direction',
+      D: 'Gap up — market opened higher',
+    },
+    explanations: {
+      bullish:
+        'Long green body with the close well above the open. Buyers absorbed every dip and pushed price higher into the close — classic bullish control.',
+      bearish:
+        'Long red body with the close well below the open. Sellers controlled the session from open to close — bearish pressure.',
+      doji: 'Open and close are nearly identical with long wicks on both sides. Neither side won — this is a textbook indecision candle.',
+    },
+    candleAria: {
+      bullish: 'Bullish candle',
+      bearish: 'Bearish candle',
+      doji: 'Doji candle',
+    },
+    correct: '✓ Correct',
+    notQuite: 'Not quite.',
+    continueLesson: 'Continue to Lesson 04 →',
+    startLesson: 'Start from Lesson 01 →',
+    tryAnother: 'Try another candle',
+  },
+};
 
 type Props = { locale?: string };
 
 export function PublicQuizSection({ locale = 'en' }: Props) {
+  const t = COPY[locale === 'fr' ? 'fr' : 'en'];
   const [candleIdx, setCandleIdx] = useState(0);
   const [picked, setPicked] = useState<null | 'A' | 'B' | 'C' | 'D'>(null);
 
@@ -61,27 +120,23 @@ export function PublicQuizSection({ locale = 'en' }: Props) {
     >
       <div className="mx-auto w-full max-w-container text-center">
         <span className="inline-block bg-accent-blue/20 text-accent-blue text-xs font-medium px-3 py-1 rounded-full">
-          Try a real Tickra lesson
+          {t.eyebrow}
         </span>
         <h2 id="public-quiz-title" className="text-white text-4xl font-medium mt-4">
-          Can you read this candle?
+          {t.title}
         </h2>
-        <p className="text-white/60 text-lg mt-3">
-          No account needed. One question. Instant feedback.
-        </p>
+        <p className="text-white/60 text-lg mt-3">{t.subtitle}</p>
 
         <div className="max-w-lg mx-auto mt-12 text-left">
           <div className="bg-navy-800 rounded-xl p-8 text-center">
-            <CandleSvg type={candle.type} />
-            <div className="text-white/40 text-xs mt-4">EUR/USD · 1H</div>
-            <p className="text-white text-lg font-medium text-center mt-6">
-              What does this candle tell you?
-            </p>
+            <CandleSvg type={candle.type} ariaLabel={t.candleAria[candle.type]} />
+            <div className="text-white/40 text-xs mt-4">{t.pair}</div>
+            <p className="text-white text-lg font-medium text-center mt-6">{t.prompt}</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
-              {OPTIONS.map((opt) => {
-                const isPicked = picked === opt.key;
-                const isCorrectOpt = opt.key === candle.correct;
+              {(['A', 'B', 'C', 'D'] as const).map((key) => {
+                const isPicked = picked === key;
+                const isCorrectOpt = key === candle.correct;
                 let className =
                   'text-left bg-navy-700 hover:bg-navy-600 text-white text-sm rounded-lg py-3 px-4 transition-colors';
                 if (isAnswered) {
@@ -101,14 +156,14 @@ export function PublicQuizSection({ locale = 'en' }: Props) {
                 }
                 return (
                   <button
-                    key={opt.key}
+                    key={key}
                     type="button"
-                    onClick={() => !isAnswered && setPicked(opt.key)}
+                    onClick={() => !isAnswered && setPicked(key)}
                     className={className}
                     disabled={isAnswered}
                   >
-                    <span className="font-medium mr-2">{opt.key}.</span>
-                    {opt.label}
+                    <span className="font-medium mr-2">{key}.</span>
+                    {t.options[key]}
                   </button>
                 );
               })}
@@ -118,29 +173,37 @@ export function PublicQuizSection({ locale = 'en' }: Props) {
           {isAnswered ? (
             <>
               {isCorrect ? (
-                <div className="bg-success/10 border border-success/20 rounded-xl p-5 mt-6">
-                  <p className="text-success font-medium">✓ Correct</p>
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="bg-success/10 border border-success/20 rounded-xl p-5 mt-6"
+                >
+                  <p className="text-success font-medium">{t.correct}</p>
                   <p className="text-white/70 text-sm mt-2 leading-relaxed">
-                    {candle.explanation}
+                    {t.explanations[candle.type]}
                   </p>
                   <Link
                     href={`/${locale}/learn/japanese-candles/04`}
                     className="inline-flex items-center mt-4 bg-accent-blue hover:bg-accent-blue-hover text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   >
-                    Continue to Lesson 04 →
+                    {t.continueLesson}
                   </Link>
                 </div>
               ) : (
-                <div className="bg-danger/10 border border-danger/20 rounded-xl p-5 mt-6">
-                  <p className="text-danger font-medium">Not quite.</p>
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="bg-danger/10 border border-danger/20 rounded-xl p-5 mt-6"
+                >
+                  <p className="text-danger font-medium">{t.notQuite}</p>
                   <p className="text-white/70 text-sm mt-2 leading-relaxed">
-                    {candle.explanation}
+                    {t.explanations[candle.type]}
                   </p>
                   <Link
                     href={`/${locale}/learn/japanese-candles/01`}
                     className="inline-flex items-center mt-4 bg-accent-blue hover:bg-accent-blue-hover text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   >
-                    Start from Lesson 01 →
+                    {t.startLesson}
                   </Link>
                 </div>
               )}
@@ -149,7 +212,7 @@ export function PublicQuizSection({ locale = 'en' }: Props) {
                 onClick={reset}
                 className="mt-3 w-full border border-white/30 text-white/80 hover:bg-white/10 px-4 py-2 rounded-lg text-sm transition-colors"
               >
-                Try another candle
+                {t.tryAnother}
               </button>
             </>
           ) : null}
@@ -159,7 +222,7 @@ export function PublicQuizSection({ locale = 'en' }: Props) {
   );
 }
 
-function CandleSvg({ type }: { type: 'bullish' | 'bearish' | 'doji' }) {
+function CandleSvg({ type, ariaLabel }: { type: CandleType; ariaLabel: string }) {
   // viewBox 0 0 60 200
   if (type === 'bullish') {
     const color = '#059669';
@@ -167,7 +230,7 @@ function CandleSvg({ type }: { type: 'bullish' | 'bearish' | 'doji' }) {
       <svg
         viewBox="0 0 60 200"
         role="img"
-        aria-label="Bullish candle"
+        aria-label={ariaLabel}
         className="mx-auto"
         width="120"
         height="200"
@@ -184,7 +247,7 @@ function CandleSvg({ type }: { type: 'bullish' | 'bearish' | 'doji' }) {
       <svg
         viewBox="0 0 60 200"
         role="img"
-        aria-label="Bearish candle"
+        aria-label={ariaLabel}
         className="mx-auto"
         width="120"
         height="200"
@@ -201,7 +264,7 @@ function CandleSvg({ type }: { type: 'bullish' | 'bearish' | 'doji' }) {
     <svg
       viewBox="0 0 60 200"
       role="img"
-      aria-label="Doji candle"
+      aria-label={ariaLabel}
       className="mx-auto"
       width="120"
       height="200"

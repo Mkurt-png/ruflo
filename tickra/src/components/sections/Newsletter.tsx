@@ -45,10 +45,14 @@ export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string
 
         <div className="col-span-12 lg:col-span-5 lg:col-start-8">
           <div className="rounded-sm border border-line bg-surface p-6 md:p-8">
-            <PdfPreview />
+            <PdfPreview filename={t.pdfFilename} meta={t.pdfMeta} />
 
             {sent ? (
-              <div className="mt-6 flex items-start gap-3 rounded-sm border border-line bg-elevated p-5">
+              <div
+                role="status"
+                aria-live="polite"
+                className="mt-6 flex items-start gap-3 rounded-sm border border-line bg-elevated p-5"
+              >
                 <Check
                   aria-hidden
                   className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink"
@@ -79,6 +83,7 @@ export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string
                 <button
                   type="submit"
                   disabled={pending}
+                  aria-busy={pending}
                   className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {t.submit}
@@ -97,7 +102,7 @@ export function Newsletter({ dict, locale }: { dict: Dictionary; locale?: string
   );
 }
 
-function PdfPreview() {
+function PdfPreview({ filename, meta }: { filename: string; meta: string }) {
   return (
     <div className="flex items-center gap-4 rounded-sm border border-line bg-canvas p-4">
       <span
@@ -108,10 +113,10 @@ function PdfPreview() {
       </span>
       <div className="min-w-0">
         <div className="truncate font-display text-[15px] font-medium tracking-tight text-ink">
-          10 candles to recognise.pdf
+          {filename}
         </div>
         <div className="mt-1 font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">
-          14 pages · 1.8 MB · FR / EN
+          {meta}
         </div>
       </div>
     </div>

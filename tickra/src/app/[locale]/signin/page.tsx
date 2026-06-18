@@ -1,12 +1,26 @@
 import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { SignInForm } from '@/components/auth/SignInForm';
 
-export const metadata = { title: 'Connexion · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'signin',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Connexion' : 'Sign in',
+    description:
+      params.locale === 'fr'
+        ? 'Connexion à votre compte Tickra.'
+        : 'Sign in to your Tickra account.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Connexion' : 'Tickra · Sign in',
+    noindex: true,
+  });
+}
 
 export default async function SignInPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

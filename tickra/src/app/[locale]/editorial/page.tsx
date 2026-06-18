@@ -7,8 +7,24 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
+import { EditorialItemListJsonLd } from '@/components/seo/EditorialItemListJsonLd';
+import { parseEditorialDate } from '@/lib/editorial/date-parse';
+import { pageMeta } from '@/lib/seo/page-meta';
 
-export const metadata = { title: 'Éditorial · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'editorial',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Éditorial' : 'Editorial',
+    description:
+      params.locale === 'fr'
+        ? 'Le journal éditorial : longues lectures, méthode, et carnets de bord.'
+        : 'The editorial journal: long reads, method, and field notes.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Éditorial' : 'Tickra · Editorial',
+  });
+}
 
 export default async function EditorialPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -17,9 +33,32 @@ export default async function EditorialPage({ params }: { params: { locale: stri
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${params.locale}` },
+          {
+            name: params.locale === 'fr' ? 'Éditorial' : 'Editorial',
+            path: `/${params.locale}/editorial`,
+          },
+        ]}
+      />
+      <EditorialItemListJsonLd
+        locale={params.locale}
+        entries={t.posts.map((p) => ({
+          slug: p.slug,
+          title: p.title,
+          excerpt: p.excerpt,
+          date: p.date,
+          // dict.editorial uses dict.editorial.posts[]; author lives on
+          // dict.editorialArticles.posts[slug]. The list page's dict
+          // type doesn't include author, so we leave it undefined here
+          // and let the per-article page emit author on its Article
+          // schema (where it does come from editorialArticles).
+        }))}
+      />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
-        <PageHero title={t.title} body={t.subtitle} eyebrow="Editorial" />
+        <PageHero title={t.title} body={t.subtitle} eyebrow={params.locale === 'fr' ? 'Éditorial' : 'Editorial'} />
 
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">
@@ -32,7 +71,11 @@ export default async function EditorialPage({ params }: { params: { locale: stri
                   >
                     <div className="col-span-12 md:col-span-3">
                       <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-                        {post.date} · {post.readingTime}
+                        {(() => {
+                          const iso = parseEditorialDate(post.date);
+                          return iso ? <time dateTime={iso}>{post.date}</time> : post.date;
+                        })()}
+                        {' · '}{post.readingTime}
                       </div>
                     </div>
                     <div className="col-span-12 md:col-span-8 md:col-start-5">

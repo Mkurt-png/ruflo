@@ -63,7 +63,7 @@ export function BattleJoin(props: Props) {
       const res = await fetch('/api/battle/create', { method: 'POST' });
       const data = (await res.json().catch(() => null)) as { id?: string; error?: string } | null;
       if (!res.ok) {
-        // TICKRA-FIX: surface the real backend reason so we can diagnose.
+        // surface the real backend reason so we can diagnose.
         const reason = data?.error ?? 'unknown';
         const human =
           reason === 'pro_required'

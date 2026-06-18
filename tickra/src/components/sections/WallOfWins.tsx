@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-4: anonymised "this week on Tickra" wall of wins.
+// anonymised "this week on Tickra" wall of wins.
 // Honest disclaimer + aggregated stats. When a real backend aggregator ships,
 // these counters can swap to fetched data with no UI change.
 

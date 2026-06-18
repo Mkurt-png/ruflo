@@ -128,7 +128,7 @@ export async function logMistake(email: string, lessonId: string): Promise<boole
     .eq('lesson_id', lessonId)
     .maybeSingle();
   if (existing.data) return true;
-  // TICKRA-PHASE-5A: schedule the new mistake into SRS — due tomorrow with
+  // schedule the new mistake into SRS — due tomorrow with
   // default ease/interval. Migration 016 added next_review_at; safe-default
   // on inserts so the card surfaces in /review the next day.
   const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();

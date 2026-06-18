@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-6: contextual sticky CTA — auto-adjusts label + href based on
+// contextual sticky CTA — auto-adjusts label + href based on
 // where the user currently is. Default props are used as a fallback when no
 // rule matches (preserves home-page behaviour).
 
@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { easeOutExpo } from '@/lib/motion';
+import { isEditorialPath } from '@/lib/editorial/routes';
 
 type Props = {
   href: string;
@@ -68,6 +69,9 @@ export function MobileStickyCta({ href, label }: Props) {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Honour the editorial silence: no pill on Maison and her rooms.
+  if (isEditorialPath(pathname)) return null;
 
   const cta = resolve(pathname, { href, label });
 

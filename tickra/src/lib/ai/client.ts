@@ -1,4 +1,4 @@
-// TICKRA-PHASE-2.1: thin AI client. Originally Anthropic-only; now defaults
+// thin AI client. Originally Anthropic-only; now defaults
 // to Groq (free hosted Llama 3.3 70B, OpenAI-compatible API) and falls back
 // to Anthropic if only ANTHROPIC_API_KEY is set. Same exported shape — every
 // caller (AskTickra, Trade Coach, debug probe) keeps working unchanged.

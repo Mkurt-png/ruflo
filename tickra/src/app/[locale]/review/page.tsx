@@ -10,6 +10,14 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 
 export const dynamic = 'force-dynamic';
 
+// Personal SRS review queue. Server-redirects to /signin for anonymous
+// visitors; keep it out of Google's index but allow follow so the
+// signin link still passes signal.
+export const metadata = {
+  title: 'Review · Tickra',
+  robots: { index: false, follow: true },
+};
+
 export default async function ReviewPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const locale = params.locale as Locale;
@@ -47,7 +55,7 @@ export default async function ReviewPage({ params }: { params: { locale: string 
   return (
     <>
       <Navbar dict={dict} locale={locale} />
-      <main className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
+      <main id="main" className="mx-auto w-full max-w-3xl px-6 py-12 md:py-16">
         <header className="mb-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">
             {copy.eyebrow}

@@ -95,7 +95,11 @@ export function LessonFeedback({ lessonId, locale }: { lessonId: string; locale:
           {t.title}
         </div>
         {sent && vote === 'up' ? (
-          <span className="inline-flex items-center gap-2 text-[13.5px] text-up">
+          <span
+            role="status"
+            aria-live="polite"
+            className="inline-flex items-center gap-2 text-[13.5px] text-up"
+          >
             <Check aria-hidden className="h-3.5 w-3.5" strokeWidth={2} />
             {t.thanks}
           </span>
@@ -138,7 +142,11 @@ export function LessonFeedback({ lessonId, locale }: { lessonId: string; locale:
       ) : null}
 
       {sent && vote === 'down' ? (
-        <p className="mt-5 inline-flex items-center gap-2 text-[13.5px] text-muted">
+        <p
+          role="status"
+          aria-live="polite"
+          className="mt-5 inline-flex items-center gap-2 text-[13.5px] text-muted"
+        >
           <Check aria-hidden className="h-3.5 w-3.5" strokeWidth={2} />
           {t.thanks}
         </p>

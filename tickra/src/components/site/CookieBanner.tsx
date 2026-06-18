@@ -50,38 +50,38 @@ export function CookieBanner({ locale, title, body, accept, reject, learnMore }:
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 60, opacity: 0 }}
           transition={{ duration: 0.45, ease: easeOutExpo }}
-          className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-3xl rounded-sm border border-line bg-surface p-5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] md:p-6"
+          className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-3xl border border-black/15 bg-[#F4F1EA] p-5 text-[#0E0E0E] shadow-[0_18px_40px_-18px_rgba(14,14,14,0.35)] md:p-6"
         >
           <div className="flex flex-col gap-5 md:flex-row md:items-start md:gap-8">
             <div className="flex-1">
-              <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-                {title}
+              <div className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
+                Tickra · {title}
               </div>
-              <p className="mt-2 text-[14px] leading-relaxed text-ink">
+              <p className="mt-3 font-display leading-relaxed text-[#0E0E0E]/85" style={{ fontSize: '15px' }}>
                 {body}{' '}
                 <Link
                   href={`/${locale}/privacy`}
-                  className="underline underline-offset-4 decoration-line transition-colors hover:decoration-ink"
+                  className="underline underline-offset-4 decoration-black/35 transition-colors hover:decoration-[#0E0E0E]"
                 >
                   {learnMore}
                 </Link>
                 .
               </p>
             </div>
-            <div className="flex flex-shrink-0 flex-col gap-2 md:flex-row">
-              <button
-                type="button"
-                onClick={() => close('necessary')}
-                className="inline-flex h-10 items-center justify-center rounded-full border border-line px-4 text-[13.5px] font-medium tracking-tight text-ink transition-colors hover:border-ink"
-              >
-                {reject}
-              </button>
+            <div className="flex flex-shrink-0 flex-wrap items-baseline gap-x-8 gap-y-2 md:flex-col md:items-end">
               <button
                 type="button"
                 onClick={() => close('all')}
-                className="inline-flex h-10 items-center justify-center rounded-full bg-ink px-4 text-[13.5px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90"
+                className="font-mono text-[10.5px] uppercase tracking-[0.34em] text-[#0E0E0E] underline underline-offset-4 hover:text-black/70 transition-colors"
               >
-                {accept}
+                {accept} →
+              </button>
+              <button
+                type="button"
+                onClick={() => close('necessary')}
+                className="font-mono text-[10.5px] uppercase tracking-[0.28em] text-black/55 hover:text-[#0E0E0E] transition-colors"
+              >
+                {reject}
               </button>
             </div>
           </div>

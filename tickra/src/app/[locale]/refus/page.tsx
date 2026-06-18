@@ -1,30 +1,34 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
 import { REFUSALS } from '@/lib/tickra/refus';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { RefusItemListJsonLd } from '@/components/seo/RefusItemListJsonLd';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/refus — Le Refus. Ten things Tickra will never build.
 // A manifesto by negation, in the editorial register. Static content,
 // no logic, no progress — defines the brand by what it refuses.
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'refus',
-  title: 'Le Refus',
-  description:
-    'Dix choses que Tickra ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
+  title: { fr: 'Le Refus', en: 'The Refusal' },
+  description: {
+    fr: 'Dix choses que Tickra ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
+    en: 'Ten things Tickra will never build. A manifesto by negation, written to remove all ambiguity.',
+  },
 });
 
 const COPY = {
   fr: {
     eyebrow: 'Le Refus — manifeste par négation',
-    head1: 'Ce qu’on ne fera',
-    head2: 'jamais.',
-    head3: 'Dix choses, signées.',
+    status: 'Permanent',
+    head: ['Ce qu’on ne fera', 'jamais.', 'Dix choses, signées.'] as [string, string, string],
     intro:
       'Un site de trading se définit autant par ce qu’il refuse que par ce qu’il publie. Voici les dix lignes que Tickra ne franchira pas. Si une seule d’entre elles vous manque, vous êtes au mauvais endroit — et nous préférons que vous le sachiez maintenant.',
     footer:
@@ -32,9 +36,8 @@ const COPY = {
   },
   en: {
     eyebrow: 'The Refusal — manifesto by negation',
-    head1: 'What we will',
-    head2: 'never build.',
-    head3: 'Ten lines, signed.',
+    status: 'Permanent',
+    head: ['What we will', 'never build.', 'Ten lines, signed.'] as [string, string, string],
     intro:
       'A trading site is defined as much by what it refuses as by what it publishes. Here are the ten lines Tickra will not cross. If even one of them is something you need, you are in the wrong place — and we would rather you know now.',
     footer:
@@ -50,7 +53,6 @@ export default async function RefusPage({ params }: { params: { locale: string }
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="refus"
         title={locale === 'fr' ? 'Le Refus' : 'The Refusal'}
@@ -59,47 +61,34 @@ export default async function RefusPage({ params }: { params: { locale: string }
           : 'Ten things Tickra will never build. A manifesto by negation.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
-              {locale === 'fr' ? 'Permanent' : 'Permanent'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="refus"
+        title={{ fr: 'Le Refus', en: 'The Refusal' }}
+      />
+      <RefusItemListJsonLd locale={locale} />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={t.status}
+        head={t.head}
+        intro={t.intro}
+      >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr'
+              ? 'Un site se définit autant par ce qu’il refuse que par ce qu’il publie.'
+              : 'A site is defined as much by what it refuses as by what it publishes.'}
+          </Pull>
         </section>
-
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <ol className="space-y-16">
             {REFUSALS.map((r, i) => (
               <li
                 key={r.id}
-                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0"
+                id={r.id}
+                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0 scroll-mt-24"
               >
                 <span className="font-mono text-[11px] tracking-[0.22em] text-black/35 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
@@ -128,8 +117,36 @@ export default async function RefusPage({ params }: { params: { locale: string }
             </p>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'silence',
+              title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+              caption: {
+                fr: 'Ce que l’interface ne fera pas — pendant qu’on y est.',
+                en: 'What the interface will not do — while we are at it.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Les lignes que nous avons franchies, et corrigées en public.',
+                en: 'The lines we crossed, and corrected in public.',
+              },
+            },
+            {
+              slug: 'cote-inversee',
+              title: { fr: 'La Cote inversée', en: 'The Inverted Score' },
+              caption: {
+                fr: 'L’éditeur qui se note avec la même formule que vous.',
+                en: 'The editor scoring themselves with the reader’s formula.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

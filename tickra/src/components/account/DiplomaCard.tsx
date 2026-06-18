@@ -65,7 +65,14 @@ export function DiplomaCard({ locale, email }: { locale: Locale; email: string |
           <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
             {t.progressLabel}
           </div>
-          <div className="h-1 w-48 rounded-full bg-line">
+          <div
+            role="progressbar"
+            aria-valuenow={completedCount}
+            aria-valuemin={0}
+            aria-valuemax={total}
+            aria-label={t.progressLabel}
+            className="h-1 w-48 rounded-full bg-line"
+          >
             <div
               className="h-1 rounded-full bg-ink"
               style={{ width: `${Math.round((completedCount / total) * 100)}%` }}

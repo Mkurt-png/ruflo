@@ -8,3 +8,8 @@ dist
 *.log
 .vercel
 .turbo
+# Editor backup files — git history is the only backup we keep.
+*.bak
+*.swp
+*.tmp
+*~

@@ -1,5 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { listTrades } from '@/lib/db/journal-queries';
@@ -11,6 +12,24 @@ import { AutopsiePanel } from '@/components/journal/AutopsiePanel';
 import { MurSilence } from '@/components/journal/MurSilence';
 import { readSilence } from '@/lib/tickra/silence';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+
+// Per-user trading journal — gated by getSession, never indexable.
+// robots.ts already disallows /journal; the explicit noindex closes
+// the loop and emits a description for browser tabs.
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'journal',
+    locale: params.locale,
+    title: 'Journal',
+    description:
+      params.locale === 'fr'
+        ? 'Votre journal de trading — entrées, observations du Greffier, autopsie.'
+        : 'Your trading journal — entries, Registrar notes, autopsy.',
+    ogEyebrow: 'Tickra · Journal',
+    noindex: true,
+  });
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -72,12 +91,12 @@ async function ProJournal({ email, locale }: { email: string; locale: Locale }) 
       <KpiStrip
         className="mb-6"
         items={[
-          { label: locale === 'fr' ? 'Trades' : 'Trades', value: String(trades.length), tone: 'brand' },
+          { label: 'Trades', value: String(trades.length), tone: 'brand' },
           { label: locale === 'fr' ? 'Clôturés' : 'Closed', value: String(closed.length) },
-          { label: locale === 'fr' ? 'Win rate' : 'Win rate', value: `${winRate}%`, tone: winRate >= 50 ? 'up' : winRate > 0 ? 'down' : 'neutral' },
+          { label: 'Win rate', value: `${winRate}%`, tone: winRate >= 50 ? 'up' : winRate > 0 ? 'down' : 'neutral' },
           { label: 'P&L', value: `${net >= 0 ? '+' : ''}${net.toFixed(0)}`, tone: net >= 0 ? 'up' : 'down', hint: 'USD' },
         ]}
-        trailing={<LivePulse label={locale === 'fr' ? 'journal' : 'journal'} />}
+        trailing={<LivePulse label="journal" />}
       />
       <JournalApp initialTrades={trades} locale={locale} />
       <GreffierPanel trades={trades} locale={locale} />

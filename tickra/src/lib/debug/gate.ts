@@ -1,4 +1,4 @@
-// TICKRA-FIX(security): central debug-endpoint authorisation.
+// central debug-endpoint authorisation.
 // Every /api/debug/* route should pass through this gate. Two ways to pass:
 //   1. We're NOT on Vercel production (preview, dev, etc.).
 //   2. The request carries `x-debug-token: <process.env.DEBUG_TOKEN>`.

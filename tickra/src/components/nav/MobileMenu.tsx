@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
+import { NavLink } from './NavLink';
 import { Menu, X } from 'lucide-react';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { easeOutExpo } from '@/lib/motion';
@@ -60,6 +61,7 @@ export function MobileMenu({ dict, locale, links }: Props) {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
+            aria-label={locale === 'fr' ? 'Menu mobile' : 'Mobile menu'}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -71,19 +73,19 @@ export function MobileMenu({ dict, locale, links }: Props) {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -8, opacity: 0 }}
               transition={{ duration: 0.35, ease: easeOutExpo }}
-              aria-label="Mobile primary"
+              aria-label={locale === 'fr' ? 'Navigation mobile' : 'Mobile primary'}
               className="flex h-full flex-col px-6 pb-12 pt-10"
             >
               <ul className="flex flex-col gap-2">
                 {links.map((l) => (
                   <li key={l.href}>
-                    <Link
+                    <NavLink
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="block py-3 font-display text-2xl font-medium tracking-tight text-ink transition-colors hover:text-muted"
+                      className="block py-3 font-display text-2xl font-medium tracking-tight text-ink transition-colors hover:text-muted aria-[current=page]:underline aria-[current=page]:underline-offset-4"
                     >
                       {l.label}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
                 {/* TICKRA-DESIGN: explore section in mobile menu — same surface as desktop dropdown. */}

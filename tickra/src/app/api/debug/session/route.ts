@@ -6,7 +6,7 @@ import { isDebugAuthorised } from '@/lib/debug/gate';
 export const dynamic = 'force-dynamic';
 
 // GET /api/debug/session
-// TICKRA-FIX(security): never returns the session email anymore (was a
+// never returns the session email anymore (was a
 // fingerprinting/XSS amplifier). Only presence/length. Production callers
 // still need `x-debug-token: $DEBUG_TOKEN`.
 export async function GET(req: Request) {

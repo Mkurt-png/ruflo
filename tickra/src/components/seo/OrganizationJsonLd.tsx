@@ -1,4 +1,5 @@
 import { SITE_URL } from '@/lib/site-url';
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 
 // Organization JSON-LD — global, mounted in the locale layout so it
 // appears on every page. Tells Google / LLMs who Tickra SAS is, where it
@@ -14,7 +15,7 @@ export function OrganizationJsonLd() {
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.svg`,
     description:
-      'Plateforme de formation au trading et à l’analyse des marchés financiers. Cursus structuré, 10 minutes par jour, vrais graphiques.',
+      'Maison éditoriale de trading. Une Criée chaque jour, une Lettre chaque dimanche, un Lexique vivant — métier enseigné comme un livre, sans fanfare.',
     foundingDate: '2025',
     founders: [{ '@type': 'Person', name: 'Hamza Kurt' }],
     address: {
@@ -53,9 +54,8 @@ export function OrganizationJsonLd() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
     />
   );
 }
 
-export default OrganizationJsonLd;

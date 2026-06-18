@@ -68,4 +68,3 @@ export function Manifeste({ locale }: Props) {
   );
 }
 
-export default Manifeste;

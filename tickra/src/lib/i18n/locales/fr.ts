@@ -80,6 +80,10 @@ const fr = {
         body: "Le moteur graphique en lequel vous avez déjà confiance, intégré à chaque leçon. Mêmes outils de dessin, mêmes données, zéro changement de contexte.",
       },
     },
+    streakDays: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
+    streakFreezeNote: 'Freeze utilisé samedi.',
+    streakPreservedNote: 'Streak préservé.',
+    freezeTooltipLabel: 'Qu’est-ce qu’un freeze ?',
   },
   metrics: {
     eyebrow: 'Sur le terrain',
@@ -130,6 +134,8 @@ const fr = {
     ],
     disclaimer: 'Apprenants vérifiés par email. Aucune rémunération.',
     verifiedLabel: 'Profil vérifié',
+    prevLabel: 'Témoignage précédent',
+    nextLabel: 'Témoignage suivant',
   },
   builtBy: {
     eyebrow: 'Conçu par',
@@ -617,7 +623,7 @@ const fr = {
     primary: 'Rejoindre la cohorte',
     secondary: 'Lire la charte',
     badge: 'Inclus dans Pro et À vie',
-    // TICKRA-PHASE-4: charter + live sessions used on /community page.
+    // charter + live sessions used on /community page.
     charterTitle: 'La charte Tickra',
     charterIntro: 'Trois règles qui rendent la cohorte vivable, et que personne ne contourne.',
     charterRules: [
@@ -673,6 +679,8 @@ const fr = {
     submit: 'Recevoir le PDF',
     sent: 'Merci. Vérifiez votre boîte de réception dans une minute.',
     legal: 'Vos données sont traitées selon notre politique de confidentialité. Pas de revente, pas de spam.',
+    pdfFilename: '10-bougies-a-reconnaitre.pdf',
+    pdfMeta: '14 pages · 1.8 Mo · FR / EN',
   },
   pageHeaderInternal: {
     backHome: 'Retour à l’accueil',

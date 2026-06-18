@@ -5,8 +5,24 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
+import { ChangelogItemListJsonLd } from '@/components/seo/ChangelogItemListJsonLd';
+import { pageMeta } from '@/lib/seo/page-meta';
+import { parseEditorialDate } from '@/lib/editorial/date-parse';
 
-export const metadata = { title: 'Journal des versions · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'changelog',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Journal des versions' : 'Changelog',
+    description:
+      params.locale === 'fr'
+        ? 'Ce qui a changé sur Tickra, semaine après semaine.'
+        : 'What changed on Tickra, week after week.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Journal des versions' : 'Tickra · Changelog',
+  });
+}
 
 export default async function ChangelogPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -15,9 +31,19 @@ export default async function ChangelogPage({ params }: { params: { locale: stri
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${params.locale}` },
+          {
+            name: params.locale === 'fr' ? 'Journal des versions' : 'Changelog',
+            path: `/${params.locale}/changelog`,
+          },
+        ]}
+      />
+      <ChangelogItemListJsonLd locale={params.locale} entries={t.entries} />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
-        <PageHero title={t.title} body={t.subtitle} eyebrow="Changelog" />
+        <PageHero title={t.title} body={t.subtitle} eyebrow={params.locale === 'fr' ? 'Journal des versions' : 'Changelog'} />
 
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">
@@ -26,7 +52,10 @@ export default async function ChangelogPage({ params }: { params: { locale: stri
                 <li key={entry.version} className="grid grid-cols-12 gap-x-6 gap-y-4 py-10 md:py-14">
                   <div className="col-span-12 md:col-span-3">
                     <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-                      {entry.date}
+                      {(() => {
+                        const iso = parseEditorialDate(entry.date);
+                        return iso ? <time dateTime={iso}>{entry.date}</time> : entry.date;
+                      })()}
                     </div>
                     <div className="mt-3 font-display text-2xl font-medium tracking-tight text-ink">
                       {entry.version}

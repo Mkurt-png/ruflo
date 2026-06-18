@@ -1,5 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { getSession } from '@/lib/auth/session';
 import { Navbar } from '@/components/nav/Navbar';
@@ -9,7 +10,20 @@ import { PageHero } from '@/components/ui/PageHero';
 import { SimulatorApp } from '@/components/simulator/SimulatorApp';
 import { FlashCrashMode } from '@/components/simulator/FlashCrashMode';
 
-export const metadata = { title: 'Simulateur · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'me/simulator',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Simulateur' : 'Simulator',
+    description:
+      params.locale === 'fr'
+        ? 'Le simulateur de trading Tickra — paper-trading sur des marchés réels, en local.'
+        : 'Tickra’s trading simulator — paper trading on real markets, local.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Simulateur' : 'Tickra · Simulator',
+    noindex: true,
+  });
+}
 
 export default async function SimulatorPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -28,14 +42,14 @@ export default async function SimulatorPage({ params }: { params: { locale: stri
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero eyebrow={locale === 'fr' ? 'Pro · Lifetime' : 'Pro · Lifetime'} title={title} body={body} />
+        <PageHero eyebrow="Pro · Lifetime" title={title} body={body} />
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-16">
             <SimulatorApp locale={locale} />
           </Container>
         </section>
 
-        {/* TICKRA-PHASE-2.4: replay famous historical crashes for pedagogical value. */}
+        {/* replay famous historical crashes for pedagogical value. */}
         <section className="border-b border-line bg-elevated">
           <Container as="div" className="py-12 md:py-16">
             <FlashCrashMode locale={locale} />

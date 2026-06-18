@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-2.2: AI Trade Coach. After each closed trade, the user can
+// AI Trade Coach. After each closed trade, the user can
 // hit "Coach review" → the trade context is sent to Claude → a short
 // pedagogical analysis comes back. Pro/Lifetime only (Trade Coach is a
 // premium-perceived feature).
@@ -105,6 +105,7 @@ export function TradeCoach({ locale, trade }: { locale: Locale; trade: TradeInpu
       type="button"
       onClick={ask}
       disabled={pending}
+      aria-busy={pending}
       className="mt-2 inline-flex h-8 items-center gap-1.5 rounded-full border border-line px-3 text-[11px] uppercase tracking-[0.18em] text-muted hover:border-brand hover:text-brand disabled:opacity-60"
     >
       {pending ? <Loader2 className="h-3 w-3 animate-spin" strokeWidth={2} /> : <Sparkles className="h-3 w-3" strokeWidth={2} />}

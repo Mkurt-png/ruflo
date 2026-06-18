@@ -15,6 +15,8 @@ import { ArticleToc } from '@/components/editorial/ArticleToc';
 import { ArticleJsonLd } from '@/components/seo/ArticleJsonLd';
 import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { SITE_URL } from '@/lib/site-url';
+import { translateArticleSlug } from '@/lib/editorial/slug-translation';
+import { parseEditorialDate } from '@/lib/editorial/date-parse';
 
 type Params = { locale: string; slug: string };
 
@@ -46,15 +48,58 @@ export async function generateMetadata({ params }: { params: Params }) {
   const post = (dict.editorialArticles.posts as Record<string, Post>)[params.slug];
   if (!post) return {};
   const canonical = `/${params.locale}/editorial/${params.slug}`;
+  // FR and EN editorial slugs are different (lire-bougie-japonaise vs
+  // read-japanese-candle). Map both via translateArticleSlug so the
+  // hreflang alternates point at URLs that actually resolve, rather
+  // than 404ing a French slug under /en.
+  const frSlug = translateArticleSlug(params.slug, params.locale, 'fr');
+  const enSlug = translateArticleSlug(params.slug, params.locale, 'en');
+  // Share card via /api/og — same edge-cached endpoint editorial
+  // cluster rooms use. Without this in the OG/Twitter meta, social
+  // previews (Twitter, Discord, Slack, iMessage, LinkedIn) would
+  // render text only.
+  const ogImage = `${SITE_URL}/api/og?${new URLSearchParams({
+    title: post.title,
+    eyebrow: params.locale === 'fr' ? 'Tickra · Éditorial' : 'Tickra · Editorial',
+    locale: params.locale,
+  }).toString()}`;
   return {
     title: `${post.title} · Tickra`,
     description: post.excerpt,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      // Declare both translations + x-default so Google can serve the
+      // right locale to each search audience. Matches the convention
+      // editorialMeta uses for the rest of the cluster.
+      languages: {
+        'fr-FR': `${SITE_URL}/fr/editorial/${frSlug}`,
+        'en-GB': `${SITE_URL}/en/editorial/${enSlug}`,
+        'x-default': `${SITE_URL}/fr/editorial/${frSlug}`,
+      },
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
       url: `${SITE_URL}${canonical}`,
+      siteName: 'Tickra',
+      locale: params.locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: params.locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+      // OG type:article requires published_time + authors for proper
+      // social card previews and Facebook News Tab eligibility.
+      ...(parseEditorialDate(post.date) && {
+        publishedTime: parseEditorialDate(post.date),
+      }),
+      authors: [post.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      site: '@tickra',
+      creator: '@tickra',
+      images: [ogImage],
     },
   };
 }
@@ -83,8 +128,19 @@ export default async function EditorialArticlePage({ params }: { params: Params 
         url={url}
         title={post.title}
         description={post.excerpt}
-        date={post.date}
+        // post.date is a human display string ("18 mai 2026"); Schema.org
+        // datePublished must be ISO 8601. Parse first; on failure, fall
+        // back to a stable site-launch date so the schema still
+        // validates rather than shipping a malformed date.
+        date={parseEditorialDate(post.date) ?? '2026-01-01'}
         author={post.author}
+        // Custom share card per article via /api/og — same edge-cached
+        // endpoint editorial rooms use, ivory paper, italic title.
+        image={`${SITE_URL}/api/og?${new URLSearchParams({
+          title: post.title,
+          eyebrow: params.locale === 'fr' ? 'Tickra · Éditorial' : 'Tickra · Editorial',
+          locale: params.locale,
+        }).toString()}`}
         locale={params.locale}
       />
       <BreadcrumbJsonLd
@@ -113,7 +169,15 @@ export default async function EditorialArticlePage({ params }: { params: Params 
 
               <Eyebrow>
                 <span>
-                  {post.date} · {post.readingTime} · {post.author}
+                  {/* Wrap the date in a semantic <time datetime>
+                      element so crawlers, assistive tech, and copy-to-
+                      clipboard tooling all get the ISO date alongside
+                      the human display string. */}
+                  {(() => {
+                    const iso = parseEditorialDate(post.date);
+                    return iso ? <time dateTime={iso}>{post.date}</time> : post.date;
+                  })()}
+                  {' · '}{post.readingTime}{' · '}{post.author}
                 </span>
               </Eyebrow>
 
@@ -130,6 +194,8 @@ export default async function EditorialArticlePage({ params }: { params: Params 
                   url={url}
                   copyLabel={shareCopy}
                   copiedLabel={copiedCopy}
+                  shareXLabel={params.locale === 'fr' ? 'Partager sur X' : 'Share on X'}
+                  shareLinkedInLabel={params.locale === 'fr' ? 'Partager sur LinkedIn' : 'Share on LinkedIn'}
                 />
               </div>
             </Container>
@@ -159,7 +225,7 @@ export default async function EditorialArticlePage({ params }: { params: Params 
             <section className="border-b border-line">
               <Container as="div" className="py-16 md:py-20">
                 <nav
-                  aria-label="Article pagination"
+                  aria-label={params.locale === 'fr' ? 'Pagination des articles' : 'Article pagination'}
                   className="grid grid-cols-1 gap-3 md:grid-cols-2"
                 >
                   {prevSlug ? (

@@ -1,19 +1,29 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/institutionnel — Le tier institutionnel. Stub honnête.
 // Brochure d'un futur abonnement pour prop-firms / desks.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'L’Abonnement institutionnel · Tickra',
-  description:
-    'Tickra pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.',
-};
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'institutionnel',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'L’Abonnement institutionnel' : 'The Institutional Subscription',
+    description:
+      params.locale === 'fr'
+        ? 'Tickra pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.'
+        : 'Tickra for desks and prop firms: collective Registrar, team-wide Silence Wall, weekly register audit.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Institutionnel' : 'Tickra · Institutional',
+  });
+}
 
 const COPY = {
   fr: {
@@ -62,41 +72,29 @@ export default async function InstitutionnelPage({ params }: { params: { locale:
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
-              {locale === 'fr' ? 'Sur conversation' : 'On conversation'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
-        </section>
+      <EditorialJsonLd
+        slug="institutionnel"
+        title={locale === 'fr' ? 'L’Institutionnel' : 'The Institutional'}
+        description={
+          locale === 'fr'
+            ? 'Tickra pour les desks et prop-firms. Sur conversation.'
+            : 'Tickra for desks and prop firms. On conversation.'
+        }
+        locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="institutionnel"
+        title={{ fr: 'L’Institutionnel', en: 'The Institutional' }}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={locale === 'fr' ? 'Sur conversation' : 'On conversation'}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <ol className="mt-6 space-y-5 border-t border-black/15 pt-10">
@@ -127,8 +125,7 @@ export default async function InstitutionnelPage({ params }: { params: { locale:
             </Link>
           </div>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+      </EditorialFrame>
     </>
   );
 }

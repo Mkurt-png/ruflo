@@ -19,8 +19,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
   const tr = getTrack(params.track);
-  if (!tr) return {};
-  return { title: `${tr.title[params.locale as Locale]} · Certificat · Tickra` };
+  if (!tr) return { robots: { index: false, follow: false } };
+  return {
+    title: `${tr.title[params.locale as Locale]} · Certificat · Tickra`,
+    // Per-user achievement page — never indexable.
+    robots: { index: false, follow: false },
+  };
 }
 
 export default async function TrackCertificatePage({ params }: { params: Params }) {

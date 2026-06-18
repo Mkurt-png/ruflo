@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -12,10 +13,23 @@ import { PricingReassurance } from '@/components/pricing/PricingReassurance';
 import { TrustBar } from '@/components/pricing/TrustBar';
 import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { FaqJsonLd } from '@/components/seo/FaqJsonLd';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 
-export const metadata = { title: 'Tarifs · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'pricing',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Tarifs' : 'Pricing',
+    description:
+      params.locale === 'fr'
+        ? 'Trois plans simples — Gratuit, Pro, À vie. Pas d’engagement, pas de mensualités cachées.'
+        : 'Three simple plans — Free, Pro, Lifetime. No commitment, no hidden fees.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Tarifs' : 'Tickra · Pricing',
+  });
+}
 
 export default async function PricingPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -25,6 +39,11 @@ export default async function PricingPage({ params }: { params: { locale: string
   return (
     <>
       <FaqJsonLd entries={dict.faq.items} />
+      <PageBreadcrumb
+        locale={params.locale}
+        slug="pricing"
+        title={{ fr: 'Tarifs', en: 'Pricing' }}
+      />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <section className="border-b border-line">
@@ -61,7 +80,7 @@ export default async function PricingPage({ params }: { params: { locale: string
           </Container>
         </section>
 
-        {/* TICKRA-PHASE-1.3: financial reassurance + pricing FAQ. */}
+        {/* financial reassurance + pricing FAQ. */}
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-24">
             <PricingReassurance locale={params.locale} />

@@ -77,4 +77,3 @@ export function Methode({ locale }: Props) {
   );
 }
 
-export default Methode;

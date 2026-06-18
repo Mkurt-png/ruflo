@@ -70,7 +70,8 @@ export function CertificatePreview({
             canonical proof; the box just signals where a QR will sit when we
             add the encoder. */}
         <svg
-          aria-label="QR placeholder"
+          role="img"
+          aria-label={fr ? 'QR (espace réservé)' : 'QR placeholder'}
           width="56"
           height="56"
           viewBox="0 0 56 56"

@@ -108,19 +108,19 @@ export function NotificationOptin({ locale }: { locale: Locale }) {
   };
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="notification-optin-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-center gap-2.5">
         <Bell aria-hidden className="h-4 w-4 text-ink" strokeWidth={1.6} />
-        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+        <h2 id="notification-optin-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
       </div>
       <p className="mt-3 max-w-md text-[14px] text-muted">{t.description}</p>
 
       {state === 'unsupported' ? (
         <p className="mt-6 text-[13px] text-subtle">{t.unsupported}</p>
       ) : state === 'denied' ? (
-        <p className="mt-6 text-[13px] text-down">{t.denied}</p>
+        <p role="alert" className="mt-6 text-[13px] text-down">{t.denied}</p>
       ) : state === 'enabled' ? (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+        <div role="status" aria-live="polite" className="mt-6 flex flex-wrap items-center justify-between gap-3">
           <span className="inline-flex items-center gap-2 text-[13.5px] text-up">
             <Check aria-hidden className="h-3.5 w-3.5" strokeWidth={2} />
             {t.enabled}

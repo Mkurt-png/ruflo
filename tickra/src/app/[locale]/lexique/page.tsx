@@ -2,9 +2,10 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { Term } from '@/components/lexique/Term';
+import { TermsInProse } from '@/components/lexique/TermsInProse';
 import { GLOSSARY } from '@/lib/curriculum/glossary';
 
 // /[locale]/lexique — Le Lexique vivant. Showcase of the inline
@@ -13,15 +14,18 @@ import { GLOSSARY } from '@/lib/curriculum/glossary';
 // is the entry-point and the proof; the actual usage lives wherever
 // the editor places <Term> inside a lesson or an editorial page.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'lexique',
-  title: 'Le Lexique vivant',
-  description:
-    'Chaque mot d’une leçon peut s’ouvrir : définition, et un lien vers le glossaire. Pas de tooltip qui flotte — un geste choisi.',
+  title: { fr: 'Le Lexique vivant', en: 'The Living Lexicon' },
+  description: {
+    fr: 'Chaque mot d’une leçon peut s’ouvrir : définition, et un lien vers le glossaire. Pas de tooltip qui flotte — un geste choisi.',
+    en: 'Every word in a lesson can open: definition, and a link to the glossary. No floating tooltip — a chosen gesture.',
+  },
 });
 
 const COPY = {
@@ -85,7 +89,6 @@ export default async function LexiquePage({ params }: { params: { locale: string
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="lexique"
         title={locale === 'fr' ? 'Le Lexique vivant' : 'The Living Lexicon'}
@@ -94,40 +97,19 @@ export default async function LexiquePage({ params }: { params: { locale: string
           : 'Every word in a lesson opens to its definition, on click.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {t.counter(GLOSSARY.length)}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
-        </section>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="lexique"
+        title={{ fr: 'Le Lexique vivant', en: 'The Living Lexicon' }}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={t.counter(GLOSSARY.length)}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <div className="border-t border-black/15 pt-12">
@@ -165,6 +147,27 @@ export default async function LexiquePage({ params }: { params: { locale: string
 
           <div className="mt-16 border-t border-black/15 pt-12">
             <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
+              {locale === 'fr' ? 'Sans encapsulation manuelle' : 'Without manual wrapping'}
+            </p>
+            <p
+              className="mt-3 font-display leading-relaxed text-[#0E0E0E]/80 max-w-[680px]"
+              style={{ fontSize: 'clamp(18px, 1.9vw, 22px)', lineHeight: 1.5 }}
+            >
+              <TermsInProse locale={locale}>
+                {locale === 'fr'
+                  ? 'Quand le doji apparaît près d’un support, la mèche du marteau pose la question : qui tient ? Le break of structure se trouve plus loin ; le stop-loss vit au-dessus de la dernière bougie.'
+                  : 'When the doji appears near a support, the wick of the hammer asks: who holds? The break of structure is further out; the stop-loss sits above the last candle.'}
+              </TermsInProse>
+            </p>
+            <p className="mt-3 font-mono text-[10.5px] text-black/55">
+              {locale === 'fr'
+                ? 'Les pointillés sont posés automatiquement par <TermsInProse>.'
+                : 'Dotted underlines placed automatically by <TermsInProse>.'}
+            </p>
+          </div>
+
+          <div className="mt-16 border-t border-black/15 pt-12">
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
               {t.usage}
             </p>
             <p
@@ -195,8 +198,36 @@ export default async function LexiquePage({ params }: { params: { locale: string
             </Link>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'annuaire',
+              title: { fr: 'L’Annuaire', en: 'The Index' },
+              caption: {
+                fr: 'L’index alphabétique des leçons.',
+                en: 'The alphabetical lesson index.',
+              },
+            },
+            {
+              slug: 'recherche',
+              title: { fr: 'La Recherche', en: 'The Search' },
+              caption: {
+                fr: 'Pour chercher dans les leçons et le glossaire.',
+                en: 'To search lessons and the glossary.',
+              },
+            },
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'Le mot Cote a sa propre fiche, ici.',
+                en: 'The Score formula, defined.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { NavLink } from './NavLink';
 import { LocaleSwitcher } from './LocaleSwitcher';
 import { ManuscritToggle } from '@/components/site/ManuscritToggle';
 import { MobileMenu } from './MobileMenu';
@@ -20,10 +21,10 @@ export function Navbar({ dict, locale }: Props) {
 
   const exploreItems = [
     { href: `/${locale}/maison`, label: locale === 'fr' ? 'La Maison · plan' : 'The House · plan' },
-    { href: `/${locale}/criee`, label: locale === 'fr' ? 'La Criée' : 'La Criée' },
+    { href: `/${locale}/criee`, label: 'La Criée' },
     { href: `/${locale}/lettre`, label: locale === 'fr' ? 'La Lettre' : 'The Letter' },
     { href: `/${locale}/veillee`, label: locale === 'fr' ? 'La Veillée' : 'The Vigil' },
-    { href: `/${locale}/journal`, label: locale === 'fr' ? 'Journal' : 'Journal' },
+    { href: `/${locale}/journal`, label: 'Journal' },
     { href: `/${locale}/survie`, label: locale === 'fr' ? 'Survie' : 'Survival' },
     { href: `/${locale}/me/simulator`, label: dict.nav.simulator },
     { href: `/${locale}/battle`, label: dict.nav.battle },
@@ -42,16 +43,16 @@ export function Navbar({ dict, locale }: Props) {
           <span className="text-[15px] font-medium tracking-tight">Tickra</span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden md:block">
+        <nav aria-label={locale === 'fr' ? 'Navigation principale' : 'Primary'} className="hidden md:block">
           <ul className="flex items-center gap-8">
             {links.map((l) => (
               <li key={l.href}>
-                <Link
+                <NavLink
                   href={l.href}
-                  className="text-sm text-white/70 hover:text-white transition-colors"
+                  className="text-sm text-white/70 hover:text-white transition-colors aria-[current=page]:text-white"
                 >
                   {l.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
             <li>

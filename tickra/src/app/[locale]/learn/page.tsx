@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -9,8 +10,22 @@ import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 import { LessonResumeCard } from '@/components/learn/LessonResumeCard';
 import { TrackFilter } from '@/components/learn/TrackFilter';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+import { CourseListJsonLd } from '@/components/seo/CourseListJsonLd';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 
-export const metadata = { title: 'Apprendre · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'learn',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Apprendre' : 'Learn',
+    description:
+      params.locale === 'fr'
+        ? 'Le cursus de trading Tickra — pistes, leçons et exercices à votre rythme.'
+        : 'Tickra’s trading curriculum — tracks, lessons and exercises at your pace.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Apprendre' : 'Tickra · Learn',
+  });
+}
 
 export default async function LearnPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -25,6 +40,16 @@ export default async function LearnPage({ params }: { params: { locale: string }
 
   return (
     <>
+      <CourseListJsonLd tracks={TRACKS} locale={locale} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${locale}` },
+          {
+            name: locale === 'fr' ? 'Apprendre' : 'Learn',
+            path: `/${locale}/learn`,
+          },
+        ]}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={locale === 'fr' ? 'Apprendre' : 'Learn'} title={title} body={body} />

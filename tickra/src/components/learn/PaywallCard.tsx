@@ -44,7 +44,7 @@ export function PaywallCard({
 }) {
   const t = copy[locale];
   return (
-    <article className="relative overflow-hidden rounded-sm border border-line bg-surface p-8 md:p-12">
+    <article aria-labelledby="paywall-card-title" className="relative overflow-hidden rounded-sm border border-line bg-surface p-8 md:p-12">
       <span aria-hidden className="aurora" />
       <span aria-hidden className="aurora aurora--lt" />
 
@@ -54,7 +54,7 @@ export function PaywallCard({
           {t.eyebrow}
         </div>
 
-        <h2 className="mt-6 max-w-2xl font-display text-display-md font-medium tracking-tight text-balance text-ink">
+        <h2 id="paywall-card-title" className="mt-6 max-w-2xl font-display text-display-md font-medium tracking-tight text-balance text-ink">
           {t.title}
         </h2>
         <p className="mt-5 max-w-xl text-pretty text-[16px] leading-relaxed text-muted md:text-[17px]">

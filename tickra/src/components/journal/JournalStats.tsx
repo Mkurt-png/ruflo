@@ -34,8 +34,11 @@ const COPY = {
   },
 } as const;
 
-function fmt(n: number, digits = 2) {
-  return n.toLocaleString('en-US', { maximumFractionDigits: digits, minimumFractionDigits: 0 });
+function fmt(n: number, locale: Locale, digits = 2) {
+  return n.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    maximumFractionDigits: digits,
+    minimumFractionDigits: 0,
+  });
 }
 
 function pct(n: number) {
@@ -48,26 +51,26 @@ export function JournalStats({ stats, curve, locale }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Stat label={t.winRate} value={pct(stats.winRate)} sub={`${stats.wins}/${stats.closedTrades}`} />
-        <Stat label={t.pnl} value={fmt(stats.totalPnl)} valueClass={pnlClass} />
-        <Stat label={t.expectancy} value={fmt(stats.expectancy)} />
-        <Stat label={t.avgR} value={`${fmt(stats.avgR, 2)}R`} />
+        <Stat label={t.pnl} value={fmt(stats.totalPnl, locale)} valueClass={pnlClass} />
+        <Stat label={t.expectancy} value={fmt(stats.expectancy, locale)} />
+        <Stat label={t.avgR} value={`${fmt(stats.avgR, locale, 2)}R`} />
         <Stat label={t.trades} value={String(stats.totalTrades)} sub={`${stats.openTrades} open`} />
-        <Stat label={t.best} value={fmt(stats.bestTrade)} valueClass="text-up" />
-        <Stat label={t.worst} value={fmt(stats.worstTrade)} valueClass="text-down" />
+        <Stat label={t.best} value={fmt(stats.bestTrade, locale)} valueClass="text-up" />
+        <Stat label={t.worst} value={fmt(stats.worstTrade, locale)} valueClass="text-down" />
         <Stat
           label={`${t.streakW} / ${t.streakL}`}
           value={`${stats.longestWinStreak} / ${stats.longestLossStreak}`}
         />
-      </div>
+      </dl>
 
       <div className="rounded-2xl border border-line bg-surface p-6">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">{t.curve}</p>
         {curve.length === 0 ? (
           <p className="mt-4 text-sm text-muted">{t.empty}</p>
         ) : (
-          <EquitySvg curve={curve} />
+          <EquitySvg curve={curve} ariaLabel={t.curve} />
         )}
       </div>
     </div>
@@ -87,16 +90,18 @@ function Stat({
 }) {
   return (
     <div className="rounded-xl border border-line bg-surface p-4">
-      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-subtle">{label}</p>
-      <p className={`mt-2 font-display text-2xl font-medium ${valueClass}`}>{value}</p>
-      {sub ? <p className="mt-1 text-xs text-muted">{sub}</p> : null}
+      <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-subtle">{label}</dt>
+      <dd className={`mt-2 font-display text-2xl font-medium ${valueClass}`}>
+        {value}
+        {sub ? <span className="mt-1 block text-xs font-normal text-muted">{sub}</span> : null}
+      </dd>
     </div>
   );
 }
 
 // Inline SVG equity curve — pure stroke path, auto-fit to viewBox.
 // Zero-line drawn for orientation; cumulative P&L plotted left→right.
-function EquitySvg({ curve }: { curve: EquityPoint[] }) {
+function EquitySvg({ curve, ariaLabel }: { curve: EquityPoint[]; ariaLabel: string }) {
   const W = 600;
   const H = 180;
   const PAD = 16;
@@ -123,7 +128,7 @@ function EquitySvg({ curve }: { curve: EquityPoint[] }) {
       viewBox={`0 0 ${W} ${H}`}
       className="mt-4 h-44 w-full"
       role="img"
-      aria-label="Equity curve"
+      aria-label={ariaLabel}
     >
       {/* Zero line */}
       <line

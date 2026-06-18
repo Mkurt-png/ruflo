@@ -203,7 +203,42 @@ function fmtVolume(n: number): string {
   return n.toFixed(0);
 }
 
-export function TradingViewWidget({ symbol }: { symbol: string }) {
+export function TradingViewWidget({ symbol, locale = 'en' }: { symbol: string; locale?: string }) {
+  const isFr = locale === 'fr';
+  const labels = isFr
+    ? {
+        price: 'Prix',
+        live: 'En direct',
+        timeframe: 'Période',
+        cursor: 'Curseur',
+        clear: 'Effacer',
+        indicators: 'Indicateurs',
+        trendline: 'Tendance',
+        ray: 'Demi-droite',
+        horizontal: 'Horizontale',
+        rectangle: 'Rectangle',
+        fibonacci: 'Fibonacci',
+      }
+    : {
+        price: 'Price',
+        live: 'Live',
+        timeframe: 'Timeframe',
+        cursor: 'Cursor',
+        clear: 'Clear',
+        indicators: 'Indicators',
+        trendline: 'Trendline',
+        ray: 'Ray',
+        horizontal: 'Horizontal',
+        rectangle: 'Rectangle',
+        fibonacci: 'Fibonacci',
+      };
+  const drawingToolLabel: Record<string, string> = {
+    segment: labels.trendline,
+    rayLine: labels.ray,
+    horizontalStraightLine: labels.horizontal,
+    rectangle: labels.rectangle,
+    fibonacciLine: labels.fibonacci,
+  };
   const ref = useRef<HTMLDivElement>(null);
   const chartRef = useRef<Chart | null>(null);
   const lastBarRef = useRef<KLineData | null>(null);
@@ -428,7 +463,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-line bg-elevated/40 px-4 py-3">
         <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">Price</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">{labels.price}</span>
             <span className={cn('font-display text-2xl font-semibold tabular-nums', isUp ? 'text-up' : 'text-down')}>
               {snapshot ? fmtPrice(snapshot.close, decimals) : '—'}
             </span>
@@ -437,7 +472,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
                 {deltaSign}{fmtPrice(snapshot.delta, decimals)} ({deltaSign}{snapshot.deltaPct.toFixed(2)}%)
               </span>
             )}
-            <span className="ml-1 inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up" aria-label="live" />
+            <span className="ml-1 inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up motion-reduce:animate-none" aria-label={labels.live} />
           </div>
           {displayBar && (
             <dl className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] tabular-nums">
@@ -451,7 +486,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
         </div>
 
         {/* Timeframe pills */}
-        <div role="tablist" aria-label="Timeframe" className="inline-flex rounded-lg border border-line bg-canvas p-0.5">
+        <div role="tablist" aria-label={labels.timeframe} className="inline-flex rounded-lg border border-line bg-canvas p-0.5">
           {TF_OPTIONS.map((tf) => (
             <button
               key={tf}
@@ -473,7 +508,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
       {/* ─── Toolbar: drawing tools + indicators ───────────────────────── */}
       <div className="flex flex-wrap items-center gap-1.5 border-b border-line px-3 py-2">
         <ToolButton
-          label="Cursor"
+          label={labels.cursor}
           Icon={MousePointer2}
           active={activeTool === 'cursor'}
           onClick={() => pickTool('cursor')}
@@ -482,14 +517,14 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
         {DRAWING_TOOLS.map((t) => (
           <ToolButton
             key={t.id}
-            label={t.label}
+            label={drawingToolLabel[t.id] ?? t.label}
             Icon={t.Icon}
             active={activeTool === t.id}
             onClick={() => pickTool(t.id)}
           />
         ))}
         <ToolButton
-          label="Clear"
+          label={labels.clear}
           Icon={Eraser}
           tone="danger"
           onClick={() => pickTool('eraser')}
@@ -498,7 +533,7 @@ export function TradingViewWidget({ symbol }: { symbol: string }) {
         {/* Indicators */}
         <span className="ml-1 mr-1 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
           <LineChartIcon className="h-3 w-3" strokeWidth={2} />
-          Indicators
+          {labels.indicators}
         </span>
         {INDICATORS.map((ind) => {
           const active = ind.pane === 'main' ? mainInds.has(ind.id) : subInds.has(ind.id);
@@ -555,7 +590,7 @@ function ToolButton({
       ? 'text-down hover:bg-down/10'
       : 'text-ink hover:bg-elevated';
   return (
-    <button type="button" onClick={onClick} className={`${base} ${styles}`} aria-pressed={active} title={label}>
+    <button type="button" onClick={onClick} className={`${base} ${styles}`} aria-pressed={active} aria-label={label} title={label}>
       <Icon className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
       <span className="hidden sm:inline">{label}</span>
     </button>

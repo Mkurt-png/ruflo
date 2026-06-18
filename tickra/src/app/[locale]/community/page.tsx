@@ -2,13 +2,27 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowUpRight, Calendar, ShieldCheck } from 'lucide-react';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
-export const metadata = { title: 'Communauté · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'community',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Communauté' : 'Community',
+    description:
+      params.locale === 'fr'
+        ? 'Cercles, lectures partagées, événements — comment les lecteurs de Tickra se croisent.'
+        : 'Circles, shared readings, events — how Tickra readers cross paths.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Communauté' : 'Tickra · Community',
+  });
+}
 
 export default async function CommunityPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -18,6 +32,11 @@ export default async function CommunityPage({ params }: { params: { locale: stri
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="community"
+        title={{ fr: 'Communauté', en: 'Community' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero
@@ -26,7 +45,7 @@ export default async function CommunityPage({ params }: { params: { locale: stri
           body={t.body}
         />
 
-        {/* TICKRA-PHASE-4: Charter — the three non-negotiables. */}
+        {/* Charter — the three non-negotiables. */}
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-28">
             <div className="grid grid-cols-12 gap-x-6 gap-y-8">
@@ -60,7 +79,7 @@ export default async function CommunityPage({ params }: { params: { locale: stri
           </Container>
         </section>
 
-        {/* TICKRA-PHASE-4: Upcoming live sessions schedule. */}
+        {/* Upcoming live sessions schedule. */}
         <section className="border-b border-line bg-elevated">
           <Container as="div" className="py-20 md:py-28">
             <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">

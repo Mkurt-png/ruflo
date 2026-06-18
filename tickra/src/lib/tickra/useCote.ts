@@ -7,9 +7,8 @@
 import { useEffect, useState } from 'react';
 import { useProgress } from '@/lib/progress/hook';
 import { SCOPE_EVENT, scopedKey } from '@/lib/progress/scope';
+import { currentDailyStreak } from '@/lib/progress/streak';
 import { computeCote, type CoteOutput } from './cote';
-
-const DAY = 86_400_000;
 
 function readJournalCount(): number {
   if (typeof window === 'undefined') return 0;
@@ -25,23 +24,7 @@ function readJournalCount(): number {
 
 function computeStreak(completed: Record<string, number>): number {
   if (typeof window === 'undefined') return 0;
-  const days = new Set<string>();
-  for (const ts of Object.values(completed)) {
-    days.add(new Date(ts).toISOString().slice(0, 10));
-  }
-  let streak = 0;
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  for (;;) {
-    const key = cursor.toISOString().slice(0, 10);
-    if (days.has(key)) {
-      streak += 1;
-      cursor.setTime(cursor.getTime() - DAY);
-    } else {
-      break;
-    }
-  }
-  return streak;
+  return currentDailyStreak(completed);
 }
 
 const ZERO: CoteOutput = {

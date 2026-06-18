@@ -11,11 +11,15 @@ const copy = {
     title: 'Carte du curriculum',
     subtitle: 'Une cellule par leçon, une ligne par piste. Noir = validé.',
     completed: 'validées',
+    doneSuffix: 'validée',
+    todoSuffix: 'à faire',
   },
   en: {
     title: 'Curriculum map',
     subtitle: 'One cell per lesson, one row per track. Black = done.',
     completed: 'completed',
+    doneSuffix: 'done',
+    todoSuffix: 'to do',
   },
 };
 
@@ -30,9 +34,9 @@ export function CurriculumHeatmap({ locale }: { locale: Locale }) {
   ) : 0;
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="curriculum-heatmap-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
-        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+        <h2 id="curriculum-heatmap-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
         <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
           {done} / {total} {t.completed}
         </div>
@@ -52,6 +56,7 @@ export function CurriculumHeatmap({ locale }: { locale: Locale }) {
                   <li
                     key={l.id}
                     title={`${String(l.index).padStart(2, '0')} · ${l.title[locale]}`}
+                    aria-label={`${String(l.index).padStart(2, '0')} · ${l.title[locale]} — ${isDone ? t.doneSuffix : t.todoSuffix}`}
                     className={cn(
                       'h-4 w-4 rounded-[2px]',
                       isDone ? 'bg-ink' : 'border border-line bg-canvas',

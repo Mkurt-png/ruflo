@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import { GLOSSARY, categoryLabel, tagsFor, tagLabel, type GlossaryTerm } from '@/lib/curriculum/glossary';
 import { cn } from '@/lib/cn';
@@ -14,6 +14,21 @@ const noResult = { fr: 'Aucun terme ne correspond.', en: 'No term matches.' };
 export function GlossaryClient({ locale }: { locale: Locale }) {
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState<Cat>('all');
+
+  // If the reader deep-linked from <Term> (eg. /fr/glossary#stop-loss),
+  // the active filter may hide the target. Reset to 'all' on mount and
+  // re-scroll the matching <li> into view once it's rendered.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.location.hash) return;
+    setCat('all');
+    setQuery('');
+    const id = window.location.hash.slice(1);
+    requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      el?.scrollIntoView({ block: 'start' });
+    });
+  }, []);
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(GLOSSARY.map((g) => g.category)));
@@ -62,11 +77,21 @@ export function GlossaryClient({ locale }: { locale: Locale }) {
       </div>
 
       {results.length === 0 ? (
-        <p className="mt-16 text-center text-[14.5px] text-muted">{noResult[locale]}</p>
+        <p
+          role="status"
+          aria-live="polite"
+          className="mt-16 text-center text-[14.5px] text-muted"
+        >
+          {noResult[locale]}
+        </p>
       ) : (
         <ul className="mt-12 divide-y divide-line border-y border-line">
           {results.map((g) => (
-            <li key={g.term.en} className="grid grid-cols-12 gap-x-6 gap-y-3 py-7 md:py-8">
+            <li
+              key={g.term.en}
+              id={encodeURIComponent(g.term[locale])}
+              className="grid grid-cols-12 gap-x-6 gap-y-3 py-7 md:py-8 scroll-mt-24"
+            >
               <div className="col-span-12 md:col-span-4">
                 <h2 className="font-display text-xl font-medium tracking-tight text-ink md:text-2xl">
                   {g.term[locale]}

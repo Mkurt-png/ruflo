@@ -3,6 +3,7 @@ import { locales } from '@/lib/i18n/config';
 import en from '@/lib/i18n/locales/en';
 import fr from '@/lib/i18n/locales/fr';
 import { TRACKS } from '@/lib/curriculum/data';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
 import { SITE_URL as SITE } from '@/lib/site-url';
 
 const routes = [
@@ -18,7 +19,10 @@ const routes = [
   { path: '/tools', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/changelog', changeFrequency: 'weekly' as const, priority: 0.4 },
   { path: '/community', changeFrequency: 'monthly' as const, priority: 0.5 },
-  { path: '/signin', changeFrequency: 'yearly' as const, priority: 0.3 },
+  // Marketing-grade sample lesson — public, indexable.
+  { path: '/lesson/japanese-candles', changeFrequency: 'yearly' as const, priority: 0.6 },
+  // /signin removed — robots.ts disallows it; sitemap entry would
+  // contradict the disallow and trigger Search Console warnings.
   { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/risk', changeFrequency: 'yearly' as const, priority: 0.2 },
@@ -34,6 +38,8 @@ const routes = [
   { path: '/cercle', changeFrequency: 'weekly' as const, priority: 0.55 },
   { path: '/almanach', changeFrequency: 'daily' as const, priority: 0.7 },
   { path: '/annuaire', changeFrequency: 'weekly' as const, priority: 0.75 },
+  { path: '/recherche', changeFrequency: 'monthly' as const, priority: 0.7 },
+  { path: '/rentree', changeFrequency: 'weekly' as const, priority: 0.55 },
   { path: '/refus', changeFrequency: 'yearly' as const, priority: 0.6 },
   { path: '/erratum', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/cote-inversee', changeFrequency: 'monthly' as const, priority: 0.6 },
@@ -41,22 +47,34 @@ const routes = [
   { path: '/etages', changeFrequency: 'monthly' as const, priority: 0.7 },
   { path: '/method', changeFrequency: 'monthly' as const, priority: 0.65 },
   { path: '/survie', changeFrequency: 'monthly' as const, priority: 0.7 },
-  { path: '/journal', changeFrequency: 'weekly' as const, priority: 0.55 },
-  // Preparation pages
-  { path: '/bureau-partage', changeFrequency: 'monthly' as const, priority: 0.45 },
-  { path: '/edition-lifetime', changeFrequency: 'monthly' as const, priority: 0.5 },
+  // /journal is intentionally absent: robots.ts disallows it as a
+  // private working surface; emitting it in the sitemap would
+  // contradict that signal and trigger 'sitemap'd URL is blocked'
+  // warnings in Search Console.
   { path: '/institutionnel', changeFrequency: 'monthly' as const, priority: 0.45 },
-  { path: '/mecenat', changeFrequency: 'monthly' as const, priority: 0.45 },
+  // Candor-stub rooms (/bureau-partage, /edition-lifetime, /mecenat) are
+  // intentionally absent: they emit `robots: noindex, follow` until the
+  // service behind them ships. They stay linkable from /maison.
 ];
 
+// Pin lastModified at module load so a single deploy reports one
+// timestamp, and the next deploy reports the next one. Using
+// `new Date()` per request meant every URL's lastModified shifted
+// on every server invocation, which Google's freshness heuristic
+// reads as "the site changes every minute" — bad signal.
+const DEPLOY_TIME = new Date();
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const now = DEPLOY_TIME;
   const main = locales.flatMap((locale) =>
     routes.map((r) => ({
       url: `${SITE}/${locale}${r.path}`,
       lastModified: now,
       changeFrequency: r.changeFrequency,
-      priority: locale === 'en' ? r.priority : r.priority * 0.9,
+      // Tickra is French-first (defaultLocale, x-default, manifest lang
+      // all point at fr). FR pages keep full priority; EN translations
+      // inherit a slight downweight as the secondary surface.
+      priority: locale === 'fr' ? r.priority : r.priority * 0.9,
     })),
   );
 
@@ -66,7 +84,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE}/${locale}/editorial/${slug}`,
       lastModified: now,
       changeFrequency: 'monthly' as const,
-      priority: locale === 'en' ? 0.55 : 0.5,
+      priority: locale === 'fr' ? 0.55 : 0.5,
     }));
   });
 
@@ -76,14 +94,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${SITE}/${locale}/learn/${track.slug}`,
         lastModified: now,
         changeFrequency: 'monthly' as const,
-        priority: locale === 'en' ? 0.7 : 0.65,
+        priority: locale === 'fr' ? 0.7 : 0.65,
       },
-      ...track.lessons.map((lesson) => ({
-        url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
-        lastModified: now,
-        changeFrequency: 'monthly' as const,
-        priority: locale === 'en' ? 0.5 : 0.45,
-      })),
+      // Only sitemap seeded lessons. Unseeded lessons render a
+      // structured placeholder and are tagged robots:noindex, so
+      // submitting them would contradict the per-page directive
+      // and trigger 'submitted URL marked noindex' warnings in
+      // Search Console.
+      ...track.lessons
+        .filter((lesson) => isSeeded(lesson.id))
+        .map((lesson) => ({
+          url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
+          lastModified: now,
+          changeFrequency: 'monthly' as const,
+          // FR is the primary locale (defaultLocale, x-default). EN
+          // translations inherit a slight downweight to match the
+          // pattern used for the main and track routes above.
+          priority: locale === 'fr' ? 0.5 : 0.45,
+        })),
     ]),
   );
 

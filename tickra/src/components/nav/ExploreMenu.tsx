@@ -5,7 +5,7 @@
 // to close. No external dep.
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import { NavLink } from './NavLink';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
@@ -37,6 +37,7 @@ export function ExploreMenu({ label, items }: { label: string; items: Item[] }) 
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
+        aria-controls="explore-menu"
         onClick={() => setOpen((v) => !v)}
         className="inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-ink"
       >
@@ -49,19 +50,20 @@ export function ExploreMenu({ label, items }: { label: string; items: Item[] }) 
       </button>
       {open ? (
         <div
+          id="explore-menu"
           role="menu"
           className="absolute left-0 top-full mt-3 min-w-[180px] rounded-sm border border-line bg-surface p-1 shadow-[0_18px_40px_-18px_rgba(27,29,51,0.25)]"
         >
           {items.map((it) => (
-            <Link
+            <NavLink
               key={it.href}
               href={it.href}
               role="menuitem"
               onClick={() => setOpen(false)}
-              className="block rounded-sm px-3 py-2 text-sm text-ink transition-colors hover:bg-elevated"
+              className="block rounded-sm px-3 py-2 text-sm text-ink transition-colors hover:bg-elevated aria-[current=page]:font-medium"
             >
               {it.label}
-            </Link>
+            </NavLink>
           ))}
         </div>
       ) : null}

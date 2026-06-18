@@ -37,7 +37,7 @@ export async function GET(req: Request) {
   authUrl.searchParams.set('prompt', 'select_account');
 
   const response = NextResponse.redirect(authUrl);
-  // TICKRA-FIX: path '/' (not '/api/auth/google') so the cookie is reliably
+  // path '/' (not '/api/auth/google') so the cookie is reliably
   // sent on the callback request across every browser / proxy / preview
   // deployment. The narrow path caused intermittent "invalid_state" errors
   // where the first OAuth attempt failed but the second worked (because

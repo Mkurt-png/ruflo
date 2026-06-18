@@ -60,7 +60,7 @@ export async function POST(req: Request) {
 
   const ok = await markComplete(session.email, body.lessonId);
 
-  // TICKRA-PHASE-5C: post-write achievement evaluation. Fire-and-forget so
+  // post-write achievement evaluation. Fire-and-forget so
   // a webhook hiccup doesn't break the user's lesson-complete flow.
   let unlocked: string[] = [];
   if (ok) {

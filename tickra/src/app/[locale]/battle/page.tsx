@@ -1,5 +1,6 @@
 import { redirect, notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { getCurrentPlan } from '@/lib/auth/server-plan';
 import { Navbar } from '@/components/nav/Navbar';
@@ -16,7 +17,24 @@ const BattleArena3D = nextDynamic(
 );
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'battle',
+    locale: params.locale,
+    title: 'Battle',
+    description:
+      params.locale === 'fr'
+        ? 'Le mode duel de Tickra — face à face hebdomadaire, anonyme.'
+        : 'Tickra’s duel mode — weekly anonymous head-to-head.',
+    ogEyebrow: 'Tickra · Battle',
+    // Requires signin — page server-redirects to /signin?next=/battle for
+    // anonymous visitors, so Googlebot would index a redirect-loop URL.
+    // Keep it out of the index but allow follow so the link to /signin
+    // still passes signal.
+    noindex: true,
+  });
+}
 
 export default async function BattleHubPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -26,7 +44,7 @@ export default async function BattleHubPage({ params }: { params: { locale: stri
   if (plan !== 'pro' && plan !== 'lifetime') redirect(`/${locale}/pricing`);
 
   const dict = await getDictionary(locale);
-  const title = locale === 'fr' ? 'Battle mode' : 'Battle mode';
+  const title = 'Battle mode';
   const body =
     locale === 'fr'
       ? 'Affrontez un autre membre Pro sur 5 questions tirées au sort. Le plus rapide et le plus juste gagne.'
@@ -36,7 +54,7 @@ export default async function BattleHubPage({ params }: { params: { locale: stri
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero eyebrow={locale === 'fr' ? 'Pro' : 'Pro'} title={title} body={body} />
+        <PageHero eyebrow="Pro" title={title} body={body} />
 
         {/* Futuristic duel arena — two glowing avatars facing off across
             an energy beam with travelling pulses. */}
@@ -59,10 +77,10 @@ export default async function BattleHubPage({ params }: { params: { locale: stri
             <KpiStrip
               className="mb-6"
               items={[
-                { label: locale === 'fr' ? 'Questions' : 'Questions', value: '5', tone: 'brand' },
-                { label: locale === 'fr' ? 'Timer' : 'Timer', value: '60s', hint: locale === 'fr' ? '/ question' : '/ question' },
+                { label: 'Questions', value: '5', tone: 'brand' },
+                { label: 'Timer', value: '60s', hint: '/ question' },
                 { label: locale === 'fr' ? 'Joueurs' : 'Players', value: '2', hint: '1v1' },
-                { label: locale === 'fr' ? 'Format' : 'Format', value: locale === 'fr' ? 'BO5' : 'BO5', tone: 'up' },
+                { label: 'Format', value: 'BO5', tone: 'up' },
               ]}
               trailing={<LivePulse label={locale === 'fr' ? 'salons ouverts' : 'rooms open'} />}
             />

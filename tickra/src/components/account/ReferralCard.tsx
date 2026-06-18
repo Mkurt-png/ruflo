@@ -83,22 +83,26 @@ export function ReferralCard({ locale }: { locale: Locale }) {
 
   if (status === 'loading') {
     return (
-      <article className="rounded-sm border border-line bg-surface p-6">
-        <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+        <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
-        </div>
-        <p className="mt-3 text-sm text-muted">{t.loading}</p>
+        </h2>
+        <p role="status" aria-live="polite" aria-busy="true" className="mt-3 text-sm text-muted">
+          {t.loading}
+        </p>
       </article>
     );
   }
 
   if (status === 'error' || !data) {
     return (
-      <article className="rounded-sm border border-line bg-surface p-6">
-        <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+        <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
-        </div>
-        <p className="mt-3 text-sm text-muted">{t.error}</p>
+        </h2>
+        <p role="alert" className="mt-3 text-sm text-muted">
+          {t.error}
+        </p>
       </article>
     );
   }
@@ -107,10 +111,10 @@ export function ReferralCard({ locale }: { locale: Locale }) {
   // accidentally surface invite links from non-paying users.
   if (data.plan === 'free') {
     return (
-      <article className="rounded-sm border border-line bg-surface p-6">
-        <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+        <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.eyebrow}
-        </div>
+        </h2>
         <p className="mt-3 text-sm text-muted">{t.proOnly}</p>
       </article>
     );
@@ -132,20 +136,21 @@ export function ReferralCard({ locale }: { locale: Locale }) {
   };
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-6">
-      <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+    <article aria-labelledby="referral-card-title" className="rounded-sm border border-line bg-surface p-6">
+      <h2 id="referral-card-title" className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
         {t.eyebrow}
-      </div>
+      </h2>
       <h3 className="mt-3 font-display text-2xl font-medium tracking-tight text-ink">
         {t.title}
       </h3>
 
       <div className="mt-5">
-        <label className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+        <label htmlFor="referral-link" className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
           {t.yourLink}
         </label>
         <div className="mt-2 flex gap-2">
           <input
+            id="referral-link"
             readOnly
             value={link}
             className="flex-1 truncate rounded-sm border border-line bg-canvas px-3 py-2 font-mono text-[12px] text-ink"
@@ -154,9 +159,10 @@ export function ReferralCard({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={onCopy}
+            aria-live="polite"
             className="inline-flex h-10 items-center gap-2 rounded-sm border border-line px-3 text-[13px] font-medium text-ink transition-colors hover:border-ink"
           >
-            {copied ? <Check className="h-4 w-4" strokeWidth={1.75} /> : <Copy className="h-4 w-4" strokeWidth={1.75} />}
+            {copied ? <Check aria-hidden className="h-4 w-4" strokeWidth={1.75} /> : <Copy aria-hidden className="h-4 w-4" strokeWidth={1.75} />}
             {copied ? t.copied : t.copy}
           </button>
         </div>

@@ -1,4 +1,4 @@
-// TICKRA-PHASE-1.7: lightweight client-side A/B test for the hero CTA copy.
+// lightweight client-side A/B test for the hero CTA copy.
 // Three buckets, 50/25/25 split. Variant assignment is stable per visitor
 // (localStorage), so a returning user always sees the same label. Plausible
 // custom events fire on impression + click so we can compare conversion.
@@ -6,8 +6,6 @@
 const STORAGE_KEY = 'tickra-ab-hero-cta';
 
 export type HeroCtaVariant = 'control' | 'free' | 'sample';
-
-const VARIANTS: HeroCtaVariant[] = ['control', 'free', 'sample'];
 
 export function getHeroCtaVariant(): HeroCtaVariant {
   if (typeof window === 'undefined') return 'control';

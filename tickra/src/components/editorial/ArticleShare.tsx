@@ -8,9 +8,21 @@ type Props = {
   url: string;
   copyLabel: string;
   copiedLabel: string;
+  /** Optional aria-label for the X/Twitter share link. Defaults to
+   * English when omitted to preserve existing callers. */
+  shareXLabel?: string;
+  /** Optional aria-label for the LinkedIn share link. */
+  shareLinkedInLabel?: string;
 };
 
-export function ArticleShare({ title, url, copyLabel, copiedLabel }: Props) {
+export function ArticleShare({
+  title,
+  url,
+  copyLabel,
+  copiedLabel,
+  shareXLabel = 'Share on X',
+  shareLinkedInLabel = 'Share on LinkedIn',
+}: Props) {
   const [copied, setCopied] = useState(false);
 
   const onCopy = async () => {
@@ -28,10 +40,10 @@ export function ArticleShare({ title, url, copyLabel, copiedLabel }: Props) {
 
   return (
     <div className="flex items-center gap-2">
-      <ShareLink href={xUrl} label="Share on X">
+      <ShareLink href={xUrl} label={shareXLabel}>
         <Twitter aria-hidden className="h-4 w-4" strokeWidth={1.6} />
       </ShareLink>
-      <ShareLink href={liUrl} label="Share on LinkedIn">
+      <ShareLink href={liUrl} label={shareLinkedInLabel}>
         <Linkedin aria-hidden className="h-4 w-4" strokeWidth={1.6} />
       </ShareLink>
       <button

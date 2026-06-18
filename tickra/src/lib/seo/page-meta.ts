@@ -1,0 +1,94 @@
+// Generic page metadata helper for non-editorial-cluster pages.
+//
+// editorialMeta covers the editorial cluster (rooms of La Maison) and
+// emits an /api/og share card by default. This helper is for plain
+// utility pages — glossary, changelog, editorial list — that want
+// the same hreflang/canonical/OG matrix without the share card.
+
+import type { Metadata } from 'next';
+import type { Locale } from '@/lib/i18n/config';
+import { SITE_URL, SITE_NAME } from '@/lib/site-url';
+
+export type PageMetaInput = {
+  /** Path relative to the locale prefix, e.g. "glossary". */
+  slug: string;
+  /** Page title shown in the browser tab (without "· Tickra" suffix). */
+  title: string;
+  /** Short description used for OG and meta description. */
+  description: string;
+  /** Locale to anchor the canonical URL. */
+  locale: Locale;
+  /** OG type — defaults to 'website'. Set 'article' for long-form. */
+  ogType?: 'website' | 'article';
+  /**
+   * When true, emits `robots: noindex, follow`. Use for auth/private
+   * surfaces (/signin, /welcome, /me) and any page that should resolve
+   * but not be indexed. Hreflang is still emitted so the language
+   * matrix stays consistent.
+   */
+  noindex?: boolean;
+  /**
+   * Optional eyebrow rendered on the /api/og share card. When set,
+   * pageMeta wires both OpenGraph and Twitter cards to the dynamic
+   * /api/og endpoint with this eyebrow plus the page title. When
+   * omitted, no share card is declared (Next.js falls back to any
+   * file-based opengraph-image.tsx in the same segment).
+   */
+  ogEyebrow?: string;
+};
+
+export function pageMeta({
+  slug,
+  title,
+  description,
+  locale,
+  ogType = 'website',
+  noindex = false,
+  ogEyebrow,
+}: PageMetaInput): Metadata {
+  const path = slug.startsWith('/') ? slug : `/${slug}`;
+  const canonical = `/${locale}${path}`;
+  const ogImage = ogEyebrow
+    ? `${SITE_URL}/api/og?${new URLSearchParams({
+        title,
+        eyebrow: ogEyebrow,
+        locale,
+      }).toString()}`
+    : undefined;
+  return {
+    title: `${title} · ${SITE_NAME}`,
+    description,
+    ...(noindex && { robots: { index: false, follow: true } }),
+    alternates: {
+      canonical,
+      languages: {
+        'fr-FR': `${SITE_URL}/fr${path}`,
+        'en-GB': `${SITE_URL}/en${path}`,
+        'x-default': `${SITE_URL}/fr${path}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}${canonical}`,
+      siteName: SITE_NAME,
+      type: ogType,
+      locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      ...(ogImage && {
+        images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+      }),
+    },
+    // Twitter cards: declare site + creator so the @tickra handle is
+    // attributed consistently across the catalogue. summary_large_image
+    // matches what editorialMeta and root buildMetadata declare.
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      site: '@tickra',
+      creator: '@tickra',
+      ...(ogImage && { images: [ogImage] }),
+    },
+  };
+}

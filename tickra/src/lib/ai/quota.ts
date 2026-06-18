@@ -1,4 +1,4 @@
-// TICKRA-FIX(security): the previous implementation was vulnerable in two
+// the previous implementation was vulnerable in two
 // ways:
 //   1. Read-then-upsert TOCTOU — N concurrent calls all saw `used < limit`
 //      and went through, allowing budget burn through parallel requests.
@@ -32,7 +32,7 @@ export async function consumeAiQuota(
   const limit = plan === 'free' ? FREE_DAILY_LIMIT : PRO_DAILY_LIMIT;
   const db = await getDb();
   if (!db) {
-    // TICKRA-FIX: fail-closed when DB is missing (was permissive before).
+    // fail-closed when DB is missing (was permissive before).
     return { ok: false, reason: 'db_unavailable', remaining: 0 };
   }
 

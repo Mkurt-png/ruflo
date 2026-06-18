@@ -87,14 +87,14 @@ export function DailyChallenge({ locale }: { locale: Locale }) {
   const isCorrect = choice === card.correct;
 
   return (
-    <article className="rounded-sm border border-ink bg-ink p-7 text-canvas md:p-9">
+    <article aria-labelledby="daily-challenge-title" className="rounded-sm border border-ink bg-ink p-7 text-canvas md:p-9">
       <div className="flex items-center gap-2.5">
         <Calendar aria-hidden className="h-4 w-4 text-canvas/70" strokeWidth={1.6} />
         <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-canvas/70">
           {t.eyebrow}
         </div>
       </div>
-      <h2 className="mt-5 max-w-2xl font-display text-2xl font-medium tracking-tight text-balance md:text-3xl">
+      <h2 id="daily-challenge-title" className="mt-5 max-w-2xl font-display text-2xl font-medium tracking-tight text-balance md:text-3xl">
         {card.q}
       </h2>
 
@@ -144,6 +144,8 @@ export function DailyChallenge({ locale }: { locale: Locale }) {
 
       {revealed ? (
         <motion.div
+          role="status"
+          aria-live="polite"
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: easeOutExpo }}

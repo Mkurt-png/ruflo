@@ -9,8 +9,20 @@ import { cn } from '@/lib/cn';
 type Locale = 'fr' | 'en';
 
 const copy = {
-  fr: { title: 'Distinctions', subtitle: 'Débloquées au fil de votre progression.', counter: 'débloquées' },
-  en: { title: 'Achievements', subtitle: 'Unlocked as you progress.', counter: 'unlocked' },
+  fr: {
+    title: 'Distinctions',
+    subtitle: 'Débloquées au fil de votre progression.',
+    counter: 'débloquées',
+    unlockedSr: 'Débloquée',
+    lockedSr: 'Verrouillée',
+  },
+  en: {
+    title: 'Achievements',
+    subtitle: 'Unlocked as you progress.',
+    counter: 'unlocked',
+    unlockedSr: 'Unlocked',
+    lockedSr: 'Locked',
+  },
 };
 
 export function Achievements({ locale }: { locale: Locale }) {
@@ -22,9 +34,9 @@ export function Achievements({ locale }: { locale: Locale }) {
   const unlocked = items.filter((i) => i.unlocked).length;
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="achievements-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
-        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+        <h2 id="achievements-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
         <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
           {unlocked} / {total} {t.counter}
         </div>
@@ -54,6 +66,7 @@ export function Achievements({ locale }: { locale: Locale }) {
               )}
             </span>
             <div className="min-w-0 flex-1">
+              <span className="sr-only">{a.unlocked ? t.unlockedSr : t.lockedSr} — </span>
               <div
                 className={cn(
                   'font-display text-[15px] font-medium tracking-tight',

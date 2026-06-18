@@ -61,15 +61,16 @@ export function computeSurvie(input: SurvieInput): SurvieOutput | null {
   const breakEvenWinRate =
     plannedR !== null && plannedR > 0 ? (1 / (1 + plannedR)) * 100 : null;
 
+  // Fraction of the account left after one losing trade. riskPct is
+  // guaranteed > 0 above, so survivalRate is always < 1. When riskPct >= 100
+  // the account is wiped (or worse) in a single loss, so the honest answer
+  // is 1 — not Infinity, which the old `survivalRate > 0` guard wrongly
+  // produced and the UI rendered as "∞ losses to halve" for a 100% risk.
   const survivalRate = 1 - riskPct / 100;
   const lossesToHalve =
-    survivalRate > 0 && survivalRate < 1
-      ? Math.ceil(LN_HALF / Math.log(survivalRate))
-      : Infinity;
+    survivalRate <= 0 ? 1 : Math.ceil(LN_HALF / Math.log(survivalRate));
   const lossesToTenth =
-    survivalRate > 0 && survivalRate < 1
-      ? Math.ceil(LN_TENTH / Math.log(survivalRate))
-      : Infinity;
+    survivalRate <= 0 ? 1 : Math.ceil(LN_TENTH / Math.log(survivalRate));
 
   const warnings: SurvieOutput['warnings'] = [];
   if (riskPct >= 2) warnings.push('risk-high');

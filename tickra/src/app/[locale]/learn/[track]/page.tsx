@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { isLocale, locales, type Locale } from '@/lib/i18n/config';
+import { SITE_URL } from '@/lib/site-url';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -13,6 +14,7 @@ import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
 import { LessonPreviewPopover } from '@/components/learn/LessonPreviewPopover';
 import { LessonLockBadge } from '@/components/learn/LessonLockBadge';
 import { CourseJsonLd } from '@/components/seo/CourseJsonLd';
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd';
 import { CalendarClock, Info } from 'lucide-react';
 
 type Params = { locale: string; track: string };
@@ -29,7 +31,46 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
   const track = getTrack(params.track);
   if (!track) return {};
-  return { title: `${track.title[params.locale as Locale]} · Tickra` };
+  const locale = params.locale as Locale;
+  const title = track.title[locale];
+  const description = track.summary[locale];
+  const path = `/learn/${params.track}`;
+  const canonical = `/${locale}${path}`;
+  const ogImage = `${SITE_URL}/api/og?${new URLSearchParams({
+    title,
+    eyebrow: locale === 'fr' ? 'Tickra · Piste' : 'Tickra · Track',
+    locale,
+  }).toString()}`;
+  return {
+    title: `${title} · Tickra`,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        'fr-FR': `${SITE_URL}/fr${path}`,
+        'en-GB': `${SITE_URL}/en${path}`,
+        'x-default': `${SITE_URL}/fr${path}`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: `${SITE_URL}${canonical}`,
+      siteName: 'Tickra',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      site: '@tickra',
+      creator: '@tickra',
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function TrackPage({ params }: { params: Params }) {
@@ -42,6 +83,16 @@ export default async function TrackPage({ params }: { params: Params }) {
   return (
     <>
       <CourseJsonLd track={track} locale={locale} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Tickra', path: `/${locale}` },
+          {
+            name: locale === 'fr' ? 'Apprendre' : 'Learn',
+            path: `/${locale}/learn`,
+          },
+          { name: track.title[locale], path: `/${locale}/learn/${track.slug}` },
+        ]}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <section className="border-b border-line">
@@ -80,7 +131,7 @@ export default async function TrackPage({ params }: { params: Params }) {
                       globalIndex={lessonGlobalIndex(track.slug, lesson.slug)}
                       locale={locale}
                     />
-                    {/* TICKRA-PHASE-1.2: "Bientôt" badge on unseeded lessons. */}
+                    {/* "Bientôt" badge on unseeded lessons. */}
                     {!isSeeded(lesson.id) ? (
                       <span className="inline-flex items-center gap-1 rounded-full border border-line bg-canvas px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
                         <CalendarClock aria-hidden className="h-3 w-3" strokeWidth={2} />
@@ -101,7 +152,7 @@ export default async function TrackPage({ params }: { params: Params }) {
                         <Info aria-hidden className="h-3.5 w-3.5" strokeWidth={1.6} />
                       </span>
                     </LessonPreviewPopover>
-                    <LessonCheckmark lessonId={lesson.id} />
+                    <LessonCheckmark lessonId={lesson.id} locale={locale} />
                     <Link
                       href={`/${locale}/learn/${track.slug}/${lesson.slug}`}
                       aria-label={locale === 'fr' ? 'Ouvrir' : 'Open'}

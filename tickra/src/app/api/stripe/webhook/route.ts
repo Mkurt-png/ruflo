@@ -85,7 +85,7 @@ export async function POST(req: Request) {
 
     const event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
 
-    // TICKRA-FIX(security): Stripe retries — drop duplicate event.id so
+    // Stripe retries — drop duplicate event.id so
     // we don't re-apply state transitions on a flaky network.
     if (await alreadyProcessedStripeEvent(event.id)) {
       return NextResponse.json({ received: true, idempotent: true });
@@ -104,7 +104,7 @@ export async function POST(req: Request) {
         if (plan) patch.plan = plan;
         if (cycle) patch.cycle = cycle === 'monthly' || cycle === 'annual' ? cycle : null;
         if (plan === 'lifetime') patch.cycle = 'once';
-        // TICKRA-FIX(security): UPDATE only — never create a user row from
+        // UPDATE only — never create a user row from
         // a Stripe webhook. /api/checkout now requires an authenticated
         // session, so the row must already exist.
         await updateExistingUser(email, patch);
@@ -159,7 +159,7 @@ export async function POST(req: Request) {
         const sub = event.data.object;
         const email = await emailForCustomer(typeof sub.customer === 'string' ? sub.customer : null);
         if (!email) break;
-        // TICKRA-FIX(security): only grant Pro if the subscription's price
+        // only grant Pro if the subscription's price
         // matches one of our configured Pro price IDs. Was over-granting Pro
         // on any active subscription tied to the customer (incl. trials, gift
         // products, anything else they ever bought).

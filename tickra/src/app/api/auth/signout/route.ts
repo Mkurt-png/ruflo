@@ -4,7 +4,7 @@ import { SESSION_COOKIE } from '@/lib/auth/session';
 // POST or GET /api/auth/signout?locale=fr|en — clears the session cookie
 // and bounces the user back to the localised home page.
 //
-// TICKRA-FIX: a default 307 redirect preserves the request method, so a POST
+// a default 307 redirect preserves the request method, so a POST
 // signout landed on a GET-only page and triggered HTTP 405. Use 303 (See
 // Other) to force a GET. Also redirect to "/<locale>" instead of
 // "/<locale>/signin" so the user lands on the public landing, not on the

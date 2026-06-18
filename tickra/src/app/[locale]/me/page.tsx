@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { getSession } from '@/lib/auth/session';
 import { Navbar } from '@/components/nav/Navbar';
@@ -17,7 +18,20 @@ const PortfolioStats3D = dynamic(
   { ssr: false, loading: () => <div className="w-full h-[320px]" aria-hidden /> },
 );
 
-export const metadata = { title: 'Mon compte · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'me',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Mon espace' : 'My space',
+    description:
+      params.locale === 'fr'
+        ? 'Votre tableau de bord Tickra : progression, journal, paramètres.'
+        : 'Your Tickra dashboard: progress, journal, settings.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Mon espace' : 'Tickra · My space',
+    noindex: true,
+  });
+}
 
 export default async function MePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

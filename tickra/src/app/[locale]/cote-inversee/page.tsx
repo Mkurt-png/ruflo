@@ -1,23 +1,27 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/cote-inversee — La Cote inversée. Once a month, the
 // editor publishes their own composite score, computed with the same
 // formula a reader's account would use, on the same sample window.
 // Static editorial register, signed by date.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'cote-inversee',
-  title: 'La Cote inversée',
-  description:
-    'Tous les mois, l’éditeur publie sa propre Cote, calculée avec la même formule que la vôtre. Transparence radicale.',
+  title: { fr: 'La Cote inversée', en: 'The Inverted Score' },
+  description: {
+    fr: 'Tous les mois, l’éditeur publie sa propre Cote, calculée avec la même formule que la vôtre. Transparence radicale.',
+    en: 'Each month, the editor publishes their own Score, computed with the same formula yours uses. Radical transparency.',
+  },
 });
 
 type Edition = {
@@ -118,7 +122,6 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="cote-inversee"
         title={locale === 'fr' ? 'La Cote inversée' : 'The Inverted Score'}
@@ -127,39 +130,23 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
           : 'The editor publishes their own Score monthly, same formula.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
-              {EDITIONS.length} {locale === 'fr' ? 'éditions' : 'editions'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="cote-inversee"
+        title={{ fr: 'La Cote inversée', en: 'The Inverted Score' }}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={`${EDITIONS.length} ${locale === 'fr' ? 'éditions' : 'editions'}`}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'Demander aux lecteurs ce qu’ils ratent — et le faire en premier.' : 'Asking readers what they miss — and doing it first.'}
+          </Pull>
         </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
@@ -247,8 +234,36 @@ export default async function CoteInverseePage({ params }: { params: { locale: s
             </p>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'La formule exacte que cette page applique à l’éditeur.',
+                en: 'The exact formula this page applies to the editor.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Quand l’éditeur se trompe, c’est ici qu’on le sait.',
+                en: 'When the editor errs, you read it here.',
+              },
+            },
+            {
+              slug: 'voix',
+              title: { fr: 'Les Voix', en: 'The Voices' },
+              caption: {
+                fr: 'D’autres lectures de leur propre cote, à voix anonyme.',
+                en: 'Other readings of one’s own score, in anonymous voices.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

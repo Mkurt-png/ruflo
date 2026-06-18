@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useProgress } from '@/lib/progress/hook';
 import { useCote } from '@/lib/tickra/useCote';
 import { TRACKS } from '@/lib/curriculum/data';
+import { currentDailyStreak } from '@/lib/progress/streak';
 
 type Locale = 'fr' | 'en';
 
@@ -34,23 +35,6 @@ function dueReviewCount(mistakes: Record<string, { loggedAt: number; reviewedAt?
   ).length;
 }
 
-function streakDays(completed: Record<string, number>): number {
-  if (typeof window === 'undefined') return 0;
-  const days = new Set<string>();
-  for (const ts of Object.values(completed)) {
-    days.add(new Date(ts).toISOString().slice(0, 10));
-  }
-  let streak = 0;
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  for (;;) {
-    if (days.has(cursor.toISOString().slice(0, 10))) {
-      streak += 1;
-      cursor.setTime(cursor.getTime() - DAY);
-    } else break;
-  }
-  return streak;
-}
 
 export function Bureau({ locale, email }: { locale: Locale; email: string }) {
   const { state, ready } = useProgress();
@@ -64,7 +48,7 @@ export function Bureau({ locale, email }: { locale: Locale; email: string }) {
   const t = COPY[locale];
   const next = useMemo(() => pickNextLesson(state.completed ?? {}), [state]);
   const due = useMemo(() => dueReviewCount(state.mistakes ?? {}), [state]);
-  const streak = useMemo(() => streakDays(state.completed ?? {}), [state]);
+  const streak = useMemo(() => currentDailyStreak(state.completed ?? {}), [state]);
 
   const formattedDate = now
     ? now.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-GB', {
@@ -93,7 +77,7 @@ export function Bureau({ locale, email }: { locale: Locale; email: string }) {
         </header>
 
         <div className="mt-16 md:mt-20 max-w-[1100px]">
-          <p
+          <h1
             className="font-display italic font-light text-[#0E0E0E]"
             style={{ fontSize: 'clamp(40px, 6vw, 88px)', lineHeight: 0.98, letterSpacing: '-0.035em' }}
           >
@@ -102,7 +86,7 @@ export function Bureau({ locale, email }: { locale: Locale; email: string }) {
             <span className="text-black/55">{t.subOne}</span>
             <br />
             <span className="text-black/35">{t.subTwo}</span>
-          </p>
+          </h1>
         </div>
 
         {/* Five ledger entries */}

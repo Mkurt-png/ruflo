@@ -1,18 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowRight, CreditCard, GraduationCap, LogOut, RefreshCw } from 'lucide-react';
 import { useProgress } from '@/lib/progress/hook';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
-import { StreakHeatmap } from './StreakHeatmap';
-import { ActivityChart } from './ActivityChart';
-import { Achievements } from './Achievements';
-import { TrackCertificates } from './TrackCertificates';
-import { ReviewQueue } from './ReviewQueue';
-import { Bookmarks } from './Bookmarks';
-import { LifetimeStats } from './LifetimeStats';
-import { NotificationOptin } from './NotificationOptin';
 import { FirstRunTour } from './FirstRunTour';
 import { DailyChallenge } from './DailyChallenge';
 import { DailyQuests } from './DailyQuests';
@@ -23,14 +16,18 @@ import { SharePanel } from './SharePanel';
 import { DigestToggle } from './DigestToggle';
 import { ReviewBanner } from './ReviewBanner';
 import { WeeklyPlan } from './WeeklyPlan';
-import { ExportProgress } from './ExportProgress';
-import { ImportProgress } from './ImportProgress';
-import { CurriculumHeatmap } from './CurriculumHeatmap';
-import { ShareProfile } from './ShareProfile';
 import { WhatsNewBanner } from './WhatsNewBanner';
-import { PositionSizer } from '@/components/learn/PositionSizer';
-import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+
+// PERF: the ~14 below-the-fold dashboard panels live in one chunk that
+// loads on the client after hydration, keeping /me's First Load JS lean.
+const AccountPanelDeck = dynamic(
+  () => import('./AccountPanelDeck').then((m) => m.AccountPanelDeck),
+  {
+    ssr: false,
+    loading: () => <div aria-hidden className="mt-3 h-64 rounded-sm border border-line bg-surface" />,
+  },
+);
 import { getReviewQueue, dueNow } from '@/lib/progress/review';
 
 type Locale = 'fr' | 'en';
@@ -139,10 +136,10 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
       </div>
 
       <section className="col-span-12 lg:col-span-8">
-        <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
-          <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+        <article aria-labelledby="account-progress-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
+          <h2 id="account-progress-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
             {t.progress}
-          </div>
+          </h2>
           <div className="mt-5 flex items-baseline gap-3">
             <span className="font-display text-5xl font-medium tracking-tighter text-ink">
               {completedCount}
@@ -179,12 +176,12 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           </div>
         </article>
 
-        {/* TICKRA-PHASE-1.5: prominent banner when spaced-rep reviews are due. */}
+        {/* prominent banner when spaced-rep reviews are due. */}
         <div className="mt-3">
           <ReviewBanner locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-1.4: 14-day personalised plan, generated from placement. */}
+        {/* 14-day personalised plan, generated from placement. */}
         <div className="mt-3">
           <WeeklyPlan locale={locale} />
         </div>
@@ -199,12 +196,12 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <DailyQuests locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-4: community CTA + charter link. */}
+        {/* community CTA + charter link. */}
         <div className="mt-3">
           <CommunityPanel locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-4: referral program — Pro+ gets a unique invite link. */}
+        {/* referral program — Pro+ gets a unique invite link. */}
         <div className="mt-3">
           <ReferralCard locale={locale} />
         </div>
@@ -214,7 +211,7 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <SharePanel locale={locale} />
         </div>
 
-        {/* TICKRA-PHASE-4: weekly Sunday digest opt-in. Default ON server-side. */}
+        {/* weekly Sunday digest opt-in. Default ON server-side. */}
         <div className="mt-3 rounded-2xl border border-line bg-surface px-5">
           <DigestToggle initialOptIn={true} locale={locale} />
         </div>
@@ -223,61 +220,9 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <DailyChallenge locale={locale} />
         </div>
 
-        <div className="mt-3">
-          <LifetimeStats locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <StreakHeatmap locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ActivityChart locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <CurriculumHeatmap locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <NotificationOptin locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ReviewQueue locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <Bookmarks locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <TrackCertificates locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <Achievements locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <PositionSizer locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ExpectancyCalculator locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ExportProgress locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ImportProgress locale={locale} />
-        </div>
-
-        <div className="mt-3">
-          <ShareProfile locale={locale} />
-        </div>
+        {/* PERF: below-the-fold panels split into one lazily-loaded
+            chunk so they stay out of /me's First Load JS. */}
+        <AccountPanelDeck locale={locale} />
       </section>
 
       <aside className="col-span-12 lg:col-span-4">
@@ -310,7 +255,9 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           <button
             type="button"
             onClick={openPortal}
-            className="flex w-full items-center justify-between rounded-sm border border-line bg-surface p-6 text-left transition-colors hover:border-ink"
+            disabled={portalState === 'pending'}
+            aria-busy={portalState === 'pending'}
+            className="flex w-full items-center justify-between rounded-sm border border-line bg-surface p-6 text-left transition-colors hover:border-ink disabled:cursor-wait disabled:opacity-70"
           >
             <span className="flex items-center gap-3 text-[14.5px] text-ink">
               <CreditCard aria-hidden className="h-4 w-4" strokeWidth={1.75} />
@@ -320,12 +267,12 @@ export function AccountPanel({ locale, email }: { locale: Locale; email: string 
           </button>
 
           {portalState === 'no_customer' ? (
-            <p className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
+            <p role="status" aria-live="polite" className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
               {t.billingNoCustomer}
             </p>
           ) : null}
           {portalState === 'not_configured' ? (
-            <p className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
+            <p role="status" aria-live="polite" className="px-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
               {t.billingNotConfigured}
             </p>
           ) : null}

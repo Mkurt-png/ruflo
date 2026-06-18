@@ -69,6 +69,19 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
     setVisible(false);
   };
 
+  // Close on Escape while the tour is visible — matches AskTickra,
+  // HeroVideo, Term, ExploreMenu, MobileMenu, CommandPalette, and the
+  // ExitIntentModal's keyboard contract.
+  useEffect(() => {
+    if (!visible) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
+
   const advance = () => {
     if (step >= t.length - 1) close();
     else setStep((s) => s + 1);
@@ -98,7 +111,7 @@ export function FirstRunTour({ locale }: { locale: Locale }) {
           >
             <button
               type="button"
-              aria-label="Close"
+              aria-label={locale === 'fr' ? 'Fermer' : 'Close'}
               onClick={close}
               className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-elevated hover:text-ink"
             >

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -9,8 +10,21 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
-export const metadata = { title: 'Outils · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'tools',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Outils' : 'Tools',
+    description:
+      params.locale === 'fr'
+        ? 'Calculs et fiches pratiques pour la séance — risk, sizing, post-mortem.'
+        : 'Calculators and worksheets for the trading day — risk, sizing, post-mortem.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Outils' : 'Tickra · Tools',
+  });
+}
 
 const copy = {
   fr: {
@@ -45,6 +59,11 @@ export default async function ToolsPage({ params }: { params: { locale: string }
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="tools"
+        title={{ fr: 'Outils', en: 'Tools' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={t.eyebrow} title={t.title} body={t.body} />

@@ -2,23 +2,28 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/etages — L'Étage Pro. Re-narrates Tickra's three tiers
 // as floors of a building rather than columns of a pricing card.
 // Pure editorial register, links the reader down toward /pricing
 // only at the end. The story of the building, before the bill.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { EtagesItemListJsonLd } from '@/components/seo/EtagesItemListJsonLd';
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'etages',
-  title: 'Les Étages',
-  description:
-    'Trois étages, pas trois colonnes : le rez-de-chaussée gratuit, l’atelier Pro, le bureau Lifetime. La pricing card, à la fin.',
+  title: { fr: 'Les Étages', en: 'The Floors' },
+  description: {
+    fr: 'Trois étages, pas trois colonnes : le rez-de-chaussée gratuit, l’atelier Pro, le bureau Lifetime. La pricing card, à la fin.',
+    en: 'Three floors, not three columns: the free ground floor, the Pro workshop, the Lifetime study. The pricing card, at the end.',
+  },
 });
 
 type Etage = {
@@ -134,7 +139,6 @@ export default async function EtagesPage({ params }: { params: { locale: string 
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="etages"
         title={locale === 'fr' ? 'Les Étages' : 'The Floors'}
@@ -143,46 +147,41 @@ export default async function EtagesPage({ params }: { params: { locale: string 
           : 'Three floors, not three columns. The house before the bill.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {ETAGES.length} {locale === 'fr' ? 'étages' : 'floors'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="etages"
+        title={{ fr: 'Les Étages', en: 'The Floors' }}
+      />
+      <EtagesItemListJsonLd
+        locale={locale}
+        entries={ETAGES.map((e) => ({
+          level: e.level,
+          anchor: `etage-${e.level}`,
+          name: e.name[locale],
+          role: e.role[locale],
+          ambience: e.ambience[locale],
+        }))}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={`${ETAGES.length} ${locale === 'fr' ? 'étages' : 'floors'}`}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'La maison plutôt que les colonnes.' : 'The house, not the columns.'}
+          </Pull>
         </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           {[...ETAGES].reverse().map((e, i) => (
             <article
               key={e.level}
-              className="border-t border-black/15 pt-12 mt-16 first:mt-0 first:border-0 first:pt-0"
+              id={`etage-${e.level}`}
+              className="border-t border-black/15 pt-12 mt-16 first:mt-0 first:border-0 first:pt-0 scroll-mt-24"
             >
               <header className="flex flex-wrap items-baseline justify-between gap-4">
                 <div>
@@ -241,8 +240,36 @@ export default async function EtagesPage({ params }: { params: { locale: string 
             </Link>
           </div>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Ce que ces étages n’hébergeront jamais.',
+                en: 'What these floors will never host.',
+              },
+            },
+            {
+              slug: 'silence',
+              title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+              caption: {
+                fr: 'L’UI commune aux trois étages, sans pastilles.',
+                en: 'The shared UI across the three floors, without dots.',
+              },
+            },
+            {
+              slug: 'mecenat',
+              title: { fr: 'Le Mécénat', en: 'The Patronage' },
+              caption: {
+                fr: 'Un autre étage, payé pour un inconnu.',
+                en: 'Another floor, paid for a stranger.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

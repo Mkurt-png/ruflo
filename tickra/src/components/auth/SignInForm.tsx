@@ -9,7 +9,7 @@ import PasskeySignIn from './PasskeySignIn';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
-// TICKRA-FIX: human-readable messages per backend error code.
+// human-readable messages per backend error code.
 const errorCopy: Record<string, { fr: string; en: string }> = {
   expired:        { fr: 'Le lien a expiré. Demandez-en un nouveau.',          en: 'The link expired. Request a new one.' },
   bad_signature:  { fr: 'Lien invalide ou modifié. Redemandez un lien.',      en: 'Invalid or tampered link. Request a new one.' },
@@ -70,14 +70,18 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
       <p className="mt-4 text-[15.5px] leading-relaxed text-muted">{t.subtitle}</p>
 
       {oauthError ? (
-        <div className="mt-6 flex flex-col gap-3 rounded-sm border border-down/40 bg-down/10 p-4">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="mt-6 flex flex-col gap-3 rounded-sm border border-down/40 bg-down/10 p-4"
+        >
           <div className="flex items-start gap-3">
             <AlertTriangle aria-hidden className="mt-0.5 h-4 w-4 flex-shrink-0 text-down" strokeWidth={1.75} />
             <p className="text-[13.5px] leading-relaxed text-ink">
               {describe(oauthError, locale)}
             </p>
           </div>
-          {/* TICKRA-FIX: most magic-link failures (expired/Gmail-prefetch) are
+          {/* most magic-link failures (expired/Gmail-prefetch) are
               fixed by sending a fresh link. Surface a one-tap retry button. */}
           {oauthError !== 'oauth_not_configured' ? (
             <button
@@ -96,7 +100,11 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
       ) : null}
 
       {sent ? (
-        <div className="mt-10 flex items-start gap-3 rounded-sm border border-line bg-elevated p-5">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mt-10 flex items-start gap-3 rounded-sm border border-line bg-elevated p-5"
+        >
           <Mail aria-hidden className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink" strokeWidth={1.5} />
           <p className="text-[14.5px] leading-relaxed text-ink">{t.sent}</p>
         </div>
@@ -137,13 +145,14 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
           <button
             type="submit"
             disabled={pending}
+            aria-busy={pending}
             className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {t.submit}
             <ArrowRight aria-hidden className="h-4 w-4" strokeWidth={1.75} />
           </button>
           </form>
-          {/* TICKRA-PHASE-2.7: Passkeys (Web Authn) — biometric sign-in. */}
+          {/* Passkeys (Web Authn) — biometric sign-in. */}
           <div className="my-7 flex items-center gap-4">
             <span aria-hidden className="h-px flex-1 bg-line" />
             <span className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-subtle">

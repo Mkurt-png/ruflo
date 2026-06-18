@@ -2,24 +2,29 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { TRACKS } from '@/lib/curriculum/data';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
 
 // /[locale]/annuaire — the phonebook. One alphabetical index of
 // every lesson across every track, with the track label as the
 // source line. Pure server render from the existing curriculum
 // data. Useful as a memory palace and as a long-tail SEO map.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { AnnuaireItemListJsonLd } from '@/components/seo/AnnuaireItemListJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'annuaire',
-  title: 'L’Annuaire',
-  description:
-    'L’index alphabétique de toutes les leçons publiées sur Tickra. Une seule page, navigable au clavier, faite pour être lue lentement.',
+  title: { fr: 'L’Annuaire', en: 'The Index' },
+  description: {
+    fr: 'L’index alphabétique de toutes les leçons publiées sur Tickra. Une seule page, navigable au clavier, faite pour être lue lentement.',
+    en: 'The alphabetical index of every lesson published on Tickra. One page, keyboard-navigable, made to be read slowly.',
+  },
 });
 
 const COPY = {
@@ -54,6 +59,9 @@ type Row = {
   title: string;
   href: string;
   trackTitle: string;
+  /** Lesson id; used to filter unseeded entries out of the
+   * structured ItemList while keeping the visual index complete. */
+  lessonId: string;
 };
 
 function buildRows(locale: Locale): Row[] {
@@ -71,6 +79,7 @@ function buildRows(locale: Locale): Row[] {
         title,
         href: `/${locale}/learn/${track.slug}/${lesson.slug}`,
         trackTitle: track.title[locale],
+        lessonId: lesson.id,
       });
     }
   }
@@ -99,7 +108,6 @@ export default async function AnnuairePage({ params }: { params: { locale: strin
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="annuaire"
         title={locale === 'fr' ? 'L’Annuaire' : 'The Index'}
@@ -108,53 +116,30 @@ export default async function AnnuairePage({ params }: { params: { locale: strin
           : 'The alphabetical index of every lesson published.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {t.counts(rows.length, TRACKS.length)}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
-
-          {/* Letter nav */}
-          <nav aria-label="A-Z" className="mt-12 flex flex-wrap gap-x-3 gap-y-2 border-y border-black/15 py-3">
-            {letters.map((l) => (
-              <a
-                key={l}
-                href={`#letter-${l}`}
-                className="font-mono text-[11px] uppercase tracking-[0.22em] text-black/55 hover:text-black/90 tabular-nums"
-              >
-                {l}
-              </a>
-            ))}
-          </nav>
-        </section>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="annuaire"
+        title={{ fr: 'L’Annuaire', en: 'The Index' }}
+      />
+      <AnnuaireItemListJsonLd
+        locale={locale}
+        // Skip unseeded lessons: the destination page noindexes itself
+        // until a real body lands, so listing them in the structured
+        // catalogue would waste crawl budget on guaranteed-noindex
+        // URLs. Visual rows below stay complete — readers see the
+        // full curriculum, crawlers see only the indexable subset.
+        entries={rows
+          .filter((r) => isSeeded(r.lessonId))
+          .map((r) => ({ title: r.title, href: r.href, trackTitle: r.trackTitle }))}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={t.counts(rows.length, TRACKS.length)}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
 
         <section className="mx-auto max-w-[1100px] px-6 md:px-16 pb-32">
           {letters.map((letter) => (
@@ -200,8 +185,36 @@ export default async function AnnuairePage({ params }: { params: { locale: strin
             </p>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'almanach',
+              title: { fr: 'L’Almanach', en: 'The Almanac' },
+              caption: {
+                fr: 'Les Criées de l’année, sur une seule page.',
+                en: 'The year’s Criées, on one page.',
+              },
+            },
+            {
+              slug: 'lexique',
+              title: { fr: 'Le Lexique vivant', en: 'The Living Lexicon' },
+              caption: {
+                fr: 'Les mots qui s’ouvrent au clic.',
+                en: 'Words that open on click.',
+              },
+            },
+            {
+              slug: 'recherche',
+              title: { fr: 'La Recherche', en: 'The Search' },
+              caption: {
+                fr: 'Boîte vide qui parcourt tout.',
+                en: 'Empty box across everything.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

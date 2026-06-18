@@ -14,7 +14,7 @@ type Params = { params: { id: string } };
 
 const QUESTION_MAX_MS = 25_000; // 20s window + 5s clock-skew clamp
 
-// TICKRA-FIX(security): two layers of redaction on GET.
+// two layers of redaction on GET.
 //  1. Anonymous callers (no session) get a tiny "exists?" shape only.
 //  2. Even host/guest get `questions` with `correct` and `rationale` stripped
 //     while the battle is still active. Only after `finished` do we send the
@@ -135,7 +135,7 @@ export async function POST(req: NextRequest, { params }: Params) {
     }
     const index = Number(body.index);
     const answer = Number(body.answer);
-    // TICKRA-FIX: clamp timeMs to [0, QUESTION_MAX_MS] so a malicious client
+    // clamp timeMs to [0, QUESTION_MAX_MS] so a malicious client
     // can't claim `timeMs: 0` to always win the speed tie-breaker.
     const timeMs = Math.min(
       QUESTION_MAX_MS,
@@ -144,7 +144,7 @@ export async function POST(req: NextRequest, { params }: Params) {
     if (!Number.isInteger(index) || index < 0 || index >= battle.questions.length) {
       return NextResponse.json({ error: 'invalid_index' }, { status: 400 });
     }
-    // TICKRA-FIX(security): reject out-of-range answer indices. A timeout
+    // reject out-of-range answer indices. A timeout
     // sentinel `-1` is accepted and recorded as "no answer".
     const isSentinel = answer === -1;
     const question = battle.questions[index];

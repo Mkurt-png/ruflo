@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useProgress } from '@/lib/progress/hook';
 import { scopedKey, SCOPE_EVENT } from '@/lib/progress/scope';
 import { computeRituel, type Rituel } from '@/lib/tickra/rituel';
+import { currentDailyStreak } from '@/lib/progress/streak';
 
 type Locale = 'fr' | 'en';
 
@@ -18,35 +19,21 @@ const COPY = {
     dismiss: 'Refermer',
     open: 'Ouvrir une leçon',
     learnHref: 'learn',
+    carnet: 'Voir le carnet complet',
+    carnetHref: 'rentree',
   },
   en: {
     eyebrow: 'The Ritual — return',
     dismiss: 'Close',
     open: 'Open a lesson',
     learnHref: 'learn',
+    carnet: 'See the full register',
+    carnetHref: 'rentree',
   },
 } as const;
 
 const DISMISS_BASE = 'tickra-rituel-dismissed-v1';
 
-function computeStreak(completed: Record<string, number>): number {
-  if (typeof window === 'undefined') return 0;
-  const DAY = 86_400_000;
-  const days = new Set<string>();
-  for (const ts of Object.values(completed)) {
-    days.add(new Date(ts).toISOString().slice(0, 10));
-  }
-  let streak = 0;
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  for (;;) {
-    if (days.has(cursor.toISOString().slice(0, 10))) {
-      streak += 1;
-      cursor.setTime(cursor.getTime() - DAY);
-    } else break;
-  }
-  return streak;
-}
 
 export function RituelBanner({ locale }: { locale: Locale }) {
   const { state, ready } = useProgress();
@@ -72,7 +59,7 @@ export function RituelBanner({ locale }: { locale: Locale }) {
     return computeRituel({
       completed: state.completed ?? {},
       mistakes: state.mistakes ?? {},
-      streakDays: computeStreak(state.completed ?? {}),
+      streakDays: currentDailyStreak(state.completed ?? {}),
     });
   }, [ready, state]);
 
@@ -121,10 +108,16 @@ export function RituelBanner({ locale }: { locale: Locale }) {
         ))}
       </ol>
 
-      <div className="mt-10">
+      <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
+        <a
+          href={`/${locale}/${t.carnetHref}`}
+          className="inline-flex h-10 items-center rounded-full border border-black/70 px-5 font-mono text-[11px] uppercase tracking-[0.22em] text-[#0E0E0E] hover:bg-[#0E0E0E] hover:text-[#F4F1EA] transition-colors"
+        >
+          {t.carnet} →
+        </a>
         <a
           href={`/${locale}/${t.learnHref}`}
-          className="inline-flex h-10 items-center rounded-full border border-black/70 px-5 font-mono text-[11px] uppercase tracking-[0.22em] text-[#0E0E0E] hover:bg-[#0E0E0E] hover:text-[#F4F1EA] transition-colors"
+          className="inline-flex h-10 items-center font-mono text-[11px] uppercase tracking-[0.22em] text-black/65 hover:text-black/90 transition-colors"
         >
           {t.open}
         </a>

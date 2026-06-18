@@ -27,6 +27,7 @@ const COPY = {
     del: 'Supprimer',
     confirm: 'Supprimer ce trade ?',
     empty: 'Aucun trade pour l’instant. Ajoutez votre premier ci-dessus.',
+    caption: 'Journal des trades',
   },
   en: {
     pair: 'Pair',
@@ -44,6 +45,7 @@ const COPY = {
     del: 'Delete',
     confirm: 'Delete this trade?',
     empty: 'No trade yet. Add your first one above.',
+    caption: 'Trade journal',
   },
 } as const;
 
@@ -59,17 +61,18 @@ export function JournalTable({ trades, locale, onEdit, onDelete }: Props) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
       <table className="w-full text-sm">
+        <caption className="sr-only">{t.caption}</caption>
         <thead className="bg-elevated text-xs uppercase tracking-wider text-subtle">
           <tr>
-            <th className="px-4 py-3 text-left">{t.pair}</th>
-            <th className="px-4 py-3 text-left">{t.side}</th>
-            <th className="px-4 py-3 text-right">{t.entry}</th>
-            <th className="px-4 py-3 text-right">{t.exit}</th>
-            <th className="px-4 py-3 text-right">{t.pnl}</th>
-            <th className="px-4 py-3 text-right">{t.r}</th>
-            <th className="px-4 py-3 text-left">{t.opened}</th>
-            <th className="px-4 py-3 text-left">{t.status}</th>
-            <th className="px-4 py-3 text-right">{t.actions}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.pair}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.side}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.entry}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.exit}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.pnl}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.r}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.opened}</th>
+            <th scope="col" className="px-4 py-3 text-left">{t.status}</th>
+            <th scope="col" className="px-4 py-3 text-right">{t.actions}</th>
           </tr>
         </thead>
         <tbody>
@@ -83,7 +86,7 @@ export function JournalTable({ trades, locale, onEdit, onDelete }: Props) {
                 <td className="px-4 py-3 text-right font-mono">{row.entry_price}</td>
                 <td className="px-4 py-3 text-right font-mono">{row.exit_price ?? '—'}</td>
                 <td className={`px-4 py-3 text-right font-mono ${pnlClass}`}>
-                  {pnl === null ? '—' : pnl.toLocaleString('en-US', { maximumFractionDigits: 2 })}
+                  {pnl === null ? '—' : pnl.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US', { maximumFractionDigits: 2 })}
                 </td>
                 <td className="px-4 py-3 text-right font-mono text-muted">
                   {row.risk_r === null ? '—' : `${row.risk_r}R`}

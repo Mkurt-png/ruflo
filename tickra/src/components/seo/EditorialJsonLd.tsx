@@ -4,6 +4,7 @@
 // optional dates; the component composes the canonical URL itself.
 
 import { SITE_URL } from '@/lib/site-url';
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 
 type Locale = 'fr' | 'en';
 
@@ -24,18 +25,35 @@ export function EditorialJsonLd({
 }) {
   const path = slug.startsWith('/') ? slug : `/${slug}`;
   const url = `${SITE_URL}/${locale}${path}`;
-  const now = new Date().toISOString();
+  // Article schema needs an image for rich-result eligibility. Point
+  // at the same /api/og card the OG/Twitter cards already use so the
+  // preview stays consistent across surfaces.
+  const ogParams = new URLSearchParams({ title, locale });
+  const image = `${SITE_URL}/api/og?${ogParams.toString()}`;
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: title,
     description,
+    image: [image],
     inLanguage: locale === 'fr' ? 'fr-FR' : 'en-GB',
     url,
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     datePublished: datePublished ?? '2026-01-01T00:00:00.000Z',
-    dateModified: dateModified ?? now,
+    // When the caller doesn't pass an explicit dateModified, fall back
+    // to datePublished rather than Date.now(). The latter changed on
+    // every ISR revalidation and made Google's "page was updated"
+    // heuristic fire even when the content was identical.
+    dateModified: dateModified ?? datePublished ?? '2026-01-01T00:00:00.000Z',
     isAccessibleForFree: true,
+    // Speakable spec: the editorial headline triptych and intro
+    // paragraph are designated as voice-assistant-readable. Selectors
+    // map to EditorialFrame's data-speakable attributes so they stay
+    // stable across visual restyles.
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['[data-speakable="headline"]', '[data-speakable="intro"]'],
+    },
     author: {
       '@type': 'Organization',
       name: 'Tickra',
@@ -45,26 +63,18 @@ export function EditorialJsonLd({
       '@type': 'Organization',
       name: 'Tickra',
       url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/favicon.svg`,
+      },
     },
   };
-
-  // Defence-in-depth: escape </script>, U+2028, U+2029 so future
-  // callers cannot break out of the JSON-LD block if any prop ever
-  // carries user-supplied content. JSON.stringify alone doesn't
-  // handle these.
-  const payload = JSON.stringify(data)
-    .replace(/</g, '\\u003c')
-    .replace(/>/g, '\\u003e')
-    .replace(/&/g, '\\u0026')
-    .replace(/[\u2028]/g, '\\u2028')
-    .replace(/[\u2029]/g, '\\u2029');
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: payload }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
     />
   );
 }
 
-export default EditorialJsonLd;

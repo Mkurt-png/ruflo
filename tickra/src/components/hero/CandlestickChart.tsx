@@ -194,7 +194,7 @@ export function CandlestickChart({ caption }: { caption: string }) {
         >
           <span
             aria-hidden
-            className={`inline-block h-1.5 w-1.5 rounded-full ${liveUp ? 'bg-up' : 'bg-down'} animate-pulse`}
+            className={`inline-block h-1.5 w-1.5 rounded-full ${liveUp ? 'bg-up' : 'bg-down'} animate-pulse motion-reduce:animate-none`}
           />
           {liveUp ? '+' : ''}
           {livePct.toFixed(2)}%

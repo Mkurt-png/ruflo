@@ -1,13 +1,27 @@
 import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { PlacementTest } from '@/components/onboarding/PlacementTest';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
-export const metadata = { title: 'Test de niveau · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'onboarding',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Test de niveau' : 'Placement Test',
+    description:
+      params.locale === 'fr'
+        ? 'Un test de quelques minutes qui choisit la piste où commencer.'
+        : 'A few-minute test that picks the track where to start.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Test de niveau' : 'Tickra · Placement test',
+  });
+}
 
 export default async function OnboardingPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -16,6 +30,11 @@ export default async function OnboardingPage({ params }: { params: { locale: str
 
   return (
     <>
+      <PageBreadcrumb
+        locale={params.locale}
+        slug="onboarding"
+        title={{ fr: 'Test de niveau', en: 'Placement Test' }}
+      />
       <Navbar dict={dict} locale={params.locale} />
       <main id="main">
         <section className="border-b border-line">

@@ -36,7 +36,11 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
 
   if (sent) {
     return (
-      <div className="flex items-start gap-3 rounded-sm border border-line bg-elevated p-6">
+      <div
+        role="status"
+        aria-live="polite"
+        className="flex items-start gap-3 rounded-sm border border-line bg-elevated p-6"
+      >
         <Check aria-hidden className="mt-0.5 h-5 w-5 flex-shrink-0 text-ink" strokeWidth={1.75} />
         <p className="text-[15px] leading-relaxed text-ink">{t.sent}</p>
       </div>
@@ -63,6 +67,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       <button
         type="submit"
         disabled={pending}
+        aria-busy={pending}
         className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[15px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {t.submit}

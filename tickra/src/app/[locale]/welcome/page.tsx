@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CheckCircle2, ArrowRight, BookOpen, Settings } from 'lucide-react';
 import { isLocale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -10,9 +11,22 @@ import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { TRACKS, getTrack } from '@/lib/curriculum/data';
 
-export const metadata = { title: 'Bienvenue · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'welcome',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Bienvenue' : 'Welcome',
+    description:
+      params.locale === 'fr'
+        ? 'Bienvenue dans Tickra. La maison est ouverte.'
+        : 'Welcome to Tickra. The house is open.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Bienvenue' : 'Tickra · Welcome',
+    noindex: true,
+  });
+}
 
-// TICKRA-PHASE-1.1: focused first-action. One big primary CTA pointing at the
+// focused first-action. One big primary CTA pointing at the
 // user's recommended first lesson (from placement test). Secondary actions are
 // kept but visually downplayed so the choice paralysis disappears.
 const copy = {

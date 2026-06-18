@@ -1,5 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getSession } from '@/lib/auth/session';
 import { isDbConfigured, listProgress, listMistakes } from '@/lib/db/queries';
 import {
@@ -12,6 +13,22 @@ import { listUnlocked, recordUnlocks } from '@/lib/db/achievements-queries';
 import { Navbar } from '@/components/nav/Navbar';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+
+// Per-user achievement board — gated by getSession, never indexable.
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'achievements',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Réussites' : 'Achievements',
+    description:
+      params.locale === 'fr'
+        ? 'Vos jalons de lecture et d’apprentissage. Calculé localement.'
+        : 'Your reading and learning milestones. Computed locally.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Réussites' : 'Tickra · Achievements',
+    noindex: true,
+  });
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -52,7 +69,7 @@ export default async function AchievementsPage({ params }: { params: { locale: s
   return (
     <>
       <Navbar dict={dict} locale={locale} />
-      <main className="mx-auto w-full max-w-4xl px-6 py-12 md:py-16">
+      <main id="main" className="mx-auto w-full max-w-4xl px-6 py-12 md:py-16">
         <header className="mb-10">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-subtle">
             {t.eyebrow}
@@ -69,7 +86,7 @@ export default async function AchievementsPage({ params }: { params: { locale: s
             { label: locale === 'fr' ? 'Débloqués' : 'Unlocked', value: String(totalUnlocked), tone: 'brand', hint: `/ ${ACHIEVEMENTS.length}` },
             { label: locale === 'fr' ? 'Restants' : 'Locked', value: String(ACHIEVEMENTS.length - totalUnlocked) },
             { label: locale === 'fr' ? 'Progression' : 'Progress', value: `${Math.round((totalUnlocked / Math.max(1, ACHIEVEMENTS.length)) * 100)}%`, tone: totalUnlocked > 0 ? 'up' : 'neutral' },
-            { label: locale === 'fr' ? 'Total' : 'Total', value: String(ACHIEVEMENTS.length) },
+            { label: 'Total', value: String(ACHIEVEMENTS.length) },
           ]}
           trailing={<LivePulse label={locale === 'fr' ? 'à jour' : 'synced'} />}
         />

@@ -31,7 +31,16 @@ export function middleware(req: NextRequest) {
     (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
   );
 
-  if (hasLocale) return NextResponse.next();
+  if (hasLocale) {
+    // Forward the resolved pathname on REQUEST headers so locale-
+    // agnostic server components (404 / error pages) can detect
+    // which locale the reader is in and render the right language.
+    // Next.js does not expose route params to not-found.tsx, so this
+    // is the only server-side hook for that detection.
+    const requestHeaders = new Headers(req.headers);
+    requestHeaders.set('x-pathname', pathname);
+    return NextResponse.next({ request: { headers: requestHeaders } });
+  }
 
   const locale = pickLocale(req);
   const url = req.nextUrl.clone();

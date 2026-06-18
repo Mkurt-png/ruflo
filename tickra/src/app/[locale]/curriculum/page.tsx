@@ -2,15 +2,29 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 import { getLessonContent, isSeeded } from '@/lib/curriculum/lesson-content';
 
-export const metadata = { title: 'Curriculum · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'curriculum',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'Cursus' : 'Curriculum',
+    description:
+      params.locale === 'fr'
+        ? 'Le plan complet du cursus Tickra : pistes, leçons, ordre de lecture.'
+        : 'Tickra’s full curriculum plan: tracks, lessons, reading order.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · Cursus' : 'Tickra · Curriculum',
+  });
+}
 
 const levelLabel: Record<string, { fr: string; en: string }> = {
   foundations: { fr: 'Fondations', en: 'Foundations' },
@@ -48,6 +62,11 @@ export default async function CurriculumPage({ params }: { params: { locale: str
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="curriculum"
+        title={{ fr: 'Cursus', en: 'Curriculum' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero eyebrow={t.eyebrow} title={t.title} body={t.body} />

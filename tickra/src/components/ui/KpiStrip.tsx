@@ -57,7 +57,7 @@ export function KpiStrip({
 export function LivePulse({ label = 'live' }: { label?: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-      <span aria-hidden className="inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up" />
+      <span aria-hidden className="inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-up motion-reduce:animate-none" />
       {label}
     </span>
   );

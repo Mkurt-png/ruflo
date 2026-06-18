@@ -6,7 +6,7 @@ import { isDebugAuthorised } from '@/lib/debug/gate';
 export const dynamic = 'force-dynamic';
 
 // GET /api/debug/sendmail?to=you@example.com
-// TICKRA-FIX(security): gated — was a "spam any address through our Resend"
+// gated — was a "spam any address through our Resend"
 // vulnerability. Production callers need `x-debug-token: $DEBUG_TOKEN`.
 export async function GET(req: Request) {
   const gate = isDebugAuthorised(req);

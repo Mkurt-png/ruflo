@@ -10,10 +10,9 @@ import { useProgress } from '@/lib/progress/hook';
 import { useCote } from '@/lib/tickra/useCote';
 import { TRACKS } from '@/lib/curriculum/data';
 import { composeLetter, type LetterContext } from '@/lib/tickra/lettre';
+import { currentDailyStreak } from '@/lib/progress/streak';
 
 type Locale = 'fr' | 'en';
-
-const DAY = 86_400_000;
 
 function pickUpNext(completed: Record<string, number>): LetterContext['upNext'] {
   for (const track of TRACKS) {
@@ -26,24 +25,6 @@ function pickUpNext(completed: Record<string, number>): LetterContext['upNext'] 
   return undefined;
 }
 
-function computeStreak(completed: Record<string, number>): number {
-  if (typeof window === 'undefined') return 0;
-  const days = new Set<string>();
-  for (const ts of Object.values(completed)) {
-    days.add(new Date(ts).toISOString().slice(0, 10));
-  }
-  let streak = 0;
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  for (;;) {
-    if (days.has(cursor.toISOString().slice(0, 10))) {
-      streak += 1;
-      cursor.setTime(cursor.getTime() - DAY);
-    } else break;
-  }
-  return streak;
-}
-
 export function LettrePanel({ locale }: { locale: Locale }) {
   const { state, ready } = useProgress();
   const { cote } = useCote();
@@ -53,7 +34,7 @@ export function LettrePanel({ locale }: { locale: Locale }) {
     const ctx: LetterContext = {
       completed: state.completed ?? {},
       mistakes: state.mistakes ?? {},
-      streakDays: computeStreak(state.completed ?? {}),
+      streakDays: currentDailyStreak(state.completed ?? {}),
       cote: cote.score,
       coteDelta: cote.delta,
       upNext: pickUpNext(state.completed ?? {}),

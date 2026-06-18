@@ -1,23 +1,28 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 import { VOIX } from '@/lib/tickra/voix';
 
 // /[locale]/voix — Les Voix. Monthly interview series with anonymous
 // working traders. Editorial register. Static data file; the editor
 // publishes the audio URL whenever the recording is up.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { VoixItemListJsonLd } from '@/components/seo/VoixItemListJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'voix',
-  title: 'Les Voix',
-  description:
-    'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
+  title: { fr: 'Les Voix', en: 'The Voices' },
+  description: {
+    fr: 'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
+    en: 'One voice per month. Working traders, under pseudonym, telling their craft without grand story.',
+  },
 });
 
 const COPY = {
@@ -64,7 +69,6 @@ export default async function VoixPage({ params }: { params: { locale: string } 
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="voix"
         title={locale === 'fr' ? 'Les Voix' : 'The Voices'}
@@ -73,46 +77,33 @@ export default async function VoixPage({ params }: { params: { locale: string } 
           : 'One voice per month. Anonymous interviews with working traders.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {VOIX.length} {locale === 'fr' ? 'voix' : 'voices'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="voix"
+        title={{ fr: 'Les Voix', en: 'The Voices' }}
+      />
+      <VoixItemListJsonLd locale={locale} />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={`${VOIX.length} ${locale === 'fr' ? 'voix' : 'voices'}`}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr'
+              ? 'Une voix, un mois. Sous pseudonyme, sans grand récit.'
+              : 'One voice, one month. Under pseudonym, without grand story.'}
+          </Pull>
         </section>
-
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           {VOIX.map((v, i) => (
             <article
               key={v.id}
-              className="border-t border-black/15 pt-12 mt-16 first:mt-0 first:border-0 first:pt-0"
+              id={v.id}
+              className="border-t border-black/15 pt-12 mt-16 first:mt-0 first:border-0 first:pt-0 scroll-mt-24"
             >
               <header className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
                 <div>
@@ -123,7 +114,8 @@ export default async function VoixPage({ params }: { params: { locale: string } 
                     {v.pseudonym}
                   </span>
                   <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-black/65 tabular-nums">
-                    {formatDate(v.date, locale)} · {v.city[locale]} · {v.craft[locale]}
+                    <time dateTime={v.date}>{formatDate(v.date, locale)}</time>
+                    {' · '}{v.city[locale]}{' · '}{v.craft[locale]}
                   </p>
                 </div>
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55 tabular-nums">
@@ -168,8 +160,36 @@ export default async function VoixPage({ params }: { params: { locale: string } 
             </p>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'lettre',
+              title: { fr: 'La Lettre du dimanche', en: 'The Sunday Letter' },
+              caption: {
+                fr: 'Une voix à soi-même, chaque semaine.',
+                en: 'A voice to oneself, each week.',
+              },
+            },
+            {
+              slug: 'cercle',
+              title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+              caption: {
+                fr: 'Une voix à un inconnu, en silence.',
+                en: 'A voice to a stranger, in silence.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Quand les voix se trompent, l’éditeur le note.',
+                en: 'When voices err, the editor notes it.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

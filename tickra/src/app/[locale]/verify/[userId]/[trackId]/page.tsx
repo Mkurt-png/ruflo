@@ -9,11 +9,41 @@ import { getTrack, TRACKS } from '@/lib/curriculum/data';
 import { getTrackById as getBadgeTrack } from '@/lib/badges';
 import { verifyCertificate } from '@/lib/db/verify-queries';
 
-// TODO i18n — verify page copy is English-only for now (Phase 4D).
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Verify · Tickra' };
+export const metadata = {
+  title: 'Verify · Tickra',
+  // Per-user verification URL — never index.
+  robots: { index: false, follow: false },
+};
 
 type Params = { locale: string; userId: string; trackId: string };
+
+const COPY = {
+  fr: {
+    verified: 'Vérifié ✓',
+    completedBy: (name: string, track: string) => ({
+      prefix: `${name} a complété`,
+      track,
+    }),
+    issuedOn: 'Délivré le',
+    notVerified: 'Non vérifié',
+    notFound: 'Certificat introuvable',
+    notFoundBody: 'Ce certificat n’a pas pu être vérifié. La piste n’est peut-être pas terminée, ou le lien est invalide.',
+    anonTrader: (id: string) => `Trader #${id.slice(0, 4)}`,
+  },
+  en: {
+    verified: 'Verified ✓',
+    completedBy: (name: string, track: string) => ({
+      prefix: `${name} completed`,
+      track,
+    }),
+    issuedOn: 'Issued on',
+    notVerified: 'Not verified',
+    notFound: 'Certificate not found',
+    notFoundBody: 'This certificate could not be verified. The track may not be completed, or the link may be invalid.',
+    anonTrader: (id: string) => `Trader #${id.slice(0, 4)}`,
+  },
+} as const;
 
 // Map a curriculum track id (e.g. "candles") OR slug (e.g. "japanese-candles")
 // to the badge-tracks numeric id (e.g. "03"), so we can colour the badge.
@@ -31,6 +61,7 @@ export default async function VerifyPage({ params }: { params: Params }) {
   if (!isLocale(params.locale)) notFound();
   const locale: Locale = params.locale;
   const dict = await getDictionary(locale);
+  const t = COPY[locale];
 
   const track = getTrack(params.trackId);
   const cert = track
@@ -50,31 +81,37 @@ export default async function VerifyPage({ params }: { params: Params }) {
             {cert && track ? (
               <>
                 <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-up">
-                  Verified ✓
+                  {t.verified}
                 </span>
                 <h1 className="mt-4 max-w-2xl font-display text-3xl md:text-4xl font-medium tracking-tight text-ink">
-                  {cert.displayName ?? `Trader #${params.userId.slice(0, 4)}`} completed{' '}
+                  {t.completedBy(
+                    cert.displayName ?? t.anonTrader(params.userId),
+                    track.title[locale],
+                  ).prefix}{' '}
                   <span className="text-brand">{track.title[locale]}</span>
                 </h1>
                 <p className="mt-3 text-sm text-muted">
-                  Issued on {new Date(cert.completedAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+                  {t.issuedOn}{' '}
+                  {new Date(cert.completedAt).toLocaleDateString(
+                    locale === 'fr' ? 'fr-FR' : 'en-US',
+                    {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    },
+                  )}
                 </p>
               </>
             ) : (
               <>
                 <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-down">
-                  Not verified
+                  {t.notVerified}
                 </span>
                 <h1 className="mt-4 font-display text-3xl font-medium text-ink">
-                  Certificate not found
+                  {t.notFound}
                 </h1>
                 <p className="mt-3 text-sm text-muted">
-                  This certificate could not be verified. The track may not be completed, or the
-                  link may be invalid.
+                  {t.notFoundBody}
                 </p>
               </>
             )}

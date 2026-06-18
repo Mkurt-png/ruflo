@@ -35,7 +35,7 @@ function authorise(req: Request): boolean {
 type Contact = { email: string; first_name?: string; unsubscribed?: boolean };
 
 async function listAudienceContacts(audienceId: string): Promise<Contact[]> {
-  // TICKRA-FIX: previously returned only Resend's first page; anyone beyond
+  // previously returned only Resend's first page; anyone beyond
   // ~100 contacts never got the reminder. We try cursor-based pagination
   // (when Resend's SDK exposes it) and fall back to single-page otherwise.
   try {
@@ -88,7 +88,7 @@ export async function GET(req: Request) {
   let failed = 0;
   let skipped = 0;
 
-  // TICKRA-FIX: per-user idempotence — only send if 20h+ since last send to
+  // per-user idempotence — only send if 20h+ since last send to
   // the same address. Prevents duplicate emails if the cron fires twice or
   // is manually triggered the same day.
   const dbReady = isDbConfigured();

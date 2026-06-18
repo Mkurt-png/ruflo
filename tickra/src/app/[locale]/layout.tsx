@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/lib/theme/ThemeProvider';
@@ -18,19 +19,31 @@ import { ScopeSync } from '@/components/site/ScopeSync';
 import { HeurePapier } from '@/components/site/HeurePapier';
 import { ExitIntentModal } from '@/components/site/ExitIntentModal';
 import { OrganizationJsonLd } from '@/components/seo/OrganizationJsonLd';
+import { MotionConfig } from 'framer-motion';
 import '../globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+// Tickra uses four Inter weights total (regular, medium, semibold, bold).
+// Pinning the request avoids fetching the eight-weight variable Inter
+// file Next would otherwise serve by default.
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
 const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-fraunces',
   display: 'swap',
   axes: ['opsz'],
 });
+// JetBrains Mono is only used for editorial captions / kbd / code at
+// regular weight. Pinning to 400 avoids the full eight-weight family.
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains',
   display: 'swap',
+  weight: ['400'],
 });
 
 export function generateStaticParams() {
@@ -41,6 +54,16 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   if (!isLocale(params.locale)) return {};
   return buildMetadata(params.locale);
 }
+
+// Tells the browser chrome (mobile status bar, PWA chrome, Safari) to
+// paint in the editorial palette: ivory in light mode, ink in dark.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F4F1EA' },
+    { media: '(prefers-color-scheme: dark)', color: '#0E0E0E' },
+  ],
+  colorScheme: 'light dark',
+};
 
 export default async function LocaleLayout({
   children,
@@ -56,6 +79,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
+      dir="ltr"
       suppressHydrationWarning
       className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}
     >
@@ -69,10 +93,16 @@ export default async function LocaleLayout({
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-canvas"
         >
-          Skip to content
+          {locale === 'fr' ? 'Aller au contenu' : 'Skip to content'}
         </a>
         <ThemeProvider>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            {/* App-wide Framer Motion config: when the OS reports
+                prefers-reduced-motion, skip transforms and shorten
+                opacity transitions instead of running full slides
+                and scales. */}
+            <MotionConfig reducedMotion="user">{children}</MotionConfig>
+          </ToastProvider>
         </ThemeProvider>
         {/* Bind localStorage stores (progress/XP/bookmarks/notes) to the
             signed-in account so two accounts on one browser don't share
@@ -80,15 +110,15 @@ export default async function LocaleLayout({
         <ScopeSync />
         <HeurePapier />
         <CommandPalette locale={locale} />
-        {/* TICKRA-PHASE-6: install offline support + show "Add to home screen" prompt. */}
+        {/* install offline support + show "Add to home screen" prompt. */}
         <ServiceWorkerRegister />
         <InstallPrompt locale={locale} />
-        {/* TICKRA-PHASE-6: contextual mobile sticky CTA, available on every page. */}
+        {/* contextual mobile sticky CTA, available on every page. */}
         <MobileStickyCta
           href={`/${locale}/onboarding`}
           label={dict.stickyCta.label}
         />
-        {/* TICKRA-PHASE-2.1: floating IA assistant. Hidden on signin/onboarding/welcome. */}
+        {/* floating IA assistant. Hidden on signin/onboarding/welcome. */}
         <AskTickra locale={locale} />
         <Analytics />
         <CookieBanner

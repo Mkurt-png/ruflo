@@ -95,7 +95,7 @@ export async function generateRegistrationOptions(args: {
   if (!mod) return null;
   const { rpID, rpName } = getRpConfig();
 
-  // TICKRA-FIX: WebAuthn requires userID ≤ 64 bytes. Long emails would
+  // WebAuthn requires userID ≤ 64 bytes. Long emails would
   // silently break before. Hash the lowercased email to a stable 32-byte
   // buffer so any length email works and casing collisions don't create
   // distinct user handles on the authenticator.
@@ -286,7 +286,7 @@ export function buildSessionCookieValue(email: string, ttlSeconds: number): {
 } | null {
   const secret = process.env.AUTH_SIGNING_SECRET;
   if (!secret) return null;
-  // TICKRA-FIX(build): was using `require` with an eslint-disable comment
+  // was using `require` with an eslint-disable comment
   // for a rule the project's eslint config doesn't define, which broke the
   // Vercel build. Plain top-level import is cleaner and tree-shakes fine.
   const payload = `${email}.${Math.floor(Date.now() / 1000) + ttlSeconds}`;

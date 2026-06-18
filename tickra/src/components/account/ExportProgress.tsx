@@ -76,8 +76,8 @@ export function ExportProgress({ locale }: { locale: Locale }) {
   const ready = progressReady && bookmarksReady;
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
-      <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+    <article aria-labelledby="export-progress-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
+      <h2 id="export-progress-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
       <p className="mt-3 max-w-md text-[14px] text-muted">{t.body}</p>
       <button
         type="button"

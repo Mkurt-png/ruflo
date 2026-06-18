@@ -1,52 +1,57 @@
 import type { MetadataRoute } from 'next';
 
-// TICKRA-PHASE-6: PWA manifest — installable on iOS/Android home screen,
-// launches in standalone window, with one-tap shortcuts to learn / trade / me.
+// PWA manifest — when a reader pins Tickra to their home screen, it
+// should open in the editorial register, not in the old onboarding
+// surface. Palette matches the ivory paper everywhere else; shortcuts
+// point at the four rooms that get the most return visits.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Tickra — Trading curriculum',
+    name: 'Tickra — école de trading',
     short_name: 'Tickra',
     description:
-      'A structured trading curriculum, from your first Japanese candle to institutional‑grade decision making.',
-    start_url: '/fr',
+      'La maison éditoriale du trading. Une Criée par jour, une Lettre par dimanche, un Lexique qui s’ouvre au clic.',
+    // Locale-neutral start: the middleware routes /maison to the
+    // reader's preferred locale (cookie or Accept-Language) so EN
+    // PWA users land on /en/maison without an extra hop they'd see.
+    start_url: '/maison',
     scope: '/',
     display: 'standalone',
-    background_color: '#FAF7F2',
-    theme_color: '#1B1D33',
+    background_color: '#F4F1EA',
+    theme_color: '#0E0E0E',
     orientation: 'portrait',
     lang: 'fr',
     icons: [
       { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
       { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'maskable' },
     ],
-    categories: ['education', 'finance', 'productivity'],
+    categories: ['education', 'finance', 'books'],
     shortcuts: [
       {
-        name: 'Reprendre le cursus',
-        short_name: 'Apprendre',
-        description: 'Reprenez votre dernière leçon',
-        url: '/fr/learn',
+        name: 'La Maison',
+        short_name: 'Maison',
+        description: 'Le catalogue des pièces',
+        url: '/maison',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
       {
-        name: 'Simulateur',
-        short_name: 'Trade',
-        description: 'Paper trading démo',
-        url: '/fr/me/simulator',
+        name: 'La Criée du jour',
+        short_name: 'Criée',
+        description: 'La question d’aujourd’hui',
+        url: '/criee',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
       {
-        name: 'Mon compte',
-        short_name: 'Compte',
-        description: 'Streak, progrès, niveau',
-        url: '/fr/me',
+        name: 'La Lettre du dimanche',
+        short_name: 'Lettre',
+        description: 'Votre semaine, en trois colonnes',
+        url: '/lettre',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
       {
-        name: 'Glossaire',
-        short_name: 'Glossaire',
-        description: 'Vocabulaire trading',
-        url: '/fr/glossary',
+        name: 'Le Lexique vivant',
+        short_name: 'Lexique',
+        description: 'Les mots qui s’ouvrent au clic',
+        url: '/lexique',
         icons: [{ src: '/favicon.svg', sizes: 'any' }],
       },
     ],

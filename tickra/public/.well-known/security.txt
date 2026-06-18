@@ -1,0 +1,9 @@
+# Tickra security contact — RFC 9116
+# If you find a vulnerability, write to us at the address below. We
+# read every report; we do not run a bug bounty programme, but we do
+# log every fix in /erratum and credit researchers who ask to be.
+
+Contact: mailto:security@tickra.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: fr, en
+Canonical: https://tickra1.vercel.app/.well-known/security.txt

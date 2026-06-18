@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
@@ -9,8 +10,21 @@ import { PageHero } from '@/components/ui/PageHero';
 import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { TrustBar } from '@/components/ui/TrustBar';
 import { ShimmerButton } from '@/components/fx/ShimmerButton';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
-export const metadata = { title: 'À propos · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'about',
+    locale: params.locale,
+    title: params.locale === 'fr' ? 'À propos' : 'About',
+    description:
+      params.locale === 'fr'
+        ? 'Tickra, sa maison, sa méthode, ses gens.'
+        : 'Tickra, its house, its method, its people.',
+    ogEyebrow: params.locale === 'fr' ? 'Tickra · À propos' : 'Tickra · About',
+  });
+}
 
 // Founder copy is kept here (per-locale) rather than in the i18n bundle
 // so the team can swap names, location, proof points without touching
@@ -85,6 +99,11 @@ export default async function AboutPage({ params }: { params: { locale: string }
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="about"
+        title={{ fr: 'À propos', en: 'About' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
         <PageHero title={t.title} body={t.intro} eyebrow={dict.builtBy.eyebrow} />

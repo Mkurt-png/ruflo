@@ -26,7 +26,6 @@ function reviewLevel(m: Mistake): number {
 
 export function getReviewQueue(mistakes: Record<string, Mistake> | undefined): DueLesson[] {
   if (!mistakes) return [];
-  const now = Date.now();
   const out: DueLesson[] = [];
 
   for (const m of Object.values(mistakes)) {

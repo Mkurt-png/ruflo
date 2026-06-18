@@ -1,6 +1,7 @@
 /* Editorial layer — appended to globals.css via a JSX import.
-   Pure utility classes for the new landing composition. Black-dominant,
-   typography-driven. No effects spam. */
+   Pure utility classes for the editorial composition. Ivory paper
+   (#F4F1EA) with ink (#0E0E0E) typography, italic Fraunces display,
+   mono JetBrains captions. No effects spam. */
 
 /* Issue-style overline. */
 .ed-tag {
@@ -37,9 +38,6 @@
   letter-spacing: 0.32em;
   text-transform: uppercase;
 }
-
-/* Soft horizontal hairline rules — used as section separators. */
-.ed-rule { height: 1px; background: rgba(255,255,255,0.08); width: 100%; }
 
 /* Generous section padding helper. */
 .ed-section { padding-top: clamp(120px, 18vh, 220px); padding-bottom: clamp(120px, 18vh, 220px); }

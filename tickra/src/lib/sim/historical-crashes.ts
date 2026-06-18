@@ -1,4 +1,4 @@
-// TICKRA-PHASE-2.4: hand-curated historical "crash" sequences used by the
+// hand-curated historical "crash" sequences used by the
 // FlashCrashMode component. Each entry is a sequence of OHLC candles for
 // pedagogical replay — values are approximated from real events to keep the
 // shape recognisable without needing a market-data subscription.

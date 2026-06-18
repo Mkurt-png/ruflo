@@ -7,7 +7,7 @@ import { consumeAiQuota } from '@/lib/ai/quota';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// TICKRA-PHASE-2.1: AskTickra chat endpoint.
+// AskTickra chat endpoint.
 // POST body: { messages: AiMessage[], context?: { trackTitle?, lessonTitle?, locale? } }
 // Streams plain text deltas back to the client.
 

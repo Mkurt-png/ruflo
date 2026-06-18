@@ -2,8 +2,9 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 import { getCrieeForDate } from '@/lib/tickra/criee';
 
 // /[locale]/almanach — the year's archive. One line per past Criée
@@ -11,15 +12,19 @@ import { getCrieeForDate } from '@/lib/tickra/criee';
 // Server component: each entry is just the deterministic compute of
 // the daily card from the date seed.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { AlmanachItemListJsonLd } from '@/components/seo/AlmanachItemListJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'almanach',
-  title: 'L’Almanach',
-  description:
-    'L’archive de l’année : une ligne par Criée passée, dans l’ordre où elles ont été posées.',
+  title: { fr: 'L’Almanach', en: 'The Almanac' },
+  description: {
+    fr: 'L’archive de l’année : une ligne par Criée passée, dans l’ordre où elles ont été posées.',
+    en: 'The year’s archive: one line per past Criée, in the order they were asked.',
+  },
 });
 
 const COPY = {
@@ -81,7 +86,6 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="almanach"
         title={locale === 'fr' ? 'L’Almanach' : 'The Almanac'}
@@ -90,40 +94,36 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
           : 'The year’s archive: one line per past Criée.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {now.getUTCFullYear()} · {entries.length}{' '}
-              {locale === 'fr' ? 'entrées' : 'entries'}
-            </span>
-          </header>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="almanach"
+        title={{ fr: 'L’Almanach', en: 'The Almanac' }}
+      />
+      <AlmanachItemListJsonLd
+        locale={locale}
+        year={now.getUTCFullYear()}
+        entries={entries.map((e) => ({
+          date: e.date,
+          question: e.question[locale],
+          lessonHref: `/${locale}/learn/${e.trackSlug}/${e.lessonSlug}`,
+          trackTitle: e.source.trackTitle[locale],
+        }))}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={`${now.getUTCFullYear()} · ${entries.length} ${locale === 'fr' ? 'entrées' : 'entries'}`}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
 
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr'
+              ? 'Une seule page par année. Une seule ligne par jour.'
+              : 'One page per year. One line per day.'}
+          </Pull>
         </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
@@ -142,7 +142,7 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
                     className="grid grid-cols-[10ch_1fr_auto] items-baseline gap-x-6 py-5 hover:bg-black/[0.02] -mx-3 px-3 transition-colors"
                   >
                     <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-black/55 tabular-nums">
-                      {dateLabel}
+                      <time dateTime={e.date}>{dateLabel}</time>
                       {isToday && (
                         <span className="ml-2 text-black/85">· {t.todayTag}</span>
                       )}
@@ -168,8 +168,36 @@ export default async function AlmanachPage({ params }: { params: { locale: strin
             </p>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'criee',
+              title: { fr: 'La Criée', en: 'The Criée' },
+              caption: {
+                fr: 'La question d’aujourd’hui — encore lisible.',
+                en: 'Today’s question — still readable.',
+              },
+            },
+            {
+              slug: 'annuaire',
+              title: { fr: 'L’Annuaire', en: 'The Index' },
+              caption: {
+                fr: 'L’index alphabétique de toutes les leçons.',
+                en: 'The alphabetical index of every lesson.',
+              },
+            },
+            {
+              slug: 'recherche',
+              title: { fr: 'La Recherche', en: 'The Search' },
+              caption: {
+                fr: 'Une boîte vide pour chercher partout.',
+                en: 'An empty box to search anywhere.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

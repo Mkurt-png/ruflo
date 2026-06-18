@@ -2,11 +2,13 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
-
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { SilenceItemListJsonLd } from '@/components/seo/SilenceItemListJsonLd';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/silence — Le Silence éditorial. A second manifesto, this
 // one about the UI itself. Lists every gamified pattern Tickra
@@ -15,11 +17,13 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // /refus (what we won't build) and /erratum (what we got wrong).
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'silence',
-  title: 'Le Silence éditorial',
-  description:
-    'Les patterns d’UI que Tickra ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
+  title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+  description: {
+    fr: 'Les patterns d’UI que Tickra ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
+    en: 'UI patterns Tickra will not display: red dots, notification counters, confetti, flattering badges. The interface rule.',
+  },
 });
 
 type Banished = {
@@ -191,7 +195,6 @@ export default async function SilencePage({ params }: { params: { locale: string
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="silence"
         title={locale === 'fr' ? 'Le Silence éditorial' : 'The Editorial Silence'}
@@ -200,47 +203,40 @@ export default async function SilencePage({ params }: { params: { locale: string
           : 'UI patterns Tickra will not display.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {t.counters(BANISHED.length)}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="silence"
+        title={{ fr: 'Le Silence éditorial', en: 'The Editorial Silence' }}
+      />
+      <SilenceItemListJsonLd
+        locale={locale}
+        entries={BANISHED.map((b) => ({
+          id: b.id,
+          pattern: b.pattern[locale],
+          why: b.why[locale],
+          prose: b.prose[locale],
+        }))}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={t.counters(BANISHED.length)}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'On écrit en lettres. Pas en pastilles.' : 'We write in letters. Not in dots.'}
+          </Pull>
         </section>
-
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-16">
           <ol className="space-y-16">
             {BANISHED.map((b, i) => (
               <li
                 key={b.id}
-                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0"
+                id={b.id}
+                className="grid grid-cols-[3ch_1fr] gap-x-8 items-baseline border-t border-black/15 pt-10 first:border-0 first:pt-0 scroll-mt-24"
               >
                 <span className="font-mono text-[11px] tracking-[0.22em] text-black/35 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
@@ -297,8 +293,36 @@ export default async function SilencePage({ params }: { params: { locale: string
             </div>
           </div>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Les features mères de ces patterns. Bannies ailleurs.',
+                en: 'The mother features of these patterns. Banned elsewhere.',
+              },
+            },
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'La seule mesure qu’on accepte : la Cote, écrite à l’air libre.',
+                en: 'The only metric we accept: the Score, in the open.',
+              },
+            },
+            {
+              slug: 'etages',
+              title: { fr: 'Les Étages', en: 'The Floors' },
+              caption: {
+                fr: 'La maison plutôt que les colonnes. Le calme avant le tarif.',
+                en: 'The house before the columns. Calm before the bill.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

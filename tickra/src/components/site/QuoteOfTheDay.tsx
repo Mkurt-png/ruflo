@@ -28,11 +28,11 @@ function dayIndex(): number {
 export function QuoteOfTheDay({ locale }: { locale: Locale }) {
   const q = useMemo(() => QUOTES[dayIndex() % QUOTES.length], []);
   return (
-    <div className="border-t border-line/60 pt-6">
-      <blockquote className="max-w-2xl font-display text-[15px] leading-snug tracking-tight text-balance text-ink">
-        “{q[locale]}”
+    <div className="border-t border-black/15 pt-6">
+      <blockquote className="max-w-2xl font-display italic text-[15.5px] leading-snug tracking-tight text-balance text-[#0E0E0E]/85">
+        {q[locale]}
       </blockquote>
-      <div className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.22em] text-subtle">
+      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
         — {q.author}
       </div>
     </div>

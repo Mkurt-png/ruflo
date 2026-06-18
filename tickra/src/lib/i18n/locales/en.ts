@@ -80,6 +80,10 @@ const en = {
         body: 'The chart engine you already trust, embedded in every lesson. Same drawing tools, same data, zero context switching.',
       },
     },
+    streakDays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    streakFreezeNote: 'Freeze used Saturday.',
+    streakPreservedNote: 'Streak preserved.',
+    freezeTooltipLabel: 'What is a freeze?',
   },
   metrics: {
     eyebrow: 'In the field',
@@ -130,6 +134,8 @@ const en = {
     ],
     disclaimer: 'Learners verified by email. None were paid.',
     verifiedLabel: 'Verified profile',
+    prevLabel: 'Previous testimonial',
+    nextLabel: 'Next testimonial',
   },
   builtBy: {
     eyebrow: 'Built by',
@@ -617,7 +623,7 @@ const en = {
     primary: 'Join the cohort',
     secondary: 'Read the charter',
     badge: 'Included in Pro and Lifetime',
-    // TICKRA-PHASE-4: charter + live sessions used on /community page.
+    // charter + live sessions used on /community page.
     charterTitle: 'The Tickra charter',
     charterIntro: 'Three rules that make the cohort liveable, and nobody bends them.',
     charterRules: [
@@ -673,6 +679,8 @@ const en = {
     submit: 'Send me the PDF',
     sent: 'Thanks. Check your inbox in a minute.',
     legal: 'Your data is handled per our Privacy policy. No reselling, no spam.',
+    pdfFilename: '10-candles-to-recognise.pdf',
+    pdfMeta: '14 pages · 1.8 MB · FR / EN',
   },
   pageHeaderInternal: {
     backHome: 'Back to home',

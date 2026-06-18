@@ -11,7 +11,11 @@ import { BattleRoom } from '@/components/battle/BattleRoom';
 import { BattleJoin } from '@/components/battle/BattleJoin';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle · Tickra' };
+export const metadata = {
+  title: 'Battle · Tickra',
+  // Live duel rooms are ephemeral and user-specific — never index.
+  robots: { index: false, follow: false },
+};
 
 export default async function BattleRoomPage({
   params,
@@ -59,7 +63,7 @@ export default async function BattleRoomPage({
     <>
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero eyebrow={locale === 'fr' ? 'Pro · Battle' : 'Pro · Battle'} title={title} body={body} />
+        <PageHero eyebrow="Pro · Battle" title={title} body={body} />
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-20">
             {isParticipant ? (

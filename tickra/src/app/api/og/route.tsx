@@ -22,7 +22,19 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const title = clamp(searchParams.get('title') ?? 'Tickra', 64);
   const eyebrow = clamp(searchParams.get('eyebrow') ?? '', 64);
-  const locale = (searchParams.get('locale') ?? 'fr').toLowerCase();
+  const rawLocale = (searchParams.get('locale') ?? 'fr').toLowerCase();
+  // Strict allowlist: anything outside fr/en falls back to fr so a typo
+  // (or a crawler probing odd query strings) doesn't render a mixed
+  // half-English card.
+  const locale = rawLocale === 'en' ? 'en' : 'fr';
+  // Optional dedication — when someone shares a page from inside
+  // Tickra with their handle in the URL (?for=hamza), the share card
+  // surfaces a small "pour Hamza" / "for Hamza" line beneath the
+  // title. Sanitized to <= 32 chars to keep the card calm.
+  const forName = clamp((searchParams.get('for') ?? '').replace(/[^\p{L}\p{N}\s'.-]/gu, ''), 32);
+  const dedication = forName
+    ? (locale === 'fr' ? `Pour ${forName}.` : `For ${forName}.`)
+    : '';
   const footer = locale === 'fr' ? 'Tickra · La Maison' : 'Tickra · The House';
 
   return new ImageResponse(
@@ -72,15 +84,33 @@ export async function GET(req: Request) {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            fontSize: 116,
-            lineHeight: 0.98,
-            letterSpacing: '-0.035em',
-            fontStyle: 'italic',
-            fontWeight: 300,
+            gap: 18,
             maxWidth: 1040,
           }}
         >
-          <span>{title}</span>
+          <span
+            style={{
+              fontSize: 116,
+              lineHeight: 0.98,
+              letterSpacing: '-0.035em',
+              fontStyle: 'italic',
+              fontWeight: 300,
+            }}
+          >
+            {title}
+          </span>
+          {dedication && (
+            <span
+              style={{
+                fontSize: 28,
+                letterSpacing: '-0.015em',
+                fontStyle: 'italic',
+                color: 'rgba(0,0,0,0.55)',
+              }}
+            >
+              {dedication}
+            </span>
+          )}
         </div>
 
         {/* Bottom rule + footer */}
@@ -103,6 +133,14 @@ export async function GET(req: Request) {
         </div>
       </div>
     ),
-    { ...SIZE },
+    {
+      ...SIZE,
+      headers: {
+        // The card is a deterministic function of (title, eyebrow, locale, for).
+        // Crawlers fetch the same URL repeatedly when a link is shared widely;
+        // a long edge cache + SWR keeps Vercel cheap and the preview instant.
+        'Cache-Control': 'public, immutable, max-age=86400, stale-while-revalidate=604800',
+      },
+    },
   );
 }

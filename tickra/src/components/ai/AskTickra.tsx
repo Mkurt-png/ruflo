@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-2.1: floating AskTickra chat button + slide-in panel.
+// floating AskTickra chat button + slide-in panel.
 // Bottom-right on desktop, full-screen sheet on mobile. Lesson context is
 // auto-detected from the current URL when relevant.
 
@@ -10,6 +10,7 @@ import { ArrowUp, Loader2, MessageSquareText, Sparkles, X } from 'lucide-react';
 import { useUser } from '@/lib/auth/useUser';
 import { TRACKS } from '@/lib/curriculum/data';
 import { cn } from '@/lib/cn';
+import { isEditorialPath } from '@/lib/editorial/routes';
 
 type Locale = 'fr' | 'en';
 
@@ -77,7 +78,7 @@ export function AskTickra({ locale }: { locale: Locale }) {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages, pending]);
 
-  // TICKRA-FIX(UX): close on Escape while the panel is open.
+  // close on Escape while the panel is open.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -88,10 +89,14 @@ export function AskTickra({ locale }: { locale: Locale }) {
   }, [open]);
 
   // Hide on signin/onboarding/welcome to avoid covering critical CTAs.
+  // Also stay silent on the editorial cluster: the Maison is a reading
+  // surface, not a Q&A surface — a floating chat bubble there reads
+  // like the popups /silence bans.
   const hidden =
     pathname.includes('/signin') ||
     pathname.includes('/onboarding') ||
-    pathname.includes('/welcome');
+    pathname.includes('/welcome') ||
+    isEditorialPath(pathname);
   if (hidden) return null;
   if (!ready) return null;
 
@@ -162,7 +167,7 @@ export function AskTickra({ locale }: { locale: Locale }) {
 
       {/* Panel */}
       {open ? (
-        // TICKRA-FIX(UX): backdrop click closes; Escape closes via effect below.
+        // backdrop click closes; Escape closes via effect below.
         <div
           className="fixed inset-0 z-50 flex items-end justify-end bg-ink/40 backdrop-blur-sm md:items-end md:p-6"
           onClick={() => setOpen(false)}
@@ -226,7 +231,11 @@ export function AskTickra({ locale }: { locale: Locale }) {
               ))}
 
               {error ? (
-                <p className="rounded-sm border border-down/40 bg-down/10 p-3 text-[12.5px] text-ink">
+                <p
+                  role="alert"
+                  aria-live="assertive"
+                  className="rounded-sm border border-down/40 bg-down/10 p-3 text-[12.5px] text-ink"
+                >
                   {error}
                 </p>
               ) : null}
@@ -248,6 +257,8 @@ export function AskTickra({ locale }: { locale: Locale }) {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   rows={1}
+                  autoFocus
+                  aria-label={t.placeholder}
                   placeholder={t.placeholder}
                   className="min-h-[44px] flex-1 resize-none rounded-sm border border-line bg-canvas px-3 py-2 text-[14px] text-ink placeholder:text-subtle focus-visible:border-ink focus-visible:outline-none"
                   onKeyDown={(e) => {

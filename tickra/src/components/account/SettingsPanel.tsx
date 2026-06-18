@@ -424,7 +424,7 @@ export function SettingsPanel({ locale, email }: { locale: Locale; email: string
             </a>
           </div>
 
-          {/* TICKRA-PHASE-2.7: Passkeys (Web Authn) — biometric login. */}
+          {/* Passkeys (Web Authn) — biometric login. */}
           <div className="rounded-sm border border-line bg-canvas p-4">
             <PasskeyEnroll locale={locale} />
           </div>
@@ -534,8 +534,10 @@ function Section({
   children: React.ReactNode;
   danger?: boolean;
 }) {
+  const headingId = `settings-section-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   return (
     <article
+      aria-labelledby={headingId}
       className={cn(
         'rounded-sm border bg-surface p-7 md:p-9',
         danger ? 'border-down/40' : 'border-line',
@@ -552,9 +554,9 @@ function Section({
           {icon}
         </span>
         <div>
-          <div className={cn('font-display text-lg font-medium tracking-tight', danger ? 'text-down' : 'text-ink')}>
+          <h2 id={headingId} className={cn('font-display text-lg font-medium tracking-tight', danger ? 'text-down' : 'text-ink')}>
             {title}
-          </div>
+          </h2>
           {subtitle ? <div className="mt-1 max-w-2xl text-[13.5px] text-muted">{subtitle}</div> : null}
         </div>
       </header>
@@ -576,12 +578,20 @@ function Field({
   onChange?: (v: string) => void;
   readOnly?: boolean;
 }) {
+  // Same htmlFor/id pairing the SelectField helper uses — derive a
+  // stable id from the label so screen readers can read the field name
+  // when the input is focused.
+  const id = `field-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   return (
     <div>
-      <label className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <label
+        htmlFor={id}
+        className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted"
+      >
         {label}
       </label>
       <input
+        id={id}
         type="text"
         value={value}
         readOnly={readOnly}
@@ -607,12 +617,19 @@ function SelectField({
   onChange: (v: string) => void;
   options: { value: string; label: string }[];
 }) {
+  // Stable id derived from the label so the htmlFor/id pair binds the
+  // <label> to the <select> for screen readers (and HTML validity).
+  const id = `select-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
   return (
     <div>
-      <label className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
+      <label
+        htmlFor={id}
+        className="block font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted"
+      >
         {label}
       </label>
       <select
+        id={id}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="mt-2 block h-11 w-full rounded-sm border border-line bg-canvas px-3 text-[15px] text-ink focus-visible:border-ink focus-visible:outline-none"
@@ -645,6 +662,7 @@ function PrimaryButton({
       type="button"
       onClick={onClick}
       disabled={pending}
+      aria-busy={pending}
       className="inline-flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-[14px] font-medium tracking-tight text-canvas transition-colors hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {children}

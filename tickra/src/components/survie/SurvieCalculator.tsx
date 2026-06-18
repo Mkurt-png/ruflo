@@ -87,9 +87,9 @@ function parseInput(form: FormState): SurvieInput | null {
   };
 }
 
-function formatNumber(n: number, decimals = 2): string {
+function formatNumber(n: number, locale: Locale, decimals = 2): string {
   if (!Number.isFinite(n)) return '∞';
-  return n.toLocaleString(undefined, {
+  return n.toLocaleString(locale === 'fr' ? 'fr-FR' : 'en-US', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });
@@ -135,20 +135,20 @@ export function SurvieCalculator({ locale }: { locale: Locale }) {
             </p>
           ) : (
             <ol className="space-y-8">
-              <Reading idx={1} label={t.riskAmount} value={`${formatNumber(reading.riskAmount)} $`} />
+              <Reading idx={1} label={t.riskAmount} value={`${formatNumber(reading.riskAmount, locale)} $`} />
               <Reading
                 idx={2}
                 label={t.positionSize}
-                value={formatNumber(reading.positionSize, 4)}
+                value={formatNumber(reading.positionSize, locale, 4)}
               />
               {reading.plannedR !== null && (
-                <Reading idx={3} label={t.plannedR} value={`R ${formatNumber(reading.plannedR, 2)}`} />
+                <Reading idx={3} label={t.plannedR} value={`R ${formatNumber(reading.plannedR, locale, 2)}`} />
               )}
               {reading.breakEvenWinRate !== null && (
                 <Reading
                   idx={4}
                   label={t.breakEven}
-                  value={`${formatNumber(reading.breakEvenWinRate, 1)} %`}
+                  value={`${formatNumber(reading.breakEvenWinRate, locale, 1)} %`}
                 />
               )}
               <Reading

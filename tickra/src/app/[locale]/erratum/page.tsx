@@ -1,22 +1,27 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
 import { ERRATA, groupByYear } from '@/lib/tickra/erratum';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { ErratumItemListJsonLd } from '@/components/seo/ErratumItemListJsonLd';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/erratum — L'Erratum. Public log of the editor's
 // mistakes, grouped by year. Nothing is removed; the page only
 // grows. If trust matters more than image, this page should exist.
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'erratum',
-  title: 'L’Erratum',
-  description:
-    'Journal public des erreurs de Tickra : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
+  title: { fr: 'L’Erratum', en: 'The Erratum' },
+  description: {
+    fr: 'Journal public des erreurs de Tickra : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
+    en: 'Public log of Tickra’s mistakes: corrected lessons, mis-phrased Criées, adjusted formulas. Nothing is erased.',
+  },
 });
 
 const COPY = {
@@ -65,7 +70,6 @@ export default async function ErratumPage({ params }: { params: { locale: string
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="erratum"
         title={locale === 'fr' ? 'L’Erratum' : 'The Erratum'}
@@ -74,40 +78,24 @@ export default async function ErratumPage({ params }: { params: { locale: string
           : 'Public log of Tickra’s mistakes. Nothing is erased.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {ERRATA.length}{' '}
-              {locale === 'fr' ? 'entrées' : 'entries'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="erratum"
+        title={{ fr: 'L’Erratum', en: 'The Erratum' }}
+      />
+      <ErratumItemListJsonLd locale={locale} />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={`${ERRATA.length} ${locale === 'fr' ? 'entrées' : 'entries'}`}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'Rien n’est effacé ; tout est daté.' : 'Nothing is erased; everything is dated.'}
+          </Pull>
         </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
@@ -127,14 +115,14 @@ export default async function ErratumPage({ params }: { params: { locale: string
 
               <ol className="mt-10 space-y-14">
                 {items.map((e, i) => (
-                  <li key={e.id} className="grid grid-cols-[6ch_1fr] gap-x-6 items-baseline">
+                  <li key={e.id} id={e.id} className="grid grid-cols-[6ch_1fr] gap-x-6 items-baseline scroll-mt-24">
                     <span className="font-mono text-[10px] tracking-[0.18em] text-black/40 tabular-nums">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div>
                       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                         <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/55 tabular-nums">
-                          {e.date}
+                          <time dateTime={e.date}>{e.date}</time>
                         </span>
                         <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-black/65">
                           · {t.scope[e.scope]}
@@ -165,8 +153,36 @@ export default async function ErratumPage({ params }: { params: { locale: string
             </p>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Ce que nous n’avons jamais voulu construire.',
+                en: 'What we never wanted to build.',
+              },
+            },
+            {
+              slug: 'method',
+              title: { fr: 'La Méthode', en: 'The Method' },
+              caption: {
+                fr: 'La formule de la Cote, à l’air libre, dans tous ses détails.',
+                en: 'The Score formula, in the open, with every detail.',
+              },
+            },
+            {
+              slug: 'silence',
+              title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+              caption: {
+                fr: 'Les patterns d’UI qu’on a bannis avant qu’ils n’arrivent.',
+                en: 'UI patterns banned before they arrived.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

@@ -48,7 +48,7 @@ export function ArticleToc({ locale }: { locale: Locale }) {
   if (items.length < 2) return null;
 
   return (
-    <nav aria-label="Article sections" className="sticky top-24 hidden lg:block">
+    <nav aria-label={locale === 'fr' ? 'Sections de l’article' : 'Article sections'} className="sticky top-24 hidden lg:block">
       <div className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
         {copy[locale]}
       </div>
@@ -57,6 +57,7 @@ export function ArticleToc({ locale }: { locale: Locale }) {
           <li key={it.id}>
             <a
               href={`#${it.id}`}
+              aria-current={active === it.id ? 'location' : undefined}
               className={cn(
                 '-ml-[24px] inline-flex items-start gap-3 transition-colors',
                 active === it.id ? 'text-ink' : 'text-muted hover:text-ink',

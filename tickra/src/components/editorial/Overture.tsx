@@ -56,4 +56,3 @@ export function Overture({ locale }: Props) {
   );
 }
 
-export default Overture;

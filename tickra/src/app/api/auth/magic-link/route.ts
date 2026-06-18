@@ -47,7 +47,7 @@ export async function POST(req: Request) {
   const sig = sign(payload, secret);
   const token = `${Buffer.from(payload).toString('base64url')}.${sig}`;
 
-  // TICKRA-FIX(security): persist the nonce so the callback can mark it
+  // persist the nonce so the callback can mark it
   // consumed (single-use). Without DB this gracefully no-ops — the
   // callback's consume returns false, which we treat as replay-safe only
   // when DB is configured. See callback route comment.

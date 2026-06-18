@@ -13,6 +13,7 @@
 import { useEffect, useState } from 'react';
 import { X, Sparkles } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
+import { isEditorialPath } from '@/lib/editorial/routes';
 
 const COPY = {
   fr: {
@@ -47,6 +48,8 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (PATHS_TO_HIDE.some((p) => window.location.pathname.includes(p))) return;
+    // Editorial silence: never pop a modal on a reading room.
+    if (isEditorialPath(window.location.pathname)) return;
     if (sessionStorage.getItem('tickra_exit_seen') === '1') return;
     if (localStorage.getItem('tickra_exit_dismissed') === '1') return;
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
@@ -85,6 +88,18 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
     if (permanent) localStorage.setItem('tickra_exit_dismissed', '1');
     setOpen(false);
   };
+
+  // Close on Escape while the modal is open — matches the keyboard
+  // contract used by AskTickra, HeroVideo, the lexique Term popover
+  // and the CommandPalette so the whole site behaves uniformly.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') dismiss(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,7 +160,11 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
         <p className="mt-3 text-[14.5px] leading-relaxed text-muted">{t.body}</p>
 
         {sent ? (
-          <div className="mt-6 rounded-md border border-up/30 bg-up/10 px-4 py-3 text-[14px] text-up">
+          <div
+            role="status"
+            aria-live="polite"
+            className="mt-6 rounded-md border border-up/30 bg-up/10 px-4 py-3 text-[14px] text-up"
+          >
             {t.sent}
           </div>
         ) : (
@@ -154,6 +173,8 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
               type="email"
               required
               autoFocus
+              autoComplete="email"
+              aria-label={t.placeholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t.placeholder}
@@ -162,6 +183,7 @@ export function ExitIntentModal({ locale }: { locale: Locale }) {
             <button
               type="submit"
               disabled={pending}
+              aria-busy={pending}
               className="inline-flex h-11 items-center justify-center rounded-md bg-brand px-5 text-[14px] font-medium text-black transition-opacity hover:opacity-95 disabled:opacity-60"
             >
               {t.submit}

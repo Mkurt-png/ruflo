@@ -132,15 +132,15 @@ function NumberField({
 function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div className={cn('flex flex-col gap-2 bg-surface p-5', accent && 'bg-ink text-canvas')}>
-      <span
+      <dt
         className={cn(
           'font-mono text-[10.5px] uppercase tracking-[0.2em]',
           accent ? 'text-canvas/70' : 'text-muted',
         )}
       >
         {label}
-      </span>
-      <span className="font-display text-2xl font-medium tracking-tight tabular-nums">{value}</span>
+      </dt>
+      <dd className="font-display text-2xl font-medium tracking-tight tabular-nums">{value}</dd>
     </div>
   );
 }

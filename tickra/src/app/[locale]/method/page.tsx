@@ -2,10 +2,12 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { Pull } from '@/components/editorial/Pull';
 
 // /[locale]/method — Audit page for the Cote formula. Referenced
 // from /cote-inversee. Editorial register, no math beyond what is
@@ -13,11 +15,13 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // reading is bounded.
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'method',
-  title: 'La Méthode',
-  description:
-    'La formule de la Cote, à l’air libre : régularité, précision, honnêteté, révision. Chaque composante en une phrase.',
+  title: { fr: 'La Méthode', en: 'The Method' },
+  description: {
+    fr: 'La formule de la Cote, à l’air libre : régularité, précision, honnêteté, révision. Chaque composante en une phrase.',
+    en: 'The Score formula, in the open: regularity, precision, honesty, revision. Each component in one line.',
+  },
 });
 
 const COPY = {
@@ -116,7 +120,6 @@ export default async function MethodPage({ params }: { params: { locale: string 
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
       <EditorialJsonLd
         slug="method"
         title={locale === 'fr' ? 'La Méthode' : 'The Method'}
@@ -125,41 +128,24 @@ export default async function MethodPage({ params }: { params: { locale: string 
           : 'The Score formula, in four components.'}
         locale={locale}
       />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative px-6 md:px-16"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="flex items-baseline justify-between gap-6 border-b border-black/15 pb-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {t.eyebrow}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65 tabular-nums">
-              {locale === 'fr' ? 'Plafond' : 'Cap'} {CAP.toFixed(1)}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 max-w-[1100px]">
-            <h1
-              className="font-display italic font-light text-[#0E0E0E]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {t.head1}
-              <br />
-              <span className="text-black/55">{t.head2}</span>
-              <br />
-              <span className="text-black/35">{t.head3}</span>
-            </h1>
-          </div>
-
-          <p
-            className="mt-16 max-w-[640px] font-display text-[#0E0E0E]/75 leading-relaxed"
-            style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
-          >
-            {t.intro}
-          </p>
+      <RoomBreadcrumb
+        locale={locale}
+        slug="method"
+        title={{ fr: 'La Méthode', en: 'The Method' }}
+      />
+      <EditorialFrame
+        dict={dict}
+        locale={locale}
+        eyebrow={t.eyebrow}
+        status={`${locale === 'fr' ? 'Plafond' : 'Cap'} ${CAP.toFixed(1)}`}
+        head={[t.head1, t.head2, t.head3]}
+        intro={t.intro}
+      >
+        <section className="mx-auto max-w-[920px] px-6 md:px-16">
+          <Pull>
+            {locale === 'fr' ? 'La Cote peut baisser. C’est voulu.' : 'The Score can fall. By design.'}
+          </Pull>
         </section>
-
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
           <ol className="space-y-14">
             {PARTS.map((p, i) => (
@@ -230,8 +216,36 @@ export default async function MethodPage({ params }: { params: { locale: string 
             </Link>
           </footer>
         </section>
-      </main>
-      <Footer dict={dict} locale={locale} />
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'cote-inversee',
+              title: { fr: 'La Cote inversée', en: 'The Inverted Score' },
+              caption: {
+                fr: 'L’éditeur publie sa propre Cote chaque mois.',
+                en: 'The editor publishes their own Score monthly.',
+              },
+            },
+            {
+              slug: 'erratum',
+              title: { fr: 'L’Erratum', en: 'The Erratum' },
+              caption: {
+                fr: 'Les ajustements de formule sont consignés ici.',
+                en: 'Formula adjustments are logged here.',
+              },
+            },
+            {
+              slug: 'refus',
+              title: { fr: 'Le Refus', en: 'The Refusal' },
+              caption: {
+                fr: 'Ce que la Cote ne récompensera jamais.',
+                en: 'What the Score will never reward.',
+              },
+            },
+          ]}
+        />
+      </EditorialFrame>
     </>
   );
 }

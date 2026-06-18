@@ -27,6 +27,7 @@ const levelStyle: Record<string, { dot: string; bar: string }> = {
 };
 
 const allLabel = { fr: 'Tout', en: 'All' };
+const filterLabel = { fr: 'Filtrer par niveau', en: 'Filter by level' };
 
 export function TrackFilter({ locale }: { locale: Locale }) {
   const [level, setLevel] = useState<'all' | keyof typeof levelLabel>('all');
@@ -54,7 +55,7 @@ export function TrackFilter({ locale }: { locale: Locale }) {
 
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-2">
+      <div role="group" aria-label={filterLabel[locale]} className="flex flex-wrap items-center gap-2">
         <Pill active={level === 'all'} onClick={() => setLevel('all')}>
           {allLabel[locale]}
         </Pill>

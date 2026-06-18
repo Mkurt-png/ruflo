@@ -1,19 +1,57 @@
-import { Container } from '@/components/ui/Container';
+import { headers } from 'next/headers';
+
+// Editorial loading — quiet ivory placeholder that matches the
+// EditorialFrame shell. No spinners, no skeleton blocks: just the
+// folio caption and a faint italic line. The page will fade in over
+// it as soon as Next finishes streaming.
+//
+// Reads the active locale via the x-pathname request header that
+// middleware injects, so the streaming placeholder ships in the
+// reader's language rather than always-French copy.
+
+const COPY = {
+  fr: {
+    header: 'Tickra · Composition en cours',
+    folio: 'Folio · ——',
+    headline: 'On tourne la page…',
+    sr: 'Chargement en cours',
+  },
+  en: {
+    header: 'Tickra · Composing the page',
+    folio: 'Folio · ——',
+    headline: 'Turning the page…',
+    sr: 'Loading',
+  },
+} as const;
+
+function readLocale(): 'fr' | 'en' {
+  const pathname = headers().get('x-pathname') ?? '/fr';
+  const segment = pathname.split('/')[1];
+  return segment === 'en' ? 'en' : 'fr';
+}
 
 export default function Loading() {
+  const t = COPY[readLocale()];
   return (
-    <main className="border-b border-line">
-      <Container as="div" className="py-24 md:py-32">
-        <div className="h-3 w-16 animate-pulse rounded-full bg-line" />
-        <div className="mt-8 h-12 w-3/4 max-w-2xl animate-pulse rounded-sm bg-line md:h-16" />
-        <div className="mt-6 h-4 w-2/3 max-w-xl animate-pulse rounded-sm bg-line" />
-        <div className="mt-3 h-4 w-1/2 max-w-md animate-pulse rounded-sm bg-line" />
-        <div className="mt-12 grid grid-cols-1 gap-3 md:grid-cols-3">
-          {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-40 animate-pulse rounded-sm border border-line bg-surface" />
-          ))}
-        </div>
-      </Container>
+    <main className="min-h-[60vh] w-full bg-[#F4F1EA] text-[#0E0E0E]">
+      <header className="px-6 md:px-16 pt-10 flex items-start justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
+          {t.header}
+        </span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/40 tabular-nums">
+          {t.folio}
+        </span>
+      </header>
+      <section className="px-6 md:px-16 pt-24 md:pt-32">
+        <p
+          className="font-display italic font-light text-black/30 select-none"
+          style={{ fontSize: 'clamp(48px, 9vw, 128px)', lineHeight: 0.9, letterSpacing: '-0.03em' }}
+          aria-hidden
+        >
+          {t.headline}
+        </p>
+      </section>
+      <span className="sr-only">{t.sr}</span>
     </main>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-1.4: 14-day personal plan, built from the user's placement
+// 14-day personal plan, built from the user's placement
 // test. Shows today's lesson prominently + the next 6 days as a compact
 // vertical list. Generated once on the backend, regenerated on demand.
 
@@ -96,11 +96,11 @@ export function WeeklyPlan({ locale }: { locale: Locale }) {
 
   if (plan.length === 0) {
     return (
-      <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
-        <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+      <article aria-labelledby="weekly-plan-empty-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
+        <h2 id="weekly-plan-empty-title" className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
           <CalendarDays className="h-3.5 w-3.5" strokeWidth={1.75} />
           {t.title}
-        </div>
+        </h2>
         <p className="mt-4 text-[14px] text-muted">{t.empty}</p>
         <Link
           href={`/${locale}/onboarding`}
@@ -114,12 +114,12 @@ export function WeeklyPlan({ locale }: { locale: Locale }) {
   }
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="weekly-plan-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
-        <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+        <h2 id="weekly-plan-title" className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
           <CalendarDays className="h-3.5 w-3.5" strokeWidth={1.75} />
           {t.title}
-        </div>
+        </h2>
         <button
           type="button"
           onClick={regenerate}

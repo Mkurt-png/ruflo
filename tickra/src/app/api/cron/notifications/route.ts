@@ -10,7 +10,7 @@ import {
 import { TRACKS } from '@/lib/curriculum/data';
 import { SITE_URL } from '@/lib/site-url';
 
-// TICKRA-PHASE-1.6: per-user transactional notifications.
+// per-user transactional notifications.
 // Two kinds for now:
 //  - `plan_today`: "Aujourd'hui : <lesson title>" once per day
 //  - `streak_at_risk`: sent at most once every 20h
@@ -32,7 +32,6 @@ function authorise(req: Request): boolean {
   return got === `Bearer ${secret}`;
 }
 
-const ONE_DAY = 24 * 60 * 60 * 1000;
 const NEARLY_ONE_DAY = 20 * 60 * 60 * 1000;
 
 function lessonMeta(lessonId: string) {

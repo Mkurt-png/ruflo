@@ -36,9 +36,9 @@ export function ReviewQueue({ locale }: { locale: Locale }) {
   const due = dueNow(queue);
 
   return (
-    <article className="rounded-sm border border-line bg-surface p-7 md:p-9">
+    <article aria-labelledby="review-queue-title" className="rounded-sm border border-line bg-surface p-7 md:p-9">
       <div className="flex items-baseline justify-between">
-        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</div>
+        <h2 id="review-queue-title" className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">{t.title}</h2>
         {queue.length > 0 ? (
           <div className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
             {due.length} / {queue.length} {t.counter}

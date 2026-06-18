@@ -1,68 +1,106 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
 import { SurvieCalculator } from '@/components/survie/SurvieCalculator';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 
 // /[locale]/survie — Le Calculateur de survie. A single page that does
 // the pre-trade arithmetic in the editorial register. No SaaS card,
 // no leaderboard, no upsell. Just the numbers that decide whether the
 // account survives.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
-
-export const dynamic = 'force-dynamic';
-export const metadata = editorialMeta({
+// Static: the calculator is a client island, the surrounding prose is
+// fixed. ISR for 24h is plenty — when the editor publishes a copy
+// tweak it'll re-render on the next request.
+export const revalidate = 86400;
+export const generateMetadata = editorialPageMeta({
   slug: 'survie',
-  title: 'Le Calculateur de survie',
-  description:
-    'Taille de position, R-multiple, pertes consécutives jusqu’au demi-compte. Le calcul d’entrée de carnet, en silence.',
+  title: { fr: 'Le Calculateur de survie', en: 'The Survival Calculator' },
+  description: {
+    fr: 'Taille de position, R-multiple, pertes consécutives jusqu’au demi-compte. Le calcul d’entrée de carnet, en silence.',
+    en: 'Position size, R-multiple, consecutive losses to the half-account. The opening-page arithmetic, in silence.',
+  },
 });
+
+const COPY = {
+  fr: {
+    eyebrow: 'Le Calculateur — entrée du carnet',
+    head: ['Avant l’ordre.', 'Quatre chiffres.', 'La taille honnête.'] as [string, string, string],
+    intro:
+      'Le calcul que la séance demande avant l’ouverture : taille de position, R-multiple, et combien de pertes consécutives le compte survit. Tout reste dans votre navigateur — aucun envoi.',
+  },
+  en: {
+    eyebrow: 'The Calculator — ledger entry',
+    head: ['Before the order.', 'Four numbers.', 'The honest size.'] as [string, string, string],
+    intro:
+      'The arithmetic the session asks for before opening: position size, R-multiple, and how many consecutive losses the account survives. Everything stays in your browser — nothing sent.',
+  },
+} as const;
 
 export default async function SurviePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const locale: Locale = params.locale;
   const dict = await getDictionary(locale);
+  const t = COPY[locale];
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="px-6 md:px-16 flex items-start justify-between gap-6">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {locale === 'fr' ? 'Le Calculateur — entrée du carnet' : 'The Calculator — ledger entry'}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
-              {locale === 'fr' ? 'Local · navigateur' : 'Local · browser'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 px-6 md:px-16">
-            <p
-              className="font-display italic font-light text-[#0E0E0E] max-w-[1100px]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {locale === 'fr' ? 'Avant l’ordre.' : 'Before the order.'}
-              <br />
-              <span className="text-black/55">
-                {locale === 'fr' ? 'Quatre chiffres.' : 'Four numbers.'}
-              </span>
-              <br />
-              <span className="text-black/35">
-                {locale === 'fr' ? 'La taille honnête.' : 'The honest size.'}
-              </span>
-            </p>
-          </div>
-        </section>
-
-        <SurvieCalculator locale={locale} />
-      </main>
-      <Footer dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="survie"
+        title={locale === 'fr' ? 'Le Calculateur de survie' : 'The Survival Calculator'}
+        description={locale === 'fr'
+          ? 'Avant le prochain ordre : l’arithmétique de l’entrée, en clair.'
+          : 'Before the next order: the arithmetic of an entry, in the open.'}
+        locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="survie"
+        title={{ fr: 'Le Calculateur de survie', en: 'The Survival Calculator' }}
+      />
+    <EditorialFrame
+      dict={dict}
+      locale={locale}
+      eyebrow={t.eyebrow}
+      status={locale === 'fr' ? 'Local · navigateur' : 'Local · browser'}
+      head={t.head}
+      intro={t.intro}
+    >
+      <SurvieCalculator locale={locale} />
+      <ReadNext
+        locale={locale}
+        rooms={[
+          {
+            slug: 'method',
+            title: { fr: 'La Méthode', en: 'The Method' },
+            caption: {
+              fr: 'La formule de la Cote — l’autre arithmétique qui compte.',
+              en: 'The Score formula — the other arithmetic that counts.',
+            },
+          },
+          {
+            slug: 'refus',
+            title: { fr: 'Le Refus', en: 'The Refusal' },
+            caption: {
+              fr: 'Pourquoi il n’y aura jamais de calculateur de levier 1:100.',
+              en: 'Why there will never be a 1:100 leverage calculator.',
+            },
+          },
+          {
+            slug: 'silence',
+            title: { fr: 'Le Silence éditorial', en: 'The Editorial Silence' },
+            caption: {
+              fr: 'L’UI calme du carnet — pas de pop-ups, pas de confettis.',
+              en: 'The calm UI of the register — no popups, no confetti.',
+            },
+          },
+        ]}
+      />
+    </EditorialFrame>
     </>
   );
 }

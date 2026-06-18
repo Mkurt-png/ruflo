@@ -4,19 +4,27 @@ import { SITE_URL, SITE_NAME } from '@/lib/site-url';
 
 const copy: Record<Locale, { title: string; description: string }> = {
   en: {
-    title: 'Tickra — Learn the markets, candle by candle',
+    title: 'Tickra — the editorial house of trading',
     description:
-      'A structured trading curriculum, from your first Japanese candle to institutional‑grade decision making. Ten‑minute lessons, real charts, daily streaks.',
+      'A daily Criée, a Sunday Letter, a living Lexicon. Trading taught as a craft — slow, written, without fanfare.',
   },
   fr: {
-    title: 'Tickra — Apprenez les marchés, bougie après bougie',
+    title: 'Tickra — la maison éditoriale du trading',
     description:
-      "Un parcours de trading structuré, de votre première bougie japonaise jusqu'à la prise de décision institutionnelle. Leçons de dix minutes, vrais graphiques, streaks quotidiens.",
+      'Une Criée chaque jour, une Lettre chaque dimanche, un Lexique qui s’ouvre au clic. Le trading enseigné comme un métier — lent, écrit, sans fanfare.',
   },
 };
 
 export function buildMetadata(locale: Locale): Metadata {
   const { title, description } = copy[locale];
+  // Build a root share card via /api/og so the homepage gets the same
+  // editorial preview every editorial room already enjoys.
+  const ogParams = new URLSearchParams({
+    title: locale === 'fr' ? 'La maison éditoriale du trading' : 'The editorial house of trading',
+    eyebrow: locale === 'fr' ? 'Tickra · La Maison' : 'Tickra · The House',
+    locale,
+  });
+  const ogImage = `${SITE_URL}/api/og?${ogParams.toString()}`;
   return {
     metadataBase: new URL(SITE_URL),
     title: { default: title, template: `%s · ${SITE_NAME}` },
@@ -25,7 +33,14 @@ export function buildMetadata(locale: Locale): Metadata {
     formatDetection: { email: false, telephone: false, address: false },
     alternates: {
       canonical: `/${locale}`,
-      languages: { en: '/en', fr: '/fr' },
+      // Match the hreflang convention used by editorialMeta — explicit
+      // language-region tags plus an x-default that points at the
+      // French version (Tickra's primary tongue).
+      languages: {
+        'fr-FR': '/fr',
+        'en-GB': '/en',
+        'x-default': '/fr',
+      },
     },
     openGraph: {
       type: 'website',
@@ -33,14 +48,29 @@ export function buildMetadata(locale: Locale): Metadata {
       siteName: SITE_NAME,
       title,
       description,
-      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
+      alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
-    twitter: { card: 'summary_large_image', title, description, creator: '@tickra' },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      site: '@tickra',
+      creator: '@tickra',
+      images: [ogImage],
+    },
     robots: {
       index: true,
       follow: true,
       googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
     },
-    icons: { icon: '/favicon.svg' },
+    icons: {
+      icon: '/favicon.svg',
+      // iOS home-screen icon — uses the same vector for now. Newer iOS
+      // (16.4+) supports SVG; older iOS will fall back to a screenshot.
+      apple: '/favicon.svg',
+      shortcut: '/favicon.svg',
+    },
   };
 }

@@ -44,7 +44,14 @@ function longestDailyStreak(state: ProgressState): number {
 }
 
 function isNextDay(prev: string, next: string): boolean {
-  const a = new Date(prev);
+  // The day keys are built from LOCAL date components (see
+  // longestDailyStreak), so parse them back in local time too. Using
+  // `new Date('YYYY-MM-DD')` here would parse as UTC midnight and, for any
+  // timezone behind UTC, shift the day back one — making isNextDay return
+  // false for genuinely consecutive days and silently breaking the
+  // streak-7 / streak-30 achievements for every user west of UTC.
+  const [y, m, d] = prev.split('-').map(Number);
+  const a = new Date(y, m - 1, d);
   a.setDate(a.getDate() + 1);
   const key = `${a.getFullYear()}-${String(a.getMonth() + 1).padStart(2, '0')}-${String(a.getDate()).padStart(2, '0')}`;
   return key === next;

@@ -1,4 +1,5 @@
 import { SITE_URL } from '@/lib/site-url';
+import { safeJsonLd } from '@/lib/seo/safe-jsonld';
 
 type Crumb = { name: string; path: string };
 
@@ -16,7 +17,7 @@ export function BreadcrumbJsonLd({ items }: { items: ReadonlyArray<Crumb> }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(payload) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(payload) }}
     />
   );
 }

@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 // POST /api/checkout
 // Body: { plan: 'pro' | 'lifetime', cycle?: 'monthly' | 'annual', locale?: 'fr' | 'en' }
 //
-// TICKRA-FIX(security): no longer accepts `email` from the body — we use the
+// no longer accepts `email` from the body — we use the
 // session email so an attacker can't pre-fill a victim's address (which
 // previously led to victims receiving Stripe receipts + a Pro row created
 // in their name).
@@ -38,7 +38,7 @@ function resolvePrice(plan: Plan, cycle: Cycle): { price: string; mode: 'subscri
 }
 
 export async function POST(req: Request) {
-  // TICKRA-FIX(security): require an authenticated user. Was unauthenticated
+  // require an authenticated user. Was unauthenticated
   // (anyone could create Stripe sessions on behalf of any email).
   const session = getSession();
   if (!session) {
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ url: checkoutSession.url });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error';
-    // TICKRA-FIX(security): log the full Stripe error server-side but only
+    // log the full Stripe error server-side but only
     // surface a generic message to the client (was echoing internals).
     console.error('[checkout] stripe error', message);
     return NextResponse.json(

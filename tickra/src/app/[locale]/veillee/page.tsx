@@ -3,6 +3,9 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { readVeillee, readingLine } from '@/lib/tickra/veillee';
 
 // /[locale]/veillee — La Veillée. Sunday 21:00 UTC, 30 minutes,
@@ -11,16 +14,18 @@ import { readVeillee, readingLine } from '@/lib/tickra/veillee';
 // No streaming, no chat, no participant list. The only synchrony is
 // the synchrony of reading.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'veillee',
-  title: 'La Veillée',
-  description:
-    'Dimanche, 21 h UTC. Une page, une phrase par minute, lue par tout le monde au même moment. Pas de vidéo, pas de chat.',
+  title: { fr: 'La Veillée', en: 'The Vigil' },
+  description: {
+    fr: 'Dimanche, 21 h UTC. Une page, une phrase par minute, lue par tout le monde au même moment. Pas de vidéo, pas de chat.',
+    en: 'Sunday, 21:00 UTC. One page, one sentence per minute, read by everyone at the same time. No video, no chat.',
+  },
 });
 
 const COPY = {
@@ -94,6 +99,19 @@ export default async function VeilleePage({ params }: { params: { locale: string
 
   return (
     <>
+      <EditorialJsonLd
+        slug="veillee"
+        title={locale === 'fr' ? 'La Veillée' : 'The Vigil'}
+        description={locale === 'fr'
+          ? 'Une lecture collective, trente minutes, le dimanche soir à 21 h UTC.'
+          : 'A collective reading, thirty minutes, Sunday evening at 21:00 UTC.'}
+        locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="veillee"
+        title={{ fr: 'La Veillée', en: 'The Vigil' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">
         <section
@@ -211,6 +229,35 @@ export default async function VeilleePage({ params }: { params: { locale: string
             </a>
           </footer>
         </section>
+        <ReadNext
+          locale={locale}
+          rooms={[
+            {
+              slug: 'lettre',
+              title: { fr: 'La Lettre du dimanche', en: 'The Sunday Letter' },
+              caption: {
+                fr: 'Ce que la semaine vous a écrit, en trois colonnes.',
+                en: 'What the week wrote to you, in three columns.',
+              },
+            },
+            {
+              slug: 'cercle',
+              title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+              caption: {
+                fr: 'La Lettre d’un autre lecteur, en silence.',
+                en: 'Another reader’s Letter, in silence.',
+              },
+            },
+            {
+              slug: 'almanach',
+              title: { fr: 'L’Almanach', en: 'The Almanac' },
+              caption: {
+                fr: 'Les Criées que la Veillée n’a pas lues.',
+                en: 'The Criées the Vigil did not read.',
+              },
+            },
+          ]}
+        />
       </main>
       <Footer dict={dict} locale={locale} />
     </>

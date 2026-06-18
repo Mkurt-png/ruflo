@@ -1,67 +1,99 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
-import { Navbar } from '@/components/nav/Navbar';
-import { Footer } from '@/components/sections/Footer';
+import { EditorialFrame } from '@/components/editorial/EditorialFrame';
+import { ReadNext } from '@/components/editorial/ReadNext';
+import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
+import { RoomBreadcrumb } from '@/components/seo/RoomBreadcrumb';
 import { LettrePanel } from '@/components/lettre/LettrePanel';
+import { editorialPageMeta } from '@/lib/seo/editorial-meta';
 
 // /[locale]/lettre — La Lettre du dimanche. Editorial weekly digest
 // composed locally from the reader's progress. Ivory paper register,
 // no network, no charts.
 
-import { editorialMeta } from '@/lib/seo/editorial-meta';
-
 export const revalidate = 3600;
-export const metadata = editorialMeta({
+export const generateMetadata = editorialPageMeta({
   slug: 'lettre',
-  title: 'La Lettre du dimanche',
-  description:
-    'Un bilan hebdomadaire éditorial, calculé localement à partir de votre progression. Lecture calme, dix minutes.',
+  title: { fr: 'La Lettre du dimanche', en: 'The Sunday Letter' },
+  description: {
+    fr: 'Un bilan hebdomadaire éditorial, calculé localement à partir de votre progression. Lecture calme, dix minutes.',
+    en: 'An editorial weekly digest, computed locally from your progress. Calm reading, ten minutes.',
+  },
 });
+
+const COPY = {
+  fr: {
+    eyebrow: 'La Lettre — bilan hebdomadaire',
+    status: 'Lecture · ~10 min',
+    head: ['Une semaine.', 'Trois colonnes.', 'Aucun bruit.'] as [string, string, string],
+  },
+  en: {
+    eyebrow: 'The Letter — weekly digest',
+    status: 'Read · ~10 min',
+    head: ['One week.', 'Three columns.', 'No noise.'] as [string, string, string],
+  },
+} as const;
 
 export default async function LettrePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const locale: Locale = params.locale;
   const dict = await getDictionary(locale);
+  const t = COPY[locale];
 
   return (
     <>
-      <Navbar dict={dict} locale={locale} />
-      <main id="main" className="bg-[#F4F1EA] min-h-screen">
-        <section
-          className="relative"
-          style={{ paddingTop: 'clamp(120px, 16vh, 200px)', paddingBottom: 'clamp(48px, 8vh, 96px)' }}
-        >
-          <header className="px-6 md:px-16 flex items-start justify-between gap-6">
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-              {locale === 'fr' ? 'La Lettre — bilan hebdomadaire' : 'The Letter — weekly digest'}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/65">
-              {locale === 'fr' ? 'Lecture · ~10 min' : 'Read · ~10 min'}
-            </span>
-          </header>
-
-          <div className="mt-16 md:mt-24 px-6 md:px-16">
-            <p
-              className="font-display italic font-light text-[#0E0E0E] max-w-[1100px]"
-              style={{ fontSize: 'clamp(40px, 6vw, 92px)', lineHeight: 0.96, letterSpacing: '-0.035em' }}
-            >
-              {locale === 'fr' ? 'Une semaine.' : 'One week.'}
-              <br />
-              <span className="text-black/55">
-                {locale === 'fr' ? 'Trois colonnes.' : 'Three columns.'}
-              </span>
-              <br />
-              <span className="text-black/35">
-                {locale === 'fr' ? 'Aucun bruit.' : 'No noise.'}
-              </span>
-            </p>
-          </div>
-        </section>
-
-        <LettrePanel locale={locale} />
-      </main>
-      <Footer dict={dict} locale={locale} />
+      <EditorialJsonLd
+        slug="lettre"
+        title={locale === 'fr' ? 'La Lettre du dimanche' : 'The Sunday Letter'}
+        description={locale === 'fr'
+          ? 'Bilan hebdomadaire, calculé localement à partir de votre progression.'
+          : 'Weekly digest computed locally from your progress.'}
+        locale={locale}
+      />
+      <RoomBreadcrumb
+        locale={locale}
+        slug="lettre"
+        title={{ fr: 'La Lettre du dimanche', en: 'The Sunday Letter' }}
+      />
+      <EditorialFrame
+      dict={dict}
+      locale={locale}
+      eyebrow={t.eyebrow}
+      status={t.status}
+      head={t.head}
+    >
+      <LettrePanel locale={locale} />
+      <ReadNext
+        locale={locale}
+        rooms={[
+          {
+            slug: 'rentree',
+            title: { fr: 'Le Carnet d’absence', en: 'The Absence Register' },
+            caption: {
+              fr: 'Si vous revenez après plusieurs Lettres ratées.',
+              en: 'If you return after missing several Letters.',
+            },
+          },
+          {
+            slug: 'cercle',
+            title: { fr: 'Le Cercle de relecture', en: 'The Reading Circle' },
+            caption: {
+              fr: 'La Lettre d’un autre lecteur, en silence.',
+              en: 'Another reader’s Letter, in silence.',
+            },
+          },
+          {
+            slug: 'veillee',
+            title: { fr: 'La Veillée', en: 'The Vigil' },
+            caption: {
+              fr: 'La lecture commune du dimanche soir.',
+              en: 'The shared Sunday-evening reading.',
+            },
+          },
+        ]}
+      />
+    </EditorialFrame>
     </>
   );
 }

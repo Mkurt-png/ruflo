@@ -27,9 +27,34 @@ export function HeurePapier() {
       else root.classList.remove('tickra-night');
     };
     apply();
-    // Re-check every minute. Cheap: one classList toggle.
-    const interval = window.setInterval(apply, 60_000);
-    return () => window.clearInterval(interval);
+    // Re-check every minute, but only while the tab is visible — no
+    // point waking the page when the user isn't looking. Pause via
+    // clearInterval on visibilitychange; reapply immediately on
+    // return so the state catches up the moment focus is back.
+    let interval: number | null = null;
+    const start = () => {
+      if (interval !== null) return;
+      interval = window.setInterval(apply, 60_000);
+    };
+    const stop = () => {
+      if (interval === null) return;
+      window.clearInterval(interval);
+      interval = null;
+    };
+    const onVisibility = () => {
+      if (document.hidden) {
+        stop();
+      } else {
+        apply();
+        start();
+      }
+    };
+    if (!document.hidden) start();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
   }, []);
   return null;
 }

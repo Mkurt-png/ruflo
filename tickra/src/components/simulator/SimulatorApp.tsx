@@ -14,7 +14,7 @@
 // Buy/Sell flow: pick symbol, size in lots, stop loss in pips, take profit in
 // pips → opens a position. Auto-closes when SL or TP is hit.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ArrowDownRight, ArrowUpRight, Lock, RotateCcw, TrendingDown, TrendingUp, X } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
@@ -150,8 +150,12 @@ function pnlOf(p: Position): number {
   return pips * meta.pipValuePerLot * p.size;
 }
 
-function fmtUsd(n: number): string {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(n);
+function fmtUsd(n: number, locale: Locale = 'en'): string {
+  return new Intl.NumberFormat(locale === 'fr' ? 'fr-FR' : 'en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 2,
+  }).format(n);
 }
 
 const COPY = {
@@ -483,13 +487,13 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
     <div className="space-y-6">
       {/* ─── Equity bar ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-        <Stat label={t.balance} value={fmtUsd(state.balance)} />
+        <Stat label={t.balance} value={fmtUsd(state.balance, locale)} />
         <Stat
           label={t.floating}
-          value={fmtUsd(floatingPnl)}
+          value={fmtUsd(floatingPnl, locale)}
           tone={floatingPnl >= 0 ? 'up' : 'down'}
         />
-        <Stat label={t.equity} value={fmtUsd(equity)} accent />
+        <Stat label={t.equity} value={fmtUsd(equity, locale)} accent />
       </div>
 
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
@@ -510,7 +514,7 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
               </button>
             ))}
           </div>
-          <TradingViewWidget symbol={symbolMeta.tv} />
+          <TradingViewWidget symbol={symbolMeta.tv} locale={locale} />
         </div>
 
         {/* ─── Trade panel ──────────────────────────────────────── */}
@@ -548,11 +552,11 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
           <dl className="mt-5 grid grid-cols-3 gap-3 border-t border-line pt-4 text-[12px]">
             <div>
               <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{t.risk}</dt>
-              <dd className="mt-1 font-display text-base text-down">−{fmtUsd(riskUsd)}</dd>
+              <dd className="mt-1 font-display text-base text-down">−{fmtUsd(riskUsd, locale)}</dd>
             </div>
             <div>
               <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{t.reward}</dt>
-              <dd className="mt-1 font-display text-base text-up">+{fmtUsd(rewardUsd)}</dd>
+              <dd className="mt-1 font-display text-base text-up">+{fmtUsd(rewardUsd, locale)}</dd>
             </div>
             <div>
               <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{t.rr}</dt>
@@ -602,7 +606,7 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
                   <span className="font-mono text-[11px] text-muted">{p.size.toFixed(2)} lot · {p.stopPips}/{p.tpPips} pips</span>
                   <span className="font-mono text-[11px] tabular-nums text-muted">{p.entry.toFixed(meta.pip < 0.01 ? 5 : 2)} → {p.current.toFixed(meta.pip < 0.01 ? 5 : 2)}</span>
                   <span className={cn('ml-auto font-display tabular-nums text-base', pnl >= 0 ? 'text-up' : 'text-down')}>
-                    {pnl >= 0 ? '+' : ''}{fmtUsd(pnl)}
+                    {pnl >= 0 ? '+' : ''}{fmtUsd(pnl, locale)}
                   </span>
                   <button
                     type="button"
@@ -627,7 +631,7 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
             <Row label={t.trades} value={String(stats.trades)} />
             <Row label={t.winRate} value={`${stats.winRate.toFixed(0)}%`} />
             <Row label={t.avgR} value={`${stats.avgR.toFixed(2)} R`} tone={stats.avgR >= 0 ? 'up' : 'down'} />
-            <Row label={t.netPnl} value={fmtUsd(stats.netPnl)} tone={stats.netPnl >= 0 ? 'up' : 'down'} />
+            <Row label={t.netPnl} value={fmtUsd(stats.netPnl, locale)} tone={stats.netPnl >= 0 ? 'up' : 'down'} />
           </dl>
           <button
             type="button"
@@ -657,10 +661,10 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
                       <span className="font-mono text-[11px] text-muted">{c.size.toFixed(2)} lot</span>
                       <span className="font-mono text-[11px] text-subtle">{reason}</span>
                       <span className={cn('ml-auto font-display tabular-nums', c.pnl >= 0 ? 'text-up' : 'text-down')}>
-                        {c.pnl >= 0 ? '+' : ''}{fmtUsd(c.pnl)}
+                        {c.pnl >= 0 ? '+' : ''}{fmtUsd(c.pnl, locale)}
                       </span>
                     </div>
-                    {/* TICKRA-PHASE-2.2: AI Trade Coach review on demand. */}
+                    {/* AI Trade Coach review on demand. */}
                     <TradeCoach
                       locale={locale}
                       trade={{
@@ -702,10 +706,12 @@ function Stat({ label, value, tone, accent }: { label: string; value: string; to
 }
 
 function Field({ label, value, step, min, max, onChange }: { label: string; value: number; step: number; min?: number; max?: number; onChange: (v: number) => void }) {
+  const id = useId();
   return (
     <div>
-      <label className="block font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">{label}</label>
+      <label htmlFor={id} className="block font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted">{label}</label>
       <input
+        id={id}
         type="number"
         value={value}
         step={step}

@@ -1,13 +1,27 @@
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { pageMeta } from '@/lib/seo/page-meta';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
+import { PageBreadcrumb } from '@/components/seo/PageBreadcrumb';
 
-export const metadata = { title: 'Politique cookies · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  if (!isLocale(params.locale)) return {};
+  return pageMeta({
+    slug: 'cookies',
+    locale: params.locale,
+    title: 'Cookies',
+    description:
+      params.locale === 'fr'
+        ? 'La politique cookies de Tickra : ce qu’on dépose, ce qu’on ne dépose pas, comment refuser.'
+        : 'Tickra’s cookie policy: what we drop, what we don’t, how to refuse.',
+    ogEyebrow: 'Tickra · Cookies',
+  });
+}
 
 const COPY = {
   fr: {
@@ -126,9 +140,14 @@ export default async function CookiesPage({ params }: { params: { locale: string
 
   return (
     <>
+      <PageBreadcrumb
+        locale={locale}
+        slug="cookies"
+        title={{ fr: 'Cookies', en: 'Cookies' }}
+      />
       <Navbar dict={dict} locale={locale} />
       <main id="main">
-        <PageHero title={t.title} meta={t.updated} eyebrow="Legal" />
+        <PageHero title={t.title} meta={t.updated} eyebrow={locale === 'fr' ? 'Légal' : 'Legal'} />
         <section>
           <Container as="div" className="py-20 md:py-28">
             <div className="mx-auto max-w-3xl">
