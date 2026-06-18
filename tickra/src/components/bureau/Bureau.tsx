@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useProgress } from '@/lib/progress/hook';
 import { useCote } from '@/lib/tickra/useCote';
 import { TRACKS } from '@/lib/curriculum/data';
+import { currentDailyStreak } from '@/lib/progress/streak';
 
 type Locale = 'fr' | 'en';
 
@@ -34,23 +35,6 @@ function dueReviewCount(mistakes: Record<string, { loggedAt: number; reviewedAt?
   ).length;
 }
 
-function streakDays(completed: Record<string, number>): number {
-  if (typeof window === 'undefined') return 0;
-  const days = new Set<string>();
-  for (const ts of Object.values(completed)) {
-    days.add(new Date(ts).toISOString().slice(0, 10));
-  }
-  let streak = 0;
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  for (;;) {
-    if (days.has(cursor.toISOString().slice(0, 10))) {
-      streak += 1;
-      cursor.setTime(cursor.getTime() - DAY);
-    } else break;
-  }
-  return streak;
-}
 
 export function Bureau({ locale, email }: { locale: Locale; email: string }) {
   const { state, ready } = useProgress();
@@ -64,7 +48,7 @@ export function Bureau({ locale, email }: { locale: Locale; email: string }) {
   const t = COPY[locale];
   const next = useMemo(() => pickNextLesson(state.completed ?? {}), [state]);
   const due = useMemo(() => dueReviewCount(state.mistakes ?? {}), [state]);
-  const streak = useMemo(() => streakDays(state.completed ?? {}), [state]);
+  const streak = useMemo(() => currentDailyStreak(state.completed ?? {}), [state]);
 
   const formattedDate = now
     ? now.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-GB', {

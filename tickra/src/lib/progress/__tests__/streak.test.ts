@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { currentDailyStreak } from '../useCote';
+import { currentDailyStreak } from '../streak';
 
 // Build a completion timestamp at local noon, `daysAgo` local days before NOW.
 function localNoon(now: number, daysAgo: number): number {

@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useProgress } from '@/lib/progress/hook';
 import { scopedKey, SCOPE_EVENT } from '@/lib/progress/scope';
 import { computeRituel, type Rituel } from '@/lib/tickra/rituel';
+import { currentDailyStreak } from '@/lib/progress/streak';
 
 type Locale = 'fr' | 'en';
 
@@ -33,24 +34,6 @@ const COPY = {
 
 const DISMISS_BASE = 'tickra-rituel-dismissed-v1';
 
-function computeStreak(completed: Record<string, number>): number {
-  if (typeof window === 'undefined') return 0;
-  const DAY = 86_400_000;
-  const days = new Set<string>();
-  for (const ts of Object.values(completed)) {
-    days.add(new Date(ts).toISOString().slice(0, 10));
-  }
-  let streak = 0;
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  for (;;) {
-    if (days.has(cursor.toISOString().slice(0, 10))) {
-      streak += 1;
-      cursor.setTime(cursor.getTime() - DAY);
-    } else break;
-  }
-  return streak;
-}
 
 export function RituelBanner({ locale }: { locale: Locale }) {
   const { state, ready } = useProgress();
@@ -76,7 +59,7 @@ export function RituelBanner({ locale }: { locale: Locale }) {
     return computeRituel({
       completed: state.completed ?? {},
       mistakes: state.mistakes ?? {},
-      streakDays: computeStreak(state.completed ?? {}),
+      streakDays: currentDailyStreak(state.completed ?? {}),
     });
   }, [ready, state]);
 

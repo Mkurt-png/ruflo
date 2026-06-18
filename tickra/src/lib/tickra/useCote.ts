@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { useProgress } from '@/lib/progress/hook';
 import { SCOPE_EVENT, scopedKey } from '@/lib/progress/scope';
+import { currentDailyStreak } from '@/lib/progress/streak';
 import { computeCote, type CoteOutput } from './cote';
 
 function readJournalCount(): number {
@@ -19,40 +20,6 @@ function readJournalCount(): number {
   } catch {
     return 0;
   }
-}
-
-// Local-time YYYY-MM-DD key. Users think in their own calendar day, so a
-// lesson finished at 14:00 local belongs to that local day — not the UTC
-// day, which toISOString() would have used (off by one east of UTC).
-function localDayKey(d: Date): string {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-}
-
-/** Current consecutive-day streak: number of local days, ending today,
- * each carrying at least one completion. Pure + now-injectable for tests.
- * Keys and the walking cursor are both in local time so the comparison is
- * timezone-consistent, and the cursor steps back by calendar day
- * (`setDate`) rather than a fixed 24h so DST transitions don't skip a day. */
-export function currentDailyStreak(
-  completed: Record<string, number>,
-  now: number = Date.now(),
-): number {
-  const days = new Set<string>();
-  for (const ts of Object.values(completed)) {
-    days.add(localDayKey(new Date(ts)));
-  }
-  let streak = 0;
-  const cursor = new Date(now);
-  cursor.setHours(0, 0, 0, 0);
-  for (;;) {
-    if (days.has(localDayKey(cursor))) {
-      streak += 1;
-      cursor.setDate(cursor.getDate() - 1);
-    } else {
-      break;
-    }
-  }
-  return streak;
 }
 
 function computeStreak(completed: Record<string, number>): number {
