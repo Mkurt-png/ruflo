@@ -80,7 +80,7 @@ export function Pricing({ dict, locale }: Props) {
               : 'border border-gray-200';
 
             return (
-              <article key={plan.id} className={`${baseClasses} ${borderClasses}`}>
+              <article key={plan.id} aria-labelledby={`pricing-plan-${plan.id}`} className={`${baseClasses} ${borderClasses}`}>
                 {highlighted ? (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-blue text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">
                     {t.mostChosen ?? 'Most popular'}
@@ -88,7 +88,7 @@ export function Pricing({ dict, locale }: Props) {
                 ) : null}
 
                 <header>
-                  <h3 className="text-text-primary text-xl font-medium">{plan.name}</h3>
+                  <h3 id={`pricing-plan-${plan.id}`} className="text-text-primary text-xl font-medium">{plan.name}</h3>
                   <p className="text-text-secondary text-sm mt-2">{plan.tagline}</p>
                 </header>
 

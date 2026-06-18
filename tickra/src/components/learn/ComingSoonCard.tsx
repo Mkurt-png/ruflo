@@ -38,7 +38,7 @@ export function ComingSoonCard({
 }) {
   const t = copy[locale];
   return (
-    <article className="relative overflow-hidden rounded-sm border border-line bg-surface p-8 md:p-12">
+    <article aria-labelledby="coming-soon-card-title" className="relative overflow-hidden rounded-sm border border-line bg-surface p-8 md:p-12">
       <span aria-hidden className="aurora aurora--lt" />
       <div className="relative">
         <div className="inline-flex items-center gap-2 rounded-full border border-line bg-canvas px-3 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted">
@@ -46,7 +46,7 @@ export function ComingSoonCard({
           {t.eyebrow}
         </div>
 
-        <h2 className="mt-6 max-w-2xl font-display text-display-md font-medium tracking-tight text-balance text-ink">
+        <h2 id="coming-soon-card-title" className="mt-6 max-w-2xl font-display text-display-md font-medium tracking-tight text-balance text-ink">
           {t.title}
         </h2>
         <p className="mt-5 max-w-xl text-pretty text-[16px] leading-relaxed text-muted md:text-[17px]">
