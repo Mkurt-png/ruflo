@@ -9,6 +9,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
+import { RiskOfRuinSimulator } from '@/components/learn/RiskOfRuinSimulator';
 
 export const metadata = { title: 'Outils · Tickra' };
 
@@ -16,7 +17,7 @@ const copy = {
   fr: {
     eyebrow: 'Outils',
     title: 'Les outils Tickra.',
-    body: 'Quatre outils utilitaires pour décider mieux, plus vite. Aucun n’envoie de données. Tout fonctionne hors‑ligne.',
+    body: 'Des outils utilitaires pour décider mieux, plus vite. Aucun n’envoie de données. Tout fonctionne hors‑ligne.',
     glossaryTitle: 'Glossaire',
     glossaryBody: '42 termes essentiels, classés par thème, cherchables.',
     glossaryCta: 'Ouvrir le glossaire',
@@ -27,7 +28,7 @@ const copy = {
   en: {
     eyebrow: 'Tools',
     title: 'The Tickra tools.',
-    body: 'Four utilities to decide better, faster. None send any data. Everything works offline.',
+    body: 'Utilities to decide better, faster. None send any data. Everything works offline.',
     glossaryTitle: 'Glossary',
     glossaryBody: '42 essential terms, sorted by theme, searchable.',
     glossaryCta: 'Open the glossary',
@@ -54,6 +55,9 @@ export default async function ToolsPage({ params }: { params: { locale: string }
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
               <PositionSizer locale={locale} />
               <ExpectancyCalculator locale={locale} />
+            </div>
+            <div className="mt-3">
+              <RiskOfRuinSimulator locale={locale} />
             </div>
           </Container>
         </section>
