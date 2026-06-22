@@ -11,6 +11,7 @@ import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 import { RiskOfRuinSimulator } from '@/components/learn/RiskOfRuinSimulator';
 import { MarketSessionsClock } from '@/components/learn/MarketSessionsClock';
+import { CandlePatternTrainer } from '@/components/learn/CandlePatternTrainer';
 
 export const metadata = { title: 'Outils · Tickra' };
 
@@ -62,6 +63,9 @@ export default async function ToolsPage({ params }: { params: { locale: string }
             </div>
             <div className="mt-3">
               <MarketSessionsClock locale={locale} />
+            </div>
+            <div className="mt-3">
+              <CandlePatternTrainer locale={locale} />
             </div>
           </Container>
         </section>
