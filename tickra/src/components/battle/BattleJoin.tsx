@@ -50,11 +50,12 @@ export function BattleJoin(props: Props) {
   const [copied, setCopied] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
+  const battleId = props.mode === 'join' ? props.battleId : undefined;
   const inviteUrl = useMemo(() => {
     if (props.mode !== 'join') return '';
-    if (typeof window === 'undefined') return `/battle/${props.battleId}`;
-    return `${window.location.origin}/${props.locale}/battle/${props.battleId}`;
-  }, [props.mode, props.locale, (props as JoinMode).battleId]);
+    if (typeof window === 'undefined') return `/battle/${battleId}`;
+    return `${window.location.origin}/${props.locale}/battle/${battleId}`;
+  }, [props.mode, props.locale, battleId]);
 
   const onCreate = useCallback(async () => {
     setBusy(true);
