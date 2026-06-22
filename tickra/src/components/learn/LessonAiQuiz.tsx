@@ -8,7 +8,13 @@
 import { useState } from 'react';
 import { Check, Loader2, RefreshCw, Sparkles, X } from 'lucide-react';
 import { useUser } from '@/lib/auth/useUser';
+import { addXp } from '@/lib/progress/xp';
 import { cn } from '@/lib/cn';
+
+// XP awarded per correct answer when an AI quiz is completed. Mirrors the
+// simulator's "every action rewards XP" model so the quiz feeds the same
+// gamification loop (levels, daily quests).
+const XP_PER_CORRECT = 5;
 
 type Locale = 'fr' | 'en';
 
@@ -39,6 +45,7 @@ const copy = {
     error: 'Impossible de générer le quiz. Réessaie.',
     correctTag: 'Bonne réponse',
     wrongTag: 'Mauvaise réponse',
+    xpEarned: 'XP gagnés',
   },
   en: {
     eyebrow: 'Adaptive quiz',
@@ -59,6 +66,7 @@ const copy = {
     error: 'Could not generate the quiz. Try again.',
     correctTag: 'Correct',
     wrongTag: 'Incorrect',
+    xpEarned: 'XP earned',
   },
 };
 
@@ -119,6 +127,12 @@ export function LessonAiQuiz({
   const advance = () => {
     if (!questions) return;
     if (current + 1 >= questions.length) {
+      // Quiz finished — award XP for correct answers and notify the XP badge.
+      const correct = answers.filter(Boolean).length;
+      if (correct > 0) {
+        addXp(correct * XP_PER_CORRECT);
+        if (typeof window !== 'undefined') window.dispatchEvent(new Event('tickra-xp-changed'));
+      }
       setDone(true);
     } else {
       setCurrent((c) => c + 1);
@@ -239,6 +253,12 @@ export function LessonAiQuiz({
           <p className="mt-2 text-[13.5px] leading-relaxed text-muted">
             {score === total ? t.perfect : score >= Math.ceil(total * 0.6) ? t.good : t.weak}
           </p>
+          {score > 0 ? (
+            <p className="mt-2 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brand">
+              <Sparkles className="h-3 w-3" strokeWidth={2} />
+              +{score * XP_PER_CORRECT} {t.xpEarned}
+            </p>
+          ) : null}
           <button
             type="button"
             onClick={generate}
