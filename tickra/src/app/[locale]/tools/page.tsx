@@ -12,6 +12,7 @@ import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
 import { RiskOfRuinSimulator } from '@/components/learn/RiskOfRuinSimulator';
 import { MarketSessionsClock } from '@/components/learn/MarketSessionsClock';
 import { CandlePatternTrainer } from '@/components/learn/CandlePatternTrainer';
+import { LossMathPanel } from '@/components/learn/LossMathPanel';
 
 export const metadata = { title: 'Outils · Tickra' };
 
@@ -57,6 +58,9 @@ export default async function ToolsPage({ params }: { params: { locale: string }
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
               <PositionSizer locale={locale} />
               <ExpectancyCalculator locale={locale} />
+            </div>
+            <div className="mt-3">
+              <LossMathPanel locale={locale} />
             </div>
             <div className="mt-3">
               <RiskOfRuinSimulator locale={locale} />
