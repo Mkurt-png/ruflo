@@ -233,7 +233,7 @@ class TradeExecutor:
             pl = float(fill.get("pl", 0))
 
             async with self.db() as session:
-                from backend.models.trade import Trade
+                from models.trade import Trade
 
                 result = await session.execute(
                     select(Trade).where(Trade.oanda_trade_id == trade_id)
@@ -301,7 +301,7 @@ class TradeExecutor:
         oanda_trade_id: str,
     ) -> dict:
         """Persiste le trade en base de données après exécution chez OANDA."""
-        from backend.models.trade import Trade
+        from models.trade import Trade
 
         trade = Trade(
             pair=signal.pair,
@@ -345,7 +345,7 @@ class TradeExecutor:
             trade_id = oanda_trade.get("id")
 
             async with self.db() as session:
-                from backend.models.trade import Trade
+                from models.trade import Trade
 
                 result = await session.execute(
                     select(Trade).where(Trade.oanda_trade_id == trade_id)
@@ -365,7 +365,7 @@ class TradeExecutor:
         """
         count = 0
         try:
-            from backend.models.trade import Trade
+            from models.trade import Trade
 
             async with self.db() as session:
                 result = await session.execute(

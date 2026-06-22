@@ -24,18 +24,14 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 # ---------------------------------------------------------------------------
 # pylint: disable=wrong-import-position
 try:
-    from backend.database.base import Base  # noqa: F401  — metadata carrier
+    # Import Base et tous les modèles pour la détection automatique par Alembic
+    from database.database import Base  # noqa: F401
 
-    # Domain models
-    from backend.models.user import User  # noqa: F401
-    from backend.models.trade import Trade  # noqa: F401
-    from backend.models.signal import Signal  # noqa: F401
-    from backend.models.account import Account  # noqa: F401
-    from backend.models.performance import PerformanceSnapshot  # noqa: F401
+    from models.trade import Trade  # noqa: F401
+    from models.signal import Signal  # noqa: F401
+    from models.account import AccountSnapshot  # noqa: F401
 except ImportError:
-    # During initial setup the models may not exist yet — that is fine.
-    # Alembic will operate on an empty MetaData and generate the full schema
-    # once the model files are created.
+    # Pendant l'initialisation initiale, les modèles peuvent ne pas exister encore.
     from sqlalchemy.orm import DeclarativeBase
 
     class Base(DeclarativeBase):  # type: ignore[no-redef]

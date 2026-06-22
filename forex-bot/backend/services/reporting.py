@@ -37,7 +37,7 @@ class ReportingService:
         - Sharpe Ratio annualisé (approximation sur série P&L)
         - Statistiques par paire
         """
-        from backend.models.trade import Trade
+        from models.trade import Trade
 
         async with self.db() as session:
             result = await session.execute(
@@ -143,7 +143,7 @@ class ReportingService:
 
         Périodes supportées : "day", "week", "month", "all"
         """
-        from backend.models.trade import Trade
+        from models.trade import Trade
 
         now = datetime.utcnow()
 
@@ -217,7 +217,7 @@ class ReportingService:
         Exporte tous les trades (ouverts et fermés) en CSV.
         Retourne le contenu CSV comme chaîne de caractères.
         """
-        from backend.models.trade import Trade
+        from models.trade import Trade
 
         async with self.db() as session:
             result = await session.execute(
@@ -294,7 +294,7 @@ class ReportingService:
 
         Périodes : "1d", "1w", "1m", "3m", "6m", "1y", "all"
         """
-        from backend.models.account import AccountSnapshot
+        from models.account import AccountSnapshot
 
         period_days = {
             "1d": 1,
@@ -338,7 +338,7 @@ class ReportingService:
         Retourne les statistiques de performance mois par mois.
         Utile pour le calendrier de performance dans le dashboard.
         """
-        from backend.models.trade import Trade
+        from models.trade import Trade
 
         async with self.db() as session:
             result = await session.execute(
