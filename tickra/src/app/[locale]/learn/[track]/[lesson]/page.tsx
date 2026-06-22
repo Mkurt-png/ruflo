@@ -9,6 +9,7 @@ import { getLessonContent, isSeeded } from '@/lib/curriculum/lesson-content';
 import { LessonRunner } from '@/components/learn/LessonRunner';
 import { LessonNotes } from '@/components/learn/LessonNotes';
 import { LessonFeedback } from '@/components/learn/LessonFeedback';
+import { LessonAiQuiz } from '@/components/learn/LessonAiQuiz';
 import { PrefetchNeighbours } from '@/components/learn/PrefetchNeighbours';
 import { PaywallCard } from '@/components/learn/PaywallCard';
 import { ComingSoonCard } from '@/components/learn/ComingSoonCard';
@@ -107,7 +108,10 @@ export default async function LessonPage({
                   total={totalLessons()}
                   reviewMode={reviewMode}
                 />
-                <div className="mt-12 grid grid-cols-1 gap-3 md:mt-16 md:grid-cols-2">
+                <div className="mt-12 md:mt-16">
+                  <LessonAiQuiz trackSlug={track.slug} lessonSlug={lesson.slug} locale={locale} />
+                </div>
+                <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
                   <LessonNotes lessonId={lesson.id} locale={locale} />
                   <LessonFeedback lessonId={lesson.id} locale={locale} />
                 </div>
