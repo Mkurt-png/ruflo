@@ -29,6 +29,16 @@
       "trackingIssue": "https://github.com/ruvnet/agentic-flow/pull/154",
       "expiresAt": "2026-11-19",
       "rationale": "Cannot fully eliminate from the audit graph until either @xenova/transformers itself ships a fix OR agentic-flow drops it entirely (covered by ADR-121 Phase 4 migration). The browser substrate does not invoke embedding code paths, so the optional-dep path is the right install profile. Re-audit when ADR-121 Phase 4 lands or @xenova/transformers ships a CVE-clean version."
+    },
+    {
+      "package": "v3/@claude-flow/browser",
+      "depName": "vitest",
+      "severity": "critical",
+      "via": ["vite", "vite-node", "@vitest/mocker"],
+      "tracking": "GHSA-5xrq-8626-4rwp — Vitest UI server arbitrary file read/exec. vitest is a devDependency (test tooling) and is NEVER part of the published runtime bundle, so end users of @claude-flow/browser are not exposed. The advisory only applies while the Vitest UI server is actively listening, which never happens in production. npm audit propagates a `critical` up to the direct `vitest` dep through the evolving vite/vite-node/@vitest/mocker advisory chain even though the pinned versions are already current (vitest 4.1.6, vite 8.0.13). `npm audit fix` cannot run here because the package uses the `workspace:*` protocol.",
+      "trackingIssue": "https://github.com/advisories/GHSA-5xrq-8626-4rwp",
+      "expiresAt": "2026-09-22",
+      "rationale": "Dev-only / test-tooling finding with zero runtime exposure for published consumers. Re-triage by bumping vitest/vite to the latest patched versions during the next workspace-wide (pnpm) dependency refresh, where audit fixes can be applied without the npm workspace-protocol limitation."
     }
   ],
   "lockfile": [
