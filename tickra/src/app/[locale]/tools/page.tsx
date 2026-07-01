@@ -28,6 +28,16 @@ const copy = {
     paletteTitle: 'Palette ⌘K',
     paletteBody: 'Toutes les leçons, pages et définitions à deux frappes. Cherchez n’importe où, ouvrez en un Entrée.',
     paletteHint: 'Tapez ⌘K (ou Ctrl K) sur n’importe quelle page.',
+    quickNav: 'Aller à',
+    nav: {
+      sizer: 'Taille de position',
+      expectancy: 'Espérance',
+      loss: 'Math des pertes',
+      ruin: 'Risque de ruine',
+      growth: 'Projection',
+      sessions: 'Sessions',
+      patterns: 'Figures',
+    },
   },
   en: {
     eyebrow: 'Tools',
@@ -39,6 +49,16 @@ const copy = {
     paletteTitle: 'Palette ⌘K',
     paletteBody: 'Every lesson, page and term in two keystrokes. Search anywhere, open with Enter.',
     paletteHint: 'Press ⌘K (or Ctrl K) on any page.',
+    quickNav: 'Jump to',
+    nav: {
+      sizer: 'Position size',
+      expectancy: 'Expectancy',
+      loss: 'Math of losses',
+      ruin: 'Risk of ruin',
+      growth: 'Projection',
+      sessions: 'Sessions',
+      patterns: 'Patterns',
+    },
   },
 };
 
@@ -56,23 +76,53 @@ export default async function ToolsPage({ params }: { params: { locale: string }
 
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-24">
+            {/* Quick anchor navigation — the toolbox is long, this jumps around it. */}
+            <nav aria-label={t.quickNav} className="mb-10 flex flex-wrap items-center gap-2">
+              <span className="mr-1 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
+                {t.quickNav}
+              </span>
+              {(
+                [
+                  ['sizer', t.nav.sizer],
+                  ['expectancy', t.nav.expectancy],
+                  ['loss', t.nav.loss],
+                  ['ruin', t.nav.ruin],
+                  ['growth', t.nav.growth],
+                  ['sessions', t.nav.sessions],
+                  ['patterns', t.nav.patterns],
+                ] as const
+              ).map(([id, label]) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  className="inline-flex h-8 items-center rounded-full border border-line bg-canvas px-3 font-mono text-[10.5px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-ink hover:text-ink"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-              <PositionSizer locale={locale} />
-              <ExpectancyCalculator locale={locale} />
+              <div id="sizer" className="scroll-mt-24">
+                <PositionSizer locale={locale} />
+              </div>
+              <div id="expectancy" className="scroll-mt-24">
+                <ExpectancyCalculator locale={locale} />
+              </div>
             </div>
-            <div className="mt-3">
+            <div id="loss" className="mt-3 scroll-mt-24">
               <LossMathPanel locale={locale} />
             </div>
-            <div className="mt-3">
+            <div id="ruin" className="mt-3 scroll-mt-24">
               <RiskOfRuinSimulator locale={locale} />
             </div>
-            <div className="mt-3">
+            <div id="growth" className="mt-3 scroll-mt-24">
               <GrowthProjection locale={locale} />
             </div>
-            <div className="mt-3">
+            <div id="sessions" className="mt-3 scroll-mt-24">
               <MarketSessionsClock locale={locale} />
             </div>
-            <div className="mt-3">
+            <div id="patterns" className="mt-3 scroll-mt-24">
               <CandlePatternTrainer locale={locale} />
             </div>
           </Container>
