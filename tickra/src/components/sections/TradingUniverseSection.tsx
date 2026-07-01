@@ -40,7 +40,7 @@ const COPY = {
 export function TradingUniverseSection({ locale }: { locale: Locale }) {
   const t = COPY[locale];
   return (
-    <section className="relative bg-black text-white overflow-hidden border-y border-white/10">
+    <section className="relative bg-elevated text-ink overflow-hidden border-y border-line">
       {/* Soft radial glow */}
       <div
         aria-hidden
@@ -58,14 +58,14 @@ export function TradingUniverseSection({ locale }: { locale: Locale }) {
           <h2 className="mt-4 font-display text-4xl md:text-5xl font-medium tracking-tight text-balance">
             {t.title}
           </h2>
-          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/65">
+          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted">
             {t.body}
           </p>
           <dl className="mt-8 grid grid-cols-2 gap-4 max-w-md">
             {t.bullets.map((b) => (
-              <div key={b.label} className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+              <div key={b.label} className="rounded-lg border border-line bg-surface/[0.02] p-4">
                 <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">{b.label}</dt>
-                <dd className="mt-1 text-[13px] text-white/70">{b.hint}</dd>
+                <dd className="mt-1 text-[13px] text-muted">{b.hint}</dd>
               </div>
             ))}
           </dl>

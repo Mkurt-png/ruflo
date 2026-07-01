@@ -17,11 +17,11 @@ export function Pricing({ dict, locale }: Props) {
   const [cycle, setCycle] = useState<Cycle>('monthly');
 
   return (
-    <section id="pricing" aria-labelledby="pricing-title" className="bg-white py-24">
+    <section id="pricing" aria-labelledby="pricing-title" className="bg-surface py-24">
       <div className="mx-auto w-full max-w-container px-6 md:px-10">
         <div id="pricing-title" className="text-center">
-          <p className="text-navy-900 text-xs font-medium uppercase tracking-widest">{t.eyebrow}</p>
-          <h2 className="text-navy-900 text-3xl md:text-4xl font-medium mt-2">{t.title}</h2>
+          <p className="text-ink text-xs font-medium uppercase tracking-widest">{t.eyebrow}</p>
+          <h2 className="text-ink text-3xl md:text-4xl font-medium mt-2">{t.title}</h2>
           <p className="text-text-secondary text-base mt-4 max-w-2xl mx-auto">{t.body}</p>
         </div>
 
@@ -33,7 +33,7 @@ export function Pricing({ dict, locale }: Props) {
               onClick={() => setCycle('monthly')}
               className={
                 cycle === 'monthly'
-                  ? 'bg-white text-text-primary shadow-sm rounded-full px-4 py-2 text-sm font-medium'
+                  ? 'bg-surface text-text-primary shadow-sm rounded-full px-4 py-2 text-sm font-medium'
                   : 'text-text-secondary px-4 py-2 text-sm'
               }
             >
@@ -44,7 +44,7 @@ export function Pricing({ dict, locale }: Props) {
               onClick={() => setCycle('annual')}
               className={
                 cycle === 'annual'
-                  ? 'bg-white text-text-primary shadow-sm rounded-full px-4 py-2 text-sm font-medium'
+                  ? 'bg-surface text-text-primary shadow-sm rounded-full px-4 py-2 text-sm font-medium'
                   : 'text-text-secondary px-4 py-2 text-sm'
               }
             >
@@ -74,15 +74,15 @@ export function Pricing({ dict, locale }: Props) {
             }
 
             const baseClasses =
-              'relative flex flex-col bg-white rounded-2xl p-8 hover:shadow-md transition-all duration-200';
+              'relative flex flex-col bg-surface rounded-2xl p-8 hover:shadow-md transition-all duration-200';
             const borderClasses = highlighted
               ? 'border-2 border-accent-blue'
-              : 'border border-gray-200';
+              : 'border border-line';
 
             return (
               <article key={plan.id} className={`${baseClasses} ${borderClasses}`}>
                 {highlighted ? (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-blue text-white text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-blue text-ink text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap">
                     {t.mostChosen ?? 'Most popular'}
                   </span>
                 ) : null}
@@ -102,7 +102,7 @@ export function Pricing({ dict, locale }: Props) {
                   <p className="text-xs text-success mt-1">{subline}</p>
                 ) : null}
 
-                <ul className="mt-8 space-y-3 border-t border-gray-100 pt-6 text-sm">
+                <ul className="mt-8 space-y-3 border-t border-line pt-6 text-sm">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-start gap-3">
                       <Check
@@ -120,10 +120,10 @@ export function Pricing({ dict, locale }: Props) {
                     href={`/${locale}/onboarding?plan=${plan.id}`}
                     className={
                       isPro
-                        ? 'inline-flex w-full items-center justify-center bg-accent-blue text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-accent-blue-hover transition-colors duration-200'
+                        ? 'inline-flex w-full items-center justify-center bg-accent-blue text-ink px-6 py-3 rounded-lg text-sm font-medium hover:bg-accent-blue-hover transition-colors duration-200'
                         : isLifetime
-                          ? 'inline-flex w-full items-center justify-center bg-navy-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-navy-800 transition-colors duration-200'
-                          : 'inline-flex w-full items-center justify-center border border-navy-900 text-navy-900 px-6 py-3 rounded-lg text-sm font-medium hover:bg-navy-900 hover:text-white transition-colors duration-200'
+                          ? 'inline-flex w-full items-center justify-center bg-elevated text-ink px-6 py-3 rounded-lg text-sm font-medium hover:bg-elevated transition-colors duration-200'
+                          : 'inline-flex w-full items-center justify-center border border-ink text-ink px-6 py-3 rounded-lg text-sm font-medium hover:bg-elevated hover:text-ink transition-colors duration-200'
                     }
                   >
                     {plan.cta}

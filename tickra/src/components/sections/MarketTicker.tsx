@@ -66,21 +66,21 @@ export function MarketTicker() {
   return (
     <div
       aria-hidden
-      className="relative w-full overflow-hidden border-y border-white/10 bg-black"
+      className="relative w-full overflow-hidden border-y border-line bg-elevated"
     >
       {/* edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-canvas to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-canvas to-transparent" />
 
       <div className="flex w-max animate-ticker py-2.5 motion-reduce:animate-none">
         {loop.map((t, i) => {
           const up = t.changePct >= 0;
           return (
             <div key={`${t.symbol}-${i}`} className="flex items-baseline gap-2 px-5">
-              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/55">
+              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
                 {t.symbol}
               </span>
-              <span className="font-display text-[13px] tabular-nums text-white">
+              <span className="font-display text-[13px] tabular-nums text-ink">
                 {fmt(t.price, t.decimals)}
               </span>
               <span

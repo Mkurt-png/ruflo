@@ -94,7 +94,7 @@ export function Testimonials({ dict }: Props) {
       <div className="mx-auto w-full max-w-container px-6 md:px-10">
         <h2
           id="testimonials-title"
-          className="text-navy-900 text-3xl md:text-4xl font-medium text-center"
+          className="text-ink text-3xl md:text-4xl font-medium text-center"
         >
           {t.title}
         </h2>
@@ -104,7 +104,7 @@ export function Testimonials({ dict }: Props) {
             type="button"
             aria-label="Previous testimonial"
             onClick={prev}
-            className="absolute -left-2 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-navy-900/20 flex items-center justify-center text-navy-900 hover:bg-navy-900 hover:text-white transition-colors"
+            className="absolute -left-2 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-ink hover:bg-elevated hover:text-ink transition-colors"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -112,7 +112,7 @@ export function Testimonials({ dict }: Props) {
             type="button"
             aria-label="Next testimonial"
             onClick={next}
-            className="absolute -right-2 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white border border-navy-900/20 flex items-center justify-center text-navy-900 hover:bg-navy-900 hover:text-white transition-colors"
+            className="absolute -right-2 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-surface border border-line flex items-center justify-center text-ink hover:bg-elevated hover:text-ink transition-colors"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -127,7 +127,7 @@ export function Testimonials({ dict }: Props) {
               {CARDS.map((c) => (
                 <article
                   key={c.name}
-                  className="bg-white rounded-xl p-6 border border-gray-100 flex flex-col shrink-0 w-full md:w-[calc((100%-3.75rem)/4)]"
+                  className="bg-surface rounded-xl p-6 border border-line flex flex-col shrink-0 w-full md:w-[calc((100%-3.75rem)/4)]"
                 >
                   <header className="flex items-start gap-3">
                     <Avatar name={c.name} />
@@ -145,7 +145,7 @@ export function Testimonials({ dict }: Props) {
                   <blockquote className="relative mt-4 text-sm text-text-secondary leading-relaxed flex-1">
                     <span
                       aria-hidden
-                      className="absolute -top-3 -left-1 font-serif text-4xl text-navy-900/10 leading-none select-none"
+                      className="absolute -top-3 -left-1 font-serif text-4xl text-subtle leading-none select-none"
                     >
                       &ldquo;
                     </span>
@@ -180,7 +180,7 @@ function Avatar({ name }: { name: string }) {
   return (
     <span
       aria-hidden
-      className="w-10 h-10 rounded-full bg-navy-900 text-white flex items-center justify-center text-sm font-medium shrink-0"
+      className="w-10 h-10 rounded-full bg-elevated text-ink flex items-center justify-center text-sm font-medium shrink-0"
     >
       {initials}
     </span>
