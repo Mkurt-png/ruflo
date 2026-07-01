@@ -665,8 +665,11 @@ function LinkButton({ href, children }: { href: string; children: React.ReactNod
 
 function Avatar({ url, fallback }: { url: string | null; fallback: string }) {
   if (url) {
-    // eslint-disable-next-line @next/next/no-img-element
     return (
+      // Avatar comes from an arbitrary external provider URL; next/image would
+      // require whitelisting every possible remote host. A plain img with a
+      // no-referrer policy is the right call here.
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         src={url}
         alt=""
