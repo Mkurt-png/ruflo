@@ -44,7 +44,18 @@ const config: Config = {
         'pulse-soft': 'pulse-soft 2.2s ease-in-out infinite',
         scanlines: 'scanlines 0.6s linear infinite',
       },
+      borderRadius: {
+        // TICKRA-REDESIGN (glassmorphism): softer corners everywhere. Cards use
+        // rounded-sm across the app, so bumping it rounds the whole UI at once.
+        sm: '0.6rem',
+        DEFAULT: '0.75rem',
+        md: '0.9rem',
+        lg: '1.1rem',
+      },
       boxShadow: {
+        // Frosted-glass elevation: soft cool shadow + faint holographic rim.
+        glass: '0 1px 0 rgb(255 255 255 / 0.55) inset, 0 20px 60px -30px rgb(var(--glow) / 0.45), 0 8px 30px -18px rgb(var(--ink) / 0.18)',
+        'glass-lg': '0 1px 0 rgb(255 255 255 / 0.6) inset, 0 40px 100px -40px rgb(var(--glow) / 0.5), 0 12px 40px -20px rgb(var(--ink) / 0.22)',
         'glow-brand': '0 0 0 1px rgb(var(--brand) / 0.25), 0 0 40px -8px rgb(var(--brand) / 0.55)',
         'glow-up':    '0 0 0 1px rgb(var(--up) / 0.25),    0 0 40px -8px rgb(var(--up) / 0.55)',
         'glow-down':  '0 0 0 1px rgb(var(--down) / 0.25),  0 0 40px -8px rgb(var(--down) / 0.55)',

@@ -17,34 +17,39 @@
  */
 
 :root {
-  --canvas:   250 250 250;   /* near-white #FAFAFA */
-  --surface:  255 255 255;   /* pure white card */
-  --elevated: 245 245 245;   /* zinc-100 */
-  --ink:       10  10  10;   /* black-near */
-  --muted:     82  82  82;   /* zinc-600 */
-  --subtle:   161 161 170;   /* zinc-400 */
-  --line:     229 231 235;   /* gray-200 */
-  --brand:      0 210 106;   /* vivid green #00D26A */
-  --accent:   220 252 231;   /* green-100 tint */
-  --glow:       0 210 106;   /* brand-coloured glow */
-  --up:         0 210 106;   /* matches brand — gains = brand colour */
-  --down:     255  77  79;   /* crimson #FF4D4F */
+  /* TICKRA-REDESIGN (glassmorphism clair): iridescent holographic identity.
+     Brand shifts to a cyan→violet holo accent; up/down keep trading
+     semantics (green gains / rose losses). Surfaces stay light so
+     backdrop-blur reads as frosted glass. */
+  --canvas:   244 246 252;   /* cool near-white #F4F6FC */
+  --surface:  255 255 255;   /* white — rendered translucent for glass */
+  --elevated: 238 242 251;   /* faint cool tint */
+  --ink:       17  19  32;   /* deep indigo-ink #111320 */
+  --muted:     82  90  114;  /* slate-600 */
+  --subtle:   148 156 180;   /* slate-400 */
+  --line:     222 227 241;   /* cool gray-200 */
+  --brand:     56 189 248;   /* holographic cyan #38BDF8 */
+  --accent:   167 139 250;   /* violet #A78BFA */
+  --glow:     168  85 247;   /* violet glow #A855F7 */
+  --up:        22 197  94;   /* green gains #16C55E */
+  --down:     244  63  94;   /* rose losses #F43F5E */
   color-scheme: light;
 }
 
 html.dark {
-  --canvas:    10  10  10;   /* near-black #0A0A0A */
-  --surface:   20  20  20;   /* surface card #141414 */
-  --elevated:  31  31  31;   /* elevated #1F1F1F */
-  --ink:      250 250 250;   /* white-near */
-  --muted:    212 212 216;   /* zinc-300 */
-  --subtle:   113 113 122;   /* zinc-500 */
-  --line:      39  39  42;   /* zinc-800 */
-  --brand:      0 230 118;   /* slightly brighter green for OLED */
-  --accent:    15  53  35;   /* deep green tint */
-  --glow:       0 230 118;
-  --up:         0 230 118;
-  --down:     255  99 102;
+  /* Deep-space glass: near-black indigo with the same holo accents. */
+  --canvas:    8  10  20;    /* #080A14 */
+  --surface:  20  24  40;    /* #141828 translucent card */
+  --elevated: 28  33  54;    /* #1C2136 */
+  --ink:      237 240 252;   /* near-white indigo */
+  --muted:    170 178 205;
+  --subtle:   110 118 148;
+  --line:      44  52  82;    /* indigo-800 */
+  --brand:     94 211 255;   /* brighter cyan for OLED #5ED3FF */
+  --accent:   181 158 255;   /* violet */
+  --glow:     168  85 247;
+  --up:        34 214 110;
+  --down:     251  86 114;
   color-scheme: dark;
 }
 
@@ -55,10 +60,27 @@ html {
 }
 
 body {
-  background: rgb(var(--canvas));
   color: rgb(var(--ink));
   font-feature-settings: 'ss01', 'cv11';
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: color 0.25s ease;
+  /* TICKRA-REDESIGN: iridescent holographic canvas. A cool base with three
+     soft cyan / violet / mint pastel blooms fixed behind every page, so the
+     whole site sits on frosted-glass light. */
+  background-color: rgb(var(--canvas));
+  background-image:
+    radial-gradient(60% 55% at 12% 8%, rgb(var(--brand) / 0.16), transparent 70%),
+    radial-gradient(55% 50% at 92% 12%, rgb(var(--glow) / 0.16), transparent 70%),
+    radial-gradient(60% 60% at 78% 96%, rgb(var(--accent) / 0.14), transparent 72%),
+    radial-gradient(50% 45% at 20% 92%, rgb(var(--up) / 0.10), transparent 72%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+html.dark body {
+  background-image:
+    radial-gradient(60% 55% at 12% 8%, rgb(var(--brand) / 0.20), transparent 70%),
+    radial-gradient(55% 50% at 92% 12%, rgb(var(--glow) / 0.22), transparent 70%),
+    radial-gradient(60% 60% at 78% 96%, rgb(var(--accent) / 0.18), transparent 72%),
+    radial-gradient(50% 45% at 20% 92%, rgb(var(--up) / 0.12), transparent 72%);
 }
 
 ::selection {
@@ -163,12 +185,13 @@ body {
     background: linear-gradient(
       90deg,
       rgb(var(--brand))   0%,
-      #5EEAD4            25%,
-      #67E8F9            50%,
-      #5EEAD4            75%,
+      #818CF8            22%,
+      rgb(var(--glow))   45%,
+      #F472B6            62%,
+      #818CF8            80%,
       rgb(var(--brand)) 100%
     );
-    background-size: 220% 100%;
+    background-size: 240% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -251,12 +274,12 @@ body {
     background: linear-gradient(
       90deg,
       rgb(var(--brand))   0%,
-      rgb(var(--accent)) 35%,
-      rgb(var(--up))     50%,
-      rgb(var(--accent)) 65%,
+      rgb(var(--accent)) 30%,
+      rgb(var(--glow))   50%,
+      #F472B6            68%,
       rgb(var(--brand))  100%
     );
-    background-size: 220% 100%;
+    background-size: 240% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

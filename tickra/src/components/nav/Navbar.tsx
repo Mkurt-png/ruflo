@@ -35,11 +35,11 @@ export function Navbar({ dict, locale }: Props) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-black/95 backdrop-blur-sm border-b border-white/10">
+    <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/60 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-canvas/50">
       <div className="relative mx-auto w-full max-w-container px-6 md:px-10 flex h-16 items-center justify-between">
-        <Link href={`/${locale}`} aria-label="Tickra" className="flex items-center gap-2.5 text-white">
+        <Link href={`/${locale}`} aria-label="Tickra" className="flex items-center gap-2.5 text-ink">
           <Logo />
-          <span className="text-[15px] font-medium tracking-tight">Tickra</span>
+          <span className="text-[15px] font-semibold tracking-tight">Tickra</span>
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
@@ -48,7 +48,7 @@ export function Navbar({ dict, locale }: Props) {
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="text-sm text-white/70 hover:text-white transition-colors"
+                  className="text-sm text-muted transition-colors hover:text-ink"
                 >
                   {l.label}
                 </Link>
@@ -75,7 +75,7 @@ export function Navbar({ dict, locale }: Props) {
           <div className="hidden md:block">
             <Link
               href={`/${locale}/onboarding`}
-              className="inline-flex items-center bg-brand text-black px-4 py-2 rounded-lg text-sm font-semibold hover:brightness-110 transition-all"
+              className="inline-flex items-center rounded-full bg-[linear-gradient(110deg,rgb(var(--brand)),rgb(var(--glow)))] px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgb(var(--glow)/0.7)] transition-all hover:-translate-y-0.5 hover:brightness-110"
             >
               {dict.nav.getStarted}
             </Link>
