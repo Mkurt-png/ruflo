@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
+import type { Metadata } from 'next';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
+import { SITE_URL } from '@/lib/site-url';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
@@ -15,7 +17,40 @@ import { CandlePatternTrainer } from '@/components/learn/CandlePatternTrainer';
 import { LossMathPanel } from '@/components/learn/LossMathPanel';
 import { GrowthProjection } from '@/components/learn/GrowthProjection';
 
-export const metadata = { title: 'Outils · Tickra' };
+const meta = {
+  fr: {
+    title: 'Outils',
+    description:
+      'Calculateurs et simulateurs de trading Tickra : taille de position, espérance, math des pertes, risque de ruine (Monte-Carlo), projection de croissance, horloge des sessions forex et reconnaissance de figures. Tout en local, rien n’est envoyé.',
+  },
+  en: {
+    title: 'Tools',
+    description:
+      'Tickra trading calculators and simulators: position sizing, expectancy, the math of losses, Monte-Carlo risk of ruin, growth projection, a live forex sessions clock and candlestick-pattern training. All local, nothing is sent.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const locale: Locale = isLocale(params.locale) ? params.locale : 'fr';
+  const m = meta[locale];
+  const url = `${SITE_URL}/${locale}/tools`;
+  return {
+    title: m.title,
+    description: m.description,
+    alternates: {
+      canonical: `/${locale}/tools`,
+      languages: { en: '/en/tools', fr: '/fr/tools' },
+    },
+    openGraph: {
+      type: 'website',
+      url,
+      title: `${m.title} · Tickra`,
+      description: m.description,
+      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+    },
+    twitter: { card: 'summary_large_image', title: `${m.title} · Tickra`, description: m.description },
+  };
+}
 
 const copy = {
   fr: {
