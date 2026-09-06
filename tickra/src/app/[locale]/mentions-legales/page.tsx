@@ -1,9 +1,13 @@
+import { EMAIL } from '@/lib/brand';
 import { notFound } from 'next/navigation';
 import { ENTITY, entityDescription } from '@/lib/legal/entity';
+import { SITE_URL } from '@/lib/site-url';
 
 // Deployment facts the code cannot read at build time. Stating the wrong one
 // is exactly the mistake this page already made — it claimed Frankfurt while
 // vercel.json deploys to cdg1. Keep these in step with the dashboards.
+const SITE_HOST = SITE_URL.replace(/^https?:\/\//, '');
+
 const SUPABASE_REGION = 'Canada (Central) — Montréal, Québec';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
@@ -27,11 +31,11 @@ const COPY = {
       {
         h: '1. Éditeur du site',
         body: [
-          `Le site kNOWTrade (tickra.com) est exploité par ${entityDescription('fr')}.`,
+          `Le site kNOWTrade (${SITE_HOST}) est exploité par ${entityDescription('fr')}.`,
           ...(ENTITY.neq ? [`NEQ : ${ENTITY.neq}`] : []),
           ...(ENTITY.businessNumber ? [`Numéro d’entreprise (ARC) : ${ENTITY.businessNumber}`] : []),
           'Directeur de la publication : Hamza Kurt.',
-          'Contact : hello@tickra.com',
+          `Contact : ${EMAIL.support}`,
         ],
       },
       {
@@ -70,7 +74,7 @@ const COPY = {
         body: [
           'Le traitement des données personnelles est décrit dans notre Politique de confidentialité.',
           'L’usage des cookies est détaillé dans notre Politique cookies.',
-          'Personne responsable de la protection des renseignements personnels (Loi 25) : privacy@tickra.com.',
+          `Personne responsable de la protection des renseignements personnels (Loi 25) : ${EMAIL.privacy}.`,
           'En cas de manquement, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec — cai.gouv.qc.ca — ou du Commissariat à la protection de la vie privée du Canada — priv.gc.ca.',
         ],
       },
@@ -91,11 +95,11 @@ const COPY = {
       {
         h: '1. Publisher',
         body: [
-          `The kNOWTrade website (tickra.com) is operated by ${entityDescription('en')}.`,
+          `The kNOWTrade website (${SITE_HOST}) is operated by ${entityDescription('en')}.`,
           ...(ENTITY.neq ? [`NEQ: ${ENTITY.neq}`] : []),
           ...(ENTITY.businessNumber ? [`Business number (CRA): ${ENTITY.businessNumber}`] : []),
           'Publication director: Hamza Kurt.',
-          'Contact: hello@tickra.com',
+          `Contact: ${EMAIL.support}`,
         ],
       },
       {
@@ -134,7 +138,7 @@ const COPY = {
         body: [
           'Personal data processing is described in our Privacy Policy.',
           'Cookie usage is detailed in our Cookie Policy.',
-          'Privacy officer (Law 25): privacy@tickra.com.',
+          `Privacy officer (Law 25): ${EMAIL.privacy}.`,
           'Complaints can be filed with the Commission d\u2019accès à l\u2019information du Québec — cai.gouv.qc.ca — or the Office of the Privacy Commissioner of Canada — priv.gc.ca.',
         ],
       },

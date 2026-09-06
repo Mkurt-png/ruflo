@@ -1,3 +1,4 @@
+import { EMAIL } from '@/lib/brand';
 import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine, entityPostalAddress } from '@/lib/legal/entity';
 const fr = {
   nav: {
@@ -413,9 +414,9 @@ const fr = {
     title: 'Contact',
     intro: 'Une question produit, presse, partenariat ? Écrivez‑nous, on répond sous deux jours ouvrés.',
     emails: [
-      { label: 'Support apprenants', value: 'hello@tickra.com' },
-      { label: 'Presse & contenu', value: 'press@tickra.com' },
-      { label: 'Partenariats', value: 'partners@tickra.com' },
+      { label: 'Support apprenants', value: EMAIL.support },
+      { label: 'Presse & contenu', value: EMAIL.press },
+      { label: 'Partenariats', value: EMAIL.partners },
     ],
     form: {
       nameLabel: 'Votre nom',
@@ -440,7 +441,7 @@ const fr = {
         { h: '3. Compte', p: 'L’accès aux fonctionnalités payantes requiert la création d’un compte. Vous garantissez l’exactitude des informations fournies et acceptez de maintenir la confidentialité de vos identifiants. La connexion se fait par lien magique envoyé à votre adresse e‑mail.' },
         { h: '4. Abonnements et paiement', p: 'kNOWTrade propose trois formules : Gratuit, Pro (mensuel ou annuel) et À vie. Le paiement est traité par Stripe. Les prix sont affichés dans la devise de votre pays (CAD, EUR ou USD) ; les taxes applicables (TPS/TVH et TVQ, ou taxe équivalente selon votre lieu de résidence) sont calculées au moment du paiement. Pro est un contrat à exécution successive résiliable à tout moment depuis votre espace personnel, conformément à la Loi sur la protection du consommateur. À vie est couvert par une garantie satisfait ou remboursé de 14 jours à compter de l’achat.' },
         { h: '5. Propriété intellectuelle', p: `Tous les contenus pédagogiques, graphiques, logos, marques et textes présents sur kNOWTrade sont la propriété exclusive de ${ENTITY.legalName} ou de ses partenaires. Toute reproduction, représentation ou diffusion non autorisée est strictement interdite.` },
-        { h: '6. Renseignements personnels', p: 'Le traitement de vos renseignements personnels est décrit dans notre Politique de confidentialité. Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale), vous disposez d’un droit d’accès, de rectification, de retrait de consentement et de portabilité. Pour exercer ces droits : privacy@tickra.com.' },
+        { h: '6. Renseignements personnels', p: `Le traitement de vos renseignements personnels est décrit dans notre Politique de confidentialité. Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale), vous disposez d’un droit d’accès, de rectification, de retrait de consentement et de portabilité. Pour exercer ces droits : ${EMAIL.privacy}.` },
         { h: '7. Responsabilité', p: 'kNOWTrade met tout en œuvre pour assurer la disponibilité du service mais ne peut être tenu responsable d’éventuelles interruptions, pertes de données, ou décisions de trading prises par l’utilisateur. Voir également notre Avertissement risque.' },
         { h: '8. Résiliation', p: 'kNOWTrade se réserve le droit de suspendre ou résilier un compte en cas de violation des présentes CGU, de fraude, ou d’usage contraire aux lois en vigueur.' },
         { h: '9. Droit applicable', p: `Les présentes CGU sont régies par les lois de la province de ${ENTITY.province} et les lois du Canada qui y sont applicables. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents du district judiciaire de l’exploitant.` },
@@ -450,12 +451,12 @@ const fr = {
       title: 'Politique de confidentialité',
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
-        { h: '1. Responsable de la protection des renseignements personnels', p: `${ENTITY.legalName}, ${entityPostalAddress()}, ${ENTITY.country}. Personne responsable de la protection des renseignements personnels (Loi 25) : privacy@tickra.com.` },
+        { h: '1. Responsable de la protection des renseignements personnels', p: `${ENTITY.legalName}, ${entityPostalAddress()}, ${ENTITY.country}. Personne responsable de la protection des renseignements personnels (Loi 25) : ${EMAIL.privacy}.` },
         { h: '2. Données collectées', p: 'Nous collectons : votre adresse e‑mail (création de compte), votre progression pédagogique (modules complétés, scores, streaks), vos données de paiement (traitées par Stripe — nous ne stockons jamais de numéro de carte), et des données techniques anonymisées (analytics agrégés).' },
         { h: '3. Finalités', p: 'Vos données sont utilisées pour : fournir le service, mesurer la progression, facturer l’abonnement, vous envoyer des e‑mails transactionnels (et marketing uniquement si vous avez opté), améliorer la plateforme via analytics agrégés.' },
         { h: '4. Hébergement et communication hors Québec', p: 'Votre compte et votre progression sont stockés dans une base de données hébergée par Supabase à Montréal (région Canada Central) : ces données ne quittent pas le Québec. Les serveurs de rendu du site (Vercel, Paris) ainsi que nos fournisseurs de paiement (Stripe) et de courriel (Resend) se situent en revanche hors du Québec. Conformément à la Loi 25, ces communications font l’objet d’une évaluation des facteurs relatifs à la vie privée et d’engagements contractuels de protection équivalente.' },
         { h: '5. Durée de conservation', p: 'Compte actif : pour la durée de votre abonnement, plus 3 ans après la dernière connexion. Pièces de facturation : 6 ans après la fin de l’année d’imposition concernée, conformément aux exigences de l’Agence du revenu du Canada et de Revenu Québec. Vous pouvez demander la suppression à tout moment.' },
-        { h: '6. Vos droits', p: 'Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale) : accès, rectification, retrait du consentement, portabilité, et désindexation. Exercez vos droits par courriel à privacy@tickra.com. En cas de désaccord, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec (cai.gouv.qc.ca) ou du Commissariat à la protection de la vie privée du Canada (priv.gc.ca).' },
+        { h: '6. Vos droits', p: `Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale) : accès, rectification, retrait du consentement, portabilité, et désindexation. Exercez vos droits par courriel à ${EMAIL.privacy}. En cas de désaccord, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec (cai.gouv.qc.ca) ou du Commissariat à la protection de la vie privée du Canada (priv.gc.ca).` },
         { h: '7. Cookies', p: 'kNOWTrade utilise des cookies strictement nécessaires (session, préférence de langue, préférence de thème) et, avec votre consentement, des cookies d’analytics. Voir notre bandeau cookies.' },
       ],
     },

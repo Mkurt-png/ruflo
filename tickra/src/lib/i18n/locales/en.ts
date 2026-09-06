@@ -1,3 +1,4 @@
+import { EMAIL } from '@/lib/brand';
 import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine, entityPostalAddress } from '@/lib/legal/entity';
 const en = {
   nav: {
@@ -413,9 +414,9 @@ const en = {
     title: 'Contact',
     intro: 'Product question, press, partnership? Write to us — we reply within two working days.',
     emails: [
-      { label: 'Learner support', value: 'hello@tickra.com' },
-      { label: 'Press & content', value: 'press@tickra.com' },
-      { label: 'Partnerships', value: 'partners@tickra.com' },
+      { label: 'Learner support', value: EMAIL.support },
+      { label: 'Press & content', value: EMAIL.press },
+      { label: 'Partnerships', value: EMAIL.partners },
     ],
     form: {
       nameLabel: 'Your name',
@@ -440,7 +441,7 @@ const en = {
         { h: '3. Account', p: 'Access to paid features requires creating an account. You warrant the accuracy of the information provided and undertake to keep your credentials confidential. Sign‑in is performed via magic link sent to your email address.' },
         { h: '4. Subscription and payment', p: 'kNOWTrade offers three plans: Free, Pro (monthly or annual), and Lifetime. Payment is processed by Stripe. Prices are shown in your country\u2019s currency (CAD, EUR or USD); applicable taxes (GST/HST and QST, or the equivalent for your place of residence) are calculated at checkout. Pro is a successive-performance contract, cancellable at any time from your account in accordance with the Consumer Protection Act. Lifetime is covered by a 14\u2011day money\u2011back guarantee from purchase.' },
         { h: '5. Intellectual property', p: `All educational content, graphics, logos, marks and text on kNOWTrade are the exclusive property of ${ENTITY.legalName} or its partners. Any unauthorised reproduction or distribution is strictly prohibited.` },
-        { h: '6. Personal information', p: 'Processing of your personal information is described in our Privacy policy. Under Québec\u2019s Law 25 and the federal PIPEDA, you have rights of access, rectification, withdrawal of consent, and portability. To exercise these rights: privacy@tickra.com.' },
+        { h: '6. Personal information', p: `Processing of your personal information is described in our Privacy policy. Under Québec\u2019s Law 25 and the federal PIPEDA, you have rights of access, rectification, withdrawal of consent, and portability. To exercise these rights: ${EMAIL.privacy}.` },
         { h: '7. Liability', p: 'kNOWTrade makes its best efforts to ensure service availability but cannot be held liable for outages, data loss, or trading decisions made by the user. See also our Risk disclosure.' },
         { h: '8. Termination', p: 'kNOWTrade may suspend or terminate an account in case of breach of these Terms, fraud, or unlawful use.' },
         { h: '9. Governing law', p: `These Terms are governed by the laws of the province of ${ENTITY.province} and the laws of Canada applicable therein. Any dispute will first be submitted to mediation, then to the competent courts of the operator\u2019s judicial district.` },
@@ -450,12 +451,12 @@ const en = {
       title: 'Privacy policy',
       updated: 'Last updated: May 2026',
       sections: [
-        { h: '1. Person in charge of personal information', p: `${ENTITY.legalName}, ${entityPostalAddress()}, ${ENTITY.country}. Privacy officer (Law 25): privacy@tickra.com.` },
+        { h: '1. Person in charge of personal information', p: `${ENTITY.legalName}, ${entityPostalAddress()}, ${ENTITY.country}. Privacy officer (Law 25): ${EMAIL.privacy}.` },
         { h: '2. Data collected', p: 'We collect: your email address (account creation), your educational progress (modules completed, scores, streaks), payment data (handled by Stripe — we never store card numbers), and anonymous technical data (aggregated analytics).' },
         { h: '3. Purposes', p: 'Your data is used to: provide the service, measure progress, bill the subscription, send transactional emails (and marketing only if opted in), improve the platform via aggregated analytics.' },
         { h: '4. Hosting and disclosure outside Québec', p: 'Your account and progress are stored in a database hosted by Supabase in Montréal (Canada Central region): that data does not leave Québec. The site\u2019s rendering servers (Vercel, Paris) and our payment (Stripe) and email (Resend) providers are located outside Québec. In accordance with Law 25, those disclosures are subject to a privacy impact assessment and to contractual commitments of equivalent protection.' },
         { h: '5. Retention', p: 'Active account: for the duration of your subscription plus 3 years after last sign\u2011in. Billing records: 6 years after the end of the relevant tax year, as required by the Canada Revenue Agency and Revenu Québec. You may request deletion at any time.' },
-        { h: '6. Your rights', p: 'Under Law 25 (Québec) and PIPEDA (federal): access, rectification, withdrawal of consent, portability, and de-indexing. Exercise your rights at privacy@tickra.com. If you disagree with our response, you may complain to the Commission d\u2019accès à l\u2019information du Québec (cai.gouv.qc.ca) or the Office of the Privacy Commissioner of Canada (priv.gc.ca).' },
+        { h: '6. Your rights', p: `Under Law 25 (Québec) and PIPEDA (federal): access, rectification, withdrawal of consent, portability, and de-indexing. Exercise your rights at ${EMAIL.privacy}. If you disagree with our response, you may complain to the Commission d\u2019accès à l\u2019information du Québec (cai.gouv.qc.ca) or the Office of the Privacy Commissioner of Canada (priv.gc.ca).` },
         { h: '7. Cookies', p: 'kNOWTrade uses strictly necessary cookies (session, language preference, theme preference) and, with your consent, analytics cookies. See our cookie banner.' },
       ],
     },

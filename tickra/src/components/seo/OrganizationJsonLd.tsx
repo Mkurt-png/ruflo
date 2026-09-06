@@ -1,3 +1,4 @@
+import { EMAIL } from '@/lib/brand';
 import { SITE_URL } from '@/lib/site-url';
 import { ENTITY } from '@/lib/legal/entity';
 
@@ -32,18 +33,18 @@ export function OrganizationJsonLd() {
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'hello@tickra.com',
+        email: EMAIL.support,
         availableLanguage: ['French', 'English'],
       },
       {
         '@type': 'ContactPoint',
         contactType: 'press',
-        email: 'press@tickra.com',
+        email: EMAIL.press,
       },
       {
         '@type': 'ContactPoint',
         contactType: 'privacy',
-        email: 'privacy@tickra.com',
+        email: EMAIL.privacy,
       },
     ],
     knowsAbout: ['Trading', 'Technical analysis', 'Risk management', 'Japanese candlesticks', 'Financial markets education'],

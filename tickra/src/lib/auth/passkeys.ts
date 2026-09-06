@@ -11,6 +11,8 @@ import { cookies } from 'next/headers';
 import { createHmac } from 'node:crypto';
 
 export const CHALLENGE_COOKIE = 'tickra-webauthn-challenge';
+import { SITE_URL } from '@/lib/site-url';
+
 const CHALLENGE_TTL_SECONDS = 5 * 60; // 5 minutes — generous for slow USB keys
 
 export type RpConfig = {
@@ -20,11 +22,13 @@ export type RpConfig = {
 };
 
 export function getRpConfig(): RpConfig {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tickra1.vercel.app';
-  let host = 'tickra1.vercel.app';
-  let origin = siteUrl.replace(/\/$/, '');
+  // Derived from the one canonical site URL. The rpID a passkey was created
+  // under is baked into the credential, so a domain change invalidates every
+  // existing passkey — see the note in lib/site-url.
+  let host = SITE_URL.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  let origin = SITE_URL.replace(/\/$/, '');
   try {
-    const url = new URL(siteUrl);
+    const url = new URL(SITE_URL);
     host = url.hostname;
     origin = `${url.protocol}//${url.host}`;
   } catch {

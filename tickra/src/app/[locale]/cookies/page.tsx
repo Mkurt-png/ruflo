@@ -1,3 +1,4 @@
+import { EMAIL } from '@/lib/brand';
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
@@ -57,7 +58,7 @@ const COPY = {
       {
         h: '6. Vos droits',
         body: [
-          'Vous disposez d’un droit d’accès, de rectification, d’opposition et de suppression sur les données collectées via cookies. Contact : privacy@tickra.com.',
+          `Vous disposez d’un droit d’accès, de rectification, d’opposition et de suppression sur les données collectées via cookies. Contact : ${EMAIL.privacy}.`,
           'En cas de manquement, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec — cai.gouv.qc.ca.',
         ],
       },
@@ -110,7 +111,7 @@ const COPY = {
       {
         h: '6. Your rights',
         body: [
-          'You have rights to access, rectification, objection and deletion on data collected via cookies. Contact: privacy@tickra.com.',
+          `You have rights to access, rectification, objection and deletion on data collected via cookies. Contact: ${EMAIL.privacy}.`,
           'Complaints can be filed with the Commission d\u2019accès à l\u2019information du Québec — cai.gouv.qc.ca.',
         ],
       },

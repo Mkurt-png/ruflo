@@ -1,10 +1,11 @@
+import { EMAIL } from '@/lib/brand';
 import { NextResponse } from 'next/server';
 import { FROM, sendEmail } from '@/lib/email/resend';
 
 // POST /api/contact   { name, email, subject, message }
-// Routes to hello@tickra.com via Resend when RESEND_API_KEY is set.
+// Routes to the support address via Resend when RESEND_API_KEY is set.
 
-const CONTACT_TO = process.env.CONTACT_TO ?? 'hello@tickra.com';
+const CONTACT_TO = process.env.CONTACT_TO ?? EMAIL.support;
 
 function escape(input: string): string {
   return input.replace(/[&<>"']/g, (c) =>

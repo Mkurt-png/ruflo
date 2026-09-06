@@ -1,3 +1,4 @@
+import { EMAIL } from '@/lib/brand';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 import { SITE_URL } from '@/lib/site-url';
@@ -16,7 +17,7 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'hello@tickra.com',
+        email: EMAIL.support,
         availableLanguage: ['English', 'French'],
       },
     ],

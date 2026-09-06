@@ -1,3 +1,4 @@
+import { EMAIL, BRAND_NAME } from '@/lib/brand';
 // Thin wrapper around Resend's transactional + audiences APIs.
 // Activates only when RESEND_API_KEY is set. Never throws on missing env —
 // returns a discriminated result so callers can degrade gracefully.
@@ -66,4 +67,4 @@ export async function addToAudience(input: AudienceAddInput): Promise<AudienceAd
   }
 }
 
-export const FROM = process.env.RESEND_FROM ?? 'kNOWTrade <hello@tickra.com>';
+export const FROM = process.env.RESEND_FROM ?? `${BRAND_NAME} <${EMAIL.support}>`;
