@@ -200,7 +200,7 @@ const fr = {
         cta: 'Commencer gratuitement',
         features: [
           'Test de niveau inclus',
-          '12 premières leçons débloquées',
+          '4 premières leçons débloquées',
           '3 vies par jour',
           'Suivi des streaks',
           'Révisions de leçon avec pubs',

@@ -200,7 +200,7 @@ const en = {
         cta: 'Start free',
         features: [
           'Placement test included',
-          'First 12 lessons unlocked',
+          'First 4 lessons unlocked',
           '3 lives per day',
           'Streak tracking',
           'Lesson reviews with ads',
