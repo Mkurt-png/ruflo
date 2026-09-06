@@ -16,16 +16,15 @@
 // ⚠️  Drafted from public sources. Not legal advice. Have it reviewed by a
 //     Québec lawyer or notary before taking payments.
 
-/** Marks a fact the operator still has to supply. */
-const TODO = (what: string) => `[À COMPLÉTER : ${what}]`;
-
 export type Operator = {
   /** How the operator is legally identified. */
   kind: 'individual' | 'company';
   /** Full legal name of the person, or the registered company name. */
   legalName: string;
-  /** Public contact address. Required on a legal notice. */
-  address: string;
+  /** Street line, e.g. "475, rue Notre-Dame". */
+  street: string;
+  city: string;
+  postalCode: string;
   province: string;
   country: string;
   countryCode: string;
@@ -46,7 +45,9 @@ export type Operator = {
 export const ENTITY: Operator = {
   kind: 'individual',
   legalName: 'Hamza Kurt',
-  address: TODO('adresse de contact publiable'),
+  street: '475, rue Notre-Dame',
+  city: 'Victoriaville',
+  postalCode: 'G6B 4B3',
   province: 'Québec',
   country: 'Canada',
   countryCode: 'CA',
@@ -56,9 +57,12 @@ export const ENTITY: Operator = {
   businessNumber: null,
 };
 
-/** True while any required fact is still a placeholder. */
-export function hasUnfilledEntityFacts(): boolean {
-  return [ENTITY.legalName, ENTITY.address].some((v) => v.startsWith('[À COMPLÉTER'));
+/**
+ * The postal address on one line, written the Québec way:
+ * street, city (Province) POSTAL CODE.
+ */
+export function entityPostalAddress(): string {
+  return `${ENTITY.street}, ${ENTITY.city} (${ENTITY.province}) ${ENTITY.postalCode}`;
 }
 
 /**
@@ -74,14 +78,16 @@ export function entityIdentityLine(): string {
 
 /** Address block lines, with absent registrations dropped. */
 export function entityAddressLines(): string[] {
-  const lines = [ENTITY.legalName, ENTITY.address, `${ENTITY.province}, ${ENTITY.country}`];
+  // `address` already carries the city and province, so only the country is
+  // added — repeating "Québec" on its own line reads as a formatting bug.
+  const lines = [ENTITY.legalName, entityPostalAddress(), ENTITY.country];
   if (ENTITY.neq) lines.push(`NEQ ${ENTITY.neq}`);
   return lines;
 }
 
 /** How to describe the operator in a sentence, e.g. in the terms. */
 export function entityDescription(locale: 'fr' | 'en'): string {
-  const where = `${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}`;
+  const where = `${entityPostalAddress()}, ${ENTITY.country}`;
   const registration = ENTITY.neq ? (locale === 'fr' ? ` (NEQ ${ENTITY.neq})` : ` (NEQ ${ENTITY.neq})`) : '';
   if (locale === 'fr') {
     return ENTITY.kind === 'individual'

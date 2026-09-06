@@ -1,4 +1,4 @@
-import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine } from '@/lib/legal/entity';
+import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine, entityPostalAddress } from '@/lib/legal/entity';
 const fr = {
   nav: {
     method: 'Méthode',
@@ -450,7 +450,7 @@ const fr = {
       title: 'Politique de confidentialité',
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
-        { h: '1. Responsable de la protection des renseignements personnels', p: `${ENTITY.legalName}, ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}. Personne responsable de la protection des renseignements personnels (Loi 25) : privacy@tickra.com.` },
+        { h: '1. Responsable de la protection des renseignements personnels', p: `${ENTITY.legalName}, ${entityPostalAddress()}, ${ENTITY.country}. Personne responsable de la protection des renseignements personnels (Loi 25) : privacy@tickra.com.` },
         { h: '2. Données collectées', p: 'Nous collectons : votre adresse e‑mail (création de compte), votre progression pédagogique (modules complétés, scores, streaks), vos données de paiement (traitées par Stripe — nous ne stockons jamais de numéro de carte), et des données techniques anonymisées (analytics agrégés).' },
         { h: '3. Finalités', p: 'Vos données sont utilisées pour : fournir le service, mesurer la progression, facturer l’abonnement, vous envoyer des e‑mails transactionnels (et marketing uniquement si vous avez opté), améliorer la plateforme via analytics agrégés.' },
         { h: '4. Hébergement et communication hors Québec', p: 'Vos données sont hébergées par Vercel et par nos fournisseurs (Supabase, Stripe, Resend), dont les serveurs peuvent se situer hors du Québec, notamment aux États‑Unis et dans l’Union européenne. Conformément à la Loi 25, ces communications font l’objet d’une évaluation des facteurs relatifs à la vie privée et d’engagements contractuels de protection équivalente.' },

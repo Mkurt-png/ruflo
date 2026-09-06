@@ -22,7 +22,9 @@ export function OrganizationJsonLd() {
     founders: [{ '@type': 'Person', name: ENTITY.legalName }],
     address: {
       '@type': 'PostalAddress',
-      streetAddress: ENTITY.address,
+      streetAddress: ENTITY.street,
+      addressLocality: ENTITY.city,
+      postalCode: ENTITY.postalCode,
       addressRegion: ENTITY.province,
       addressCountry: ENTITY.countryCode,
     },

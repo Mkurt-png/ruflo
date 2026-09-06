@@ -1,4 +1,4 @@
-import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine } from '@/lib/legal/entity';
+import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine, entityPostalAddress } from '@/lib/legal/entity';
 const en = {
   nav: {
     method: 'Method',
@@ -450,7 +450,7 @@ const en = {
       title: 'Privacy policy',
       updated: 'Last updated: May 2026',
       sections: [
-        { h: '1. Person in charge of personal information', p: `${ENTITY.legalName}, ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}. Privacy officer (Law 25): privacy@tickra.com.` },
+        { h: '1. Person in charge of personal information', p: `${ENTITY.legalName}, ${entityPostalAddress()}, ${ENTITY.country}. Privacy officer (Law 25): privacy@tickra.com.` },
         { h: '2. Data collected', p: 'We collect: your email address (account creation), your educational progress (modules completed, scores, streaks), payment data (handled by Stripe — we never store card numbers), and anonymous technical data (aggregated analytics).' },
         { h: '3. Purposes', p: 'Your data is used to: provide the service, measure progress, bill the subscription, send transactional emails (and marketing only if opted in), improve the platform via aggregated analytics.' },
         { h: '4. Hosting and disclosure outside Québec', p: 'Your data is hosted by Vercel and by our providers (Supabase, Stripe, Resend), whose servers may be located outside Québec, notably in the United States and the European Union. In accordance with Law 25, these disclosures are subject to a privacy impact assessment and to contractual commitments of equivalent protection.' },
