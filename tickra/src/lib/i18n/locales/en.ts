@@ -245,7 +245,7 @@ const en = {
       title: 'Compare in detail',
       rows: [
         { label: 'Placement test', free: 'Included', pro: 'Included', lifetime: 'Included' },
-        { label: 'Lessons unlocked', free: '10 / 222', pro: '222 / 222', lifetime: '222 / 222 + future' },
+        { label: 'Lessons unlocked', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + future' },
         { label: 'Daily lives', free: '3', pro: 'Unlimited', lifetime: 'Unlimited' },
         { label: 'Embedded TradingView', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Decision journal', free: '—', pro: 'Included', lifetime: 'Included + export' },
