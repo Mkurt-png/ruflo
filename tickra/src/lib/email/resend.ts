@@ -68,3 +68,28 @@ export async function addToAudience(input: AudienceAddInput): Promise<AudienceAd
 }
 
 export const FROM = process.env.RESEND_FROM ?? `${BRAND_NAME} <${EMAIL.support}>`;
+
+/**
+ * Send, and log a failure server-side.
+ *
+ * `sendEmail` reports failure in its return value rather than throwing, which
+ * is the right shape — but it means an ignored result is an invisible failure.
+ * That bit the most important path in the app: /api/auth/magic-link discarded
+ * the result and always answered "check your email", so a rejected send (an
+ * unverified RESEND_FROM domain, a bad key, an exhausted quota) left the user
+ * staring at an inbox that would never receive anything, with nothing in the
+ * logs either.
+ *
+ * Callers still must not surface the reason to the client — it would leak
+ * configuration and, on the sign-in path, whether an address exists. This logs
+ * for the operator and returns the result for callers that care.
+ */
+export async function sendEmailLogged(input: SendInput, context: string): Promise<SendResult> {
+  const result = await sendEmail(input);
+  if (!result.ok) {
+    console.error('[email] %s: send failed — %s', context, result.error);
+  } else if (!result.delivered) {
+    console.warn('[email] %s: not sent — RESEND_API_KEY is not configured', context);
+  }
+  return result;
+}

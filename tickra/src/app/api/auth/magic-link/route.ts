@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createHmac, randomBytes } from 'node:crypto';
-import { FROM, sendEmail } from '@/lib/email/resend';
+import { FROM, sendEmailLogged } from '@/lib/email/resend';
 import { isDbConfigured, recordMagicNonce } from '@/lib/db/queries';
 import { rateLimit, clientIp } from '@/lib/security/rate-limit';
 
@@ -90,13 +90,13 @@ export async function POST(req: Request) {
   const intro = locale === 'fr' ? 'Cliquez pour vous connecter (lien valable 15 minutes) :' : 'Click to sign in (link valid 15 minutes):';
   const ignore = locale === 'fr' ? 'Vous n’avez pas demandé ce lien ? Ignorez ce message.' : 'Didn’t request this link? You can ignore this email.';
 
-  await sendEmail({
+  await sendEmailLogged({
     from: FROM,
     to: email,
     subject,
     text: `${intro}\n\n${url}\n\n${ignore}`,
     html: `<p>${intro}</p><p><a href="${url}">${url}</a></p><p style="color:#666">${ignore}</p>`,
-  });
+  }, 'magic-link');
 
   // Always return ok — never reveal whether the address has an account.
   return NextResponse.json({ ok: true });

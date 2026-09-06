@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { FROM, sendEmail } from '@/lib/email/resend';
+import { FROM, sendEmailLogged } from '@/lib/email/resend';
 import {
   getUserPlan,
   isDbConfigured,
@@ -108,7 +108,7 @@ export async function GET(req: Request) {
         if (meta) {
           const href = `${SITE_URL}/fr/learn/${meta.track.slug}/${meta.lesson.slug}`;
           const c = planTodayCopy('fr', meta.lesson.title.fr, href);
-          await sendEmail({ from: FROM, to: u.email, subject: c.subject, text: c.text });
+          await sendEmailLogged({ from: FROM, to: u.email, subject: c.subject, text: c.text }, 'cron/notifications');
           await recordNotification(u.email, 'plan_today');
           planTodayCount += 1;
           continue;
@@ -124,7 +124,7 @@ export async function GET(req: Request) {
       const c = streakAtRiskCopy('fr', href);
       // Only send this branch on Sundays to avoid spamming; refine later.
       if (new Date().getDay() === 0) {
-        await sendEmail({ from: FROM, to: u.email, subject: c.subject, text: c.text });
+        await sendEmailLogged({ from: FROM, to: u.email, subject: c.subject, text: c.text }, 'cron/notifications');
         await recordNotification(u.email, 'streak_at_risk');
         streakRiskCount += 1;
         continue;
