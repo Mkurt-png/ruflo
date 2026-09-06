@@ -1,11 +1,10 @@
 import { notFound } from 'next/navigation';
 import { ENTITY, entityDescription } from '@/lib/legal/entity';
 
-// The Supabase project's region is a deployment fact, not something the code
-// can read at build time — and stating the wrong one is exactly the mistake
-// this page already made (it claimed Frankfurt while vercel.json deploys to
-// cdg1/Paris). Set it once here from the Supabase dashboard.
-const SUPABASE_REGION = '[À COMPLÉTER : région Supabase]';
+// Deployment facts the code cannot read at build time. Stating the wrong one
+// is exactly the mistake this page already made — it claimed Frankfurt while
+// vercel.json deploys to cdg1. Keep these in step with the dashboards.
+const SUPABASE_REGION = 'Canada (Central) — Montréal, Québec';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
@@ -40,8 +39,8 @@ const COPY = {
         body: [
           'Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.',
           'Les serveurs de rendu sont situés à Paris, France (région cdg1).',
-          `Les bases de données utilisateurs sont hébergées par Supabase Inc. (région ${SUPABASE_REGION}).`,
-          'Ces serveurs se trouvant hors du Québec, la communication de renseignements personnels hors du Québec est encadrée par notre Politique de confidentialité, conformément à la Loi 25.',
+          `La base de données des utilisateurs est hébergée par Supabase Inc. dans la région ${SUPABASE_REGION} : elle ne quitte pas la province.`,
+          'En revanche, les serveurs de rendu (France) ainsi que nos fournisseurs de paiement (Stripe) et de courriel (Resend) se trouvent hors du Québec. Ces communications sont encadrées par notre Politique de confidentialité, conformément à la Loi 25.',
         ],
       },
       {
@@ -104,8 +103,8 @@ const COPY = {
         body: [
           'The site is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA.',
           'Rendering servers are located in Paris, France (region cdg1).',
-          `User databases are hosted by Supabase Inc. (region ${SUPABASE_REGION}).`,
-          'As these servers are outside Québec, the disclosure of personal information outside Québec is governed by our Privacy Policy, in accordance with Law 25.',
+          `The user database is hosted by Supabase Inc. in the ${SUPABASE_REGION} region: it does not leave the province.`,
+          'The rendering servers (France) and our payment (Stripe) and email (Resend) providers are, however, located outside Québec. Those disclosures are governed by our Privacy Policy, in accordance with Law 25.',
         ],
       },
       {
