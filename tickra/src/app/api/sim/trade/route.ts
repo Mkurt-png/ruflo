@@ -16,6 +16,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
+import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 import {
   addToBalance,
   closeTrade,
@@ -132,7 +133,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'db_unavailable' }, { status: 503 });
   }
   const u = await getUser(session.email);
-  const plan = u?.plan === 'pro' || u?.plan === 'lifetime' ? u.plan : 'free';
+  const plan = resolveEffectivePlan(u);
   if (plan === 'free') {
     return NextResponse.json({ error: 'pro_required' }, { status: 403 });
   }

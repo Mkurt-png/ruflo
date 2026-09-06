@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
+import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 import { completeChat } from '@/lib/ai/client';
 import { consumeAiQuota } from '@/lib/ai/quota';
 
@@ -92,7 +93,7 @@ export async function POST(req: Request) {
   let plan: 'free' | 'pro' | 'lifetime' = 'free';
   if (isDbConfigured()) {
     const u = await getUser(session.email);
-    if (u?.plan === 'pro' || u?.plan === 'lifetime') plan = u.plan;
+    plan = resolveEffectivePlan(u);
   }
   if (plan === 'free') {
     return NextResponse.json({ error: 'pro_required' }, { status: 403 });

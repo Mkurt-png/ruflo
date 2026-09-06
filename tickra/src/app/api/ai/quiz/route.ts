@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
+import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 import { completeChat } from '@/lib/ai/client';
 import { consumeAiQuota } from '@/lib/ai/quota';
 import { getLesson } from '@/lib/curriculum/data';
@@ -105,7 +106,7 @@ export async function POST(req: Request) {
   let plan: 'free' | 'pro' | 'lifetime' = 'free';
   if (isDbConfigured()) {
     const u = await getUser(email);
-    if (u?.plan === 'pro' || u?.plan === 'lifetime') plan = u.plan;
+    plan = resolveEffectivePlan(u);
   }
   const quota = await consumeAiQuota(email, plan);
   if (!quota.ok) {
