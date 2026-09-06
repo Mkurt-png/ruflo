@@ -1,4 +1,4 @@
-import { ENTITY } from '@/lib/legal/entity';
+import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine } from '@/lib/legal/entity';
 const fr = {
   nav: {
     method: 'Méthode',
@@ -427,7 +427,7 @@ const fr = {
     },
     address: {
       title: 'Adresse',
-      lines: [ENTITY.legalName, ENTITY.address, `${ENTITY.province}, ${ENTITY.country}`, `NEQ ${ENTITY.neq}`],
+      lines: entityAddressLines(),
     },
   },
   legal: {
@@ -435,7 +435,7 @@ const fr = {
       title: 'Conditions générales d’utilisation',
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
-        { h: '1. Objet', p: `Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’usage du service kNOWTrade, exploité par ${ENTITY.legalName}, dont le siège est situé ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country} (NEQ ${ENTITY.neq}). En accédant au service, vous acceptez les présentes CGU.` },
+        { h: '1. Objet', p: `Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’usage du service kNOWTrade, exploité par ${entityDescription('fr')}. En accédant au service, vous acceptez les présentes CGU.` },
         { h: '2. Nature du service', p: 'kNOWTrade est une plateforme pédagogique de formation au trading. kNOWTrade ne fournit aucun conseil en investissement, n’est inscrit ni comme courtier ni comme conseiller auprès de l’Autorité des marchés financiers (AMF) du Québec, n’est membre de l’Organisme canadien de réglementation des investissements (OCRI), et n’exerce aucune activité assujettie à la Loi sur les valeurs mobilières ou à la Loi sur les instruments dérivés.' },
         { h: '3. Compte', p: 'L’accès aux fonctionnalités payantes requiert la création d’un compte. Vous garantissez l’exactitude des informations fournies et acceptez de maintenir la confidentialité de vos identifiants. La connexion se fait par lien magique envoyé à votre adresse e‑mail.' },
         { h: '4. Abonnements et paiement', p: 'kNOWTrade propose trois formules : Gratuit, Pro (mensuel ou annuel) et À vie. Le paiement est traité par Stripe. Les prix sont affichés dans la devise de votre pays (CAD, EUR ou USD) ; les taxes applicables (TPS/TVH et TVQ, ou taxe équivalente selon votre lieu de résidence) sont calculées au moment du paiement. Pro est un contrat à exécution successive résiliable à tout moment depuis votre espace personnel, conformément à la Loi sur la protection du consommateur. À vie est couvert par une garantie satisfait ou remboursé de 14 jours à compter de l’achat.' },
@@ -443,7 +443,7 @@ const fr = {
         { h: '6. Renseignements personnels', p: 'Le traitement de vos renseignements personnels est décrit dans notre Politique de confidentialité. Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale), vous disposez d’un droit d’accès, de rectification, de retrait de consentement et de portabilité. Pour exercer ces droits : privacy@tickra.com.' },
         { h: '7. Responsabilité', p: 'kNOWTrade met tout en œuvre pour assurer la disponibilité du service mais ne peut être tenu responsable d’éventuelles interruptions, pertes de données, ou décisions de trading prises par l’utilisateur. Voir également notre Avertissement risque.' },
         { h: '8. Résiliation', p: 'kNOWTrade se réserve le droit de suspendre ou résilier un compte en cas de violation des présentes CGU, de fraude, ou d’usage contraire aux lois en vigueur.' },
-        { h: '9. Droit applicable', p: `Les présentes CGU sont régies par les lois de la province de ${ENTITY.province} et les lois du Canada qui y sont applicables. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents du district judiciaire du siège de l’entreprise.` },
+        { h: '9. Droit applicable', p: `Les présentes CGU sont régies par les lois de la province de ${ENTITY.province} et les lois du Canada qui y sont applicables. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents du district judiciaire de l’exploitant.` },
       ],
     },
     privacy: {
@@ -829,7 +829,7 @@ const fr = {
     risk:
       "Le trading comporte un risque substantiel de perte. kNOWTrade est une plateforme éducative ; rien sur ce site ne constitue un conseil en investissement.",
     copyright: '© 2026 kNOWTrade. Tous droits réservés.',
-    legal: `${ENTITY.legalName} · NEQ ${ENTITY.neq} · ${ENTITY.province}, ${ENTITY.country}`,
+    legal: entityIdentityLine(),
   },
   theme: { light: 'Passer en thème clair', dark: 'Passer en thème sombre' },
   locale: { switch: 'Changer de langue' },

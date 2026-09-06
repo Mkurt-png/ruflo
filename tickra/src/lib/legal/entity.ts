@@ -1,41 +1,96 @@
-// The publishing entity, in one place.
+// The operator of the site, in one place.
 //
 // The site previously declared a French SAS (RCS Paris, SIREN, CNIL, AMF
-// France) while the business actually operates from Canada and settles into a
-// Canadian bank account. Every one of those French facts was wrong, and wrong
-// in the way that matters: the entity that collects the money determines which
-// sales taxes apply, which regulator's language belongs on the risk warning,
-// which privacy law governs the data, and which courts hear a dispute.
+// France) while the business operates from Québec and settles into a Québec
+// credit union. None of those French facts were true, and it is not cosmetic:
+// the party that collects the money decides which sales taxes apply, whose
+// regulator's language belongs on the risk warning, which privacy law governs
+// the data, and which courts hear a dispute.
 //
-// The values below are the ones only the operator can supply. They are
-// deliberately left as visible placeholders rather than plausible-looking
-// invented ones: a legal page that reads "[À COMPLÉTER]" is obviously
-// unfinished, whereas a fabricated registration number looks finished and is a
-// false statement to every visitor.
+// There is no incorporated company. The operator is a natural person, so the
+// model here is a sole operator: no share capital, and no registration numbers
+// unless and until they exist. Fields that do not apply are `null`, and every
+// surface omits them rather than printing an empty label — a legal page must
+// never imply a registration that was never made.
 //
-// ⚠️  These pages are a starting point drafted from public sources, not legal
-//     advice. Have them reviewed by a Québec lawyer before taking payments.
+// ⚠️  Drafted from public sources. Not legal advice. Have it reviewed by a
+//     Québec lawyer or notary before taking payments.
 
 /** Marks a fact the operator still has to supply. */
 const TODO = (what: string) => `[À COMPLÉTER : ${what}]`;
 
-export const ENTITY = {
-  /** Registered legal name — e.g. "9999-9999 Québec inc." or a sole proprietorship. */
-  legalName: TODO('dénomination légale de l’entreprise'),
-  /** Québec enterprise number from the Registraire des entreprises. */
-  neq: TODO('NEQ'),
-  /** Canada Revenue Agency business number, if registered for GST/QST. */
-  businessNumber: TODO('numéro d’entreprise (ARC)'),
-  /** Head office address. */
-  address: TODO('adresse du siège'),
+export type Operator = {
+  /** How the operator is legally identified. */
+  kind: 'individual' | 'company';
+  /** Full legal name of the person, or the registered company name. */
+  legalName: string;
+  /** Public contact address. Required on a legal notice. */
+  address: string;
+  province: string;
+  country: string;
+  countryCode: string;
+  /**
+   * Québec enterprise number. Null while unregistered.
+   *
+   * Note: in Québec a natural person who carries on an activity under a name
+   * that is not their own surname and given name must register with the
+   * Registraire des entreprises. Trading under "kNOWTrade" rather than the
+   * operator's own name therefore appears to require registration — worth
+   * confirming before launch.
+   */
+  neq: string | null;
+  /** CRA business number. Null until registered for GST/QST. */
+  businessNumber: string | null;
+};
+
+export const ENTITY: Operator = {
+  kind: 'individual',
+  legalName: 'Hamza Kurt',
+  address: TODO('adresse de contact publiable'),
   province: 'Québec',
   country: 'Canada',
   countryCode: 'CA',
-} as const;
+  // Not registered. Leave null rather than inventing a number — the pages
+  // simply omit the line.
+  neq: null,
+  businessNumber: null,
+};
 
-/** True while any entity fact is still a placeholder. */
+/** True while any required fact is still a placeholder. */
 export function hasUnfilledEntityFacts(): boolean {
-  return Object.values(ENTITY).some((v) => v.startsWith('[À COMPLÉTER'));
+  return [ENTITY.legalName, ENTITY.address].some((v) => v.startsWith('[À COMPLÉTER'));
+}
+
+/**
+ * Identity line for footers and credits: the name, plus any registration
+ * numbers that actually exist, plus the place.
+ */
+export function entityIdentityLine(): string {
+  const parts = [ENTITY.legalName];
+  if (ENTITY.neq) parts.push(`NEQ ${ENTITY.neq}`);
+  parts.push(`${ENTITY.province}, ${ENTITY.country}`);
+  return parts.join(' · ');
+}
+
+/** Address block lines, with absent registrations dropped. */
+export function entityAddressLines(): string[] {
+  const lines = [ENTITY.legalName, ENTITY.address, `${ENTITY.province}, ${ENTITY.country}`];
+  if (ENTITY.neq) lines.push(`NEQ ${ENTITY.neq}`);
+  return lines;
+}
+
+/** How to describe the operator in a sentence, e.g. in the terms. */
+export function entityDescription(locale: 'fr' | 'en'): string {
+  const where = `${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}`;
+  const registration = ENTITY.neq ? (locale === 'fr' ? ` (NEQ ${ENTITY.neq})` : ` (NEQ ${ENTITY.neq})`) : '';
+  if (locale === 'fr') {
+    return ENTITY.kind === 'individual'
+      ? `${ENTITY.legalName}, travailleur autonome établi au ${ENTITY.province}, ${ENTITY.country}, joignable à l’adresse ${where}${registration}`
+      : `${ENTITY.legalName}, dont le siège est situé ${where}${registration}`;
+  }
+  return ENTITY.kind === 'individual'
+    ? `${ENTITY.legalName}, a self-employed operator based in ${ENTITY.province}, ${ENTITY.country}, contactable at ${where}${registration}`
+    : `${ENTITY.legalName}, head office at ${where}${registration}`;
 }
 
 /** Regulators and statutes referenced by the legal pages. */
@@ -45,7 +100,6 @@ export const REGULATORS = {
     en: 'Autorité des marchés financiers (AMF) of Québec',
     url: 'https://lautorite.qc.ca',
   },
-  /** National self-regulatory body for investment dealers. */
   dealers: {
     fr: 'Organisme canadien de réglementation des investissements (OCRI)',
     en: 'Canadian Investment Regulatory Organization (CIRO)',
@@ -61,7 +115,6 @@ export const REGULATORS = {
     en: 'Office of the Privacy Commissioner of Canada',
     url: 'https://www.priv.gc.ca',
   },
-  /** Québec problem-gambling helpline, replacing the French service. */
   gamblingHelp: {
     fr: 'Jeu : aide et référence — 1 866 767-5389 (24 h/24, gratuit)',
     en: 'Gambling: Help and Referral — 1-866-767-5389 (24/7, free)',

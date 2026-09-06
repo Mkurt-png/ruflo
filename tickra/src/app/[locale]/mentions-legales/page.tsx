@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { ENTITY } from '@/lib/legal/entity';
+import { ENTITY, entityDescription } from '@/lib/legal/entity';
 
 // The Supabase project's region is a deployment fact, not something the code
 // can read at build time — and stating the wrong one is exactly the mistake
@@ -28,9 +28,9 @@ const COPY = {
       {
         h: '1. Éditeur du site',
         body: [
-          `Le site kNOWTrade (tickra.com) est exploité par ${ENTITY.legalName}, entreprise établie au ${ENTITY.province}, ${ENTITY.country}.`,
-          `Siège : ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}.`,
-          `NEQ : ${ENTITY.neq} · Numéro d’entreprise (ARC) : ${ENTITY.businessNumber}.`,
+          `Le site kNOWTrade (tickra.com) est exploité par ${entityDescription('fr')}.`,
+          ...(ENTITY.neq ? [`NEQ : ${ENTITY.neq}`] : []),
+          ...(ENTITY.businessNumber ? [`Numéro d’entreprise (ARC) : ${ENTITY.businessNumber}`] : []),
           'Directeur de la publication : Hamza Kurt.',
           'Contact : hello@tickra.com',
         ],
@@ -92,9 +92,9 @@ const COPY = {
       {
         h: '1. Publisher',
         body: [
-          `The kNOWTrade website (tickra.com) is operated by ${ENTITY.legalName}, a business established in ${ENTITY.province}, ${ENTITY.country}.`,
-          `Head office: ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}.`,
-          `NEQ: ${ENTITY.neq} · Business number (CRA): ${ENTITY.businessNumber}.`,
+          `The kNOWTrade website (tickra.com) is operated by ${entityDescription('en')}.`,
+          ...(ENTITY.neq ? [`NEQ: ${ENTITY.neq}`] : []),
+          ...(ENTITY.businessNumber ? [`Business number (CRA): ${ENTITY.businessNumber}`] : []),
           'Publication director: Hamza Kurt.',
           'Contact: hello@tickra.com',
         ],

@@ -1,4 +1,4 @@
-import { ENTITY } from '@/lib/legal/entity';
+import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine } from '@/lib/legal/entity';
 const en = {
   nav: {
     method: 'Method',
@@ -427,7 +427,7 @@ const en = {
     },
     address: {
       title: 'Address',
-      lines: [ENTITY.legalName, ENTITY.address, `${ENTITY.province}, ${ENTITY.country}`, `NEQ ${ENTITY.neq}`],
+      lines: entityAddressLines(),
     },
   },
   legal: {
@@ -435,7 +435,7 @@ const en = {
       title: 'Terms of Service',
       updated: 'Last updated: May 2026',
       sections: [
-        { h: '1. Purpose', p: `These Terms of Service ("Terms") govern access to and use of the kNOWTrade service operated by ${ENTITY.legalName}, head office at ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country} (NEQ ${ENTITY.neq}). By accessing the service, you accept these Terms.` },
+        { h: '1. Purpose', p: `These Terms of Service ("Terms") govern access to and use of the kNOWTrade service operated by ${entityDescription('en')}. By accessing the service, you accept these Terms.` },
         { h: '2. Nature of the service', p: 'kNOWTrade is an educational trading platform. kNOWTrade provides no investment advice, is registered neither as a dealer nor as an adviser with the Autorité des marchés financiers (AMF) of Québec, is not a member of the Canadian Investment Regulatory Organization (CIRO), and carries on no activity governed by the Securities Act or the Derivatives Act.' },
         { h: '3. Account', p: 'Access to paid features requires creating an account. You warrant the accuracy of the information provided and undertake to keep your credentials confidential. Sign‑in is performed via magic link sent to your email address.' },
         { h: '4. Subscription and payment', p: 'kNOWTrade offers three plans: Free, Pro (monthly or annual), and Lifetime. Payment is processed by Stripe. Prices are shown in your country\u2019s currency (CAD, EUR or USD); applicable taxes (GST/HST and QST, or the equivalent for your place of residence) are calculated at checkout. Pro is a successive-performance contract, cancellable at any time from your account in accordance with the Consumer Protection Act. Lifetime is covered by a 14\u2011day money\u2011back guarantee from purchase.' },
@@ -443,7 +443,7 @@ const en = {
         { h: '6. Personal information', p: 'Processing of your personal information is described in our Privacy policy. Under Québec\u2019s Law 25 and the federal PIPEDA, you have rights of access, rectification, withdrawal of consent, and portability. To exercise these rights: privacy@tickra.com.' },
         { h: '7. Liability', p: 'kNOWTrade makes its best efforts to ensure service availability but cannot be held liable for outages, data loss, or trading decisions made by the user. See also our Risk disclosure.' },
         { h: '8. Termination', p: 'kNOWTrade may suspend or terminate an account in case of breach of these Terms, fraud, or unlawful use.' },
-        { h: '9. Governing law', p: `These Terms are governed by the laws of the province of ${ENTITY.province} and the laws of Canada applicable therein. Any dispute will first be submitted to mediation, then to the competent courts of the judicial district of the company\u2019s head office.` },
+        { h: '9. Governing law', p: `These Terms are governed by the laws of the province of ${ENTITY.province} and the laws of Canada applicable therein. Any dispute will first be submitted to mediation, then to the competent courts of the operator\u2019s judicial district.` },
       ],
     },
     privacy: {
@@ -829,7 +829,7 @@ const en = {
     risk:
       'Trading involves substantial risk of loss. kNOWTrade is an educational platform; nothing on this site constitutes investment advice.',
     copyright: '© 2026 kNOWTrade. All rights reserved.',
-    legal: `${ENTITY.legalName} · NEQ ${ENTITY.neq} · ${ENTITY.province}, ${ENTITY.country}`,
+    legal: entityIdentityLine(),
   },
   theme: { light: 'Switch to light theme', dark: 'Switch to dark theme' },
   locale: { switch: 'Change language' },

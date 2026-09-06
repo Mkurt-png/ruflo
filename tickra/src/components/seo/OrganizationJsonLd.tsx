@@ -11,13 +11,15 @@ export function OrganizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'kNOWTrade',
-    legalName: ENTITY.legalName,
+    // A sole operator has no separate legal name — the person IS the entity,
+    // so it is stated as the founder rather than as a company name.
+    ...(ENTITY.kind === 'company' ? { legalName: ENTITY.legalName } : {}),
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.svg`,
     description:
       'Plateforme de formation au trading et à l’analyse des marchés financiers. Cursus structuré, 10 minutes par jour, vrais graphiques.',
     foundingDate: '2025',
-    founders: [{ '@type': 'Person', name: 'Hamza Kurt' }],
+    founders: [{ '@type': 'Person', name: ENTITY.legalName }],
     address: {
       '@type': 'PostalAddress',
       streetAddress: ENTITY.address,
