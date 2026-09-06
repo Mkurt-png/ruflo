@@ -1,6 +1,14 @@
 import { NextResponse } from 'next/server';
+// Type-only: erased at build, so Stripe stays out of the bundle when unused.
+import type Stripe from 'stripe';
 import { getSession } from '@/lib/auth/session';
 import { ensureUser, isDbConfigured } from '@/lib/db/queries';
+import {
+  countryFromHeaders,
+  currencyForCountry,
+  isCurrency,
+  type Currency,
+} from '@/lib/pricing/currency';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +45,19 @@ function resolvePrice(plan: Plan, cycle: Cycle): { price: string; mode: 'subscri
   return null;
 }
 
+/**
+ * True when Stripe refused the request because of the `currency` parameter —
+ * which is what happens until the Price has `currency_options` configured for
+ * it in the Dashboard. Anything else (network, auth, rate limit) is a real
+ * failure and must not be retried.
+ */
+function isCurrencyRejection(err: unknown): boolean {
+  if (!err || typeof err !== 'object') return false;
+  const e = err as { type?: string; param?: string; message?: string };
+  if (e.type !== 'StripeInvalidRequestError') return false;
+  return e.param === 'currency' || /currency/i.test(e.message ?? '');
+}
+
 export async function POST(req: Request) {
   // TICKRA-FIX(security): require an authenticated user. Was unauthenticated
   // (anyone could create Stripe sessions on behalf of any email).
@@ -49,6 +70,7 @@ export async function POST(req: Request) {
     plan?: Plan;
     cycle?: Cycle;
     locale?: 'fr' | 'en';
+    currency?: string;
   } | null;
 
   if (!body?.plan || (body.plan !== 'pro' && body.plan !== 'lifetime')) {
@@ -56,6 +78,14 @@ export async function POST(req: Request) {
   }
   const cycle: Cycle = body.cycle === 'annual' ? 'annual' : 'monthly';
   const locale = body.locale === 'fr' ? 'fr' : 'en';
+
+  // Charge in the currency the pricing page actually displayed. The client
+  // sends it, but we do not trust it blindly — an unrecognised value falls back
+  // to the visitor's own geo, so the worst a tampered body can do is pick
+  // another of our three published price points, never an arbitrary amount.
+  const currency: Currency = isCurrency(body.currency)
+    ? body.currency
+    : currencyForCountry(countryFromHeaders(req.headers));
 
   // Make sure the user row exists before Stripe fires the webhook — the
   // webhook now only UPDATES existing rows, it never creates them.
@@ -88,7 +118,7 @@ export async function POST(req: Request) {
     const { default: Stripe } = await import('stripe');
     const stripe = new Stripe(secret);
 
-    const checkoutSession = await stripe.checkout.sessions.create({
+    const params: Stripe.Checkout.SessionCreateParams = {
       mode: resolved.mode,
       line_items: [{ price: resolved.price, quantity: 1 }],
       customer_email: session.email,
@@ -101,8 +131,26 @@ export async function POST(req: Request) {
       // first going through the Tax onboarding. Re-enable once you've set
       // up Stripe Tax + your registrations.
       billing_address_collection: 'auto',
-      metadata: { plan: body.plan, cycle, locale },
-    });
+      metadata: { plan: body.plan, cycle, locale, currency },
+    };
+
+    // Multi-currency: Stripe accepts `currency` only when the Price carries a
+    // matching entry in its `currency_options`. Until those are configured in
+    // the Dashboard it rejects the parameter — so retry once without it rather
+    // than failing the sale. A customer paying in the Price's base currency is
+    // a far better outcome than a broken checkout button.
+    let checkoutSession;
+    try {
+      checkoutSession = await stripe.checkout.sessions.create({ ...params, currency });
+    } catch (currencyErr) {
+      // Retry ONLY on a rejection of the currency parameter itself. Retrying a
+      // network blip or an outage would just create a second session and
+      // double the load on an already-struggling API.
+      if (!isCurrencyRejection(currencyErr)) throw currencyErr;
+      const detail = currencyErr instanceof Error ? currencyErr.message : 'unknown error';
+      console.warn('[checkout] currency %s unavailable, using the base price: %s', currency, detail);
+      checkoutSession = await stripe.checkout.sessions.create(params);
+    }
 
     return NextResponse.json({ url: checkoutSession.url });
   } catch (err) {

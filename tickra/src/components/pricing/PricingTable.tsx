@@ -8,13 +8,47 @@ import { cn } from '@/lib/cn';
 import { fadeUp } from '@/lib/motion';
 import { useUser } from '@/lib/auth/useUser';
 import { toast } from '@/components/site/ToastProvider';
+import { formatPrice, PRICES, annualSavingsPercent, type Currency } from '@/lib/pricing/currency';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
 type Cycle = 'monthly' | 'annual';
 
-export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+export function PricingTable({
+  dict,
+  locale,
+  currency,
+}: {
+  dict: Dictionary;
+  locale: Locale;
+  /** Decided server-side from the visitor's country — see lib/pricing/currency. */
+  currency: Currency;
+}) {
   const t = dict.pricing;
+  const prices = PRICES[currency];
+
+  // Prices come from the currency table, not the locale dictionary: the two
+  // are independent (a French speaker in Montreal reads French and pays CAD).
+  const priceFor = (planId: string, forCycle: Cycle): { price: string; cadence: string } | null => {
+    if (planId === 'pro') {
+      return forCycle === 'annual'
+        ? {
+            price: formatPrice(prices.proAnnualPerMonth, currency, locale),
+            cadence: t.plans.find((pl) => pl.id === 'pro')?.cadenceAnnual ?? t.cycle.annual,
+          }
+        : {
+            price: formatPrice(prices.proMonthly, currency, locale),
+            cadence: t.plans.find((pl) => pl.id === 'pro')?.cadence ?? t.cycle.monthly,
+          };
+    }
+    if (planId === 'lifetime') {
+      return {
+        price: formatPrice(prices.lifetime, currency, locale),
+        cadence: t.plans.find((pl) => pl.id === 'lifetime')?.cadence ?? '',
+      };
+    }
+    return null;
+  };
   const [cycle, setCycle] = useState<Cycle>('monthly');
   const [pending, setPending] = useState<string | null>(null);
   const { user } = useUser();
@@ -25,7 +59,7 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ plan: planId, cycle, locale }),
+        body: JSON.stringify({ plan: planId, cycle, locale, currency }),
       });
       const data = (await res.json()) as { url?: string; error?: string; hint?: string };
       if (data.url) {
@@ -55,17 +89,33 @@ export function PricingTable({ dict, locale }: { dict: Dictionary; locale: Local
         onChange={setCycle}
         labelMonthly={t.cycle.monthly}
         labelAnnual={t.cycle.annual}
-        badge={t.annualBadge}
+        badge={
+          locale === 'fr'
+            ? `Économisez ${annualSavingsPercent(prices)} %`
+            : `Save ${annualSavingsPercent(prices)}%`
+        }
       />
 
       <div className="mt-12 grid grid-cols-1 gap-3 lg:grid-cols-3">
         {t.plans.map((plan, i) => {
           const highlighted = 'highlighted' in plan && plan.highlighted;
           const showAnnual = cycle === 'annual' && 'priceAnnual' in plan && plan.priceAnnual;
-          const price = showAnnual ? plan.priceAnnual : plan.price;
+          const localised = priceFor(plan.id, cycle);
+          const price = localised?.price ?? (showAnnual ? plan.priceAnnual : plan.price);
           const cadence =
-            showAnnual && 'cadenceAnnual' in plan && plan.cadenceAnnual ? plan.cadenceAnnual : plan.cadence;
-          const savings = 'savings' in plan && plan.savings ? plan.savings : null;
+            localised?.cadence ??
+            (showAnnual && 'cadenceAnnual' in plan && plan.cadenceAnnual
+              ? plan.cadenceAnnual
+              : plan.cadence);
+          // The annual total is what actually leaves the customer's account —
+          // showing only the per-month figure without it reads as a bait price.
+          const annualTotal =
+            plan.id === 'pro' && cycle === 'annual'
+              ? locale === 'fr'
+                ? `soit ${formatPrice(prices.proAnnualTotal, currency, locale)} par an`
+                : `${formatPrice(prices.proAnnualTotal, currency, locale)} billed yearly`
+              : null;
+          const savings = annualTotal ?? ('savings' in plan && plan.savings ? plan.savings : null);
           const isFree = plan.id === 'free';
           const isPaid = !isFree;
           const isLoading = pending === plan.id;
