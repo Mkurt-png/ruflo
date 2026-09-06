@@ -11,7 +11,7 @@ import { Footer } from '@/components/sections/Footer';
 
 export const revalidate = 86400;
 export const metadata = {
-  title: 'Le Mécénat · Tickra',
+  title: 'Le Mécénat · kNOWTrade',
   description:
     'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.',
 };
@@ -33,7 +33,7 @@ const COPY = {
       'Si la demande dépasse l’offre, l’éditeur tient une file d’attente ; aucune préférence pour les premiers arrivés.',
     ],
     candor:
-      'Note d’honnêteté : le don nécessite l’activation Stripe et la mécanique d’attribution serveur. Tickra prépare la sienne. Cette page reste pour que l’intention soit publique avant le bouton.',
+      'Note d’honnêteté : le don nécessite l’activation Stripe et la mécanique d’attribution serveur. kNOWTrade prépare la sienne. Cette page reste pour que l’intention soit publique avant le bouton.',
     cta: 'Voir les étages',
   },
   en: {
@@ -52,7 +52,7 @@ const COPY = {
       'If demand exceeds supply, the editor keeps a queue; no preference for first arrivals.',
     ],
     candor:
-      'Honesty note: the gift requires Stripe activation and server-side allocation. Tickra is preparing both. This page stays so the intent is public before the button.',
+      'Honesty note: the gift requires Stripe activation and server-side allocation. kNOWTrade is preparing both. This page stays so the intent is public before the button.',
     cta: 'See the floors',
   },
 } as const;

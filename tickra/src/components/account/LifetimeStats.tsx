@@ -6,7 +6,7 @@ import { TRACKS } from '@/lib/curriculum/data';
 
 type Locale = 'fr' | 'en';
 
-// Tickra promises ~10 minutes per lesson — we use that as the basis for time-
+// kNOWTrade promises ~10 minutes per lesson — we use that as the basis for time-
 // spent estimates. Estimate stays honest because it is labelled as such.
 const MINUTES_PER_LESSON = 10;
 

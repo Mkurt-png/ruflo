@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /*
- * Tickra · Punchy Fintech palette (Option B — Robinhood / Public vibe).
+ * kNOWTrade · glass palette — iridescent light, cyan → violet.
  *
  * Light mode  = clean off-white + near-black ink + vivid green brand.
  * Dark mode   = deep black + bright white ink + vivid green brand.
@@ -410,7 +410,7 @@ html.tickra-manuscrit h3.font-display {
   }
 }
 
-/* Print stylesheet — Tickra is editorial; it should print like one.
+/* Print stylesheet — kNOWTrade is editorial; it should print like one.
    Strip navbar/footer, force ivory paper, keep the serif italic, drop
    shadows and dotted underlines that don't ink well. */
 @media print {

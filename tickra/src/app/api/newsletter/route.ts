@@ -27,9 +27,9 @@ export async function POST(req: Request) {
   const locale: 'fr' | 'en' = body.locale === 'fr' ? 'fr' : 'en';
   const pdfUrl = locale === 'fr' ? PDF_URL_FR : PDF_URL_EN;
 
-  const subject = locale === 'fr' ? 'Votre PDF Tickra' : 'Your Tickra PDF';
-  const body_fr = `Merci de vous être inscrit·e à l'éditorial Tickra.\n\nTéléchargez le PDF ici : ${pdfUrl}\n\nÀ très vite,\nL'équipe Tickra`;
-  const body_en = `Thanks for subscribing to the Tickra editorial.\n\nDownload the PDF here: ${pdfUrl}\n\nSpeak soon,\nThe Tickra team`;
+  const subject = locale === 'fr' ? 'Votre PDF kNOWTrade' : 'Your kNOWTrade PDF';
+  const body_fr = `Merci de vous être inscrit·e à l'éditorial kNOWTrade.\n\nTéléchargez le PDF ici : ${pdfUrl}\n\nÀ très vite,\nL'équipe kNOWTrade`;
+  const body_en = `Thanks for subscribing to the kNOWTrade editorial.\n\nDownload the PDF here: ${pdfUrl}\n\nSpeak soon,\nThe kNOWTrade team`;
 
   const [audience, mail] = await Promise.all([
     addToAudience({ email }),

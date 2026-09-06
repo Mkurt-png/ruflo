@@ -86,7 +86,7 @@ export async function POST(req: Request) {
 
   const url = `${siteUrl}/api/auth/callback?token=${encodeURIComponent(token)}&locale=${locale}`;
 
-  const subject = locale === 'fr' ? 'Votre lien de connexion Tickra' : 'Your Tickra sign-in link';
+  const subject = locale === 'fr' ? 'Votre lien de connexion kNOWTrade' : 'Your kNOWTrade sign-in link';
   const intro = locale === 'fr' ? 'Cliquez pour vous connecter (lien valable 15 minutes) :' : 'Click to sign in (link valid 15 minutes):';
   const ignore = locale === 'fr' ? 'Vous n’avez pas demandé ce lien ? Ignorez ce message.' : 'Didn’t request this link? You can ignore this email.';
 

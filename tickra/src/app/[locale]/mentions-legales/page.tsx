@@ -7,7 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
 
-export const metadata = { title: 'Mentions légales · Tickra' };
+export const metadata = { title: 'Mentions légales · kNOWTrade' };
 
 // FR-mandatory Mentions légales page (LCEN 2004-575, art. 6-III).
 // Hardcoded copy (not in dict) because it's France-specific legal text;
@@ -21,7 +21,7 @@ const COPY = {
       {
         h: '1. Éditeur du site',
         body: [
-          'Le site Tickra (tickra.com) est édité par Tickra SAS, société par actions simplifiée au capital de 1 000 €, immatriculée au RCS de Paris sous le numéro 928 471 320.',
+          'Le site kNOWTrade (tickra.com) est édité par Tickra SAS, société par actions simplifiée au capital de 1 000 €, immatriculée au RCS de Paris sous le numéro 928 471 320.',
           'Siège social : 12 rue de Paradis, 75010 Paris, France.',
           'Numéro de TVA intracommunautaire : FR XX 928 471 320.',
           'Directeur de la publication : Hamza Kurt, Président.',
@@ -39,22 +39,22 @@ const COPY = {
       {
         h: '3. Propriété intellectuelle',
         body: [
-          'L’ensemble des contenus présents sur le site Tickra — textes, leçons, graphiques, logos, marques, code source, illustrations, vidéos — est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.',
+          'L’ensemble des contenus présents sur le site kNOWTrade — textes, leçons, graphiques, logos, marques, code source, illustrations, vidéos — est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.',
           'Toute reproduction, représentation, modification, publication, adaptation totale ou partielle des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable de Tickra SAS.',
         ],
       },
       {
         h: '4. Nature du service',
         body: [
-          'Tickra est une plateforme de formation en ligne au trading et à l’analyse des marchés financiers.',
-          'Tickra n’est pas un Prestataire de Services d’Investissement (PSI), n’est pas Conseiller en Investissements Financiers (CIF), et n’est pas régulé par l’Autorité des Marchés Financiers (AMF) à ce titre.',
-          'Tickra ne fournit aucun conseil personnalisé en investissement, aucun signal d’achat ou de vente, et ne traite aucun ordre de bourse. Toute décision d’investissement reste sous la seule responsabilité de l’utilisateur.',
+          'kNOWTrade est une plateforme de formation en ligne au trading et à l’analyse des marchés financiers.',
+          'kNOWTrade n’est pas un Prestataire de Services d’Investissement (PSI), n’est pas Conseiller en Investissements Financiers (CIF), et n’est pas régulé par l’Autorité des Marchés Financiers (AMF) à ce titre.',
+          'kNOWTrade ne fournit aucun conseil personnalisé en investissement, aucun signal d’achat ou de vente, et ne traite aucun ordre de bourse. Toute décision d’investissement reste sous la seule responsabilité de l’utilisateur.',
         ],
       },
       {
         h: '5. Médiation de la consommation',
         body: [
-          'Conformément à l’article L. 612-1 du Code de la consommation, tout consommateur peut recourir gratuitement à un médiateur de la consommation en cas de litige avec Tickra qui n’aurait pas été résolu directement.',
+          'Conformément à l’article L. 612-1 du Code de la consommation, tout consommateur peut recourir gratuitement à un médiateur de la consommation en cas de litige avec kNOWTrade qui n’aurait pas été résolu directement.',
           'Médiateur compétent : Médiateur de la consommation FEVAD, 60 rue La Boétie, 75008 Paris — mediateurduecommerce@fevad.com.',
           'Plateforme européenne de résolution des litiges : ec.europa.eu/consumers/odr',
         ],
@@ -71,7 +71,7 @@ const COPY = {
       {
         h: '7. Crédits',
         body: [
-          'Design & développement : équipe Tickra (Paris).',
+          'Design & développement : équipe kNOWTrade (Paris).',
           'Polices : Inter, Fraunces, JetBrains Mono (Google Fonts — licence OFL).',
           'Icônes : Lucide (licence ISC).',
         ],
@@ -85,7 +85,7 @@ const COPY = {
       {
         h: '1. Publisher',
         body: [
-          'The Tickra website (tickra.com) is published by Tickra SAS, a French simplified joint-stock company with share capital of €1,000, registered with the Paris Trade Register under number 928 471 320.',
+          'The kNOWTrade website (tickra.com) is published by Tickra SAS, a French simplified joint-stock company with share capital of €1,000, registered with the Paris Trade Register under number 928 471 320.',
           'Registered office: 12 rue de Paradis, 75010 Paris, France.',
           'VAT number: FR XX 928 471 320.',
           'Publication director: Hamza Kurt, President.',
@@ -103,22 +103,22 @@ const COPY = {
       {
         h: '3. Intellectual property',
         body: [
-          'All content on the Tickra website — text, lessons, graphics, logos, trademarks, source code, illustrations, videos — is protected by French and international intellectual property law.',
+          'All content on the kNOWTrade website — text, lessons, graphics, logos, trademarks, source code, illustrations, videos — is protected by French and international intellectual property law.',
           'Any reproduction, representation, modification, publication, or partial or total adaptation of site elements, by any means, is prohibited without prior written authorisation from Tickra SAS.',
         ],
       },
       {
         h: '4. Service nature',
         body: [
-          'Tickra is an online education platform for trading and financial markets analysis.',
-          'Tickra is not an Investment Services Provider (PSI), not a Financial Investment Advisor (CIF), and is not regulated by the French AMF in that capacity.',
-          'Tickra provides no personalised investment advice, no buy or sell signals, and processes no stock orders. All investment decisions are the sole responsibility of the user.',
+          'kNOWTrade is an online education platform for trading and financial markets analysis.',
+          'kNOWTrade is not an Investment Services Provider (PSI), not a Financial Investment Advisor (CIF), and is not regulated by the French AMF in that capacity.',
+          'kNOWTrade provides no personalised investment advice, no buy or sell signals, and processes no stock orders. All investment decisions are the sole responsibility of the user.',
         ],
       },
       {
         h: '5. Consumer mediation',
         body: [
-          'In accordance with article L. 612-1 of the French Consumer Code, any consumer may use a consumer mediator free of charge in case of dispute with Tickra that has not been resolved directly.',
+          'In accordance with article L. 612-1 of the French Consumer Code, any consumer may use a consumer mediator free of charge in case of dispute with kNOWTrade that has not been resolved directly.',
           'Competent mediator: FEVAD Consumer Mediator, 60 rue La Boétie, 75008 Paris — mediateurduecommerce@fevad.com.',
           'EU Online Dispute Resolution platform: ec.europa.eu/consumers/odr',
         ],
@@ -135,7 +135,7 @@ const COPY = {
       {
         h: '7. Credits',
         body: [
-          'Design & development: Tickra team (Paris).',
+          'Design & development: kNOWTrade team (Paris).',
           'Fonts: Inter, Fraunces, JetBrains Mono (Google Fonts — OFL license).',
           'Icons: Lucide (ISC license).',
         ],

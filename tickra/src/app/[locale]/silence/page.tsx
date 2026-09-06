@@ -9,7 +9,7 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 // /[locale]/silence — Le Silence éditorial. A second manifesto, this
-// one about the UI itself. Lists every gamified pattern Tickra
+// one about the UI itself. Lists every gamified pattern kNOWTrade
 // refuses to display: red dots, unread counts, congratulatory
 // modals, badge animations, confetti, streak fireworks. Pairs with
 // /refus (what we won't build) and /erratum (what we got wrong).
@@ -19,7 +19,7 @@ export const metadata = editorialMeta({
   slug: 'silence',
   title: 'Le Silence éditorial',
   description:
-    'Les patterns d’UI que Tickra ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
+    'Les patterns d’UI que kNOWTrade ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
 });
 
 type Banished = {
@@ -142,8 +142,8 @@ const BANISHED: Banished[] = [
     id: 'gamified-onboarding',
     pattern: { fr: 'L’onboarding gamifié à coups d’étapes cochées', en: 'Gamified onboarding with checkmark steps' },
     why: {
-      fr: 'Cocher des cases pour « débloquer » Tickra suggère qu’il y a un piège. Il n’y en a pas — la maison est ouverte.',
-      en: 'Checking boxes to "unlock" Tickra suggests there is a trick. There is none — the house is open.',
+      fr: 'Cocher des cases pour « débloquer » kNOWTrade suggère qu’il y a un piège. Il n’y en a pas — la maison est ouverte.',
+      en: 'Checking boxes to "unlock" kNOWTrade suggests there is a trick. There is none — the house is open.',
     },
     prose: {
       fr: 'Le rez-de-chaussée est lisible sans rien remplir. Si vous voulez monter à l’atelier, vous montez ; sinon, vous lisez.',
@@ -159,12 +159,12 @@ const COPY = {
     head2: 'l’écran',
     head3: 'ne fera pas.',
     intro:
-      'Le Refus dit ce que Tickra ne construira jamais. Le Silence éditorial dit comment Tickra ne vous parlera jamais. Les pastilles, les confettis, les pop-ups, les paliers : ils ont leur grammaire ailleurs. Ici, on écrit en lettres.',
+      'Le Refus dit ce que kNOWTrade ne construira jamais. Le Silence éditorial dit comment kNOWTrade ne vous parlera jamais. Les pastilles, les confettis, les pop-ups, les paliers : ils ont leur grammaire ailleurs. Ici, on écrit en lettres.',
     counters: (n: number) => `${n} patterns bannis. La liste s’allongera plutôt que de raccourcir.`,
     refusLink: 'Voir aussi : Le Refus',
     erratumLink: 'Et : L’Erratum',
     footer:
-      'Si vous voyez une pastille rouge, un compteur ou un confetti quelque part sur Tickra, écrivez-nous. Ce sera consigné dans /erratum avant d’être retiré.',
+      'Si vous voyez une pastille rouge, un compteur ou un confetti quelque part sur kNOWTrade, écrivez-nous. Ce sera consigné dans /erratum avant d’être retiré.',
     instead: 'À la place',
   },
   en: {
@@ -173,12 +173,12 @@ const COPY = {
     head2: 'screen',
     head3: 'will not do.',
     intro:
-      'The Refusal says what Tickra will never build. The Editorial Silence says how Tickra will never speak to you. Dots, confetti, popups, tiers: they have their grammar elsewhere. Here, we write in letters.',
+      'The Refusal says what kNOWTrade will never build. The Editorial Silence says how kNOWTrade will never speak to you. Dots, confetti, popups, tiers: they have their grammar elsewhere. Here, we write in letters.',
     counters: (n: number) => `${n} banished patterns. The list will grow rather than shrink.`,
     refusLink: 'See also: The Refusal',
     erratumLink: 'And: The Erratum',
     footer:
-      'If you see a red dot, a counter, or confetti anywhere on Tickra, write to us. It will be logged in /erratum before being removed.',
+      'If you see a red dot, a counter, or confetti anywhere on kNOWTrade, write to us. It will be logged in /erratum before being removed.',
     instead: 'In its place',
   },
 } as const;
@@ -196,8 +196,8 @@ export default async function SilencePage({ params }: { params: { locale: string
         slug="silence"
         title={locale === 'fr' ? 'Le Silence éditorial' : 'The Editorial Silence'}
         description={locale === 'fr'
-          ? 'Les patterns d’UI que Tickra ne déploiera pas.'
-          : 'UI patterns Tickra will not display.'}
+          ? 'Les patterns d’UI que kNOWTrade ne déploiera pas.'
+          : 'UI patterns kNOWTrade will not display.'}
         locale={locale}
       />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">

@@ -13,7 +13,7 @@ const copy = {
   fr: [
     {
       title: 'Bienvenue sur votre compte.',
-      body: 'Cette page rassemble votre progression, vos favoris, vos certificats et les outils Tickra. Trois choses à savoir.',
+      body: 'Cette page rassemble votre progression, vos favoris, vos certificats et les outils kNOWTrade. Trois choses à savoir.',
       next: 'Suivant',
     },
     {
@@ -30,7 +30,7 @@ const copy = {
   en: [
     {
       title: 'Welcome to your account.',
-      body: 'This page collects your progress, bookmarks, certificates and Tickra tools. Three things to know.',
+      body: 'This page collects your progress, bookmarks, certificates and kNOWTrade tools. Three things to know.',
       next: 'Next',
     },
     {

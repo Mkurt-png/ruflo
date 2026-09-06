@@ -5,7 +5,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 
-// /[locale]/etages — L'Étage Pro. Re-narrates Tickra's three tiers
+// /[locale]/etages — L'Étage Pro. Re-narrates kNOWTrade's three tiers
 // as floors of a building rather than columns of a pricing card.
 // Pure editorial register, links the reader down toward /pricing
 // only at the end. The story of the building, before the bill.
@@ -108,7 +108,7 @@ const COPY = {
     head2: 'Pas trois colonnes.',
     head3: 'Une seule maison.',
     intro:
-      'La plupart des sites de trading affichent trois colonnes côte à côte, à hauteur d’œil, avec des cases à cocher. Tickra préfère une maison : on entre par le rez-de-chaussée, on monte si on veut, on redescend quand on veut. Voici l’organisation, étage par étage.',
+      'La plupart des sites de trading affichent trois colonnes côte à côte, à hauteur d’œil, avec des cases à cocher. kNOWTrade préfère une maison : on entre par le rez-de-chaussée, on monte si on veut, on redescend quand on veut. Voici l’organisation, étage par étage.',
     pricingCta: 'Voir le détail tarifaire',
     footer:
       'Ce sont les étages, pas les prix. Pour les chiffres, descendez à la page /pricing — elle ne porte que l’addition, jamais l’histoire.',
@@ -119,7 +119,7 @@ const COPY = {
     head2: 'Not three columns.',
     head3: 'One house.',
     intro:
-      'Most trading sites display three columns side by side, at eye level, with checkboxes. Tickra prefers a house: you enter on the ground floor, you go up if you want, you come back down when you want. Here is the organization, floor by floor.',
+      'Most trading sites display three columns side by side, at eye level, with checkboxes. kNOWTrade prefers a house: you enter on the ground floor, you go up if you want, you come back down when you want. Here is the organization, floor by floor.',
     pricingCta: 'See the pricing detail',
     footer:
       'These are the floors, not the prices. For the numbers, go down to /pricing — that page carries the bill, never the story.',

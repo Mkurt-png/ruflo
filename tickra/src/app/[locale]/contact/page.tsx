@@ -7,7 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { ContactForm } from '@/components/contact/ContactForm';
 
-export const metadata = { title: 'Contact · Tickra' };
+export const metadata = { title: 'Contact · kNOWTrade' };
 
 export default async function ContactPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

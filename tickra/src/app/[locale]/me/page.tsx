@@ -17,7 +17,7 @@ const PortfolioStats3D = dynamic(
   { ssr: false, loading: () => <div className="w-full h-[320px]" aria-hidden /> },
 );
 
-export const metadata = { title: 'Mon compte · Tickra' };
+export const metadata = { title: 'Mon compte · kNOWTrade' };
 
 export default async function MePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

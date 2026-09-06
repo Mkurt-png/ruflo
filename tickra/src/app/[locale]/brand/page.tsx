@@ -10,7 +10,7 @@ import { MagneticTilt } from '@/components/fx/MagneticTilt';
 import { CursorGlow } from '@/components/fx/CursorGlow';
 
 export const metadata = {
-  title: 'Brand · Tickra',
+  title: 'Brand · kNOWTrade',
   // Internal style guide — discoverable by team, not crawled.
   robots: { index: false, follow: false },
 };

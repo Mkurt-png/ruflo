@@ -19,7 +19,7 @@ export const metadata = editorialMeta({
   slug: 'annuaire',
   title: 'L’Annuaire',
   description:
-    'L’index alphabétique de toutes les leçons publiées sur Tickra. Une seule page, navigable au clavier, faite pour être lue lentement.',
+    'L’index alphabétique de toutes les leçons publiées sur kNOWTrade. Une seule page, navigable au clavier, faite pour être lue lentement.',
 });
 
 const COPY = {
@@ -29,7 +29,7 @@ const COPY = {
     head2: 'a écrit.',
     head3: 'Sur une seule page.',
     intro:
-      'L’Annuaire liste, par ordre alphabétique, chaque leçon publiée sur Tickra. Pas de filtres, pas de tags, pas de recommandations : une page sobre, faite pour être lue par sauts ou par balayage. C’est aussi la mémoire du site — si une notion n’apparaît pas ici, c’est qu’elle n’existe pas chez nous.',
+      'L’Annuaire liste, par ordre alphabétique, chaque leçon publiée sur kNOWTrade. Pas de filtres, pas de tags, pas de recommandations : une page sobre, faite pour être lue par sauts ou par balayage. C’est aussi la mémoire du site — si une notion n’apparaît pas ici, c’est qu’elle n’existe pas chez nous.',
     counts: (n: number, tracks: number) =>
       `${n} leçons sur ${tracks} pistes. Mise à jour automatique.`,
     footer:
@@ -41,7 +41,7 @@ const COPY = {
     head2: 'have written.',
     head3: 'On one page.',
     intro:
-      'L’Annuaire lists, in alphabetical order, every lesson published on Tickra. No filters, no tags, no recommendations: a calm page, made to be read by leaps or by scanning. It is also the site’s memory — if a notion does not appear here, it does not exist in our work.',
+      'L’Annuaire lists, in alphabetical order, every lesson published on kNOWTrade. No filters, no tags, no recommendations: a calm page, made to be read by leaps or by scanning. It is also the site’s memory — if a notion does not appear here, it does not exist in our work.',
     counts: (n: number, tracks: number) =>
       `${n} lessons across ${tracks} tracks. Updates automatically.`,
     footer:

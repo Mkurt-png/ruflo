@@ -10,9 +10,9 @@ import { Footer } from '@/components/sections/Footer';
 
 export const revalidate = 86400;
 export const metadata = {
-  title: 'L’Abonnement institutionnel · Tickra',
+  title: 'L’Abonnement institutionnel · kNOWTrade',
   description:
-    'Tickra pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.',
+    'kNOWTrade pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.',
 };
 
 const COPY = {
@@ -22,7 +22,7 @@ const COPY = {
     head2: 'Un Greffier.',
     head3: 'Un audit.',
     intro:
-      'Quand Tickra entre dans une salle de marché ou une prop-firm, il ne perd pas son éditorial — il l’adapte. Le Greffier devient collectif : il lit le carnet de toute l’équipe et rend des observations hebdomadaires. Le Mur du silence s’applique aux drawdowns d’équipe. La Cote devient une note de salle, signée par l’éditeur.',
+      'Quand kNOWTrade entre dans une salle de marché ou une prop-firm, il ne perd pas son éditorial — il l’adapte. Le Greffier devient collectif : il lit le carnet de toute l’équipe et rend des observations hebdomadaires. Le Mur du silence s’applique aux drawdowns d’équipe. La Cote devient une note de salle, signée par l’éditeur.',
     bullets: [
       'Greffier collectif : observations sur le carnet agrégé de l’équipe.',
       'Mur du silence à l’échelle : déclenché par drawdown de salle, pas individuel.',
@@ -40,7 +40,7 @@ const COPY = {
     head2: 'One Registrar.',
     head3: 'One audit.',
     intro:
-      'When Tickra enters a trading desk or a prop firm, it does not lose its editorial — it adapts it. The Registrar becomes collective: it reads the whole team’s ledger and returns weekly observations. The Wall of Silence applies to team drawdowns. The Score becomes a room note, signed by the editor.',
+      'When kNOWTrade enters a trading desk or a prop firm, it does not lose its editorial — it adapts it. The Registrar becomes collective: it reads the whole team’s ledger and returns weekly observations. The Wall of Silence applies to team drawdowns. The Score becomes a room note, signed by the editor.',
     bullets: [
       'Collective Registrar: observations on the team’s aggregated ledger.',
       'Wall of Silence at scale: triggered by desk drawdown, not individual.',

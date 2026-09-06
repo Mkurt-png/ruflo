@@ -7,7 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { PlacementTest } from '@/components/onboarding/PlacementTest';
 
-export const metadata = { title: 'Test de niveau · Tickra' };
+export const metadata = { title: 'Test de niveau · kNOWTrade' };
 
 export default async function OnboardingPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

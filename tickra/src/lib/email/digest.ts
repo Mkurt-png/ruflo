@@ -58,21 +58,21 @@ export function buildDigestEmail(
   const nextUrl = stats.nextLessonUrl ?? `${siteUrl}/${locale}/learn`;
 
   if (locale === 'fr') {
-    const subject = `Votre semaine Tickra — ${stats.xpThisWeek} XP, série ${stats.streak} j`;
+    const subject = `Votre semaine kNOWTrade — ${stats.xpThisWeek} XP, série ${stats.streak} j`;
     const text =
       `Bonjour${name},\n\n` +
-      `Cette semaine sur Tickra :\n` +
+      `Cette semaine sur kNOWTrade :\n` +
       `• ${stats.xpThisWeek} XP gagnés\n` +
       `• ${stats.lessonsThisWeek} leçons terminées\n` +
       `• Série actuelle : ${stats.streak} jour(s)\n\n` +
       (stats.nextLessonTitle
         ? `Prochaine leçon recommandée : ${stats.nextLessonTitle}\n${nextUrl}\n\n`
         : `Reprenez ici : ${nextUrl}\n\n`) +
-      `— Tickra\n\n` +
+      `— kNOWTrade\n\n` +
       `Se désabonner : ${unsubUrl}`;
     const html =
       `<p>Bonjour${escapeHtml(name)},</p>` +
-      `<p>Cette semaine sur Tickra :</p>` +
+      `<p>Cette semaine sur kNOWTrade :</p>` +
       `<ul>` +
       `<li><strong>${stats.xpThisWeek} XP</strong> gagnés</li>` +
       `<li><strong>${stats.lessonsThisWeek}</strong> leçons terminées</li>` +
@@ -81,28 +81,28 @@ export function buildDigestEmail(
       (stats.nextLessonTitle
         ? `<p>Prochaine leçon recommandée : <a href="${escapeAttr(nextUrl)}">${escapeHtml(stats.nextLessonTitle)}</a></p>`
         : `<p><a href="${escapeAttr(nextUrl)}">Reprendre l’apprentissage</a></p>`) +
-      `<p>— Tickra</p>` +
+      `<p>— kNOWTrade</p>` +
       `<p style="font-size:12px;color:#888">` +
       `<a href="${escapeAttr(unsubUrl)}">Se désabonner du digest hebdomadaire</a>` +
       `</p>`;
     return { subject, html, text };
   }
 
-  const subject = `Your Tickra week — ${stats.xpThisWeek} XP, ${stats.streak}-day streak`;
+  const subject = `Your kNOWTrade week — ${stats.xpThisWeek} XP, ${stats.streak}-day streak`;
   const text =
     `Hi${name},\n\n` +
-    `Your week on Tickra:\n` +
+    `Your week on kNOWTrade:\n` +
     `• ${stats.xpThisWeek} XP earned\n` +
     `• ${stats.lessonsThisWeek} lessons completed\n` +
     `• Current streak: ${stats.streak} day(s)\n\n` +
     (stats.nextLessonTitle
       ? `Recommended next: ${stats.nextLessonTitle}\n${nextUrl}\n\n`
       : `Pick up here: ${nextUrl}\n\n`) +
-    `— Tickra\n\n` +
+    `— kNOWTrade\n\n` +
     `Unsubscribe: ${unsubUrl}`;
   const html =
     `<p>Hi${escapeHtml(name)},</p>` +
-    `<p>Your week on Tickra:</p>` +
+    `<p>Your week on kNOWTrade:</p>` +
     `<ul>` +
     `<li><strong>${stats.xpThisWeek} XP</strong> earned</li>` +
     `<li><strong>${stats.lessonsThisWeek}</strong> lessons completed</li>` +
@@ -111,7 +111,7 @@ export function buildDigestEmail(
     (stats.nextLessonTitle
       ? `<p>Recommended next: <a href="${escapeAttr(nextUrl)}">${escapeHtml(stats.nextLessonTitle)}</a></p>`
       : `<p><a href="${escapeAttr(nextUrl)}">Pick up where you left off</a></p>`) +
-    `<p>— Tickra</p>` +
+    `<p>— kNOWTrade</p>` +
     `<p style="font-size:12px;color:#888">` +
     `<a href="${escapeAttr(unsubUrl)}">Unsubscribe from the weekly digest</a>` +
     `</p>`;

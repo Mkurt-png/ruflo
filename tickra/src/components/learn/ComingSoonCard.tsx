@@ -8,7 +8,7 @@ const copy = {
     eyebrow: 'Bientôt disponible',
     title: 'Cette leçon arrive très bientôt.',
     body:
-      "Tickra n'expose jamais une leçon qui n'a pas encore son contenu complet. Cette piste est en cours de rédaction par l'équipe pédagogique. Vous recevrez un mail dès qu'elle est publiée.",
+      "kNOWTrade n'expose jamais une leçon qui n'a pas encore son contenu complet. Cette piste est en cours de rédaction par l'équipe pédagogique. Vous recevrez un mail dès qu'elle est publiée.",
     eta: 'ETA : courant juin 2026',
     previous: 'Leçon précédente',
     back: 'Retour à la piste',
@@ -17,7 +17,7 @@ const copy = {
     eyebrow: 'Coming soon',
     title: 'This lesson arrives shortly.',
     body:
-      "Tickra never exposes a lesson that does not yet have its full content. This track is being written by the curriculum team. You'll get a mail as soon as it goes live.",
+      "kNOWTrade never exposes a lesson that does not yet have its full content. This track is being written by the curriculum team. You'll get a mail as soon as it goes live.",
     eta: 'ETA: June 2026',
     previous: 'Previous lesson',
     back: 'Back to the track',

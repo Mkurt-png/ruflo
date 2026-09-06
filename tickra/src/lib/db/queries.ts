@@ -1,4 +1,4 @@
-// Typed query helpers for every Tickra table.
+// Typed query helpers for every kNOWTrade table.
 // Each helper returns a plain shape; errors surface as `null` for reads and
 // `{ ok: false }` for writes — callers degrade gracefully when DB is unset.
 

@@ -30,7 +30,7 @@ export function getRpConfig(): RpConfig {
   } catch {
     /* fall through to defaults */
   }
-  return { rpID: host, rpName: 'Tickra', origin };
+  return { rpID: host, rpName: 'kNOWTrade', origin };
 }
 
 // Lazy loader — returns null if package isn't installed. Routes turn that

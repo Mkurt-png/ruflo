@@ -22,7 +22,7 @@ export type GeneratedQuestion = {
   rationale: string;
 };
 
-const SYSTEM_FR = `Tu es Tickra Examinateur, un pédagogue exigeant qui rédige des questions de compréhension sur le trading.
+const SYSTEM_FR = `Tu es kNOWTrade Examinateur, un pédagogue exigeant qui rédige des questions de compréhension sur le trading.
 Tu génères un quiz à partir du contenu d'une leçon. Règles :
 - Questions à choix unique, 3 options chacune, exactement une bonne réponse.
 - Reste STRICTEMENT dans le périmètre pédagogique de la leçon fournie. Aucun signal, aucune prédiction de prix, aucun conseil d'investissement.
@@ -31,7 +31,7 @@ Tu génères un quiz à partir du contenu d'une leçon. Règles :
 - Réponds UNIQUEMENT avec du JSON valide, sans texte autour, sans bloc markdown.
 Format exact : {"questions":[{"q":"...","options":["...","...","..."],"correct":0,"rationale":"..."}]}`;
 
-const SYSTEM_EN = `You are Tickra Examiner, a demanding educator who writes trading comprehension questions.
+const SYSTEM_EN = `You are kNOWTrade Examiner, a demanding educator who writes trading comprehension questions.
 You generate a quiz from a lesson's content. Rules:
 - Single-choice questions, 3 options each, exactly one correct answer.
 - Stay STRICTLY within the educational scope of the provided lesson. No signals, no price predictions, no investment advice.

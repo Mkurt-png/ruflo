@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-2.1: floating AskTickra chat button + slide-in panel.
+// TICKRA-PHASE-2.1: floating AskNow chat button + slide-in panel.
 // Bottom-right on desktop, full-screen sheet on mobile. Lesson context is
 // auto-detected from the current URL when relevant.
 
@@ -18,7 +18,7 @@ type Message = { role: 'user' | 'assistant'; content: string };
 const copy = {
   fr: {
     open: 'Posez une question',
-    title: 'AskTickra',
+    title: 'AskNow',
     subtitle: 'Posez une question sur le trading ou une leçon. Réponses pédagogiques uniquement, jamais de signaux.',
     placeholder: 'Ex : explique-moi un harami',
     send: 'Envoyer',
@@ -26,13 +26,13 @@ const copy = {
     poweredBy: 'IA pédagogique · Pas de conseil en investissement',
     quotaExceeded: 'Limite quotidienne atteinte. Passez Pro pour 200 questions/jour.',
     notConfigured: "L'assistant n'est pas encore activé sur cette instance.",
-    notAuth: 'Connectez-vous pour utiliser AskTickra.',
+    notAuth: 'Connectez-vous pour utiliser AskNow.',
     genericError: 'Erreur de communication avec l’IA. Réessayez.',
     examples: ['Qu’est-ce qu’un pip ?', 'Comment fonctionne le R:R ?', 'Pourquoi mon stop est-il chassé ?'],
   },
   en: {
     open: 'Ask a question',
-    title: 'AskTickra',
+    title: 'AskNow',
     subtitle: 'Ask any trading or lesson question. Educational answers only, never signals.',
     placeholder: 'e.g. explain a harami',
     send: 'Send',
@@ -40,7 +40,7 @@ const copy = {
     poweredBy: 'Educational AI · Not investment advice',
     quotaExceeded: 'Daily limit reached. Upgrade to Pro for 200 questions/day.',
     notConfigured: 'AI assistant not yet enabled on this instance.',
-    notAuth: 'Sign in to use AskTickra.',
+    notAuth: 'Sign in to use AskNow.',
     genericError: 'Error talking to the AI. Try again.',
     examples: ['What is a pip?', 'How does R:R work?', 'Why is my stop hunted?'],
   },
@@ -60,7 +60,7 @@ function detectLessonContext(pathname: string): { trackTitle?: string; lessonTit
   return { trackTitle: track.title.fr, lessonTitle: lesson.title.fr };
 }
 
-export function AskTickra({ locale }: { locale: Locale }) {
+export function AskNow({ locale }: { locale: Locale }) {
   const t = copy[locale];
   const { user, ready } = useUser();
   const pathname = usePathname() ?? '/';

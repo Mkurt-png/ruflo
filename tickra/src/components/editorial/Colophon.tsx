@@ -38,7 +38,7 @@ export function Colophon({ locale }: Props) {
         <div className="mt-28 md:mt-40 grid grid-cols-12 gap-x-6 items-end">
           <div className="col-span-12 md:col-span-6">
             <span className="ed-tag text-black/45">
-              {locale === 'fr' ? 'Tickra · Paris · 2026' : 'Tickra · Paris · 2026'}
+              {locale === 'fr' ? 'kNOWTrade · Paris · 2026' : 'kNOWTrade · Paris · 2026'}
             </span>
           </div>
           <div className="col-span-12 md:col-span-6 md:text-right mt-10 md:mt-0">

@@ -19,7 +19,7 @@ const copy = {
       {
         icon: 'stripe',
         title: 'Paiement sécurisé Stripe',
-        body: 'Vos données bancaires ne transitent jamais par Tickra. Stripe est certifié PCI-DSS niveau 1.',
+        body: 'Vos données bancaires ne transitent jamais par kNOWTrade. Stripe est certifié PCI-DSS niveau 1.',
       },
       {
         icon: 'lock',
@@ -67,7 +67,7 @@ const copy = {
       {
         icon: 'stripe',
         title: 'Secure Stripe payment',
-        body: 'Your card details never touch Tickra. Stripe is PCI-DSS Level 1 certified.',
+        body: 'Your card details never touch kNOWTrade. Stripe is PCI-DSS Level 1 certified.',
       },
       {
         icon: 'lock',

@@ -28,7 +28,7 @@ export function TrackBadge({ trackName, level, size = 80 }: TrackBadgeProps) {
   return (
     <svg
       role="img"
-      aria-label={`Tickra badge — ${trackName} (${level})`}
+      aria-label={`kNOWTrade badge — ${trackName} (${level})`}
       width={size}
       height={size}
       viewBox="0 0 80 80"
@@ -38,7 +38,7 @@ export function TrackBadge({ trackName, level, size = 80 }: TrackBadgeProps) {
       <circle cx={40} cy={40} r={38} fill={colors.bg} stroke={colors.fg} strokeWidth={2} />
       {/* Inner */}
       <circle cx={40} cy={40} r={30} fill="#FFFFFF" stroke={colors.fg} strokeWidth={1} />
-      {/* Tickra mark — tiny candle stack */}
+      {/* kNOWTrade mark — tiny candle stack */}
       <g stroke={colors.fg} strokeWidth={1.4} fill={colors.fg}>
         <rect x={28} y={32} width={3} height={10} rx={0.5} />
         <line x1={29.5} y1={28} x2={29.5} y2={32} />

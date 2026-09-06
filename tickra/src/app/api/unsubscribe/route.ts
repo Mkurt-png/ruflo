@@ -40,7 +40,7 @@ export async function GET(req: Request) {
   return new NextResponse(
     htmlPage(
       "You're unsubscribed",
-      'You will no longer receive the Tickra weekly digest. You can re-enable it any time from your account settings.',
+      'You will no longer receive the kNOWTrade weekly digest. You can re-enable it any time from your account settings.',
     ),
     { status: 200, headers: { 'content-type': 'text/html; charset=utf-8' } },
   );

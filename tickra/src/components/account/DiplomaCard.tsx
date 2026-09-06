@@ -9,10 +9,10 @@ type Locale = 'fr' | 'en';
 
 const copy = {
   fr: {
-    eyebrow: 'Diplôme Tickra',
+    eyebrow: 'Diplôme kNOWTrade',
     decoree: 'Décerné à',
     anonymous: '— anonyme —',
-    body: 'Pour avoir suivi le cursus Tickra, complété les exercices et les points de contrôle des quinze pistes.',
+    body: 'Pour avoir suivi le cursus kNOWTrade, complété les exercices et les points de contrôle des quinze pistes.',
     issued: 'Délivré le',
     notQualified: 'Le diplôme se débloque à la dernière leçon.',
     progressLabel: 'Progression',
@@ -23,10 +23,10 @@ const copy = {
     refTitle: 'Référence',
   },
   en: {
-    eyebrow: 'Tickra diploma',
+    eyebrow: 'kNOWTrade diploma',
     decoree: 'Awarded to',
     anonymous: '— anonymous —',
-    body: 'For completing the Tickra curriculum, all drills and checkpoints across fifteen tracks.',
+    body: 'For completing the kNOWTrade curriculum, all drills and checkpoints across fifteen tracks.',
     issued: 'Issued',
     notQualified: 'The diploma unlocks at the last lesson.',
     progressLabel: 'Progress',

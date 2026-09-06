@@ -25,7 +25,7 @@ export async function GET(_req: Request, { params }: Params) {
     .join('');
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Tickra badge — ${escapeXml(trackName)} (${level})">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="kNOWTrade badge — ${escapeXml(trackName)} (${level})">
   <rect width="320" height="320" fill="#FFFFFF"/>
   <circle cx="160" cy="160" r="150" fill="${colors.bg}" stroke="${colors.fg}" stroke-width="6"/>
   <circle cx="160" cy="160" r="120" fill="#FFFFFF" stroke="${colors.fg}" stroke-width="2"/>
@@ -39,7 +39,7 @@ export async function GET(_req: Request, { params }: Params) {
   </g>
   <text x="160" y="218" text-anchor="middle" font-size="28" font-family="ui-sans-serif, system-ui" font-weight="600" fill="${colors.fg}">${escapeXml(short)}</text>
   <text x="160" y="244" text-anchor="middle" font-size="14" font-family="ui-sans-serif, system-ui" font-weight="500" fill="${colors.fg}" opacity="0.8">${escapeXml(level.toUpperCase())}</text>
-  <text x="160" y="288" text-anchor="middle" font-size="11" font-family="ui-sans-serif, system-ui" fill="#1C1917">Tickra · ${escapeXml(params.userId.slice(0, 8))}</text>
+  <text x="160" y="288" text-anchor="middle" font-size="11" font-family="ui-sans-serif, system-ui" fill="#1C1917">kNOWTrade · ${escapeXml(params.userId.slice(0, 8))}</text>
 </svg>`;
 
   return new NextResponse(svg, {

@@ -44,7 +44,7 @@ export function buildLinkedInShareUrl(p: LinkedInShareParams): string {
   const u = new URL('https://www.linkedin.com/profile/add');
   u.searchParams.set('startTask', 'CERTIFICATION_NAME');
   u.searchParams.set('name', p.trackName);
-  u.searchParams.set('organizationName', 'Tickra');
+  u.searchParams.set('organizationName', 'kNOWTrade');
   u.searchParams.set('issueYear', String(p.issueYear));
   u.searchParams.set('issueMonth', String(p.issueMonth));
   u.searchParams.set('certUrl', p.certUrl);

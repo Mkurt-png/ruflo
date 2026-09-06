@@ -35,11 +35,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     openGraph: {
       type: 'website',
       url: `${SITE_URL}/${locale}/glossary`,
-      title: `${m.title} · Tickra`,
+      title: `${m.title} · kNOWTrade`,
       description: m.description,
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
     },
-    twitter: { card: 'summary_large_image', title: `${m.title} · Tickra`, description: m.description },
+    twitter: { card: 'summary_large_image', title: `${m.title} · kNOWTrade`, description: m.description },
   };
 }
 
@@ -51,8 +51,8 @@ export default async function GlossaryPage({ params }: { params: { locale: strin
   const title = locale === 'fr' ? 'Glossaire' : 'Glossary';
   const body =
     locale === 'fr'
-      ? `${GLOSSARY.length} termes essentiels du trading, classés par thème. Tickra n’invente pas de jargon — on définit le vrai vocabulaire des desks.`
-      : `${GLOSSARY.length} essential trading terms, sorted by theme. Tickra does not invent jargon — we define the real desk vocabulary.`;
+      ? `${GLOSSARY.length} termes essentiels du trading, classés par thème. kNOWTrade n’invente pas de jargon — on définit le vrai vocabulaire des desks.`
+      : `${GLOSSARY.length} essential trading terms, sorted by theme. kNOWTrade does not invent jargon — we define the real desk vocabulary.`;
 
   return (
     <>

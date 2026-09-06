@@ -7,7 +7,7 @@ import { REFUSALS } from '@/lib/tickra/refus';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
-// /[locale]/refus — Le Refus. Ten things Tickra will never build.
+// /[locale]/refus — Le Refus. Ten things kNOWTrade will never build.
 // A manifesto by negation, in the editorial register. Static content,
 // no logic, no progress — defines the brand by what it refuses.
 
@@ -16,7 +16,7 @@ export const metadata = editorialMeta({
   slug: 'refus',
   title: 'Le Refus',
   description:
-    'Dix choses que Tickra ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
+    'Dix choses que kNOWTrade ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
 });
 
 const COPY = {
@@ -26,7 +26,7 @@ const COPY = {
     head2: 'jamais.',
     head3: 'Dix choses, signées.',
     intro:
-      'Un site de trading se définit autant par ce qu’il refuse que par ce qu’il publie. Voici les dix lignes que Tickra ne franchira pas. Si une seule d’entre elles vous manque, vous êtes au mauvais endroit — et nous préférons que vous le sachiez maintenant.',
+      'Un site de trading se définit autant par ce qu’il refuse que par ce qu’il publie. Voici les dix lignes que kNOWTrade ne franchira pas. Si une seule d’entre elles vous manque, vous êtes au mauvais endroit — et nous préférons que vous le sachiez maintenant.',
     footer:
       'Ce manifeste est public et permanent. Si nous y revenons un jour, ce sera ici, daté, en haut — sans communication, sans excuse, sans soldes.',
   },
@@ -36,7 +36,7 @@ const COPY = {
     head2: 'never build.',
     head3: 'Ten lines, signed.',
     intro:
-      'A trading site is defined as much by what it refuses as by what it publishes. Here are the ten lines Tickra will not cross. If even one of them is something you need, you are in the wrong place — and we would rather you know now.',
+      'A trading site is defined as much by what it refuses as by what it publishes. Here are the ten lines kNOWTrade will not cross. If even one of them is something you need, you are in the wrong place — and we would rather you know now.',
     footer:
       'This manifesto is public and permanent. If we ever revisit it, it will be here, dated at the top — no announcement, no excuse, no sale.',
   },
@@ -55,8 +55,8 @@ export default async function RefusPage({ params }: { params: { locale: string }
         slug="refus"
         title={locale === 'fr' ? 'Le Refus' : 'The Refusal'}
         description={locale === 'fr'
-          ? 'Dix choses que Tickra ne construira jamais. Un manifeste par la négation.'
-          : 'Ten things Tickra will never build. A manifesto by negation.'}
+          ? 'Dix choses que kNOWTrade ne construira jamais. Un manifeste par la négation.'
+          : 'Ten things kNOWTrade will never build. A manifesto by negation.'}
         locale={locale}
       />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">

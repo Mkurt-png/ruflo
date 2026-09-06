@@ -5,4 +5,4 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tickra1.vercel.app'
 ).replace(/\/+$/, '');
 
-export const SITE_NAME = 'Tickra';
+export { BRAND_NAME as SITE_NAME } from '@/lib/brand';

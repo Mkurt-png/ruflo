@@ -1,4 +1,4 @@
-// Discord webhook notifier for Tickra platform events.
+// Discord webhook notifier for kNOWTrade platform events.
 //
 // Fire-and-forget posting helpers: every call is safe to await OR drop on
 // the floor. If the webhook env var is missing, or Discord is down, or the
@@ -74,7 +74,7 @@ export function obfuscate(email: string): string {
 
 export function formatSignup({ displayName }: { displayName?: string | null }): string {
   const who = displayName?.trim() || 'An apprentice';
-  return `New signup: **${who}** just joined Tickra. Welcome aboard!`;
+  return `New signup: **${who}** just joined kNOWTrade. Welcome aboard!`;
 }
 
 export function formatSale({
@@ -85,7 +85,7 @@ export function formatSale({
   displayName?: string | null;
 }): string {
   const who = displayName?.trim() || 'An apprentice';
-  const planLabel = plan === 'lifetime' ? 'Tickra Lifetime' : 'Tickra Pro';
+  const planLabel = plan === 'lifetime' ? 'kNOWTrade Lifetime' : 'kNOWTrade Pro';
   return `New ${planLabel} upgrade: **${who}** just went Pro. Cha-ching!`;
 }
 

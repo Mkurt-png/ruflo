@@ -16,7 +16,7 @@ export const metadata = editorialMeta({
   slug: 'erratum',
   title: 'L’Erratum',
   description:
-    'Journal public des erreurs de Tickra : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
+    'Journal public des erreurs de kNOWTrade : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
 });
 
 const COPY = {
@@ -70,8 +70,8 @@ export default async function ErratumPage({ params }: { params: { locale: string
         slug="erratum"
         title={locale === 'fr' ? 'L’Erratum' : 'The Erratum'}
         description={locale === 'fr'
-          ? 'Journal public des erreurs de Tickra. Rien n’est effacé.'
-          : 'Public log of Tickra’s mistakes. Nothing is erased.'}
+          ? 'Journal public des erreurs de kNOWTrade. Rien n’est effacé.'
+          : 'Public log of kNOWTrade’s mistakes. Nothing is erased.'}
         locale={locale}
       />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">

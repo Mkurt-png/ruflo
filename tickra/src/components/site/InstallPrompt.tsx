@@ -18,13 +18,13 @@ const DISMISS_DAYS = 30;
 
 const copy = {
   fr: {
-    title: 'Installer Tickra sur votre écran d’accueil',
+    title: 'Installer kNOWTrade sur votre écran d’accueil',
     body: 'Accès rapide, ouverture en plein écran, leçons accessibles hors connexion.',
     install: 'Installer',
     later: 'Plus tard',
   },
   en: {
-    title: 'Install Tickra on your home screen',
+    title: 'Install kNOWTrade on your home screen',
     body: 'Quick access, full-screen launch, lessons available offline.',
     install: 'Install',
     later: 'Not now',

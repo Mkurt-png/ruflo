@@ -1,4 +1,4 @@
-// La Cote — Tickra's single number. Replaces a dashboard of widgets
+// La Cote — kNOWTrade's single number. Replaces a dashboard of widgets
 // with one cotation-style figure: TCKR 61.4 ▲ +0.8
 //
 // Composition (out of 100):

@@ -66,4 +66,4 @@ export async function addToAudience(input: AudienceAddInput): Promise<AudienceAd
   }
 }
 
-export const FROM = process.env.RESEND_FROM ?? 'Tickra <hello@tickra.com>';
+export const FROM = process.env.RESEND_FROM ?? 'kNOWTrade <hello@tickra.com>';

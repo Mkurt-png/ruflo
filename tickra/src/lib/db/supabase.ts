@@ -1,4 +1,4 @@
-// Tickra DB client. Real Supabase wiring behind a lazy import so the project
+// kNOWTrade DB client. Real Supabase wiring behind a lazy import so the project
 // still builds (and runtime works) when no env keys are present.
 //
 // Env keys required to activate:

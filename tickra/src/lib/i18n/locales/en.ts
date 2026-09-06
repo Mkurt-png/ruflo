@@ -18,7 +18,7 @@ const en = {
     eyebrow: 'A structured path · From candle 1',
     title: ['Start at candle 1.', 'Reach institutional level.'],
     titleEm: 'institutional',
-    body: 'Tickra teaches the markets the way trading floors learn them — pattern by pattern, risk by risk, decision by decision. Ten‑minute lessons, real charts, no theatrics.',
+    body: 'kNOWTrade teaches the markets the way trading floors learn them — pattern by pattern, risk by risk, decision by decision. Ten‑minute lessons, real charts, no theatrics.',
     primaryCta: 'Take the placement test',
     secondaryCta: 'Free lesson preview (2 min)',
     chartCaption: 'EUR/USD · 1H · Last 24 sessions',
@@ -61,7 +61,7 @@ const en = {
       },
       streak: {
         title: 'Streaks that respect your time.',
-        body: 'Ten minutes counts. Miss a day, keep your streak with a freeze. Tickra rewards consistency, not grinding.',
+        body: 'Ten minutes counts. Miss a day, keep your streak with a freeze. kNOWTrade rewards consistency, not grinding.',
       },
       library: {
         title: '222 modules, fifteen tracks.',
@@ -73,7 +73,7 @@ const en = {
       },
       journal: {
         title: 'Decisions, journaled.',
-        body: 'Every drill captures your reasoning. After ten sessions, Tickra surfaces the patterns in your own mistakes.',
+        body: 'Every drill captures your reasoning. After ten sessions, kNOWTrade surfaces the patterns in your own mistakes.',
       },
       tv: {
         title: 'TradingView, native.',
@@ -101,7 +101,7 @@ const en = {
     items: [
       {
         quote:
-          'I spent two years on YouTube before realising I was learning nothing. Six weeks on Tickra and I finally have a method — and I know why I lose when I lose.',
+          'I spent two years on YouTube before realising I was learning nothing. Six weeks on kNOWTrade and I finally have a method — and I know why I lose when I lose.',
         name: 'Léa M.',
         role: 'Junior analyst · Paris',
         meta: 'Pro · joined Jan 2026',
@@ -134,7 +134,7 @@ const en = {
   builtBy: {
     eyebrow: 'Built by',
     title: 'A team that ran a book, not a YouTube channel.',
-    body: 'Tickra is built by former trading‑floor operators and educators who trained juniors in banking. The product only teaches what was useful to a trader paid to decide.',
+    body: 'kNOWTrade is built by former trading‑floor operators and educators who trained juniors in banking. The product only teaches what was useful to a trader paid to decide.',
     people: [
       {
         name: 'Marc Hauser',
@@ -268,15 +268,15 @@ const en = {
     items: [
       {
         q: 'Do I need a brokerage account to start?',
-        a: 'No. The first sixty lessons run entirely inside Tickra on historical data. You only need a broker when you decide to graduate to live execution — and we walk you through choosing one.',
+        a: 'No. The first sixty lessons run entirely inside kNOWTrade on historical data. You only need a broker when you decide to graduate to live execution — and we walk you through choosing one.',
       },
       {
-        q: 'Is Tickra a signal service?',
-        a: 'No. We do not publish entries, exits, or recommendations. Tickra is a learning platform — the trades you take are yours, the reasoning is yours, the responsibility is yours.',
+        q: 'Is kNOWTrade a signal service?',
+        a: 'No. We do not publish entries, exits, or recommendations. kNOWTrade is a learning platform — the trades you take are yours, the reasoning is yours, the responsibility is yours.',
       },
       {
         q: 'How long until I can trade real money?',
-        a: 'Most Pro learners reach the Risk Management capstone in 4–6 weeks. Whether you should trade then is a separate question — Tickra refuses to rush that decision.',
+        a: 'Most Pro learners reach the Risk Management capstone in 4–6 weeks. Whether you should trade then is a separate question — kNOWTrade refuses to rush that decision.',
       },
       {
         q: 'Can I cancel anytime?',
@@ -291,7 +291,7 @@ const en = {
   cta: {
     eyebrow: 'Begin',
     title: 'Read your first candle today.',
-    body: 'Six questions, ninety seconds. Tickra finds where you stand and queues lesson one.',
+    body: 'Six questions, ninety seconds. kNOWTrade finds where you stand and queues lesson one.',
     primary: 'Take the placement test',
     secondary: 'See pricing',
   },
@@ -366,7 +366,7 @@ const en = {
     ],
     result: {
       title: 'Your starting point',
-      subtitle: 'Here is the track Tickra recommends. No obligation — you can pick any other track at any time.',
+      subtitle: 'Here is the track kNOWTrade recommends. No obligation — you can pick any other track at any time.',
       cta: 'Create my free account',
       back: 'Review my answers',
       tracks: {
@@ -391,8 +391,8 @@ const en = {
     legal: 'Protected by our Privacy policy. We never store passwords.',
   },
   about: {
-    title: 'About Tickra',
-    intro: 'Tickra was born from a simple frustration: there was no place to learn the markets the way you learn a craft — in layers, through drills, with a heading. So we built one.',
+    title: 'About kNOWTrade',
+    intro: 'kNOWTrade was born from a simple frustration: there was no place to learn the markets the way you learn a craft — in layers, through drills, with a heading. So we built one.',
     sections: [
       {
         title: 'Our bet',
@@ -400,7 +400,7 @@ const en = {
       },
       {
         title: 'What we refuse',
-        body: 'No signals, no demo‑account screenshots, no income promises, no hidden upsells. We charge for a curriculum, period. If you’re looking for a shortcut, Tickra is not for you.',
+        body: 'No signals, no demo‑account screenshots, no income promises, no hidden upsells. We charge for a curriculum, period. If you’re looking for a shortcut, kNOWTrade is not for you.',
       },
       {
         title: 'What we promise',
@@ -434,14 +434,14 @@ const en = {
       title: 'Terms of Service',
       updated: 'Last updated: May 2026',
       sections: [
-        { h: '1. Purpose', p: 'These Terms of Service ("Terms") govern access to and use of the Tickra service operated by Tickra SAS, registered office at 12 rue de Paradis, 75010 Paris, France (RCS Paris 928 471 320). By accessing the service, you accept these Terms.' },
-        { h: '2. Nature of the service', p: 'Tickra is an educational trading platform. Tickra does not provide investment advice, is not an Investment Services Provider, is not a Financial Investment Advisor, and is not regulated by the Autorité des Marchés Financiers (AMF) in that capacity.' },
+        { h: '1. Purpose', p: 'These Terms of Service ("Terms") govern access to and use of the kNOWTrade service operated by Tickra SAS, registered office at 12 rue de Paradis, 75010 Paris, France (RCS Paris 928 471 320). By accessing the service, you accept these Terms.' },
+        { h: '2. Nature of the service', p: 'kNOWTrade is an educational trading platform. kNOWTrade does not provide investment advice, is not an Investment Services Provider, is not a Financial Investment Advisor, and is not regulated by the Autorité des Marchés Financiers (AMF) in that capacity.' },
         { h: '3. Account', p: 'Access to paid features requires creating an account. You warrant the accuracy of the information provided and undertake to keep your credentials confidential. Sign‑in is performed via magic link sent to your email address.' },
-        { h: '4. Subscription and payment', p: 'Tickra offers three plans: Free, Pro (monthly or annual), and Lifetime. Payment is processed by Stripe. Prices shown include VAT. The applicable VAT rate is that of the country of consumption. Pro is cancellable at any time from your account. Lifetime is covered by a 14‑day money‑back guarantee from purchase.' },
-        { h: '5. Intellectual property', p: 'All educational content, graphics, logos, marks and text on Tickra are the exclusive property of Tickra SAS or its partners. Any unauthorised reproduction or distribution is strictly prohibited.' },
+        { h: '4. Subscription and payment', p: 'kNOWTrade offers three plans: Free, Pro (monthly or annual), and Lifetime. Payment is processed by Stripe. Prices shown include VAT. The applicable VAT rate is that of the country of consumption. Pro is cancellable at any time from your account. Lifetime is covered by a 14‑day money‑back guarantee from purchase.' },
+        { h: '5. Intellectual property', p: 'All educational content, graphics, logos, marks and text on kNOWTrade are the exclusive property of Tickra SAS or its partners. Any unauthorised reproduction or distribution is strictly prohibited.' },
         { h: '6. Personal data', p: 'Processing of your personal data is described in our Privacy policy. Under GDPR, you have rights of access, rectification, erasure, portability, and objection. To exercise these rights: privacy@tickra.com.' },
-        { h: '7. Liability', p: 'Tickra makes its best efforts to ensure service availability but cannot be held liable for outages, data loss, or trading decisions made by the user. See also our Risk disclosure.' },
-        { h: '8. Termination', p: 'Tickra may suspend or terminate an account in case of breach of these Terms, fraud, or unlawful use.' },
+        { h: '7. Liability', p: 'kNOWTrade makes its best efforts to ensure service availability but cannot be held liable for outages, data loss, or trading decisions made by the user. See also our Risk disclosure.' },
+        { h: '8. Termination', p: 'kNOWTrade may suspend or terminate an account in case of breach of these Terms, fraud, or unlawful use.' },
         { h: '9. Governing law', p: 'These Terms are governed by French law. Any dispute will first be submitted to mediation, then to the competent courts of Paris.' },
       ],
     },
@@ -455,7 +455,7 @@ const en = {
         { h: '4. Hosting', p: 'Your data is hosted in the European Union (Vercel — Frankfurt) and with GDPR‑compliant subprocessors (Stripe, Resend). No transfer outside the EU occurs without appropriate safeguards.' },
         { h: '5. Retention', p: 'Active account: for the duration of your subscription plus 3 years after last sign‑in. Billing data: 10 years (legal obligation). You may request deletion at any time.' },
         { h: '6. Your rights', p: 'Under GDPR: access, rectification, erasure, portability, objection, restriction. Exercise your rights at privacy@tickra.com. You may also lodge a complaint with the CNIL (cnil.fr).' },
-        { h: '7. Cookies', p: 'Tickra uses strictly necessary cookies (session, language preference, theme preference) and, with your consent, analytics cookies. See our cookie banner.' },
+        { h: '7. Cookies', p: 'kNOWTrade uses strictly necessary cookies (session, language preference, theme preference) and, with your consent, analytics cookies. See our cookie banner.' },
       ],
     },
     risk: {
@@ -463,16 +463,16 @@ const en = {
       updated: 'Last updated: May 2026',
       sections: [
         { h: 'Trading carries substantial risk of loss.', p: 'Trading financial markets — equities, currencies (FX), commodities, indices, crypto‑assets, derivatives — carries a substantial risk of capital loss. Past performance is no guarantee of future performance. You may lose all or part of the capital invested.' },
-        { h: 'Tickra is an educational platform.', p: 'Nothing on Tickra constitutes investment advice, a personalised recommendation, or a solicitation to invest. Tickra is not an Investment Services Provider, is not a Financial Investment Advisor, is not regulated by the AMF in that capacity, and does not receive or process any market orders. Any trading decision is the user’s sole responsibility.' },
+        { h: 'kNOWTrade is an educational platform.', p: 'Nothing on kNOWTrade constitutes investment advice, a personalised recommendation, or a solicitation to invest. kNOWTrade is not an Investment Services Provider, is not a Financial Investment Advisor, is not regulated by the AMF in that capacity, and does not receive or process any market orders. Any trading decision is the user’s sole responsibility.' },
         { h: 'Leverage.', p: 'Leveraged products (CFDs, FX, derivatives) amplify both gains and losses. An ESMA study shows 74–89% of retail accounts lose money trading CFDs. Never trade with money you need.' },
-        { h: 'Regulation.', p: 'In France, trading of some products is regulated by the AMF and ACPR. Before trading, check that your broker is regulated (registre.regafi.fr). Tickra systematically recommends that learners use brokers authorised in the EU.' },
-        { h: 'Audience.', p: 'Tickra is reserved for adults (18+). If you are in financial difficulty or suspect a gambling addiction, contact a national helpline (e.g. in France: Joueurs Info Service 09 74 75 13 13).' },
+        { h: 'Regulation.', p: 'In France, trading of some products is regulated by the AMF and ACPR. Before trading, check that your broker is regulated (registre.regafi.fr). kNOWTrade systematically recommends that learners use brokers authorised in the EU.' },
+        { h: 'Audience.', p: 'kNOWTrade is reserved for adults (18+). If you are in financial difficulty or suspect a gambling addiction, contact a national helpline (e.g. in France: Joueurs Info Service 09 74 75 13 13).' },
       ],
     },
   },
   changelog: {
     title: 'Changelog',
-    subtitle: 'Tickra ships every week. Here is what we have shipped.',
+    subtitle: 'kNOWTrade ships every week. Here is what we have shipped.',
     entries: [
       {
         version: 'v0.9.0',
@@ -580,7 +580,7 @@ const en = {
       'Classic mistake: confusing a marubozu with a merely "large" candle. Measure the body/wick ratio. Below 80%, it is not a marubozu.',
     ],
     drillTitle: 'Drill (preview)',
-    drillBody: 'In the full lesson, you identify 8 marubozu candles across 24 historical EUR/USD sessions. You justify your reasoning. Tickra corrects you and queues the quiz.',
+    drillBody: 'In the full lesson, you identify 8 marubozu candles across 24 historical EUR/USD sessions. You justify your reasoning. kNOWTrade corrects you and queues the quiz.',
     cta: 'Continue this lesson (free)',
     secondary: 'See the full curriculum',
   },
@@ -599,7 +599,7 @@ const en = {
     body: 'The roadmap is public. Voting on what we build next is included in Pro and Lifetime.',
     items: [
       { quarter: 'Summer 2026', status: 'Building', title: '1‑click backtest', body: 'Test a simple rule (entry/exit/risk) across 10 years of history in under five seconds.' },
-      { quarter: 'Summer 2026', status: 'Building', title: 'Live cohorts', body: 'Weekly trade‑review sessions with a Tickra mentor, in small groups.' },
+      { quarter: 'Summer 2026', status: 'Building', title: 'Live cohorts', body: 'Weekly trade‑review sessions with a kNOWTrade mentor, in small groups.' },
       { quarter: 'Fall 2026', status: 'Planned', title: 'Crypto track', body: 'Adapt the Market Structure track to crypto specifics (24/7 regime, fragmented liquidity).' },
       { quarter: 'Fall 2026', status: 'Planned', title: 'Journal API', body: 'Export your journal to Notion, Obsidian, or your own spreadsheet.' },
       { quarter: 'Winter 2026', status: 'Research', title: 'AI‑guided mode', body: 'A coach that spots your weak points and queues the right lesson. In research — not before it’s actually useful.' },
@@ -608,7 +608,7 @@ const en = {
   community: {
     eyebrow: 'Community',
     title: 'A cohort. Not a Telegram group.',
-    body: 'The private Tickra cohort gathers verified learners following the same method. No signals, no pumps, no like‑chasing — peer work.',
+    body: 'The private kNOWTrade cohort gathers verified learners following the same method. No signals, no pumps, no like‑chasing — peer work.',
     bullets: [
       'Channel per track (candles, risk, volume…).',
       'Weekly trade review, moderated by a former desk trader.',
@@ -618,7 +618,7 @@ const en = {
     secondary: 'Read the charter',
     badge: 'Included in Pro and Lifetime',
     // TICKRA-PHASE-4: charter + live sessions used on /community page.
-    charterTitle: 'The Tickra charter',
+    charterTitle: 'The kNOWTrade charter',
     charterIntro: 'Three rules that make the cohort liveable, and nobody bends them.',
     charterRules: [
       { title: 'No signals', body: 'No position sharing to copy. The cohort teaches you to decide, not to follow.' },
@@ -650,8 +650,8 @@ const en = {
   whyNot: {
     eyebrow: 'Comparison',
     title: 'Why not YouTube?',
-    body: 'Comparing Tickra to a free video library is comparing a school to a bookshelf. Both contain knowledge. Only one teaches you to use it.',
-    columns: ['YouTube', 'Generalist MOOC', 'Paid academy', 'Tickra'],
+    body: 'Comparing kNOWTrade to a free video library is comparing a school to a bookshelf. Both contain knowledge. Only one teaches you to use it.',
+    columns: ['YouTube', 'Generalist MOOC', 'Paid academy', 'kNOWTrade'],
     rows: [
       { label: 'Sequenced curriculum', values: ['Random', 'Linear', 'Variable', 'Adaptive'] },
       { label: 'Chart drills', values: ['—', 'Rare', 'Often', 'Every lesson'] },
@@ -662,12 +662,12 @@ const en = {
       { label: 'Realistic daily commitment', values: ['None', 'Module‑dependent', '1‑3 h', '10 min'] },
       { label: 'Cost', values: ['CA$0 + attention', 'CA$0‑500', 'CA$500‑5,000', 'CA$15/mo or CA$199 lifetime'] },
     ],
-    footnote: 'Tickra does not say YouTube has nothing to offer. Tickra says a method beats a feed.',
+    footnote: 'kNOWTrade does not say YouTube has nothing to offer. kNOWTrade says a method beats a feed.',
   },
   newsletter: {
     eyebrow: 'Newsletter',
     title: 'The 10 candles every beginner must recognise.',
-    body: '14‑page PDF, free. Exercise appendix included. You also stay subscribed to the Tickra editorial (one send per week, one‑click unsubscribe).',
+    body: '14‑page PDF, free. Exercise appendix included. You also stay subscribed to the kNOWTrade editorial (one send per week, one‑click unsubscribe).',
     emailLabel: 'Email address',
     emailPlaceholder: 'you@example.com',
     submit: 'Send me the PDF',
@@ -690,7 +690,7 @@ const en = {
           { h: 'A candle is not a colour', p: 'Beginners learn that a green candle means "up" and a red candle means "down". True, but that is the zero‑level of information. A candle tells four numbers over time: open, high, low, close. Its colour is just a derivative — a visual shortcut for whether the close is above or below the open.' },
           { h: 'The body measures conviction', p: 'The longer the body relative to the wicks, the more the winning side controlled the session. A green candle with a long body and small wicks signals that buyers led from start to finish. A green candle with a small body and long wicks signals indecision: sellers showed up, perhaps even took control briefly, before being pushed back.' },
           { h: 'Wicks tell rejection', p: 'A long upper wick at the top of an uptrend is not a decorative detail — it is a message. Price rose, and was refused. Sellers were there. The same upper wick at the bottom of a consolidation means nothing — context changes everything.' },
-          { h: 'The useful lesson', p: 'Never read a candle in isolation. Read it in the context of the trend, the volume, the level it tests. That is precisely what Tickra trains: not the definition of a pattern, but its situated reading.' },
+          { h: 'The useful lesson', p: 'Never read a candle in isolation. Read it in the context of the trend, the volume, the level it tests. That is precisely what kNOWTrade trains: not the definition of a pattern, but its situated reading.' },
         ],
       },
       'expectancy-trading': {
@@ -715,7 +715,7 @@ const en = {
         body: [
           { h: 'The percentage trap', p: 'Losing 50% of your capital does not require a 50% gain to recover — it requires 100%. Losing 80% requires 400%. That asymmetry is mathematical, brutal, and it has destroyed more trading careers than all the strategies combined.' },
           { h: 'Risking 1% per trade', p: 'On €10,000 capital, risking 1% per trade means a maximum risk of €100. With a reasonable strategy (positive expectancy, 45% hit rate, 1:2 R:R), your probability of hitting ruin over 1,000 trades is below 0.01%. Move to 5% per trade and that probability rises to 90%.' },
-          { h: 'Why pro desks repeat it', p: 'Professional desks have strict limits — often below 0.5% of AUM per idea — not because they are timid, but because they have seen a hundred times what the distribution tail produces. Retail traders skip that step because they have never seen a major drawdown. Tickra has them simulate the drawdown before it arrives for real.' },
+          { h: 'Why pro desks repeat it', p: 'Professional desks have strict limits — often below 0.5% of AUM per idea — not because they are timid, but because they have seen a hundred times what the distribution tail produces. Retail traders skip that step because they have never seen a major drawdown. kNOWTrade has them simulate the drawdown before it arrives for real.' },
           { h: 'The useful lesson', p: 'Risk of ruin is the only curve that determines whether you will still be here in five years. Everything else — patterns, indicators, signals — is optional next to it.' },
         ],
       },
@@ -728,7 +728,7 @@ const en = {
         body: [
           { h: 'The problem with perfect lines', p: 'A beginner draws support as a pen stroke. Price touches, bounces, they are happy. The market, however, does not know there is a line. There is a zone, crossed by orders, stops, trailing — and what you think you are "touching" is in fact a band several percent wide.' },
           { h: 'Read the reaction, not the price tag', p: 'An interesting support is not the one that holds, it is the one that produces a clean reaction: large candle, volume, lower-wick rejection. Without that signature, you do not have a support — you have a drawing. The distinction changes everything: wait for the proof, do not front-run price.' },
-          { h: 'Why they break when you believe most', p: 'The more visible a level, the more stops it attracts. Actors who can read those stops hunt them on purpose — that is a fact, not conspiracy. A "clean" level that has never been tested is precisely the ideal target for a fake-out. Tickra teaches you to wait for the retest after the break, not to enter on the break itself.' },
+          { h: 'Why they break when you believe most', p: 'The more visible a level, the more stops it attracts. Actors who can read those stops hunt them on purpose — that is a fact, not conspiracy. A "clean" level that has never been tested is precisely the ideal target for a fake-out. kNOWTrade teaches you to wait for the retest after the break, not to enter on the break itself.' },
           { h: 'The useful lesson', p: 'Do not trade the line, trade the reaction to the line. And if the reaction does not come, the setup never existed — nothing to regret.' },
         ],
       },
@@ -768,14 +768,14 @@ const en = {
           { h: 'The "three-screen" rule', p: 'Seasoned traders almost always work with three scales: a long one for context (e.g. daily), a medium one for setup (e.g. 1h), a short one for execution (e.g. 5 min). Context gives an acceptable direction, setup gives the zone, execution gives the timing. Skipping one of the three guarantees an incomplete decision.' },
           { h: 'The "it goes up" trap', p: 'A green 5-min candle does not say "it goes up". It says "for 5 minutes, buyers had the upper hand". That same sequence can be a technical bounce inside a daily downtrend — so a sell, not a buy. Reading the lower timeframe without its higher context is reading the end of a sentence and thinking it is the full meaning.' },
           { h: 'Align before entering', p: 'The rule that simplifies life: only enter when all three timeframes point the same way. When daily is up, 1h is pulling back, and 5 min restarts up, you have a trade. When one of the three says otherwise, you have a dilemma — therefore nothing to do.' },
-          { h: 'The useful lesson', p: 'Multi‑timeframe is not an expert luxury: it is the minimum hygiene that stops you from confusing noise with signal. Tickra forces this layered reading from the very first lesson, because it protects more than every pattern combined.' },
+          { h: 'The useful lesson', p: 'Multi‑timeframe is not an expert luxury: it is the minimum hygiene that stops you from confusing noise with signal. kNOWTrade forces this layered reading from the very first lesson, because it protects more than every pattern combined.' },
         ],
       },
     },
   },
   errors: {
     title: 'Something broke.',
-    body: 'An unexpected error occurred. The Tickra team has been notified. You can retry or go back home.',
+    body: 'An unexpected error occurred. The kNOWTrade team has been notified. You can retry or go back home.',
     retry: 'Retry',
     home: 'Back to home',
   },
@@ -826,8 +826,8 @@ const en = {
       },
     ],
     risk:
-      'Trading involves substantial risk of loss. Tickra is an educational platform; nothing on this site constitutes investment advice.',
-    copyright: '© 2026 Tickra. All rights reserved.',
+      'Trading involves substantial risk of loss. kNOWTrade is an educational platform; nothing on this site constitutes investment advice.',
+    copyright: '© 2026 kNOWTrade. All rights reserved.',
     legal: 'Tickra SAS · RCS Paris 928 471 320 · 12 rue de Paradis, 75010 Paris',
   },
   theme: { light: 'Switch to light theme', dark: 'Switch to dark theme' },

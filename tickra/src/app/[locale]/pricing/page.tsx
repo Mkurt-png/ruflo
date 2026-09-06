@@ -15,7 +15,7 @@ import { FaqJsonLd } from '@/components/seo/FaqJsonLd';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 
-export const metadata = { title: 'Tarifs · Tickra' };
+export const metadata = { title: 'Tarifs · kNOWTrade' };
 
 export default async function PricingPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

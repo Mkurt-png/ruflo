@@ -133,7 +133,7 @@ const seeded: Seed = {
           en: ['Yes, immediately', 'No, it is a momentum cue', 'Yes if volume confirms'],
         },
         correct: 1,
-        rationale: { fr: 'C’est une information, pas un signal. Tickra n’entraîne jamais d’entrée sur une seule bougie.', en: 'It is information, not a signal. Tickra never drills entries off a single candle.' },
+        rationale: { fr: 'C’est une information, pas un signal. kNOWTrade n’entraîne jamais d’entrée sur une seule bougie.', en: 'It is information, not a signal. kNOWTrade never drills entries off a single candle.' },
       },
       {
         q: { fr: 'Marubozu en haut d’une tendance haussière mature, ça veut dire :', en: 'Marubozu at the top of a mature uptrend means:' },
@@ -145,7 +145,7 @@ const seeded: Seed = {
         rationale: { fr: 'Une longue tendance + une marubozu peut signaler un climax buying. À recouper avec le volume.', en: 'A long trend + a marubozu can signal climax buying. Cross‑check with volume.' },
       },
       {
-        q: { fr: 'Quel ratio corps/amplitude définit une marubozu chez Tickra ?', en: 'What body/range ratio defines a marubozu at Tickra?' },
+        q: { fr: 'Quel ratio corps/amplitude définit une marubozu chez kNOWTrade ?', en: 'What body/range ratio defines a marubozu at kNOWTrade?' },
         options: { fr: ['> 50 %', '> 80 %', '100 % exact'], en: ['> 50%', '> 80%', 'Exactly 100%'] },
         correct: 1,
         rationale: { fr: 'En dessous de 80 % vous avez juste une grande bougie, pas une marubozu.', en: 'Below 80% you have a large candle, not a marubozu.' },
@@ -848,12 +848,12 @@ const seeded: Seed = {
       fr: [
         'Une bougie n’existe jamais seule. Le contexte — tendance amont, niveau testé, volume, timeframe — décide à 80 % du signal.',
         'Une même marubozu peut être : un climax (fin de tendance), une cassure (rupture de niveau), ou un simple décrochage (au milieu d’un range). Trois lectures, une seule bougie.',
-        'La règle de Tickra : avant de lire la bougie, repérez d’abord la tendance, les niveaux, et la volatilité. La bougie n’est que le déclic final.',
+        'La règle de kNOWTrade : avant de lire la bougie, repérez d’abord la tendance, les niveaux, et la volatilité. La bougie n’est que le déclic final.',
       ],
       en: [
         'A candle never stands alone. Context — prior trend, level tested, volume, timeframe — decides 80% of the signal.',
         'The same marubozu can be: a climax (end of trend), a breakout (level break), or just noise (mid-range). Three reads, one candle.',
-        'Tickra’s rule: before reading the candle, locate the trend, the levels, and the volatility. The candle is just the final trigger.',
+        'kNOWTrade’s rule: before reading the candle, locate the trend, the levels, and the volatility. The candle is just the final trigger.',
       ],
     },
     drill: {
@@ -896,12 +896,12 @@ const seeded: Seed = {
     intro: {
       fr: [
         'Point de contrôle de la piste Bougies japonaises. Cinq questions, pas de marche arrière. Vous pouvez le repasser.',
-        'Tickra n’utilise pas ces tests pour vous juger. Ils servent à fixer ce qui mérite révision avant de continuer.',
+        'kNOWTrade n’utilise pas ces tests pour vous juger. Ils servent à fixer ce qui mérite révision avant de continuer.',
         'Si vous échouez à plus d’une question, retournez aux leçons concernées. Ce n’est ni un échec ni une sanction — c’est de l’économie d’erreurs futures.',
       ],
       en: [
         'Candles track checkpoint. Five questions, no going back. You can retake.',
-        'Tickra does not use these tests to judge. They flag what deserves a review before continuing.',
+        'kNOWTrade does not use these tests to judge. They flag what deserves a review before continuing.',
         'If you miss more than one, revisit the relevant lessons. Not a failure or a punishment — it is future-error economics.',
       ],
     },
@@ -1240,12 +1240,12 @@ const seeded: Seed = {
     intro: {
       fr: [
         'Une fausse cassure (fakeout) est une cassure qui rentre dans sa cage : le prix passe au‑delà du niveau, puis revient dedans.',
-        'C’est l’un des pièges les plus chers pour les débutants. La règle de Tickra : attendre la clôture au‑delà ET, idéalement, le retest du niveau cassé.',
+        'C’est l’un des pièges les plus chers pour les débutants. La règle de kNOWTrade : attendre la clôture au‑delà ET, idéalement, le retest du niveau cassé.',
         'Les fakeouts ne sont pas un échec du système — c’est un mécanisme par lequel les market makers cherchent la liquidité au‑delà des stops évidents.',
       ],
       en: [
         'A fakeout is a break that goes back into its cage: price moves beyond the level, then returns inside.',
-        'One of the most expensive traps for beginners. Tickra’s rule: wait for the close beyond AND, ideally, the retest of the broken level.',
+        'One of the most expensive traps for beginners. kNOWTrade’s rule: wait for the close beyond AND, ideally, the retest of the broken level.',
         'Fakeouts are not a system failure — they are how market makers hunt liquidity beyond the obvious stops.',
       ],
     },
@@ -1338,12 +1338,12 @@ const seeded: Seed = {
     intro: {
       fr: [
         'Un graphique propre est un graphique lisible — pas un graphique vide. Trop d’indicateurs = bruit. Aucun marquage = aveugle.',
-        'La règle de Tickra : 3 niveaux maximum (support majeur, résistance majeure, ligne de tendance ou MA200), pas plus. Tout autre tracé doit s’effacer.',
+        'La règle de kNOWTrade : 3 niveaux maximum (support majeur, résistance majeure, ligne de tendance ou MA200), pas plus. Tout autre tracé doit s’effacer.',
         'Un graphique propre vous force à voir le prix. Et tant qu’on ne voit pas le prix, on ne lit rien.',
       ],
       en: [
         'A clean chart is a readable chart — not an empty one. Too many indicators = noise. No markup = blind.',
-        'Tickra’s rule: 3 levels max (major support, major resistance, trendline or 200MA), no more. Any other markup must go.',
+        'kNOWTrade’s rule: 3 levels max (major support, major resistance, trendline or 200MA), no more. Any other markup must go.',
         'A clean chart forces you to see price. Until you see price, you read nothing.',
       ],
     },
@@ -1534,12 +1534,12 @@ const seeded: Seed = {
     intro: {
       fr: [
         'Le ratio risque/rendement (R:R) est le rapport entre ce que vous risquez et ce que vous pouvez gagner. C’est la promesse mathématique d’un trade.',
-        'Sous 1:2 (vous risquez 1 pour gagner 2), Tickra ne recommande pas le trade. La marge d’erreur est trop fine pour compenser les frais et les ratés.',
+        'Sous 1:2 (vous risquez 1 pour gagner 2), kNOWTrade ne recommande pas le trade. La marge d’erreur est trop fine pour compenser les frais et les ratés.',
         'Au‑dessus de 1:3, vous tolérez plus d’erreurs. Vous pouvez perdre 60 % de vos trades et rester rentable.',
       ],
       en: [
         'Risk/Reward (R:R) is the ratio between what you risk and what you can earn. The mathematical promise of a trade.',
-        'Below 1:2 (risk 1 to gain 2), Tickra does not recommend the trade. Margin of error is too thin to absorb fees and misses.',
+        'Below 1:2 (risk 1 to gain 2), kNOWTrade does not recommend the trade. Margin of error is too thin to absorb fees and misses.',
         'Above 1:3, you tolerate more errors. You can lose 60% of trades and stay profitable.',
       ],
     },
@@ -1560,7 +1560,7 @@ const seeded: Seed = {
     },
     quiz: [
       {
-        q: { fr: 'En dessous de quel R:R Tickra refuse le trade ?', en: 'Below which R:R does Tickra refuse?' },
+        q: { fr: 'En dessous de quel R:R kNOWTrade refuse le trade ?', en: 'Below which R:R does kNOWTrade refuse?' },
         options: { fr: ['1:2', '1:5', '1:1.1'], en: ['1:2', '1:5', '1:1.1'] },
         correct: 0,
         rationale: { fr: 'Sous 1:2 la marge d’erreur disparaît avec les frais.', en: 'Below 1:2 the error margin vanishes with fees.' },
@@ -2444,7 +2444,7 @@ const seeded: Seed = {
         q: { fr: 'Quel ordre suivre dans la formation ?', en: 'Which order to follow in training?' },
         options: { fr: ['Bases → brokers → bougies → risque', 'Bougies en premier toujours', 'Au hasard, c’est égal'], en: ['Basics → brokers → candles → risk', 'Candles first always', 'Random, no difference'] },
         correct: 0,
-        rationale: { fr: 'Tickra empile les blocs.', en: 'Tickra stacks blocks.' },
+        rationale: { fr: 'kNOWTrade empile les blocs.', en: 'kNOWTrade stacks blocks.' },
       },
       {
         q: { fr: 'La règle d’or quand un module est flou :', en: 'Golden rule when a module feels fuzzy:' },
@@ -2555,12 +2555,12 @@ const seeded: Seed = {
       fr: [
         'TradingView est devenu l’outil graphique standard. Free : 1 graphique, 3 indicateurs, 1 alerte. Pro : 4 graphiques, 5 alertes. Pro+ : 8 graphiques. Premium : 10 graphiques, replays intrabar, données 2nd-by-2nd.',
         'Avantage majeur : la communauté. Vous pouvez publier votre analyse, comparer aux autres, suivre des traders sérieux (et ignorer les vendeurs de rêve).',
-        'Tickra intègre TradingView dans les leçons et le simulateur. Pas besoin de compte payant pour démarrer — le free suffit jusqu’à ce que vous ayez besoin de multi-écrans.',
+        'kNOWTrade intègre TradingView dans les leçons et le simulateur. Pas besoin de compte payant pour démarrer — le free suffit jusqu’à ce que vous ayez besoin de multi-écrans.',
       ],
       en: [
         'TradingView has become the standard charting tool. Free: 1 chart, 3 indicators, 1 alert. Pro: 4 charts, 5 alerts. Pro+: 8 charts. Premium: 10 charts, intrabar replays, second-by-second data.',
         'Major edge: the community. You can publish your analysis, compare to others, follow serious traders (and ignore the dream-sellers).',
-        'Tickra embeds TradingView inside lessons and the simulator. No paid plan needed to start — free is enough until you need multi-screens.',
+        'kNOWTrade embeds TradingView inside lessons and the simulator. No paid plan needed to start — free is enough until you need multi-screens.',
       ],
     },
     drill: { prompt: { fr: 'Vous voulez 4 graphiques côte à côte. Quel plan ?', en: 'You want 4 charts side by side. Which plan?' }, options: { fr: ['Pro', 'Free', 'Aucun, c’est impossible'], en: ['Pro', 'Free', 'None, impossible'] }, correct: 0, rationale: { fr: 'Pro débloque 4.', en: 'Pro unlocks 4.' } },
@@ -2660,18 +2660,18 @@ const seeded: Seed = {
       fr: [
         'Point de contrôle de la piste Brokers & plateformes. Trois acquis à valider : choisir un broker régulé (juridiction sérieuse, séparation des fonds), maîtriser les ordres de base (marché, limite, stop, OCO), connaître les coûts cachés (swap, commission, spread variable).',
         'Si la moindre des trois est floue, refaites la leçon correspondante. La piste suivante (Bougies japonaises) suppose ces fondations posées.',
-        'Bonus pratique : faites un dépôt-retrait test de 50 € sur votre futur broker avant de prendre l’abonnement Pro Tickra. C’est 50 € d’assurance pour vérifier que le canal fonctionne dans les deux sens.',
+        'Bonus pratique : faites un dépôt-retrait test de 50 € sur votre futur broker avant de prendre l’abonnement Pro kNOWTrade. C’est 50 € d’assurance pour vérifier que le canal fonctionne dans les deux sens.',
       ],
       en: [
         'Checkpoint for Brokers & platforms. Three things to lock in: pick a regulated broker (serious jurisdiction, segregated funds), master basic orders (market, limit, stop, OCO), know the hidden costs (swap, commission, variable spread).',
         'If any of the three is fuzzy, retake the matching lesson. The next track (Japanese candles) assumes these foundations are set.',
-        'Practical bonus: do a €50 test deposit-withdrawal on your future broker before subscribing to Tickra Pro. It’s €50 of insurance to check the channel works both ways.',
+        'Practical bonus: do a €50 test deposit-withdrawal on your future broker before subscribing to kNOWTrade Pro. It’s €50 of insurance to check the channel works both ways.',
       ],
     },
     drill: { prompt: { fr: 'Vous hésitez entre deux brokers. Test décisif :', en: 'You hesitate between two brokers. Decisive test:' }, options: { fr: ['Dépôt-retrait de 50 € sur les deux', 'Comparer leurs spreads affichés', 'Choisir le plus grand bonus'], en: ['€50 deposit-withdraw on both', 'Compare advertised spreads', 'Pick the bigger bonus'] }, correct: 0, rationale: { fr: 'On éprouve avant de s’engager.', en: 'You test before you commit.' } },
     quiz: [
       { q: { fr: 'Un bonus broker énorme signale souvent :', en: 'A huge broker bonus often signals:' }, options: { fr: ['Conditions de retrait restrictives', 'Une opportunité', 'Une régulation forte'], en: ['Restrictive withdrawal terms', 'An opportunity', 'Strong regulation'] }, correct: 0, rationale: { fr: 'On verrouille votre capital.', en: 'They lock your capital.' } },
-      { q: { fr: 'La séquence apprentissage est :', en: 'The learning sequence is:' }, options: { fr: ['Brokers → Bougies → Risque', 'Risque en premier toujours', 'Au hasard'], en: ['Brokers → Candles → Risk', 'Risk first always', 'Random'] }, correct: 0, rationale: { fr: 'Tickra empile.', en: 'Tickra stacks.' } },
+      { q: { fr: 'La séquence apprentissage est :', en: 'The learning sequence is:' }, options: { fr: ['Brokers → Bougies → Risque', 'Risque en premier toujours', 'Au hasard'], en: ['Brokers → Candles → Risk', 'Risk first always', 'Random'] }, correct: 0, rationale: { fr: 'kNOWTrade empile.', en: 'kNOWTrade stacks.' } },
       { q: { fr: 'En cas de doute sur un broker :', en: 'When in doubt about a broker:' }, options: { fr: ['On passe', 'On y va à fond', 'On demande à un signal Telegram'], en: ['Walk away', 'Go all in', 'Ask a Telegram signal'] }, correct: 0, rationale: { fr: 'Le doute coûte moins cher.', en: 'Doubt is cheaper.' } },
     ],
   },
@@ -4512,7 +4512,7 @@ const seeded: Seed = {
   },
 
   // ─── Psychologie — 10 leçons seedées ──────────────────────────────────
-  // La piste la plus alignée avec la voix éditoriale Tickra : peu de
+  // La piste la plus alignée avec la voix éditoriale kNOWTrade : peu de
   // figures, beaucoup de phrases, chaque leçon centrée sur un biais
   // précis et un exercice court à coucher dans le journal.
   'psy-01': {
@@ -4743,7 +4743,7 @@ const seeded: Seed = {
       rationale: { fr: 'Outil de discipline.', en: 'Discipline tool.' },
     },
     quiz: [
-      { q: { fr: 'Trois entrées par trade :', en: 'Three lines per trade:' }, options: { fr: ['Décision, émotion, phrase de retour', 'Heure, P&L, ticker', 'Aucune'], en: ['Decision, emotion, return-sentence', 'Time, P&L, ticker', 'None'] }, correct: 0, rationale: { fr: 'Format Tickra.', en: 'Tickra format.' } },
+      { q: { fr: 'Trois entrées par trade :', en: 'Three lines per trade:' }, options: { fr: ['Décision, émotion, phrase de retour', 'Heure, P&L, ticker', 'Aucune'], en: ['Decision, emotion, return-sentence', 'Time, P&L, ticker', 'None'] }, correct: 0, rationale: { fr: 'Format kNOWTrade.', en: 'kNOWTrade format.' } },
       { q: { fr: 'Fréquence d’écriture :', en: 'Writing cadence:' }, options: { fr: ['Après chaque trade', 'Une fois par mois', 'Jamais'], en: ['After each trade', 'Once a month', 'Never'] }, correct: 0, rationale: { fr: 'Régularité = mémoire.', en: 'Regularity = memory.' } },
       { q: { fr: 'Objectif du journal :', en: 'Journal goal:' }, options: { fr: ['Ne pas répéter', 'Faire joli', 'Partager'], en: ['Not to repeat', 'Look nice', 'Share'] }, correct: 0, rationale: { fr: 'Correction du double.', en: 'Pattern correction.' } },
     ],
@@ -4802,7 +4802,7 @@ const PLACEHOLDER_QUIZ_POOL: ReadonlyArray<{
   rationale: { fr: string; en: string };
 }> = [
   {
-    q: { fr: 'La méthode Tickra met l’accent sur :', en: 'The Tickra method emphasises:' },
+    q: { fr: 'La méthode kNOWTrade met l’accent sur :', en: 'The kNOWTrade method emphasises:' },
     options: { fr: ['L’exposé puis l’exercice', 'Les indicateurs secrets', 'Le trading en live'], en: ['Brief then drill', 'Secret indicators', 'Live trading'] },
     correct: 0,
     rationale: { fr: 'Pas de raccourci.', en: 'No shortcut.' },
@@ -4900,8 +4900,8 @@ function placeholder(track: TrackMeta, lesson: LessonMeta): LessonContent {
       },
       correct: 0,
       rationale: {
-        fr: 'La méthode Tickra : exposé → exercice → revue. Sauter une étape ne fait pas gagner du temps.',
-        en: 'The Tickra method: brief → drill → review. Skipping a step does not save time.',
+        fr: 'La méthode kNOWTrade : exposé → exercice → revue. Sauter une étape ne fait pas gagner du temps.',
+        en: 'The kNOWTrade method: brief → drill → review. Skipping a step does not save time.',
       },
     },
     quiz,

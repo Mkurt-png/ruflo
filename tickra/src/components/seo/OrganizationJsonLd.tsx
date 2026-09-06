@@ -9,7 +9,7 @@ export function OrganizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Tickra',
+    name: 'kNOWTrade',
     legalName: 'Tickra SAS',
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.svg`,

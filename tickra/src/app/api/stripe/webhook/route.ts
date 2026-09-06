@@ -17,7 +17,7 @@ import {
 } from '@/lib/notify/discord';
 
 function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
-  const planName = plan === 'lifetime' ? 'Tickra Lifetime' : 'Tickra Pro';
+  const planName = plan === 'lifetime' ? 'kNOWTrade Lifetime' : 'kNOWTrade Pro';
   const meHref = `${SITE_URL}/${locale}/me`;
   const curriculumHref = `${SITE_URL}/${locale}/curriculum`;
   if (locale === 'fr') {
@@ -28,7 +28,7 @@ function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
         `Prochaine étape : commencez la piste "Bougies japonaises" depuis le cursus.\n` +
         `Votre espace : ${meHref}\n` +
         `Le cursus : ${curriculumHref}\n\n` +
-        `À très vite,\nL'équipe Tickra`,
+        `À très vite,\nL'équipe kNOWTrade`,
     };
   }
   return {
@@ -38,7 +38,7 @@ function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
       `Next step: start the "Japanese candles" track from the curriculum.\n` +
       `Your space: ${meHref}\n` +
       `The curriculum: ${curriculumHref}\n\n` +
-      `Speak soon,\nThe Tickra team`,
+      `Speak soon,\nThe kNOWTrade team`,
   };
 }
 

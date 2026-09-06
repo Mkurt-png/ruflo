@@ -13,7 +13,7 @@ const copy = {
     title: 'Rappel quotidien',
     enabled: 'Activé. Vous recevrez un rappel demain à la même heure.',
     description:
-      'Tickra peut vous envoyer une notification douce une fois par jour, sans serveur — directement depuis votre navigateur, tant que cet onglet reste ouvert.',
+      'kNOWTrade peut vous envoyer une notification douce une fois par jour, sans serveur — directement depuis votre navigateur, tant que cet onglet reste ouvert.',
     enable: 'Activer le rappel',
     disable: 'Désactiver',
     denied: 'Votre navigateur a refusé les notifications. Vous pouvez les réautoriser depuis ses paramètres.',
@@ -21,13 +21,13 @@ const copy = {
     toastTitle: 'Rappel activé',
     toastBody: 'Un rappel quotidien sera envoyé tant que cet onglet est ouvert.',
     fired: '10 minutes ?',
-    firedBody: 'Lancez votre leçon Tickra du jour.',
+    firedBody: 'Lancez votre leçon kNOWTrade du jour.',
   },
   en: {
     title: 'Daily reminder',
     enabled: 'On. We will ping you tomorrow at the same time.',
     description:
-      'Tickra can send you a gentle notification once a day, with no server — straight from your browser, as long as this tab stays open.',
+      'kNOWTrade can send you a gentle notification once a day, with no server — straight from your browser, as long as this tab stays open.',
     enable: 'Enable reminder',
     disable: 'Disable',
     denied: 'Your browser denied notifications. Re-enable them in browser settings.',
@@ -35,7 +35,7 @@ const copy = {
     toastTitle: 'Reminder enabled',
     toastBody: 'A daily reminder will fire as long as this tab is open.',
     fired: '10 minutes?',
-    firedBody: 'Run your Tickra lesson for today.',
+    firedBody: 'Run your kNOWTrade lesson for today.',
   },
 };
 

@@ -1,11 +1,19 @@
 import { ImageResponse } from 'next/og';
 import { isLocale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
+import { SITE_URL } from '@/lib/site-url';
 
 export const runtime = 'edge';
-export const alt = 'Tickra — Learn the markets, candle by candle';
+export const alt = 'kNOWTrade — Learn the markets, candle by candle';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
+
+// Brand palette, matching the glass tokens in globals.css.
+const BRAND = 'rgb(56, 189, 248)';
+const ACCENT = 'rgb(168, 85, 247)';
+const INK = 'rgb(17, 19, 32)';
+const MUTED = 'rgb(108, 116, 144)';
+const CANVAS = 'rgb(244, 246, 252)';
 
 export default async function OgImage({ params }: { params: { locale: string } }) {
   const locale = isLocale(params.locale) ? params.locale : 'en';
@@ -18,8 +26,8 @@ export default async function OgImage({ params }: { params: { locale: string } }
         style={{
           width: '100%',
           height: '100%',
-          background: 'rgb(248, 247, 243)',
-          color: 'rgb(10, 10, 12)',
+          background: CANVAS,
+          color: INK,
           padding: '72px 80px',
           display: 'flex',
           flexDirection: 'column',
@@ -36,18 +44,20 @@ export default async function OgImage({ params }: { params: { locale: string } }
             letterSpacing: '-0.01em',
           }}
         >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgb(10,10,12)" strokeWidth="1.75">
-            <rect x="4" y="9" width="3" height="10" />
-            <line x1="5.5" y1="5" x2="5.5" y2="9" />
-            <line x1="5.5" y1="19" x2="5.5" y2="22" />
-            <rect x="10.5" y="5" width="3" height="13" fill="rgb(10,10,12)" />
-            <line x1="12" y1="2" x2="12" y2="5" />
-            <line x1="12" y1="18" x2="12" y2="22" />
-            <rect x="17" y="11" width="3" height="7" />
-            <line x1="18.5" y1="7" x2="18.5" y2="11" />
-            <line x1="18.5" y1="18" x2="18.5" y2="21" />
+          {/* The N chandelier mark. Flat two-tone rather than gradient — Satori
+              renders solid fills far more reliably than <linearGradient>. */}
+          <svg width="34" height="34" viewBox="0 0 64 64">
+            <path d="M14 46L50 18" fill="none" stroke={ACCENT} strokeWidth="5" strokeLinecap="round" />
+            <line x1="14" y1="9" x2="14" y2="55" stroke={BRAND} strokeWidth="3" strokeLinecap="round" />
+            <rect x="8" y="18" width="12" height="28" rx="3" fill={BRAND} />
+            <line x1="50" y1="9" x2="50" y2="55" stroke={ACCENT} strokeWidth="3" strokeLinecap="round" />
+            <rect x="44" y="18" width="12" height="28" rx="3" fill={ACCENT} />
           </svg>
-          <span style={{ fontWeight: 600 }}>Tickra</span>
+          <span style={{ display: 'flex', letterSpacing: '-0.02em' }}>
+            <span style={{ fontWeight: 400, color: MUTED }}>k</span>
+            <span style={{ fontWeight: 800, color: ACCENT }}>NOW</span>
+            <span style={{ fontWeight: 600 }}>Trade</span>
+          </span>
         </div>
 
         <div
@@ -63,7 +73,7 @@ export default async function OgImage({ params }: { params: { locale: string } }
           }}
         >
           <span>{line1}</span>
-          <span style={{ color: 'rgb(92, 92, 100)', fontStyle: 'italic' }}>{line2}</span>
+          <span style={{ color: MUTED, fontStyle: 'italic' }}>{line2}</span>
         </div>
 
         <div
@@ -72,13 +82,13 @@ export default async function OgImage({ params }: { params: { locale: string } }
             justifyContent: 'space-between',
             alignItems: 'center',
             fontSize: 18,
-            color: 'rgb(92, 92, 100)',
+            color: MUTED,
             letterSpacing: '0.16em',
             textTransform: 'uppercase',
           }}
         >
           <span>222 lessons · 15 tracks · 10 min/day</span>
-          <span>tickra.com</span>
+          <span>{SITE_URL.replace(/^https?:\/\//, '')}</span>
         </div>
       </div>
     ),
