@@ -24,7 +24,7 @@ const copy = {
       {
         icon: 'lock',
         title: 'Vos données vous appartiennent',
-        body: 'Export RGPD intégral en un clic depuis votre compte. Aucune revente de données.',
+        body: 'Export intégral de vos données en un clic depuis votre compte, conformément à la Loi 25. Aucune revente de données.',
       },
     ],
     faqTitle: 'Questions tarifs',
@@ -72,7 +72,7 @@ const copy = {
       {
         icon: 'lock',
         title: 'Your data is yours',
-        body: 'Full GDPR export in one click from your account. Zero data resale.',
+        body: 'Full data export in one click from your account, as required by Québec\u2019s Law 25. Zero data resale.',
       },
     ],
     faqTitle: 'Pricing FAQ',

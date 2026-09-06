@@ -55,7 +55,9 @@ export function LePari({ locale }: Props) {
 
           <div className="col-span-12 flex justify-between items-baseline mt-12">
             <span className="ed-tag text-black/45">
-              {locale === 'fr' ? 'AMF · Éducation, pas de signal, pas de conseil' : 'AMF · Education only, no signals, no advice'}
+              {locale === 'fr'
+                ? 'Éducation seulement — ni signal, ni conseil, non inscrit auprès de l’AMF'
+                : 'Education only — no signals, no advice, not registered with the AMF'}
             </span>
             <Link
               href={`/${locale}/pricing`}

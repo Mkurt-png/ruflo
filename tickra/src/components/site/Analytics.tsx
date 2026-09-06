@@ -1,4 +1,4 @@
-// Plausible analytics — privacy-first, cookieless, no banner required (CNIL-friendly).
+// Plausible analytics — privacy-first and cookieless, so no consent banner is required.
 // Activates only when NEXT_PUBLIC_PLAUSIBLE_DOMAIN is set.
 // Optional: NEXT_PUBLIC_PLAUSIBLE_SRC to point at a self-hosted instance.
 

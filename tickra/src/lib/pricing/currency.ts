@@ -20,8 +20,14 @@
 export const CURRENCIES = ['eur', 'usd', 'cad'] as const;
 export type Currency = (typeof CURRENCIES)[number];
 
-/** Fallback when the visitor's country is unknown or unsupported. */
-export const DEFAULT_CURRENCY: Currency = 'eur';
+/**
+ * Fallback when the visitor's country is unknown.
+ *
+ * USD rather than the operator's own CAD: an unknown country is by definition
+ * an international visitor, and USD is the currency they are most likely to
+ * recognise. CAD is reserved for visitors actually detected in Canada.
+ */
+export const DEFAULT_CURRENCY: Currency = 'usd';
 
 export function isCurrency(value: unknown): value is Currency {
   return typeof value === 'string' && (CURRENCIES as readonly string[]).includes(value);
@@ -41,9 +47,8 @@ const CAD_COUNTRIES = new Set(['CA']);
 
 /**
  * The currency to quote a visitor from `country` (an ISO 3166-1 alpha-2 code).
- * Anything outside the EU/EEA and Canada is quoted in US dollars, the usual
- * default for international customers — except an unknown country, which falls
- * back to euros because that is the company's home market.
+ * Anything outside the EU/EEA and Canada is quoted in US dollars, as is any
+ * visitor whose country cannot be determined.
  */
 export function currencyForCountry(country: string | null | undefined): Currency {
   if (!country) return DEFAULT_CURRENCY;

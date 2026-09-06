@@ -27,11 +27,11 @@ describe('currencyForCountry', () => {
     }
   });
 
-  it('falls back to the home currency when the country is unknown', () => {
+  it('falls back to the international default when the country is unknown', () => {
     expect(currencyForCountry(null)).toBe(DEFAULT_CURRENCY);
     expect(currencyForCountry(undefined)).toBe(DEFAULT_CURRENCY);
     expect(currencyForCountry('')).toBe(DEFAULT_CURRENCY);
-    // Not a 2-letter code — a proxy sending junk must not become "usd".
+    // Not a 2-letter code — a proxy sending junk takes the same safe default.
     expect(currencyForCountry('FRA')).toBe(DEFAULT_CURRENCY);
     expect(currencyForCountry('X')).toBe(DEFAULT_CURRENCY);
   });

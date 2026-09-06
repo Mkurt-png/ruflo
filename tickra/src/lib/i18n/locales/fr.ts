@@ -1,3 +1,4 @@
+import { ENTITY } from '@/lib/legal/entity';
 const fr = {
   nav: {
     method: 'Méthode',
@@ -426,7 +427,7 @@ const fr = {
     },
     address: {
       title: 'Adresse',
-      lines: ['Tickra SAS', '12 rue de Paradis', '75010 Paris, France', 'SIREN 928 471 320'],
+      lines: [ENTITY.legalName, ENTITY.address, `${ENTITY.province}, ${ENTITY.country}`, `NEQ ${ENTITY.neq}`],
     },
   },
   legal: {
@@ -434,27 +435,27 @@ const fr = {
       title: 'Conditions générales d’utilisation',
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
-        { h: '1. Objet', p: 'Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’usage du service kNOWTrade édité par Tickra SAS, dont le siège social est situé 12 rue de Paradis, 75010 Paris (RCS Paris 928 471 320). En accédant au service, vous acceptez les présentes CGU.' },
-        { h: '2. Nature du service', p: 'kNOWTrade est une plateforme pédagogique de formation au trading. kNOWTrade ne fournit pas de conseil en investissement, n’est ni Prestataire de Services d’Investissement (PSI), ni Conseiller en Investissements Financiers (CIF), et n’est pas régulé par l’Autorité des Marchés Financiers (AMF) à ce titre.' },
+        { h: '1. Objet', p: `Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’usage du service kNOWTrade, exploité par ${ENTITY.legalName}, dont le siège est situé ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country} (NEQ ${ENTITY.neq}). En accédant au service, vous acceptez les présentes CGU.` },
+        { h: '2. Nature du service', p: 'kNOWTrade est une plateforme pédagogique de formation au trading. kNOWTrade ne fournit aucun conseil en investissement, n’est inscrit ni comme courtier ni comme conseiller auprès de l’Autorité des marchés financiers (AMF) du Québec, n’est membre de l’Organisme canadien de réglementation des investissements (OCRI), et n’exerce aucune activité assujettie à la Loi sur les valeurs mobilières ou à la Loi sur les instruments dérivés.' },
         { h: '3. Compte', p: 'L’accès aux fonctionnalités payantes requiert la création d’un compte. Vous garantissez l’exactitude des informations fournies et acceptez de maintenir la confidentialité de vos identifiants. La connexion se fait par lien magique envoyé à votre adresse e‑mail.' },
-        { h: '4. Abonnements et paiement', p: 'kNOWTrade propose trois formules : Gratuit, Pro (mensuel ou annuel) et À vie. Le paiement est traité par Stripe. Les prix affichés sont TTC. La TVA applicable est celle du pays de consommation. Pro est résiliable à tout moment depuis votre espace personnel. À vie est couvert par une garantie satisfait ou remboursé de 14 jours à compter de l’achat.' },
-        { h: '5. Propriété intellectuelle', p: 'Tous les contenus pédagogiques, graphiques, logos, marques et textes présents sur kNOWTrade sont la propriété exclusive de Tickra SAS ou de ses partenaires. Toute reproduction, représentation ou diffusion non autorisée est strictement interdite.' },
-        { h: '6. Données personnelles', p: 'Le traitement de vos données personnelles est décrit dans notre Politique de confidentialité. Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement, de portabilité et d’opposition. Pour exercer ces droits : privacy@tickra.com.' },
+        { h: '4. Abonnements et paiement', p: 'kNOWTrade propose trois formules : Gratuit, Pro (mensuel ou annuel) et À vie. Le paiement est traité par Stripe. Les prix sont affichés dans la devise de votre pays (CAD, EUR ou USD) ; les taxes applicables (TPS/TVH et TVQ, ou taxe équivalente selon votre lieu de résidence) sont calculées au moment du paiement. Pro est un contrat à exécution successive résiliable à tout moment depuis votre espace personnel, conformément à la Loi sur la protection du consommateur. À vie est couvert par une garantie satisfait ou remboursé de 14 jours à compter de l’achat.' },
+        { h: '5. Propriété intellectuelle', p: `Tous les contenus pédagogiques, graphiques, logos, marques et textes présents sur kNOWTrade sont la propriété exclusive de ${ENTITY.legalName} ou de ses partenaires. Toute reproduction, représentation ou diffusion non autorisée est strictement interdite.` },
+        { h: '6. Renseignements personnels', p: 'Le traitement de vos renseignements personnels est décrit dans notre Politique de confidentialité. Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale), vous disposez d’un droit d’accès, de rectification, de retrait de consentement et de portabilité. Pour exercer ces droits : privacy@tickra.com.' },
         { h: '7. Responsabilité', p: 'kNOWTrade met tout en œuvre pour assurer la disponibilité du service mais ne peut être tenu responsable d’éventuelles interruptions, pertes de données, ou décisions de trading prises par l’utilisateur. Voir également notre Avertissement risque.' },
         { h: '8. Résiliation', p: 'kNOWTrade se réserve le droit de suspendre ou résilier un compte en cas de violation des présentes CGU, de fraude, ou d’usage contraire aux lois en vigueur.' },
-        { h: '9. Droit applicable', p: 'Les présentes CGU sont régies par le droit français. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents de Paris.' },
+        { h: '9. Droit applicable', p: `Les présentes CGU sont régies par les lois de la province de ${ENTITY.province} et les lois du Canada qui y sont applicables. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents du district judiciaire du siège de l’entreprise.` },
       ],
     },
     privacy: {
       title: 'Politique de confidentialité',
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
-        { h: '1. Responsable du traitement', p: 'Tickra SAS, 12 rue de Paradis, 75010 Paris, France. Délégué à la protection des données : privacy@tickra.com.' },
+        { h: '1. Responsable de la protection des renseignements personnels', p: `${ENTITY.legalName}, ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}. Personne responsable de la protection des renseignements personnels (Loi 25) : privacy@tickra.com.` },
         { h: '2. Données collectées', p: 'Nous collectons : votre adresse e‑mail (création de compte), votre progression pédagogique (modules complétés, scores, streaks), vos données de paiement (traitées par Stripe — nous ne stockons jamais de numéro de carte), et des données techniques anonymisées (analytics agrégés).' },
         { h: '3. Finalités', p: 'Vos données sont utilisées pour : fournir le service, mesurer la progression, facturer l’abonnement, vous envoyer des e‑mails transactionnels (et marketing uniquement si vous avez opté), améliorer la plateforme via analytics agrégés.' },
-        { h: '4. Hébergement', p: 'Vos données sont hébergées dans l’Union européenne (Vercel — Francfort) et chez nos sous‑traitants conformes RGPD (Stripe, Resend). Aucun transfert hors UE n’est effectué sans garanties appropriées.' },
-        { h: '5. Durée de conservation', p: 'Compte actif : pour la durée de votre abonnement, plus 3 ans après dernière connexion. Données de facturation : 10 ans (obligation légale). Vous pouvez demander la suppression à tout moment.' },
-        { h: '6. Vos droits', p: 'Conformément au RGPD : accès, rectification, effacement, portabilité, opposition, limitation du traitement. Exercez vos droits par e‑mail à privacy@tickra.com. Vous pouvez aussi déposer une réclamation auprès de la CNIL (cnil.fr).' },
+        { h: '4. Hébergement et communication hors Québec', p: 'Vos données sont hébergées par Vercel et par nos fournisseurs (Supabase, Stripe, Resend), dont les serveurs peuvent se situer hors du Québec, notamment aux États‑Unis et dans l’Union européenne. Conformément à la Loi 25, ces communications font l’objet d’une évaluation des facteurs relatifs à la vie privée et d’engagements contractuels de protection équivalente.' },
+        { h: '5. Durée de conservation', p: 'Compte actif : pour la durée de votre abonnement, plus 3 ans après la dernière connexion. Pièces de facturation : 6 ans après la fin de l’année d’imposition concernée, conformément aux exigences de l’Agence du revenu du Canada et de Revenu Québec. Vous pouvez demander la suppression à tout moment.' },
+        { h: '6. Vos droits', p: 'Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale) : accès, rectification, retrait du consentement, portabilité, et désindexation. Exercez vos droits par courriel à privacy@tickra.com. En cas de désaccord, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec (cai.gouv.qc.ca) ou du Commissariat à la protection de la vie privée du Canada (priv.gc.ca).' },
         { h: '7. Cookies', p: 'kNOWTrade utilise des cookies strictement nécessaires (session, préférence de langue, préférence de thème) et, avec votre consentement, des cookies d’analytics. Voir notre bandeau cookies.' },
       ],
     },
@@ -463,10 +464,10 @@ const fr = {
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
         { h: 'Le trading comporte un risque substantiel de perte.', p: 'Le trading sur les marchés financiers — actions, devises (Forex), matières premières, indices, crypto‑actifs, produits dérivés — comporte un risque substantiel de perte en capital. Les performances passées ne préjugent pas des performances futures. Vous pouvez perdre tout ou partie du capital investi.' },
-        { h: 'kNOWTrade est une plateforme éducative.', p: "Rien sur kNOWTrade ne constitue un conseil en investissement, une recommandation personnalisée, ni une sollicitation à investir. kNOWTrade n'est pas Prestataire de Services d'Investissement (PSI), n'est pas Conseiller en Investissements Financiers (CIF), n'est pas régulé par l'AMF à ce titre, et ne reçoit ni ne traite aucun ordre de bourse. Toute décision de trading prise par l'utilisateur est sa seule responsabilité." },
-        { h: 'Effet de levier.', p: 'Les produits avec effet de levier (CFD, FX, dérivés) amplifient les gains comme les pertes. Une étude ESMA montre que 74 à 89 % des comptes particuliers perdent de l’argent en tradant des CFD. Ne tradez jamais avec de l’argent dont vous avez besoin.' },
-        { h: 'Réglementation', p: 'En France, le trading de certains produits est encadré par l’AMF et l’ACPR. Avant de trader, vérifiez que votre courtier est régulé (registre.regafi.fr). kNOWTrade recommande systématiquement à ses apprenants de privilégier des courtiers agréés dans l’UE.' },
-        { h: 'Public', p: 'kNOWTrade est réservé aux personnes majeures (18 ans et plus). Si vous êtes en situation de fragilité financière ou si vous suspectez une addiction au jeu, contactez Joueurs Info Service : 09 74 75 13 13 (appel non surtaxé).' },
+        { h: 'kNOWTrade est une plateforme éducative.', p: "Rien sur kNOWTrade ne constitue un conseil en investissement, une recommandation personnalisée, ni une sollicitation à investir. kNOWTrade n'est inscrit ni comme courtier ni comme conseiller auprès de l'Autorité des marchés financiers du Québec, n'est pas membre de l'OCRI, et ne reçoit ni ne traite aucun ordre de bourse. Toute décision de trading prise par l'utilisateur est sa seule responsabilité." },
+        { h: 'Effet de levier.', p: 'Les produits avec effet de levier (CFD, FX, dérivés) amplifient les gains comme les pertes. Les données publiées par le régulateur européen ESMA — les plus détaillées disponibles publiquement sur le sujet — montrent que 74 à 89 % des comptes particuliers perdent de l’argent en tradant des CFD. Ne tradez jamais avec de l’argent dont vous avez besoin.' },
+        { h: 'Réglementation', p: 'Au Québec, les valeurs mobilières et les instruments dérivés sont encadrés par l’Autorité des marchés financiers, et les courtiers par l’OCRI. Avant de trader, vérifiez que votre courtier est bien inscrit — registre de l’AMF sur lautorite.qc.ca. kNOWTrade recommande systématiquement à ses apprenants de privilégier des courtiers inscrits au Canada.' },
+        { h: 'Public', p: 'kNOWTrade est réservé aux personnes majeures (18 ans et plus). Si vous êtes en situation de fragilité financière ou si vous suspectez une dépendance au jeu, contactez Jeu : aide et référence — 1 866 767-5389 (24 h/24, gratuit et confidentiel).' },
       ],
     },
   },
@@ -828,7 +829,7 @@ const fr = {
     risk:
       "Le trading comporte un risque substantiel de perte. kNOWTrade est une plateforme éducative ; rien sur ce site ne constitue un conseil en investissement.",
     copyright: '© 2026 kNOWTrade. Tous droits réservés.',
-    legal: 'Tickra SAS · RCS Paris 928 471 320 · 12 rue de Paradis, 75010 Paris',
+    legal: `${ENTITY.legalName} · NEQ ${ENTITY.neq} · ${ENTITY.province}, ${ENTITY.country}`,
   },
   theme: { light: 'Passer en thème clair', dark: 'Passer en thème sombre' },
   locale: { switch: 'Changer de langue' },

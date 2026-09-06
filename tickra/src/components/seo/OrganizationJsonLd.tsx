@@ -1,7 +1,8 @@
 import { SITE_URL } from '@/lib/site-url';
+import { ENTITY } from '@/lib/legal/entity';
 
 // Organization JSON-LD — global, mounted in the locale layout so it
-// appears on every page. Tells Google / LLMs who Tickra SAS is, where it
+// appears on every page. Tells Google / LLMs who the operator is, where it
 // is, who runs it, and how to contact it. Improves rich-result eligibility
 // and ChatGPT/Perplexity citation likelihood.
 
@@ -10,7 +11,7 @@ export function OrganizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'kNOWTrade',
-    legalName: 'Tickra SAS',
+    legalName: ENTITY.legalName,
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.svg`,
     description:
@@ -19,10 +20,9 @@ export function OrganizationJsonLd() {
     founders: [{ '@type': 'Person', name: 'Hamza Kurt' }],
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '12 rue de Paradis',
-      postalCode: '75010',
-      addressLocality: 'Paris',
-      addressCountry: 'FR',
+      streetAddress: ENTITY.address,
+      addressRegion: ENTITY.province,
+      addressCountry: ENTITY.countryCode,
     },
     contactPoint: [
       {
@@ -43,7 +43,11 @@ export function OrganizationJsonLd() {
       },
     ],
     knowsAbout: ['Trading', 'Technical analysis', 'Risk management', 'Japanese candlesticks', 'Financial markets education'],
-    areaServed: { '@type': 'Country', name: 'France' },
+    areaServed: [
+      { '@type': 'Country', name: 'Canada' },
+      { '@type': 'Country', name: 'France' },
+      { '@type': 'Country', name: 'United States' },
+    ],
     sameAs: [
       'https://twitter.com/tickra',
       'https://www.linkedin.com/company/tickra',

@@ -51,14 +51,14 @@ const COPY = {
         body: [
           'Les cookies strictement nécessaires sont conservés pour la durée indiquée ci-dessus.',
           'Les cookies d’analytics sont supprimés à la fin de chaque session.',
-          'Aucun cookie n’est conservé plus de 13 mois conformément aux recommandations de la CNIL.',
+          'Aucun cookie n’est conservé plus de 13 mois.',
         ],
       },
       {
         h: '6. Vos droits',
         body: [
           'Vous disposez d’un droit d’accès, de rectification, d’opposition et de suppression sur les données collectées via cookies. Contact : privacy@tickra.com.',
-          'En cas de manquement, vous pouvez introduire une réclamation auprès de la CNIL — cnil.fr.',
+          'En cas de manquement, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec — cai.gouv.qc.ca.',
         ],
       },
     ],
@@ -104,14 +104,14 @@ const COPY = {
         body: [
           'Strictly-necessary cookies are kept for the durations listed above.',
           'Analytics cookies are deleted at end of session.',
-          'No cookie is retained beyond 13 months, in line with CNIL recommendations.',
+          'No cookie is retained beyond 13 months.',
         ],
       },
       {
         h: '6. Your rights',
         body: [
           'You have rights to access, rectification, objection and deletion on data collected via cookies. Contact: privacy@tickra.com.',
-          'Complaints can be filed with the French CNIL — cnil.fr.',
+          'Complaints can be filed with the Commission d\u2019accès à l\u2019information du Québec — cai.gouv.qc.ca.',
         ],
       },
     ],

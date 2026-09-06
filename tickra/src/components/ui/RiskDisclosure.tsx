@@ -1,4 +1,4 @@
-// RiskDisclosure — AMF-aware risk warning to display anywhere we discuss
+// RiskDisclosure — regulator-aware risk warning to display anywhere we discuss
 // trading, leverage, or paid market education. Visible by default;
 // collapsible variant available for tight surfaces like pricing cards.
 
@@ -19,8 +19,8 @@ const COPY = {
       'Le trading comporte un risque élevé de perte rapide en capital. Les performances passées ne préjugent pas des performances futures. kNOWTrade ne fournit ni signaux, ni conseil personnalisé en investissement.',
     long: [
       'Le trading et l’investissement sur les marchés financiers, et notamment l’utilisation d’instruments avec effet de levier (CFD, futures, forex, crypto), comportent un risque élevé de perte rapide et totale du capital. Une majorité d’investisseurs particuliers perdent de l’argent.',
-      'kNOWTrade est une plateforme d’éducation. Nous ne fournissons aucun signal d’achat ou de vente, aucun conseil personnalisé en investissement, ni aucune gestion de portefeuille. Nous ne sommes pas un Prestataire de Services d’Investissement au sens du Code monétaire et financier.',
-      'Toute décision d’investissement reste sous votre seule responsabilité. Avant d’engager des fonds réels, assurez-vous de comprendre les instruments concernés, votre tolérance au risque, et le cas échéant consultez un conseiller agréé par l’AMF.',
+      'kNOWTrade est une plateforme d’éducation. Nous ne fournissons aucun signal d’achat ou de vente, aucun conseil personnalisé en investissement, ni aucune gestion de portefeuille. Nous ne sommes inscrits ni comme courtier ni comme conseiller auprès de l’Autorité des marchés financiers du Québec.',
+      'Toute décision d’investissement reste sous votre seule responsabilité. Avant d’engager des fonds réels, assurez-vous de comprendre les instruments concernés, votre tolérance au risque, et le cas échéant consultez un conseiller inscrit auprès de l’Autorité des marchés financiers du Québec.',
     ],
   },
   en: {
@@ -29,7 +29,7 @@ const COPY = {
       'Trading carries a high risk of rapid capital loss. Past performance is not indicative of future results. kNOWTrade provides no signals and no personalised investment advice.',
     long: [
       'Trading and investing on financial markets — particularly leveraged instruments (CFDs, futures, FX, crypto) — carry a high risk of rapid and total capital loss. The majority of retail investors lose money.',
-      'kNOWTrade is an education platform. We do not provide buy or sell signals, personalised investment advice, or portfolio management. We are not an authorised Investment Services Provider.',
+      'kNOWTrade is an education platform. We do not provide buy or sell signals, personalised investment advice, or portfolio management. We are registered neither as a dealer nor as an adviser with the Autorité des marchés financiers of Québec.',
       'Every investment decision is yours alone. Before committing real funds, make sure you understand the instruments involved, your risk tolerance, and where appropriate consult an authorised financial advisor.',
     ],
   },

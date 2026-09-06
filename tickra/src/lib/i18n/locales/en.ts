@@ -1,3 +1,4 @@
+import { ENTITY } from '@/lib/legal/entity';
 const en = {
   nav: {
     method: 'Method',
@@ -426,7 +427,7 @@ const en = {
     },
     address: {
       title: 'Address',
-      lines: ['Tickra SAS', '12 rue de Paradis', '75010 Paris, France', 'SIREN 928 471 320'],
+      lines: [ENTITY.legalName, ENTITY.address, `${ENTITY.province}, ${ENTITY.country}`, `NEQ ${ENTITY.neq}`],
     },
   },
   legal: {
@@ -434,27 +435,27 @@ const en = {
       title: 'Terms of Service',
       updated: 'Last updated: May 2026',
       sections: [
-        { h: '1. Purpose', p: 'These Terms of Service ("Terms") govern access to and use of the kNOWTrade service operated by Tickra SAS, registered office at 12 rue de Paradis, 75010 Paris, France (RCS Paris 928 471 320). By accessing the service, you accept these Terms.' },
-        { h: '2. Nature of the service', p: 'kNOWTrade is an educational trading platform. kNOWTrade does not provide investment advice, is not an Investment Services Provider, is not a Financial Investment Advisor, and is not regulated by the Autorité des Marchés Financiers (AMF) in that capacity.' },
+        { h: '1. Purpose', p: `These Terms of Service ("Terms") govern access to and use of the kNOWTrade service operated by ${ENTITY.legalName}, head office at ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country} (NEQ ${ENTITY.neq}). By accessing the service, you accept these Terms.` },
+        { h: '2. Nature of the service', p: 'kNOWTrade is an educational trading platform. kNOWTrade provides no investment advice, is registered neither as a dealer nor as an adviser with the Autorité des marchés financiers (AMF) of Québec, is not a member of the Canadian Investment Regulatory Organization (CIRO), and carries on no activity governed by the Securities Act or the Derivatives Act.' },
         { h: '3. Account', p: 'Access to paid features requires creating an account. You warrant the accuracy of the information provided and undertake to keep your credentials confidential. Sign‑in is performed via magic link sent to your email address.' },
-        { h: '4. Subscription and payment', p: 'kNOWTrade offers three plans: Free, Pro (monthly or annual), and Lifetime. Payment is processed by Stripe. Prices shown include VAT. The applicable VAT rate is that of the country of consumption. Pro is cancellable at any time from your account. Lifetime is covered by a 14‑day money‑back guarantee from purchase.' },
-        { h: '5. Intellectual property', p: 'All educational content, graphics, logos, marks and text on kNOWTrade are the exclusive property of Tickra SAS or its partners. Any unauthorised reproduction or distribution is strictly prohibited.' },
-        { h: '6. Personal data', p: 'Processing of your personal data is described in our Privacy policy. Under GDPR, you have rights of access, rectification, erasure, portability, and objection. To exercise these rights: privacy@tickra.com.' },
+        { h: '4. Subscription and payment', p: 'kNOWTrade offers three plans: Free, Pro (monthly or annual), and Lifetime. Payment is processed by Stripe. Prices are shown in your country\u2019s currency (CAD, EUR or USD); applicable taxes (GST/HST and QST, or the equivalent for your place of residence) are calculated at checkout. Pro is a successive-performance contract, cancellable at any time from your account in accordance with the Consumer Protection Act. Lifetime is covered by a 14\u2011day money\u2011back guarantee from purchase.' },
+        { h: '5. Intellectual property', p: `All educational content, graphics, logos, marks and text on kNOWTrade are the exclusive property of ${ENTITY.legalName} or its partners. Any unauthorised reproduction or distribution is strictly prohibited.` },
+        { h: '6. Personal information', p: 'Processing of your personal information is described in our Privacy policy. Under Québec\u2019s Law 25 and the federal PIPEDA, you have rights of access, rectification, withdrawal of consent, and portability. To exercise these rights: privacy@tickra.com.' },
         { h: '7. Liability', p: 'kNOWTrade makes its best efforts to ensure service availability but cannot be held liable for outages, data loss, or trading decisions made by the user. See also our Risk disclosure.' },
         { h: '8. Termination', p: 'kNOWTrade may suspend or terminate an account in case of breach of these Terms, fraud, or unlawful use.' },
-        { h: '9. Governing law', p: 'These Terms are governed by French law. Any dispute will first be submitted to mediation, then to the competent courts of Paris.' },
+        { h: '9. Governing law', p: `These Terms are governed by the laws of the province of ${ENTITY.province} and the laws of Canada applicable therein. Any dispute will first be submitted to mediation, then to the competent courts of the judicial district of the company\u2019s head office.` },
       ],
     },
     privacy: {
       title: 'Privacy policy',
       updated: 'Last updated: May 2026',
       sections: [
-        { h: '1. Data controller', p: 'Tickra SAS, 12 rue de Paradis, 75010 Paris, France. Data Protection contact: privacy@tickra.com.' },
+        { h: '1. Person in charge of personal information', p: `${ENTITY.legalName}, ${ENTITY.address}, ${ENTITY.province}, ${ENTITY.country}. Privacy officer (Law 25): privacy@tickra.com.` },
         { h: '2. Data collected', p: 'We collect: your email address (account creation), your educational progress (modules completed, scores, streaks), payment data (handled by Stripe — we never store card numbers), and anonymous technical data (aggregated analytics).' },
         { h: '3. Purposes', p: 'Your data is used to: provide the service, measure progress, bill the subscription, send transactional emails (and marketing only if opted in), improve the platform via aggregated analytics.' },
-        { h: '4. Hosting', p: 'Your data is hosted in the European Union (Vercel — Frankfurt) and with GDPR‑compliant subprocessors (Stripe, Resend). No transfer outside the EU occurs without appropriate safeguards.' },
-        { h: '5. Retention', p: 'Active account: for the duration of your subscription plus 3 years after last sign‑in. Billing data: 10 years (legal obligation). You may request deletion at any time.' },
-        { h: '6. Your rights', p: 'Under GDPR: access, rectification, erasure, portability, objection, restriction. Exercise your rights at privacy@tickra.com. You may also lodge a complaint with the CNIL (cnil.fr).' },
+        { h: '4. Hosting and disclosure outside Québec', p: 'Your data is hosted by Vercel and by our providers (Supabase, Stripe, Resend), whose servers may be located outside Québec, notably in the United States and the European Union. In accordance with Law 25, these disclosures are subject to a privacy impact assessment and to contractual commitments of equivalent protection.' },
+        { h: '5. Retention', p: 'Active account: for the duration of your subscription plus 3 years after last sign\u2011in. Billing records: 6 years after the end of the relevant tax year, as required by the Canada Revenue Agency and Revenu Québec. You may request deletion at any time.' },
+        { h: '6. Your rights', p: 'Under Law 25 (Québec) and PIPEDA (federal): access, rectification, withdrawal of consent, portability, and de-indexing. Exercise your rights at privacy@tickra.com. If you disagree with our response, you may complain to the Commission d\u2019accès à l\u2019information du Québec (cai.gouv.qc.ca) or the Office of the Privacy Commissioner of Canada (priv.gc.ca).' },
         { h: '7. Cookies', p: 'kNOWTrade uses strictly necessary cookies (session, language preference, theme preference) and, with your consent, analytics cookies. See our cookie banner.' },
       ],
     },
@@ -463,10 +464,10 @@ const en = {
       updated: 'Last updated: May 2026',
       sections: [
         { h: 'Trading carries substantial risk of loss.', p: 'Trading financial markets — equities, currencies (FX), commodities, indices, crypto‑assets, derivatives — carries a substantial risk of capital loss. Past performance is no guarantee of future performance. You may lose all or part of the capital invested.' },
-        { h: 'kNOWTrade is an educational platform.', p: 'Nothing on kNOWTrade constitutes investment advice, a personalised recommendation, or a solicitation to invest. kNOWTrade is not an Investment Services Provider, is not a Financial Investment Advisor, is not regulated by the AMF in that capacity, and does not receive or process any market orders. Any trading decision is the user’s sole responsibility.' },
-        { h: 'Leverage.', p: 'Leveraged products (CFDs, FX, derivatives) amplify both gains and losses. An ESMA study shows 74–89% of retail accounts lose money trading CFDs. Never trade with money you need.' },
-        { h: 'Regulation.', p: 'In France, trading of some products is regulated by the AMF and ACPR. Before trading, check that your broker is regulated (registre.regafi.fr). kNOWTrade systematically recommends that learners use brokers authorised in the EU.' },
-        { h: 'Audience.', p: 'kNOWTrade is reserved for adults (18+). If you are in financial difficulty or suspect a gambling addiction, contact a national helpline (e.g. in France: Joueurs Info Service 09 74 75 13 13).' },
+        { h: 'kNOWTrade is an educational platform.', p: 'Nothing on kNOWTrade constitutes investment advice, a personalised recommendation, or a solicitation to invest. kNOWTrade is registered neither as a dealer nor as an adviser with the Autorité des marchés financiers of Québec, is not a CIRO member, and does not receive or process any market orders. Any trading decision is the user\u2019s sole responsibility.' },
+        { h: 'Leverage.', p: 'Leveraged products (CFDs, FX, derivatives) amplify both gains and losses. Data published by the European regulator ESMA — the most detailed publicly available on the subject — shows 74–89% of retail accounts lose money trading CFDs. Never trade with money you need.' },
+        { h: 'Regulation.', p: 'In Québec, securities and derivatives are regulated by the Autorité des marchés financiers, and dealers by CIRO. Before trading, check that your broker is registered — the AMF register at lautorite.qc.ca. kNOWTrade systematically recommends that learners use brokers registered in Canada.' },
+        { h: 'Audience.', p: 'kNOWTrade is reserved for adults (18+). If you are in financial difficulty or suspect a gambling addiction, contact Gambling: Help and Referral — 1-866-767-5389 (24/7, free and confidential).' },
       ],
     },
   },
@@ -828,7 +829,7 @@ const en = {
     risk:
       'Trading involves substantial risk of loss. kNOWTrade is an educational platform; nothing on this site constitutes investment advice.',
     copyright: '© 2026 kNOWTrade. All rights reserved.',
-    legal: 'Tickra SAS · RCS Paris 928 471 320 · 12 rue de Paradis, 75010 Paris',
+    legal: `${ENTITY.legalName} · NEQ ${ENTITY.neq} · ${ENTITY.province}, ${ENTITY.country}`,
   },
   theme: { light: 'Switch to light theme', dark: 'Switch to dark theme' },
   locale: { switch: 'Change language' },
