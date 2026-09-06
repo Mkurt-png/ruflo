@@ -23,13 +23,13 @@ export const runtime = 'nodejs';
 const SUBJECT_FR = '10 minutes — votre leçon Tickra du jour';
 const SUBJECT_EN = '10 minutes — your Tickra lesson for today';
 
+// TICKRA-FIX(security): fail CLOSED — see weekly-digest. This endpoint mails
+// the entire Resend audience, so the old permissive path (forgeable
+// `x-vercel-cron` header, or no CRON_SECRET at all) was a spam cannon.
 function authorise(req: Request): boolean {
-  if (req.headers.get('x-vercel-cron')) return true;
   const secret = process.env.CRON_SECRET;
-  if (!secret) return true; // Permissive when no secret set — same as the rest of the gated stack.
-  const got = req.headers.get('authorization');
-  if (!got) return false;
-  return got === `Bearer ${secret}`;
+  if (!secret) return false;
+  return req.headers.get('authorization') === `Bearer ${secret}`;
 }
 
 type Contact = { email: string; first_name?: string; unsubscribed?: boolean };
