@@ -9,13 +9,22 @@ import { isDbConfigured, lastNotificationAt, recordNotification } from '@/lib/db
 // comes from a Resend Audience (RESEND_AUDIENCE_ID) so unsubscribes are
 // honoured by the provider without any extra logic on our side.
 //
-// Auth: Vercel Cron sets a `x-vercel-cron` header by default. We additionally
-// support `CRON_SECRET` for any other invoker.
+// SCHEDULE: Vercel Cron is UTC-only. This runs at 13:00 UTC — 09:00 in Montréal
+// (08:00 in winter, since cron does not follow daylight saving) and 15:00 in
+// Paris. The previous 08:00 UTC was chosen when the business was assumed to be
+// French: fine at 10:00 Paris, but 04:00 in Québec, where a "come do your
+// lesson" reminder is never read and teaches inbox providers to treat us as
+// spam. The current time is good for Québec and still acceptable for France.
+//
+// Auth: requires `Authorization: Bearer $CRON_SECRET` and fails closed when
+// CRON_SECRET is unset. `x-vercel-cron` alone is NOT accepted — it is an
+// ordinary unsigned header anyone can send, which made this endpoint a spam
+// cannon.
 //
 // Env:
 //   RESEND_API_KEY
 //   RESEND_AUDIENCE_ID
-//   CRON_SECRET            (optional, recommended for non-Vercel invokers)
+//   CRON_SECRET            (REQUIRED — the route refuses every request without it)
 //   NEXT_PUBLIC_SITE_URL
 
 export const runtime = 'nodejs';

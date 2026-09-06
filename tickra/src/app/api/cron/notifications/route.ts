@@ -15,12 +15,15 @@ import { SITE_URL } from '@/lib/site-url';
 //  - `plan_today`: "Aujourd'hui : <lesson title>" once per day
 //  - `streak_at_risk`: sent at most once every 20h
 //
-// Schedule this from Vercel Cron with the JSON:
-//   { "path": "/api/cron/notifications", "schedule": "0 8 * * *" }
-//
-// Or any other scheduler hitting GET with `x-vercel-cron` header or
+// Scheduled from vercel.json; any other scheduler works too, hitting GET with
 // Authorization: Bearer CRON_SECRET.
-
+//
+// SCHEDULE: Vercel Cron is UTC-only. This runs at 12:00 UTC — 08:00 in Montréal
+// (07:00 in winter, since cron does not follow daylight saving) and 14:00 in
+// Paris. The previous 07:00 UTC was chosen when the business was assumed to be
+// French: 09:00 in Paris, but 03:00 in Québec, where a "come do your lesson"
+// nudge is never read and teaches inbox providers to treat us as spam. The
+// current time is good for Québec and still acceptable for France.
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
