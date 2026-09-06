@@ -1,39 +1,99 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
+import type { Metadata } from 'next';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
+import { SITE_URL } from '@/lib/site-url';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { PositionSizer } from '@/components/learn/PositionSizer';
 import { ExpectancyCalculator } from '@/components/learn/ExpectancyCalculator';
+import { RiskOfRuinSimulator } from '@/components/learn/RiskOfRuinSimulator';
+import { MarketSessionsClock } from '@/components/learn/MarketSessionsClock';
+import { CandlePatternTrainer } from '@/components/learn/CandlePatternTrainer';
+import { LossMathPanel } from '@/components/learn/LossMathPanel';
+import { GrowthProjection } from '@/components/learn/GrowthProjection';
 
-export const metadata = { title: 'Outils · Tickra' };
+const meta = {
+  fr: {
+    title: 'Outils',
+    description:
+      'Calculateurs et simulateurs de trading Tickra : taille de position, espérance, math des pertes, risque de ruine (Monte-Carlo), projection de croissance, horloge des sessions forex et reconnaissance de figures. Tout en local, rien n’est envoyé.',
+  },
+  en: {
+    title: 'Tools',
+    description:
+      'Tickra trading calculators and simulators: position sizing, expectancy, the math of losses, Monte-Carlo risk of ruin, growth projection, a live forex sessions clock and candlestick-pattern training. All local, nothing is sent.',
+  },
+};
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const locale: Locale = isLocale(params.locale) ? params.locale : 'fr';
+  const m = meta[locale];
+  const url = `${SITE_URL}/${locale}/tools`;
+  return {
+    title: m.title,
+    description: m.description,
+    alternates: {
+      canonical: `/${locale}/tools`,
+      languages: { en: '/en/tools', fr: '/fr/tools' },
+    },
+    openGraph: {
+      type: 'website',
+      url,
+      title: `${m.title} · Tickra`,
+      description: m.description,
+      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+    },
+    twitter: { card: 'summary_large_image', title: `${m.title} · Tickra`, description: m.description },
+  };
+}
 
 const copy = {
   fr: {
     eyebrow: 'Outils',
     title: 'Les outils Tickra.',
-    body: 'Quatre outils utilitaires pour décider mieux, plus vite. Aucun n’envoie de données. Tout fonctionne hors‑ligne.',
+    body: 'Des outils utilitaires pour décider mieux, plus vite. Aucun n’envoie de données. Tout fonctionne hors‑ligne.',
     glossaryTitle: 'Glossaire',
     glossaryBody: '42 termes essentiels, classés par thème, cherchables.',
     glossaryCta: 'Ouvrir le glossaire',
     paletteTitle: 'Palette ⌘K',
     paletteBody: 'Toutes les leçons, pages et définitions à deux frappes. Cherchez n’importe où, ouvrez en un Entrée.',
     paletteHint: 'Tapez ⌘K (ou Ctrl K) sur n’importe quelle page.',
+    quickNav: 'Aller à',
+    nav: {
+      sizer: 'Taille de position',
+      expectancy: 'Espérance',
+      loss: 'Math des pertes',
+      ruin: 'Risque de ruine',
+      growth: 'Projection',
+      sessions: 'Sessions',
+      patterns: 'Figures',
+    },
   },
   en: {
     eyebrow: 'Tools',
     title: 'The Tickra tools.',
-    body: 'Four utilities to decide better, faster. None send any data. Everything works offline.',
+    body: 'Utilities to decide better, faster. None send any data. Everything works offline.',
     glossaryTitle: 'Glossary',
     glossaryBody: '42 essential terms, sorted by theme, searchable.',
     glossaryCta: 'Open the glossary',
     paletteTitle: 'Palette ⌘K',
     paletteBody: 'Every lesson, page and term in two keystrokes. Search anywhere, open with Enter.',
     paletteHint: 'Press ⌘K (or Ctrl K) on any page.',
+    quickNav: 'Jump to',
+    nav: {
+      sizer: 'Position size',
+      expectancy: 'Expectancy',
+      loss: 'Math of losses',
+      ruin: 'Risk of ruin',
+      growth: 'Projection',
+      sessions: 'Sessions',
+      patterns: 'Patterns',
+    },
   },
 };
 
@@ -51,9 +111,54 @@ export default async function ToolsPage({ params }: { params: { locale: string }
 
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-24">
+            {/* Quick anchor navigation — the toolbox is long, this jumps around it. */}
+            <nav aria-label={t.quickNav} className="mb-10 flex flex-wrap items-center gap-2">
+              <span className="mr-1 font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">
+                {t.quickNav}
+              </span>
+              {(
+                [
+                  ['sizer', t.nav.sizer],
+                  ['expectancy', t.nav.expectancy],
+                  ['loss', t.nav.loss],
+                  ['ruin', t.nav.ruin],
+                  ['growth', t.nav.growth],
+                  ['sessions', t.nav.sessions],
+                  ['patterns', t.nav.patterns],
+                ] as const
+              ).map(([id, label]) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  className="inline-flex h-8 items-center rounded-full border border-line bg-canvas px-3 font-mono text-[10.5px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-ink hover:text-ink"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+
             <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-              <PositionSizer locale={locale} />
-              <ExpectancyCalculator locale={locale} />
+              <div id="sizer" className="scroll-mt-24">
+                <PositionSizer locale={locale} />
+              </div>
+              <div id="expectancy" className="scroll-mt-24">
+                <ExpectancyCalculator locale={locale} />
+              </div>
+            </div>
+            <div id="loss" className="mt-3 scroll-mt-24">
+              <LossMathPanel locale={locale} />
+            </div>
+            <div id="ruin" className="mt-3 scroll-mt-24">
+              <RiskOfRuinSimulator locale={locale} />
+            </div>
+            <div id="growth" className="mt-3 scroll-mt-24">
+              <GrowthProjection locale={locale} />
+            </div>
+            <div id="sessions" className="mt-3 scroll-mt-24">
+              <MarketSessionsClock locale={locale} />
+            </div>
+            <div id="patterns" className="mt-3 scroll-mt-24">
+              <CandlePatternTrainer locale={locale} />
             </div>
           </Container>
         </section>

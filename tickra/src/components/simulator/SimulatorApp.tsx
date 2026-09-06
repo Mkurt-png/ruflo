@@ -23,6 +23,8 @@ import { addXp } from '@/lib/progress/xp';
 import { TradingViewWidget } from './TradingViewWidget';
 import { TradeCoach } from './TradeCoach';
 import { PaywallCard } from '@/components/learn/PaywallCard';
+import { SimAnalyticsPanel } from './SimAnalyticsPanel';
+import type { AnalyticsTrade } from '@/lib/sim/analytics';
 
 type Locale = 'fr' | 'en';
 
@@ -363,6 +365,22 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
     return { trades, winRate, netPnl, avgR };
   }, [state.closed]);
 
+  // TICKRA-PHASE-3: enrich closed trades with R multiples for the analytics
+  // panel. Kept here because R depends on the symbol pip table; the analytics
+  // module itself stays pure and symbol-agnostic.
+  const analyticsTrades = useMemo<AnalyticsTrade[]>(
+    () =>
+      state.closed.map((c) => {
+        const risk = c.stopPips > 0 ? c.stopPips * SYMBOLS[c.symbol].pipValuePerLot * c.size : 0;
+        return {
+          pnl: c.pnl,
+          rMultiple: risk > 0 ? c.pnl / risk : null,
+          closedAt: c.closedAt,
+        };
+      }),
+    [state.closed],
+  );
+
   const openTrade = (side: Side) => {
     const entry = symbolMeta.price + (Math.random() - 0.5) * 4 * symbolMeta.pip;
     // Optimistic id — the server will issue the real UUID and we'll reconcile
@@ -682,6 +700,8 @@ export function SimulatorApp({ locale }: { locale: Locale }) {
           )}
         </div>
       </section>
+
+      <SimAnalyticsPanel trades={analyticsTrades} startBalance={INITIAL.balance} locale={locale} />
 
       <p className="text-center font-mono text-[10.5px] uppercase tracking-[0.2em] text-subtle">{t.legal}</p>
     </div>

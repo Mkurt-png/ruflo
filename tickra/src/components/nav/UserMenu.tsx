@@ -16,7 +16,7 @@ export function UserMenu({ locale, signInLabel, accountLabel }: Props) {
     return (
       <Link
         href={`/${locale}/me`}
-        className="hidden text-sm text-white/80 transition-colors hover:text-white md:inline"
+        className="hidden text-sm text-muted transition-colors hover:text-ink md:inline"
       >
         {accountLabel}
       </Link>
@@ -26,7 +26,7 @@ export function UserMenu({ locale, signInLabel, accountLabel }: Props) {
   return (
     <Link
       href={`/${locale}/signin`}
-      className="hidden text-sm text-white/60 transition-colors hover:text-white md:inline"
+      className="hidden text-sm text-muted transition-colors hover:text-ink md:inline"
     >
       {signInLabel}
     </Link>

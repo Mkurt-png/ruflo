@@ -1,14 +1,38 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
-import { isLocale } from '@/lib/i18n/config';
+import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { SITE_URL } from '@/lib/site-url';
 
-export const metadata = { title: 'Éditorial · Tickra' };
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const locale: Locale = isLocale(params.locale) ? params.locale : 'fr';
+  const dict = await getDictionary(locale);
+  const t = dict.editorial;
+  const feedUrl = `${SITE_URL}/${locale}/editorial/feed.xml`;
+  return {
+    title: t.title,
+    description: t.subtitle,
+    alternates: {
+      canonical: `/${locale}/editorial`,
+      languages: { en: '/en/editorial', fr: '/fr/editorial' },
+      types: { 'application/rss+xml': feedUrl },
+    },
+    openGraph: {
+      type: 'website',
+      url: `${SITE_URL}/${locale}/editorial`,
+      title: `${t.title} · Tickra`,
+      description: t.subtitle,
+      locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+    },
+    twitter: { card: 'summary_large_image', title: `${t.title} · Tickra`, description: t.subtitle },
+  };
+}
 
 export default async function EditorialPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

@@ -163,7 +163,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
     } catch {
       /* noop */
     }
-  }, [initial.id]);
+  }, [initial.id, setState]);
 
   // Realtime subscription (with polling fallback).
   useEffect(() => {
@@ -283,7 +283,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
         /* noop */
       }
     },
-    [state, submitted, viewerEmail],
+    [state, submitted, viewerEmail, setState],
   );
 
   // Waiting room (host before guest joins).

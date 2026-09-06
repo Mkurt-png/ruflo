@@ -24,12 +24,13 @@ import { SITE_URL } from '@/lib/site-url';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// TICKRA-FIX(security): fail CLOSED — see weekly-digest. `x-vercel-cron` is an
+// unsigned header anyone can forge, and an unset CRON_SECRET used to open the
+// endpoint to the whole internet.
 function authorise(req: Request): boolean {
-  if (req.headers.get('x-vercel-cron')) return true;
   const secret = process.env.CRON_SECRET;
-  if (!secret) return true;
-  const got = req.headers.get('authorization');
-  return got === `Bearer ${secret}`;
+  if (!secret) return false;
+  return req.headers.get('authorization') === `Bearer ${secret}`;
 }
 
 const ONE_DAY = 24 * 60 * 60 * 1000;

@@ -200,7 +200,7 @@ const fr = {
         cta: 'Commencer gratuitement',
         features: [
           'Test de niveau inclus',
-          '12 premières leçons débloquées',
+          '4 premières leçons débloquées',
           '3 vies par jour',
           'Suivi des streaks',
           'Révisions de leçon avec pubs',
@@ -245,7 +245,7 @@ const fr = {
       title: 'Comparer en détail',
       rows: [
         { label: 'Test de niveau', free: 'Inclus', pro: 'Inclus', lifetime: 'Inclus' },
-        { label: 'Leçons débloquées', free: '10 / 222', pro: '222 / 222', lifetime: '222 / 222 + futures' },
+        { label: 'Leçons débloquées', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + futures' },
         { label: 'Vies quotidiennes', free: '3', pro: 'Illimitées', lifetime: 'Illimitées' },
         { label: 'TradingView intégré', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Journal de décisions', free: '—', pro: 'Inclus', lifetime: 'Inclus + export' },

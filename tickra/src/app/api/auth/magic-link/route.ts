@@ -2,6 +2,16 @@ import { NextResponse } from 'next/server';
 import { createHmac, randomBytes } from 'node:crypto';
 import { FROM, sendEmail } from '@/lib/email/resend';
 import { isDbConfigured, recordMagicNonce } from '@/lib/db/queries';
+import { rateLimit, clientIp } from '@/lib/security/rate-limit';
+
+// TICKRA-FIX(security): throttle sign-in mail. Without this, the endpoint can
+// be looped to mail any address through our Resend domain (quota burn + spam
+// reputation). Two buckets so one abuser can't mail-bomb a single victim, and
+// can't fan out across many victims either.
+const EMAIL_LIMIT = 5;      // per address
+const EMAIL_WINDOW = 15 * 60;
+const IP_LIMIT = 15;        // per source IP
+const IP_WINDOW = 60 * 60;
 
 export const dynamic = 'force-dynamic';
 
@@ -39,6 +49,25 @@ export async function POST(req: Request) {
   if (!secret) {
     // Always return 200 so we don't leak whether the env is wired.
     return NextResponse.json({ ok: true, delivered: false, reason: 'not_configured' });
+  }
+
+  // Throttle before doing any work. We still answer 200 so the response is
+  // indistinguishable from a successful send — never reveal whether an address
+  // exists, or that a limit was hit.
+  const emailBucket = await rateLimit(
+    `magic:email:${email.toLowerCase()}`,
+    EMAIL_LIMIT,
+    EMAIL_WINDOW,
+  );
+  if (!emailBucket.allowed) {
+    return NextResponse.json({ ok: true });
+  }
+  const ip = clientIp(req);
+  if (ip) {
+    const ipBucket = await rateLimit(`magic:ip:${ip}`, IP_LIMIT, IP_WINDOW);
+    if (!ipBucket.allowed) {
+      return NextResponse.json({ ok: true });
+    }
   }
 
   const expiresAt = Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS;

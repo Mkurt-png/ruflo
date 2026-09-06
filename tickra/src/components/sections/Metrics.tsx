@@ -33,32 +33,32 @@ export function Metrics({ dict }: Props) {
     <section
       ref={ref}
       aria-labelledby="metrics-title"
-      className="bg-navy-900 text-white py-24 px-6"
+      className="bg-elevated text-ink py-24 px-6"
     >
       <div className="mx-auto w-full max-w-container">
         <h2
           id="metrics-title"
-          className="text-white text-4xl font-medium text-center"
+          className="text-ink text-4xl font-medium text-center"
         >
           {t.title}
         </h2>
-        <p className="text-white/60 text-lg text-center mt-3 mb-16 max-w-2xl mx-auto">{t.body}</p>
+        <p className="text-muted text-lg text-center mt-3 mb-16 max-w-2xl mx-auto">{t.body}</p>
 
         <dl className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
           {t.items.map((m) => (
             <div key={m.label} className="text-center">
               <dt className="sr-only">{m.label}</dt>
-              <dd className="text-5xl font-medium text-white">
+              <dd className="text-5xl font-medium text-ink">
                 <AnimatedMetric value={m.value} started={started} />
               </dd>
-              <div aria-hidden className="text-sm text-white/50 text-center mt-2">
+              <div aria-hidden className="text-sm text-muted text-center mt-2">
                 {m.label}
               </div>
             </div>
           ))}
         </dl>
 
-        <p className="text-white/30 text-xs text-center mt-12">{t.footnote}</p>
+        <p className="text-subtle text-xs text-center mt-12">{t.footnote}</p>
       </div>
     </section>
   );

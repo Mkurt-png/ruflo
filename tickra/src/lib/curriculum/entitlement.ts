@@ -8,7 +8,7 @@
 
 import type { Plan } from '@/lib/auth/useUser';
 
-export const FREE_LESSON_LIMIT = 10;
+export const FREE_LESSON_LIMIT = 4;
 
 export type EntitlementPlan = Plan;
 

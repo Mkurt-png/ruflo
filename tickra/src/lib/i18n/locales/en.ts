@@ -200,7 +200,7 @@ const en = {
         cta: 'Start free',
         features: [
           'Placement test included',
-          'First 12 lessons unlocked',
+          'First 4 lessons unlocked',
           '3 lives per day',
           'Streak tracking',
           'Lesson reviews with ads',
@@ -245,7 +245,7 @@ const en = {
       title: 'Compare in detail',
       rows: [
         { label: 'Placement test', free: 'Included', pro: 'Included', lifetime: 'Included' },
-        { label: 'Lessons unlocked', free: '10 / 222', pro: '222 / 222', lifetime: '222 / 222 + future' },
+        { label: 'Lessons unlocked', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + future' },
         { label: 'Daily lives', free: '3', pro: 'Unlimited', lifetime: 'Unlimited' },
         { label: 'Embedded TradingView', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Decision journal', free: '—', pro: 'Included', lifetime: 'Included + export' },

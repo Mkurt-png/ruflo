@@ -26,7 +26,7 @@ export function ShimmerButton(props: Props) {
     'group relative inline-flex items-center justify-center overflow-hidden rounded-lg px-6 py-3 text-base font-semibold transition-all duration-200 will-change-transform hover:-translate-y-0.5';
   const toneClasses =
     tone === 'brand'
-      ? 'bg-brand text-black hover:bg-brand/95 shadow-[0_0_0_0_rgba(0,210,106,0)] hover:shadow-[0_10px_40px_-8px_rgba(0,210,106,0.55)]'
+      ? 'bg-brand text-ink hover:brightness-110 shadow-[0_0_0_0_rgb(var(--brand)/0)] hover:shadow-[0_10px_40px_-8px_rgb(var(--brand)/0.55)]'
       : 'bg-ink text-canvas hover:bg-ink/95 shadow-[0_0_0_0_rgba(0,0,0,0)] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)]';
 
   const Inner = (

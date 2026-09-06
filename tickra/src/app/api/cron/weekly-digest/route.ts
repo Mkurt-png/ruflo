@@ -24,12 +24,15 @@ import { TRACKS, getTrack } from '@/lib/curriculum/data';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// TICKRA-FIX(security): fail CLOSED. The previous version trusted the
+// `x-vercel-cron` header, which is an ordinary unsigned request header any
+// caller can forge, and fell open when CRON_SECRET was unset — so anyone could
+// trigger a mass mailing to the whole audience (Resend quota burn + domain
+// reputation damage). Only a matching CRON_SECRET is accepted now.
 function authorise(req: Request): boolean {
-  if (req.headers.get('x-vercel-cron')) return true;
   const secret = process.env.CRON_SECRET;
-  if (!secret) return true; // permissive when unset, matches daily-reminder
-  const got = req.headers.get('authorization');
-  return got === `Bearer ${secret}`;
+  if (!secret) return false;
+  return req.headers.get('authorization') === `Bearer ${secret}`;
 }
 
 export async function GET(req: Request) {

@@ -29,7 +29,7 @@ export function LocaleSwitcher({ current, label }: Props) {
       role="group"
       aria-label={label}
       className={cn(
-        'inline-flex h-9 items-center rounded-full border border-white/20 p-0.5 font-mono text-[11px] uppercase tracking-[0.15em]',
+        'inline-flex h-9 items-center rounded-full border border-line p-0.5 font-mono text-[11px] uppercase tracking-[0.15em]',
         isPending && 'opacity-60',
       )}
     >
@@ -43,7 +43,7 @@ export function LocaleSwitcher({ current, label }: Props) {
             aria-pressed={active}
             className={cn(
               'h-full rounded-full px-2.5 transition-colors',
-              active ? 'bg-white text-black' : 'text-white/60 hover:text-white',
+              active ? 'bg-ink text-canvas' : 'text-muted hover:text-ink',
             )}
           >
             {loc}

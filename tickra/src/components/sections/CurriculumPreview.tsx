@@ -19,12 +19,12 @@ export function CurriculumPreview({ dict, locale }: Props) {
   return (
     <section
       aria-labelledby="curriculum-preview-title"
-      className="bg-white py-24"
+      className="bg-surface py-24"
     >
       <div className="mx-auto w-full max-w-container px-6 md:px-10">
         <div id="curriculum-preview-title">
-          <p className="text-navy-900 text-xs font-medium uppercase tracking-widest">{t.eyebrow}</p>
-          <h2 className="text-navy-900 text-3xl md:text-4xl font-medium mt-2 max-w-3xl">
+          <p className="text-ink text-xs font-medium uppercase tracking-widest">{t.eyebrow}</p>
+          <h2 className="text-ink text-3xl md:text-4xl font-medium mt-2 max-w-3xl">
             {t.title}
           </h2>
           <p className="text-text-secondary text-base mt-4 max-w-2xl">{t.body}</p>
@@ -38,10 +38,10 @@ export function CurriculumPreview({ dict, locale }: Props) {
             return (
               <li
                 key={track.name}
-                className="bg-white border border-gray-100 rounded-xl p-5 hover:border-navy-900/30 transition-colors"
+                className="bg-surface border border-line rounded-xl p-5 hover:border-line transition-colors"
               >
                 <div className="flex justify-between items-start">
-                  <span aria-hidden className="text-navy-900/20 font-medium text-3xl leading-none">
+                  <span aria-hidden className="text-subtle font-medium text-3xl leading-none">
                     {num}
                   </span>
                   <span
