@@ -5,7 +5,7 @@ import { SITE_URL } from '@/lib/site-url';
 
 // Deployment facts the code cannot read at build time. Stating the wrong one
 // is exactly the mistake this page already made — it claimed Frankfurt while
-// vercel.json deploys to cdg1. Keep these in step with the dashboards.
+// vercel.json deploys to yul1. Keep these in step with the dashboards.
 const SITE_HOST = SITE_URL.replace(/^https?:\/\//, '');
 
 const SUPABASE_REGION = 'Canada (Central) — Montréal, Québec';
@@ -42,9 +42,9 @@ const COPY = {
         h: '2. Hébergement',
         body: [
           'Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.',
-          'Les serveurs de rendu sont situés à Paris, France (région cdg1).',
-          `La base de données des utilisateurs est hébergée par Supabase Inc. dans la région ${SUPABASE_REGION} : elle ne quitte pas la province.`,
-          'En revanche, les serveurs de rendu (France) ainsi que nos fournisseurs de paiement (Stripe) et de courriel (Resend) se trouvent hors du Québec. Ces communications sont encadrées par notre Politique de confidentialité, conformément à la Loi 25.',
+          'Les serveurs de rendu sont situés à Montréal, Québec (région yul1).',
+          `La base de données des utilisateurs est hébergée par Supabase Inc. dans la région ${SUPABASE_REGION}.`,
+          'Le rendu du site et la base de données se trouvent donc tous deux au Québec. Seuls nos fournisseurs de paiement (Stripe) et de courriel (Resend) sont situés hors de la province ; ces communications sont encadrées par notre Politique de confidentialité, conformément à la Loi 25.',
         ],
       },
       {
@@ -106,9 +106,9 @@ const COPY = {
         h: '2. Hosting',
         body: [
           'The site is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA.',
-          'Rendering servers are located in Paris, France (region cdg1).',
-          `The user database is hosted by Supabase Inc. in the ${SUPABASE_REGION} region: it does not leave the province.`,
-          'The rendering servers (France) and our payment (Stripe) and email (Resend) providers are, however, located outside Québec. Those disclosures are governed by our Privacy Policy, in accordance with Law 25.',
+          'Rendering servers are located in Montréal, Québec (region yul1).',
+          `The user database is hosted by Supabase Inc. in the ${SUPABASE_REGION} region.`,
+          'Both the site\u2019s rendering and its database are therefore located in Québec. Only our payment (Stripe) and email (Resend) providers sit outside the province; those disclosures are governed by our Privacy Policy, in accordance with Law 25.',
         ],
       },
       {

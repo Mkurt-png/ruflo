@@ -4,18 +4,18 @@
   "buildCommand": "next build",
   "installCommand": "npm install",
   "outputDirectory": ".next",
-  "regions": ["cdg1"],
+  "regions": ["yul1"],
   "github": {
     "silent": false
   },
   "crons": [
     {
       "path": "/api/cron/daily-reminder",
-      "schedule": "0 8 * * *"
+      "schedule": "0 13 * * *"
     },
     {
       "path": "/api/cron/notifications",
-      "schedule": "0 7 * * *"
+      "schedule": "0 12 * * *"
     },
     {
       "path": "/api/cron/weekly-digest",

@@ -4,7 +4,14 @@
 -- at least one completed lesson — kept simple/portable in SQL.
 --
 -- Joined against tickra_users so we can surface display_name + share_slug when share_public is true.
--- The view never exposes email — callers filter or hash separately. Idempotent.
+-- Idempotent.
+--
+-- NOTE: this view DOES select email — it is the first column. It is the API
+-- layer (lib/db/leaderboard-queries) that anonymises before returning, not the
+-- view. An earlier version of this comment claimed the opposite, which is how
+-- the exposure in migration 021 went unnoticed: a view runs with its owner's
+-- privileges, so it read straight through the RLS added in 019. See 021 for the
+-- fix (security_invoker + revoked grants).
 
 create or replace view tickra_leaderboard_weekly as
 with weekly as (
