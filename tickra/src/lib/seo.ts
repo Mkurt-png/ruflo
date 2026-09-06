@@ -4,12 +4,12 @@ import { SITE_URL, SITE_NAME } from '@/lib/site-url';
 
 const copy: Record<Locale, { title: string; description: string }> = {
   en: {
-    title: 'Tickra — Learn the markets, candle by candle',
+    title: 'kNOWTrade — Learn the markets, candle by candle',
     description:
       'A structured trading curriculum, from your first Japanese candle to institutional‑grade decision making. Ten‑minute lessons, real charts, daily streaks.',
   },
   fr: {
-    title: 'Tickra — Apprenez les marchés, bougie après bougie',
+    title: 'kNOWTrade — Apprenez les marchés, bougie après bougie',
     description:
       "Un parcours de trading structuré, de votre première bougie japonaise jusqu'à la prise de décision institutionnelle. Leçons de dix minutes, vrais graphiques, streaks quotidiens.",
   },

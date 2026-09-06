@@ -36,7 +36,7 @@ export function CertificatePreview({
     >
       <div className="flex-1 flex flex-col items-center justify-center px-12 py-16 text-center">
         <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-muted">
-          Tickra · {fr ? 'Certificat de réussite' : 'Certificate of completion'}
+          kNOWTrade · {fr ? 'Certificat de réussite' : 'Certificate of completion'}
         </p>
 
         <div className="mt-10">

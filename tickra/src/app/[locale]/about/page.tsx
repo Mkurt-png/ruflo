@@ -10,7 +10,7 @@ import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { TrustBar } from '@/components/ui/TrustBar';
 import { ShimmerButton } from '@/components/fx/ShimmerButton';
 
-export const metadata = { title: 'À propos · Tickra' };
+export const metadata = { title: 'À propos · kNOWTrade' };
 
 // Founder copy is kept here (per-locale) rather than in the i18n bundle
 // so the team can swap names, location, proof points without touching
@@ -24,7 +24,7 @@ const FOUNDER = {
     bio: [
       'J’ai commencé à trader à 18 ans avec un livre et un compte démo. J’ai brûlé deux comptes réels avant de comprendre que le problème n’était pas le marché — c’était la méthode.',
       'Pendant cinq ans, j’ai démonté ce qui sépare un trader qui survit d’un trader qui explose : un cadre de risque écrit, des figures que l’on reconnaît dans son sommeil, et un journal honnête.',
-      'Tickra, c’est le parcours que j’aurais voulu avoir à 18 ans. Pas un cours magistral — un atelier : 10 minutes par jour, des figures réelles, un risque mesuré, un journal qui te confronte.',
+      'kNOWTrade, c’est le parcours que j’aurais voulu avoir à 18 ans. Pas un cours magistral — un atelier : 10 minutes par jour, des figures réelles, un risque mesuré, un journal qui te confronte.',
     ],
     proofs: [
       { label: 'Années sur les marchés', value: '7+' },
@@ -41,7 +41,7 @@ const FOUNDER = {
     bio: [
       'I started trading at 18 with a book and a demo account. I blew up two real accounts before realising the problem wasn’t the market — it was the method.',
       'Over the next five years I broke down what separates a trader who survives from one who detonates: a written risk framework, patterns you recognise in your sleep, and an honest journal.',
-      'Tickra is the curriculum I wish I had at 18. Not a lecture — a workshop: 10 minutes a day, real charts, measured risk, a journal that confronts you.',
+      'kNOWTrade is the curriculum I wish I had at 18. Not a lecture — a workshop: 10 minutes a day, real charts, measured risk, a journal that confronts you.',
     ],
     proofs: [
       { label: 'Years on the markets', value: '7+' },

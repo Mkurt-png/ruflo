@@ -17,31 +17,31 @@ export async function generateMetadata({ params }: { params: Params }) {
   const payload = decodeShare(params.token);
   if (!payload) return {};
   return {
-    title: `${payload.n} · Tickra`,
-    description: `${payload.l} lessons, ${payload.t} tracks, ${payload.s}-day streak on Tickra.`,
+    title: `${payload.n} · kNOWTrade`,
+    description: `${payload.l} lessons, ${payload.t} tracks, ${payload.s}-day streak on kNOWTrade.`,
   };
 }
 
 const copy = {
   fr: {
     eyebrow: 'Profil partagé',
-    summary: 'progresse sur Tickra.',
+    summary: 'progresse sur kNOWTrade.',
     lessons: 'leçons',
     tracks: 'pistes',
     streak: 'jours de série',
     cta: 'Commencer mon parcours',
-    learn: 'En savoir plus sur Tickra',
+    learn: 'En savoir plus sur kNOWTrade',
     generatedAt: 'Généré le',
     of: 'sur',
   },
   en: {
     eyebrow: 'Shared profile',
-    summary: 'is progressing on Tickra.',
+    summary: 'is progressing on kNOWTrade.',
     lessons: 'lessons',
     tracks: 'tracks',
     streak: 'day streak',
     cta: 'Start my own',
-    learn: 'Learn about Tickra',
+    learn: 'Learn about kNOWTrade',
     generatedAt: 'Generated',
     of: 'of',
   },

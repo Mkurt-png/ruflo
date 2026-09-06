@@ -2,6 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
+import { hasPaidAccess } from '@/lib/auth/plan-expiry';
 import { listTrades } from '@/lib/db/journal-queries';
 import { Navbar } from '@/components/nav/Navbar';
 import { getDictionary } from '@/lib/i18n/dictionaries';
@@ -23,7 +24,7 @@ export default async function JournalPage({ params }: { params: { locale: string
   if (!session) redirect(`/${locale}/signin`);
   if (!isDbConfigured()) redirect(`/${locale}/me`);
   const user = await getUser(session.email);
-  const isPro = user?.plan === 'pro' || user?.plan === 'lifetime';
+  const isPro = hasPaidAccess(user);
 
   const copy = COPY[locale];
 

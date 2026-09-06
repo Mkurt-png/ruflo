@@ -6,7 +6,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 
-export const metadata = { title: 'Journal des versions · Tickra' };
+export const metadata = { title: 'Journal des versions · kNOWTrade' };
 
 export default async function ChangelogPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

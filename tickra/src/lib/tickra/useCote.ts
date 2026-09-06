@@ -1,7 +1,7 @@
 'use client';
 
 // useCote — reads all client-side progress sources and computes the
-// composite Tickra Cote. Re-runs when the scope changes (sign-in) or
+// composite kNOWTrade Cote. Re-runs when the scope changes (sign-in) or
 // when a store dispatches a storage update.
 
 import { useEffect, useState } from 'react';

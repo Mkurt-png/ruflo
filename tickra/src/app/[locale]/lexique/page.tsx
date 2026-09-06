@@ -31,7 +31,7 @@ const COPY = {
     head2: 'Un geste.',
     head3: 'Pas de tooltip.',
     intro:
-      'Tickra ne survole pas. Les termes soulignés en pointillés ne s’ouvrent qu’au clic, et seulement si le lecteur le demande. Voici comment ça se lit.',
+      'kNOWTrade ne survole pas. Les termes soulignés en pointillés ne s’ouvrent qu’au clic, et seulement si le lecteur le demande. Voici comment ça se lit.',
     demoTitle: 'Lisez cette phrase pour voir l’effet',
     demoDoji: 'Quand on voit un',
     demoDojiTerm: 'doji',
@@ -56,7 +56,7 @@ const COPY = {
     head2: 'One gesture.',
     head3: 'No tooltip.',
     intro:
-      'Tickra does not hover. Dotted-underlined terms open only on click, and only when the reader asks. Here is how it reads.',
+      'kNOWTrade does not hover. Dotted-underlined terms open only on click, and only when the reader asks. Here is how it reads.',
     demoTitle: 'Read this sentence to see the effect',
     demoDoji: 'When you see a',
     demoDojiTerm: 'doji',

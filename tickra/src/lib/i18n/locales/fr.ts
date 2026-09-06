@@ -1,3 +1,5 @@
+import { EMAIL } from '@/lib/brand';
+import { ENTITY, entityAddressLines, entityDescription, entityIdentityLine, entityPostalAddress } from '@/lib/legal/entity';
 const fr = {
   nav: {
     method: 'Méthode',
@@ -18,7 +20,7 @@ const fr = {
     eyebrow: 'Un parcours structuré · Depuis la bougie 1',
     title: ['Commencez à la bougie 1.', 'Atteignez le niveau institutionnel.'],
     titleEm: 'institutionnel',
-    body: "Tickra enseigne les marchés comme les salles de marché les apprennent — figure par figure, risque par risque, décision par décision. Des leçons de dix minutes, des vrais graphiques, zéro tape‑à‑l'œil.",
+    body: "kNOWTrade enseigne les marchés comme les salles de marché les apprennent — figure par figure, risque par risque, décision par décision. Des leçons de dix minutes, des vrais graphiques, zéro tape‑à‑l'œil.",
     primaryCta: 'Passer le test de niveau',
     secondaryCta: 'Aperçu gratuit d’une leçon (2 min)',
     chartCaption: 'EUR/USD · 1H · 24 dernières séances',
@@ -61,7 +63,7 @@ const fr = {
       },
       streak: {
         title: 'Des streaks qui respectent votre temps.',
-        body: 'Dix minutes comptent. Un jour manqué, un freeze conserve la série. Tickra récompense la régularité, pas le surmenage.',
+        body: 'Dix minutes comptent. Un jour manqué, un freeze conserve la série. kNOWTrade récompense la régularité, pas le surmenage.',
       },
       library: {
         title: '222 modules, quinze pistes.',
@@ -73,7 +75,7 @@ const fr = {
       },
       journal: {
         title: 'Décisions, journalisées.',
-        body: 'Chaque exercice capture votre raisonnement. Après dix séances, Tickra fait remonter les schémas de vos propres erreurs.',
+        body: 'Chaque exercice capture votre raisonnement. Après dix séances, kNOWTrade fait remonter les schémas de vos propres erreurs.',
       },
       tv: {
         title: 'TradingView, en natif.',
@@ -101,7 +103,7 @@ const fr = {
     items: [
       {
         quote:
-          "J'ai passé deux ans sur YouTube avant de comprendre que je n'apprenais rien. En six semaines sur Tickra, j'ai enfin une méthode — et je sais pourquoi je perds quand je perds.",
+          "J'ai passé deux ans sur YouTube avant de comprendre que je n'apprenais rien. En six semaines sur kNOWTrade, j'ai enfin une méthode — et je sais pourquoi je perds quand je perds.",
         name: 'Léa M.',
         role: 'Analyste junior · Paris',
         meta: 'Pro · Inscrite janvier 2026',
@@ -134,7 +136,7 @@ const fr = {
   builtBy: {
     eyebrow: 'Conçu par',
     title: 'Une équipe qui a tenu un livre, pas une chaîne YouTube.',
-    body: "Tickra est conçu par d'anciens opérateurs de salle de marché et des pédagogues qui ont formé des juniors en banque. Le produit n'enseigne que ce qui a été utile à un trader payé pour décider.",
+    body: "kNOWTrade est conçu par d'anciens opérateurs de salle de marché et des pédagogues qui ont formé des juniors en banque. Le produit n'enseigne que ce qui a été utile à un trader payé pour décider.",
     people: [
       {
         name: 'Marc Hauser',
@@ -268,15 +270,15 @@ const fr = {
     items: [
       {
         q: "Faut‑il un compte chez un courtier pour commencer ?",
-        a: "Non. Les soixante premières leçons se déroulent entièrement dans Tickra sur des données historiques. Vous n'avez besoin d'un courtier que lorsque vous décidez de passer à l'exécution réelle — et nous vous accompagnons pour le choisir.",
+        a: "Non. Les soixante premières leçons se déroulent entièrement dans kNOWTrade sur des données historiques. Vous n'avez besoin d'un courtier que lorsque vous décidez de passer à l'exécution réelle — et nous vous accompagnons pour le choisir.",
       },
       {
-        q: 'Tickra est‑il un service de signaux ?',
-        a: "Non. Nous ne publions ni entrées, ni sorties, ni recommandations. Tickra est une plateforme d'apprentissage — les trades sont les vôtres, le raisonnement est le vôtre, la responsabilité est la vôtre.",
+        q: 'kNOWTrade est‑il un service de signaux ?',
+        a: "Non. Nous ne publions ni entrées, ni sorties, ni recommandations. kNOWTrade est une plateforme d'apprentissage — les trades sont les vôtres, le raisonnement est le vôtre, la responsabilité est la vôtre.",
       },
       {
         q: 'Combien de temps avant de trader en réel ?',
-        a: "La plupart des apprenants Pro atteignent le module Gestion du Risque en 4 à 6 semaines. Faut‑il alors trader en réel ? C'est une autre question — Tickra refuse de la précipiter.",
+        a: "La plupart des apprenants Pro atteignent le module Gestion du Risque en 4 à 6 semaines. Faut‑il alors trader en réel ? C'est une autre question — kNOWTrade refuse de la précipiter.",
       },
       {
         q: 'Puis‑je annuler à tout moment ?',
@@ -291,7 +293,7 @@ const fr = {
   cta: {
     eyebrow: 'Commencer',
     title: 'Lisez votre première bougie aujourd’hui.',
-    body: 'Six questions, quatre‑vingt‑dix secondes. Tickra trouve où vous en êtes et programme la leçon une.',
+    body: 'Six questions, quatre‑vingt‑dix secondes. kNOWTrade trouve où vous en êtes et programme la leçon une.',
     primary: 'Passer le test de niveau',
     secondary: 'Voir les tarifs',
   },
@@ -366,7 +368,7 @@ const fr = {
     ],
     result: {
       title: 'Votre point de départ',
-      subtitle: 'Voici la piste que Tickra vous recommande. Aucune obligation, vous pouvez choisir une autre piste à tout moment.',
+      subtitle: 'Voici la piste que kNOWTrade vous recommande. Aucune obligation, vous pouvez choisir une autre piste à tout moment.',
       cta: 'Créer mon compte gratuit',
       back: 'Revoir mes réponses',
       tracks: {
@@ -391,8 +393,8 @@ const fr = {
     legal: 'Protégé par notre politique de confidentialité. Nous ne stockons jamais de mot de passe.',
   },
   about: {
-    title: 'À propos de Tickra',
-    intro: 'Tickra est né d’une frustration simple : il n’existait aucun endroit pour apprendre les marchés comme on apprend un métier — par couches, par exercices, avec un cap. Nous l’avons construit.',
+    title: 'À propos de kNOWTrade',
+    intro: 'kNOWTrade est né d’une frustration simple : il n’existait aucun endroit pour apprendre les marchés comme on apprend un métier — par couches, par exercices, avec un cap. Nous l’avons construit.',
     sections: [
       {
         title: 'Notre pari',
@@ -400,7 +402,7 @@ const fr = {
       },
       {
         title: 'Ce que nous refusons',
-        body: 'Pas de signaux, pas de captures de comptes en démo, pas de promesses de revenus, pas d’upsells masqués. Nous facturons un cursus, point. Si vous attendez un raccourci, Tickra n’est pas pour vous.',
+        body: 'Pas de signaux, pas de captures de comptes en démo, pas de promesses de revenus, pas d’upsells masqués. Nous facturons un cursus, point. Si vous attendez un raccourci, kNOWTrade n’est pas pour vous.',
       },
       {
         title: 'Ce que nous promettons',
@@ -412,9 +414,9 @@ const fr = {
     title: 'Contact',
     intro: 'Une question produit, presse, partenariat ? Écrivez‑nous, on répond sous deux jours ouvrés.',
     emails: [
-      { label: 'Support apprenants', value: 'hello@tickra.com' },
-      { label: 'Presse & contenu', value: 'press@tickra.com' },
-      { label: 'Partenariats', value: 'partners@tickra.com' },
+      { label: 'Support apprenants', value: EMAIL.support },
+      { label: 'Presse & contenu', value: EMAIL.press },
+      { label: 'Partenariats', value: EMAIL.partners },
     ],
     form: {
       nameLabel: 'Votre nom',
@@ -426,7 +428,7 @@ const fr = {
     },
     address: {
       title: 'Adresse',
-      lines: ['Tickra SAS', '12 rue de Paradis', '75010 Paris, France', 'SIREN 928 471 320'],
+      lines: entityAddressLines(),
     },
   },
   legal: {
@@ -434,28 +436,28 @@ const fr = {
       title: 'Conditions générales d’utilisation',
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
-        { h: '1. Objet', p: 'Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’usage du service Tickra édité par Tickra SAS, dont le siège social est situé 12 rue de Paradis, 75010 Paris (RCS Paris 928 471 320). En accédant au service, vous acceptez les présentes CGU.' },
-        { h: '2. Nature du service', p: 'Tickra est une plateforme pédagogique de formation au trading. Tickra ne fournit pas de conseil en investissement, n’est ni Prestataire de Services d’Investissement (PSI), ni Conseiller en Investissements Financiers (CIF), et n’est pas régulé par l’Autorité des Marchés Financiers (AMF) à ce titre.' },
+        { h: '1. Objet', p: `Les présentes Conditions Générales d’Utilisation (CGU) régissent l’accès et l’usage du service kNOWTrade, exploité par ${entityDescription('fr')}. En accédant au service, vous acceptez les présentes CGU.` },
+        { h: '2. Nature du service', p: 'kNOWTrade est une plateforme pédagogique de formation au trading. kNOWTrade ne fournit aucun conseil en investissement, n’est inscrit ni comme courtier ni comme conseiller auprès de l’Autorité des marchés financiers (AMF) du Québec, n’est membre de l’Organisme canadien de réglementation des investissements (OCRI), et n’exerce aucune activité assujettie à la Loi sur les valeurs mobilières ou à la Loi sur les instruments dérivés.' },
         { h: '3. Compte', p: 'L’accès aux fonctionnalités payantes requiert la création d’un compte. Vous garantissez l’exactitude des informations fournies et acceptez de maintenir la confidentialité de vos identifiants. La connexion se fait par lien magique envoyé à votre adresse e‑mail.' },
-        { h: '4. Abonnements et paiement', p: 'Tickra propose trois formules : Gratuit, Pro (mensuel ou annuel) et À vie. Le paiement est traité par Stripe. Les prix affichés sont TTC. La TVA applicable est celle du pays de consommation. Pro est résiliable à tout moment depuis votre espace personnel. À vie est couvert par une garantie satisfait ou remboursé de 14 jours à compter de l’achat.' },
-        { h: '5. Propriété intellectuelle', p: 'Tous les contenus pédagogiques, graphiques, logos, marques et textes présents sur Tickra sont la propriété exclusive de Tickra SAS ou de ses partenaires. Toute reproduction, représentation ou diffusion non autorisée est strictement interdite.' },
-        { h: '6. Données personnelles', p: 'Le traitement de vos données personnelles est décrit dans notre Politique de confidentialité. Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement, de portabilité et d’opposition. Pour exercer ces droits : privacy@tickra.com.' },
-        { h: '7. Responsabilité', p: 'Tickra met tout en œuvre pour assurer la disponibilité du service mais ne peut être tenu responsable d’éventuelles interruptions, pertes de données, ou décisions de trading prises par l’utilisateur. Voir également notre Avertissement risque.' },
-        { h: '8. Résiliation', p: 'Tickra se réserve le droit de suspendre ou résilier un compte en cas de violation des présentes CGU, de fraude, ou d’usage contraire aux lois en vigueur.' },
-        { h: '9. Droit applicable', p: 'Les présentes CGU sont régies par le droit français. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents de Paris.' },
+        { h: '4. Abonnements et paiement', p: 'kNOWTrade propose trois formules : Gratuit, Pro (mensuel ou annuel) et À vie. Le paiement est traité par Stripe. Les prix sont affichés dans la devise de votre pays (CAD, EUR ou USD) ; les taxes applicables (TPS/TVH et TVQ, ou taxe équivalente selon votre lieu de résidence) sont calculées au moment du paiement. Pro est un contrat à exécution successive résiliable à tout moment depuis votre espace personnel, conformément à la Loi sur la protection du consommateur. À vie est couvert par une garantie satisfait ou remboursé de 14 jours à compter de l’achat.' },
+        { h: '5. Propriété intellectuelle', p: `Tous les contenus pédagogiques, graphiques, logos, marques et textes présents sur kNOWTrade sont la propriété exclusive de ${ENTITY.legalName} ou de ses partenaires. Toute reproduction, représentation ou diffusion non autorisée est strictement interdite.` },
+        { h: '6. Renseignements personnels', p: `Le traitement de vos renseignements personnels est décrit dans notre Politique de confidentialité. Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale), vous disposez d’un droit d’accès, de rectification, de retrait de consentement et de portabilité. Pour exercer ces droits : ${EMAIL.privacy}.` },
+        { h: '7. Responsabilité', p: 'kNOWTrade met tout en œuvre pour assurer la disponibilité du service mais ne peut être tenu responsable d’éventuelles interruptions, pertes de données, ou décisions de trading prises par l’utilisateur. Voir également notre Avertissement risque.' },
+        { h: '8. Résiliation', p: 'kNOWTrade se réserve le droit de suspendre ou résilier un compte en cas de violation des présentes CGU, de fraude, ou d’usage contraire aux lois en vigueur.' },
+        { h: '9. Droit applicable', p: `Les présentes CGU sont régies par les lois de la province de ${ENTITY.province} et les lois du Canada qui y sont applicables. Tout litige sera soumis à la médiation préalable, puis aux tribunaux compétents du district judiciaire de l’exploitant.` },
       ],
     },
     privacy: {
       title: 'Politique de confidentialité',
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
-        { h: '1. Responsable du traitement', p: 'Tickra SAS, 12 rue de Paradis, 75010 Paris, France. Délégué à la protection des données : privacy@tickra.com.' },
+        { h: '1. Responsable de la protection des renseignements personnels', p: `${ENTITY.legalName}, ${entityPostalAddress()}, ${ENTITY.country}. Personne responsable de la protection des renseignements personnels (Loi 25) : ${EMAIL.privacy}.` },
         { h: '2. Données collectées', p: 'Nous collectons : votre adresse e‑mail (création de compte), votre progression pédagogique (modules complétés, scores, streaks), vos données de paiement (traitées par Stripe — nous ne stockons jamais de numéro de carte), et des données techniques anonymisées (analytics agrégés).' },
         { h: '3. Finalités', p: 'Vos données sont utilisées pour : fournir le service, mesurer la progression, facturer l’abonnement, vous envoyer des e‑mails transactionnels (et marketing uniquement si vous avez opté), améliorer la plateforme via analytics agrégés.' },
-        { h: '4. Hébergement', p: 'Vos données sont hébergées dans l’Union européenne (Vercel — Francfort) et chez nos sous‑traitants conformes RGPD (Stripe, Resend). Aucun transfert hors UE n’est effectué sans garanties appropriées.' },
-        { h: '5. Durée de conservation', p: 'Compte actif : pour la durée de votre abonnement, plus 3 ans après dernière connexion. Données de facturation : 10 ans (obligation légale). Vous pouvez demander la suppression à tout moment.' },
-        { h: '6. Vos droits', p: 'Conformément au RGPD : accès, rectification, effacement, portabilité, opposition, limitation du traitement. Exercez vos droits par e‑mail à privacy@tickra.com. Vous pouvez aussi déposer une réclamation auprès de la CNIL (cnil.fr).' },
-        { h: '7. Cookies', p: 'Tickra utilise des cookies strictement nécessaires (session, préférence de langue, préférence de thème) et, avec votre consentement, des cookies d’analytics. Voir notre bandeau cookies.' },
+        { h: '4. Hébergement et communication hors Québec', p: 'Votre compte et votre progression sont stockés dans une base de données hébergée par Supabase à Montréal (région Canada Central) : ces données ne quittent pas le Québec. Les serveurs de rendu du site (Vercel, Paris) ainsi que nos fournisseurs de paiement (Stripe) et de courriel (Resend) se situent en revanche hors du Québec. Conformément à la Loi 25, ces communications font l’objet d’une évaluation des facteurs relatifs à la vie privée et d’engagements contractuels de protection équivalente.' },
+        { h: '5. Durée de conservation', p: 'Compte actif : pour la durée de votre abonnement, plus 3 ans après la dernière connexion. Pièces de facturation : 6 ans après la fin de l’année d’imposition concernée, conformément aux exigences de l’Agence du revenu du Canada et de Revenu Québec. Vous pouvez demander la suppression à tout moment.' },
+        { h: '6. Vos droits', p: `Conformément à la Loi 25 (Québec) et à la LPRPDE (fédérale) : accès, rectification, retrait du consentement, portabilité, et désindexation. Exercez vos droits par courriel à ${EMAIL.privacy}. En cas de désaccord, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec (cai.gouv.qc.ca) ou du Commissariat à la protection de la vie privée du Canada (priv.gc.ca).` },
+        { h: '7. Cookies', p: 'kNOWTrade utilise des cookies strictement nécessaires (session, préférence de langue, préférence de thème) et, avec votre consentement, des cookies d’analytics. Voir notre bandeau cookies.' },
       ],
     },
     risk: {
@@ -463,16 +465,16 @@ const fr = {
       updated: 'Dernière mise à jour : mai 2026',
       sections: [
         { h: 'Le trading comporte un risque substantiel de perte.', p: 'Le trading sur les marchés financiers — actions, devises (Forex), matières premières, indices, crypto‑actifs, produits dérivés — comporte un risque substantiel de perte en capital. Les performances passées ne préjugent pas des performances futures. Vous pouvez perdre tout ou partie du capital investi.' },
-        { h: 'Tickra est une plateforme éducative.', p: "Rien sur Tickra ne constitue un conseil en investissement, une recommandation personnalisée, ni une sollicitation à investir. Tickra n'est pas Prestataire de Services d'Investissement (PSI), n'est pas Conseiller en Investissements Financiers (CIF), n'est pas régulé par l'AMF à ce titre, et ne reçoit ni ne traite aucun ordre de bourse. Toute décision de trading prise par l'utilisateur est sa seule responsabilité." },
-        { h: 'Effet de levier.', p: 'Les produits avec effet de levier (CFD, FX, dérivés) amplifient les gains comme les pertes. Une étude ESMA montre que 74 à 89 % des comptes particuliers perdent de l’argent en tradant des CFD. Ne tradez jamais avec de l’argent dont vous avez besoin.' },
-        { h: 'Réglementation', p: 'En France, le trading de certains produits est encadré par l’AMF et l’ACPR. Avant de trader, vérifiez que votre courtier est régulé (registre.regafi.fr). Tickra recommande systématiquement à ses apprenants de privilégier des courtiers agréés dans l’UE.' },
-        { h: 'Public', p: 'Tickra est réservé aux personnes majeures (18 ans et plus). Si vous êtes en situation de fragilité financière ou si vous suspectez une addiction au jeu, contactez Joueurs Info Service : 09 74 75 13 13 (appel non surtaxé).' },
+        { h: 'kNOWTrade est une plateforme éducative.', p: "Rien sur kNOWTrade ne constitue un conseil en investissement, une recommandation personnalisée, ni une sollicitation à investir. kNOWTrade n'est inscrit ni comme courtier ni comme conseiller auprès de l'Autorité des marchés financiers du Québec, n'est pas membre de l'OCRI, et ne reçoit ni ne traite aucun ordre de bourse. Toute décision de trading prise par l'utilisateur est sa seule responsabilité." },
+        { h: 'Effet de levier.', p: 'Les produits avec effet de levier (CFD, FX, dérivés) amplifient les gains comme les pertes. Les données publiées par le régulateur européen ESMA — les plus détaillées disponibles publiquement sur le sujet — montrent que 74 à 89 % des comptes particuliers perdent de l’argent en tradant des CFD. Ne tradez jamais avec de l’argent dont vous avez besoin.' },
+        { h: 'Réglementation', p: 'Au Québec, les valeurs mobilières et les instruments dérivés sont encadrés par l’Autorité des marchés financiers, et les courtiers par l’OCRI. Avant de trader, vérifiez que votre courtier est bien inscrit — registre de l’AMF sur lautorite.qc.ca. kNOWTrade recommande systématiquement à ses apprenants de privilégier des courtiers inscrits au Canada.' },
+        { h: 'Public', p: 'kNOWTrade est réservé aux personnes majeures (18 ans et plus). Si vous êtes en situation de fragilité financière ou si vous suspectez une dépendance au jeu, contactez Jeu : aide et référence — 1 866 767-5389 (24 h/24, gratuit et confidentiel).' },
       ],
     },
   },
   changelog: {
     title: 'Journal des versions',
-    subtitle: 'Tickra évolue chaque semaine. Voici ce que nous expédions.',
+    subtitle: 'kNOWTrade évolue chaque semaine. Voici ce que nous expédions.',
     entries: [
       {
         version: 'v0.9.0',
@@ -580,7 +582,7 @@ const fr = {
       'Erreur classique : confondre marubozu et bougie simplement « grande ». Mesurez le ratio corps/ombre. En dessous de 80 %, ce n’est pas une marubozu.',
     ],
     drillTitle: 'Exercice (aperçu)',
-    drillBody: 'Dans la leçon complète, vous identifiez 8 bougies marubozu sur 24 séances historiques de l’EUR/USD. Vous justifiez votre raisonnement. Tickra vous corrige et vous propose le mini‑quiz.',
+    drillBody: 'Dans la leçon complète, vous identifiez 8 bougies marubozu sur 24 séances historiques de l’EUR/USD. Vous justifiez votre raisonnement. kNOWTrade vous corrige et vous propose le mini‑quiz.',
     cta: 'Continuer cette leçon (gratuit)',
     secondary: 'Voir le programme complet',
   },
@@ -599,7 +601,7 @@ const fr = {
     body: 'La feuille de route est publique. Voter sur la priorité d’une fonctionnalité est inclus dans Pro et À vie.',
     items: [
       { quarter: 'Été 2026', status: 'En construction', title: 'Backtest 1 clic', body: 'Tester une règle simple (entrée/sortie/risque) sur 10 ans d’historique en moins de cinq secondes.' },
-      { quarter: 'Été 2026', status: 'En construction', title: 'Cohortes en direct', body: 'Sessions hebdomadaires de revue de trades avec un mentor Tickra, en petit groupe.' },
+      { quarter: 'Été 2026', status: 'En construction', title: 'Cohortes en direct', body: 'Sessions hebdomadaires de revue de trades avec un mentor kNOWTrade, en petit groupe.' },
       { quarter: 'Automne 2026', status: 'Planifié', title: 'Module Crypto', body: 'Adapter la piste Structure de marché aux particularités des crypto‑actifs (régime 24/7, liquidité fragmentée).' },
       { quarter: 'Automne 2026', status: 'Planifié', title: 'API Journal', body: 'Exporter ton journal vers Notion, Obsidian, ou ton propre tableur.' },
       { quarter: 'Hiver 2026', status: 'Recherche', title: 'Mode pédagogique guidé par IA', body: 'Un coach qui repère tes points faibles et te propose la prochaine leçon. En recherche — pas avant qu’il soit utile.' },
@@ -608,7 +610,7 @@ const fr = {
   community: {
     eyebrow: 'Communauté',
     title: 'Une promotion. Pas un groupe Telegram.',
-    body: 'La cohorte privée Tickra rassemble des apprenants vérifiés qui suivent la même méthode. Pas de signaux, pas de pump, pas de chasse aux likes — du travail entre pairs.',
+    body: 'La cohorte privée kNOWTrade rassemble des apprenants vérifiés qui suivent la même méthode. Pas de signaux, pas de pump, pas de chasse aux likes — du travail entre pairs.',
     bullets: [
       'Salon par piste (bougies, risque, volume…).',
       'Revue de trade hebdomadaire, modérée par un ancien trader de desk.',
@@ -618,7 +620,7 @@ const fr = {
     secondary: 'Lire la charte',
     badge: 'Inclus dans Pro et À vie',
     // TICKRA-PHASE-4: charter + live sessions used on /community page.
-    charterTitle: 'La charte Tickra',
+    charterTitle: 'La charte kNOWTrade',
     charterIntro: 'Trois règles qui rendent la cohorte vivable, et que personne ne contourne.',
     charterRules: [
       { title: 'Pas de signaux', body: 'Aucun partage de positions à recopier. La cohorte enseigne à décider, pas à suivre.' },
@@ -650,8 +652,8 @@ const fr = {
   whyNot: {
     eyebrow: 'Comparaison',
     title: 'Pourquoi pas YouTube ?',
-    body: 'Comparer Tickra à une vidéothèque gratuite, c’est comparer une école à une bibliothèque. Les deux contiennent du savoir. Une seule vous apprend à l’utiliser.',
-    columns: ['YouTube', 'MOOC généraliste', 'Académie payante', 'Tickra'],
+    body: 'Comparer kNOWTrade à une vidéothèque gratuite, c’est comparer une école à une bibliothèque. Les deux contiennent du savoir. Une seule vous apprend à l’utiliser.',
+    columns: ['YouTube', 'MOOC généraliste', 'Académie payante', 'kNOWTrade'],
     rows: [
       { label: 'Curriculum séquencé', values: ['Aléatoire', 'Linéaire', 'Variable', 'Adaptatif'] },
       { label: 'Exercices sur graphique', values: ['—', 'Rare', 'Souvent', 'Chaque leçon'] },
@@ -662,12 +664,12 @@ const fr = {
       { label: 'Engagement quotidien réaliste', values: ['Aucun', 'Selon module', '1‑3 h', '10 min'] },
       { label: 'Coût', values: ['0 $CA + attention', '0–500 $CA', '500–5 000 $CA', '15 $CA/mois ou 199 $CA à vie'] },
     ],
-    footnote: 'Tickra ne dit pas que YouTube n’a rien à offrir. Tickra dit qu’une méthode bat un flux.',
+    footnote: 'kNOWTrade ne dit pas que YouTube n’a rien à offrir. kNOWTrade dit qu’une méthode bat un flux.',
   },
   newsletter: {
     eyebrow: 'Newsletter',
     title: 'Les 10 bougies que tout débutant doit reconnaître.',
-    body: 'PDF de 14 pages, gratuit. Annexe d’exercices incluse. Vous restez aussi abonné à l’éditorial Tickra (1 envoi par semaine, désabonnement en un clic).',
+    body: 'PDF de 14 pages, gratuit. Annexe d’exercices incluse. Vous restez aussi abonné à l’éditorial kNOWTrade (1 envoi par semaine, désabonnement en un clic).',
     emailLabel: 'Adresse e‑mail',
     emailPlaceholder: 'vous@exemple.com',
     submit: 'Recevoir le PDF',
@@ -690,7 +692,7 @@ const fr = {
           { h: 'Une bougie n’est pas une couleur', p: 'Le débutant apprend qu’une bougie verte signifie « hausse » et une bougie rouge « baisse ». C’est exact, mais c’est aussi le niveau zéro de l’information. Une bougie raconte quatre chiffres dans le temps : ouverture, plus haut, plus bas, clôture. Sa couleur est juste une dérivée — un raccourci visuel pour savoir si la clôture est au‑dessus ou en dessous de l’ouverture.' },
           { h: 'Le corps mesure la conviction', p: 'Plus le corps est long par rapport aux ombres, plus le côté gagnant a contrôlé la séance. Une bougie verte avec un long corps et de petites ombres signale que les acheteurs ont mené la danse du début à la fin. Une bougie verte avec un petit corps et de longues ombres signale une indécision : les vendeurs sont venus, ont peut‑être même pris le contrôle un moment, avant de se faire repousser.' },
           { h: 'Les ombres racontent le rejet', p: 'Une longue ombre haute en haut d’une tendance haussière n’est pas un détail décoratif : c’est un message. Le prix est monté, et a été refoulé. Les vendeurs y étaient. La même ombre haute en bas d’une consolidation ne signifie rien — le contexte change tout.' },
-          { h: 'La leçon utile', p: 'Ne lisez jamais une bougie isolée. Lisez‑la dans le contexte de la tendance, du volume, du niveau qu’elle teste. C’est précisément ce que Tickra entraîne : pas la définition d’une figure, mais sa lecture située.' },
+          { h: 'La leçon utile', p: 'Ne lisez jamais une bougie isolée. Lisez‑la dans le contexte de la tendance, du volume, du niveau qu’elle teste. C’est précisément ce que kNOWTrade entraîne : pas la définition d’une figure, mais sa lecture située.' },
         ],
       },
       'esperance-mathematique-trading': {
@@ -715,7 +717,7 @@ const fr = {
         body: [
           { h: 'Le piège du pourcentage', p: 'Perdre 50 % de votre capital ne demande pas un gain de 50 % pour récupérer — il en faut 100 %. Perdre 80 %, il en faut 400 %. Cette asymétrie est mathématique, brutale, et elle a déjà détruit plus de carrières de trader que toutes les stratégies réunies.' },
           { h: 'Risquer 1 % par trade', p: 'Sur un capital de 10 000 €, risquer 1 % par trade signifie un risque maximal de 100 €. Avec une stratégie raisonnable (espérance positive, 45 % de réussite, R:R 1:2), votre probabilité d’atteindre la ruine sur 1 000 trades est inférieure à 0,01 %. Passez à 5 % par trade, et cette probabilité monte à 90 %.' },
-          { h: 'Pourquoi les desks pros le rappellent', p: 'Les desks professionnels ont des limites strictes — souvent moins de 0,5 % de l’AUM par idée — pas parce que ce sont des frileux, mais parce qu’ils ont vu cent fois ce que produit la queue de distribution. Les traders particuliers sautent cette étape parce qu’ils n’ont jamais vu de drawdown majeur. Tickra leur fait simuler le drawdown avant qu’il n’arrive en vrai.' },
+          { h: 'Pourquoi les desks pros le rappellent', p: 'Les desks professionnels ont des limites strictes — souvent moins de 0,5 % de l’AUM par idée — pas parce que ce sont des frileux, mais parce qu’ils ont vu cent fois ce que produit la queue de distribution. Les traders particuliers sautent cette étape parce qu’ils n’ont jamais vu de drawdown majeur. kNOWTrade leur fait simuler le drawdown avant qu’il n’arrive en vrai.' },
           { h: 'La leçon utile', p: 'Le risque de ruine est la seule courbe qui détermine si vous serez encore là dans cinq ans. Tout le reste — figures, indicateurs, signaux — n’est qu’optionnel à côté.' },
         ],
       },
@@ -728,7 +730,7 @@ const fr = {
         body: [
           { h: 'Le problème des lignes parfaites', p: 'Un débutant trace un support comme un trait au stylo. Le prix touche, rebondit, il est content. Le marché, lui, ne sait pas qu’il y a une ligne. Il y a une zone, traversée par des ordres, des stops, des trailing — et ce que vous croyez « toucher » est en réalité une bande de quelques pourcents.' },
           { h: 'Lire la réaction, pas la cote', p: 'Un support intéressant n’est pas celui qui tient, c’est celui qui produit une réaction nette : grande bougie, volume, mèche basse de rejet. Sans cette signature, vous n’avez pas un support — vous avez un dessin. La distinction change tout : on attend la preuve, on ne devance pas le prix.' },
-          { h: 'Pourquoi ils cassent quand vous y croyez le plus', p: 'Plus un niveau est visible, plus il attire des stops. Les acteurs qui savent lire ces stops les chassent volontairement — c’est un fait, pas une théorie du complot. Un niveau « propre » qui n’a jamais été testé est précisément la cible idéale pour un faux signal. Tickra apprend à attendre le retour après la cassure, pas à entrer sur la cassure elle-même.' },
+          { h: 'Pourquoi ils cassent quand vous y croyez le plus', p: 'Plus un niveau est visible, plus il attire des stops. Les acteurs qui savent lire ces stops les chassent volontairement — c’est un fait, pas une théorie du complot. Un niveau « propre » qui n’a jamais été testé est précisément la cible idéale pour un faux signal. kNOWTrade apprend à attendre le retour après la cassure, pas à entrer sur la cassure elle-même.' },
           { h: 'La leçon utile', p: 'Ne tradez pas la ligne, tradez la réaction à la ligne. Et si la réaction ne vient pas, le setup n’existait pas — il n’y a rien à regretter.' },
         ],
       },
@@ -768,14 +770,14 @@ const fr = {
           { h: 'La règle du « trois écrans »', p: 'Les traders aguerris travaillent presque toujours sur trois échelles : une longue pour le contexte (par ex. jour), une moyenne pour le setup (par ex. 1 h), une courte pour l’exécution (par ex. 5 min). Le contexte donne la direction acceptable, le setup donne la zone, l’exécution donne le timing. Sauter une de ces trois, c’est garantir une décision incomplète.' },
           { h: 'Le piège du « ça monte »', p: 'Une bougie verte en 5 min ne dit pas « ça monte ». Elle dit « pendant 5 minutes, les acheteurs ont eu la main ». La même séquence peut être un rebond technique dans une tendance baissière daily — donc une vente, pas un achat. Lire l’échelle inférieure sans son contexte supérieur, c’est lire la fin d’une phrase et croire que c’est le sens complet.' },
           { h: 'Aligner avant d’entrer', p: 'La règle qui simplifie la vie : n’entrez que lorsque les trois timeframes pointent dans la même direction. Quand le daily est haussier, le 1h en pull-back, et la 5 min en redémarrage haussier, vous avez un trade. Quand l’une des trois dit autre chose, vous avez un dilemme — donc rien à faire.' },
-          { h: 'La leçon utile', p: 'Multi‑timeframe n’est pas un luxe d’expert : c’est l’hygiène minimale pour ne pas confondre bruit et signal. Tickra impose cette lecture étagée dès la première leçon, parce qu’elle protège plus que toutes les figures réunies.' },
+          { h: 'La leçon utile', p: 'Multi‑timeframe n’est pas un luxe d’expert : c’est l’hygiène minimale pour ne pas confondre bruit et signal. kNOWTrade impose cette lecture étagée dès la première leçon, parce qu’elle protège plus que toutes les figures réunies.' },
         ],
       },
     },
   },
   errors: {
     title: 'Quelque chose s’est cassé.',
-    body: 'Une erreur inattendue est survenue. L’équipe Tickra a été notifiée. Vous pouvez réessayer ou revenir à l’accueil.',
+    body: 'Une erreur inattendue est survenue. L’équipe kNOWTrade a été notifiée. Vous pouvez réessayer ou revenir à l’accueil.',
     retry: 'Réessayer',
     home: 'Retour à l’accueil',
   },
@@ -826,9 +828,9 @@ const fr = {
       },
     ],
     risk:
-      "Le trading comporte un risque substantiel de perte. Tickra est une plateforme éducative ; rien sur ce site ne constitue un conseil en investissement.",
-    copyright: '© 2026 Tickra. Tous droits réservés.',
-    legal: 'Tickra SAS · RCS Paris 928 471 320 · 12 rue de Paradis, 75010 Paris',
+      "Le trading comporte un risque substantiel de perte. kNOWTrade est une plateforme éducative ; rien sur ce site ne constitue un conseil en investissement.",
+    copyright: '© 2026 kNOWTrade. Tous droits réservés.',
+    legal: entityIdentityLine(),
   },
   theme: { light: 'Passer en thème clair', dark: 'Passer en thème sombre' },
   locale: { switch: 'Changer de langue' },

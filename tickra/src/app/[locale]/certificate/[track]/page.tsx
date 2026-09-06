@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
   const tr = getTrack(params.track);
   if (!tr) return {};
-  return { title: `${tr.title[params.locale as Locale]} · Certificat · Tickra` };
+  return { title: `${tr.title[params.locale as Locale]} · Certificat · kNOWTrade` };
 }
 
 export default async function TrackCertificatePage({ params }: { params: Params }) {

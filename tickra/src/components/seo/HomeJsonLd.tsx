@@ -1,3 +1,4 @@
+import { EMAIL } from '@/lib/brand';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 import { SITE_URL } from '@/lib/site-url';
@@ -8,7 +9,7 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Tickra',
+    name: 'kNOWTrade',
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.svg`,
     sameAs: [],
@@ -16,7 +17,7 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: 'hello@tickra.com',
+        email: EMAIL.support,
         availableLanguage: ['English', 'French'],
       },
     ],
@@ -25,9 +26,9 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
   const course = {
     '@context': 'https://schema.org',
     '@type': 'Course',
-    name: 'Tickra — Trading curriculum',
+    name: 'kNOWTrade — Trading curriculum',
     description: dict.hero.body,
-    provider: { '@type': 'Organization', name: 'Tickra', sameAs: SITE_URL },
+    provider: { '@type': 'Organization', name: 'kNOWTrade', sameAs: SITE_URL },
     inLanguage: locale === 'fr' ? 'fr-FR' : 'en-US',
     educationalLevel: 'Beginner to Advanced',
     url,
@@ -46,9 +47,9 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
   const product = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: 'Tickra Pro',
+    name: 'kNOWTrade Pro',
     description: dict.pricing.body,
-    brand: { '@type': 'Brand', name: 'Tickra' },
+    brand: { '@type': 'Brand', name: 'kNOWTrade' },
     offers: dict.pricing.plans.map((plan) => ({
       '@type': 'Offer',
       name: plan.name,

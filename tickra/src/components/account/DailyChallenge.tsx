@@ -14,7 +14,7 @@ const copy = {
   fr: {
     eyebrow: 'Carte du jour',
     title: 'Une question. Soixante secondes.',
-    body: 'Tirée d’une leçon Tickra. Identique pour tous, change tous les jours.',
+    body: 'Tirée d’une leçon kNOWTrade. Identique pour tous, change tous les jours.',
     submit: 'Valider',
     correct: 'Bonne réponse.',
     incorrect: 'Pas tout à fait.',
@@ -25,7 +25,7 @@ const copy = {
   en: {
     eyebrow: 'Card of the day',
     title: 'One question. Sixty seconds.',
-    body: 'Drawn from a Tickra lesson. Same for everyone, changes every day.',
+    body: 'Drawn from a kNOWTrade lesson. Same for everyone, changes every day.',
     submit: 'Submit',
     correct: 'Correct.',
     incorrect: 'Not quite.',

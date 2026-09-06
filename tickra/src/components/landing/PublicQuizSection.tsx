@@ -61,7 +61,7 @@ export function PublicQuizSection({ locale = 'en' }: Props) {
     >
       <div className="mx-auto w-full max-w-container text-center">
         <span className="inline-block bg-accent-blue/20 text-accent-blue text-xs font-medium px-3 py-1 rounded-full">
-          Try a real Tickra lesson
+          Try a real kNOWTrade lesson
         </span>
         <h2 id="public-quiz-title" className="text-white text-4xl font-medium mt-4">
           Can you read this candle?

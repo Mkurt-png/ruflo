@@ -53,6 +53,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ url: portal.url });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'unknown error';
-    return NextResponse.json({ error: 'stripe_error', detail: message }, { status: 502 });
+    // TICKRA-FIX(security): log Stripe's message server-side, return a generic
+    // one. Matches /api/checkout, which was hardened earlier; this route had
+    // been left echoing internals to the client.
+    console.error('[billing/portal] stripe error', message);
+    return NextResponse.json(
+      { error: 'stripe_error', hint: 'billing portal temporarily unavailable' },
+      { status: 502 },
+    );
   }
 }

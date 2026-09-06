@@ -21,13 +21,13 @@ const ICONS = {
 const COPY = {
   fr: [
     { icon: 'refresh',  value: '14 jours', caption: 'satisfait ou remboursé · sans question' },
-    { icon: 'shield',   value: 'AMF-aware', caption: 'éducation, pas de signal · pas de conseil' },
+    { icon: 'shield',   value: 'Éducation', caption: 'pas de signal · pas de conseil · non inscrit AMF' },
     { icon: 'badge',    value: 'Annulable',  caption: 'en deux clics · zéro friction' },
     { icon: 'lock',     value: 'Données',    caption: 'chiffrées · jamais revendues' },
   ] as Item[],
   en: [
     { icon: 'refresh',  value: '14-day',     caption: 'money-back · no questions asked' },
-    { icon: 'shield',   value: 'AMF-aware',  caption: 'education only · no signals · no advice' },
+    { icon: 'shield',   value: 'Education', caption: 'no signals · no advice · not AMF-registered' },
     { icon: 'badge',    value: 'Cancel',     caption: 'in two clicks · zero friction' },
     { icon: 'lock',     value: 'Encrypted',  caption: 'never sold · never shared' },
   ] as Item[],

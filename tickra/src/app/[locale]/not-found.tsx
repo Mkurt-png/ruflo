@@ -10,7 +10,7 @@ export default function NotFound() {
     <main className="min-h-screen w-full bg-[#F4F1EA] text-[#0E0E0E] flex flex-col">
       <header className="px-6 md:px-16 pt-10 flex items-start justify-between">
         <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/55">
-          Tickra · Service du catalogue
+          kNOWTrade · Service du catalogue
         </span>
         <span className="font-mono text-[10px] uppercase tracking-[0.34em] text-black/45 tabular-nums">
           404 / Page introuvable

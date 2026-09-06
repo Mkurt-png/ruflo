@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
+import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 
 // Always run per-request: the response depends on the session cookie.
 export const dynamic = 'force-dynamic';
@@ -14,7 +15,9 @@ export async function GET() {
   let plan: 'free' | 'pro' | 'lifetime' = 'free';
   if (isDbConfigured()) {
     const row = await getUser(session.email);
-    if (row?.plan === 'pro' || row?.plan === 'lifetime') plan = row.plan;
+    // TICKRA-FIX(billing): honour the paid-through date so a missed Stripe
+    // webhook can't leave an account on Pro indefinitely.
+    plan = resolveEffectivePlan(row);
   }
 
   return NextResponse.json({ user: { email: session.email }, plan });

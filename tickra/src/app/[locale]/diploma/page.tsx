@@ -7,7 +7,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { DiplomaCard } from '@/components/account/DiplomaCard';
 
-export const metadata = { title: 'Diplôme · Tickra' };
+export const metadata = { title: 'Diplôme · kNOWTrade' };
 
 export default async function DiplomaPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

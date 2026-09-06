@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!post) return {};
   const canonical = `/${params.locale}/editorial/${params.slug}`;
   return {
-    title: `${post.title} · Tickra`,
+    title: `${post.title} · kNOWTrade`,
     description: post.excerpt,
     alternates: { canonical },
     openGraph: {
@@ -89,7 +89,7 @@ export default async function EditorialArticlePage({ params }: { params: Params 
       />
       <BreadcrumbJsonLd
         items={[
-          { name: 'Tickra', path: `/${params.locale}` },
+          { name: 'kNOWTrade', path: `/${params.locale}` },
           {
             name: params.locale === 'fr' ? 'Éditorial' : 'Editorial',
             path: `/${params.locale}/editorial`,

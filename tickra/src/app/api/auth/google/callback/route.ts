@@ -48,7 +48,7 @@ export async function GET(req: Request) {
   const cookie = req.headers.get('cookie') ?? '';
   const cookieState = parseCookie(cookie, STATE_COOKIE);
   if (!cookieState || cookieState !== state) {
-    // TICKRA-FIX: if the user already has a valid Tickra session, the OAuth
+    // TICKRA-FIX: if the user already has a valid kNOWTrade session, the OAuth
     // flow is redundant — just send them home instead of surfacing a scary
     // "invalid_state" error. This covers the case where the state cookie
     // got dropped (browser quirk, narrow path, multiple tabs) but the user

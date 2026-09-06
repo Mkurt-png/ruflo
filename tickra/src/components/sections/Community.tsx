@@ -93,7 +93,7 @@ function CohortPreview() {
           </span>
           <div>
             <div className="font-display text-[15px] font-medium tracking-tight text-ink">
-              Tickra · Cohorte
+              kNOWTrade · Cohorte
             </div>
             <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted">
               98 en ligne · 1 247 membres

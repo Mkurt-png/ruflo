@@ -381,7 +381,7 @@ export const TRACKS: TrackMeta[] = [
       t('Scaler son capital', 'Scaling capital'),
       t('Savoir s’arrêter', 'Knowing when to quit'),
       t('Exercice : plan d’un mois', 'Drill: one‑month plan'),
-      t('Diplôme Tickra', 'Tickra diploma'),
+      t('Diplôme kNOWTrade', 'kNOWTrade diploma'),
     ],
   ),
 ];

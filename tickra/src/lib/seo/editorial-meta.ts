@@ -1,7 +1,7 @@
 // Shared metadata builder for the editorial cluster. Each room in
 // La Maison uses this to publish a consistent OpenGraph + Twitter
 // card, so link previews on Twitter / Discord / Slack / iMessage
-// render the editorial title rather than the default Tickra share.
+// render the editorial title rather than the default kNOWTrade share.
 
 import type { Metadata } from 'next';
 import { SITE_URL } from '@/lib/site-url';
@@ -9,7 +9,7 @@ import { SITE_URL } from '@/lib/site-url';
 export type EditorialMetaInput = {
   /** Page slug relative to the locale prefix, e.g. "lettre". */
   slug: string;
-  /** Page title in its primary language. "· Tickra" is appended. */
+  /** Page title in its primary language. "· kNOWTrade" is appended. */
   title: string;
   /** Short page description, used for OG and Twitter. */
   description: string;
@@ -45,7 +45,7 @@ export function editorialMeta({
   if (eyebrow) ogParams.set('eyebrow', eyebrow);
   const ogImage = `${SITE_URL}/api/og?${ogParams.toString()}`;
   return {
-    title: `${title} · Tickra`,
+    title: `${title} · kNOWTrade`,
     description,
     alternates: {
       canonical: url,
@@ -56,7 +56,7 @@ export function editorialMeta({
       description,
       type: 'article',
       url,
-      siteName: 'Tickra',
+      siteName: 'kNOWTrade',
       locale: locale === 'fr' ? 'fr_FR' : 'en_GB',
       alternateLocale: locale === 'fr' ? ['en_GB'] : ['fr_FR'],
       images: [

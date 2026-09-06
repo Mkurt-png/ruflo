@@ -1,4 +1,4 @@
-// L'Erratum — public log of mistakes Tickra has made.
+// L'Erratum — public log of mistakes kNOWTrade has made.
 // Static data, edited by the editor. Each entry stays here forever:
 // nothing is silently corrected. If you want to know whether a site
 // can be trusted, read its erratum before its manifesto.

@@ -13,7 +13,7 @@ import { CommandPalette } from '@/components/site/CommandPalette';
 import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
 import { InstallPrompt } from '@/components/site/InstallPrompt';
 import { MobileStickyCta } from '@/components/site/MobileStickyCta';
-import { AskTickra } from '@/components/ai/AskTickra';
+import { AskNow } from '@/components/ai/AskNow';
 import { ScopeSync } from '@/components/site/ScopeSync';
 import { HeurePapier } from '@/components/site/HeurePapier';
 import { ExitIntentModal } from '@/components/site/ExitIntentModal';
@@ -89,7 +89,7 @@ export default async function LocaleLayout({
           label={dict.stickyCta.label}
         />
         {/* TICKRA-PHASE-2.1: floating IA assistant. Hidden on signin/onboarding/welcome. */}
-        <AskTickra locale={locale} />
+        <AskNow locale={locale} />
         <Analytics />
         <CookieBanner
           locale={locale}

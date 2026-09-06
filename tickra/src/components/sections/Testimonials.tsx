@@ -24,7 +24,7 @@ const CARDS: Card[] = [
     plan: 'Pro',
     joined: 'Jan 2026',
     quote:
-      'I spent two years on YouTube before realising I was learning nothing. Six weeks on Tickra and I finally have a method.',
+      'I spent two years on YouTube before realising I was learning nothing. Six weeks on kNOWTrade and I finally have a method.',
   },
   {
     name: 'Karim B.',

@@ -4,8 +4,8 @@ import type { MetadataRoute } from 'next';
 // launches in standalone window, with one-tap shortcuts to learn / trade / me.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Tickra — Trading curriculum',
-    short_name: 'Tickra',
+    name: 'kNOWTrade — Trading curriculum',
+    short_name: 'kNOWTrade',
     description:
       'A structured trading curriculum, from your first Japanese candle to institutional‑grade decision making.',
     start_url: '/fr',

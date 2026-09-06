@@ -22,16 +22,16 @@ import { SITE_URL } from '@/lib/site-url';
 type Params = { locale: string; slug: string };
 
 export const dynamic = 'force-dynamic';
-// Tickra awards XP for many actions client-side, but on the public page we
+// kNOWTrade awards XP for many actions client-side, but on the public page we
 // only know server-side completions. Map each completed lesson to a fixed
 // XP value — this keeps the displayed level deterministic and conservative.
 const XP_PER_LESSON = 25;
 
 const copy = {
   fr: {
-    anonymous: 'Apprenant Tickra',
+    anonymous: 'Apprenant kNOWTrade',
     eyebrow: 'Profil public',
-    summary: 'progresse sur Tickra.',
+    summary: 'progresse sur kNOWTrade.',
     streak: 'Série la plus longue',
     streakUnit: 'jours',
     level: 'Niveau',
@@ -44,14 +44,14 @@ const copy = {
     pro: 'Pro',
     lifetime: 'Lifetime',
     cta: 'Commencer mon propre parcours',
-    learn: 'Découvrir Tickra',
+    learn: 'Découvrir kNOWTrade',
     of: 'sur',
     months: ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
   },
   en: {
-    anonymous: 'Tickra learner',
+    anonymous: 'kNOWTrade learner',
     eyebrow: 'Public profile',
-    summary: 'is progressing on Tickra.',
+    summary: 'is progressing on kNOWTrade.',
     streak: 'Longest streak',
     streakUnit: 'days',
     level: 'Level',
@@ -64,7 +64,7 @@ const copy = {
     pro: 'Pro',
     lifetime: 'Lifetime',
     cta: 'Start my own journey',
-    learn: 'Discover Tickra',
+    learn: 'Discover kNOWTrade',
     of: 'of',
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   },
@@ -156,11 +156,11 @@ export async function generateMetadata({
   if (!user) return {};
   const name = displayNameFor(user, locale);
   const stats = await computeStats(user.email);
-  const title = `${name} · Tickra`;
+  const title = `${name} · kNOWTrade`;
   const description =
     locale === 'fr'
-      ? `${stats.lessons} leçons, ${stats.tracks} pistes, ${stats.streak} jours de série sur Tickra.`
-      : `${stats.lessons} lessons, ${stats.tracks} tracks, ${stats.streak}-day streak on Tickra.`;
+      ? `${stats.lessons} leçons, ${stats.tracks} pistes, ${stats.streak} jours de série sur kNOWTrade.`
+      : `${stats.lessons} lessons, ${stats.tracks} tracks, ${stats.streak}-day streak on kNOWTrade.`;
   const url = `${SITE_URL}/${locale}/u/${params.slug}`;
   return {
     title,
@@ -171,7 +171,7 @@ export async function generateMetadata({
       url,
       title,
       description,
-      siteName: 'Tickra',
+      siteName: 'kNOWTrade',
       images: user.avatar_url ? [{ url: user.avatar_url }] : undefined,
     },
     twitter: {

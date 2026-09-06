@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { FROM, sendEmail } from '@/lib/email/resend';
+import { FROM, sendEmailLogged } from '@/lib/email/resend';
 import {
   getUserPlan,
   isDbConfigured,
@@ -51,7 +51,7 @@ function planTodayCopy(locale: 'fr' | 'en', lessonTitle: string, href: string) {
       text:
         `Dix minutes suffisent pour faire la leçon du jour.\n\n` +
         `Aujourd'hui : ${lessonTitle}\n${href}\n\n` +
-        `À très vite,\nL'équipe Tickra`,
+        `À très vite,\nL'équipe kNOWTrade`,
     };
   }
   return {
@@ -59,21 +59,21 @@ function planTodayCopy(locale: 'fr' | 'en', lessonTitle: string, href: string) {
     text:
       `Ten minutes are enough for today's lesson.\n\n` +
       `Today: ${lessonTitle}\n${href}\n\n` +
-      `Speak soon,\nThe Tickra team`,
+      `Speak soon,\nThe kNOWTrade team`,
   };
 }
 
 function streakAtRiskCopy(locale: 'fr' | 'en', href: string) {
   if (locale === 'fr') {
     return {
-      subject: 'Votre streak Tickra est en danger',
+      subject: 'Votre streak kNOWTrade est en danger',
       text:
         `Vous n'avez pas pratiqué depuis presque 24 h. Une leçon de 10 min suffit à préserver votre série.\n\n` +
         `Reprendre maintenant : ${href}`,
     };
   }
   return {
-    subject: 'Your Tickra streak is at risk',
+    subject: 'Your kNOWTrade streak is at risk',
     text:
       `You haven't practised in nearly 24 hours. A 10-minute lesson keeps the streak alive.\n\n` +
       `Resume now: ${href}`,
@@ -108,7 +108,7 @@ export async function GET(req: Request) {
         if (meta) {
           const href = `${SITE_URL}/fr/learn/${meta.track.slug}/${meta.lesson.slug}`;
           const c = planTodayCopy('fr', meta.lesson.title.fr, href);
-          await sendEmail({ from: FROM, to: u.email, subject: c.subject, text: c.text });
+          await sendEmailLogged({ from: FROM, to: u.email, subject: c.subject, text: c.text }, 'cron/notifications');
           await recordNotification(u.email, 'plan_today');
           planTodayCount += 1;
           continue;
@@ -124,7 +124,7 @@ export async function GET(req: Request) {
       const c = streakAtRiskCopy('fr', href);
       // Only send this branch on Sundays to avoid spamming; refine later.
       if (new Date().getDay() === 0) {
-        await sendEmail({ from: FROM, to: u.email, subject: c.subject, text: c.text });
+        await sendEmailLogged({ from: FROM, to: u.email, subject: c.subject, text: c.text }, 'cron/notifications');
         await recordNotification(u.email, 'streak_at_risk');
         streakRiskCount += 1;
         continue;

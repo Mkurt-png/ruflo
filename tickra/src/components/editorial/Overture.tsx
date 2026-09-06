@@ -10,7 +10,7 @@ type Props = { locale: Locale };
 
 export function Overture({ locale }: Props) {
   const issue = locale === 'fr' ? 'No. 01 · Juin 2026 · Paris' : 'No. 01 · June 2026 · Paris';
-  const overline = locale === 'fr' ? 'Tickra — école de marché' : 'Tickra — school of markets';
+  const overline = locale === 'fr' ? 'kNOWTrade — école de marché' : 'kNOWTrade — school of markets';
   const phraseA = locale === 'fr' ? 'Le marché' : 'The market';
   const phraseB = locale === 'fr' ? 'est un texte.' : 'is a text.';
   const signature = locale === 'fr' ? 'On apprend à le lire.' : 'We learn to read it.';

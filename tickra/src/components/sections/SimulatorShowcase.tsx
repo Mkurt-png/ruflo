@@ -14,7 +14,7 @@ type Locale = 'fr' | 'en';
 
 const copy = {
   fr: {
-    eyebrow: 'Réservé à Tickra Pro',
+    eyebrow: 'Réservé à kNOWTrade Pro',
     title: 'Entraînez-vous sur un vrai marché. Sans risquer un centime.',
     body:
       'Un compte démo à 10 000 $, six instruments (forex, indices, or, crypto), TradingView intégré, gestion du stop et du take-profit calculée automatiquement à partir de votre risque par trade. Toutes vos positions et statistiques sauvegardées.',
@@ -37,7 +37,7 @@ const copy = {
     short: 'Vendre',
   },
   en: {
-    eyebrow: 'Reserved for Tickra Pro',
+    eyebrow: 'Reserved for kNOWTrade Pro',
     title: 'Practise on a real market. Without risking a cent.',
     body:
       'A $10,000 demo account, six instruments (forex, indices, gold, crypto), embedded TradingView, stop and take-profit auto-computed from your per-trade risk. Every position and stat saved.',

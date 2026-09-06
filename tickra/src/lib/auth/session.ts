@@ -1,4 +1,4 @@
-// Server-side helpers to read and verify the Tickra session cookie.
+// Server-side helpers to read and verify the kNOWTrade session cookie.
 //
 // The session cookie is set by /api/auth/callback (magic-link) and
 // /api/auth/google/callback (Google OAuth). Both use the same encoding:

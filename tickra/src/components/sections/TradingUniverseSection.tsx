@@ -12,7 +12,7 @@ const TradingGlobe3D = dynamic(
 
 const COPY = {
   fr: {
-    eyebrow: 'Tickra · réseau',
+    eyebrow: 'kNOWTrade · réseau',
     title: 'Tous les marchés. Un seul langage.',
     body:
       'Forex, indices, crypto, métaux. Vous apprenez une grammaire — chandelles, structure, gestion du risque — et elle se parle partout. Le terminal, le simulateur, le journal : tous connectés au même fond commun.',
@@ -24,7 +24,7 @@ const COPY = {
     ],
   },
   en: {
-    eyebrow: 'Tickra · network',
+    eyebrow: 'kNOWTrade · network',
     title: 'Every market. One language.',
     body:
       'Forex, indices, crypto, metals. You learn one grammar — candles, structure, risk management — and it speaks everywhere. The terminal, the simulator, the journal: all connected to the same foundation.',

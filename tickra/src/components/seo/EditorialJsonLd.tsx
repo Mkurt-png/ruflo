@@ -38,12 +38,12 @@ export function EditorialJsonLd({
     isAccessibleForFree: true,
     author: {
       '@type': 'Organization',
-      name: 'Tickra',
+      name: 'kNOWTrade',
       url: SITE_URL,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Tickra',
+      name: 'kNOWTrade',
       url: SITE_URL,
     },
   };

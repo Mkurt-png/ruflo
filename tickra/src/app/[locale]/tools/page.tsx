@@ -21,12 +21,12 @@ const meta = {
   fr: {
     title: 'Outils',
     description:
-      'Calculateurs et simulateurs de trading Tickra : taille de position, espérance, math des pertes, risque de ruine (Monte-Carlo), projection de croissance, horloge des sessions forex et reconnaissance de figures. Tout en local, rien n’est envoyé.',
+      'Calculateurs et simulateurs de trading kNOWTrade : taille de position, espérance, math des pertes, risque de ruine (Monte-Carlo), projection de croissance, horloge des sessions forex et reconnaissance de figures. Tout en local, rien n’est envoyé.',
   },
   en: {
     title: 'Tools',
     description:
-      'Tickra trading calculators and simulators: position sizing, expectancy, the math of losses, Monte-Carlo risk of ruin, growth projection, a live forex sessions clock and candlestick-pattern training. All local, nothing is sent.',
+      'kNOWTrade trading calculators and simulators: position sizing, expectancy, the math of losses, Monte-Carlo risk of ruin, growth projection, a live forex sessions clock and candlestick-pattern training. All local, nothing is sent.',
   },
 };
 
@@ -44,18 +44,18 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     openGraph: {
       type: 'website',
       url,
-      title: `${m.title} · Tickra`,
+      title: `${m.title} · kNOWTrade`,
       description: m.description,
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
     },
-    twitter: { card: 'summary_large_image', title: `${m.title} · Tickra`, description: m.description },
+    twitter: { card: 'summary_large_image', title: `${m.title} · kNOWTrade`, description: m.description },
   };
 }
 
 const copy = {
   fr: {
     eyebrow: 'Outils',
-    title: 'Les outils Tickra.',
+    title: 'Les outils kNOWTrade.',
     body: 'Des outils utilitaires pour décider mieux, plus vite. Aucun n’envoie de données. Tout fonctionne hors‑ligne.',
     glossaryTitle: 'Glossaire',
     glossaryBody: '42 termes essentiels, classés par thème, cherchables.',
@@ -76,7 +76,7 @@ const copy = {
   },
   en: {
     eyebrow: 'Tools',
-    title: 'The Tickra tools.',
+    title: 'The kNOWTrade tools.',
     body: 'Utilities to decide better, faster. None send any data. Everything works offline.',
     glossaryTitle: 'Glossary',
     glossaryBody: '42 essential terms, sorted by theme, searchable.',

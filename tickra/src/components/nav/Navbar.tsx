@@ -5,6 +5,8 @@ import { MobileMenu } from './MobileMenu';
 import { UserMenu } from './UserMenu';
 import { ExploreMenu } from './ExploreMenu';
 import { ScrollProgressBar } from './ScrollProgressBar';
+import { LogoMark, Wordmark } from '@/components/brand/Logo';
+import { BRAND_NAME } from '@/lib/brand';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -37,9 +39,9 @@ export function Navbar({ dict, locale }: Props) {
   return (
     <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/60 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-canvas/50">
       <div className="relative mx-auto w-full max-w-container px-6 md:px-10 flex h-16 items-center justify-between">
-        <Link href={`/${locale}`} aria-label="Tickra" className="flex items-center gap-2.5 text-ink">
-          <Logo />
-          <span className="text-[15px] font-semibold tracking-tight">Tickra</span>
+        <Link href={`/${locale}`} aria-label={BRAND_NAME} className="flex items-center gap-2.5 text-ink">
+          <LogoMark />
+          <Wordmark />
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
@@ -89,25 +91,3 @@ export function Navbar({ dict, locale }: Props) {
   );
 }
 
-function Logo() {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      className="h-5 w-5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-    >
-      <rect x="4" y="9" width="3" height="10" rx="0.5" />
-      <line x1="5.5" y1="5" x2="5.5" y2="9" />
-      <line x1="5.5" y1="19" x2="5.5" y2="22" />
-      <rect x="10.5" y="5" width="3" height="13" rx="0.5" fill="currentColor" />
-      <line x1="12" y1="2" x2="12" y2="5" />
-      <line x1="12" y1="18" x2="12" y2="22" />
-      <rect x="17" y="11" width="3" height="7" rx="0.5" />
-      <line x1="18.5" y1="7" x2="18.5" y2="11" />
-      <line x1="18.5" y1="18" x2="18.5" y2="21" />
-    </svg>
-  );
-}

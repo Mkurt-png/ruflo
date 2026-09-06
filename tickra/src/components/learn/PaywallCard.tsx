@@ -6,9 +6,9 @@ type Locale = 'fr' | 'en';
 
 const copy = {
   fr: {
-    eyebrow: 'Leçon réservée à Tickra Pro',
+    eyebrow: 'Leçon réservée à kNOWTrade Pro',
     title: 'Pour aller plus loin, passez à Pro.',
-    body: `Les ${FREE_LESSON_LIMIT} premières leçons sont gratuites pour vous donner la méthode. La suite — le détail, les exercices, le suivi de progression — fait partie de Tickra Pro.`,
+    body: `Les ${FREE_LESSON_LIMIT} premières leçons sont gratuites pour vous donner la méthode. La suite — le détail, les exercices, le suivi de progression — fait partie de kNOWTrade Pro.`,
     bullets: [
       'Accès à toutes les leçons et pistes',
       'Suivi de progression, streaks et révisions',
@@ -19,9 +19,9 @@ const copy = {
     secondary: 'Revoir une leçon gratuite',
   },
   en: {
-    eyebrow: 'Lesson reserved for Tickra Pro',
+    eyebrow: 'Lesson reserved for kNOWTrade Pro',
     title: 'To go further, upgrade to Pro.',
-    body: `The first ${FREE_LESSON_LIMIT} lessons are free so you see the method. The rest — the depth, the drills, the progression tracking — is part of Tickra Pro.`,
+    body: `The first ${FREE_LESSON_LIMIT} lessons are free so you see the method. The rest — the depth, the drills, the progression tracking — is part of kNOWTrade Pro.`,
     bullets: [
       'Access to every lesson and track',
       'Progress tracking, streaks and reviews',

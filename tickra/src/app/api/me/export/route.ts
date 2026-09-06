@@ -10,7 +10,7 @@ import {
 
 // GET /api/me/export
 // Returns a JSON dump of every row attached to the current user.
-// RGPD-style portability — let users grab their own data.
+// Portability (Law 25 / PIPEDA) — let users grab their own data.
 
 export async function GET() {
   const session = getSession();

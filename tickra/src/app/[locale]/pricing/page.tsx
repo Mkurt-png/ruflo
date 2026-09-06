@@ -1,3 +1,4 @@
+import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { isLocale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
@@ -14,13 +15,24 @@ import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { FaqJsonLd } from '@/components/seo/FaqJsonLd';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
+import { countryFromHeaders, currencyForCountry } from '@/lib/pricing/currency';
 
-export const metadata = { title: 'Tarifs · Tickra' };
+export const metadata = { title: 'Tarifs · kNOWTrade' };
+
+// The page quotes prices in the visitor's own currency, so it must be rendered
+// per request. Without this the route is prerendered and every visitor is
+// served whichever country the build machine happened to look like — i.e. the
+// geo detection would silently do nothing.
+export const dynamic = 'force-dynamic';
 
 export default async function PricingPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const dict = await getDictionary(params.locale);
   const t = dict.pricing;
+  // Quote the visitor in their own currency. Reading a header makes this route
+  // dynamic, which is what we want — a cached page would show one country's
+  // prices to everyone.
+  const currency = currencyForCountry(countryFromHeaders(headers()));
 
   return (
     <>
@@ -51,7 +63,7 @@ export default async function PricingPage({ params }: { params: { locale: string
           </Container>
 
           <Container as="div" className="pb-20 md:pb-28">
-            <PricingTable dict={dict} locale={params.locale} />
+            <PricingTable dict={dict} locale={params.locale} currency={currency} />
           </Container>
         </section>
 

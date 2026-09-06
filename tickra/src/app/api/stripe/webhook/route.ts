@@ -15,9 +15,10 @@ import {
   formatSale,
   formatReferralConversion,
 } from '@/lib/notify/discord';
+import { resolveCustomerEmail, type CustomerLookup } from '@/lib/stripe/resolve-customer';
 
 function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
-  const planName = plan === 'lifetime' ? 'Tickra Lifetime' : 'Tickra Pro';
+  const planName = plan === 'lifetime' ? 'kNOWTrade Lifetime' : 'kNOWTrade Pro';
   const meHref = `${SITE_URL}/${locale}/me`;
   const curriculumHref = `${SITE_URL}/${locale}/curriculum`;
   if (locale === 'fr') {
@@ -28,7 +29,7 @@ function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
         `Prochaine étape : commencez la piste "Bougies japonaises" depuis le cursus.\n` +
         `Votre espace : ${meHref}\n` +
         `Le cursus : ${curriculumHref}\n\n` +
-        `À très vite,\nL'équipe Tickra`,
+        `À très vite,\nL'équipe kNOWTrade`,
     };
   }
   return {
@@ -38,7 +39,7 @@ function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
       `Next step: start the "Japanese candles" track from the curriculum.\n` +
       `Your space: ${meHref}\n` +
       `The curriculum: ${curriculumHref}\n\n` +
-      `Speak soon,\nThe Tickra team`,
+      `Speak soon,\nThe kNOWTrade team`,
   };
 }
 
@@ -65,6 +66,25 @@ async function emailForCustomer(customerId: string | null | undefined): Promise<
   if (!customerId) return null;
   const u = await getUserByStripeCustomer(customerId);
   return u?.email ?? null;
+}
+
+/**
+ * Bind the tested resolver (lib/stripe/resolve-customer) to this route's real
+ * DB and Stripe clients. The logic — and every edge case around it — lives
+ * there under unit test; this is only the wiring.
+ */
+function customerLookup(stripe: {
+  customers: { retrieve: (id: string) => Promise<unknown> };
+}): CustomerLookup {
+  return {
+    byStripeCustomer: (id) => emailForCustomer(id),
+    fromStripe: async (id) =>
+      (await stripe.customers.retrieve(id)) as { deleted?: boolean; email?: string | null } | null,
+    // Update-only: a webhook must never conjure a user row.
+    link: async (email, id) => {
+      await updateExistingUser(email, { stripe_customer: id });
+    },
+  };
 }
 
 export async function POST(req: Request) {
@@ -94,7 +114,10 @@ export async function POST(req: Request) {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
-        const email = session.customer_email ?? (await emailForCustomer(session.customer as string | null));
+        const email =
+          session.customer_email ??
+          (session.customer_details as { email?: string | null } | null)?.email ??
+          (await resolveCustomerEmail(customerLookup(stripe), session.customer as string | null));
         if (!email) break;
         const plan = planFromMetadata(session.metadata as Record<string, string | undefined> | null);
         const cycle = cycleFromMetadata(session.metadata as Record<string, string | undefined> | null);
@@ -157,7 +180,10 @@ export async function POST(req: Request) {
       case 'customer.subscription.created':
       case 'customer.subscription.updated': {
         const sub = event.data.object;
-        const email = await emailForCustomer(typeof sub.customer === 'string' ? sub.customer : null);
+        const email = await resolveCustomerEmail(
+          customerLookup(stripe),
+          typeof sub.customer === 'string' ? sub.customer : null,
+        );
         if (!email) break;
         // TICKRA-FIX(security): only grant Pro if the subscription's price
         // matches one of our configured Pro price IDs. Was over-granting Pro
@@ -195,7 +221,10 @@ export async function POST(req: Request) {
       }
       case 'customer.subscription.deleted': {
         const sub = event.data.object;
-        const email = await emailForCustomer(typeof sub.customer === 'string' ? sub.customer : null);
+        const email = await resolveCustomerEmail(
+          customerLookup(stripe),
+          typeof sub.customer === 'string' ? sub.customer : null,
+        );
         if (!email) break;
         await updateExistingUser(email, { plan: 'free', current_period_end: null });
         break;

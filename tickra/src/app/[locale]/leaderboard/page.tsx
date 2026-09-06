@@ -9,7 +9,7 @@ import { getWeeklyLeaderboard, type LeaderboardEntry } from '@/lib/db/leaderboar
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
 // TODO i18n — leaderboard copy is English-only for now (Phase 4A).
-export const metadata = { title: 'Weekly leaderboard · Tickra' };
+export const metadata = { title: 'Weekly leaderboard · kNOWTrade' };
 export const dynamic = 'force-dynamic';
 
 export default async function LeaderboardPage({ params }: { params: { locale: string } }) {

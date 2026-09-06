@@ -21,7 +21,7 @@ const COPY = {
     head2: 'ferme.',
     head3: 'Ouvrez-le demain.',
     body: (losses: number, window: number, until: string) =>
-      `Sur les ${window} dernières clôtures, ${losses} étaient des pertes et le cumul est négatif. La règle de Tickra est claire : le journal se referme jusqu’à ${until}. Ce n’est pas une punition, c’est une protection — celle qu’on n’arrive pas toujours à s’imposer seul.`,
+      `Sur les ${window} dernières clôtures, ${losses} étaient des pertes et le cumul est négatif. La règle de kNOWTrade est claire : le journal se referme jusqu’à ${until}. Ce n’est pas une punition, c’est une protection — celle qu’on n’arrive pas toujours à s’imposer seul.`,
     until: 'Lever à',
     override: 'Forcer l’ouverture',
     confirm: 'En forçant, vous reconnaissez que la décision est vôtre. Le mur revient demain.',
@@ -34,7 +34,7 @@ const COPY = {
     head2: 'is closed.',
     head3: 'Open it tomorrow.',
     body: (losses: number, window: number, until: string) =>
-      `Of your last ${window} closes, ${losses} were losses and the cumulative is negative. Tickra’s rule is plain: the journal stays shut until ${until}. Not a punishment — a protection you cannot always impose on yourself.`,
+      `Of your last ${window} closes, ${losses} were losses and the cumulative is negative. kNOWTrade’s rule is plain: the journal stays shut until ${until}. Not a punishment — a protection you cannot always impose on yourself.`,
     until: 'Lifts at',
     override: 'Force open',
     confirm: 'By forcing, you acknowledge the decision is yours. The wall returns tomorrow.',

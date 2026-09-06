@@ -1,6 +1,6 @@
 // Le Cercle de relecture — appariement déterministe local.
 //
-// Tant que Tickra n'a pas de service de pairing serveur, le Cercle
+// Tant que kNOWTrade n'a pas de service de pairing serveur, le Cercle
 // fonctionne en mode honnête : on dérive un pseudonyme à partir du
 // hash de l'email signé et on apparie chaque lecteur à un partenaire
 // fictif mais plausible, choisi dans une liste seedée. Le pairing

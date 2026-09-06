@@ -1,3 +1,4 @@
+import { EMAIL } from '@/lib/brand';
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
@@ -7,7 +8,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
 
-export const metadata = { title: 'Politique cookies · Tickra' };
+export const metadata = { title: 'Politique cookies · kNOWTrade' };
 
 const COPY = {
   fr: {
@@ -23,7 +24,7 @@ const COPY = {
       {
         h: '2. Cookies que nous déposons',
         body: [
-          'Tickra dépose uniquement des cookies strictement nécessaires au fonctionnement du service, et — uniquement si vous y consentez — des cookies de mesure d’audience.',
+          'kNOWTrade dépose uniquement des cookies strictement nécessaires au fonctionnement du service, et — uniquement si vous y consentez — des cookies de mesure d’audience.',
           '— Session (tickra_session) : authentification, durée 30 jours, strictement nécessaire.',
           '— Préférence de thème (tickra_theme) : clair / sombre / auto, durée 1 an, strictement nécessaire.',
           '— Préférence de langue (tickra_locale) : fr / en, durée 1 an, strictement nécessaire.',
@@ -34,7 +35,7 @@ const COPY = {
       {
         h: '3. Cookies que nous ne déposons pas',
         body: [
-          'Tickra ne dépose ni cookie publicitaire, ni cookie de profilage, ni cookie de réseau social, ni cookie de revente de données.',
+          'kNOWTrade ne dépose ni cookie publicitaire, ni cookie de profilage, ni cookie de réseau social, ni cookie de revente de données.',
           'Nous n’utilisons aucun outil de tracking cross-site (Meta Pixel, TikTok Pixel, Google Ads Conversion, etc.).',
         ],
       },
@@ -42,7 +43,7 @@ const COPY = {
         h: '4. Gérer votre consentement',
         body: [
           'Vous pouvez à tout moment retirer ou modifier votre consentement via le bandeau cookies, accessible en bas de chaque page.',
-          'Vous pouvez aussi paramétrer votre navigateur pour refuser tous les cookies. Note : refuser les cookies strictement nécessaires empêchera le bon fonctionnement de Tickra (impossibilité de rester connecté, perte des préférences à chaque visite).',
+          'Vous pouvez aussi paramétrer votre navigateur pour refuser tous les cookies. Note : refuser les cookies strictement nécessaires empêchera le bon fonctionnement de kNOWTrade (impossibilité de rester connecté, perte des préférences à chaque visite).',
           'Liens utiles selon votre navigateur : Chrome (support.google.com/chrome), Firefox (support.mozilla.org), Safari (support.apple.com), Edge (support.microsoft.com).',
         ],
       },
@@ -51,14 +52,14 @@ const COPY = {
         body: [
           'Les cookies strictement nécessaires sont conservés pour la durée indiquée ci-dessus.',
           'Les cookies d’analytics sont supprimés à la fin de chaque session.',
-          'Aucun cookie n’est conservé plus de 13 mois conformément aux recommandations de la CNIL.',
+          'Aucun cookie n’est conservé plus de 13 mois.',
         ],
       },
       {
         h: '6. Vos droits',
         body: [
-          'Vous disposez d’un droit d’accès, de rectification, d’opposition et de suppression sur les données collectées via cookies. Contact : privacy@tickra.com.',
-          'En cas de manquement, vous pouvez introduire une réclamation auprès de la CNIL — cnil.fr.',
+          `Vous disposez d’un droit d’accès, de rectification, d’opposition et de suppression sur les données collectées via cookies. Contact : ${EMAIL.privacy}.`,
+          'En cas de manquement, vous pouvez porter plainte auprès de la Commission d’accès à l’information du Québec — cai.gouv.qc.ca.',
         ],
       },
     ],
@@ -76,7 +77,7 @@ const COPY = {
       {
         h: '2. Cookies we set',
         body: [
-          'Tickra only sets cookies strictly necessary to operate the service, and — only with your consent — anonymous audience measurement cookies.',
+          'kNOWTrade only sets cookies strictly necessary to operate the service, and — only with your consent — anonymous audience measurement cookies.',
           '— Session (tickra_session): authentication, 30-day duration, strictly necessary.',
           '— Theme preference (tickra_theme): light / dark / auto, 1-year duration, strictly necessary.',
           '— Language preference (tickra_locale): fr / en, 1-year duration, strictly necessary.',
@@ -87,7 +88,7 @@ const COPY = {
       {
         h: '3. Cookies we do NOT set',
         body: [
-          'Tickra sets no advertising cookies, no profiling cookies, no social-network cookies, and no data-resale cookies.',
+          'kNOWTrade sets no advertising cookies, no profiling cookies, no social-network cookies, and no data-resale cookies.',
           'We use no cross-site tracking tools (Meta Pixel, TikTok Pixel, Google Ads Conversion, etc.).',
         ],
       },
@@ -95,7 +96,7 @@ const COPY = {
         h: '4. Managing consent',
         body: [
           'You can withdraw or change consent at any time via the cookie banner, accessible at the bottom of every page.',
-          'You can also configure your browser to refuse all cookies. Note: refusing strictly-necessary cookies will break Tickra (no persistent login, preferences lost every visit).',
+          'You can also configure your browser to refuse all cookies. Note: refusing strictly-necessary cookies will break kNOWTrade (no persistent login, preferences lost every visit).',
           'Browser help: Chrome (support.google.com/chrome), Firefox (support.mozilla.org), Safari (support.apple.com), Edge (support.microsoft.com).',
         ],
       },
@@ -104,14 +105,14 @@ const COPY = {
         body: [
           'Strictly-necessary cookies are kept for the durations listed above.',
           'Analytics cookies are deleted at end of session.',
-          'No cookie is retained beyond 13 months, in line with CNIL recommendations.',
+          'No cookie is retained beyond 13 months.',
         ],
       },
       {
         h: '6. Your rights',
         body: [
-          'You have rights to access, rectification, objection and deletion on data collected via cookies. Contact: privacy@tickra.com.',
-          'Complaints can be filed with the French CNIL — cnil.fr.',
+          `You have rights to access, rectification, objection and deletion on data collected via cookies. Contact: ${EMAIL.privacy}.`,
+          'Complaints can be filed with the Commission d\u2019accès à l\u2019information du Québec — cai.gouv.qc.ca.',
         ],
       },
     ],

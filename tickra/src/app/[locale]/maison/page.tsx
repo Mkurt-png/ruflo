@@ -6,7 +6,7 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 
 // /[locale]/maison — La Maison. A single index of every editorial
-// piece Tickra has built. The Navbar will stay slim; this page
+// piece kNOWTrade has built. The Navbar will stay slim; this page
 // carries the full map. Organised by floor (rituals / readings /
 // archives / manifestos) so the reader can find a calm room without
 // scrolling through a menu.
@@ -19,7 +19,7 @@ export const metadata = editorialMeta({
   slug: 'maison',
   title: 'La Maison',
   description:
-    'Plan de la maison Tickra : toutes les pièces éditoriales sur une seule page. Rituels, lectures, archives, manifestes.',
+    'Plan de la maison kNOWTrade : toutes les pièces éditoriales sur une seule page. Rituels, lectures, archives, manifestes.',
 });
 
 type Room = {
@@ -128,8 +128,8 @@ const WINGS: Wing[] = [
         slug: 'refus',
         title: { fr: 'Le Refus', en: 'The Refusal' },
         caption: {
-          fr: 'Dix choses que Tickra ne construira jamais. Permanent.',
-          en: 'Ten things Tickra will never build. Permanent.',
+          fr: 'Dix choses que kNOWTrade ne construira jamais. Permanent.',
+          en: 'Ten things kNOWTrade will never build. Permanent.',
         },
       },
       {
@@ -221,8 +221,8 @@ const WINGS: Wing[] = [
         slug: 'institutionnel',
         title: { fr: 'L’Institutionnel', en: 'The Institutional' },
         caption: {
-          fr: 'Tickra pour les desks et prop-firms. Sur conversation.',
-          en: 'Tickra for desks and prop firms. On conversation.',
+          fr: 'kNOWTrade pour les desks et prop-firms. Sur conversation.',
+          en: 'kNOWTrade for desks and prop firms. On conversation.',
         },
       },
       {
@@ -244,7 +244,7 @@ const COPY = {
     head2: 'D’une seule pièce.',
     head3: 'Une porte par lieu.',
     intro:
-      'Tickra n’est pas un menu déroulant. C’est une maison. Voici le plan complet : les rituels au sud, les lectures au nord, les archives en sous-sol, les manifestes au mur du salon, les outils calmes près de la fenêtre. Vous entrez par où vous voulez.',
+      'kNOWTrade n’est pas un menu déroulant. C’est une maison. Voici le plan complet : les rituels au sud, les lectures au nord, les archives en sous-sol, les manifestes au mur du salon, les outils calmes près de la fenêtre. Vous entrez par où vous voulez.',
     signedNote: '· Connexion requise',
     footer:
       'Cette page sert de plan. Si vous cherchez une notion précise, l’Annuaire la liste par ordre alphabétique. Si vous voulez écrire, le Journal vous attend ; si vous voulez vous taire, La Veillée le dimanche.',
@@ -255,7 +255,7 @@ const COPY = {
     head2: 'In one room.',
     head3: 'One door per place.',
     intro:
-      'Tickra is not a dropdown menu. It is a house. Here is the full plan: the rituals to the south, the readings to the north, the archives in the basement, the manifestos on the parlor wall, the calm tools near the window. You enter wherever you like.',
+      'kNOWTrade is not a dropdown menu. It is a house. Here is the full plan: the rituals to the south, the readings to the north, the archives in the basement, the manifestos on the parlor wall, the calm tools near the window. You enter wherever you like.',
     signedNote: '· Sign-in required',
     footer:
       'This page serves as a plan. If you are looking for a specific notion, the Index lists them alphabetically. If you want to write, the Journal awaits; if you want to stay silent, La Veillée on Sunday.',
@@ -276,8 +276,8 @@ export default async function MaisonPage({ params }: { params: { locale: string 
         slug="maison"
         title={locale === 'fr' ? 'La Maison' : 'The House'}
         description={locale === 'fr'
-          ? 'Plan de la maison Tickra : toutes les pièces éditoriales sur une page.'
-          : 'Plan of the Tickra house: every editorial room on one page.'}
+          ? 'Plan de la maison kNOWTrade : toutes les pièces éditoriales sur une page.'
+          : 'Plan of the kNOWTrade house: every editorial room on one page.'}
         locale={locale}
       />
       <main id="main" className="bg-[#F4F1EA] min-h-screen">

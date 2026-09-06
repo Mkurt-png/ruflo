@@ -19,12 +19,12 @@ const copy = {
       {
         icon: 'stripe',
         title: 'Paiement sécurisé Stripe',
-        body: 'Vos données bancaires ne transitent jamais par Tickra. Stripe est certifié PCI-DSS niveau 1.',
+        body: 'Vos données bancaires ne transitent jamais par kNOWTrade. Stripe est certifié PCI-DSS niveau 1.',
       },
       {
         icon: 'lock',
         title: 'Vos données vous appartiennent',
-        body: 'Export RGPD intégral en un clic depuis votre compte. Aucune revente de données.',
+        body: 'Export intégral de vos données en un clic depuis votre compte, conformément à la Loi 25. Aucune revente de données.',
       },
     ],
     faqTitle: 'Questions tarifs',
@@ -67,12 +67,12 @@ const copy = {
       {
         icon: 'stripe',
         title: 'Secure Stripe payment',
-        body: 'Your card details never touch Tickra. Stripe is PCI-DSS Level 1 certified.',
+        body: 'Your card details never touch kNOWTrade. Stripe is PCI-DSS Level 1 certified.',
       },
       {
         icon: 'lock',
         title: 'Your data is yours',
-        body: 'Full GDPR export in one click from your account. Zero data resale.',
+        body: 'Full data export in one click from your account, as required by Québec\u2019s Law 25. Zero data resale.',
       },
     ],
     faqTitle: 'Pricing FAQ',

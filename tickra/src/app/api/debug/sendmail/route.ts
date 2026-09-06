@@ -23,8 +23,8 @@ export async function GET(req: Request) {
   const result = await sendEmail({
     from: FROM,
     to,
-    subject: 'Tickra diag — test',
-    text: 'This is a Tickra diagnostic test email. If you see it, Resend is working.',
+    subject: 'kNOWTrade diag — test',
+    text: 'This is a kNOWTrade diagnostic test email. If you see it, Resend is working.',
   });
 
   return NextResponse.json({

@@ -10,7 +10,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
 import { getLessonContent, isSeeded } from '@/lib/curriculum/lesson-content';
 
-export const metadata = { title: 'Curriculum · Tickra' };
+export const metadata = { title: 'Curriculum · kNOWTrade' };
 
 const levelLabel: Record<string, { fr: string; en: string }> = {
   foundations: { fr: 'Fondations', en: 'Foundations' },

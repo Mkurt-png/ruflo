@@ -69,7 +69,7 @@ const COPY = {
     head2: 'Publique.',
     head3: 'Même formule que la vôtre.',
     intro:
-      'Tickra demande à ses lecteurs d’écrire ce qu’ils ratent. Il serait étrange de ne pas en faire autant. Chaque mois, je publie ici ma propre Cote, calculée avec la même formule, sur la même fenêtre. Aucune flatterie, aucun lissage. C’est ce que la formule rend.',
+      'kNOWTrade demande à ses lecteurs d’écrire ce qu’ils ratent. Il serait étrange de ne pas en faire autant. Chaque mois, je publie ici ma propre Cote, calculée avec la même formule, sur la même fenêtre. Aucune flatterie, aucun lissage. C’est ce que la formule rend.',
     score: 'Cote',
     delta: 'Variation',
     parts: 'Composantes',
@@ -87,7 +87,7 @@ const COPY = {
     head2: 'In public.',
     head3: 'Same formula as yours.',
     intro:
-      'Tickra asks readers to write what they miss. It would be strange not to do the same. Every month, I publish my own Score here, computed with the same formula, on the same window. No flattery, no smoothing. It is what the formula returns.',
+      'kNOWTrade asks readers to write what they miss. It would be strange not to do the same. Every month, I publish my own Score here, computed with the same formula, on the same window. No flattery, no smoothing. It is what the formula returns.',
     score: 'Score',
     delta: 'Change',
     parts: 'Components',

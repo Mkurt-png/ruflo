@@ -10,7 +10,7 @@ import { LessonResumeCard } from '@/components/learn/LessonResumeCard';
 import { TrackFilter } from '@/components/learn/TrackFilter';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 
-export const metadata = { title: 'Apprendre · Tickra' };
+export const metadata = { title: 'Apprendre · kNOWTrade' };
 
 export default async function LearnPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

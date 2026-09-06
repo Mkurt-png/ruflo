@@ -17,7 +17,7 @@ describe('buildLinkedInShareUrl', () => {
   it('carries the certification metadata as query params', () => {
     expect(parsed.searchParams.get('startTask')).toBe('CERTIFICATION_NAME');
     expect(parsed.searchParams.get('name')).toBe('Japanese Candles');
-    expect(parsed.searchParams.get('organizationName')).toBe('Tickra');
+    expect(parsed.searchParams.get('organizationName')).toBe('kNOWTrade');
     expect(parsed.searchParams.get('issueYear')).toBe('2026');
     expect(parsed.searchParams.get('issueMonth')).toBe('6');
     expect(parsed.searchParams.get('certUrl')).toBe('https://tickra.app/verify/u/track');

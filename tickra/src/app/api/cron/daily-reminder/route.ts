@@ -20,8 +20,8 @@ import { isDbConfigured, lastNotificationAt, recordNotification } from '@/lib/db
 
 export const runtime = 'nodejs';
 
-const SUBJECT_FR = '10 minutes — votre leçon Tickra du jour';
-const SUBJECT_EN = '10 minutes — your Tickra lesson for today';
+const SUBJECT_FR = '10 minutes — votre leçon kNOWTrade du jour';
+const SUBJECT_EN = '10 minutes — your kNOWTrade lesson for today';
 
 // TICKRA-FIX(security): fail CLOSED — see weekly-digest. This endpoint mails
 // the entire Resend audience, so the old permissive path (forgeable
@@ -110,8 +110,8 @@ export async function GET(req: Request) {
       ? `Bonjour${c.first_name ? ' ' + c.first_name : ''},`
       : `Hi${c.first_name ? ' ' + c.first_name : ''},`;
     const body = locale === 'fr'
-      ? `${greeting}\n\nDix minutes suffisent pour avancer d'une leçon. Reprenez où vous en étiez :\n${resumeUrl}\n\n— Tickra`
-      : `${greeting}\n\nTen minutes is enough for one lesson. Pick up where you left off:\n${resumeUrl}\n\n— Tickra`;
+      ? `${greeting}\n\nDix minutes suffisent pour avancer d'une leçon. Reprenez où vous en étiez :\n${resumeUrl}\n\n— kNOWTrade`
+      : `${greeting}\n\nTen minutes is enough for one lesson. Pick up where you left off:\n${resumeUrl}\n\n— kNOWTrade`;
 
     const r = await sendEmail({ from: FROM, to: c.email, subject, text: body });
     if (r.ok && 'delivered' in r && r.delivered) {

@@ -9,7 +9,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { SimulatorApp } from '@/components/simulator/SimulatorApp';
 import { FlashCrashMode } from '@/components/simulator/FlashCrashMode';
 
-export const metadata = { title: 'Simulateur · Tickra' };
+export const metadata = { title: 'Simulateur · kNOWTrade' };
 
 export default async function SimulatorPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

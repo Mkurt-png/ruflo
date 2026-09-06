@@ -8,7 +8,7 @@ type Locale = 'fr' | 'en';
 const copy = {
   fr: {
     title: 'Calculateur de taille de position',
-    subtitle: 'Trois variables, une équation. Tickra l’utilise sur chaque trade.',
+    subtitle: 'Trois variables, une équation. kNOWTrade l’utilise sur chaque trade.',
     capital: 'Capital ($)',
     riskPct: 'Risque par trade (%)',
     entry: 'Prix d’entrée',
@@ -24,7 +24,7 @@ const copy = {
   },
   en: {
     title: 'Position size calculator',
-    subtitle: 'Three inputs, one equation. Tickra uses it on every trade.',
+    subtitle: 'Three inputs, one equation. kNOWTrade uses it on every trade.',
     capital: 'Capital ($)',
     riskPct: 'Risk per trade (%)',
     entry: 'Entry price',

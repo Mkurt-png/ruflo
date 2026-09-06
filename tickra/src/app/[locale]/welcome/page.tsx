@@ -10,7 +10,7 @@ import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { TRACKS, getTrack } from '@/lib/curriculum/data';
 
-export const metadata = { title: 'Bienvenue · Tickra' };
+export const metadata = { title: 'Bienvenue · kNOWTrade' };
 
 // TICKRA-PHASE-1.1: focused first-action. One big primary CTA pointing at the
 // user's recommended first lesson (from placement test). Secondary actions are
@@ -18,7 +18,7 @@ export const metadata = { title: 'Bienvenue · Tickra' };
 const copy = {
   fr: {
     eyebrow: 'Paiement confirmé',
-    title: 'Bienvenue dans Tickra Pro.',
+    title: 'Bienvenue dans kNOWTrade Pro.',
     body: "Votre accès est actif. Reçu Stripe par email, et un mail de bienvenue arrive dans quelques minutes.",
     primary: 'Démarrer ma première leçon',
     primaryHint: (track: string) => `Première leçon de la piste ${track}`,
@@ -30,7 +30,7 @@ const copy = {
   },
   en: {
     eyebrow: 'Payment confirmed',
-    title: 'Welcome to Tickra Pro.',
+    title: 'Welcome to kNOWTrade Pro.',
     body: "Your access is live. Stripe receipt by email, welcome mail on its way.",
     primary: 'Start my first lesson',
     primaryHint: (track: string) => `First lesson of the ${track} track`,

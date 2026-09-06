@@ -8,7 +8,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 
-export const metadata = { title: 'Communauté · Tickra' };
+export const metadata = { title: 'Communauté · kNOWTrade' };
 
 export default async function CommunityPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
