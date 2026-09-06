@@ -4,7 +4,7 @@
   "buildCommand": "next build",
   "installCommand": "npm install",
   "outputDirectory": ".next",
-  "regions": ["cdg1"],
+  "regions": ["yul1"],
   "github": {
     "silent": false
   },

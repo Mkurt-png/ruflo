@@ -99,7 +99,7 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
             <span>
               {t.copyright.replace('2026', String(year))}
             </span>
-            <span>Made in Paris · CDG1</span>
+            <span>Made in Québec · YUL1</span>
           </div>
         </div>
       </Container>
