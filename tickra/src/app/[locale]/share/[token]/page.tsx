@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const payload = decodeShare(params.token);
   if (!payload) return {};
   return {
-    title: `${payload.n} · nkNOWTrade`,
+    title: `${payload.n}`,
     description: `${payload.l} lessons, ${payload.t} tracks, ${payload.s}-day streak on nkNOWTrade.`,
   };
 }

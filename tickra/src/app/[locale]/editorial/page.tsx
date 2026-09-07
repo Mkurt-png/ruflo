@@ -26,11 +26,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     openGraph: {
       type: 'website',
       url: `${SITE_URL}/${locale}/editorial`,
-      title: `${t.title} · nkNOWTrade`,
+      title: `${t.title}`,
       description: t.subtitle,
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
     },
-    twitter: { card: 'summary_large_image', title: `${t.title} · nkNOWTrade`, description: t.subtitle },
+    twitter: { card: 'summary_large_image', title: `${t.title}`, description: t.subtitle },
   };
 }
 

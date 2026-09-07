@@ -8,7 +8,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { SettingsPanel } from '@/components/account/SettingsPanel';
 
-export const metadata = { title: 'Paramètres · nkNOWTrade' };
+export const metadata = { title: 'Paramètres' };
 
 export default async function SettingsPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

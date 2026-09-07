@@ -156,7 +156,7 @@ export async function generateMetadata({
   if (!user) return {};
   const name = displayNameFor(user, locale);
   const stats = await computeStats(user.email);
-  const title = `${name} · nkNOWTrade`;
+  const title = `${name}`;
   const description =
     locale === 'fr'
       ? `${stats.lessons} leçons, ${stats.tracks} pistes, ${stats.streak} jours de série sur nkNOWTrade.`

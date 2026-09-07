@@ -12,7 +12,7 @@ import { Footer } from '@/components/sections/Footer';
 
 export const revalidate = 86400;
 export const metadata = {
-  title: 'L’Édition Lifetime · nkNOWTrade',
+  title: 'L’Édition Lifetime',
   description:
     'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.',
 };

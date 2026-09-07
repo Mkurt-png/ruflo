@@ -17,7 +17,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
 
-export const metadata = { title: 'Mentions légales · nkNOWTrade' };
+export const metadata = { title: 'Mentions légales' };
 
 // FR-mandatory Mentions légales page (LCEN 2004-575, art. 6-III).
 // Hardcoded copy (not in dict) because it's France-specific legal text;

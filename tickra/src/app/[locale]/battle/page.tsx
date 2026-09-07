@@ -16,7 +16,7 @@ const BattleArena3D = nextDynamic(
 );
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle · nkNOWTrade' };
+export const metadata = { title: 'Battle' };
 
 export default async function BattleHubPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

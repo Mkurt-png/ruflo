@@ -53,10 +53,11 @@ export function OrganizationJsonLd() {
       { '@type': 'Country', name: 'France' },
       { '@type': 'Country', name: 'United States' },
     ],
-    sameAs: [
-      'https://twitter.com/tickra',
-      'https://www.linkedin.com/company/tickra',
-    ],
+    // `sameAs` is a claim that these profiles ARE this organisation. The two
+    // that were here pointed at @tickra handles from the old name — accounts
+    // this operator does not hold, so the site was vouching for someone else's.
+    // Left empty until real profiles exist; an absent claim beats a false one.
+    sameAs: [] as string[],
   };
 
   return (

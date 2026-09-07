@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!post) return {};
   const canonical = `/${params.locale}/editorial/${params.slug}`;
   return {
-    title: `${post.title} · nkNOWTrade`,
+    title: `${post.title}`,
     description: post.excerpt,
     alternates: { canonical },
     openGraph: {

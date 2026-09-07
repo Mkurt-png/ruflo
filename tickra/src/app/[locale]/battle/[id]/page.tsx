@@ -11,7 +11,7 @@ import { BattleRoom } from '@/components/battle/BattleRoom';
 import { BattleJoin } from '@/components/battle/BattleJoin';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle · nkNOWTrade' };
+export const metadata = { title: 'Battle' };
 
 export default async function BattleRoomPage({
   params,
