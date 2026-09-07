@@ -1,6 +1,6 @@
 // Brand identity — the "N chandelier" mark.
 //
-// The N of kNOWTrade is built from two real Japanese candlesticks (body plus
+// The N of nkNOWTrade is built from two real Japanese candlesticks (body plus
 // upper and lower wick) joined by a rising diagonal: the letter of the key word
 // and the instrument of the trade are the same object.
 //
@@ -73,8 +73,10 @@ export function LogoMark({ className = 'h-5 w-5', title }: MarkProps) {
 export function Wordmark({ className = 'text-[15px]' }: { className?: string }) {
   return (
     <span className={`tracking-tight ${className}`} aria-label={BRAND_NAME}>
+      {/* The "n" of the domain and the "k" of the pun both sit light, so the
+          eye still lands on NOW rather than on a four-letter run-up. */}
       <span aria-hidden className="font-normal text-muted">
-        k
+        nk
       </span>
       <span
         aria-hidden

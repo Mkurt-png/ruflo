@@ -6,7 +6,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PlacementTest } from '@/components/placement/PlacementTest';
 
-export const metadata = { title: 'Test de placement · kNOWTrade' };
+export const metadata = { title: 'Test de placement · nkNOWTrade' };
 
 export default async function PlacementPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

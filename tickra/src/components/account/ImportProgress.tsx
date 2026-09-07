@@ -14,17 +14,17 @@ const NOTE_PREFIX = 'tickra-note:';
 const copy = {
   fr: {
     title: 'Importer une progression',
-    body: 'Restaurez un export JSON kNOWTrade. La progression existante est fusionnée — rien n’est supprimé.',
+    body: 'Restaurez un export JSON nkNOWTrade. La progression existante est fusionnée — rien n’est supprimé.',
     cta: 'Choisir un fichier',
-    invalid: 'Fichier invalide. Vérifiez que c’est bien un export kNOWTrade.',
+    invalid: 'Fichier invalide. Vérifiez que c’est bien un export nkNOWTrade.',
     imported: 'Import terminé.',
     badPayload: 'Payload non reconnu.',
   },
   en: {
     title: 'Import progress',
-    body: 'Restore a kNOWTrade JSON export. Existing progress is merged — nothing is dropped.',
+    body: 'Restore a nkNOWTrade JSON export. Existing progress is merged — nothing is dropped.',
     cta: 'Choose a file',
-    invalid: 'Invalid file. Check it is a kNOWTrade export.',
+    invalid: 'Invalid file. Check it is a nkNOWTrade export.',
     imported: 'Import complete.',
     badPayload: 'Unrecognised payload.',
   },

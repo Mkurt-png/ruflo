@@ -28,11 +28,11 @@ export async function GET(_req: Request, { params }: { params: { locale: string 
   });
 
   const xml = buildRss({
-    title: locale === 'fr' ? 'kNOWTrade — Éditorial' : 'kNOWTrade — Editorial',
+    title: locale === 'fr' ? 'nkNOWTrade — Éditorial' : 'nkNOWTrade — Editorial',
     description:
       locale === 'fr'
-        ? 'Essais et méthode kNOWTrade sur le trading, les marchés et la psychologie.'
-        : 'kNOWTrade essays and method on trading, markets and psychology.',
+        ? 'Essais et méthode nkNOWTrade sur le trading, les marchés et la psychologie.'
+        : 'nkNOWTrade essays and method on trading, markets and psychology.',
     siteUrl: base,
     feedUrl: `${base}/editorial/feed.xml`,
     language: locale === 'fr' ? 'fr-FR' : 'en-US',

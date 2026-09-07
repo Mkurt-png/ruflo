@@ -5,14 +5,19 @@
 // visible in plain text too — the wordmark in components/brand/Logo.tsx does
 // the same job typographically.
 //
+// The leading "n" matches the domain, nknowtrade.com. It is carried as its own
+// part rather than merged into `lead` so the wordmark can keep the k separate:
+// flattening the whole thing to "nknowtrade" would erase the k-NOW reading, and
+// with it the reason the mark is built the way it is.
+//
 // Note: the operator's identity (see lib/legal/entity.ts) is deliberately NOT
 // derived from this constant. Who runs the business is a legal fact, not
 // branding.
 
-export const BRAND_NAME = 'kNOWTrade';
+export const BRAND_NAME = 'nkNOWTrade';
 
-/** The three parts of the wordmark, for surfaces that style them separately. */
-export const BRAND_PARTS = { lead: 'k', now: 'NOW', tail: 'Trade' } as const;
+/** The parts of the wordmark, for surfaces that style them separately. */
+export const BRAND_PARTS = { prefix: 'n', lead: 'k', now: 'NOW', tail: 'Trade' } as const;
 
 /**
  * Domain the public contact addresses live on.

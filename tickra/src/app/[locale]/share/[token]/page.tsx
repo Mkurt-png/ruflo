@@ -17,31 +17,31 @@ export async function generateMetadata({ params }: { params: Params }) {
   const payload = decodeShare(params.token);
   if (!payload) return {};
   return {
-    title: `${payload.n} · kNOWTrade`,
-    description: `${payload.l} lessons, ${payload.t} tracks, ${payload.s}-day streak on kNOWTrade.`,
+    title: `${payload.n} · nkNOWTrade`,
+    description: `${payload.l} lessons, ${payload.t} tracks, ${payload.s}-day streak on nkNOWTrade.`,
   };
 }
 
 const copy = {
   fr: {
     eyebrow: 'Profil partagé',
-    summary: 'progresse sur kNOWTrade.',
+    summary: 'progresse sur nkNOWTrade.',
     lessons: 'leçons',
     tracks: 'pistes',
     streak: 'jours de série',
     cta: 'Commencer mon parcours',
-    learn: 'En savoir plus sur kNOWTrade',
+    learn: 'En savoir plus sur nkNOWTrade',
     generatedAt: 'Généré le',
     of: 'sur',
   },
   en: {
     eyebrow: 'Shared profile',
-    summary: 'is progressing on kNOWTrade.',
+    summary: 'is progressing on nkNOWTrade.',
     lessons: 'lessons',
     tracks: 'tracks',
     streak: 'day streak',
     cta: 'Start my own',
-    learn: 'Learn about kNOWTrade',
+    learn: 'Learn about nkNOWTrade',
     generatedAt: 'Generated',
     of: 'of',
   },

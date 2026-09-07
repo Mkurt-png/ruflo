@@ -22,16 +22,16 @@ import { SITE_URL } from '@/lib/site-url';
 type Params = { locale: string; slug: string };
 
 export const dynamic = 'force-dynamic';
-// kNOWTrade awards XP for many actions client-side, but on the public page we
+// nkNOWTrade awards XP for many actions client-side, but on the public page we
 // only know server-side completions. Map each completed lesson to a fixed
 // XP value — this keeps the displayed level deterministic and conservative.
 const XP_PER_LESSON = 25;
 
 const copy = {
   fr: {
-    anonymous: 'Apprenant kNOWTrade',
+    anonymous: 'Apprenant nkNOWTrade',
     eyebrow: 'Profil public',
-    summary: 'progresse sur kNOWTrade.',
+    summary: 'progresse sur nkNOWTrade.',
     streak: 'Série la plus longue',
     streakUnit: 'jours',
     level: 'Niveau',
@@ -44,14 +44,14 @@ const copy = {
     pro: 'Pro',
     lifetime: 'Lifetime',
     cta: 'Commencer mon propre parcours',
-    learn: 'Découvrir kNOWTrade',
+    learn: 'Découvrir nkNOWTrade',
     of: 'sur',
     months: ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'],
   },
   en: {
-    anonymous: 'kNOWTrade learner',
+    anonymous: 'nkNOWTrade learner',
     eyebrow: 'Public profile',
-    summary: 'is progressing on kNOWTrade.',
+    summary: 'is progressing on nkNOWTrade.',
     streak: 'Longest streak',
     streakUnit: 'days',
     level: 'Level',
@@ -64,7 +64,7 @@ const copy = {
     pro: 'Pro',
     lifetime: 'Lifetime',
     cta: 'Start my own journey',
-    learn: 'Discover kNOWTrade',
+    learn: 'Discover nkNOWTrade',
     of: 'of',
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   },
@@ -156,11 +156,11 @@ export async function generateMetadata({
   if (!user) return {};
   const name = displayNameFor(user, locale);
   const stats = await computeStats(user.email);
-  const title = `${name} · kNOWTrade`;
+  const title = `${name} · nkNOWTrade`;
   const description =
     locale === 'fr'
-      ? `${stats.lessons} leçons, ${stats.tracks} pistes, ${stats.streak} jours de série sur kNOWTrade.`
-      : `${stats.lessons} lessons, ${stats.tracks} tracks, ${stats.streak}-day streak on kNOWTrade.`;
+      ? `${stats.lessons} leçons, ${stats.tracks} pistes, ${stats.streak} jours de série sur nkNOWTrade.`
+      : `${stats.lessons} lessons, ${stats.tracks} tracks, ${stats.streak}-day streak on nkNOWTrade.`;
   const url = `${SITE_URL}/${locale}/u/${params.slug}`;
   return {
     title,
@@ -171,7 +171,7 @@ export async function generateMetadata({
       url,
       title,
       description,
-      siteName: 'kNOWTrade',
+      siteName: 'nkNOWTrade',
       images: user.avatar_url ? [{ url: user.avatar_url }] : undefined,
     },
     twitter: {

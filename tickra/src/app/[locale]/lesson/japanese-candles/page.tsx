@@ -10,7 +10,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { CandlestickChart } from '@/components/hero/CandlestickChart';
 
-export const metadata = { title: 'Leçon — Bougies japonaises · kNOWTrade' };
+export const metadata = { title: 'Leçon — Bougies japonaises · nkNOWTrade' };
 
 export default async function LessonPreviewPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

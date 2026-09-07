@@ -28,9 +28,9 @@ export async function POST(req: Request) {
   const locale: 'fr' | 'en' = body.locale === 'fr' ? 'fr' : 'en';
   const pdfUrl = locale === 'fr' ? PDF_URL_FR : PDF_URL_EN;
 
-  const subject = locale === 'fr' ? 'Votre PDF kNOWTrade' : 'Your kNOWTrade PDF';
-  const body_fr = `Merci de vous être inscrit·e à l'éditorial kNOWTrade.\n\nTéléchargez le PDF ici : ${pdfUrl}\n\nÀ très vite,\nL'équipe kNOWTrade`;
-  const body_en = `Thanks for subscribing to the kNOWTrade editorial.\n\nDownload the PDF here: ${pdfUrl}\n\nSpeak soon,\nThe kNOWTrade team`;
+  const subject = locale === 'fr' ? 'Votre PDF nkNOWTrade' : 'Your nkNOWTrade PDF';
+  const body_fr = `Merci de vous être inscrit·e à l'éditorial nkNOWTrade.\n\nTéléchargez le PDF ici : ${pdfUrl}\n\nÀ très vite,\nL'équipe nkNOWTrade`;
+  const body_en = `Thanks for subscribing to the nkNOWTrade editorial.\n\nDownload the PDF here: ${pdfUrl}\n\nSpeak soon,\nThe nkNOWTrade team`;
 
   const [audience, mail] = await Promise.all([
     addToAudience({ email }),

@@ -66,7 +66,7 @@ export function ShareProfile({ locale }: { locale: Locale }) {
   }, [state, ready]);
 
   const onGenerate = () => {
-    const displayName = name.trim() || (locale === 'fr' ? 'Apprenant kNOWTrade' : 'kNOWTrade learner');
+    const displayName = name.trim() || (locale === 'fr' ? 'Apprenant nkNOWTrade' : 'nkNOWTrade learner');
     const token = encodeShare({
       v: 1,
       n: displayName,

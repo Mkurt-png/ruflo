@@ -12,7 +12,7 @@ import { Footer } from '@/components/sections/Footer';
 
 export const revalidate = 86400;
 export const metadata = {
-  title: 'L’Édition Lifetime · kNOWTrade',
+  title: 'L’Édition Lifetime · nkNOWTrade',
   description:
     'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.',
 };
@@ -32,7 +32,7 @@ const COPY = {
       'Vingt trades commentés — vous choisissez la sélection.',
       'Trois Criées de l’année avec leur leçon source intégrale.',
       'Une Lettre du Nouvel An signée par l’éditeur, à votre nom.',
-      'Un essai inédit, jamais publié sur kNOWTrade.',
+      'Un essai inédit, jamais publié sur nkNOWTrade.',
     ],
     candor:
       'Note d’honnêteté : le programme postal sera activé quand la migration commerciale et l’imprimerie partenaire seront prêtes. Les membres Lifetime actuels reçoivent dès maintenant le PDF mensuel ; le papier suivra.',
@@ -52,7 +52,7 @@ const COPY = {
       'Twenty annotated trades — you choose the selection.',
       'Three of the year’s Criées with their full source lesson.',
       'A New Year Letter signed by the editor, addressed to you.',
-      'One unpublished essay, never seen on kNOWTrade.',
+      'One unpublished essay, never seen on nkNOWTrade.',
     ],
     candor:
       'Honesty note: the postal program will go live when the commercial migration and partner printer are ready. Current Lifetime members already receive the monthly PDF; paper will follow.',

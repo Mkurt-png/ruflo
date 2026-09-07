@@ -12,7 +12,7 @@ import { Footer } from '@/components/sections/Footer';
 
 export const revalidate = 86400;
 export const metadata = {
-  title: 'Le Bureau partagé · kNOWTrade',
+  title: 'Le Bureau partagé · nkNOWTrade',
   description:
     'Publier une journée de votre journal en lecture seule, annotée d’une ligne. Pas de DM, pas de likes — une page typographique.',
 };
