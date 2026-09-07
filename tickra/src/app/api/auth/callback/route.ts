@@ -118,7 +118,28 @@ export async function GET(req: Request) {
   return confirmPage(token, locale);
 }
 
+// TICKRA-FIX(auth): sign-in must never answer with a broken page.
+//
+// Every failure below redirects to /signin with a reason the page can explain,
+// except that an unguarded throw — a transient DB error inside
+// consumeMagicNonce, say — escaped as a 500. The user then got Chrome's "this
+// page isn't working", with no way back and nothing in the logs saying why, on
+// the one route that is the only door into the product.
+//
+// So the whole handler is wrapped: anything unexpected is logged for the
+// operator and shown to the user as a retryable error, never as a dead page.
 export async function POST(req: Request) {
+  const localeHint = new URL(req.url).searchParams.get('locale') === 'fr' ? 'fr' : 'en';
+  try {
+    return await handleCallback(req);
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : 'unknown error';
+    console.error('[auth/callback] unexpected failure: %s', detail);
+    return fail(localeHint, 'server_error', new URL(req.url));
+  }
+}
+
+async function handleCallback(req: Request) {
   const url = new URL(req.url);
   const form = await req.formData().catch(() => null);
   const token = typeof form?.get('token') === 'string' ? (form.get('token') as string) : null;
@@ -163,7 +184,18 @@ export async function POST(req: Request) {
   // to the previous best-effort behaviour so the auth flow still works in
   // dev — but in production with DB the nonce is single-use.
   if (isDbConfigured()) {
-    const consumed = await consumeMagicNonce(nonce, email);
+    // Distinguish "this link was already used" from "the database is having a
+    // moment". Both used to look identical from here; only the first is the
+    // user's problem, and telling someone their valid link expired when the
+    // database blinked is the worst of the two answers.
+    let consumed: boolean;
+    try {
+      consumed = await consumeMagicNonce(nonce, email);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : 'unknown error';
+      console.error('[auth/callback] could not consume nonce: %s', detail);
+      return fail(locale, 'server_error', url);
+    }
     if (!consumed) {
       return fail(locale, 'expired', url);
     }
