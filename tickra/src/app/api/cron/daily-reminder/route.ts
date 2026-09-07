@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { FROM, sendEmail } from '@/lib/email/resend';
+import { renderEmail } from '@/lib/email/layout';
+import { EMAIL } from '@/lib/brand';
 import { isDbConfigured, lastNotificationAt, recordNotification } from '@/lib/db/queries';
 
 // GET /api/cron/daily-reminder
@@ -118,11 +120,35 @@ export async function GET(req: Request) {
     const greeting = locale === 'fr'
       ? `Bonjour${c.first_name ? ' ' + c.first_name : ''},`
       : `Hi${c.first_name ? ' ' + c.first_name : ''},`;
-    const body = locale === 'fr'
-      ? `${greeting}\n\nDix minutes suffisent pour avancer d'une leçon. Reprenez où vous en étiez :\n${resumeUrl}\n\n— nkNOWTrade`
-      : `${greeting}\n\nTen minutes is enough for one lesson. Pick up where you left off:\n${resumeUrl}\n\n— nkNOWTrade`;
+    const unsubscribeUrl = `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(c.email)}`;
+    const mail = locale === 'fr'
+      ? renderEmail({
+          heading: greeting,
+          intro: 'Dix minutes suffisent pour avancer d’une leçon. Reprenez où vous en étiez.',
+          cta: { label: 'Reprendre ma leçon', url: resumeUrl },
+          footer: [
+            'Vous recevez ce rappel quotidien parce que vous l’avez demandé lors de votre inscription.',
+            `Pour ne plus le recevoir : ${unsubscribeUrl}`,
+          ],
+        })
+      : renderEmail({
+          heading: greeting,
+          intro: 'Ten minutes is enough for one lesson. Pick up where you left off.',
+          cta: { label: 'Resume my lesson', url: resumeUrl },
+          footer: [
+            'You are receiving this daily reminder because you opted in when you signed up.',
+            `To stop receiving it: ${unsubscribeUrl}`,
+          ],
+        });
 
-    const r = await sendEmail({ from: FROM, to: c.email, subject, text: body });
+    const r = await sendEmail({
+      from: FROM,
+      replyTo: EMAIL.support,
+      to: c.email,
+      subject,
+      text: mail.text,
+      html: mail.html,
+    });
     if (r.ok && 'delivered' in r && r.delivered) {
       sent += 1;
       if (dbReady) await recordNotification(c.email, 'daily_reminder');
