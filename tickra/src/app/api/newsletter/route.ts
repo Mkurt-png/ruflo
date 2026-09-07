@@ -1,4 +1,6 @@
 import { SITE_URL } from '@/lib/site-url';
+import { renderEmail } from '@/lib/email/layout';
+import { BRAND_NAME, EMAIL } from '@/lib/brand';
 import { NextResponse } from 'next/server';
 import { addToAudience, FROM, sendEmail } from '@/lib/email/resend';
 
@@ -29,16 +31,36 @@ export async function POST(req: Request) {
   const pdfUrl = locale === 'fr' ? PDF_URL_FR : PDF_URL_EN;
 
   const subject = locale === 'fr' ? 'Votre PDF nkNOWTrade' : 'Your nkNOWTrade PDF';
-  const body_fr = `Merci de vous être inscrit·e à l'éditorial nkNOWTrade.\n\nTéléchargez le PDF ici : ${pdfUrl}\n\nÀ très vite,\nL'équipe nkNOWTrade`;
-  const body_en = `Thanks for subscribing to the nkNOWTrade editorial.\n\nDownload the PDF here: ${pdfUrl}\n\nSpeak soon,\nThe nkNOWTrade team`;
+  const unsubscribeUrl = `${SITE_URL}/api/unsubscribe?email=${encodeURIComponent(email)}`;
+  const rendered = locale === 'fr'
+    ? renderEmail({
+        heading: 'Votre PDF est prêt',
+        intro: `Merci de vous être inscrit·e à l’éditorial ${BRAND_NAME}. Voici le document promis.`,
+        cta: { label: 'Télécharger le PDF', url: pdfUrl },
+        footer: [
+          'Vous recevez ce message parce que cette adresse vient de s’inscrire à l’éditorial.',
+          `Se désinscrire : ${unsubscribeUrl}`,
+        ],
+      })
+    : renderEmail({
+        heading: 'Your PDF is ready',
+        intro: `Thanks for subscribing to the ${BRAND_NAME} editorial. Here is the document.`,
+        cta: { label: 'Download the PDF', url: pdfUrl },
+        footer: [
+          'You are receiving this because this address just subscribed to the editorial.',
+          `Unsubscribe: ${unsubscribeUrl}`,
+        ],
+      });
 
   const [audience, mail] = await Promise.all([
     addToAudience({ email }),
     sendEmail({
       from: FROM,
       to: email,
+      replyTo: EMAIL.support,
       subject,
-      text: locale === 'fr' ? body_fr : body_en,
+      text: rendered.text,
+      html: rendered.html,
     }),
   ]);
 

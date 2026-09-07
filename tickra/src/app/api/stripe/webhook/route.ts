@@ -9,6 +9,8 @@ import {
 } from '@/lib/db/queries';
 import { markReferralConverted } from '@/lib/db/referral-queries';
 import { sendEmail, FROM } from '@/lib/email/resend';
+import { renderEmail } from '@/lib/email/layout';
+import { BRAND_NAME, EMAIL } from '@/lib/brand';
 import { SITE_URL } from '@/lib/site-url';
 import {
   postDiscord,
@@ -18,29 +20,39 @@ import {
 import { resolveCustomerEmail, type CustomerLookup } from '@/lib/stripe/resolve-customer';
 
 function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
-  const planName = plan === 'lifetime' ? 'nkNOWTrade Lifetime' : 'nkNOWTrade Pro';
-  const meHref = `${SITE_URL}/${locale}/me`;
+  const planName = plan === 'lifetime' ? `${BRAND_NAME} À vie` : `${BRAND_NAME} Pro`;
+  const planNameEn = plan === 'lifetime' ? `${BRAND_NAME} Lifetime` : `${BRAND_NAME} Pro`;
   const curriculumHref = `${SITE_URL}/${locale}/curriculum`;
+
   if (locale === 'fr') {
-    return {
-      subject: `Bienvenue dans ${planName}`,
-      text:
-        `Merci pour votre paiement — votre accès ${planName} est actif.\n\n` +
-        `Prochaine étape : commencez la piste "Bougies japonaises" depuis le cursus.\n` +
-        `Votre espace : ${meHref}\n` +
-        `Le cursus : ${curriculumHref}\n\n` +
-        `À très vite,\nL'équipe nkNOWTrade`,
-    };
+    const { html, text } = renderEmail({
+      heading: `Bienvenue dans ${planName}`,
+      intro:
+        'Votre paiement est confirmé et votre accès est actif. La suite la plus simple : ' +
+        'commencez la piste « Bougies japonaises », dix minutes suffisent.',
+      cta: { label: 'Ouvrir le cursus', url: curriculumHref },
+      footer: [
+        `Vous recevez ce message parce qu’un abonnement ${planName} vient d’être activé pour cette adresse.`,
+        `Votre espace personnel : ${SITE_URL}/${locale}/me`,
+        'Une question ? Répondez simplement à ce courriel.',
+      ],
+    });
+    return { subject: `Bienvenue dans ${planName}`, text, html };
   }
-  return {
-    subject: `Welcome to ${planName}`,
-    text:
-      `Thanks for your payment — your ${planName} access is now live.\n\n` +
-      `Next step: start the "Japanese candles" track from the curriculum.\n` +
-      `Your space: ${meHref}\n` +
-      `The curriculum: ${curriculumHref}\n\n` +
-      `Speak soon,\nThe nkNOWTrade team`,
-  };
+
+  const { html, text } = renderEmail({
+    heading: `Welcome to ${planNameEn}`,
+    intro:
+      'Your payment is confirmed and your access is live. The simplest next step: ' +
+      'start the "Japanese candles" track — ten minutes is enough.',
+    cta: { label: 'Open the curriculum', url: curriculumHref },
+    footer: [
+      `You are receiving this because a ${planNameEn} subscription was just activated for this address.`,
+      `Your account: ${SITE_URL}/${locale}/me`,
+      'Questions? Just reply to this email.',
+    ],
+  });
+  return { subject: `Welcome to ${planNameEn}`, text, html };
 }
 
 // POST /api/stripe/webhook
@@ -172,7 +184,14 @@ export async function POST(req: Request) {
         const meta = session.metadata as Record<string, string | undefined> | null;
         const locale: 'fr' | 'en' = meta?.locale === 'fr' ? 'fr' : 'en';
         const mail = welcomeEmail(plan, locale);
-        sendEmail({ from: FROM, to: email, subject: mail.subject, text: mail.text }).catch(() => {
+        sendEmail({
+          from: FROM,
+          replyTo: EMAIL.support,
+          to: email,
+          subject: mail.subject,
+          text: mail.text,
+          html: mail.html,
+        }).catch(() => {
           /* swallow — never fail the webhook on email errors */
         });
         break;
