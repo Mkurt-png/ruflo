@@ -40,10 +40,25 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(A, B);
 }
 
+// TICKRA-FIX(auth): 303, not the default 307.
+//
+// `NextResponse.redirect()` defaults to 307, which PRESERVES the request
+// method. Once the callback moved to POST (so mail scanners could no longer
+// burn the single-use nonce with a plain GET), every redirect out of it told
+// the browser to re-issue a POST — at /signin and /onboarding, which are pages
+// and answer GET only. Both the failure path and the success path ended in
+// HTTP 405, so sign-in was broken outright: the session cookie was set on a
+// response the browser then followed with a POST it could not complete.
+//
+// 303 See Other is the status for "your POST is done, now GET this instead".
+const SEE_OTHER = 303;
+
 // TICKRA-FIX: granular error codes so the signin page can show a human
 // message + a "resend link" button on failure, instead of a generic "invalid".
 const fail = (locale: 'fr' | 'en', reason: string, url: URL) =>
-  NextResponse.redirect(new URL(`/${locale}/signin?error=${encodeURIComponent(reason)}`, url));
+  NextResponse.redirect(new URL(`/${locale}/signin?error=${encodeURIComponent(reason)}`, url), {
+    status: SEE_OTHER,
+  });
 
 // TICKRA-FIX(auth): mail providers (Gmail, Outlook SafeLinks, corporate AV)
 // pre-fetch links to scan them. Because the magic-link nonce is single-use,
@@ -226,6 +241,7 @@ async function handleCallback(req: Request) {
 
   const redirect = NextResponse.redirect(
     new URL(`/${locale}/onboarding?session=success`, url),
+    { status: SEE_OTHER },
   );
   redirect.cookies.set(COOKIE_NAME, sessionValue, {
     httpOnly: true,
