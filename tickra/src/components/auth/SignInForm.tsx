@@ -18,6 +18,9 @@ const errorCopy: Record<string, { fr: string; en: string }> = {
   bad_payload:    { fr: 'Lien incomplet. Redemandez un lien.',                en: 'Incomplete link. Request a new one.' },
   missing_token:  { fr: 'Lien manquant. Redemandez un lien depuis le formulaire.', en: 'Missing token. Request a new link from the form.' },
   not_configured: { fr: 'Connexion temporairement indisponible. Réessayez.', en: 'Sign-in temporarily unavailable. Try again.' },
+  // Something broke on our side rather than with the link. Say so, so the user
+  // retries instead of assuming their address is the problem.
+  server_error:   { fr: 'Un problème est survenu de notre côté. Redemandez un lien.', en: 'Something went wrong on our side. Request a new link.' },
   invalid:        { fr: 'Lien invalide. Redemandez un lien.',                 en: 'Invalid link. Request a new one.' },
   invalid_state:  { fr: 'Session OAuth invalide. Réessayez.',                 en: 'Invalid OAuth state. Try again.' },
   oauth_not_configured: { fr: 'Google sign-in non configuré.',                en: 'Google sign-in not configured.' },

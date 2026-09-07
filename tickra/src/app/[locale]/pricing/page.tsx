@@ -17,7 +17,7 @@ import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 import { countryFromHeaders, currencyForCountry } from '@/lib/pricing/currency';
 
-export const metadata = { title: 'Tarifs · kNOWTrade' };
+export const metadata = { title: 'Tarifs · nkNOWTrade' };
 
 // The page quotes prices in the visitor's own currency, so it must be rendered
 // per request. Without this the route is prerendered and every visitor is

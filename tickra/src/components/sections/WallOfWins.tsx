@@ -1,6 +1,6 @@
 'use client';
 
-// TICKRA-PHASE-4: anonymised "this week on kNOWTrade" wall of wins.
+// TICKRA-PHASE-4: anonymised "this week on nkNOWTrade" wall of wins.
 // Honest disclaimer + aggregated stats. When a real backend aggregator ships,
 // these counters can swap to fetched data with no UI change.
 
@@ -14,7 +14,7 @@ type Locale = 'fr' | 'en';
 
 const copy = {
   fr: {
-    eyebrow: 'Cette semaine sur kNOWTrade',
+    eyebrow: 'Cette semaine sur nkNOWTrade',
     title: 'Ce que la cohorte a fait, en agrégé.',
     body: 'Données anonymisées, comptées localement et corroborées chaque dimanche. Aucun nom, aucun montant en €, aucune capture P&L.',
     stats: [
@@ -31,7 +31,7 @@ const copy = {
     legal: 'Chiffres rafraîchis chaque dimanche soir à 22 h GMT.',
   },
   en: {
-    eyebrow: 'This week on kNOWTrade',
+    eyebrow: 'This week on nkNOWTrade',
     title: 'What the cohort actually did, aggregated.',
     body: 'Anonymised data, locally counted and verified every Sunday. No names, no € amounts, no P&L screenshots.',
     stats: [

@@ -54,7 +54,7 @@ function planTodayCopy(locale: 'fr' | 'en', lessonTitle: string, href: string) {
       text:
         `Dix minutes suffisent pour faire la leçon du jour.\n\n` +
         `Aujourd'hui : ${lessonTitle}\n${href}\n\n` +
-        `À très vite,\nL'équipe kNOWTrade`,
+        `À très vite,\nL'équipe nkNOWTrade`,
     };
   }
   return {
@@ -62,21 +62,21 @@ function planTodayCopy(locale: 'fr' | 'en', lessonTitle: string, href: string) {
     text:
       `Ten minutes are enough for today's lesson.\n\n` +
       `Today: ${lessonTitle}\n${href}\n\n` +
-      `Speak soon,\nThe kNOWTrade team`,
+      `Speak soon,\nThe nkNOWTrade team`,
   };
 }
 
 function streakAtRiskCopy(locale: 'fr' | 'en', href: string) {
   if (locale === 'fr') {
     return {
-      subject: 'Votre streak kNOWTrade est en danger',
+      subject: 'Votre streak nkNOWTrade est en danger',
       text:
         `Vous n'avez pas pratiqué depuis presque 24 h. Une leçon de 10 min suffit à préserver votre série.\n\n` +
         `Reprendre maintenant : ${href}`,
     };
   }
   return {
-    subject: 'Your kNOWTrade streak is at risk',
+    subject: 'Your nkNOWTrade streak is at risk',
     text:
       `You haven't practised in nearly 24 hours. A 10-minute lesson keeps the streak alive.\n\n` +
       `Resume now: ${href}`,

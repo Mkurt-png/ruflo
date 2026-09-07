@@ -1,4 +1,4 @@
-// Spaced-repetition logic for kNOWTrade.
+// Spaced-repetition logic for nkNOWTrade.
 // Targets: a lesson is "due" if (now − lastTouch) ≥ interval(level).
 // Levels grow each time the lesson is reviewed (3d → 7d → 14d → 30d → 90d).
 

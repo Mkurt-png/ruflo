@@ -17,7 +17,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
 
-export const metadata = { title: 'Mentions légales · kNOWTrade' };
+export const metadata = { title: 'Mentions légales · nkNOWTrade' };
 
 // FR-mandatory Mentions légales page (LCEN 2004-575, art. 6-III).
 // Hardcoded copy (not in dict) because it's France-specific legal text;
@@ -31,7 +31,7 @@ const COPY = {
       {
         h: '1. Éditeur du site',
         body: [
-          `Le site kNOWTrade (${SITE_HOST}) est exploité par ${entityDescription('fr')}.`,
+          `Le site nkNOWTrade (${SITE_HOST}) est exploité par ${entityDescription('fr')}.`,
           ...(ENTITY.neq ? [`NEQ : ${ENTITY.neq}`] : []),
           ...(ENTITY.businessNumber ? [`Numéro d’entreprise (ARC) : ${ENTITY.businessNumber}`] : []),
           'Directeur de la publication : Hamza Kurt.',
@@ -50,22 +50,22 @@ const COPY = {
       {
         h: '3. Propriété intellectuelle',
         body: [
-          'L’ensemble des contenus présents sur le site kNOWTrade — textes, leçons, graphiques, logos, marques, code source, illustrations, vidéos — est protégé par la Loi sur le droit d’auteur du Canada et par les conventions internationales applicables.',
+          'L’ensemble des contenus présents sur le site nkNOWTrade — textes, leçons, graphiques, logos, marques, code source, illustrations, vidéos — est protégé par la Loi sur le droit d’auteur du Canada et par les conventions internationales applicables.',
           `Toute reproduction, représentation, modification, publication, adaptation totale ou partielle des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable de ${ENTITY.legalName}.`,
         ],
       },
       {
         h: '4. Nature du service',
         body: [
-          'kNOWTrade est une plateforme de formation en ligne au trading et à l’analyse des marchés financiers.',
-          'kNOWTrade n’est inscrit ni comme courtier ni comme conseiller auprès de l’Autorité des marchés financiers (AMF) du Québec, n’est pas membre de l’Organisme canadien de réglementation des investissements (OCRI), et n’exerce aucune activité assujettie à la Loi sur les valeurs mobilières ou à la Loi sur les instruments dérivés.',
-          'kNOWTrade ne fournit aucun conseil personnalisé en investissement, aucun signal d’achat ou de vente, et ne traite aucun ordre de bourse. Toute décision d’investissement reste sous la seule responsabilité de l’utilisateur.',
+          'nkNOWTrade est une plateforme de formation en ligne au trading et à l’analyse des marchés financiers.',
+          'nkNOWTrade n’est inscrit ni comme courtier ni comme conseiller auprès de l’Autorité des marchés financiers (AMF) du Québec, n’est pas membre de l’Organisme canadien de réglementation des investissements (OCRI), et n’exerce aucune activité assujettie à la Loi sur les valeurs mobilières ou à la Loi sur les instruments dérivés.',
+          'nkNOWTrade ne fournit aucun conseil personnalisé en investissement, aucun signal d’achat ou de vente, et ne traite aucun ordre de bourse. Toute décision d’investissement reste sous la seule responsabilité de l’utilisateur.',
         ],
       },
       {
         h: '5. Protection du consommateur',
         body: [
-          'Les abonnements kNOWTrade constituent des contrats à exécution successive au sens de la Loi sur la protection du consommateur du Québec, résiliables à tout moment depuis votre espace personnel.',
+          'Les abonnements nkNOWTrade constituent des contrats à exécution successive au sens de la Loi sur la protection du consommateur du Québec, résiliables à tout moment depuis votre espace personnel.',
           'En cas de litige non résolu directement avec nous, vous pouvez vous adresser à l’Office de la protection du consommateur du Québec — opc.gouv.qc.ca.',
         ],
       },
@@ -81,7 +81,7 @@ const COPY = {
       {
         h: '7. Crédits',
         body: [
-          `Design & développement : équipe kNOWTrade (${ENTITY.province}).`,
+          `Design & développement : équipe nkNOWTrade (${ENTITY.province}).`,
           'Polices : Inter, Fraunces, JetBrains Mono (Google Fonts — licence OFL).',
           'Icônes : Lucide (licence ISC).',
         ],
@@ -95,7 +95,7 @@ const COPY = {
       {
         h: '1. Publisher',
         body: [
-          `The kNOWTrade website (${SITE_HOST}) is operated by ${entityDescription('en')}.`,
+          `The nkNOWTrade website (${SITE_HOST}) is operated by ${entityDescription('en')}.`,
           ...(ENTITY.neq ? [`NEQ: ${ENTITY.neq}`] : []),
           ...(ENTITY.businessNumber ? [`Business number (CRA): ${ENTITY.businessNumber}`] : []),
           'Publication director: Hamza Kurt.',
@@ -114,22 +114,22 @@ const COPY = {
       {
         h: '3. Intellectual property',
         body: [
-          'All content on the kNOWTrade website — text, lessons, graphics, logos, trademarks, source code, illustrations, videos — is protected by the Canadian Copyright Act and applicable international conventions.',
+          'All content on the nkNOWTrade website — text, lessons, graphics, logos, trademarks, source code, illustrations, videos — is protected by the Canadian Copyright Act and applicable international conventions.',
           `Any reproduction, representation, modification, publication, or partial or total adaptation of site elements, by any means, is prohibited without prior written authorisation from ${ENTITY.legalName}.`,
         ],
       },
       {
         h: '4. Service nature',
         body: [
-          'kNOWTrade is an online education platform for trading and financial markets analysis.',
-          'kNOWTrade is registered neither as a dealer nor as an adviser with the Autorité des marchés financiers (AMF) of Québec, is not a member of the Canadian Investment Regulatory Organization (CIRO), and carries on no activity governed by the Securities Act or the Derivatives Act.',
-          'kNOWTrade provides no personalised investment advice, no buy or sell signals, and processes no stock orders. All investment decisions are the sole responsibility of the user.',
+          'nkNOWTrade is an online education platform for trading and financial markets analysis.',
+          'nkNOWTrade is registered neither as a dealer nor as an adviser with the Autorité des marchés financiers (AMF) of Québec, is not a member of the Canadian Investment Regulatory Organization (CIRO), and carries on no activity governed by the Securities Act or the Derivatives Act.',
+          'nkNOWTrade provides no personalised investment advice, no buy or sell signals, and processes no stock orders. All investment decisions are the sole responsibility of the user.',
         ],
       },
       {
         h: '5. Consumer protection',
         body: [
-          'kNOWTrade subscriptions are successive-performance contracts under Québec\u2019s Consumer Protection Act, cancellable at any time from your account.',
+          'nkNOWTrade subscriptions are successive-performance contracts under Québec\u2019s Consumer Protection Act, cancellable at any time from your account.',
           'If a dispute cannot be resolved directly with us, you may contact the Office de la protection du consommateur du Québec — opc.gouv.qc.ca.',
         ],
       },
@@ -145,7 +145,7 @@ const COPY = {
       {
         h: '7. Credits',
         body: [
-          `Design & development: kNOWTrade team (${ENTITY.province}).`,
+          `Design & development: nkNOWTrade team (${ENTITY.province}).`,
           'Fonts: Inter, Fraunces, JetBrains Mono (Google Fonts — OFL license).',
           'Icons: Lucide (ISC license).',
         ],

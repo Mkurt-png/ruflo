@@ -122,7 +122,7 @@ export function deriveAchievements(state: ProgressState): Achievement[] {
     },
     {
       id: 'tickra-diploma',
-      title: { fr: 'Diplôme kNOWTrade', en: 'kNOWTrade diploma' },
+      title: { fr: 'Diplôme nkNOWTrade', en: 'nkNOWTrade diploma' },
       body: { fr: 'Les 222 leçons. Direction le marché réel.', en: 'All 222 lessons. Off to live markets.' },
       unlocked: done >= totalLessons(),
       unlockedAt: earliestCompletedAt(state, allIds),

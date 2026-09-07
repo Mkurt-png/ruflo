@@ -10,7 +10,7 @@ import { MagneticTilt } from '@/components/fx/MagneticTilt';
 import { CursorGlow } from '@/components/fx/CursorGlow';
 
 export const metadata = {
-  title: 'Brand · kNOWTrade',
+  title: 'Brand · nkNOWTrade',
   // Internal style guide — discoverable by team, not crawled.
   robots: { index: false, follow: false },
 };

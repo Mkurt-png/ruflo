@@ -4,7 +4,7 @@
 // title + eyebrow + locale query params.
 //
 // Renders the ivory editorial paper register: mono eyebrow at the
-// top, big serif italic title in three weights, "kNOWTrade · La Maison"
+// top, big serif italic title in three weights, "nkNOWTrade · La Maison"
 // footer with a hairline rule. No images, no gradients, no glow.
 
 import { ImageResponse } from 'next/og';
@@ -20,10 +20,10 @@ function clamp(s: string, max: number): string {
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const title = clamp(searchParams.get('title') ?? 'kNOWTrade', 64);
+  const title = clamp(searchParams.get('title') ?? 'nkNOWTrade', 64);
   const eyebrow = clamp(searchParams.get('eyebrow') ?? '', 64);
   const locale = (searchParams.get('locale') ?? 'fr').toLowerCase();
-  const footer = locale === 'fr' ? 'kNOWTrade · La Maison' : 'kNOWTrade · The House';
+  const footer = locale === 'fr' ? 'nkNOWTrade · La Maison' : 'nkNOWTrade · The House';
 
   return new ImageResponse(
     (
@@ -63,7 +63,7 @@ export async function GET(req: Request) {
             }}
           >
             <span>{eyebrow || (locale === 'fr' ? 'Édition' : 'Edition')}</span>
-            <span>kNOWTrade</span>
+            <span>nkNOWTrade</span>
           </div>
         </div>
 

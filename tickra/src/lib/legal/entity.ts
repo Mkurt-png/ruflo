@@ -33,7 +33,7 @@ export type Operator = {
    *
    * Note: in Québec a natural person who carries on an activity under a name
    * that is not their own surname and given name must register with the
-   * Registraire des entreprises. Trading under "kNOWTrade" rather than the
+   * Registraire des entreprises. Trading under "nkNOWTrade" rather than the
    * operator's own name therefore appears to require registration — worth
    * confirming before launch.
    */

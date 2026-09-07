@@ -4,7 +4,7 @@ import { getDictionary } from '@/lib/i18n/dictionaries';
 import { SITE_URL } from '@/lib/site-url';
 
 export const runtime = 'edge';
-export const alt = 'kNOWTrade — Learn the markets, candle by candle';
+export const alt = 'nkNOWTrade — Learn the markets, candle by candle';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -54,7 +54,7 @@ export default async function OgImage({ params }: { params: { locale: string } }
             <rect x="44" y="18" width="12" height="28" rx="3" fill={ACCENT} />
           </svg>
           <span style={{ display: 'flex', letterSpacing: '-0.02em' }}>
-            <span style={{ fontWeight: 400, color: MUTED }}>k</span>
+            <span style={{ fontWeight: 400, color: MUTED }}>nk</span>
             <span style={{ fontWeight: 800, color: ACCENT }}>NOW</span>
             <span style={{ fontWeight: 600 }}>Trade</span>
           </span>

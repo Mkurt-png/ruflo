@@ -14,7 +14,7 @@ type Locale = 'fr' | 'en';
 
 const copy = {
   fr: {
-    eyebrow: 'Réservé à kNOWTrade Pro',
+    eyebrow: 'Réservé à nkNOWTrade Pro',
     title: 'Entraînez-vous sur un vrai marché. Sans risquer un centime.',
     body:
       'Un compte démo à 10 000 $, six instruments (forex, indices, or, crypto), TradingView intégré, gestion du stop et du take-profit calculée automatiquement à partir de votre risque par trade. Toutes vos positions et statistiques sauvegardées.',
@@ -37,7 +37,7 @@ const copy = {
     short: 'Vendre',
   },
   en: {
-    eyebrow: 'Reserved for kNOWTrade Pro',
+    eyebrow: 'Reserved for nkNOWTrade Pro',
     title: 'Practise on a real market. Without risking a cent.',
     body:
       'A $10,000 demo account, six instruments (forex, indices, gold, crypto), embedded TradingView, stop and take-profit auto-computed from your per-trade risk. Every position and stat saved.',

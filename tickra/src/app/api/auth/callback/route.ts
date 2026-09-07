@@ -40,10 +40,25 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(A, B);
 }
 
+// TICKRA-FIX(auth): 303, not the default 307.
+//
+// `NextResponse.redirect()` defaults to 307, which PRESERVES the request
+// method. Once the callback moved to POST (so mail scanners could no longer
+// burn the single-use nonce with a plain GET), every redirect out of it told
+// the browser to re-issue a POST — at /signin and /onboarding, which are pages
+// and answer GET only. Both the failure path and the success path ended in
+// HTTP 405, so sign-in was broken outright: the session cookie was set on a
+// response the browser then followed with a POST it could not complete.
+//
+// 303 See Other is the status for "your POST is done, now GET this instead".
+const SEE_OTHER = 303;
+
 // TICKRA-FIX: granular error codes so the signin page can show a human
 // message + a "resend link" button on failure, instead of a generic "invalid".
 const fail = (locale: 'fr' | 'en', reason: string, url: URL) =>
-  NextResponse.redirect(new URL(`/${locale}/signin?error=${encodeURIComponent(reason)}`, url));
+  NextResponse.redirect(new URL(`/${locale}/signin?error=${encodeURIComponent(reason)}`, url), {
+    status: SEE_OTHER,
+  });
 
 // TICKRA-FIX(auth): mail providers (Gmail, Outlook SafeLinks, corporate AV)
 // pre-fetch links to scan them. Because the magic-link nonce is single-use,
@@ -118,7 +133,28 @@ export async function GET(req: Request) {
   return confirmPage(token, locale);
 }
 
+// TICKRA-FIX(auth): sign-in must never answer with a broken page.
+//
+// Every failure below redirects to /signin with a reason the page can explain,
+// except that an unguarded throw — a transient DB error inside
+// consumeMagicNonce, say — escaped as a 500. The user then got Chrome's "this
+// page isn't working", with no way back and nothing in the logs saying why, on
+// the one route that is the only door into the product.
+//
+// So the whole handler is wrapped: anything unexpected is logged for the
+// operator and shown to the user as a retryable error, never as a dead page.
 export async function POST(req: Request) {
+  const localeHint = new URL(req.url).searchParams.get('locale') === 'fr' ? 'fr' : 'en';
+  try {
+    return await handleCallback(req);
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : 'unknown error';
+    console.error('[auth/callback] unexpected failure: %s', detail);
+    return fail(localeHint, 'server_error', new URL(req.url));
+  }
+}
+
+async function handleCallback(req: Request) {
   const url = new URL(req.url);
   const form = await req.formData().catch(() => null);
   const token = typeof form?.get('token') === 'string' ? (form.get('token') as string) : null;
@@ -163,7 +199,18 @@ export async function POST(req: Request) {
   // to the previous best-effort behaviour so the auth flow still works in
   // dev — but in production with DB the nonce is single-use.
   if (isDbConfigured()) {
-    const consumed = await consumeMagicNonce(nonce, email);
+    // Distinguish "this link was already used" from "the database is having a
+    // moment". Both used to look identical from here; only the first is the
+    // user's problem, and telling someone their valid link expired when the
+    // database blinked is the worst of the two answers.
+    let consumed: boolean;
+    try {
+      consumed = await consumeMagicNonce(nonce, email);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : 'unknown error';
+      console.error('[auth/callback] could not consume nonce: %s', detail);
+      return fail(locale, 'server_error', url);
+    }
     if (!consumed) {
       return fail(locale, 'expired', url);
     }
@@ -194,6 +241,7 @@ export async function POST(req: Request) {
 
   const redirect = NextResponse.redirect(
     new URL(`/${locale}/onboarding?session=success`, url),
+    { status: SEE_OTHER },
   );
   redirect.cookies.set(COOKIE_NAME, sessionValue, {
     httpOnly: true,

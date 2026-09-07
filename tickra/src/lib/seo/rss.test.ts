@@ -20,7 +20,7 @@ describe('buildRss', () => {
     },
   ];
   const xml = buildRss({
-    title: 'kNOWTrade Editorial',
+    title: 'nkNOWTrade Editorial',
     description: 'Essays',
     siteUrl: 'https://tickra.app/en',
     feedUrl: 'https://tickra.app/en/editorial/feed.xml',

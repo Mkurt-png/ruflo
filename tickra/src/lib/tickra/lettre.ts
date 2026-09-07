@@ -16,7 +16,7 @@ export type LetterContext = {
   mistakes: Record<string, { loggedAt: number; reviewedAt?: number }>;
   /** Current consecutive-day streak. */
   streakDays: number;
-  /** kNOWTrade Cote. */
+  /** nkNOWTrade Cote. */
   cote: number;
   /** Delta from yesterday's Cote. */
   coteDelta: number;

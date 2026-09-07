@@ -6,7 +6,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { SignInForm } from '@/components/auth/SignInForm';
 
-export const metadata = { title: 'Connexion · kNOWTrade' };
+export const metadata = { title: 'Connexion · nkNOWTrade' };
 
 export default async function SignInPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

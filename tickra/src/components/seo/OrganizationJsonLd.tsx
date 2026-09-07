@@ -11,7 +11,7 @@ export function OrganizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'kNOWTrade',
+    name: 'nkNOWTrade',
     // A sole operator has no separate legal name — the person IS the entity,
     // so it is stated as the founder rather than as a company name.
     ...(ENTITY.kind === 'company' ? { legalName: ENTITY.legalName } : {}),
