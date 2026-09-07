@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
+import { pageSeo } from '@/lib/seo';
 
 // /[locale]/bureau-partage — Le Bureau partagé. Stub honnête : la
 // fonction de publication d'une journée de journal en lecture seule
@@ -11,11 +12,18 @@ import { Footer } from '@/components/sections/Footer';
 // La candor note dit pourquoi, et où l'on en est.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'Le Bureau partagé',
-  description:
-    'Publier une journée de votre journal en lecture seule, annotée d’une ligne. Pas de DM, pas de likes — une page typographique.',
-};
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  const title = locale === 'fr' ? 'Le Bureau partagé' : 'The Shared Desk';
+  return {
+    title,
+    description:
+      locale === 'fr'
+        ? 'Publier une journée de votre journal en lecture seule, annotée d’une ligne. Pas de DM, pas de likes — une page typographique.'
+        : 'Publish one day of your journal read-only, annotated with a single line. No DMs, no likes — a typographic page.',
+    ...pageSeo(locale, '/bureau-partage', title),
+  };
+}
 
 const COPY = {
   fr: {

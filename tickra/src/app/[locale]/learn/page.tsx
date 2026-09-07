@@ -9,8 +9,15 @@ import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 import { LessonResumeCard } from '@/components/learn/LessonResumeCard';
 import { TrackFilter } from '@/components/learn/TrackFilter';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Apprendre' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Apprendre' : 'Learn',
+    ...pageSeo(locale, '/learn', locale === 'fr' ? 'Apprendre' : 'Learn'),
+  };
+}
 
 export default async function LearnPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

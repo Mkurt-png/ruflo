@@ -16,8 +16,15 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Mentions légales' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Mentions légales' : 'Legal notice',
+    ...pageSeo(locale, '/mentions-legales', locale === 'fr' ? 'Mentions légales' : 'Legal notice'),
+  };
+}
 
 // FR-mandatory Mentions légales page (LCEN 2004-575, art. 6-III).
 // Hardcoded copy (not in dict) because it's France-specific legal text;

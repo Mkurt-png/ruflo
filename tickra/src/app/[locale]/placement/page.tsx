@@ -5,8 +5,15 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PlacementTest } from '@/components/placement/PlacementTest';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Test de placement' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Test de placement' : 'Placement test',
+    ...pageSeo(locale, '/placement', locale === 'fr' ? 'Test de placement' : 'Placement test'),
+  };
+}
 
 export default async function PlacementPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

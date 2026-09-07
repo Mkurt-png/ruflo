@@ -9,11 +9,14 @@ import { ShimmerButton } from '@/components/fx/ShimmerButton';
 import { MagneticTilt } from '@/components/fx/MagneticTilt';
 import { CursorGlow } from '@/components/fx/CursorGlow';
 
-export const metadata = {
-  title: 'Brand',
-  // Internal style guide — discoverable by team, not crawled.
-  robots: { index: false, follow: false },
-};
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Charte graphique' : 'Brand',
+    // Internal style guide — discoverable by team, not crawled.
+    robots: { index: false, follow: false },
+  };
+}
 
 // /brand — visual style guide. Shows palette, type ramp, signature effects
 // and the building blocks every section reuses. Acts as a QA surface for

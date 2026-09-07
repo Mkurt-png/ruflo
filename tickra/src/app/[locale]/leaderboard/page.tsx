@@ -7,9 +7,56 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { getWeeklyLeaderboard, type LeaderboardEntry } from '@/lib/db/leaderboard-queries';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
+import { pageSeo } from '@/lib/seo';
 
-// TODO i18n — leaderboard copy is English-only for now (Phase 4A).
-export const metadata = { title: 'Weekly leaderboard' };
+// TICKRA-FIX(i18n): this page carried a "TODO i18n — English-only for now"
+// note and every string hardcoded in English, while sitting in the navbar's
+// Explore menu. A French visitor clicked "Classement" and landed on a fully
+// English page. Copy now lives in `copy` below, keyed by locale.
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Classement hebdomadaire' : 'Weekly leaderboard',
+    ...pageSeo(locale, '/leaderboard', locale === 'fr' ? 'Classement hebdomadaire' : 'Weekly leaderboard'),
+  };
+}
+const copy = {
+  fr: {
+    window: '7 derniers jours',
+    title: 'Classement hebdomadaire',
+    intro:
+      'Les apprenants en tête par XP gagnés et par plus longue série en cours. ' +
+      'Anonyme par défaut — activez l’affichage de votre nom depuis votre compte.',
+    kpiXp: 'XP max',
+    kpiStreak: 'Série max',
+    kpiRanked: 'Classés',
+    kpiWindow: 'Fenêtre',
+    rolling: 'glissante',
+    dayShort: 'j',
+    columnXp: 'Meilleurs XP de la semaine',
+    columnStreak: 'Plus longues séries',
+    empty: 'Aucune entrée cette semaine pour l’instant.',
+    anonTrader: 'Apprenant',
+  },
+  en: {
+    window: 'Last 7 days',
+    title: 'Weekly leaderboard',
+    intro:
+      'Top learners by XP earned and longest current streak. Anonymous by default — opt in ' +
+      'from your account to appear by name.',
+    kpiXp: 'Top XP',
+    kpiStreak: 'Top streak',
+    kpiRanked: 'Ranked',
+    kpiWindow: 'Window',
+    rolling: 'rolling',
+    dayShort: 'd',
+    columnXp: 'Top XP this week',
+    columnStreak: 'Top streaks',
+    empty: 'No entries yet this week.',
+    anonTrader: 'Learner',
+  },
+} as const;
+
 export const dynamic = 'force-dynamic';
 
 export default async function LeaderboardPage({ params }: { params: { locale: string } }) {
@@ -17,6 +64,7 @@ export default async function LeaderboardPage({ params }: { params: { locale: st
   const locale: Locale = params.locale;
   const dict = await getDictionary(locale);
   const { topXp, topStreak } = await getWeeklyLeaderboard();
+  const t = copy[locale];
 
   return (
     <>
@@ -25,14 +73,13 @@ export default async function LeaderboardPage({ params }: { params: { locale: st
         <section className="border-b border-line">
           <Container as="div" className="py-20 md:py-24">
             <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-              Last 7 days
+              {t.window}
             </span>
             <h1 className="mt-4 font-display text-3xl md:text-4xl font-medium tracking-tight text-ink">
-              Weekly leaderboard
+              {t.title}
             </h1>
             <p className="mt-3 max-w-xl text-base text-muted">
-              Top traders by XP earned and longest current streak. Anonymous by default — opt in
-              from your account to appear by name.
+              {t.intro}
             </p>
           </Container>
         </section>
@@ -41,26 +88,28 @@ export default async function LeaderboardPage({ params }: { params: { locale: st
           <Container as="div" className="py-8">
             <KpiStrip
               items={[
-                { label: 'Top XP', value: String(topXp[0]?.xp ?? 0), tone: 'brand' },
-                { label: 'Top Streak', value: `${topStreak[0]?.streak ?? 0}d`, tone: 'up' },
-                { label: 'Ranked', value: String(topXp.length + topStreak.length) },
-                { label: 'Window', value: '7d', hint: 'rolling' },
+                { label: t.kpiXp, value: String(topXp[0]?.xp ?? 0), tone: 'brand' },
+                { label: t.kpiStreak, value: `${topStreak[0]?.streak ?? 0}${t.dayShort}`, tone: 'up' },
+                { label: t.kpiRanked, value: String(topXp.length + topStreak.length) },
+                { label: t.kpiWindow, value: `7${t.dayShort}`, hint: t.rolling },
               ]}
               trailing={<LivePulse label="weekly" />}
             />
           </Container>
           <Container as="div" className="pb-16 grid grid-cols-1 md:grid-cols-2 gap-8">
             <LeaderboardColumn
-              title="Top XP this week"
+              title={t.columnXp}
               metric="xp"
               entries={topXp}
               locale={locale}
+              t={t}
             />
             <LeaderboardColumn
-              title="Top streaks"
+              title={t.columnStreak}
               metric="streak"
               entries={topStreak}
               locale={locale}
+              t={t}
             />
           </Container>
         </section>
@@ -75,11 +124,13 @@ function LeaderboardColumn({
   metric,
   entries,
   locale,
+  t,
 }: {
   title: string;
   metric: 'xp' | 'streak';
   entries: LeaderboardEntry[];
   locale: Locale;
+  t: (typeof copy)[Locale];
 }) {
   return (
     <div className="rounded-xl border border-line bg-canvas">
@@ -87,7 +138,7 @@ function LeaderboardColumn({
         <h2 className="font-display text-lg font-medium text-ink">{title}</h2>
       </div>
       {entries.length === 0 ? (
-        <p className="px-5 py-8 text-sm text-muted">No entries yet this week.</p>
+        <p className="px-5 py-8 text-sm text-muted">{t.empty}</p>
       ) : (
         <ol className="divide-y divide-line">
           {entries.map((e) => (
@@ -99,16 +150,16 @@ function LeaderboardColumn({
                     href={`/${locale}/u/${e.slug}`}
                     className="text-sm font-medium text-ink hover:text-brand truncate block"
                   >
-                    {e.displayName ?? `Trader #${e.anonHash}`}
+                    {e.displayName ?? `${t.anonTrader} #${e.anonHash}`}
                   </Link>
                 ) : (
                   <span className="text-sm text-muted truncate block">
-                    Trader #{e.anonHash}
+                    {t.anonTrader} #{e.anonHash}
                   </span>
                 )}
               </div>
               <span className="font-mono text-sm text-ink">
-                {metric === 'xp' ? `${e.xp} XP` : `${e.streak}d`}
+                {metric === 'xp' ? `${e.xp} XP` : `${e.streak}${t.dayShort}`}
               </span>
             </li>
           ))}

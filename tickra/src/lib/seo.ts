@@ -15,6 +15,21 @@ const copy: Record<Locale, { title: string; description: string }> = {
   },
 };
 
+/**
+ * Share-card image for a page, rendered on demand by /api/og.
+ *
+ * Only the editorial rooms were wired to it, so sharing the home page, the
+ * pricing page or any lesson on Twitter, LinkedIn, Slack or WhatsApp produced
+ * a blank card — `openGraph` declared no images at all, `twitter` asked for
+ * `summary_large_image` with nothing to put in it, and public/ holds no
+ * fallback beyond a favicon. Launch-day links looked broken.
+ */
+export function ogImage(title: string, locale: Locale, eyebrow?: string): string {
+  const params = new URLSearchParams({ title, locale });
+  if (eyebrow) params.set('eyebrow', eyebrow);
+  return `${SITE_URL}/api/og?${params.toString()}`;
+}
+
 export function buildMetadata(locale: Locale): Metadata {
   const { title, description } = copy[locale];
   return {
@@ -43,10 +58,11 @@ export function buildMetadata(locale: Locale): Metadata {
       title,
       description,
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
+      images: [{ url: ogImage(title, locale), width: 1200, height: 630, alt: title }],
     },
     // No `creator` until a real handle exists: the old '@tickra' credited an
     // account that is not ours on every share card.
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, images: [ogImage(title, locale)] },
     robots: {
       index: true,
       follow: true,
@@ -65,13 +81,20 @@ export function buildMetadata(locale: Locale): Metadata {
  * pairing so the two language versions are understood as translations of each
  * other rather than as competing duplicates.
  */
-export function pageSeo(locale: Locale, path = ''): Metadata {
+export function pageSeo(locale: Locale, path = '', title?: string): Metadata {
   const suffix = path && !path.startsWith('/') ? `/${path}` : path;
+  const image = title ? ogImage(title, locale) : undefined;
   return {
     alternates: {
       canonical: `/${locale}${suffix}`,
       languages: { fr: `/fr${suffix}`, en: `/en${suffix}` },
     },
-    openGraph: { url: `${SITE_URL}/${locale}${suffix}` },
+    openGraph: {
+      url: `${SITE_URL}/${locale}${suffix}`,
+      // Only override the inherited card when the page gives its own title —
+      // otherwise the layout's site-level card is the right one.
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, alt: title! }] } : {}),
+    },
+    ...(image ? { twitter: { images: [image] } } : {}),
   };
 }

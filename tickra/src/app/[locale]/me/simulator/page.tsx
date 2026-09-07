@@ -8,8 +8,15 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { SimulatorApp } from '@/components/simulator/SimulatorApp';
 import { FlashCrashMode } from '@/components/simulator/FlashCrashMode';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Simulateur' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Simulateur' : 'Simulator',
+    ...pageSeo(locale, '/me/simulator', locale === 'fr' ? 'Simulateur' : 'Simulator'),
+  };
+}
 
 export default async function SimulatorPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

@@ -7,8 +7,15 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Politique cookies' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Politique cookies' : 'Cookie policy',
+    ...pageSeo(locale, '/cookies', locale === 'fr' ? 'Politique cookies' : 'Cookie policy'),
+  };
+}
 
 const COPY = {
   fr: {

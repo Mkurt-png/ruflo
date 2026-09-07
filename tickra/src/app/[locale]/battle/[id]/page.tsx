@@ -11,7 +11,12 @@ import { BattleRoom } from '@/components/battle/BattleRoom';
 import { BattleJoin } from '@/components/battle/BattleJoin';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Battle' : 'Battle',
+  };
+}
 
 export default async function BattleRoomPage({
   params,

@@ -9,6 +9,7 @@ import { PageHero } from '@/components/ui/PageHero';
 import { BattleJoin } from '@/components/battle/BattleJoin';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import nextDynamic from 'next/dynamic';
+import { pageSeo } from '@/lib/seo';
 
 const BattleArena3D = nextDynamic(
   () => import('@/components/sections/BattleArena3D').then((m) => m.BattleArena3D),
@@ -16,7 +17,13 @@ const BattleArena3D = nextDynamic(
 );
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Battle' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Battle' : 'Battle',
+    ...pageSeo(locale, '/battle', locale === 'fr' ? 'Battle' : 'Battle'),
+  };
+}
 
 export default async function BattleHubPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

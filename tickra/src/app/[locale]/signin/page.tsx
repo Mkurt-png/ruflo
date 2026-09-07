@@ -5,8 +5,15 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { SignInForm } from '@/components/auth/SignInForm';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Connexion' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Connexion' : 'Sign in',
+    ...pageSeo(locale, '/signin', locale === 'fr' ? 'Connexion' : 'Sign in'),
+  };
+}
 
 export default async function SignInPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

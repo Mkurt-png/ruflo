@@ -16,8 +16,15 @@ import { FaqJsonLd } from '@/components/seo/FaqJsonLd';
 import { KpiStrip, LivePulse } from '@/components/ui/KpiStrip';
 import { totalLessons, TRACKS } from '@/lib/curriculum/data';
 import { countryFromHeaders, currencyForCountry } from '@/lib/pricing/currency';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Tarifs' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Tarifs' : 'Pricing',
+    ...pageSeo(locale, '/pricing', locale === 'fr' ? 'Tarifs' : 'Pricing'),
+  };
+}
 
 // The page quotes prices in the visitor's own currency, so it must be rendered
 // per request. Without this the route is prerendered and every visitor is

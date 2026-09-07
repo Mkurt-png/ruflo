@@ -9,8 +9,15 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { TRACKS, totalLessons } from '@/lib/curriculum/data';
 import { getLessonContent, isSeeded } from '@/lib/curriculum/lesson-content';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Curriculum' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Curriculum' : 'Curriculum',
+    ...pageSeo(locale, '/curriculum', locale === 'fr' ? 'Curriculum' : 'Curriculum'),
+  };
+}
 
 const levelLabel: Record<string, { fr: string; en: string }> = {
   foundations: { fr: 'Fondations', en: 'Foundations' },

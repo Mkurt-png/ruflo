@@ -4,17 +4,25 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
+import { pageSeo } from '@/lib/seo';
 
 // /[locale]/mecenat — Le Mécénat. Stub honnête : offrir un mois Pro
 // anonyme à un lecteur, distribué par l'éditeur. Activation Stripe
 // en attente.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'Le Mécénat',
-  description:
-    'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.',
-};
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  const title = locale === 'fr' ? 'Le Mécénat' : 'Patronage';
+  return {
+    title,
+    description:
+      locale === 'fr'
+        ? 'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.'
+        : 'Give a month of Pro to a reader you will never meet. Anonymous, distributed by the editor, with no thanks and nothing in return.',
+    ...pageSeo(locale, '/mecenat', title),
+  };
+}
 
 const COPY = {
   fr: {

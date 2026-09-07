@@ -7,8 +7,15 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Communauté' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Communauté' : 'Community',
+    ...pageSeo(locale, '/community', locale === 'fr' ? 'Communauté' : 'Community'),
+  };
+}
 
 export default async function CommunityPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

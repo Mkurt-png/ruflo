@@ -11,13 +11,20 @@ import { AccountPanel } from '@/components/account/AccountPanel';
 import { CoteTicker } from '@/components/account/CoteTicker';
 import { RituelBanner } from '@/components/rituel/RituelBanner';
 import dynamic from 'next/dynamic';
+import { pageSeo } from '@/lib/seo';
 
 const PortfolioStats3D = dynamic(
   () => import('@/components/sections/PortfolioStats3D').then((m) => m.PortfolioStats3D),
   { ssr: false, loading: () => <div className="w-full h-[320px]" aria-hidden /> },
 );
 
-export const metadata = { title: 'Mon compte' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Mon compte' : 'My account',
+    ...pageSeo(locale, '/me', locale === 'fr' ? 'Mon compte' : 'My account'),
+  };
+}
 
 export default async function MePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
