@@ -64,7 +64,14 @@ export function editorialMeta({
   if (eyebrow) ogParams.set('eyebrow', eyebrow);
   const ogImage = `${SITE_URL}/api/og?${ogParams.toString()}`;
   return {
-    title: `${title} · nkNOWTrade`,
+    // NOT `${title} · nkNOWTrade`. The root layout sets
+    // `title: { template: '%s · nkNOWTrade' }`, and Next applies that template
+    // to any plain-string title a child page returns — so appending the brand
+    // here produced "The Criée · nkNOWTrade · nkNOWTrade" in the browser tab
+    // and in search results, on all sixteen editorial rooms. Caught on a
+    // deployed preview, not by reading: the template lives in another file.
+    // og:title below takes no template, so it keeps the bare title.
+    title,
     description,
     alternates: {
       canonical: url,
