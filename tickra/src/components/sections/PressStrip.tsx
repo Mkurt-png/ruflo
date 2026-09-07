@@ -1,7 +1,18 @@
 import { Container } from '@/components/ui/Container';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 
-const outlets = ['Les Échos', 'Sifted', 'Maddyness', 'Frenchweb', 'Capital', 'Forbes FR'];
+// ⚠️  DO NOT MOUNT THIS COMPONENT UNTIL THE COVERAGE IS REAL.
+//
+// It renders six publication names under a "as seen in"-style heading. None of
+// them have written about nkNOWTrade. A press strip is a claim of third-party
+// endorsement, and listing real mastheads you have not appeared in is passing
+// off their credibility as your own — the same problem as the invented
+// co-founders who were given jobs at Société Générale and BNP.
+//
+// Currently dead code: nothing imports it. Left in place because the layout is
+// fine; fill `outlets` from actual published pieces, with links, before it goes
+// anywhere near a page.
+const outlets: string[] = [];
 
 export function PressStrip({ dict }: { dict: Dictionary }) {
   return (

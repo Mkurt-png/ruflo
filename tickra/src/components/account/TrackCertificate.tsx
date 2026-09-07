@@ -18,8 +18,10 @@ const copy = {
     progressLabel: 'Progression',
     keepGoing: 'Continuer la piste',
     print: 'Imprimer',
-    signature: 'Marc Hauser · Curriculum',
-    signature2: 'Inès Vidal · Produit',
+    // Same as DiplomaCard: a certificate signed by invented people is a
+    // forged credential once a learner prints it.
+    signature: 'Hamza Kurt · nkNOWTrade',
+    signature2: 'Victoriaville, Québec',
     refTitle: 'Référence',
     levelLabel: { foundations: 'Fondations', intermediate: 'Intermédiaire', advanced: 'Avancé', mastery: 'Maîtrise' },
   },
@@ -33,8 +35,9 @@ const copy = {
     progressLabel: 'Progress',
     keepGoing: 'Keep going on the track',
     print: 'Print',
-    signature: 'Marc Hauser · Curriculum',
-    signature2: 'Inès Vidal · Product',
+    // See the fr comment above.
+    signature: 'Hamza Kurt · nkNOWTrade',
+    signature2: 'Victoriaville, Québec',
     refTitle: 'Reference',
     levelLabel: { foundations: 'Foundations', intermediate: 'Intermediate', advanced: 'Advanced', mastery: 'Mastery' },
   },

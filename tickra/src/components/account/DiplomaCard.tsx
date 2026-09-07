@@ -18,8 +18,12 @@ const copy = {
     progressLabel: 'Progression',
     keepGoing: 'Continuer',
     print: 'Imprimer mon diplôme',
-    signature: 'Marc Hauser · Curriculum',
-    signature2: 'Inès Vidal · Produit',
+    // TICKRA-FIX(honesty): the diploma was signed by two people who do not
+    // exist. This is a document a paying learner prints and may show to
+    // someone; a fabricated signature on it is a forged credential, not a
+    // copy placeholder. Signed by the person who actually wrote the course.
+    signature: 'Hamza Kurt · nkNOWTrade',
+    signature2: 'Victoriaville, Québec',
     refTitle: 'Référence',
   },
   en: {
@@ -32,8 +36,9 @@ const copy = {
     progressLabel: 'Progress',
     keepGoing: 'Keep going',
     print: 'Print my diploma',
-    signature: 'Marc Hauser · Curriculum',
-    signature2: 'Inès Vidal · Product',
+    // See the fr comment above.
+    signature: 'Hamza Kurt · nkNOWTrade',
+    signature2: 'Victoriaville, Québec',
     refTitle: 'Reference',
   },
 };

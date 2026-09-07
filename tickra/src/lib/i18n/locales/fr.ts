@@ -465,7 +465,9 @@ const fr = {
   },
   changelog: {
     title: 'Journal des versions',
-    subtitle: 'nkNOWTrade évolue chaque semaine. Voici ce que nous expédions.',
+    // Voir en.ts : cadence hebdomadaire annoncée, dernière entrée vieille de
+    // quinze semaines.
+    subtitle: 'Ce qui a été livré, et quand. Uniquement des entrées datées — pas de feuille de route.',
     entries: [
       {
         version: 'v0.9.0',
@@ -473,7 +475,9 @@ const fr = {
         title: 'Test de niveau adaptatif',
         items: [
           'Nouveau test de niveau en 6 questions, routage adaptatif vers la bonne piste.',
-          'Refonte du Hero et ajout des témoignages vérifiés.',
+          // Voir en.ts : les « témoignages vérifiés » désignaient un composant
+          // mort, importé uniquement par page.legacy.tsx.bak.
+          'Refonte du Hero.',
           'Pages légales (CGU, Confidentialité, Risque) publiées.',
         ],
       },
@@ -677,7 +681,7 @@ const fr = {
         excerpt: 'Au‑delà du mémo « rouge = baisse, vert = hausse » : ce qu’une bougie raconte sur le rapport de force entre acheteurs et vendeurs.',
         date: '18 mai 2026',
         readingTime: '8 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Une bougie n’est pas une couleur', p: 'Le débutant apprend qu’une bougie verte signifie « hausse » et une bougie rouge « baisse ». C’est exact, mais c’est aussi le niveau zéro de l’information. Une bougie raconte quatre chiffres dans le temps : ouverture, plus haut, plus bas, clôture. Sa couleur est juste une dérivée — un raccourci visuel pour savoir si la clôture est au‑dessus ou en dessous de l’ouverture.' },
           { h: 'Le corps mesure la conviction', p: 'Plus le corps est long par rapport aux ombres, plus le côté gagnant a contrôlé la séance. Une bougie verte avec un long corps et de petites ombres signale que les acheteurs ont mené la danse du début à la fin. Une bougie verte avec un petit corps et de longues ombres signale une indécision : les vendeurs sont venus, ont peut‑être même pris le contrôle un moment, avant de se faire repousser.' },
@@ -690,7 +694,7 @@ const fr = {
         excerpt: 'Un trader peut perdre 60 % de ses trades et finir l’année rentable. On vous montre les maths, sans Excel.',
         date: '11 mai 2026',
         readingTime: '11 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'L’intuition trompeuse', p: 'Tout le monde croit qu’un bon trader gagne « la plupart du temps ». Faux. La plupart des traders professionnels rentables ont un taux de réussite compris entre 35 % et 50 %. Ce qui les rend rentables n’est pas le taux, c’est la taille relative de ce qu’ils gagnent par rapport à ce qu’ils perdent.' },
           { h: 'La formule en une ligne', p: 'Espérance = (Taux gagnant × Gain moyen) − (Taux perdant × Perte moyenne). Si vous gagnez 1 R en moyenne (où R est votre risque par trade) quand vous gagnez, et perdez 1 R quand vous perdez, il vous faut un taux supérieur à 50 %. Si vous gagnez 2 R quand vous gagnez et perdez 1 R quand vous perdez, vous êtes rentable dès 34 %.' },
@@ -703,7 +707,7 @@ const fr = {
         excerpt: 'Le simulateur que les juniors regardent une fois et n’oublient plus.',
         date: '4 mai 2026',
         readingTime: '6 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Le piège du pourcentage', p: 'Perdre 50 % de votre capital ne demande pas un gain de 50 % pour récupérer — il en faut 100 %. Perdre 80 %, il en faut 400 %. Cette asymétrie est mathématique, brutale, et elle a déjà détruit plus de carrières de trader que toutes les stratégies réunies.' },
           { h: 'Risquer 1 % par trade', p: 'Sur un capital de 10 000 €, risquer 1 % par trade signifie un risque maximal de 100 €. Avec une stratégie raisonnable (espérance positive, 45 % de réussite, R:R 1:2), votre probabilité d’atteindre la ruine sur 1 000 trades est inférieure à 0,01 %. Passez à 5 % par trade, et cette probabilité monte à 90 %.' },
@@ -716,7 +720,7 @@ const fr = {
         excerpt: 'Tout le monde trace les mêmes niveaux. C’est précisément pour ça qu’ils cassent. Voici ce qu’il faut lire à la place.',
         date: '27 avril 2026',
         readingTime: '7 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Le problème des lignes parfaites', p: 'Un débutant trace un support comme un trait au stylo. Le prix touche, rebondit, il est content. Le marché, lui, ne sait pas qu’il y a une ligne. Il y a une zone, traversée par des ordres, des stops, des trailing — et ce que vous croyez « toucher » est en réalité une bande de quelques pourcents.' },
           { h: 'Lire la réaction, pas la cote', p: 'Un support intéressant n’est pas celui qui tient, c’est celui qui produit une réaction nette : grande bougie, volume, mèche basse de rejet. Sans cette signature, vous n’avez pas un support — vous avez un dessin. La distinction change tout : on attend la preuve, on ne devance pas le prix.' },
@@ -729,7 +733,7 @@ const fr = {
         excerpt: 'Pas un Excel de plus. Trois colonnes, lues le dimanche, suffisent à transformer une saison de pertes.',
         date: '20 avril 2026',
         readingTime: '5 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Pourquoi 90 % des journaux sont inutiles', p: 'La plupart des journaux empilent 30 colonnes : indicateur, RSI, news, météo. Personne ne les relit. Un journal qui change quelque chose est court et lisible en 10 minutes par semaine. Trois champs suffisent : ce que vous avez vu, ce que vous avez décidé, ce que vous avez ressenti.' },
           { h: 'Le rituel du dimanche', p: 'Le seul moment où vous êtes calme, c’est week-end. Bloquez 15 minutes le dimanche soir, ouvrez les 5 à 10 trades de la semaine et demandez : « Si je n’avais que cette photo et ma règle, est-ce que je referais le même trade ? ». Cette question, posée 50 fois, suinte une discipline qu’aucun cours ne donne.' },
@@ -742,7 +746,7 @@ const fr = {
         excerpt: 'On ne perd pas en faisant les mauvais trades. On perd en faisant les bons trades au mauvais moment, deux fois de suite.',
         date: '13 avril 2026',
         readingTime: '8 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Le FOMO est un calcul, pas une émotion', p: 'Le « fear of missing out » se présente comme une émotion, mais c’est en réalité un raccourci probabiliste défaillant : votre cerveau confond « ça vient de bouger fort » avec « ça va continuer à bouger fort ». Statistiquement, c’est l’inverse — un mouvement déjà étendu a moins d’espérance restante qu’un mouvement qui démarre. Identifier ce biais, c’est commencer à le dompter.' },
           { h: 'Le revenge trade : l’aller-retour', p: 'Après une perte, le cerveau cherche une compensation immédiate. Ce n’est pas un défaut moral — c’est de la chimie. Mais le revenge trade a une signature : taille plus grande, stop plus large ou absent, justification plus floue. La règle qui sauve : aucun trade pendant 30 minutes après une perte qui dépasse votre R standard.' },
@@ -755,7 +759,7 @@ const fr = {
         excerpt: 'La même bougie raconte trois histoires différentes en 5 min, 1 h et 1 jour. Choisir une seule, c’est trader à l’aveugle.',
         date: '6 avril 2026',
         readingTime: '9 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'La règle du « trois écrans »', p: 'Les traders aguerris travaillent presque toujours sur trois échelles : une longue pour le contexte (par ex. jour), une moyenne pour le setup (par ex. 1 h), une courte pour l’exécution (par ex. 5 min). Le contexte donne la direction acceptable, le setup donne la zone, l’exécution donne le timing. Sauter une de ces trois, c’est garantir une décision incomplète.' },
           { h: 'Le piège du « ça monte »', p: 'Une bougie verte en 5 min ne dit pas « ça monte ». Elle dit « pendant 5 minutes, les acheteurs ont eu la main ». La même séquence peut être un rebond technique dans une tendance baissière daily — donc une vente, pas un achat. Lire l’échelle inférieure sans son contexte supérieur, c’est lire la fin d’une phrase et croire que c’est le sens complet.' },
