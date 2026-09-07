@@ -3,6 +3,15 @@
 // `{ ok: false }` for writes — callers degrade gracefully when DB is unset.
 
 import { getDb, isDbConfigured } from './supabase';
+import { normaliseEmail } from '@/lib/auth/email';
+
+// Every helper below that takes an `email` runs it through `normaliseEmail`
+// first. `tickra_users.email` is the key everything else hangs off — progress,
+// plan, bookmarks, passkeys, the Stripe customer link — and addresses were
+// stored exactly as typed, so a single capital letter produced a second,
+// empty account. Normalising at this boundary means no call site can forget:
+// Stripe webhooks, Google OAuth, magic links and cron jobs all pass through
+// here. See lib/auth/email.ts.
 
 export type Plan = 'free' | 'pro' | 'lifetime';
 export type Cycle = 'monthly' | 'annual' | 'once';
@@ -32,12 +41,14 @@ export type BookmarkRow = { lesson_id: string; starred_at: string };
 // ─── Users ────────────────────────────────────────────────────────────────
 
 export async function ensureUser(email: string): Promise<void> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return;
   await db.from('tickra_users').upsert({ email }, { onConflict: 'email' });
 }
 
 export async function updateUser(email: string, patch: Partial<TickraUser>): Promise<void> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return;
   await db
@@ -46,6 +57,7 @@ export async function updateUser(email: string, patch: Partial<TickraUser>): Pro
 }
 
 export async function getUser(email: string): Promise<TickraUser | null> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return null;
   const { data, error } = await db
@@ -58,6 +70,7 @@ export async function getUser(email: string): Promise<TickraUser | null> {
 }
 
 export async function deleteUser(email: string): Promise<boolean> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   // Cascade through the foreign keys removes progress/mistakes/bookmarks too.
@@ -80,6 +93,7 @@ export async function getUserByStripeCustomer(customerId: string): Promise<Tickr
 // ─── Progress ─────────────────────────────────────────────────────────────
 
 export async function listProgress(email: string): Promise<ProgressRow[]> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return [];
   const { data, error } = await db
@@ -91,6 +105,7 @@ export async function listProgress(email: string): Promise<ProgressRow[]> {
 }
 
 export async function markComplete(email: string, lessonId: string): Promise<boolean> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   await ensureUser(email);
@@ -106,6 +121,7 @@ export async function markComplete(email: string, lessonId: string): Promise<boo
 // ─── Mistakes ─────────────────────────────────────────────────────────────
 
 export async function listMistakes(email: string): Promise<MistakeRow[]> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return [];
   const { data, error } = await db
@@ -117,6 +133,7 @@ export async function listMistakes(email: string): Promise<MistakeRow[]> {
 }
 
 export async function logMistake(email: string, lessonId: string): Promise<boolean> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   await ensureUser(email);
@@ -147,6 +164,7 @@ export async function logMistake(email: string, lessonId: string): Promise<boole
 }
 
 export async function markReviewed(email: string, lessonId: string): Promise<boolean> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   // Read current count, increment, write back. Two trips, simple semantics.
@@ -169,6 +187,7 @@ export async function markReviewed(email: string, lessonId: string): Promise<boo
 // ─── Bookmarks ────────────────────────────────────────────────────────────
 
 export async function listBookmarks(email: string): Promise<BookmarkRow[]> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return [];
   const { data, error } = await db
@@ -180,6 +199,7 @@ export async function listBookmarks(email: string): Promise<BookmarkRow[]> {
 }
 
 export async function setBookmark(email: string, lessonId: string, on: boolean): Promise<boolean> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   await ensureUser(email);
@@ -208,11 +228,16 @@ export async function recordFeedback(args: {
   vote: 'up' | 'down';
   note?: string;
 }): Promise<boolean> {
+  // `ensureUser` normalises internally, so the user row is created lowercase.
+  // Inserting the raw casing here pointed the feedback row at an address that
+  // has no user row — a dangling reference, and feedback the account never
+  // shows. Normalise once, up front, and use that value for both.
+  const email = args.email ? normaliseEmail(args.email) : null;
   const db = await getDb();
   if (!db) return false;
-  if (args.email) await ensureUser(args.email);
+  if (email) await ensureUser(email);
   const { error } = await db.from('tickra_feedback').insert({
-    email: args.email,
+    email,
     lesson_id: args.lessonId,
     vote: args.vote,
     note: args.note ?? null,
@@ -225,6 +250,7 @@ export async function recordFeedback(args: {
 export type PlanEntry = { day_index: number; lesson_id: string };
 
 export async function getUserPlan(email: string): Promise<PlanEntry[]> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return [];
   const { data, error } = await db
@@ -237,6 +263,7 @@ export async function getUserPlan(email: string): Promise<PlanEntry[]> {
 }
 
 export async function setUserPlan(email: string, entries: PlanEntry[]): Promise<boolean> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   await ensureUser(email);
@@ -250,6 +277,7 @@ export async function setUserPlan(email: string, entries: PlanEntry[]): Promise<
 // ─── Notifications log ───────────────────────────────────────────────────
 
 export async function recordNotification(email: string, kind: string): Promise<void> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return;
   await db
@@ -258,6 +286,7 @@ export async function recordNotification(email: string, kind: string): Promise<v
 }
 
 export async function lastNotificationAt(email: string, kind: string): Promise<number | null> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return null;
   const { data, error } = await db
@@ -289,6 +318,7 @@ export async function recordMagicNonce(
   nonce: string,
   expiresAt: number,
 ): Promise<boolean> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   const { error } = await db.from('tickra_magic_nonces').insert({
@@ -305,6 +335,9 @@ export async function consumeMagicNonce(
   nonce: string,
   email: string,
 ): Promise<boolean> {
+  // Must match the form `recordMagicNonce` stored, or the row is never found
+  // and a perfectly good link reports itself expired.
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return false;
   const { data, error } = await db
@@ -349,6 +382,7 @@ export async function updateExistingUser(
   email: string,
   patch: Partial<TickraUser>,
 ): Promise<{ updated: boolean }> {
+  email = normaliseEmail(email);
   const db = await getDb();
   if (!db) return { updated: false };
   const { data, error } = await db

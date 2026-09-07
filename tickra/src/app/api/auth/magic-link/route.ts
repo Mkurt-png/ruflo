@@ -3,6 +3,7 @@ import { createHmac, randomBytes } from 'node:crypto';
 import { FROM, sendEmailLogged } from '@/lib/email/resend';
 import { isDbConfigured, recordMagicNonce } from '@/lib/db/queries';
 import { rateLimit, clientIp } from '@/lib/security/rate-limit';
+import { normaliseEmail, emailLooksValid } from '@/lib/auth/email';
 import { BRAND_NAME, EMAIL } from '@/lib/brand';
 
 // TICKRA-FIX(security): throttle sign-in mail. Without this, the endpoint can
@@ -25,10 +26,6 @@ export const dynamic = 'force-dynamic';
 
 const TOKEN_TTL_SECONDS = 15 * 60; // 15 minutes
 
-function emailLooksValid(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
 function sign(payload: string, secret: string): string {
   return createHmac('sha256', secret).update(payload).digest('base64url');
 }
@@ -42,7 +39,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'valid email is required' }, { status: 400 });
   }
 
-  const email = body.email.slice(0, 200);
+  // Normalised HERE, before the token payload is signed — so the address the
+  // callback verifies, the nonce row, the session and the user row are all the
+  // same string. Signing the raw casing meant a link from a phone keyboard and
+  // one from a desktop resolved to two different accounts.
+  const email = normaliseEmail(body.email);
   const locale: 'fr' | 'en' = body.locale === 'fr' ? 'fr' : 'en';
   const secret = process.env.AUTH_SIGNING_SECRET;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? new URL(req.url).origin;
@@ -65,7 +66,7 @@ export async function POST(req: Request) {
   // is the same invisible-failure shape this route was fixed for elsewhere, and
   // it cost a debugging session on production.
   const emailBucket = await rateLimit(
-    `magic:email:${email.toLowerCase()}`,
+    `magic:email:${email}`, // already normalised
     EMAIL_LIMIT,
     EMAIL_WINDOW,
   );
@@ -98,8 +99,24 @@ export async function POST(req: Request) {
   // consumed (single-use). Without DB this gracefully no-ops — the
   // callback's consume returns false, which we treat as replay-safe only
   // when DB is configured. See callback route comment.
+  //
+  // TICKRA-FIX(auth): the result used to be discarded. If the insert failed —
+  // a connection blip, a full table, a schema change — the mail went out
+  // anyway carrying a nonce no row exists for. The callback then found
+  // nothing to consume and answered `error=expired` on a link that had never
+  // been used. Requesting another link produced the same dead link, so the
+  // user was locked out with a message telling them to do the one thing that
+  // could not work.
+  //
+  // A link we know cannot succeed is worse than no link: send nothing, and say
+  // the failure is ours so the person retries instead of doubting their
+  // address.
   if (isDbConfigured()) {
-    await recordMagicNonce(email, nonce, expiresAt);
+    const recorded = await recordMagicNonce(email, nonce, expiresAt);
+    if (!recorded) {
+      console.error('[magic-link] could not persist nonce for %s — mail not sent', email);
+      return NextResponse.json({ error: 'server_error' }, { status: 500 });
+    }
   }
 
   const url = `${siteUrl}/api/auth/callback?token=${encodeURIComponent(token)}&locale=${locale}`;
