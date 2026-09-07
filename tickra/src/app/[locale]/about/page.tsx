@@ -10,7 +10,7 @@ import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { TrustBar } from '@/components/ui/TrustBar';
 import { ShimmerButton } from '@/components/fx/ShimmerButton';
 
-export const metadata = { title: 'À propos · nkNOWTrade' };
+export const metadata = { title: 'À propos' };
 
 // Founder copy is kept here (per-locale) rather than in the i18n bundle
 // so the team can swap names, location, proof points without touching

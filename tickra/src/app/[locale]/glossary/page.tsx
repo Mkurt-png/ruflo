@@ -35,11 +35,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     openGraph: {
       type: 'website',
       url: `${SITE_URL}/${locale}/glossary`,
-      title: `${m.title} · nkNOWTrade`,
+      title: `${m.title}`,
       description: m.description,
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
     },
-    twitter: { card: 'summary_large_image', title: `${m.title} · nkNOWTrade`, description: m.description },
+    twitter: { card: 'summary_large_image', title: `${m.title}`, description: m.description },
   };
 }
 

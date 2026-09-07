@@ -10,7 +10,7 @@ import { Footer } from '@/components/sections/Footer';
 
 export const revalidate = 86400;
 export const metadata = {
-  title: 'L’Abonnement institutionnel · nkNOWTrade',
+  title: 'L’Abonnement institutionnel',
   description:
     'nkNOWTrade pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.',
 };

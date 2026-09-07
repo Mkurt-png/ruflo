@@ -35,7 +35,9 @@ export function buildMetadata(locale: Locale): Metadata {
       description,
       locale: locale === 'fr' ? 'fr_FR' : 'en_US',
     },
-    twitter: { card: 'summary_large_image', title, description, creator: '@tickra' },
+    // No `creator` until a real handle exists: the old '@tickra' credited an
+    // account that is not ours on every share card.
+    twitter: { card: 'summary_large_image', title, description },
     robots: {
       index: true,
       follow: true,

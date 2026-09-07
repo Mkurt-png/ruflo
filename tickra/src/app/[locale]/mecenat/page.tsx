@@ -11,7 +11,7 @@ import { Footer } from '@/components/sections/Footer';
 
 export const revalidate = 86400;
 export const metadata = {
-  title: 'Le Mécénat · nkNOWTrade',
+  title: 'Le Mécénat',
   description:
     'Offrir un mois Pro à un lecteur inconnu. Anonyme, distribué par l’éditeur, sans remerciement, sans contrepartie.',
 };

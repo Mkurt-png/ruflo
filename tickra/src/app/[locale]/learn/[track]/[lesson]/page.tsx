@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const found = getLesson(params.track, params.lesson);
   if (!found) return {};
   const title = found.lesson.title[params.locale as Locale];
-  return { title: `${title} · nkNOWTrade` };
+  return { title: `${title}` };
 }
 
 export default async function LessonPage({

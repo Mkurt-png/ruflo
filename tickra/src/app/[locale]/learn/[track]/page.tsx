@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
   const track = getTrack(params.track);
   if (!track) return {};
-  return { title: `${track.title[params.locale as Locale]} · nkNOWTrade` };
+  return { title: `${track.title[params.locale as Locale]}` };
 }
 
 export default async function TrackPage({ params }: { params: Params }) {

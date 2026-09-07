@@ -8,7 +8,7 @@ import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { Prose } from '@/components/ui/Prose';
 
-export const metadata = { title: 'Politique cookies · nkNOWTrade' };
+export const metadata = { title: 'Politique cookies' };
 
 const COPY = {
   fr: {

@@ -10,7 +10,7 @@ import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { TRACKS, getTrack } from '@/lib/curriculum/data';
 
-export const metadata = { title: 'Bienvenue · nkNOWTrade' };
+export const metadata = { title: 'Bienvenue' };
 
 // TICKRA-PHASE-1.1: focused first-action. One big primary CTA pointing at the
 // user's recommended first lesson (from placement test). Secondary actions are
