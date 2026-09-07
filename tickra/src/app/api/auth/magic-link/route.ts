@@ -52,22 +52,39 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, delivered: false, reason: 'not_configured' });
   }
 
-  // Throttle before doing any work. We still answer 200 so the response is
-  // indistinguishable from a successful send — never reveal whether an address
-  // exists, or that a limit was hit.
+  // TICKRA-FIX(auth): say when a request was throttled.
+  //
+  // This used to answer `{ ok: true }`, on the reasoning that a uniform reply
+  // reveals nothing about whether an address has an account. But the throttle
+  // applies to every address equally, account or not, so admitting to it leaks
+  // nothing — it only tells the requester that THIS address has been asked for
+  // a lot recently, which they already know, because it was them.
+  //
+  // What the silence did cost was real: the page said "check your email" and
+  // nothing arrived, with no way to tell a throttle from a broken mailer. That
+  // is the same invisible-failure shape this route was fixed for elsewhere, and
+  // it cost a debugging session on production.
   const emailBucket = await rateLimit(
     `magic:email:${email.toLowerCase()}`,
     EMAIL_LIMIT,
     EMAIL_WINDOW,
   );
   if (!emailBucket.allowed) {
-    return NextResponse.json({ ok: true });
+    console.warn('[magic-link] throttled: address bucket, %d hits', emailBucket.count);
+    return NextResponse.json(
+      { error: 'rate_limited', retryAfterSeconds: EMAIL_WINDOW },
+      { status: 429, headers: { 'retry-after': String(EMAIL_WINDOW) } },
+    );
   }
   const ip = clientIp(req);
   if (ip) {
     const ipBucket = await rateLimit(`magic:ip:${ip}`, IP_LIMIT, IP_WINDOW);
     if (!ipBucket.allowed) {
-      return NextResponse.json({ ok: true });
+      console.warn('[magic-link] throttled: IP bucket, %d hits', ipBucket.count);
+      return NextResponse.json(
+        { error: 'rate_limited', retryAfterSeconds: IP_WINDOW },
+        { status: 429, headers: { 'retry-after': String(IP_WINDOW) } },
+      );
     }
   }
 
