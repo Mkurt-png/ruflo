@@ -3,6 +3,7 @@ import { createHmac, randomBytes } from 'node:crypto';
 import { FROM, sendEmailLogged } from '@/lib/email/resend';
 import { isDbConfigured, recordMagicNonce } from '@/lib/db/queries';
 import { rateLimit, clientIp } from '@/lib/security/rate-limit';
+import { BRAND_NAME, EMAIL } from '@/lib/brand';
 
 // TICKRA-FIX(security): throttle sign-in mail. Without this, the endpoint can
 // be looped to mail any address through our Resend domain (quota burn + spam
@@ -86,16 +87,58 @@ export async function POST(req: Request) {
 
   const url = `${siteUrl}/api/auth/callback?token=${encodeURIComponent(token)}&locale=${locale}`;
 
-  const subject = locale === 'fr' ? 'Votre lien de connexion nkNOWTrade' : 'Your nkNOWTrade sign-in link';
-  const intro = locale === 'fr' ? 'Cliquez pour vous connecter (lien valable 15 minutes) :' : 'Click to sign in (link valid 15 minutes):';
-  const ignore = locale === 'fr' ? 'Vous n’avez pas demandé ce lien ? Ignorez ce message.' : 'Didn’t request this link? You can ignore this email.';
+  // TICKRA-FIX(deliverability): the first version of this mail was three bare
+  // <p> tags whose only link used the raw tokenised URL as its own anchor text.
+  // That is the shape of a phishing mail, and filters score it as one — it
+  // landed in Gmail's spam folder on the very first send from the new domain.
+  //
+  // Reputation and volume dominate here and no markup fixes those, but three
+  // things in the message itself were working against us and are worth fixing:
+  //
+  //   - no Reply-To, so the visible sender had no reachable inbox
+  //   - a long URL as clickable text, the classic phishing tell
+  //   - nothing identifying the sender or why the message was received
+  const t = locale === 'fr'
+    ? {
+        subject: `Votre lien de connexion ${BRAND_NAME}`,
+        heading: 'Connexion à votre compte',
+        intro: 'Voici votre lien de connexion. Il est valable 15 minutes et ne peut servir qu’une fois.',
+        cta: 'Se connecter',
+        fallback: 'Si le bouton ne fonctionne pas, copiez cette adresse dans votre navigateur :',
+        why: `Vous recevez ce message parce qu’une connexion a été demandée pour ${email} sur ${BRAND_NAME}.`,
+        ignore: 'Si ce n’est pas vous, ignorez ce message : sans le lien, personne ne peut accéder au compte.',
+      }
+    : {
+        subject: `Your ${BRAND_NAME} sign-in link`,
+        heading: 'Sign in to your account',
+        intro: 'Here is your sign-in link. It is valid for 15 minutes and can only be used once.',
+        cta: 'Sign in',
+        fallback: 'If the button does not work, copy this address into your browser:',
+        why: `You are receiving this because a sign-in was requested for ${email} on ${BRAND_NAME}.`,
+        ignore: 'If this was not you, ignore this message — without the link nobody can reach the account.',
+      };
 
   await sendEmailLogged({
     from: FROM,
+    // A visible sender with no inbox behind it is a deliverability penalty, and
+    // a dead end for anyone who simply replies.
+    replyTo: EMAIL.support,
     to: email,
-    subject,
-    text: `${intro}\n\n${url}\n\n${ignore}`,
-    html: `<p>${intro}</p><p><a href="${url}">${url}</a></p><p style="color:#666">${ignore}</p>`,
+    subject: t.subject,
+    text: `${t.heading}\n\n${t.intro}\n\n${url}\n\n${t.why}\n${t.ignore}\n\n${BRAND_NAME}`,
+    html: `<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;padding:32px 24px;color:#111320">
+  <p style="margin:0 0 24px;font-size:15px;font-weight:600;letter-spacing:-0.01em">${BRAND_NAME}</p>
+  <h1 style="margin:0 0 12px;font-size:20px;font-weight:600;letter-spacing:-0.02em">${t.heading}</h1>
+  <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#3d4255">${t.intro}</p>
+  <p style="margin:0 0 24px">
+    <a href="${url}" style="display:inline-block;background:#38bdf8;color:#ffffff;text-decoration:none;font-size:15px;font-weight:600;padding:12px 28px;border-radius:999px">${t.cta}</a>
+  </p>
+  <p style="margin:0 0 8px;font-size:13px;color:#6c7490">${t.fallback}</p>
+  <p style="margin:0 0 28px;font-size:12px;line-height:1.5;color:#6c7490;word-break:break-all">${url}</p>
+  <hr style="border:none;border-top:1px solid #dde3f0;margin:0 0 16px">
+  <p style="margin:0 0 4px;font-size:12px;line-height:1.6;color:#6c7490">${t.why}</p>
+  <p style="margin:0;font-size:12px;line-height:1.6;color:#6c7490">${t.ignore}</p>
+</div>`,
   }, 'magic-link');
 
   // Always return ok — never reveal whether the address has an account.
