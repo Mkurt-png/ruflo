@@ -16,12 +16,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata = editorialMeta({
-  slug: 'veillee',
-  title: 'La Veillée',
-  description:
-    'Dimanche, 21 h UTC. Une page, une phrase par minute, lue par tout le monde au même moment. Pas de vidéo, pas de chat.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'veillee',
+    locale,
+    title: {
+      fr: 'La Veillée',
+      en: 'The Vigil',
+    },
+    description: {
+      fr: 'Dimanche, 21 h UTC. Une page, une phrase par minute, lue par tout le monde au même moment. Pas de vidéo, pas de chat.',
+      en: 'Sunday, 21:00 UTC. One page, one sentence a minute, read by everyone at the same moment. No video, no chat.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

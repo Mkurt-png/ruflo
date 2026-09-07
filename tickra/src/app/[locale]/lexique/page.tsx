@@ -17,12 +17,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'lexique',
-  title: 'Le Lexique vivant',
-  description:
-    'Chaque mot d’une leçon peut s’ouvrir : définition, et un lien vers le glossaire. Pas de tooltip qui flotte — un geste choisi.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'lexique',
+    locale,
+    title: {
+      fr: 'Le Lexique vivant',
+      en: 'The Living Lexicon',
+    },
+    description: {
+      fr: 'Chaque mot d’une leçon peut s’ouvrir : définition, et un lien vers le glossaire. Pas de tooltip qui flotte — un geste choisi.',
+      en: 'Any word in a lesson can be opened: a definition, and a link to the glossary. No floating tooltip — a chosen gesture.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

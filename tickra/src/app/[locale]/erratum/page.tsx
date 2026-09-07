@@ -12,12 +12,21 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // grows. If trust matters more than image, this page should exist.
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'erratum',
-  title: 'L’Erratum',
-  description:
-    'Journal public des erreurs de nkNOWTrade : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'erratum',
+    locale,
+    title: {
+      fr: 'L’Erratum',
+      en: 'The Erratum',
+    },
+    description: {
+      fr: 'Journal public des erreurs de nkNOWTrade : leçons corrigées, Criées mal posées, formules ajustées. Rien n’est effacé.',
+      en: 'nkNOWTrade\'s public log of mistakes: corrected lessons, badly framed Criées, adjusted formulas. Nothing is erased.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

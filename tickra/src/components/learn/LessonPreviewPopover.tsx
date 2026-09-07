@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { TRACKS } from '@/lib/curriculum/data';
-import { getLessonContent } from '@/lib/curriculum/lesson-content';
 import { easeOutExpo } from '@/lib/motion';
 
 type Locale = 'fr' | 'en';
@@ -23,11 +22,20 @@ export function LessonPreviewPopover({
   trackSlug,
   lessonSlug,
   locale,
+  preview,
   children,
 }: {
   trackSlug: string;
   lessonSlug: string;
   locale: Locale;
+  /**
+   * First intro paragraph, resolved on the SERVER by the page that renders
+   * this popover. It used to be read here via `getLessonContent`, which
+   * dragged all 222 paid lesson bodies — drills and quiz answers included —
+   * into the public browser bundle. One free paragraph is the intended
+   * preview; the rest stays behind the paywall.
+   */
+  preview: string;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -36,8 +44,7 @@ export function LessonPreviewPopover({
   const t = copy[locale];
   const track = TRACKS.find((tr) => tr.slug === trackSlug);
   const lesson = track?.lessons.find((l) => l.slug === lessonSlug);
-  const content = track && lesson ? getLessonContent(track, lesson) : null;
-  const firstParagraph = content?.intro[locale][0] ?? '';
+  const firstParagraph = preview;
 
   useEffect(() => {
     if (!open) return;

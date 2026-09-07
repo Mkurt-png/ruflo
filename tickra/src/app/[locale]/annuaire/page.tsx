@@ -15,12 +15,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'annuaire',
-  title: 'L’Annuaire',
-  description:
-    'L’index alphabétique de toutes les leçons publiées sur nkNOWTrade. Une seule page, navigable au clavier, faite pour être lue lentement.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'annuaire',
+    locale,
+    title: {
+      fr: 'L’Annuaire',
+      en: 'The Index',
+    },
+    description: {
+      fr: 'L’index alphabétique de toutes les leçons publiées sur nkNOWTrade. Une seule page, navigable au clavier, faite pour être lue lentement.',
+      en: 'The alphabetical index of every lesson published on nkNOWTrade. One page, keyboard-navigable, made to be read slowly.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

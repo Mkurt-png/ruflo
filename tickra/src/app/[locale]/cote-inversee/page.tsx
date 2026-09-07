@@ -13,12 +13,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'cote-inversee',
-  title: 'La Cote inversée',
-  description:
-    'Tous les mois, l’éditeur publie sa propre Cote, calculée avec la même formule que la vôtre. Transparence radicale.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'cote-inversee',
+    locale,
+    title: {
+      fr: 'La Cote inversée',
+      en: 'The Inverted Score',
+    },
+    description: {
+      fr: 'Tous les mois, l’éditeur publie sa propre Cote, calculée avec la même formule que la vôtre. Transparence radicale.',
+      en: 'Every month the editor publishes their own Score, computed with the same formula as yours. Radical transparency.',
+    },
+  });
+}
 
 type Edition = {
   month: string; // ISO YYYY-MM

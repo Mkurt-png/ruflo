@@ -15,12 +15,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'almanach',
-  title: 'L’Almanach',
-  description:
-    'L’archive de l’année : une ligne par Criée passée, dans l’ordre où elles ont été posées.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'almanach',
+    locale,
+    title: {
+      fr: 'L’Almanach',
+      en: 'The Almanac',
+    },
+    description: {
+      fr: 'L’archive de l’année : une ligne par Criée passée, dans l’ordre où elles ont été posées.',
+      en: 'The year\'s archive: one line per past Criée, in the order they were asked.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

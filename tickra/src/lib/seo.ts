@@ -23,13 +23,22 @@ export function buildMetadata(locale: Locale): Metadata {
     description,
     applicationName: SITE_NAME,
     formatDetection: { email: false, telephone: false, address: false },
-    alternates: {
-      canonical: `/${locale}`,
-      languages: { en: '/en', fr: '/fr' },
-    },
+    // NO `alternates` here, deliberately.
+    //
+    // This object is the ROOT layout's metadata, and Next merges it into every
+    // page that does not override the field. A canonical of `/${locale}` here
+    // therefore told Google that /fr/pricing, /en/about and all 222 lesson
+    // pages were each duplicates of the locale home page — while the sitemap
+    // offered ~470 URLs. Google resolves that contradiction by indexing two
+    // pages and dropping the rest.
+    //
+    // With the field absent, a page without an explicit canonical is simply
+    // self-canonical, which is correct. Pages that also want hreflang pairing
+    // call `pageSeo()` below. See `canonical.test.ts`.
     openGraph: {
       type: 'website',
-      url: `${SITE_URL}/${locale}`,
+      // Same reasoning: an inherited absolute URL would label every share card
+      // with the home page's address. `metadataBase` resolves per-page URLs.
       siteName: SITE_NAME,
       title,
       description,
@@ -44,5 +53,25 @@ export function buildMetadata(locale: Locale): Metadata {
       googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
     },
     icons: { icon: '/favicon.svg' },
+  };
+}
+
+/**
+ * Canonical URL + hreflang pair for one page, given the path AFTER the locale
+ * segment ('' for the locale home page, '/pricing', '/learn/forex-basics', …).
+ *
+ * Spread into a page's `metadata` / `generateMetadata` return value. Pages that
+ * omit it are self-canonical, which is fine; this is what adds the FR↔EN
+ * pairing so the two language versions are understood as translations of each
+ * other rather than as competing duplicates.
+ */
+export function pageSeo(locale: Locale, path = ''): Metadata {
+  const suffix = path && !path.startsWith('/') ? `/${path}` : path;
+  return {
+    alternates: {
+      canonical: `/${locale}${suffix}`,
+      languages: { fr: `/fr${suffix}`, en: `/en${suffix}` },
+    },
+    openGraph: { url: `${SITE_URL}/${locale}${suffix}` },
   };
 }

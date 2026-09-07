@@ -15,12 +15,21 @@ import { pairFor } from '@/lib/tickra/cercle';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 export const dynamic = 'force-dynamic';
-export const metadata = editorialMeta({
-  slug: 'cercle',
-  title: 'Le Cercle de relecture',
-  description:
-    'Chaque dimanche, un autre lecteur, lu en silence. Deux Lettres échangées, sans messagerie, sans visage.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'cercle',
+    locale,
+    title: {
+      fr: 'Le Cercle de relecture',
+      en: 'The Reading Circle',
+    },
+    description: {
+      fr: 'Chaque dimanche, un autre lecteur, lu en silence. Deux Lettres échangées, sans messagerie, sans visage.',
+      en: 'Every Sunday, another reader, read in silence. Two Letters exchanged — no messaging, no faces.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

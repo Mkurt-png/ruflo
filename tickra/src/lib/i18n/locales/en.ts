@@ -25,7 +25,10 @@ const en = {
     secondaryCta: 'Free lesson preview (2 min)',
     chartCaption: 'EUR/USD · 1H · Last 24 sessions',
     stats: [
-      { value: '222', label: 'Structured lessons' },
+      // 158 lessons are written; 222 are planned. Advertising 222 as shipped
+      // sold 64 "coming soon" pages — including four advanced tracks that are
+      // entirely empty, which are exactly the ones people pay for.
+      { value: '158', label: 'Lessons written' },
       { value: '15', label: 'Mastery tracks' },
       { value: '10 min', label: 'Daily commitment' },
     ],
@@ -66,7 +69,7 @@ const en = {
         body: 'Ten minutes counts. Miss a day, keep your streak with a freeze. nkNOWTrade rewards consistency, not grinding.',
       },
       library: {
-        title: '222 modules, fifteen tracks.',
+        title: '158 modules written, 222 planned.',
         body: 'From forex basics to live markets. Every module ends with a checkpoint you can fail — and retake.',
       },
       risk: {
@@ -135,28 +138,21 @@ const en = {
   },
   builtBy: {
     eyebrow: 'Built by',
-    title: 'A team that ran a book, not a YouTube channel.',
-    body: 'nkNOWTrade is built by former trading‑floor operators and educators who trained juniors in banking. The product only teaches what was useful to a trader paid to decide.',
+    // TICKRA-FIX(legal): this block used to name three co-founders — Marc
+    // Hauser, Inès Vidal, Tom Reyer — with specific employers (Société
+    // Générale, BNP CIB, Les Échos) and dates. None of them exist. Inventing
+    // colleagues is one thing; attributing them to named real institutions on a
+    // page selling a paid product is false advertising, and in France and
+    // Québec it also exposes those institutions' names without any basis.
+    // nkNOWTrade is written and operated by one person. That is what the page
+    // says now.
+    title: 'Written by one person, in the open.',
+    body: 'nkNOWTrade is built and written by a single operator, not a team or a studio. Every lesson is published in full before it is sold, and the method behind the Score is spelled out on its own page. What the site does not claim, it does not know.',
     people: [
       {
-        name: 'Marc Hauser',
-        role: 'Co‑founder · Curriculum',
-        bio: 'Ex‑FX market maker (Société Générale, 2014‑2019). Junior trainer on the EUR desk since 2020.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Inès Vidal',
-        role: 'Co‑founder · Product',
-        bio: 'Ex‑Quant analyst (BNP CIB). Built the learning infra and the adaptive progression engine.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Tom Reyer',
-        role: 'Lead Design',
-        bio: 'Editorial art direction (Les Échos, Substack). Identity, type, charts.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        name: 'Hamza Kurt',
+        role: 'Author · nkNOWTrade',
+        bio: 'Sole operator. Writes the curriculum, builds the site, answers the mail.',
         linkedin: undefined as string | undefined,
       },
     ],
@@ -219,7 +215,7 @@ const en = {
         cta: 'Go Pro',
         highlighted: true,
         features: [
-          'All 222 lessons unlocked',
+          'Every published lesson unlocked (158 today)',
           'Unlimited lives, zero ads',
           'Pick any module, any time',
           'TradingView Pro embed',
@@ -247,7 +243,7 @@ const en = {
       title: 'Compare in detail',
       rows: [
         { label: 'Placement test', free: 'Included', pro: 'Included', lifetime: 'Included' },
-        { label: 'Lessons unlocked', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + future' },
+        { label: 'Lessons unlocked', free: '4 / 158', pro: '158 / 158', lifetime: '158 / 158 + future' },
         { label: 'Daily lives', free: '3', pro: 'Unlimited', lifetime: 'Unlimited' },
         { label: 'Embedded TradingView', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Decision journal', free: '—', pro: 'Included', lifetime: 'Included + export' },
@@ -406,7 +402,7 @@ const en = {
       },
       {
         title: 'What we promise',
-        body: 'A legible method, a curriculum tested on 12,000+ learners, a reachable team, and an exit at any time. Pro is cancellable in two clicks. Lifetime is refunded within 14 days, no questions.',
+        body: 'A legible method, a curriculum published in full before it is sold, a reachable author, and an exit at any time. Pro is cancellable in two clicks. Lifetime is refunded within 14 days, no questions.',
       },
     ],
   },
@@ -628,12 +624,14 @@ const en = {
       { title: 'No P&L screenshots', body: 'Gain screenshots teach nobody and feed envy. We talk method, not results.' },
     ],
     sessionsTitle: 'Upcoming live sessions',
-    sessionsIntro: 'Two sessions a week, 30 minutes, reserved for Pro and Lifetime. Replay available for 7 days.',
-    sessions: [
-      { date: 'Tuesday 18:30 GMT', title: 'Week review — EUR/USD and indices', host: 'Marc Hauser' },
-      { date: 'Thursday 19:00 GMT', title: 'Drill: 5 historical gold setups', host: 'Inès Vidal' },
-      { date: 'Saturday 11:00 GMT', title: 'Collective post-mortem — your week trades', host: 'Cohort' },
-    ],
+    // TICKRA-FIX(honesty): this advertised a recurring live-session schedule
+    // — two a week, 30 minutes, replays for 7 days — hosted by two people who
+    // do not exist, with no booking link and no calendar. It sat on a
+    // navbar-linked page and was framed as a Pro/Lifetime benefit, i.e. a paid
+    // promise nobody could keep. Sessions will be listed here once real ones
+    // are scheduled; until then the page says so.
+    sessionsIntro: 'Live sessions have not started yet. When the first one is scheduled it will be announced here and by email, with the date, the topic and the replay policy stated up front. Nothing is billed for a session that does not exist.',
+    sessions: [],
   },
   hero_extra: {
     badgeLive: 'Interactive preview',
@@ -800,8 +798,9 @@ const en = {
       {
         title: 'Product',
         links: [
-          { label: 'Method', href: '#method' },
-          { label: 'Curriculum', href: '#curriculum' },
+          // See the fr.ts comment: both were dead anchors; both have real pages.
+          { label: 'Method', href: '/method' },
+          { label: 'Curriculum', href: '/curriculum' },
           { label: 'Tools', href: '/tools' },
           { label: 'Pricing', href: '/pricing' },
           { label: 'Changelog', href: '/changelog' },

@@ -3,6 +3,7 @@
 import { useRouter, usePathname } from 'next/navigation';
 import { useTransition } from 'react';
 import { locales, type Locale } from '@/lib/i18n/config';
+import { localisePath } from '@/lib/i18n/editorial-slugs';
 import { cn } from '@/lib/cn';
 
 type Props = { current: Locale; label: string };
@@ -19,9 +20,10 @@ export function LocaleSwitcher({ current, label }: Props) {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ locale: next }),
     });
-    const segments = pathname.split('/');
-    segments[1] = next;
-    startTransition(() => router.replace(segments.join('/') || `/${next}`));
+    // Not a blind segment swap: editorial article slugs are translated, so
+    // /fr/editorial/journal-de-trading has to become
+    // /en/editorial/trading-journal, not a 404.
+    startTransition(() => router.replace(localisePath(pathname, next)));
   };
 
   return (

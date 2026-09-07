@@ -15,12 +15,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
-  slug: 'maison',
-  title: 'La Maison',
-  description:
-    'Plan de la maison nkNOWTrade : toutes les pièces éditoriales sur une seule page. Rituels, lectures, archives, manifestes.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'maison',
+    locale,
+    title: {
+      fr: 'La Maison',
+      en: 'The House',
+    },
+    description: {
+      fr: 'Plan de la maison nkNOWTrade : toutes les pièces éditoriales sur une seule page. Rituels, lectures, archives, manifestes.',
+      en: 'A map of the nkNOWTrade house: every editorial room on a single page. Rituals, readings, archives, manifestos.',
+    },
+  });
+}
 
 type Room = {
   slug: string;

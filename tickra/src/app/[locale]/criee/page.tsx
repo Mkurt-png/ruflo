@@ -13,12 +13,21 @@ import { CrieeCard } from '@/components/criee/CrieeCard';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 export const dynamic = 'force-dynamic';
-export const metadata = editorialMeta({
-  slug: 'criee',
-  title: 'La Criée',
-  description:
-    'Une question, choisie pour le jour. La même pour tout le monde. Cinq minutes, dix au plus.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'criee',
+    locale,
+    title: {
+      fr: 'La Criée',
+      en: 'The Criée',
+    },
+    description: {
+      fr: 'Une question, choisie pour le jour. La même pour tout le monde. Cinq minutes, dix au plus.',
+      en: 'One question, chosen for the day. The same one for everybody. Five minutes, ten at most.',
+    },
+  });
+}
 
 export default async function CrieePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

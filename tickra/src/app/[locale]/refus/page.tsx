@@ -12,12 +12,21 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // no logic, no progress — defines the brand by what it refuses.
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
-  slug: 'refus',
-  title: 'Le Refus',
-  description:
-    'Dix choses que nkNOWTrade ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'refus',
+    locale,
+    title: {
+      fr: 'Le Refus',
+      en: 'The Refusal',
+    },
+    description: {
+      fr: 'Dix choses que nkNOWTrade ne construira jamais. Un manifeste par la négation, écrit pour lever toute ambiguïté.',
+      en: 'Ten things nkNOWTrade will never build. A manifesto by negation, written to remove any ambiguity.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

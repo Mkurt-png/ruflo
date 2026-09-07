@@ -25,7 +25,10 @@ const fr = {
     secondaryCta: 'Aperçu gratuit d’une leçon (2 min)',
     chartCaption: 'EUR/USD · 1H · 24 dernières séances',
     stats: [
-      { value: '222', label: 'Leçons structurées' },
+      // 158 leçons sont rédigées ; 222 sont planifiées. Annoncer 222 comme
+      // livrées vendait 64 pages « bientôt » — dont quatre pistes avancées
+      // entièrement vides, exactement celles pour lesquelles on paie.
+      { value: '158', label: 'Leçons rédigées' },
       { value: '15', label: 'Pistes de maîtrise' },
       { value: '10 min', label: 'Engagement quotidien' },
     ],
@@ -66,7 +69,7 @@ const fr = {
         body: 'Dix minutes comptent. Un jour manqué, un freeze conserve la série. nkNOWTrade récompense la régularité, pas le surmenage.',
       },
       library: {
-        title: '222 modules, quinze pistes.',
+        title: '158 modules écrits, 222 planifiés.',
         body: "Des bases du forex aux marchés réels. Chaque module se termine par un point de contrôle qui peut être manqué — et repassé.",
       },
       risk: {
@@ -135,28 +138,16 @@ const fr = {
   },
   builtBy: {
     eyebrow: 'Conçu par',
-    title: 'Une équipe qui a tenu un livre, pas une chaîne YouTube.',
-    body: "nkNOWTrade est conçu par d'anciens opérateurs de salle de marché et des pédagogues qui ont formé des juniors en banque. Le produit n'enseigne que ce qui a été utile à un trader payé pour décider.",
+    // Voir le commentaire côté en.ts : trois co-fondateurs inventés, rattachés à
+    // des employeurs réels et nommés, ont été retirés. Le site est écrit et
+    // exploité par une seule personne.
+    title: 'Écrit par une seule personne, à découvert.',
+    body: "nkNOWTrade est conçu et écrit par un seul opérateur, pas par une équipe ni par un studio. Chaque leçon est publiée en entier avant d'être vendue, et la méthode derrière la Cote est détaillée sur sa propre page. Ce que le site n'affirme pas, il ne le sait pas.",
     people: [
       {
-        name: 'Marc Hauser',
-        role: 'Co‑fondateur · Curriculum',
-        bio: 'Ex‑market maker FX (Société Générale, 2014‑2019). Formateur juniors desk EUR depuis 2020.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Inès Vidal',
-        role: 'Co‑fondatrice · Produit',
-        bio: 'Ex‑Quant analyst (BNP CIB). Construit l’infra pédagogique et le moteur de progression adaptive.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Tom Reyer',
-        role: 'Lead Design',
-        bio: 'Direction artistique éditoriale (Les Échos, Substack). Identité, typographie, graphique.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        name: 'Hamza Kurt',
+        role: 'Auteur · nkNOWTrade',
+        bio: 'Opérateur unique. Écrit le cursus, développe le site, répond aux messages.',
         linkedin: undefined as string | undefined,
       },
     ],
@@ -219,7 +210,7 @@ const fr = {
         cta: 'Passer Pro',
         highlighted: true,
         features: [
-          'Les 222 leçons débloquées',
+          'Toutes les leçons publiées débloquées (158 aujourd’hui)',
           'Vies illimitées, zéro pub',
           'Choisissez n’importe quel module',
           'TradingView Pro intégré',
@@ -247,7 +238,7 @@ const fr = {
       title: 'Comparer en détail',
       rows: [
         { label: 'Test de niveau', free: 'Inclus', pro: 'Inclus', lifetime: 'Inclus' },
-        { label: 'Leçons débloquées', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + futures' },
+        { label: 'Leçons débloquées', free: '4 / 158', pro: '158 / 158', lifetime: '158 / 158 + futures' },
         { label: 'Vies quotidiennes', free: '3', pro: 'Illimitées', lifetime: 'Illimitées' },
         { label: 'TradingView intégré', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Journal de décisions', free: '—', pro: 'Inclus', lifetime: 'Inclus + export' },
@@ -406,7 +397,7 @@ const fr = {
       },
       {
         title: 'Ce que nous promettons',
-        body: 'Une méthode lisible, un curriculum testé sur 12 000+ apprenants, une équipe joignable, et une porte de sortie à tout moment. Pro est annulable en deux clics. À vie est remboursé à 14 jours sans question.',
+        body: 'Une méthode lisible, un curriculum publié en entier avant d’être vendu, un auteur joignable, et une porte de sortie à tout moment. Pro est annulable en deux clics. À vie est remboursé à 14 jours sans question.',
       },
     ],
   },
@@ -628,12 +619,11 @@ const fr = {
       { title: 'Pas de captures de P&L', body: 'Les screenshots de gains n’éduquent personne et nourrissent la jalousie. On parle de méthode, pas de résultats.' },
     ],
     sessionsTitle: 'Sessions live à venir',
-    sessionsIntro: 'Deux sessions par semaine, 30 minutes, réservées aux membres Pro et Lifetime. Replay disponible 7 jours.',
-    sessions: [
-      { date: 'Mardi 18:30 GMT', title: 'Revue de la semaine — EUR/USD et indices', host: 'Marc Hauser' },
-      { date: 'Jeudi 19:00 GMT', title: 'Drill : 5 setups historiques sur l’or', host: 'Inès Vidal' },
-      { date: 'Samedi 11:00 GMT', title: 'Post-mortem collectif — vos trades de la semaine', host: 'Cohorte' },
-    ],
+    // Voir le commentaire côté en.ts : planning de sessions live inventé,
+    // animé par des personnes qui n'existent pas, présenté comme un avantage
+    // payant. Retiré tant qu'aucune session réelle n'est programmée.
+    sessionsIntro: "Les sessions live n'ont pas encore commencé. Dès que la première est programmée, elle sera annoncée ici et par courriel, avec la date, le sujet et la règle de replay indiqués d'avance. Rien n'est facturé pour une session qui n'existe pas.",
+    sessions: [] as Array<{ date: string; title: string; host: string }>,
   },
   hero_extra: {
     badgeLive: 'Aperçu interactif',
@@ -800,8 +790,12 @@ const fr = {
       {
         title: 'Produit',
         links: [
-          { label: 'Méthode', href: '#method' },
-          { label: 'Parcours', href: '#curriculum' },
+          // Ces deux liens pointaient sur #method et #curriculum. Aucune de ces
+          // ancres n'existe sur la page d'accueil (la section s'appelle
+          // « methode », et #curriculum ne vit que dans un composant .bak), donc
+          // les deux ne faisaient rien. Les vraies pages existent.
+          { label: 'Méthode', href: '/method' },
+          { label: 'Parcours', href: '/curriculum' },
           { label: 'Outils', href: '/tools' },
           { label: 'Tarifs', href: '/pricing' },
           { label: 'Journal des versions', href: '/changelog' },

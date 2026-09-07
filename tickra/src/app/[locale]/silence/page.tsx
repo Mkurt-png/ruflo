@@ -15,12 +15,21 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // /refus (what we won't build) and /erratum (what we got wrong).
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
-  slug: 'silence',
-  title: 'Le Silence éditorial',
-  description:
-    'Les patterns d’UI que nkNOWTrade ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'silence',
+    locale,
+    title: {
+      fr: 'Le Silence éditorial',
+      en: 'Editorial Silence',
+    },
+    description: {
+      fr: 'Les patterns d’UI que nkNOWTrade ne déploiera pas : points rouges, compteurs de notifications, confettis, badges flatteurs. La règle de l’interface.',
+      en: 'The UI patterns nkNOWTrade will not ship: red dots, notification counters, confetti, flattering badges. The rule of the interface.',
+    },
+  });
+}
 
 type Banished = {
   id: string;

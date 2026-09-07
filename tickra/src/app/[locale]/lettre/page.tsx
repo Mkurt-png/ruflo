@@ -12,12 +12,21 @@ import { LettrePanel } from '@/components/lettre/LettrePanel';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'lettre',
-  title: 'La Lettre du dimanche',
-  description:
-    'Un bilan hebdomadaire éditorial, calculé localement à partir de votre progression. Lecture calme, dix minutes.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'lettre',
+    locale,
+    title: {
+      fr: 'La Lettre du dimanche',
+      en: 'The Sunday Letter',
+    },
+    description: {
+      fr: 'Un bilan hebdomadaire éditorial, calculé localement à partir de votre progression. Lecture calme, dix minutes.',
+      en: 'A weekly editorial review, computed locally from your own progress. A calm read, ten minutes.',
+    },
+  });
+}
 
 export default async function LettrePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

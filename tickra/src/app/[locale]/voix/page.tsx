@@ -13,12 +13,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'voix',
-  title: 'Les Voix',
-  description:
-    'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'voix',
+    locale,
+    title: {
+      fr: 'Les Voix',
+      en: 'The Voices',
+    },
+    description: {
+      fr: 'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
+      en: 'One voice a month. Working traders, under a pseudonym, describing their craft without the grand narrative.',
+    },
+  });
+}
 
 const COPY = {
   fr: {

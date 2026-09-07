@@ -6,26 +6,45 @@
 import type { Metadata } from 'next';
 import { SITE_URL } from '@/lib/site-url';
 
+/** A string used for both locales, or one string per locale. */
+type Localised = string | { fr: string; en: string };
+
+const pick = (value: Localised, locale: 'fr' | 'en'): string =>
+  typeof value === 'string' ? value : value[locale];
+
 export type EditorialMetaInput = {
   /** Page slug relative to the locale prefix, e.g. "lettre". */
   slug: string;
-  /** Page title in its primary language. "· nkNOWTrade" is appended. */
-  title: string;
+  /** Page title. "· nkNOWTrade" is appended. */
+  title: Localised;
   /** Short page description, used for OG and Twitter. */
-  description: string;
-  /** Locale to anchor the canonical URL. Defaults to fr. */
+  description: Localised;
+  /**
+   * Locale of the page being rendered.
+   *
+   * This MUST come from the route params. Every caller used to leave it out
+   * and assign the result to `export const metadata` — a module-level constant
+   * evaluated once — so all sixteen editorial rooms served French titles and a
+   * canonical pointing at `/fr/<slug>` on their `/en/` URLs too. The English
+   * versions were therefore unindexable, and English readers got French
+   * browser tabs on rooms linked straight from the navbar. Callers now use
+   * `generateMetadata({ params })` and pass the real locale.
+   */
   locale?: 'fr' | 'en';
   /** Optional editorial eyebrow shown on the share-card mono caption. */
-  eyebrow?: string;
+  eyebrow?: Localised;
 };
 
 export function editorialMeta({
   slug,
-  title,
-  description,
+  title: titleInput,
+  description: descriptionInput,
   locale = 'fr',
-  eyebrow,
+  eyebrow: eyebrowInput,
 }: EditorialMetaInput): Metadata {
+  const title = pick(titleInput, locale);
+  const description = pick(descriptionInput, locale);
+  const eyebrow = eyebrowInput ? pick(eyebrowInput, locale) : undefined;
   const path = slug.startsWith('/') ? slug : `/${slug}`;
   const url = `${SITE_URL}/${locale}${path}`;
   // hreflang alternates: tell search engines that fr and en are
