@@ -21,6 +21,7 @@ const errorCopy: Record<string, { fr: string; en: string }> = {
   // Something broke on our side rather than with the link. Say so, so the user
   // retries instead of assuming their address is the problem.
   server_error:   { fr: 'Un problème est survenu de notre côté. Redemandez un lien.', en: 'Something went wrong on our side. Request a new link.' },
+  rate_limited:   { fr: 'Trop de liens demandés pour cette adresse. Patientez quelques minutes, puis réessayez — le dernier lien reçu reste valable.', en: 'Too many links requested for this address. Wait a few minutes and try again — the last link you received still works.' },
   invalid:        { fr: 'Lien invalide. Redemandez un lien.',                 en: 'Invalid link. Request a new one.' },
   invalid_state:  { fr: 'Session OAuth invalide. Réessayez.',                 en: 'Invalid OAuth state. Try again.' },
   oauth_not_configured: { fr: 'Google sign-in non configuré.',                en: 'Google sign-in not configured.' },
@@ -52,13 +53,20 @@ export function SignInForm({ dict, locale }: { dict: Dictionary; locale: Locale 
     if (!email || pending) return;
     setPending(true);
     try {
-      await fetch('/api/auth/magic-link', {
+      const res = await fetch('/api/auth/magic-link', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email, locale }),
       });
+      // A throttled request sends nothing. Showing "check your email" for it
+      // leaves the person waiting for a message that will never come.
+      if (res.status === 429) {
+        setPending(false);
+        setOauthError('rate_limited');
+        return;
+      }
     } catch {
-      /* swallow — we always show the same confirmation for security */
+      /* swallow — a network error still shows the neutral confirmation */
     }
     setPending(false);
     setSent(true);
