@@ -25,7 +25,10 @@ const en = {
     secondaryCta: 'Free lesson preview (2 min)',
     chartCaption: 'EUR/USD · 1H · Last 24 sessions',
     stats: [
-      { value: '222', label: 'Structured lessons' },
+      // 158 lessons are written; 222 are planned. Advertising 222 as shipped
+      // sold 64 "coming soon" pages — including four advanced tracks that are
+      // entirely empty, which are exactly the ones people pay for.
+      { value: '158', label: 'Lessons written' },
       { value: '15', label: 'Mastery tracks' },
       { value: '10 min', label: 'Daily commitment' },
     ],
@@ -66,7 +69,7 @@ const en = {
         body: 'Ten minutes counts. Miss a day, keep your streak with a freeze. nkNOWTrade rewards consistency, not grinding.',
       },
       library: {
-        title: '222 modules, fifteen tracks.',
+        title: '158 modules written, 222 planned.',
         body: 'From forex basics to live markets. Every module ends with a checkpoint you can fail — and retake.',
       },
       risk: {
@@ -135,28 +138,21 @@ const en = {
   },
   builtBy: {
     eyebrow: 'Built by',
-    title: 'A team that ran a book, not a YouTube channel.',
-    body: 'nkNOWTrade is built by former trading‑floor operators and educators who trained juniors in banking. The product only teaches what was useful to a trader paid to decide.',
+    // TICKRA-FIX(legal): this block used to name three co-founders — Marc
+    // Hauser, Inès Vidal, Tom Reyer — with specific employers (Société
+    // Générale, BNP CIB, Les Échos) and dates. None of them exist. Inventing
+    // colleagues is one thing; attributing them to named real institutions on a
+    // page selling a paid product is false advertising, and in France and
+    // Québec it also exposes those institutions' names without any basis.
+    // nkNOWTrade is written and operated by one person. That is what the page
+    // says now.
+    title: 'Written by one person, in the open.',
+    body: 'nkNOWTrade is built and written by a single operator, not a team or a studio. Every lesson is published in full before it is sold, and the method behind the Score is spelled out on its own page. What the site does not claim, it does not know.',
     people: [
       {
-        name: 'Marc Hauser',
-        role: 'Co‑founder · Curriculum',
-        bio: 'Ex‑FX market maker (Société Générale, 2014‑2019). Junior trainer on the EUR desk since 2020.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Inès Vidal',
-        role: 'Co‑founder · Product',
-        bio: 'Ex‑Quant analyst (BNP CIB). Built the learning infra and the adaptive progression engine.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Tom Reyer',
-        role: 'Lead Design',
-        bio: 'Editorial art direction (Les Échos, Substack). Identity, type, charts.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        name: 'Hamza Kurt',
+        role: 'Author · nkNOWTrade',
+        bio: 'Sole operator. Writes the curriculum, builds the site, answers the mail.',
         linkedin: undefined as string | undefined,
       },
     ],
@@ -219,7 +215,7 @@ const en = {
         cta: 'Go Pro',
         highlighted: true,
         features: [
-          'All 222 lessons unlocked',
+          'Every published lesson unlocked (158 today)',
           'Unlimited lives, zero ads',
           'Pick any module, any time',
           'TradingView Pro embed',
@@ -247,7 +243,7 @@ const en = {
       title: 'Compare in detail',
       rows: [
         { label: 'Placement test', free: 'Included', pro: 'Included', lifetime: 'Included' },
-        { label: 'Lessons unlocked', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + future' },
+        { label: 'Lessons unlocked', free: '4 / 158', pro: '158 / 158', lifetime: '158 / 158 + future' },
         { label: 'Daily lives', free: '3', pro: 'Unlimited', lifetime: 'Unlimited' },
         { label: 'Embedded TradingView', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Decision journal', free: '—', pro: 'Included', lifetime: 'Included + export' },
@@ -406,7 +402,7 @@ const en = {
       },
       {
         title: 'What we promise',
-        body: 'A legible method, a curriculum tested on 12,000+ learners, a reachable team, and an exit at any time. Pro is cancellable in two clicks. Lifetime is refunded within 14 days, no questions.',
+        body: 'A legible method, a curriculum published in full before it is sold, a reachable author, and an exit at any time. Pro is cancellable in two clicks. Lifetime is refunded within 14 days, no questions.',
       },
     ],
   },
@@ -474,7 +470,10 @@ const en = {
   },
   changelog: {
     title: 'Changelog',
-    subtitle: 'nkNOWTrade ships every week. Here is what we have shipped.',
+    // TICKRA-FIX(honesty): claimed weekly releases while the newest entry
+    // below was fifteen weeks old. A changelog that contradicts its own
+    // header is worse than no changelog.
+    subtitle: 'What has shipped, and when. Dated entries only — no roadmap.',
     entries: [
       {
         version: 'v0.9.0',
@@ -482,7 +481,10 @@ const en = {
         title: 'Adaptive placement test',
         items: [
           'New 6‑question placement test with adaptive routing to the right track.',
-          'Hero redesign and verified testimonials.',
+          // 'verified testimonials' referred to a Testimonials component that
+          // is dead code, imported only by page.legacy.tsx.bak. Nothing was
+          // ever verified because nothing was ever shown.
+          'Hero redesign.',
           'Legal pages (Terms, Privacy, Risk) published.',
         ],
       },
@@ -628,12 +630,14 @@ const en = {
       { title: 'No P&L screenshots', body: 'Gain screenshots teach nobody and feed envy. We talk method, not results.' },
     ],
     sessionsTitle: 'Upcoming live sessions',
-    sessionsIntro: 'Two sessions a week, 30 minutes, reserved for Pro and Lifetime. Replay available for 7 days.',
-    sessions: [
-      { date: 'Tuesday 18:30 GMT', title: 'Week review — EUR/USD and indices', host: 'Marc Hauser' },
-      { date: 'Thursday 19:00 GMT', title: 'Drill: 5 historical gold setups', host: 'Inès Vidal' },
-      { date: 'Saturday 11:00 GMT', title: 'Collective post-mortem — your week trades', host: 'Cohort' },
-    ],
+    // TICKRA-FIX(honesty): this advertised a recurring live-session schedule
+    // — two a week, 30 minutes, replays for 7 days — hosted by two people who
+    // do not exist, with no booking link and no calendar. It sat on a
+    // navbar-linked page and was framed as a Pro/Lifetime benefit, i.e. a paid
+    // promise nobody could keep. Sessions will be listed here once real ones
+    // are scheduled; until then the page says so.
+    sessionsIntro: 'Live sessions have not started yet. When the first one is scheduled it will be announced here and by email, with the date, the topic and the replay policy stated up front. Nothing is billed for a session that does not exist.',
+    sessions: [],
   },
   hero_extra: {
     badgeLive: 'Interactive preview',
@@ -687,7 +691,7 @@ const en = {
         excerpt: 'Beyond "red = down, green = up": what a candle says about the balance of power between buyers and sellers.',
         date: 'May 18, 2026',
         readingTime: '8 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'A candle is not a colour', p: 'Beginners learn that a green candle means "up" and a red candle means "down". True, but that is the zero‑level of information. A candle tells four numbers over time: open, high, low, close. Its colour is just a derivative — a visual shortcut for whether the close is above or below the open.' },
           { h: 'The body measures conviction', p: 'The longer the body relative to the wicks, the more the winning side controlled the session. A green candle with a long body and small wicks signals that buyers led from start to finish. A green candle with a small body and long wicks signals indecision: sellers showed up, perhaps even took control briefly, before being pushed back.' },
@@ -700,7 +704,7 @@ const en = {
         excerpt: 'A trader can lose 60% of trades and end the year profitable. Here is the math, no Excel needed.',
         date: 'May 11, 2026',
         readingTime: '11 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'The misleading intuition', p: 'Everyone thinks a good trader wins "most of the time". Wrong. Most profitable professional traders have a hit rate between 35% and 50%. What makes them profitable is not the rate, it is the relative size of what they win versus what they lose.' },
           { h: 'The one‑line formula', p: 'Expectancy = (Win rate × Avg win) − (Loss rate × Avg loss). If you win 1 R on average (where R is your risk per trade) when you win, and lose 1 R when you lose, you need a hit rate above 50%. If you win 2 R when you win and lose 1 R when you lose, you are profitable from 34%.' },
@@ -713,7 +717,7 @@ const en = {
         excerpt: 'The simulator juniors look at once and never forget.',
         date: 'May 4, 2026',
         readingTime: '6 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'The percentage trap', p: 'Losing 50% of your capital does not require a 50% gain to recover — it requires 100%. Losing 80% requires 400%. That asymmetry is mathematical, brutal, and it has destroyed more trading careers than all the strategies combined.' },
           { h: 'Risking 1% per trade', p: 'On €10,000 capital, risking 1% per trade means a maximum risk of €100. With a reasonable strategy (positive expectancy, 45% hit rate, 1:2 R:R), your probability of hitting ruin over 1,000 trades is below 0.01%. Move to 5% per trade and that probability rises to 90%.' },
@@ -726,7 +730,7 @@ const en = {
         excerpt: 'Everyone draws the same levels. That is exactly why they break. Here is what to read instead.',
         date: 'April 27, 2026',
         readingTime: '7 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'The problem with perfect lines', p: 'A beginner draws support as a pen stroke. Price touches, bounces, they are happy. The market, however, does not know there is a line. There is a zone, crossed by orders, stops, trailing — and what you think you are "touching" is in fact a band several percent wide.' },
           { h: 'Read the reaction, not the price tag', p: 'An interesting support is not the one that holds, it is the one that produces a clean reaction: large candle, volume, lower-wick rejection. Without that signature, you do not have a support — you have a drawing. The distinction changes everything: wait for the proof, do not front-run price.' },
@@ -739,7 +743,7 @@ const en = {
         excerpt: 'Not yet another spreadsheet. Three columns, read on Sunday, are enough to turn a losing season around.',
         date: 'April 20, 2026',
         readingTime: '5 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Why 90% of journals are useless', p: 'Most journals pile up 30 columns: indicator, RSI, news, weather. Nobody re-reads them. A journal that changes something is short and readable in 10 minutes a week. Three fields are enough: what you saw, what you decided, what you felt.' },
           { h: 'The Sunday ritual', p: 'The only moment you are calm is the weekend. Block 15 minutes on Sunday evening, open the 5 to 10 trades of the week and ask: "If I only had this snapshot and my rule, would I take the same trade again?" That question, asked 50 times, sweats out a discipline no course ever teaches.' },
@@ -752,7 +756,7 @@ const en = {
         excerpt: 'You do not lose by taking bad trades. You lose by taking good trades at the wrong moment, twice in a row.',
         date: 'April 13, 2026',
         readingTime: '8 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'FOMO is a miscalculation, not an emotion', p: 'Fear of missing out presents itself as an emotion, but it is in fact a broken probabilistic shortcut: your brain confuses "this just moved a lot" with "this will keep moving a lot". Statistically, the opposite holds — an already-extended move has less expectancy left than one just starting. Naming the bias is the first step in taming it.' },
           { h: 'The revenge trade: the round-trip', p: 'After a loss, the brain seeks immediate compensation. That is not a moral flaw — it is chemistry. But the revenge trade has a signature: larger size, wider or absent stop, fuzzier justification. The rule that saves: no trade for 30 minutes after a loss above your standard R.' },
@@ -765,7 +769,7 @@ const en = {
         excerpt: 'The same candle tells three different stories on 5 min, 1 h and 1 day. Picking only one is trading blind.',
         date: 'April 6, 2026',
         readingTime: '9 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'The "three-screen" rule', p: 'Seasoned traders almost always work with three scales: a long one for context (e.g. daily), a medium one for setup (e.g. 1h), a short one for execution (e.g. 5 min). Context gives an acceptable direction, setup gives the zone, execution gives the timing. Skipping one of the three guarantees an incomplete decision.' },
           { h: 'The "it goes up" trap', p: 'A green 5-min candle does not say "it goes up". It says "for 5 minutes, buyers had the upper hand". That same sequence can be a technical bounce inside a daily downtrend — so a sell, not a buy. Reading the lower timeframe without its higher context is reading the end of a sentence and thinking it is the full meaning.' },
@@ -800,8 +804,9 @@ const en = {
       {
         title: 'Product',
         links: [
-          { label: 'Method', href: '#method' },
-          { label: 'Curriculum', href: '#curriculum' },
+          // See the fr.ts comment: both were dead anchors; both have real pages.
+          { label: 'Method', href: '/method' },
+          { label: 'Curriculum', href: '/curriculum' },
           { label: 'Tools', href: '/tools' },
           { label: 'Pricing', href: '/pricing' },
           { label: 'Changelog', href: '/changelog' },

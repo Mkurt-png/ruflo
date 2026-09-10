@@ -16,7 +16,11 @@ type Props = { dict: Dictionary; locale: Locale };
 export function Navbar({ dict, locale }: Props) {
   const links = [
     { href: `/${locale}/learn`, label: dict.nav.learn },
-    { href: `/${locale}#method`, label: dict.nav.method },
+    // Was `/${locale}#method`. The home page has no `id="method"` — its
+    // section is `id="methode"`, and the component carrying `id="method"` is
+    // only imported by page.legacy.tsx.bak — so one of the three primary nav
+    // items did nothing. `/method` is a real page.
+    { href: `/${locale}/method`, label: dict.nav.method },
     { href: `/${locale}/pricing`, label: dict.nav.pricing },
   ];
 

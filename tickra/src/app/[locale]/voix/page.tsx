@@ -13,12 +13,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 3600;
-export const metadata = editorialMeta({
-  slug: 'voix',
-  title: 'Les Voix',
-  description:
-    'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'voix',
+    locale,
+    title: {
+      fr: 'Les Voix',
+      en: 'The Voices',
+    },
+    description: {
+      fr: 'Une voix par mois. Des traders en activité, sous pseudonyme, qui racontent leur métier sans grand récit.',
+      en: 'One voice a month. Working traders, under a pseudonym, describing their craft without the grand narrative.',
+    },
+  });
+}
 
 const COPY = {
   fr: {
@@ -27,7 +36,9 @@ const COPY = {
     head2: 'Par mois.',
     head3: 'Sans grand récit.',
     intro:
-      'Une fois par mois, l’éditeur enregistre un entretien avec un trader en activité, sous pseudonyme. Pas de chiffres, pas de promesses : ce qui change leur séance, ce qu’ils ont noté un matin, ce qu’ils ont arrêté de faire.',
+      'Une fois par mois, l’éditeur enregistrera un entretien avec un trader en activité, sous pseudonyme. Pas de chiffres, pas de promesses : ce qui change leur séance, ce qu’ils ont noté un matin, ce qu’ils ont arrêté de faire.',
+    empty:
+      'La série n’a pas encore commencé — aucun entretien n’a été enregistré à ce jour. Cette page restera vide tant que ce sera le cas : nous ne publierons pas de témoignage écrit en le présentant comme une conversation.',
     cityLabel: 'Lieu',
     craftLabel: 'Métier',
     audioMissing: 'Enregistrement en attente — extraits publiés ci-dessous.',
@@ -40,7 +51,9 @@ const COPY = {
     head2: 'Per month.',
     head3: 'No grand story.',
     intro:
-      'Once a month, the editor records an interview with a working trader, under a pseudonym. No numbers, no promises: what changes their session, what they noted one morning, what they stopped doing.',
+      'Once a month, the editor will record an interview with a working trader, under a pseudonym. No numbers, no promises: what changes their session, what they noted one morning, what they stopped doing.',
+    empty:
+      'The series has not started — no interview has been recorded yet. This page stays empty until one has been: we will not publish written testimony and present it as a conversation.',
     cityLabel: 'City',
     craftLabel: 'Craft',
     audioMissing: 'Recording pending — excerpts published below.',
@@ -109,6 +122,14 @@ export default async function VoixPage({ params }: { params: { locale: string } 
         </section>
 
         <section className="mx-auto max-w-[920px] px-6 md:px-16 pb-32">
+          {VOIX.length === 0 ? (
+            <p
+              className="max-w-[640px] font-display italic text-[#0E0E0E]/70 leading-relaxed"
+              style={{ fontSize: 'clamp(17px, 1.7vw, 20px)' }}
+            >
+              {t.empty}
+            </p>
+          ) : null}
           {VOIX.map((v, i) => (
             <article
               key={v.id}

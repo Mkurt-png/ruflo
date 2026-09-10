@@ -4,6 +4,7 @@ import { ensureUser, isDbConfigured } from '@/lib/db/queries';
 import { attachReferrer } from '@/lib/db/referral-queries';
 import { postDiscord, formatSignup } from '@/lib/notify/discord';
 import { getSession } from '@/lib/auth/session';
+import { normaliseEmail } from '@/lib/auth/email';
 
 const REF_COOKIE = 'tickra-ref';
 
@@ -100,6 +101,11 @@ export async function GET(req: Request) {
   }
 
   if (!userEmail) return fail('no_email');
+  // Same canonical form as the magic-link path, so signing in with Google and
+  // signing in by email land on ONE account. Google returns the address in the
+  // casing the account was created with, which is frequently not the casing the
+  // person types into our form.
+  userEmail = normaliseEmail(userEmail);
 
   // Persist the user row immediately so it appears in Supabase as soon as
   // someone signs in. Fire-and-forget — no need to block the redirect on it.

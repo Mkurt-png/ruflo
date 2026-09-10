@@ -9,6 +9,7 @@
 
 import { cookies } from 'next/headers';
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { normaliseEmail } from './email';
 
 export const SESSION_COOKIE = 'tickra-session';
 
@@ -59,5 +60,9 @@ export function getSession(): Session | null {
   if (!email || !Number.isFinite(expiresAt)) return null;
   if (Date.now() / 1000 > expiresAt) return null;
 
-  return { email, expiresAt };
+  // Normalised on the way out, not only on the way in: cookies issued before
+  // addresses were canonicalised are still valid for seven days, and their
+  // payload carries whatever casing was typed. Without this, an existing
+  // session keeps reading and writing a second, empty account until it expires.
+  return { email: normaliseEmail(email), expiresAt };
 }

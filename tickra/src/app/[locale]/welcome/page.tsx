@@ -9,8 +9,15 @@ import { Container } from '@/components/ui/Container';
 import { getSession } from '@/lib/auth/session';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { TRACKS, getTrack } from '@/lib/curriculum/data';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Bienvenue' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Bienvenue' : 'Welcome',
+    ...pageSeo(locale, '/welcome', locale === 'fr' ? 'Bienvenue' : 'Welcome'),
+  };
+}
 
 // TICKRA-PHASE-1.1: focused first-action. One big primary CTA pointing at the
 // user's recommended first lesson (from placement test). Secondary actions are

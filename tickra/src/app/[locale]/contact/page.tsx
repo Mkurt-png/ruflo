@@ -6,8 +6,15 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { ContactForm } from '@/components/contact/ContactForm';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Contact' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Contact' : 'Contact',
+    ...pageSeo(locale, '/contact', locale === 'fr' ? 'Contact' : 'Contact'),
+  };
+}
 
 export default async function ContactPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

@@ -30,7 +30,11 @@ export const BRAND_PARTS = { prefix: 'n', lead: 'k', now: 'NOW', tail: 'Trade' }
  * JSON-LD, the contact route and the mailer. Moving to a new domain meant
  * finding all of them; now it means setting one variable.
  */
-export const CONTACT_DOMAIN = process.env.NEXT_PUBLIC_CONTACT_DOMAIN ?? 'tickra.com';
+// The fallback is the domain we actually own. It used to be `tickra.com`, a
+// domain that is not ours — so any environment missing the variable published
+// a contact address nobody reads, including inside the legally binding
+// Mentions légales and on the From: header of every transactional email.
+export const CONTACT_DOMAIN = process.env.NEXT_PUBLIC_CONTACT_DOMAIN ?? 'nknowtrade.com';
 
 export const EMAIL = {
   support: `hello@${CONTACT_DOMAIN}`,

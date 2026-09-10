@@ -4,16 +4,24 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
+import { pageSeo } from '@/lib/seo';
 
 // /[locale]/institutionnel — Le tier institutionnel. Stub honnête.
 // Brochure d'un futur abonnement pour prop-firms / desks.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'L’Abonnement institutionnel',
-  description:
-    'nkNOWTrade pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.',
-};
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  const title = locale === 'fr' ? 'L’Abonnement institutionnel' : 'The Institutional Plan';
+  return {
+    title,
+    description:
+      locale === 'fr'
+        ? 'nkNOWTrade pour les desks et prop-firms : Greffier collectif, Mur du silence à l’échelle de l’équipe, audit hebdomadaire des registres.'
+        : 'nkNOWTrade for desks and prop firms: a shared Registrar, a team-wide Wall of Silence, a weekly audit of the ledgers.',
+    ...pageSeo(locale, '/institutionnel', title),
+  };
+}
 
 const COPY = {
   fr: {

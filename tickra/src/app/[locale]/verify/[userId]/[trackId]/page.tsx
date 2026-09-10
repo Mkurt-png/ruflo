@@ -11,7 +11,10 @@ import { verifyCertificate } from '@/lib/db/verify-queries';
 
 // TODO i18n — verify page copy is English-only for now (Phase 4D).
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Verify' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return { title: locale === 'fr' ? 'Vérification' : 'Verify' };
+}
 
 type Params = { locale: string; userId: string; trackId: string };
 

@@ -7,8 +7,15 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Communauté' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Communauté' : 'Community',
+    ...pageSeo(locale, '/community', locale === 'fr' ? 'Communauté' : 'Community'),
+  };
+}
 
 export default async function CommunityPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
@@ -74,6 +81,7 @@ export default async function CommunityPage({ params }: { params: { locale: stri
               {t.sessionsIntro}
             </p>
 
+            {t.sessions.length === 0 ? null : (
             <ul className="mt-12 divide-y divide-line border-y border-line">
               {t.sessions.map((s) => (
                 <li key={s.title} className="grid grid-cols-12 gap-x-6 gap-y-2 py-6 md:py-7">
@@ -89,6 +97,7 @@ export default async function CommunityPage({ params }: { params: { locale: stri
                 </li>
               ))}
             </ul>
+            )}
 
             <div className="mt-12 flex flex-wrap items-center gap-3">
               <Link

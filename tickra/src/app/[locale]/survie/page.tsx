@@ -13,12 +13,21 @@ import { SurvieCalculator } from '@/components/survie/SurvieCalculator';
 import { editorialMeta } from '@/lib/seo/editorial-meta';
 
 export const dynamic = 'force-dynamic';
-export const metadata = editorialMeta({
-  slug: 'survie',
-  title: 'Le Calculateur de survie',
-  description:
-    'Taille de position, R-multiple, pertes consécutives jusqu’au demi-compte. Le calcul d’entrée de carnet, en silence.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'survie',
+    locale,
+    title: {
+      fr: 'Le Calculateur de survie',
+      en: 'The Survival Calculator',
+    },
+    description: {
+      fr: 'Taille de position, R-multiple, pertes consécutives jusqu’au demi-compte. Le calcul d’entrée de carnet, en silence.',
+      en: 'Position size, R-multiple, consecutive losses to half an account. The first calculation in the notebook, in silence.',
+    },
+  });
+}
 
 export default async function SurviePage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

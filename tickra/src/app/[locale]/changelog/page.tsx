@@ -5,8 +5,15 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Journal des versions' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Journal des versions' : 'Changelog',
+    ...pageSeo(locale, '/changelog', locale === 'fr' ? 'Journal des versions' : 'Changelog'),
+  };
+}
 
 export default async function ChangelogPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

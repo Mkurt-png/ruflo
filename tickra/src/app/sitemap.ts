@@ -3,6 +3,7 @@ import { locales } from '@/lib/i18n/config';
 import en from '@/lib/i18n/locales/en';
 import fr from '@/lib/i18n/locales/fr';
 import { TRACKS } from '@/lib/curriculum/data';
+import { isSeeded } from '@/lib/curriculum/lesson-content';
 import { SITE_URL as SITE } from '@/lib/site-url';
 
 const routes = [
@@ -18,7 +19,13 @@ const routes = [
   { path: '/tools', changeFrequency: 'monthly' as const, priority: 0.55 },
   { path: '/changelog', changeFrequency: 'weekly' as const, priority: 0.4 },
   { path: '/community', changeFrequency: 'monthly' as const, priority: 0.5 },
-  { path: '/signin', changeFrequency: 'yearly' as const, priority: 0.3 },
+  { path: '/leaderboard', changeFrequency: 'daily' as const, priority: 0.5 },
+  { path: '/battle', changeFrequency: 'monthly' as const, priority: 0.5 },
+  { path: '/placement', changeFrequency: 'monthly' as const, priority: 0.5 },
+  { path: '/achievements', changeFrequency: 'monthly' as const, priority: 0.4 },
+  { path: '/diploma', changeFrequency: 'monthly' as const, priority: 0.4 },
+  { path: '/review', changeFrequency: 'weekly' as const, priority: 0.4 },
+  { path: '/lesson/japanese-candles', changeFrequency: 'monthly' as const, priority: 0.6 },
   { path: '/terms', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/privacy', changeFrequency: 'yearly' as const, priority: 0.2 },
   { path: '/risk', changeFrequency: 'yearly' as const, priority: 0.2 },
@@ -78,12 +85,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: 'monthly' as const,
         priority: locale === 'en' ? 0.7 : 0.65,
       },
-      ...track.lessons.map((lesson) => ({
-        url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
-        lastModified: now,
-        changeFrequency: 'monthly' as const,
-        priority: locale === 'en' ? 0.5 : 0.45,
-      })),
+      // Only lessons that have been written. The other 64 render a "Coming
+      // soon" card, and submitting a few hundred near-identical placeholder
+      // pages is the textbook thin-content signal — it costs crawl budget on a
+      // brand-new domain and drags down the pages that do have substance.
+      ...track.lessons
+        .filter((lesson) => isSeeded(lesson.id))
+        .map((lesson) => ({
+          url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
+          lastModified: now,
+          changeFrequency: 'monthly' as const,
+          priority: locale === 'en' ? 0.5 : 0.45,
+        })),
     ]),
   );
 

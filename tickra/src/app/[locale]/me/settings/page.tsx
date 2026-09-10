@@ -7,8 +7,15 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { PageHero } from '@/components/ui/PageHero';
 import { SettingsPanel } from '@/components/account/SettingsPanel';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Paramètres' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Paramètres' : 'Settings',
+    ...pageSeo(locale, '/me/settings', locale === 'fr' ? 'Paramètres' : 'Settings'),
+  };
+}
 
 export default async function SettingsPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

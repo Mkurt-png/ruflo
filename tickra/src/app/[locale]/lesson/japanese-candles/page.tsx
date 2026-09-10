@@ -9,8 +9,15 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import { CandlestickChart } from '@/components/hero/CandlestickChart';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Leçon — Bougies japonaises' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Leçon — Bougies japonaises' : 'Lesson — Japanese candles',
+    ...pageSeo(locale, '/lesson/japanese-candles', locale === 'fr' ? 'Leçon — Bougies japonaises' : 'Lesson — Japanese candles'),
+  };
+}
 
 export default async function LessonPreviewPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

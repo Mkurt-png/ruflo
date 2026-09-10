@@ -8,8 +8,8 @@ const copy = {
     eyebrow: 'Bientôt disponible',
     title: 'Cette leçon arrive très bientôt.',
     body:
-      "nkNOWTrade n'expose jamais une leçon qui n'a pas encore son contenu complet. Cette piste est en cours de rédaction par l'équipe pédagogique. Vous recevrez un mail dès qu'elle est publiée.",
-    eta: 'ETA : courant juin 2026',
+      "nkNOWTrade n'expose jamais une leçon qui n'a pas encore son contenu complet. Celle-ci est en cours de rédaction. Elle n'est comptée dans aucune offre payante tant qu'elle n'est pas publiée.",
+    eta: 'Pas de date annoncée',
     previous: 'Leçon précédente',
     back: 'Retour à la piste',
   },
@@ -17,8 +17,8 @@ const copy = {
     eyebrow: 'Coming soon',
     title: 'This lesson arrives shortly.',
     body:
-      "nkNOWTrade never exposes a lesson that does not yet have its full content. This track is being written by the curriculum team. You'll get a mail as soon as it goes live.",
-    eta: 'ETA: June 2026',
+      'nkNOWTrade never exposes a lesson that does not yet have its full content. This one is still being written. It is not counted in any paid plan until it is published.',
+    eta: 'No date announced',
     previous: 'Previous lesson',
     back: 'Back to the track',
   },

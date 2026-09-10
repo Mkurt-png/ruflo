@@ -25,7 +25,10 @@ const fr = {
     secondaryCta: 'Aperçu gratuit d’une leçon (2 min)',
     chartCaption: 'EUR/USD · 1H · 24 dernières séances',
     stats: [
-      { value: '222', label: 'Leçons structurées' },
+      // 158 leçons sont rédigées ; 222 sont planifiées. Annoncer 222 comme
+      // livrées vendait 64 pages « bientôt » — dont quatre pistes avancées
+      // entièrement vides, exactement celles pour lesquelles on paie.
+      { value: '158', label: 'Leçons rédigées' },
       { value: '15', label: 'Pistes de maîtrise' },
       { value: '10 min', label: 'Engagement quotidien' },
     ],
@@ -66,7 +69,7 @@ const fr = {
         body: 'Dix minutes comptent. Un jour manqué, un freeze conserve la série. nkNOWTrade récompense la régularité, pas le surmenage.',
       },
       library: {
-        title: '222 modules, quinze pistes.',
+        title: '158 modules écrits, 222 planifiés.',
         body: "Des bases du forex aux marchés réels. Chaque module se termine par un point de contrôle qui peut être manqué — et repassé.",
       },
       risk: {
@@ -135,28 +138,16 @@ const fr = {
   },
   builtBy: {
     eyebrow: 'Conçu par',
-    title: 'Une équipe qui a tenu un livre, pas une chaîne YouTube.',
-    body: "nkNOWTrade est conçu par d'anciens opérateurs de salle de marché et des pédagogues qui ont formé des juniors en banque. Le produit n'enseigne que ce qui a été utile à un trader payé pour décider.",
+    // Voir le commentaire côté en.ts : trois co-fondateurs inventés, rattachés à
+    // des employeurs réels et nommés, ont été retirés. Le site est écrit et
+    // exploité par une seule personne.
+    title: 'Écrit par une seule personne, à découvert.',
+    body: "nkNOWTrade est conçu et écrit par un seul opérateur, pas par une équipe ni par un studio. Chaque leçon est publiée en entier avant d'être vendue, et la méthode derrière la Cote est détaillée sur sa propre page. Ce que le site n'affirme pas, il ne le sait pas.",
     people: [
       {
-        name: 'Marc Hauser',
-        role: 'Co‑fondateur · Curriculum',
-        bio: 'Ex‑market maker FX (Société Générale, 2014‑2019). Formateur juniors desk EUR depuis 2020.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Inès Vidal',
-        role: 'Co‑fondatrice · Produit',
-        bio: 'Ex‑Quant analyst (BNP CIB). Construit l’infra pédagogique et le moteur de progression adaptive.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
-        linkedin: undefined as string | undefined,
-      },
-      {
-        name: 'Tom Reyer',
-        role: 'Lead Design',
-        bio: 'Direction artistique éditoriale (Les Échos, Substack). Identité, typographie, graphique.',
-        // TICKRA-IMPROVEMENT: set real LinkedIn URL here when profile is public.
+        name: 'Hamza Kurt',
+        role: 'Auteur · nkNOWTrade',
+        bio: 'Opérateur unique. Écrit le cursus, développe le site, répond aux messages.',
         linkedin: undefined as string | undefined,
       },
     ],
@@ -219,7 +210,7 @@ const fr = {
         cta: 'Passer Pro',
         highlighted: true,
         features: [
-          'Les 222 leçons débloquées',
+          'Toutes les leçons publiées débloquées (158 aujourd’hui)',
           'Vies illimitées, zéro pub',
           'Choisissez n’importe quel module',
           'TradingView Pro intégré',
@@ -247,7 +238,7 @@ const fr = {
       title: 'Comparer en détail',
       rows: [
         { label: 'Test de niveau', free: 'Inclus', pro: 'Inclus', lifetime: 'Inclus' },
-        { label: 'Leçons débloquées', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + futures' },
+        { label: 'Leçons débloquées', free: '4 / 158', pro: '158 / 158', lifetime: '158 / 158 + futures' },
         { label: 'Vies quotidiennes', free: '3', pro: 'Illimitées', lifetime: 'Illimitées' },
         { label: 'TradingView intégré', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Journal de décisions', free: '—', pro: 'Inclus', lifetime: 'Inclus + export' },
@@ -406,7 +397,7 @@ const fr = {
       },
       {
         title: 'Ce que nous promettons',
-        body: 'Une méthode lisible, un curriculum testé sur 12 000+ apprenants, une équipe joignable, et une porte de sortie à tout moment. Pro est annulable en deux clics. À vie est remboursé à 14 jours sans question.',
+        body: 'Une méthode lisible, un curriculum publié en entier avant d’être vendu, un auteur joignable, et une porte de sortie à tout moment. Pro est annulable en deux clics. À vie est remboursé à 14 jours sans question.',
       },
     ],
   },
@@ -474,7 +465,9 @@ const fr = {
   },
   changelog: {
     title: 'Journal des versions',
-    subtitle: 'nkNOWTrade évolue chaque semaine. Voici ce que nous expédions.',
+    // Voir en.ts : cadence hebdomadaire annoncée, dernière entrée vieille de
+    // quinze semaines.
+    subtitle: 'Ce qui a été livré, et quand. Uniquement des entrées datées — pas de feuille de route.',
     entries: [
       {
         version: 'v0.9.0',
@@ -482,7 +475,9 @@ const fr = {
         title: 'Test de niveau adaptatif',
         items: [
           'Nouveau test de niveau en 6 questions, routage adaptatif vers la bonne piste.',
-          'Refonte du Hero et ajout des témoignages vérifiés.',
+          // Voir en.ts : les « témoignages vérifiés » désignaient un composant
+          // mort, importé uniquement par page.legacy.tsx.bak.
+          'Refonte du Hero.',
           'Pages légales (CGU, Confidentialité, Risque) publiées.',
         ],
       },
@@ -628,12 +623,11 @@ const fr = {
       { title: 'Pas de captures de P&L', body: 'Les screenshots de gains n’éduquent personne et nourrissent la jalousie. On parle de méthode, pas de résultats.' },
     ],
     sessionsTitle: 'Sessions live à venir',
-    sessionsIntro: 'Deux sessions par semaine, 30 minutes, réservées aux membres Pro et Lifetime. Replay disponible 7 jours.',
-    sessions: [
-      { date: 'Mardi 18:30 GMT', title: 'Revue de la semaine — EUR/USD et indices', host: 'Marc Hauser' },
-      { date: 'Jeudi 19:00 GMT', title: 'Drill : 5 setups historiques sur l’or', host: 'Inès Vidal' },
-      { date: 'Samedi 11:00 GMT', title: 'Post-mortem collectif — vos trades de la semaine', host: 'Cohorte' },
-    ],
+    // Voir le commentaire côté en.ts : planning de sessions live inventé,
+    // animé par des personnes qui n'existent pas, présenté comme un avantage
+    // payant. Retiré tant qu'aucune session réelle n'est programmée.
+    sessionsIntro: "Les sessions live n'ont pas encore commencé. Dès que la première est programmée, elle sera annoncée ici et par courriel, avec la date, le sujet et la règle de replay indiqués d'avance. Rien n'est facturé pour une session qui n'existe pas.",
+    sessions: [] as Array<{ date: string; title: string; host: string }>,
   },
   hero_extra: {
     badgeLive: 'Aperçu interactif',
@@ -687,7 +681,7 @@ const fr = {
         excerpt: 'Au‑delà du mémo « rouge = baisse, vert = hausse » : ce qu’une bougie raconte sur le rapport de force entre acheteurs et vendeurs.',
         date: '18 mai 2026',
         readingTime: '8 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Une bougie n’est pas une couleur', p: 'Le débutant apprend qu’une bougie verte signifie « hausse » et une bougie rouge « baisse ». C’est exact, mais c’est aussi le niveau zéro de l’information. Une bougie raconte quatre chiffres dans le temps : ouverture, plus haut, plus bas, clôture. Sa couleur est juste une dérivée — un raccourci visuel pour savoir si la clôture est au‑dessus ou en dessous de l’ouverture.' },
           { h: 'Le corps mesure la conviction', p: 'Plus le corps est long par rapport aux ombres, plus le côté gagnant a contrôlé la séance. Une bougie verte avec un long corps et de petites ombres signale que les acheteurs ont mené la danse du début à la fin. Une bougie verte avec un petit corps et de longues ombres signale une indécision : les vendeurs sont venus, ont peut‑être même pris le contrôle un moment, avant de se faire repousser.' },
@@ -700,7 +694,7 @@ const fr = {
         excerpt: 'Un trader peut perdre 60 % de ses trades et finir l’année rentable. On vous montre les maths, sans Excel.',
         date: '11 mai 2026',
         readingTime: '11 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'L’intuition trompeuse', p: 'Tout le monde croit qu’un bon trader gagne « la plupart du temps ». Faux. La plupart des traders professionnels rentables ont un taux de réussite compris entre 35 % et 50 %. Ce qui les rend rentables n’est pas le taux, c’est la taille relative de ce qu’ils gagnent par rapport à ce qu’ils perdent.' },
           { h: 'La formule en une ligne', p: 'Espérance = (Taux gagnant × Gain moyen) − (Taux perdant × Perte moyenne). Si vous gagnez 1 R en moyenne (où R est votre risque par trade) quand vous gagnez, et perdez 1 R quand vous perdez, il vous faut un taux supérieur à 50 %. Si vous gagnez 2 R quand vous gagnez et perdez 1 R quand vous perdez, vous êtes rentable dès 34 %.' },
@@ -713,7 +707,7 @@ const fr = {
         excerpt: 'Le simulateur que les juniors regardent une fois et n’oublient plus.',
         date: '4 mai 2026',
         readingTime: '6 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Le piège du pourcentage', p: 'Perdre 50 % de votre capital ne demande pas un gain de 50 % pour récupérer — il en faut 100 %. Perdre 80 %, il en faut 400 %. Cette asymétrie est mathématique, brutale, et elle a déjà détruit plus de carrières de trader que toutes les stratégies réunies.' },
           { h: 'Risquer 1 % par trade', p: 'Sur un capital de 10 000 €, risquer 1 % par trade signifie un risque maximal de 100 €. Avec une stratégie raisonnable (espérance positive, 45 % de réussite, R:R 1:2), votre probabilité d’atteindre la ruine sur 1 000 trades est inférieure à 0,01 %. Passez à 5 % par trade, et cette probabilité monte à 90 %.' },
@@ -726,7 +720,7 @@ const fr = {
         excerpt: 'Tout le monde trace les mêmes niveaux. C’est précisément pour ça qu’ils cassent. Voici ce qu’il faut lire à la place.',
         date: '27 avril 2026',
         readingTime: '7 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Le problème des lignes parfaites', p: 'Un débutant trace un support comme un trait au stylo. Le prix touche, rebondit, il est content. Le marché, lui, ne sait pas qu’il y a une ligne. Il y a une zone, traversée par des ordres, des stops, des trailing — et ce que vous croyez « toucher » est en réalité une bande de quelques pourcents.' },
           { h: 'Lire la réaction, pas la cote', p: 'Un support intéressant n’est pas celui qui tient, c’est celui qui produit une réaction nette : grande bougie, volume, mèche basse de rejet. Sans cette signature, vous n’avez pas un support — vous avez un dessin. La distinction change tout : on attend la preuve, on ne devance pas le prix.' },
@@ -739,7 +733,7 @@ const fr = {
         excerpt: 'Pas un Excel de plus. Trois colonnes, lues le dimanche, suffisent à transformer une saison de pertes.',
         date: '20 avril 2026',
         readingTime: '5 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Pourquoi 90 % des journaux sont inutiles', p: 'La plupart des journaux empilent 30 colonnes : indicateur, RSI, news, météo. Personne ne les relit. Un journal qui change quelque chose est court et lisible en 10 minutes par semaine. Trois champs suffisent : ce que vous avez vu, ce que vous avez décidé, ce que vous avez ressenti.' },
           { h: 'Le rituel du dimanche', p: 'Le seul moment où vous êtes calme, c’est week-end. Bloquez 15 minutes le dimanche soir, ouvrez les 5 à 10 trades de la semaine et demandez : « Si je n’avais que cette photo et ma règle, est-ce que je referais le même trade ? ». Cette question, posée 50 fois, suinte une discipline qu’aucun cours ne donne.' },
@@ -752,7 +746,7 @@ const fr = {
         excerpt: 'On ne perd pas en faisant les mauvais trades. On perd en faisant les bons trades au mauvais moment, deux fois de suite.',
         date: '13 avril 2026',
         readingTime: '8 min',
-        author: 'Inès Vidal',
+        author: 'Hamza Kurt',
         body: [
           { h: 'Le FOMO est un calcul, pas une émotion', p: 'Le « fear of missing out » se présente comme une émotion, mais c’est en réalité un raccourci probabiliste défaillant : votre cerveau confond « ça vient de bouger fort » avec « ça va continuer à bouger fort ». Statistiquement, c’est l’inverse — un mouvement déjà étendu a moins d’espérance restante qu’un mouvement qui démarre. Identifier ce biais, c’est commencer à le dompter.' },
           { h: 'Le revenge trade : l’aller-retour', p: 'Après une perte, le cerveau cherche une compensation immédiate. Ce n’est pas un défaut moral — c’est de la chimie. Mais le revenge trade a une signature : taille plus grande, stop plus large ou absent, justification plus floue. La règle qui sauve : aucun trade pendant 30 minutes après une perte qui dépasse votre R standard.' },
@@ -765,7 +759,7 @@ const fr = {
         excerpt: 'La même bougie raconte trois histoires différentes en 5 min, 1 h et 1 jour. Choisir une seule, c’est trader à l’aveugle.',
         date: '6 avril 2026',
         readingTime: '9 min',
-        author: 'Marc Hauser',
+        author: 'Hamza Kurt',
         body: [
           { h: 'La règle du « trois écrans »', p: 'Les traders aguerris travaillent presque toujours sur trois échelles : une longue pour le contexte (par ex. jour), une moyenne pour le setup (par ex. 1 h), une courte pour l’exécution (par ex. 5 min). Le contexte donne la direction acceptable, le setup donne la zone, l’exécution donne le timing. Sauter une de ces trois, c’est garantir une décision incomplète.' },
           { h: 'Le piège du « ça monte »', p: 'Une bougie verte en 5 min ne dit pas « ça monte ». Elle dit « pendant 5 minutes, les acheteurs ont eu la main ». La même séquence peut être un rebond technique dans une tendance baissière daily — donc une vente, pas un achat. Lire l’échelle inférieure sans son contexte supérieur, c’est lire la fin d’une phrase et croire que c’est le sens complet.' },
@@ -800,8 +794,12 @@ const fr = {
       {
         title: 'Produit',
         links: [
-          { label: 'Méthode', href: '#method' },
-          { label: 'Parcours', href: '#curriculum' },
+          // Ces deux liens pointaient sur #method et #curriculum. Aucune de ces
+          // ancres n'existe sur la page d'accueil (la section s'appelle
+          // « methode », et #curriculum ne vit que dans un composant .bak), donc
+          // les deux ne faisaient rien. Les vraies pages existent.
+          { label: 'Méthode', href: '/method' },
+          { label: 'Parcours', href: '/curriculum' },
           { label: 'Outils', href: '/tools' },
           { label: 'Tarifs', href: '/pricing' },
           { label: 'Journal des versions', href: '/changelog' },

@@ -22,14 +22,27 @@ const quickActions = {
   fr: [
     { id: 'lang-en', label: 'Passer en anglais', href: '/en', group: 'action' as const, hint: 'Langue' },
     { id: 'theme-toggle', label: 'Basculer thème clair / sombre', href: '#theme-toggle', group: 'action' as const, hint: 'Apparence' },
-    { id: 'signout', label: 'Se déconnecter', href: '/api/auth/signout?locale=fr', group: 'action' as const, hint: 'Session' },
+    { id: 'signout', label: 'Se déconnecter', href: '#signout', group: 'action' as const, hint: 'Session' },
   ],
   en: [
     { id: 'lang-fr', label: 'Switch to French', href: '/fr', group: 'action' as const, hint: 'Language' },
     { id: 'theme-toggle', label: 'Toggle light / dark theme', href: '#theme-toggle', group: 'action' as const, hint: 'Appearance' },
-    { id: 'signout', label: 'Sign out', href: '/api/auth/signout?locale=en', group: 'action' as const, hint: 'Session' },
+    { id: 'signout', label: 'Sign out', href: '#signout', group: 'action' as const, hint: 'Session' },
   ],
 };
+
+/**
+ * Signing out is a state change, so it goes out as a POST. Submitting a real
+ * form (rather than fetch) keeps the browser following the route's 303 to the
+ * home page, which is what the two on-page sign-out buttons already do.
+ */
+function signOut(locale: 'fr' | 'en') {
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.action = `/api/auth/signout?locale=${locale}`;
+  document.body.appendChild(form);
+  form.submit();
+}
 
 type Props = { locale: 'fr' | 'en' };
 
@@ -193,11 +206,15 @@ export function CommandPalette({ locale }: Props) {
         window.dispatchEvent(new Event('tickra:toggle-theme'));
         return;
       }
+      if (item.href === '#signout') {
+        signOut(locale);
+        return;
+      }
       window.location.href = item.href;
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open, active, results]);
+  }, [open, active, results, locale]);
 
   useEffect(() => {
     if (!open) return;
@@ -265,11 +282,22 @@ export function CommandPalette({ locale }: Props) {
                   {results.map((r, i) => (
                     <li key={r.id} role="option" aria-selected={i === active}>
                       <Link
-                        href={r.href === '#theme-toggle' ? '#' : r.href}
+                        href={r.href.startsWith('#') ? '#' : r.href}
+                        // TICKRA-FIX(security): sign-out used to be a real
+                        // href here, and Next prefetches links as they enter
+                        // the viewport — so simply opening ⌘K sent a request
+                        // that cleared the session cookie. It is now a
+                        // sentinel handled below with an explicit POST, and
+                        // prefetching is off for every action row.
+                        prefetch={r.group === 'action' ? false : undefined}
                         onClick={(e) => {
                           if (r.href === '#theme-toggle') {
                             e.preventDefault();
                             window.dispatchEvent(new Event('tickra:toggle-theme'));
+                          }
+                          if (r.href === '#signout') {
+                            e.preventDefault();
+                            signOut(locale);
                           }
                           setOpen(false);
                         }}

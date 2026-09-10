@@ -1,10 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Check, X } from 'lucide-react';
-import { TRACKS } from '@/lib/curriculum/data';
-import { getLessonContent } from '@/lib/curriculum/lesson-content';
+import type { DailyCard } from '@/lib/curriculum/daily-card';
 import { easeOutExpo } from '@/lib/motion';
 import { cn } from '@/lib/cn';
 
@@ -35,51 +34,29 @@ const copy = {
   },
 };
 
-// Stable index based on the day-of-year so the same card shows for everyone
-// on the same date. Iterates all seeded quizzes (skipping placeholder ones).
-function dayIndex(): number {
-  const now = new Date();
-  const start = new Date(Date.UTC(now.getUTCFullYear(), 0, 0));
-  const diff = now.getTime() - start.getTime();
-  return Math.floor(diff / (1000 * 60 * 60 * 24));
-}
-
 export function DailyChallenge({ locale }: { locale: Locale }) {
   const t = copy[locale];
   const [choice, setChoice] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
+  const [card, setCard] = useState<DailyCard | null>(null);
 
-  const card = useMemo(() => {
-    const all: Array<{
-      lessonId: string;
-      trackSlug: string;
-      lessonSlug: string;
-      lessonTitle: string;
-      trackTitle: string;
-      q: string;
-      options: string[];
-      correct: number;
-      rationale: string;
-    }> = [];
-    for (const tr of TRACKS) {
-      for (const lsn of tr.lessons) {
-        const c = getLessonContent(tr, lsn);
-        c.quiz.forEach((q) => {
-          all.push({
-            lessonId: lsn.id,
-            trackSlug: tr.slug,
-            lessonSlug: lsn.slug,
-            lessonTitle: lsn.title[locale],
-            trackTitle: tr.title[locale],
-            q: q.q[locale],
-            options: q.options[locale],
-            correct: q.correct,
-            rationale: q.rationale[locale],
-          });
-        });
-      }
-    }
-    return all.length === 0 ? null : all[dayIndex() % all.length];
+  // The card is picked on the server. Building it here meant importing every
+  // paid lesson body, drill answer and quiz rationale into the public browser
+  // bundle — the whole curriculum, readable by anyone, on every page load.
+  // One question a day is the intended free taster; the other ~660 are not.
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/daily-challenge?locale=${locale}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((body: { card?: DailyCard } | null) => {
+        if (!cancelled && body?.card) setCard(body.card);
+      })
+      .catch(() => {
+        /* the card is a nice-to-have — a failed fetch just hides it */
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [locale]);
 
   if (!card) return null;

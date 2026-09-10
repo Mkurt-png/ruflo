@@ -1,5 +1,21 @@
 'use client';
 
+// ⚠️  DO NOT MOUNT THIS COMPONENT AS-IS.
+//
+// The quotes it renders (`dict.testimonials.items`) are invented: named people
+// — "Léa M., Analyste junior · Paris", and others — with signup months, plans
+// and tracks, under a heading that calls them "apprenants vérifiés" / "verified
+// learners". Nothing was verified because nobody exists. The dictionary copy
+// also boasts "no influencer photos, no Lambo screenshots", which makes the
+// fabrication the more pointed for being dressed as the honest alternative.
+//
+// It is currently dead code — imported only by page.legacy.tsx.bak, which Next
+// does not compile — so nothing fake is on the live site. It is left in place
+// because the layout is worth keeping, but the moment there is a real customer
+// willing to be quoted, replace the dictionary entries with their words before
+// rendering this anywhere. Testimonials on a page that sells a paid product are
+// advertising, and inventing them is not a copy shortcut.
+
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 import type { Dictionary } from '@/lib/i18n/dictionaries';

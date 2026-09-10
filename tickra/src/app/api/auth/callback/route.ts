@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { consumeMagicNonce, ensureUser, isDbConfigured } from '@/lib/db/queries';
+import { normaliseEmail } from '@/lib/auth/email';
 import { attachReferrer } from '@/lib/db/referral-queries';
 import { postDiscord, formatSignup } from '@/lib/notify/discord';
 
@@ -184,7 +185,11 @@ async function handleCallback(req: Request) {
   if (payloadParts.length < 3) return fail(locale, 'bad_payload', url);
   const nonce = payloadParts.pop();
   const expiresAtStr = payloadParts.pop();
-  const email = payloadParts.join('.');
+  // Normalised, like everywhere else an address enters the system, so the
+  // session cookie and the user row agree with the nonce row. Links minted
+  // before this change still verify: the signature covers the payload as it
+  // was signed, and only the value used for lookups is folded here.
+  const email = normaliseEmail(payloadParts.join('.'));
   const expiresAt = Number(expiresAtStr);
   if (!email || !nonce || !Number.isFinite(expiresAt)) return fail(locale, 'bad_payload', url);
   // TICKRA-FIX: 30s clock-skew tolerance — some servers run slightly ahead

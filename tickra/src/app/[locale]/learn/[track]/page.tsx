@@ -8,7 +8,7 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { TRACKS, getTrack, lessonGlobalIndex } from '@/lib/curriculum/data';
-import { isSeeded } from '@/lib/curriculum/lesson-content';
+import { isSeeded, getLessonContent } from '@/lib/curriculum/lesson-content';
 import { LessonCheckmark } from '@/components/learn/LessonCheckmark';
 import { LessonPreviewPopover } from '@/components/learn/LessonPreviewPopover';
 import { LessonLockBadge } from '@/components/learn/LessonLockBadge';
@@ -93,6 +93,10 @@ export default async function TrackPage({ params }: { params: Params }) {
                       trackSlug={track.slug}
                       lessonSlug={lesson.slug}
                       locale={locale}
+                      // Resolved here, on the server: the popover is a client
+                      // component and reading the lesson body inside it put
+                      // the whole paid curriculum in the public bundle.
+                      preview={getLessonContent(track, lesson).intro[locale][0] ?? ''}
                     >
                       <span
                         aria-label={locale === 'fr' ? 'Aperçu de la leçon' : 'Lesson preview'}

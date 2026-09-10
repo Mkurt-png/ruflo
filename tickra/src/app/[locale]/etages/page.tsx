@@ -14,12 +14,21 @@ import { editorialMeta } from '@/lib/seo/editorial-meta';
 import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
-  slug: 'etages',
-  title: 'Les Étages',
-  description:
-    'Trois étages, pas trois colonnes : le rez-de-chaussée gratuit, l’atelier Pro, le bureau Lifetime. La pricing card, à la fin.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'etages',
+    locale,
+    title: {
+      fr: 'Les Étages',
+      en: 'The Floors',
+    },
+    description: {
+      fr: 'Trois étages, pas trois colonnes : le rez-de-chaussée gratuit, l’atelier Pro, le bureau Lifetime. La pricing card, à la fin.',
+      en: 'Three floors, not three columns: the free ground floor, the Pro workshop, the Lifetime office. The pricing card comes last.',
+    },
+  });
+}
 
 type Etage = {
   level: number;

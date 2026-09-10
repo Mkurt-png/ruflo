@@ -6,8 +6,15 @@ import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { DiplomaCard } from '@/components/account/DiplomaCard';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Diplôme' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Diplôme' : 'Diploma',
+    ...pageSeo(locale, '/diploma', locale === 'fr' ? 'Diplôme' : 'Diploma'),
+  };
+}
 
 export default async function DiplomaPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

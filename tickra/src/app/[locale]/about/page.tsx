@@ -9,8 +9,15 @@ import { PageHero } from '@/components/ui/PageHero';
 import { RiskDisclosure } from '@/components/ui/RiskDisclosure';
 import { TrustBar } from '@/components/ui/TrustBar';
 import { ShimmerButton } from '@/components/fx/ShimmerButton';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'À propos' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'À propos' : 'About',
+    ...pageSeo(locale, '/about', locale === 'fr' ? 'À propos' : 'About'),
+  };
+}
 
 // Founder copy is kept here (per-locale) rather than in the i18n bundle
 // so the team can swap names, location, proof points without touching

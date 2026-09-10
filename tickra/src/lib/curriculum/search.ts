@@ -1,12 +1,21 @@
-// Build a flat searchable index of all lesson content + glossary terms.
-// Used by the command palette to surface deep matches (e.g. "marubozu" finds
-// the lesson body, not just the title).
+// Build a flat searchable index of lesson titles + glossary terms.
+// Used by the command palette to surface matches (e.g. "marubozu" finds the
+// lesson that covers it).
 //
 // The index is computed once at module load (the data is static). We keep
 // snippets short so the palette stays performant on every keystroke.
+//
+// SECURITY — this module is imported by client components, so everything it
+// touches ships in a public JS chunk. It must therefore only ever read from
+// `./data` (titles, track summaries) and `./glossary`, both of which are free
+// marketing copy. It must NEVER import `./lesson-content`: that module holds
+// the paid bodies, drill answers and quiz rationales for all 222 lessons, and
+// importing it here published the entire paid curriculum — answer keys
+// included — to anyone who opened DevTools. The server-side paywall in
+// learn/[track]/[lesson]/page.tsx is correct; this import bypassed it.
+// `no-paid-content-in-bundle.test.ts` fails the build if it comes back.
 
 import { TRACKS } from './data';
-import { getLessonContent } from './lesson-content';
 import { GLOSSARY } from './glossary';
 
 export type SearchDoc = {
@@ -29,11 +38,12 @@ export function getSearchIndex(): SearchDoc[] {
 
   for (const tr of TRACKS) {
     for (const l of tr.lessons) {
-      const c = getLessonContent(tr, l);
       const titleFr = `${String(l.index).padStart(2, '0')} · ${l.title.fr}`;
       const titleEn = `${String(l.index).padStart(2, '0')} · ${l.title.en}`;
-      const bodyFr = c.intro.fr.join(' ');
-      const bodyEn = c.intro.en.join(' ');
+      // The track summary is the public blurb already shown on /curriculum,
+      // so it is safe to widen the haystack and to use as the snippet.
+      const bodyFr = tr.summary.fr;
+      const bodyEn = tr.summary.en;
       out.push({
         id: `l-${l.id}`,
         kind: 'lesson',

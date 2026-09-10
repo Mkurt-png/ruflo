@@ -123,6 +123,34 @@ export async function POST(req: Request) {
       return NextResponse.json({ received: true, idempotent: true });
     }
 
+    // TICKRA-FIX(billing): a write that failed must not be recorded as done.
+    //
+    // Every entitlement update below discarded its result, and the event was
+    // then marked processed regardless. So if the database was unreachable for
+    // the few seconds a `checkout.session.completed` arrived, the grant was
+    // lost AND Stripe's retry — which would have fixed it — was rejected as a
+    // duplicate. The customer's money was taken, the webhook answered 200, and
+    // they never got access. Nothing anywhere recorded that it had happened.
+    //
+    // Now a failed write is remembered, the event is left unprocessed, and the
+    // route answers 500 so Stripe retries on its own schedule.
+    let writeFailed = false;
+    const write = async (
+      addr: string,
+      patch: Parameters<typeof updateExistingUser>[1],
+    ): Promise<void> => {
+      const { updated } = await updateExistingUser(addr, patch);
+      if (!updated) {
+        writeFailed = true;
+        console.error(
+          '[stripe] %s (%s): could not apply %j — leaving event unprocessed for retry',
+          event.type,
+          event.id,
+          patch,
+        );
+      }
+    };
+
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object;
@@ -142,7 +170,7 @@ export async function POST(req: Request) {
         // TICKRA-FIX(security): UPDATE only — never create a user row from
         // a Stripe webhook. /api/checkout now requires an authenticated
         // session, so the row must already exist.
-        await updateExistingUser(email, patch);
+        await write(email, patch);
 
         // Referral conversion: if this user was invited and the referral
         // is still pending, flip it to converted (which also credits the
@@ -221,7 +249,7 @@ export async function POST(req: Request) {
         const periodEndSeconds =
           (sub.items?.data?.[0] as { current_period_end?: number } | undefined)?.current_period_end ??
           null;
-        await updateExistingUser(email, {
+        await write(email, {
           plan: sub.status === 'active' || sub.status === 'trialing' ? 'pro' : 'free',
           current_period_end: periodEndSeconds ? new Date(periodEndSeconds * 1000).toISOString() : null,
         });
@@ -245,7 +273,87 @@ export async function POST(req: Request) {
           typeof sub.customer === 'string' ? sub.customer : null,
         );
         if (!email) break;
-        await updateExistingUser(email, { plan: 'free', current_period_end: null });
+
+        // TICKRA-FIX(billing): a Lifetime purchase is not a subscription, and
+        // must survive one ending.
+        //
+        // This used to write plan:'free' unconditionally. Someone who bought
+        // Pro monthly, later upgraded to Lifetime, and whose old Pro
+        // subscription was then cancelled — by them or by Stripe at period end
+        // — had their paid-for-life access revoked by the cancellation of a
+        // DIFFERENT product. They paid once and lost everything, silently, with
+        // no event they could connect it to.
+        //
+        // Only a Pro subscription ending drops someone to free.
+        const priceId =
+          (sub.items?.data?.[0] as { price?: { id?: string } } | undefined)?.price?.id ?? null;
+        const proPrices = [
+          process.env.STRIPE_PRICE_PRO_MONTHLY,
+          process.env.STRIPE_PRICE_PRO_ANNUAL,
+        ].filter(Boolean) as string[];
+        if (priceId && proPrices.length > 0 && !proPrices.includes(priceId)) {
+          // Not our Pro subscription — leave entitlements alone.
+          break;
+        }
+        const current = await getUser(email);
+        if ((current as { plan?: string | null } | null)?.plan === 'lifetime') {
+          // Lifetime outranks any subscription state. Clear the renewal date,
+          // keep the access.
+          await write(email, { current_period_end: null });
+          break;
+        }
+        await write(email, { plan: 'free', current_period_end: null });
+        break;
+      }
+      // TICKRA-FIX(billing): money going back out has to take access with it.
+      //
+      // None of these were handled, so a full refund and a won chargeback both
+      // left the buyer with permanent Pro or Lifetime access. Lifetime was the
+      // expensive case: a one-off payment, refunded on day 13 of the 14-day
+      // guarantee we advertise, left the account entitled forever with nothing
+      // to reverse it — there is no subscription to cancel.
+      case 'charge.refunded': {
+        const charge = event.data.object;
+        // Partial refunds are a support decision, not an automatic revocation:
+        // only a full refund removes access.
+        if (charge.amount_refunded < charge.amount) break;
+        const email =
+          charge.billing_details?.email ??
+          (await resolveCustomerEmail(
+            customerLookup(stripe),
+            typeof charge.customer === 'string' ? charge.customer : null,
+          ));
+        if (!email) break;
+        console.warn('[stripe] full refund — revoking access for %s', email);
+        await write(email, { plan: 'free', cycle: null, current_period_end: null });
+        break;
+      }
+      case 'charge.dispute.created': {
+        // A dispute is not yet a loss, but leaving paid access open while the
+        // funds are held is how card-testing and friendly fraud get monetised.
+        // Access is restored by hand if the dispute is won.
+        const dispute = event.data.object;
+        // A Dispute carries the charge id, not the customer, so the charge has
+        // to be fetched to find out whose access this is.
+        let email: string | null = null;
+        if (typeof dispute.charge === 'string') {
+          const charge = (await stripe.charges.retrieve(dispute.charge)) as {
+            customer?: string | null;
+            billing_details?: { email?: string | null } | null;
+          };
+          email =
+            charge.billing_details?.email ??
+            (await resolveCustomerEmail(
+              customerLookup(stripe),
+              typeof charge.customer === 'string' ? charge.customer : null,
+            ));
+        }
+        if (!email) {
+          console.warn('[stripe] dispute %s — could not resolve customer, review by hand', dispute.id);
+          break;
+        }
+        console.warn('[stripe] dispute opened — suspending access for %s', email);
+        await write(email, { plan: 'free', cycle: null, current_period_end: null });
         break;
       }
       case 'invoice.payment_failed': {
@@ -257,7 +365,11 @@ export async function POST(req: Request) {
         break;
     }
 
-    // Mark this event processed (idempotency log).
+    // Only record the event as handled if everything it asked for actually
+    // landed. A 500 here is deliberate: it is what makes Stripe retry.
+    if (writeFailed) {
+      return NextResponse.json({ error: 'write_failed' }, { status: 500 });
+    }
     await markStripeEventProcessed(event.id, event.type);
 
     return NextResponse.json({ received: true });

@@ -6,8 +6,15 @@ import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { PlacementTest } from '@/components/onboarding/PlacementTest';
+import { pageSeo } from '@/lib/seo';
 
-export const metadata = { title: 'Test de niveau' };
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return {
+    title: locale === 'fr' ? 'Test de niveau' : 'Level test',
+    ...pageSeo(locale, '/onboarding', locale === 'fr' ? 'Test de niveau' : 'Level test'),
+  };
+}
 
 export default async function OnboardingPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();

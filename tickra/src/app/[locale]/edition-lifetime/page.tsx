@@ -4,6 +4,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
+import { pageSeo } from '@/lib/seo';
 
 // /[locale]/edition-lifetime — L'Édition Lifetime. Une brochure
 // éditoriale du livret annuel imprimé. Le programme postal sera
@@ -11,11 +12,18 @@ import { Footer } from '@/components/sections/Footer';
 // le dit.
 
 export const revalidate = 86400;
-export const metadata = {
-  title: 'L’Édition Lifetime',
-  description:
-    'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.',
-};
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  const title = locale === 'fr' ? 'L’Édition Lifetime' : 'The Lifetime Edition';
+  return {
+    title,
+    description:
+      locale === 'fr'
+        ? 'Une fois par an, les membres Lifetime reçoivent un livret imprimé de leur année — Cote, trades, Criées choisies, Lettre du Nouvel An.'
+        : 'Once a year, Lifetime members receive a printed booklet of their year — Score, trades, selected Criées, New Year Letter.',
+    ...pageSeo(locale, '/edition-lifetime', title),
+  };
+}
 
 const COPY = {
   fr: {

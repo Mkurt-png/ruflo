@@ -13,12 +13,21 @@ import { EditorialJsonLd } from '@/components/seo/EditorialJsonLd';
 // reading is bounded.
 
 export const revalidate = 86400;
-export const metadata = editorialMeta({
-  slug: 'method',
-  title: 'La Méthode',
-  description:
-    'La formule de la Cote, à l’air libre : régularité, précision, honnêteté, révision. Chaque composante en une phrase.',
-});
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale === 'en' ? 'en' : 'fr';
+  return editorialMeta({
+    slug: 'method',
+    locale,
+    title: {
+      fr: 'La Méthode',
+      en: 'The Method',
+    },
+    description: {
+      fr: 'La formule de la Cote, à l’air libre : régularité, précision, honnêteté, révision. Chaque composante en une phrase.',
+      en: 'The Score formula, in the open: regularity, precision, honesty, revision. Each component in one sentence.',
+    },
+  });
+}
 
 const COPY = {
   fr: {
