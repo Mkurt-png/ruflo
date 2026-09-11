@@ -1,0 +1,1147 @@
+<title>Le chalet de la clairière</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+
+<style>
+:root{
+  --paper:#F2F3EE;
+  --panel:#E9EBE2;
+  --plate:#FBFBF8;
+  --ink:#1B211C;
+  --ink2:#5B6259;
+  --ink3:#868D80;
+  --rule:#CDD1C5;
+  --rule2:#DFE2D8;
+  --sun:#C25419;
+  --sunsoft:rgba(194,84,25,.13);
+  --forest:#35624A;
+  --forestsoft:rgba(53,98,74,.12);
+  --cold:#45687F;
+  --coldsoft:rgba(69,104,127,.13);
+  --clear:rgba(196,178,138,.30);
+
+  --display:"Archivo Narrow",'Arial Narrow',Helvetica,sans-serif;
+  --body:"Source Serif 4",Georgia,'Times New Roman',serif;
+
+  --s1:.35rem; --s2:.7rem; --s3:1.1rem; --s4:1.8rem; --s5:2.8rem; --s6:4.4rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141813;
+    --panel:#1C211B;
+    --plate:#1A1F19;
+    --ink:#E7EADF;
+    --ink2:#A2AA98;
+    --ink3:#7C846F;
+    --rule:#38402F;
+    --rule2:#2A3126;
+    --sun:#E87E44;
+    --sunsoft:rgba(232,126,68,.16);
+    --forest:#79B08D;
+    --forestsoft:rgba(121,176,141,.15);
+    --cold:#84AFCB;
+    --coldsoft:rgba(132,175,203,.16);
+    --clear:rgba(196,178,138,.16);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141813;
+  --panel:#1C211B;
+  --plate:#1A1F19;
+  --ink:#E7EADF;
+  --ink2:#A2AA98;
+  --ink3:#7C846F;
+  --rule:#38402F;
+  --rule2:#2A3126;
+  --sun:#E87E44;
+  --sunsoft:rgba(232,126,68,.16);
+  --forest:#79B08D;
+  --forestsoft:rgba(121,176,141,.15);
+  --cold:#84AFCB;
+  --coldsoft:rgba(132,175,203,.16);
+  --clear:rgba(196,178,138,.16);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1rem,4vw,2.6rem) var(--s6)}
+.col{max-width:64ch}
+p{margin:0 0 var(--s3)}
+strong{font-weight:600}
+em{font-style:italic}
+a{color:var(--sun);text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:2px}
+
+h1,h2,h3,h4,.eyebrow,.tag,th,.num,figcaption,.cart,.key,.legend,table{font-family:var(--display)}
+h2,h3,h4{text-wrap:balance;margin:0}
+
+.eyebrow{
+  font-size:.72rem;letter-spacing:.19em;text-transform:uppercase;
+  font-weight:600;color:var(--ink3);
+}
+
+/* ---------- masthead: a drawing-sheet title block ---------- */
+.mast{border-bottom:2px solid var(--ink);padding:var(--s5) 0 var(--s3);margin-bottom:var(--s5)}
+.mast h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(2.4rem,7vw,4.2rem);line-height:.96;
+  letter-spacing:-.012em;text-transform:uppercase;margin:var(--s2) 0 var(--s3);
+}
+.mast h1 span{display:block;color:var(--sun)}
+.mastgrid{
+  display:grid;gap:var(--s2) var(--s4);
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  border-top:1px solid var(--rule);padding-top:var(--s2);
+}
+.mastgrid div{display:flex;flex-direction:column;gap:2px}
+.mastgrid dt,.mastgrid .k{font-family:var(--display);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.mastgrid .v{font-family:var(--display);font-size:.95rem;font-weight:600}
+
+/* ---------- sections ---------- */
+section{margin-top:var(--s6)}
+.shead{display:flex;align-items:baseline;gap:var(--s3);border-bottom:1px solid var(--ink);padding-bottom:var(--s2);margin-bottom:var(--s4)}
+.shead h2{font-size:1.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.shead .n{font-family:var(--display);font-weight:700;font-size:1.5rem;color:var(--sun);font-variant-numeric:tabular-nums}
+
+.lede{font-size:1.12rem;line-height:1.55;max-width:60ch}
+
+/* ---------- plate (planche) ---------- */
+.plate{
+  background:var(--plate);
+  border:1px solid var(--rule);
+  margin:var(--s4) 0 var(--s3);
+  overflow:hidden;
+}
+.plate .canvas{padding:var(--s3);overflow-x:auto}
+.plate svg{display:block;width:100%;max-width:100%;height:auto;color:var(--ink)}
+.cart{
+  display:flex;flex-wrap:wrap;align-items:stretch;
+  border-top:1px solid var(--rule);
+  font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink2);
+}
+.cart div{padding:.55rem .9rem;border-right:1px solid var(--rule2);display:flex;gap:.5rem;align-items:center}
+.cart div:last-child{border-right:0;margin-left:auto;font-weight:700;color:var(--ink)}
+.cart b{color:var(--ink);font-weight:700}
+figcaption{font-size:.86rem;color:var(--ink2);letter-spacing:.01em;margin-top:var(--s2);max-width:70ch}
+figure{margin:0}
+
+/* ---------- option header ---------- */
+.opt{display:flex;align-items:flex-start;gap:var(--s3);margin-top:var(--s5)}
+.opt .badge{
+  flex:none;width:2.9rem;height:2.9rem;border:2px solid var(--ink);
+  display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:1.35rem;
+}
+.opt.keep .badge{border-color:var(--sun);color:var(--sun)}
+.opt h3{font-size:1.32rem;text-transform:uppercase;letter-spacing:.04em;line-height:1.15}
+.opt .sub{font-family:var(--body);font-size:.98rem;color:var(--ink2);text-transform:none;letter-spacing:0;font-style:italic;margin-top:2px}
+
+.tag{
+  display:inline-block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;padding:.22rem .5rem;border:1px solid currentColor;margin-left:.5rem;vertical-align:.15em;
+}
+.tag.keep{color:var(--sun)}
+.tag.draft{color:var(--ink3)}
+
+/* ---------- pro / con ---------- */
+.pc{display:grid;gap:var(--s3);grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:var(--s3) 0}
+.pc h4{font-size:.72rem;letter-spacing:.17em;text-transform:uppercase;margin-bottom:var(--s2);color:var(--ink3)}
+.pc ul{margin:0;padding-left:1.05rem}
+.pc li{margin-bottom:.4rem}
+.pc .con{border-left:2px solid var(--sun);padding-left:var(--s3)}
+.pc .pro{border-left:2px solid var(--forest);padding-left:var(--s3)}
+
+.reject{
+  border:1px dashed var(--sun);padding:var(--s3);margin:var(--s3) 0;
+  background:var(--sunsoft);
+}
+.reject .k{font-family:var(--display);font-size:.68rem;letter-spacing:.17em;text-transform:uppercase;color:var(--sun);font-weight:700;display:block;margin-bottom:.3rem}
+.reject p{margin:0;font-size:.98rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:var(--s3) 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:.45rem .8rem .45rem 0;border-bottom:1px solid var(--rule2);vertical-align:top}
+th{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);font-weight:600;border-bottom-color:var(--rule)}
+td.n,th.n{text-align:right;padding-right:0}
+tr.tot td{border-top:1px solid var(--ink);border-bottom:0;font-weight:700;padding-top:.55rem}
+td.idx{color:var(--sun);font-weight:700;width:1.6rem;padding-right:.5rem}
+
+/* ---------- legend ---------- */
+.legend{display:grid;gap:var(--s2) var(--s3);grid-template-columns:repeat(auto-fit,minmax(215px,1fr));font-size:.8rem}
+.legend div{display:flex;gap:.6rem;align-items:center;color:var(--ink2);letter-spacing:.04em}
+.legend svg{flex:none;width:44px;height:20px;color:var(--ink)}
+
+.nomen{display:grid;gap:.3rem var(--s3);grid-template-columns:repeat(auto-fit,minmax(200px,1fr));font-family:var(--display);font-size:.86rem;letter-spacing:.04em}
+.nomen div{display:flex;gap:.6rem}
+.nomen b{color:var(--sun);font-variant-numeric:tabular-nums;min-width:1rem}
+
+/* ---------- precedents ---------- */
+.prec{border-top:1px solid var(--rule);padding-top:var(--s3);margin-top:var(--s4);display:grid;gap:var(--s3);grid-template-columns:minmax(0,1fr)}
+@media(min-width:760px){.prec{grid-template-columns:11rem minmax(0,1fr)}}
+.prec .slot{
+  border:1px dashed var(--rule);background:var(--panel);
+  min-height:9rem;display:grid;place-items:center;text-align:center;padding:var(--s2);
+  font-family:var(--display);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);
+}
+.prec h4{font-size:1.05rem;text-transform:uppercase;letter-spacing:.035em}
+.prec .meta{font-family:var(--display);font-size:.78rem;letter-spacing:.08em;color:var(--ink3);text-transform:uppercase;margin:.2rem 0 var(--s2)}
+.prec ul{margin:0 0 var(--s2);padding-left:1.05rem}
+.prec li{margin-bottom:.32rem;line-height:1.45}
+.prec .src{font-family:var(--display);font-size:.78rem;letter-spacing:.02em;color:var(--ink2);word-break:break-word}
+.warn{font-size:.86rem;color:var(--ink2);border-left:2px solid var(--cold);padding-left:var(--s2);margin-top:var(--s2)}
+
+/* ---------- checklist ---------- */
+.check{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.check li{display:flex;gap:.7rem;align-items:flex-start;font-size:.98rem}
+.check li::before{
+  content:"";flex:none;width:.85rem;height:.85rem;margin-top:.35rem;
+  border:1.5px solid var(--ink2);
+}
+
+details{border-top:1px solid var(--rule2);padding:var(--s2) 0}
+summary{cursor:pointer;font-family:var(--display);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+details[open] summary{color:var(--ink);margin-bottom:var(--s2)}
+
+.foot{margin-top:var(--s6);border-top:2px solid var(--ink);padding-top:var(--s2);font-family:var(--display);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);display:flex;flex-wrap:wrap;gap:var(--s3);justify-content:space-between}
+
+@media (prefers-reduced-motion:no-preference){
+  a,summary{transition:color .15s ease}
+}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .plate{break-inside:avoid;page-break-inside:avoid;border-color:#999}
+  section{break-inside:auto}
+  .opt{break-after:avoid}
+  .foot,details{display:none}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Projet d'architecture&nbsp;: initiation à la conception · Phase&nbsp;1 — Concept</div>
+  <h1>Le chalet<span>de la clairière</span></h1>
+  <div class="mastgrid">
+    <div><span class="k">Site</span><span class="v">Mont-Orford, Cantons-de-l'Est</span></div>
+    <div><span class="k">Programme</span><span class="v">Minimaison locative, 1 niveau</span></div>
+    <div><span class="k">Superficie max.</span><span class="v">500&nbsp;pi² / 46,5&nbsp;m²</span></div>
+    <div><span class="k">Documents</span><span class="v">Analyse · 3 organigrammes · Précédents</span></div>
+  </div>
+</header>
+
+<p class="lede">Trois façons de poser la même minimaison sur le même terrain. Chacune répond autrement à la seule vraie question du site&nbsp;: <strong>le soleil, la vue et l'auto arrivent tous les trois par le sud-ouest</strong>. Le reste — la chambre, la salle de bain, le poêle — découle de cette décision.</p>
+
+<!-- ══════════════ 1. LE TERRAIN ══════════════ -->
+<section>
+  <div class="shead"><span class="n">01</span><h2>Lire le terrain</h2></div>
+
+  <div class="col">
+    <p>Le lot est un rectangle d'environ <strong>30&nbsp;m sur 17,5&nbsp;m</strong> (±525&nbsp;m²), posé de biais sur le flanc de la montagne&nbsp;: son grand axe file vers le <strong>nord-est</strong>. Ce biais est la première contrainte — la maison n'est pas obligée de le suivre.</p>
+    <p>Quatre faits, tirés de la photo aérienne et des notes de l'annexe, commandent tout le reste&nbsp;:</p>
+  </div>
+
+  <div class="tw col" style="max-width:none">
+  <table>
+    <thead><tr><th style="width:38%">Constat sur le terrain</th><th>Conséquence de conception</th></tr></thead>
+    <tbody>
+      <tr><td>Une <b>clairière existante</b> occupe le centre-ouest du lot&nbsp;; le reste est boisé dense.</td><td>On bâtit dans la clairière. C'est la seule manière de respecter «&nbsp;abattage limité au minimum&nbsp;».</td></tr>
+      <tr><td>Le chemin privé se termine en <b>cul-de-sac au coin ouest</b>.</td><td>L'arrivée se fait par l'ouest, à pied sur quelques mètres&nbsp;: pas d'entrée de cour dans le boisé.</td></tr>
+      <tr><td>Le terrain <b>descend vers le sud-ouest</b> (rues et constructions en contrebas)&nbsp;; les sentiers montent au sommet par l'arrière, au nord-est.</td><td>Le devant (vue, soleil, terrasse) est au sud-ouest. L'arrière (services, écran d'arbres) est au nord-est.</td></tr>
+      <tr><td>À 45°&nbsp;N, le soleil de midi en <b>décembre</b> ne monte qu'à ±21°&nbsp;; les vents froids viennent du <b>nord-ouest</b>.</td><td>Un mur presque aveugle au nord-ouest, une grande façade vitrée au sud&nbsp;: gain solaire l'hiver, dos au vent.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="plate">
+    <div class="canvas">
+      <figure>
+        <svg viewBox="0 0 700 620" role="img" aria-label="Analyse du terrain : lot rectangulaire orient&#233; nord-est, clairi&#232;re centrale, boisé dense au nord-est et au sud-est, chemin priv&#233; en cul-de-sac au coin ouest, sentier au nord-est, pente descendant vers le sud-ouest, course du soleil et c&#244;ne de vue au sud-ouest, vents dominants du nord-ouest.">
+          <defs>
+            <marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="currentColor"/></marker>
+            <marker id="ar1c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="var(--cold)"/></marker>
+            <g id="cf1"><path d="M0,-11 L6,4 L-6,4 Z" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="4" x2="0" y2="8" stroke="var(--forest)" stroke-width="1.1"/></g>
+            <g id="df1"><circle cx="0" cy="-2" r="7" fill="none" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="5" x2="0" y2="9" stroke="var(--forest)" stroke-width="1.1"/></g>
+          </defs>
+
+          <path d="M226 334 L162 476 L74 386 Z" fill="var(--sunsoft)"/>
+
+          <g transform="translate(340,250) rotate(-34)">
+            <g stroke="var(--ink3)" stroke-width=".7" fill="none" opacity=".4">
+              <path d="M-110,-132 Q-96,0 -110,132"/><path d="M-50,-132 Q-36,0 -50,132"/>
+              <path d="M10,-132 Q24,0 10,132"/><path d="M70,-132 Q84,0 70,132"/><path d="M130,-132 Q144,0 130,132"/>
+            </g>
+            <path d="M-150,-58 C-120,-84 -40,-80 30,-64 C74,-54 76,20 34,44 C-16,72 -110,66 -146,34 C-166,16 -168,-38 -150,-58 Z" fill="var(--clear)" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 5"/>
+            <rect x="-160" y="-94" width="320" height="188" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="16 4 3 4"/>
+          </g>
+
+          <!-- cotes, hors du lot -->
+          <g stroke="var(--ink3)" stroke-width=".9" fill="none" opacity=".85">
+            <line x1="145" y1="247" x2="410" y2="68" marker-start="url(#ar1)" marker-end="url(#ar1)"/>
+            <line x1="435" y1="73" x2="540" y2="229" marker-start="url(#ar1)" marker-end="url(#ar1)"/>
+          </g>
+          <text x="277" y="152" font-family="Archivo Narrow, sans-serif" font-size="11.5" fill="var(--ink2)" letter-spacing=".08em" text-anchor="middle" transform="rotate(-34 277 152)">&#177; 30 M</text>
+          <text x="493" y="146" font-family="Archivo Narrow, sans-serif" font-size="11.5" fill="var(--ink2)" letter-spacing=".08em" text-anchor="middle" transform="rotate(56 493 146)">&#177; 17,5 M</text>
+
+
+            <use href="#cf1" transform="translate(468,120)"/><use href="#cf1" transform="translate(502,150)"/>
+            <use href="#cf1" transform="translate(530,180)"/><use href="#cf1" transform="translate(494,198)"/>
+            <use href="#cf1" transform="translate(456,168)"/><use href="#cf1" transform="translate(524,224)"/>
+            <use href="#cf1" transform="translate(552,254)"/><use href="#cf1" transform="translate(510,270)"/>
+            <use href="#cf1" transform="translate(474,242)"/><use href="#cf1" transform="translate(438,298)"/>
+            <use href="#cf1" transform="translate(468,322)"/><use href="#cf1" transform="translate(500,302)"/>
+            <use href="#cf1" transform="translate(412,342)"/><use href="#cf1" transform="translate(442,372)"/>
+            <use href="#cf1" transform="translate(388,386)"/><use href="#cf1" transform="translate(354,416)"/>
+            <use href="#cf1" transform="translate(440,170)"/><use href="#cf1" transform="translate(470,205)"/>
+            <use href="#df1" transform="translate(380,76)"/><use href="#df1" transform="translate(344,98)"/>
+            <use href="#df1" transform="translate(302,74)"/><use href="#df1" transform="translate(264,152)"/>
+            <use href="#df1" transform="translate(228,178)"/><use href="#df1" transform="translate(194,210)"/>
+            <use href="#df1" transform="translate(162,170)"/><use href="#df1" transform="translate(130,206)"/>
+            <use href="#df1" transform="translate(198,332)"/><use href="#df1" transform="translate(166,302)"/>
+            <use href="#df1" transform="translate(232,382)"/><use href="#df1" transform="translate(152,362)"/>
+
+          <g fill="none" stroke="var(--ink2)" stroke-width="2.4">
+            <path d="M18 546 C 54 500, 86 424, 106 348"/><circle cx="118" cy="308" r="24"/>
+          </g>
+          <path d="M474 161 C 512 132, 542 112, 578 96" fill="none" stroke="var(--forest)" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#ar1)"/>
+          <g stroke="var(--cold)" stroke-width="1.6" marker-end="url(#ar1c)">
+            <line x1="80" y1="70" x2="126" y2="116"/><line x1="116" y1="48" x2="162" y2="94"/>
+          </g>
+          <g transform="translate(636,142)">
+            <line x1="0" y1="30" x2="0" y2="-20" stroke="currentColor" stroke-width="1.6"/>
+            <polygon points="0,-30 6,-14 0,-18 -6,-14" fill="currentColor"/>
+            <text x="0" y="48" font-family="Archivo Narrow, sans-serif" font-size="14" font-weight="700" fill="currentColor" text-anchor="middle">N</text>
+          </g>
+          <path d="M556 375 A 250 250 0 0 1 124 375" fill="none" stroke="var(--sun)" stroke-width="1.2" stroke-dasharray="5 4"/>
+          <circle cx="556" cy="375" r="4" fill="var(--sun)"/><circle cx="124" cy="375" r="4" fill="var(--sun)"/>
+
+          <!-- pente -->
+          <line x1="470" y1="128" x2="278" y2="348" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar1)" opacity=".65"/>
+
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="250" y="292" fill="var(--ink2)" text-anchor="middle">CLAIRI&#200;RE EXISTANTE</text>
+            <text x="250" y="306" fill="var(--ink2)" text-anchor="middle">ZONE CONSTRUCTIBLE</text>
+            <text x="252" y="376" fill="currentColor" text-anchor="middle" font-weight="600">PENTE &#8595; &#177; 12 %</text>
+            <text x="556" y="306" fill="var(--forest)">BOIS&#201; DENSE</text>
+            <text x="556" y="320" fill="var(--forest)">CONIF&#200;RES &#8212; &#201;CRAN</text>
+            <text x="238" y="52" fill="var(--forest)">BOIS&#201; MIXTE / FEUILLUS</text>
+            <text x="340" y="522" fill="var(--sun)" text-anchor="middle" letter-spacing=".1em">MIDI, 21 D&#201;C. &#8212; LE SOLEIL NE MONTE QU'&#192; &#177; 21&#176;</text>
+          </g>
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="596" y="88" fill="var(--forest)">SENTIERS &#8599;</text>
+            <text x="28" y="486" fill="var(--ink2)" transform="rotate(-64 28 486)">CHEMIN PRIV&#201;</text>
+            <text x="118" y="352" font-size="11" fill="var(--ink2)" text-anchor="middle">CUL-DE-SAC</text>
+            <text x="60" y="150" fill="var(--cold)">VENTS N.-O.</text>
+            <text x="100" y="366" fill="var(--sun)" text-anchor="end">16 H</text>
+            <text x="580" y="366" fill="var(--sun)">8 H</text>
+            <text x="76" y="416" fill="var(--sun)" font-weight="700">C&#212;NE DE VUE</text>
+            <text x="76" y="430" fill="var(--sun)">LA VALL&#201;E, EN CONTREBAS</text>
+          </g>
+          <text x="26" y="552" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">COURBES DE NIVEAU ET PENTE : HYPOTH&#200;SE &#8212; AUCUN RELEV&#201; FOURNI</text>
+          <text x="26" y="567" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">&#201;T&#201; : LEVER AU N.-E., COUCHER AU N.-O., SOLEIL &#192; &#177; 68&#176; &#192; MIDI</text>
+          <text x="26" y="582" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">RELEV&#201; D'APR&#200;S LA PHOTO A&#201;RIENNE ET LES NOTES DE L'ANNEXE</text>
+          <g transform="translate(548,586)">
+            <line x1="0" y1="0" x2="107" y2="0" stroke="currentColor" stroke-width="2"/>
+            <line x1="0" y1="-4" x2="0" y2="4" stroke="currentColor" stroke-width="2"/>
+            <line x1="53.5" y1="-3" x2="53.5" y2="3" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="107" y1="-4" x2="107" y2="4" stroke="currentColor" stroke-width="2"/>
+            <text x="0" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)">0</text>
+            <text x="107" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)" text-anchor="middle">10 M</text>
+          </g>
+        </svg>
+        <figcaption>Analyse du terrain. Le soleil d'hiver, la vue et l'arrivée en auto occupent le même quadrant sud-ouest&nbsp;: c'est le conflit que les trois organigrammes règlent différemment.</figcaption>
+      </figure>
+    </div>
+    <div class="cart">
+      <div><b>Dessin</b> A-01</div>
+      <div><b>Titre</b> Analyse du terrain</div>
+      <div><b>Éch.</b> 1&nbsp;:&nbsp;250 approx.</div>
+      <div>Phase 1 · Concept</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 2. LE PROGRAMME ══════════════ -->
+<section>
+  <div class="shead"><span class="n">02</span><h2>Le programme, avant le plan</h2></div>
+
+  <div class="col">
+    <p>Avant de poser un mur, il faut savoir <em>ce qui doit toucher quoi</em>. L'organigramme fonctionnel ci-dessous ne dit rien de la forme&nbsp;: il dit seulement quelles pièces se donnent la main. Les trois options qui suivent sont trois manières de plier ce même schéma sur le terrain.</p>
+    <p>Trois regroupements imposent leur loi&nbsp;: le <strong>mur humide</strong> (cuisine + salle de bain + salle mécanique + laveuse sur une même colonne de plomberie), le <strong>sas d'entrée</strong> (bottes, skis, manteaux mouillés — il ne faut pas traverser le salon pour se déshabiller), et l'<strong>aire ouverte de jour</strong>, qui est la seule façon de faire respirer 46&nbsp;m².</p>
+  </div>
+
+  <div class="plate">
+    <div class="canvas">
+      <figure>
+        <svg viewBox="0 0 860 476" role="img" aria-label="Organigramme fonctionnel : le stationnement et les sentiers mènent au vestibule ; le vestibule dessert le rangement, la cuisine et la salle mécanique ; cuisine, dinette et salon forment une aire ouverte reliée à la terrasse ; la chambre touche la salle de bain, elle-même reliée à la salle mécanique par le mur humide.">
+          <defs>
+            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,1 L10,5 L0,9 z" fill="currentColor"/>
+            </marker>
+          </defs>
+
+          <!-- mur humide -->
+          <polyline points="345,205 345,372 475,372" fill="none" stroke="var(--cold)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".22"/>
+          <text x="286" y="458" font-family="Archivo Narrow, sans-serif" font-size="11.5" font-weight="600" fill="var(--cold)" letter-spacing=".12em">MUR HUMIDE — PLOMBERIE REGROUPÉE</text>
+
+          <!-- liens -->
+          <g stroke="currentColor" fill="none">
+            <line x1="110" y1="130" x2="160" y2="212" stroke-width="1.4" marker-end="url(#ar2)"/>
+            <line x1="110" y1="330" x2="160" y2="250" stroke-width="1.4" marker-end="url(#ar2)"/>
+            <line x1="205" y1="276" x2="205" y2="334" stroke-width="3.4"/>
+            <line x1="246" y1="212" x2="306" y2="192" stroke-width="3.4"/>
+            <line x1="238" y1="262" x2="302" y2="352" stroke-width="1.3" stroke-dasharray="4 4"/>
+            <line x1="386" y1="192" x2="444" y2="166" stroke-width="3.4"/>
+            <line x1="513" y1="176" x2="580" y2="196" stroke-width="3.4"/>
+            <line x1="386" y1="216" x2="574" y2="215" stroke-width="1.3"/>
+            <line x1="666" y1="196" x2="720" y2="176" stroke-width="3.4"/>
+            <path d="M 505 122 Q 620 88 731 126" stroke-width="1.3"/>
+            <line x1="615" y1="262" x2="612" y2="330" stroke-width="1.3"/>
+            <line x1="568" y1="372" x2="514" y2="372" stroke-width="3.4"/>
+            <line x1="436" y1="372" x2="381" y2="372" stroke-width="3.4"/>
+            <line x1="298" y1="372" x2="243" y2="372" stroke-width="1.3"/>
+            <line x1="660" y1="238" x2="726" y2="292" stroke-width="1.5" stroke-dasharray="3 5" stroke="var(--sun)"/>
+          </g>
+
+          <!-- étiquettes de liens -->
+          <g font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink3)" letter-spacing=".06em">
+            <text x="96" y="182" transform="rotate(58 96 182)">ARRIVÉE</text>
+            <text x="98" y="298" transform="rotate(-58 98 298)">PORTE ARRIÈRE</text>
+            <text x="212" y="308">SKIS, BOTTES</text>
+            <text x="266" y="232" text-anchor="middle" transform="rotate(-18 266 232)">DÉGAGEMENT</text>
+            <text x="408" y="170" transform="rotate(-24 408 170)">SERVICE</text>
+            <text x="544" y="166" transform="rotate(17 544 166)">AIRE OUVERTE</text>
+            <text x="676" y="212" transform="rotate(-20 676 212)">PORTE-FENÊTRE</text>
+            <text x="470" y="245" text-anchor="middle">VUE TRAVERSANTE</text>
+            <text x="622" y="300">PORTE</text>
+            <text x="541" y="362" text-anchor="middle">NUIT</text>
+            <text x="409" y="362" text-anchor="middle">PLOMBERIE</text>
+            <text x="686" y="270" fill="var(--sun)" transform="rotate(40 686 270)">LIEN VISUEL</text>
+            <text x="618" y="92" text-anchor="middle">REPAS DEHORS</text>
+          </g>
+
+          <!-- bulles -->
+          <g font-family="Archivo Narrow, sans-serif" text-anchor="middle" letter-spacing=".07em">
+            <g>
+              <circle cx="68" cy="130" r="42" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.6"/>
+              <text x="68" y="126" font-size="11.5" font-weight="600" fill="var(--forest)">STATION-</text>
+              <text x="68" y="139" font-size="11.5" font-weight="600" fill="var(--forest)">NEMENT</text>
+            </g>
+            <g>
+              <circle cx="68" cy="330" r="42" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.6"/>
+              <text x="68" y="326" font-size="11.5" font-weight="600" fill="var(--forest)">SENTIERS</text>
+              <text x="68" y="339" font-size="11.5" font-weight="600" fill="var(--forest)">SOMMET</text>
+            </g>
+            <g>
+              <circle cx="205" cy="230" r="46" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.8"/>
+              <text x="205" y="226" font-size="12" font-weight="700" fill="currentColor">ENTRÉE</text>
+              <text x="205" y="240" font-size="11" fill="var(--ink2)">VESTIBULE</text>
+            </g>
+            <g>
+              <circle cx="205" cy="372" r="38" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/>
+              <text x="205" y="369" font-size="11" fill="currentColor">RANGE-</text>
+              <text x="205" y="381" font-size="11" fill="currentColor">MENT</text>
+            </g>
+            <g>
+              <circle cx="340" cy="372" r="42" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/>
+              <text x="340" y="368" font-size="11" fill="currentColor">MÉCANIQUE</text>
+              <text x="340" y="381" font-size="11" fill="currentColor">+ LAVEUSE</text>
+            </g>
+            <g>
+              <circle cx="475" cy="372" r="39" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/>
+              <text x="475" y="368" font-size="11" fill="currentColor">SALLE DE</text>
+              <text x="475" y="381" font-size="11" fill="currentColor">BAIN</text>
+            </g>
+            <g>
+              <circle cx="612" cy="372" r="44" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <text x="612" y="377" font-size="12.5" font-weight="700" fill="currentColor">CHAMBRE</text>
+            </g>
+            <g>
+              <circle cx="345" cy="205" r="42" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.6"/>
+              <text x="345" y="210" font-size="12" font-weight="600" fill="currentColor">CUISINE</text>
+            </g>
+            <g>
+              <circle cx="478" cy="152" r="38" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.6"/>
+              <text x="478" y="157" font-size="12" font-weight="600" fill="currentColor">DINETTE</text>
+            </g>
+            <g>
+              <circle cx="620" cy="215" r="48" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="2"/>
+              <text x="620" y="212" font-size="13" font-weight="700" fill="currentColor">SALON</text>
+              <text x="620" y="228" font-size="10.5" fill="var(--ink2)">POÊLE À BOIS</text>
+              <rect x="612" y="255" width="16" height="11" fill="none" stroke="var(--sun)" stroke-width="1.6"/>
+            </g>
+            <g>
+              <circle cx="762" cy="152" r="44" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.8" stroke-dasharray="6 4"/>
+              <text x="762" y="157" font-size="12" font-weight="700" fill="var(--forest)">TERRASSE</text>
+            </g>
+            <g>
+              <text x="768" y="308" font-size="12" font-weight="700" fill="var(--sun)">VUE ↘</text>
+              <text x="768" y="322" font-size="11" fill="var(--sun)">VALLÉE</text>
+            </g>
+          </g>
+        </svg>
+        <figcaption>Organigramme fonctionnel du programme. Trait épais&nbsp;= lien direct (ouverture ou continuité)&nbsp;; trait fin&nbsp;= porte simple&nbsp;; pointillé orange&nbsp;= lien visuel seulement&nbsp;; flèche&nbsp;= accès depuis l'extérieur.</figcaption>
+      </figure>
+    </div>
+    <div class="cart">
+      <div><b>Dessin</b> A-02</div>
+      <div><b>Titre</b> Organigramme fonctionnel</div>
+      <div><b>Éch.</b> Sans échelle</div>
+      <div>Phase 1 · Concept</div>
+    </div>
+  </div>
+
+  <h3 class="eyebrow" style="margin-top:var(--s4)">Budget de surfaces — la contrainte des 500 pi²</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:2rem">Nº</th><th>Espace</th><th class="n">m²</th><th class="n">pi²</th><th style="width:36%">Note</th></tr></thead>
+      <tbody>
+        <tr><td class="idx">1</td><td>Entrée / vestibule</td><td class="n">3,0</td><td class="n">32</td><td>Banc, crochets, grille d'égouttement</td></tr>
+        <tr><td class="idx">2</td><td>Cuisine</td><td class="n">5,5</td><td class="n">59</td><td>Frigo, cuisinière, évier simple standard</td></tr>
+        <tr><td class="idx">3</td><td>Dinette</td><td class="n">4,0</td><td class="n">43</td><td>2 personnes, banquette avec rangement</td></tr>
+        <tr><td class="idx">4</td><td>Salon</td><td class="n">9,0</td><td class="n">97</td><td>Poêle à bois + dégagements coupe-feu</td></tr>
+        <tr><td class="idx">5</td><td>Chambre</td><td class="n">9,5</td><td class="n">102</td><td>Lit double + circulation d'un côté</td></tr>
+        <tr><td class="idx">6</td><td>Salle de bain</td><td class="n">4,5</td><td class="n">48</td><td>Douche, toilette, lavabo</td></tr>
+        <tr><td class="idx">7</td><td>Rangement / garde-robes</td><td class="n">2,0</td><td class="n">22</td><td>Réparti&nbsp;: entrée + chambre</td></tr>
+        <tr><td class="idx">8</td><td>Salle mécanique + laveuse</td><td class="n">2,0</td><td class="n">22</td><td>Chauffe-eau, laveuse superposable</td></tr>
+        <tr><td></td><td>Circulation et murs</td><td class="n">6,0</td><td class="n">65</td><td>≈ 13 % — serré, donc pas de couloir</td></tr>
+        <tr class="tot"><td></td><td>Total construit</td><td class="n">45,5</td><td class="n">490</td><td>Marge de 10 pi² sous la limite</td></tr>
+        <tr><td class="idx">9</td><td>Terrasse</td><td class="n">15,0</td><td class="n">161</td><td>Hors calcul selon les consignes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════ 3. LÉGENDE ══════════════ -->
+<section>
+  <div class="shead"><span class="n">03</span><h2>Légende et nomenclature</h2></div>
+  <p class="col">Les trois planches qui suivent emploient exactement les mêmes signes. Reproduis-les tels quels sur ta feuille&nbsp;: c'est ce qui rend une série de dessins lisible.</p>
+
+  <div class="legend" style="margin-bottom:var(--s4)">
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><line x1="2" y1="10" x2="42" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="10 3 2 3"/></svg>Limite de propriété</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><line x1="2" y1="10" x2="42" y2="10" stroke="var(--forest)" stroke-width="1.4" stroke-dasharray="3 5"/></svg>Lisière de la clairière</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><path d="M8,17 L14,3 L20,17 Z" fill="none" stroke="var(--forest)" stroke-width="1.2"/><circle cx="32" cy="9" r="6" fill="none" stroke="var(--forest)" stroke-width="1.2"/></svg>Conifère · feuillu</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><line x1="2" y1="10" x2="42" y2="10" stroke="currentColor" stroke-width="2.6"/></svg>Mur / volume bâti</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><rect x="3" y="4" width="38" height="12" fill="none" stroke="var(--forest)" stroke-width="1.4" stroke-dasharray="5 4"/></svg>Terrasse (plancher de bois)</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><defs><marker id="lgA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="currentColor"/></marker></defs><line x1="2" y1="10" x2="38" y2="10" stroke="currentColor" stroke-width="1.5" marker-end="url(#lgA)"/></svg>Circulation / accès</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><path d="M4,16 Q22,2 40,16" fill="none" stroke="var(--sun)" stroke-width="1.4" stroke-dasharray="5 4"/></svg>Course du soleil</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><path d="M6,10 L40,2 L40,18 Z" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1"/></svg>Cône de vue</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><defs><marker id="lgB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="var(--cold)"/></marker></defs><line x1="2" y1="5" x2="34" y2="15" stroke="var(--cold)" stroke-width="1.6" marker-end="url(#lgB)"/></svg>Vents dominants d'hiver</div>
+    <div><svg viewBox="0 0 44 20" aria-hidden="true"><path d="M6,3 Q12,10 6,17 M20,3 Q26,10 20,17 M34,3 Q40,10 34,17" fill="none" stroke="var(--ink3)" stroke-width="1"/></svg>Courbes de niveau</div>
+  </div>
+
+  <h3 class="eyebrow">Nomenclature des espaces (identique sur les trois planches)</h3>
+  <div class="nomen" style="margin-top:var(--s2)">
+    <div><b>1</b> Entrée / vestibule</div>
+    <div><b>2</b> Cuisine</div>
+    <div><b>3</b> Dinette</div>
+    <div><b>4</b> Salon (poêle à bois)</div>
+    <div><b>5</b> Chambre</div>
+    <div><b>6</b> Salle de bain</div>
+    <div><b>7</b> Rangement / garde-robe</div>
+    <div><b>8</b> Salle mécanique + laveuse</div>
+    <div><b>9</b> Terrasse</div>
+  </div>
+</section>
+
+<!-- ══════════════ 4. LES TROIS ORGANIGRAMMES ══════════════ -->
+<section>
+  <div class="shead"><span class="n">04</span><h2>Trois organigrammes</h2></div>
+  <p class="lede">Même terrain, même programme, même superficie. Ce qui change, c'est <em>l'angle de la maison</em> — et tout le reste suit.</p>
+
+  <!-- ---------- OPTION 1 ---------- -->
+  <div class="opt">
+    <div class="badge">01</div>
+    <div>
+      <h3>La barre alignée<span class="tag draft">Brouillon</span></h3>
+      <div class="sub">Le volume suit les limites du terrain. Mur de service au nord-ouest, façade ouverte au sud-est.</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="canvas">
+      <figure>
+        <svg viewBox="0 0 700 620" role="img" aria-label="Organigramme 1 : volume rectangulaire align&#233; sur les limites du terrain, implant&#233; dans la clairi&#232;re ; mur de service au nord-ouest, pi&#232;ces de jour au sud-est, terrasse au bout sud-ouest face &#224; la vue.">
+          <defs>
+            <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="currentColor"/></marker>
+            <marker id="ar3c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="var(--cold)"/></marker>
+            <g id="cf3"><path d="M0,-11 L6,4 L-6,4 Z" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="4" x2="0" y2="8" stroke="var(--forest)" stroke-width="1.1"/></g>
+            <g id="df3"><circle cx="0" cy="-2" r="7" fill="none" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="5" x2="0" y2="9" stroke="var(--forest)" stroke-width="1.1"/></g>
+          </defs>
+
+          <path d="M226 334 L162 476 L74 386 Z" fill="var(--sunsoft)"/>
+
+          <g transform="translate(340,250) rotate(-34)">
+            <g stroke="var(--ink3)" stroke-width=".7" fill="none" opacity=".4">
+              <path d="M-110,-132 Q-96,0 -110,132"/><path d="M-50,-132 Q-36,0 -50,132"/>
+              <path d="M10,-132 Q24,0 10,132"/><path d="M70,-132 Q84,0 70,132"/><path d="M130,-132 Q144,0 130,132"/>
+            </g>
+            <path d="M-150,-58 C-120,-84 -40,-80 30,-64 C74,-54 76,20 34,44 C-16,72 -110,66 -146,34 C-166,16 -168,-38 -150,-58 Z" fill="var(--clear)" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 5"/>
+            <rect x="-160" y="-94" width="320" height="188" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="16 4 3 4"/>
+            <rect x="-152" y="-88" width="44" height="36" fill="none" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="4 3"/>
+          </g>
+          <text x="193" y="294" font-family="Archivo Narrow, sans-serif" font-size="10" fill="var(--ink3)" letter-spacing=".08em" text-anchor="middle">STATIONNEMENT</text>
+
+
+            <use href="#cf3" transform="translate(468,120)"/><use href="#cf3" transform="translate(502,150)"/>
+            <use href="#cf3" transform="translate(530,180)"/><use href="#cf3" transform="translate(494,198)"/>
+            <use href="#cf3" transform="translate(456,168)"/><use href="#cf3" transform="translate(524,224)"/>
+            <use href="#cf3" transform="translate(552,254)"/><use href="#cf3" transform="translate(510,270)"/>
+            <use href="#cf3" transform="translate(474,242)"/><use href="#cf3" transform="translate(438,298)"/>
+            <use href="#cf3" transform="translate(468,322)"/><use href="#cf3" transform="translate(500,302)"/>
+            <use href="#cf3" transform="translate(412,342)"/><use href="#cf3" transform="translate(442,372)"/>
+            <use href="#cf3" transform="translate(388,386)"/><use href="#cf3" transform="translate(354,416)"/>
+            <use href="#cf3" transform="translate(440,170)"/><use href="#cf3" transform="translate(470,205)"/>
+            <use href="#df3" transform="translate(380,76)"/><use href="#df3" transform="translate(344,98)"/>
+            <use href="#df3" transform="translate(302,74)"/><use href="#df3" transform="translate(264,152)"/>
+            <use href="#df3" transform="translate(228,178)"/><use href="#df3" transform="translate(194,210)"/>
+            <use href="#df3" transform="translate(162,170)"/><use href="#df3" transform="translate(130,206)"/>
+            <use href="#df3" transform="translate(198,332)"/><use href="#df3" transform="translate(166,302)"/>
+            <use href="#df3" transform="translate(232,382)"/><use href="#df3" transform="translate(152,362)"/>
+
+          <!-- b&#226;timent : barre align&#233;e -->
+          <g transform="translate(347,239) rotate(-34)">
+            <rect x="-96.5" y="-22.5" width="38" height="45" fill="none" stroke="var(--forest)" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <rect x="-58.5" y="-22.5" width="117" height="45" fill="var(--panel)" stroke="currentColor" stroke-width="2.6"/>
+            <line x1="-58.5" y1="-22.5" x2="58.5" y2="-22.5" stroke="var(--cold)" stroke-width="5"/>
+            <line x1="-58.5" y1="22.5" x2="10" y2="22.5" stroke="var(--sun)" stroke-width="4"/>
+            <line x1="-22" y1="-22.5" x2="-6" y2="-22.5" stroke="var(--panel)" stroke-width="5"/>
+            <line x1="-22" y1="-22.5" x2="-6" y2="-22.5" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2"/>
+            <rect x="-40" y="16" width="9" height="7" fill="none" stroke="var(--sun)" stroke-width="1.4"/>
+            <g font-family="Archivo Narrow, sans-serif" font-size="11" font-weight="700" text-anchor="middle">
+              <g><circle cx="-44" cy="11.5" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="-44" y="15" transform="rotate(34 -44 11.5)" fill="currentColor">4</text></g>
+              <g><circle cx="-22" cy="11.5" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="-22" y="15" transform="rotate(34 -22 11.5)" fill="currentColor">3</text></g>
+              <g><circle cx="0" cy="11.5" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="0" y="15" transform="rotate(34 0 11.5)" fill="currentColor">2</text></g>
+              <g><circle cx="38" cy="11.5" r="9.5" fill="none" stroke="currentColor" stroke-width="1.4"/><text x="38" y="15" transform="rotate(34 38 11.5)" fill="currentColor">5</text></g>
+              <g><circle cx="-14" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="-14" y="-8" transform="rotate(34 -14 -11.5)" fill="currentColor">1</text></g>
+              <g><circle cx="8" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="8" y="-8" transform="rotate(34 8 -11.5)" fill="currentColor">7</text></g>
+              <g><circle cx="30" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="30" y="-8" transform="rotate(34 30 -11.5)" fill="currentColor">6</text></g>
+              <g><circle cx="49" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="49" y="-8" transform="rotate(34 49 -11.5)" fill="currentColor">8</text></g>
+              <g><circle cx="-77.5" cy="0" r="9.5" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.4"/><text x="-77.5" y="3.5" transform="rotate(34 -77.5 0)" fill="var(--forest)">9</text></g>
+            </g>
+          </g>
+
+          <g fill="none" stroke="var(--ink2)" stroke-width="2.4">
+            <path d="M18 546 C 54 500, 86 424, 106 348"/><circle cx="118" cy="308" r="24"/>
+          </g>
+          <path d="M474 161 C 512 132, 542 112, 578 96" fill="none" stroke="var(--forest)" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#ar3)"/>
+          <g stroke="var(--cold)" stroke-width="1.6" marker-end="url(#ar3c)">
+            <line x1="80" y1="70" x2="126" y2="116"/><line x1="116" y1="48" x2="162" y2="94"/>
+          </g>
+          <g transform="translate(636,142)">
+            <line x1="0" y1="30" x2="0" y2="-20" stroke="currentColor" stroke-width="1.6"/>
+            <polygon points="0,-30 6,-14 0,-18 -6,-14" fill="currentColor"/>
+            <text x="0" y="48" font-family="Archivo Narrow, sans-serif" font-size="14" font-weight="700" fill="currentColor" text-anchor="middle">N</text>
+          </g>
+          <path d="M556 375 A 250 250 0 0 1 124 375" fill="none" stroke="var(--sun)" stroke-width="1.2" stroke-dasharray="5 4"/>
+          <circle cx="556" cy="375" r="4" fill="var(--sun)"/><circle cx="124" cy="375" r="4" fill="var(--sun)"/>
+
+          <path d="M200 268 C 240 258, 280 244, 316 232" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar3)"/>
+          <path d="M406 218 C 432 196, 450 178, 468 164" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#ar3)"/>
+
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="325" y="206" fill="var(--cold)" font-weight="600" text-anchor="middle" transform="rotate(-34 325 206)">MUR DE SERVICE &#8212; AVEUGLE</text>
+            <text x="364" y="278" fill="var(--sun)" font-weight="600" text-anchor="middle" transform="rotate(-34 364 278)">FA&#199;ADE OUVERTE &#8212; SUD-EST</text>
+            <text x="238" y="250" fill="var(--ink2)" text-anchor="end">ENTR&#201;E &#8594;</text>
+            <text x="262" y="322" fill="var(--forest)" font-weight="600" text-anchor="middle">TERRASSE</text>
+            <text x="340" y="522" fill="var(--sun)" text-anchor="middle" letter-spacing=".1em">SOLEIL D'HIVER &#8212; MIDI</text>
+          </g>
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="596" y="88" fill="var(--forest)">SENTIERS &#8599;</text>
+            <text x="28" y="486" fill="var(--ink2)" transform="rotate(-64 28 486)">CHEMIN PRIV&#201;</text>
+            <text x="118" y="352" font-size="11" fill="var(--ink2)" text-anchor="middle">CUL-DE-SAC</text>
+            <text x="60" y="150" fill="var(--cold)">VENTS N.-O.</text>
+            <text x="100" y="366" fill="var(--sun)" text-anchor="end">16 H</text>
+            <text x="580" y="366" fill="var(--sun)">8 H</text>
+            <text x="76" y="416" fill="var(--sun)" font-weight="700">C&#212;NE DE VUE</text>
+            <text x="76" y="430" fill="var(--sun)">LA VALL&#201;E, EN CONTREBAS</text>
+          </g>
+          <text x="26" y="552" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">EMPRISE : LA PLUS COMPACTE &#8212; LE VOLUME TIENT ENTI&#200;REMENT DANS LA CLAIRI&#200;RE</text>
+          <text x="26" y="567" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">PLOMBERIE REGROUP&#201;E SUR UN SEUL MUR (2 &#183; 6 &#183; 8)</text>
+          <text x="26" y="582" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">LIMITE : LA VUE N'EST CADR&#201;E QUE PAR LE PIGNON SUD-OUEST</text>
+          <g transform="translate(548,586)">
+            <line x1="0" y1="0" x2="107" y2="0" stroke="currentColor" stroke-width="2"/>
+            <line x1="0" y1="-4" x2="0" y2="4" stroke="currentColor" stroke-width="2"/>
+            <line x1="53.5" y1="-3" x2="53.5" y2="3" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="107" y1="-4" x2="107" y2="4" stroke="currentColor" stroke-width="2"/>
+            <text x="0" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)">0</text>
+            <text x="107" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)" text-anchor="middle">10 M</text>
+          </g>
+        </svg>
+        <figcaption>Organigramme 1. La barre suit le grand axe du lot&nbsp;: le mur nord-ouest concentre tous les services et bloque le vent, la façade sud-est s'ouvre, et la terrasse occupe le pignon sud-ouest, face à la vallée.</figcaption>
+      </figure>
+    </div>
+    <div class="cart">
+      <div><b>Dessin</b> A-03</div>
+      <div><b>Titre</b> Organigramme — option 1&nbsp;: la barre alignée</div>
+      <div><b>Éch.</b> 1&nbsp;:&nbsp;250 approx.</div>
+      <div>Brouillon</div>
+    </div>
+  </div>
+
+  <div class="pc">
+    <div class="pro"><h4>Ce qui fonctionne</h4><ul>
+      <li>Le volume tient tout entier dans la clairière existante&nbsp;: <strong>c’est l’option qui touche le moins au boisé</strong>.</li>
+      <li>Un seul mur porte toute la plomberie et toute la mécanique&nbsp;: le plus économique des trois.</li>
+      <li>Forme rectangulaire simple&nbsp;: toiture à un ou deux versants, structure évidente, chantier rapide.</li>
+      <li>L'entrée au milieu du mur de service sépare naturellement le jour (sud-ouest) de la nuit (nord-est).</li>
+    </ul></div>
+    <div class="con"><h4>Ce qui coince</h4><ul>
+      <li>La grande façade vitrée regarde le <strong>sud-est</strong>&nbsp;: beau soleil du matin, mais elle tourne le dos à la vue.</li>
+      <li>La vallée n'est cadrée que par le pignon sud-ouest, donc par une seule fenêtre.</li>
+      <li>Le stationnement, le chemin d'accès et la terrasse se disputent le même coin ouest.</li>
+    </ul></div>
+  </div>
+
+  <div class="reject">
+    <span class="k">Note à inscrire sur le brouillon</span>
+    <p>Version non retenue&nbsp;: en suivant les limites du terrain, la façade principale s'oriente au sud-est. La maison reçoit bien le soleil du matin, mais la vue sur la vallée n'est captée que par un pignon. Le terrain impose son angle au bâtiment au lieu que le bâtiment choisisse son orientation.</p>
+  </div>
+
+  <!-- ---------- OPTION 2 ---------- -->
+  <div class="opt keep">
+    <div class="badge">02</div>
+    <div>
+      <h3>Le volume pivoté<span class="tag keep">Retenu</span></h3>
+      <div class="sub">La maison quitte l'angle du terrain et se tourne plein sud. Galerie couverte sur toute la façade, terrasse au coin sud-ouest.</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="canvas">
+      <figure>
+        <svg viewBox="0 0 700 620" role="img" aria-label="Organigramme 2 : le volume est pivot&#233; d'environ 34 degr&#233;s par rapport aux limites du terrain pour orienter sa longue fa&#231;ade plein sud ; galerie couverte au sud, terrasse ouverte au coin sud-ouest face &#224; la vue, mur de service au nord.">
+          <defs>
+            <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="currentColor"/></marker>
+            <marker id="ar4c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="var(--cold)"/></marker>
+            <g id="cf4"><path d="M0,-11 L6,4 L-6,4 Z" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="4" x2="0" y2="8" stroke="var(--forest)" stroke-width="1.1"/></g>
+            <g id="df4"><circle cx="0" cy="-2" r="7" fill="none" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="5" x2="0" y2="9" stroke="var(--forest)" stroke-width="1.1"/></g>
+          </defs>
+
+          <path d="M226 334 L162 476 L74 386 Z" fill="var(--sunsoft)"/>
+
+          <g transform="translate(340,250) rotate(-34)">
+            <g stroke="var(--ink3)" stroke-width=".7" fill="none" opacity=".4">
+              <path d="M-110,-132 Q-96,0 -110,132"/><path d="M-50,-132 Q-36,0 -50,132"/>
+              <path d="M10,-132 Q24,0 10,132"/><path d="M70,-132 Q84,0 70,132"/><path d="M130,-132 Q144,0 130,132"/>
+            </g>
+            <path d="M-150,-58 C-120,-84 -40,-80 30,-64 C74,-54 76,20 34,44 C-16,72 -110,66 -146,34 C-166,16 -168,-38 -150,-58 Z" fill="var(--clear)" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 5"/>
+            <rect x="-160" y="-94" width="320" height="188" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="16 4 3 4"/>
+            <rect x="-152" y="-88" width="44" height="36" fill="none" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="4 3"/>
+          </g>
+          <text x="193" y="294" font-family="Archivo Narrow, sans-serif" font-size="10" fill="var(--ink3)" letter-spacing=".08em" text-anchor="middle">STATIONNEMENT</text>
+
+
+            <use href="#cf4" transform="translate(468,120)"/><use href="#cf4" transform="translate(502,150)"/>
+            <use href="#cf4" transform="translate(530,180)"/><use href="#cf4" transform="translate(494,198)"/>
+            <use href="#cf4" transform="translate(456,168)"/><use href="#cf4" transform="translate(524,224)"/>
+            <use href="#cf4" transform="translate(552,254)"/><use href="#cf4" transform="translate(510,270)"/>
+            <use href="#cf4" transform="translate(474,242)"/><use href="#cf4" transform="translate(438,298)"/>
+            <use href="#cf4" transform="translate(468,322)"/><use href="#cf4" transform="translate(500,302)"/>
+            <use href="#cf4" transform="translate(412,342)"/><use href="#cf4" transform="translate(442,372)"/>
+            <use href="#cf4" transform="translate(388,386)"/><use href="#cf4" transform="translate(354,416)"/>
+            <use href="#cf4" transform="translate(440,170)"/><use href="#cf4" transform="translate(470,205)"/>
+            <use href="#df4" transform="translate(380,76)"/><use href="#df4" transform="translate(344,98)"/>
+            <use href="#df4" transform="translate(302,74)"/><use href="#df4" transform="translate(264,152)"/>
+            <use href="#df4" transform="translate(228,178)"/><use href="#df4" transform="translate(194,210)"/>
+            <use href="#df4" transform="translate(162,170)"/><use href="#df4" transform="translate(130,206)"/>
+            <use href="#df4" transform="translate(198,332)"/><use href="#df4" transform="translate(166,302)"/>
+            <use href="#df4" transform="translate(232,382)"/><use href="#df4" transform="translate(152,362)"/>
+
+          <!-- b&#226;timent pivot&#233; : plein sud -->
+          <g transform="translate(325,250)">
+            <rect x="-96" y="-4" width="38" height="52" fill="none" stroke="var(--forest)" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <rect x="-58.5" y="22.5" width="117" height="26" fill="none" stroke="var(--forest)" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <rect x="-58.5" y="-22.5" width="117" height="45" fill="var(--panel)" stroke="currentColor" stroke-width="2.6"/>
+            <line x1="-58.5" y1="-22.5" x2="58.5" y2="-22.5" stroke="var(--cold)" stroke-width="5"/>
+            <line x1="-58.5" y1="22.5" x2="24" y2="22.5" stroke="var(--sun)" stroke-width="4"/>
+            <line x1="-16" y1="-22.5" x2="0" y2="-22.5" stroke="var(--panel)" stroke-width="5"/>
+            <line x1="-16" y1="-22.5" x2="0" y2="-22.5" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2"/>
+            <rect x="-40" y="16" width="9" height="7" fill="none" stroke="var(--sun)" stroke-width="1.4"/>
+            <g font-family="Archivo Narrow, sans-serif" font-size="11" font-weight="700" text-anchor="middle">
+              <g><circle cx="-44" cy="11.5" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="-44" y="15" fill="currentColor">4</text></g>
+              <g><circle cx="-21" cy="11.5" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="-21" y="15" fill="currentColor">3</text></g>
+              <g><circle cx="2" cy="11.5" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="2" y="15" fill="currentColor">2</text></g>
+              <g><circle cx="42" cy="11.5" r="9.5" fill="none" stroke="currentColor" stroke-width="1.4"/><text x="42" y="15" fill="currentColor">5</text></g>
+              <g><circle cx="-8" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="-8" y="-8" fill="currentColor">1</text></g>
+              <g><circle cx="13" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="13" y="-8" fill="currentColor">7</text></g>
+              <g><circle cx="33" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="33" y="-8" fill="currentColor">6</text></g>
+              <g><circle cx="51" cy="-11.5" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="51" y="-8" fill="currentColor">8</text></g>
+              <g><circle cx="-77" cy="22" r="9.5" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.4"/><text x="-77" y="25.5" fill="var(--forest)">9</text></g>
+            </g>
+            <line x1="58.5" y1="-22.5" x2="104" y2="-22.5" stroke="var(--sun)" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="58.5" y1="-22.5" x2="96" y2="-47.8" stroke="var(--sun)" stroke-width="1" stroke-dasharray="3 3"/>
+            <path d="M 92 -22.5 A 33.5 33.5 0 0 0 86.3 -41.1" fill="none" stroke="var(--sun)" stroke-width="1.2"/>
+            <text x="112" y="-36" font-family="Archivo Narrow, sans-serif" font-size="11" font-weight="700" fill="var(--sun)" letter-spacing=".06em">34&#176;</text>
+          </g>
+
+          <g fill="none" stroke="var(--ink2)" stroke-width="2.4">
+            <path d="M18 546 C 54 500, 86 424, 106 348"/><circle cx="118" cy="308" r="24"/>
+          </g>
+          <path d="M474 161 C 512 132, 542 112, 578 96" fill="none" stroke="var(--forest)" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#ar4)"/>
+          <g stroke="var(--cold)" stroke-width="1.6" marker-end="url(#ar4c)">
+            <line x1="80" y1="70" x2="126" y2="116"/><line x1="116" y1="48" x2="162" y2="94"/>
+          </g>
+          <g transform="translate(636,142)">
+            <line x1="0" y1="30" x2="0" y2="-20" stroke="currentColor" stroke-width="1.6"/>
+            <polygon points="0,-30 6,-14 0,-18 -6,-14" fill="currentColor"/>
+            <text x="0" y="48" font-family="Archivo Narrow, sans-serif" font-size="14" font-weight="700" fill="currentColor" text-anchor="middle">N</text>
+          </g>
+          <path d="M556 375 A 250 250 0 0 1 124 375" fill="none" stroke="var(--sun)" stroke-width="1.2" stroke-dasharray="5 4"/>
+          <circle cx="556" cy="375" r="4" fill="var(--sun)"/><circle cx="124" cy="375" r="4" fill="var(--sun)"/>
+
+          <path d="M200 268 C 236 254, 272 242, 306 236" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar4)"/>
+          <path d="M392 232 C 424 206, 448 182, 468 164" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#ar4)"/>
+          <line x1="325" y1="400" x2="325" y2="330" stroke="var(--sun)" stroke-width="1.6" marker-end="url(#ar4)" opacity=".85"/>
+
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="325" y="216" fill="var(--cold)" font-weight="600" text-anchor="middle">MUR DE SERVICE &#8212; AVEUGLE, PLEIN NORD</text>
+            <text x="325" y="316" fill="var(--forest)" font-weight="600" text-anchor="middle">GALERIE COUVERTE</text>
+            <text x="220" y="236" fill="var(--sun)" font-weight="700" text-anchor="end">TERRASSE &#8600;</text>
+            <text x="220" y="250" fill="var(--sun)" text-anchor="end">VUE + SOLEIL COUCHANT</text>
+            <text x="234" y="278" fill="var(--ink2)" text-anchor="end">ENTR&#201;E &#8594;</text>
+            <text x="340" y="522" fill="var(--sun)" text-anchor="middle" letter-spacing=".1em">SOLEIL D'HIVER &#8212; PLEIN SUD SUR LA FA&#199;ADE</text>
+          </g>
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="596" y="88" fill="var(--forest)">SENTIERS &#8599;</text>
+            <text x="28" y="486" fill="var(--ink2)" transform="rotate(-64 28 486)">CHEMIN PRIV&#201;</text>
+            <text x="118" y="352" font-size="11" fill="var(--ink2)" text-anchor="middle">CUL-DE-SAC</text>
+            <text x="60" y="150" fill="var(--cold)">VENTS N.-O.</text>
+            <text x="100" y="366" fill="var(--sun)" text-anchor="end">16 H</text>
+            <text x="580" y="366" fill="var(--sun)">8 H</text>
+            <text x="76" y="416" fill="var(--sun)" font-weight="700">C&#212;NE DE VUE</text>
+            <text x="76" y="430" fill="var(--sun)">LA VALL&#201;E, EN CONTREBAS</text>
+          </g>
+          <text x="26" y="552" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">EMPRISE : VOLUME + GALERIE &#8212; D&#201;BORDE L&#201;G&#200;REMENT LA LISI&#200;RE AU SUD-EST</text>
+          <text x="26" y="567" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">PLOMBERIE REGROUP&#201;E SUR UN SEUL MUR (2 &#183; 6 &#183; 8)</text>
+          <text x="26" y="582" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">LA FA&#199;ADE SUD SERT &#192; LA FOIS LE SOLEIL D'HIVER ET LA VUE</text>
+          <g transform="translate(548,586)">
+            <line x1="0" y1="0" x2="107" y2="0" stroke="currentColor" stroke-width="2"/>
+            <line x1="0" y1="-4" x2="0" y2="4" stroke="currentColor" stroke-width="2"/>
+            <line x1="53.5" y1="-3" x2="53.5" y2="3" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="107" y1="-4" x2="107" y2="4" stroke="currentColor" stroke-width="2"/>
+            <text x="0" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)">0</text>
+            <text x="107" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)" text-anchor="middle">10 M</text>
+          </g>
+        </svg>
+        <figcaption>Organigramme 2. En pivotant de 34° par rapport aux limites, la longue façade devient plein sud&nbsp;: le soleil bas d'hiver entre jusqu'au fond de la maison, et la terrasse du coin sud-ouest attrape à la fois la vue et le soleil de fin de journée. Prix à payer&nbsp;: trois ou quatre arbres.</figcaption>
+      </figure>
+    </div>
+    <div class="cart">
+      <div><b>Dessin</b> A-04</div>
+      <div><b>Titre</b> Organigramme — option 2&nbsp;: le volume pivoté</div>
+      <div><b>Éch.</b> 1&nbsp;:&nbsp;250 approx.</div>
+      <div>Version retenue</div>
+    </div>
+  </div>
+
+  <div class="pc">
+    <div class="pro"><h4>Ce qui fonctionne</h4><ul>
+      <li>Une seule décision — l'angle — règle le soleil <em>et</em> la vue&nbsp;: c'est la ligne directrice du concept.</li>
+      <li>Salon, dinette et cuisine sont tous les trois sur la façade sud&nbsp;: chaque pièce de jour a de la lumière et un point de vue.</li>
+      <li>Le débord de toit de la galerie coupe le soleil haut de juillet (68°) et laisse passer celui de décembre (21°).</li>
+      <li>L'arrivée oblique fait découvrir la vallée <strong>en marchant vers la porte</strong>&nbsp;: la maison a un vrai devant.</li>
+      <li>Mur nord aveugle contre les vents dominants&nbsp;; le boisé de conifères au nord-est complète l'écran.</li>
+    </ul></div>
+    <div class="con"><h4>Ce qui coince</h4><ul>
+      <li>La galerie <strong>déborde la lisière au sud-est</strong>&nbsp;: quelques arbres et du sous-bois à retirer. À vérifier sur place et à justifier au client.</li>
+      <li>Implantation en biais&nbsp;: piquetage plus délicat, et le toit doit gérer la neige côté galerie.</li>
+      <li>La chambre est au bout est&nbsp;: soleil du matin très tôt en été (à corriger par une fenêtre plus petite).</li>
+    </ul></div>
+  </div>
+
+  <!-- ---------- OPTION 3 ---------- -->
+  <div class="opt">
+    <div class="badge">03</div>
+    <div>
+      <h3>Le L abrité<span class="tag draft">Brouillon</span></h3>
+      <div class="sub">Deux ailes qui referment une cour-terrasse au sud-ouest. On entre par la cour.</div>
+    </div>
+  </div>
+
+  <div class="plate">
+    <div class="canvas">
+      <figure>
+        <svg viewBox="0 0 700 620" role="img" aria-label="Organigramme 3 : deux ailes en L align&#233;es sur le terrain enveloppent une terrasse abrit&#233;e au sud-ouest ; l'aile nord-ouest contient les pi&#232;ces de jour, l'aile nord-est le vestibule, le rangement, la salle de bain et la chambre.">
+          <defs>
+            <marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="currentColor"/></marker>
+            <marker id="ar5c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="var(--cold)"/></marker>
+            <g id="cf5"><path d="M0,-11 L6,4 L-6,4 Z" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="4" x2="0" y2="8" stroke="var(--forest)" stroke-width="1.1"/></g>
+            <g id="df5"><circle cx="0" cy="-2" r="7" fill="none" stroke="var(--forest)" stroke-width="1.1"/><line x1="0" y1="5" x2="0" y2="9" stroke="var(--forest)" stroke-width="1.1"/></g>
+          </defs>
+
+          <path d="M226 334 L162 476 L74 386 Z" fill="var(--sunsoft)"/>
+
+          <g transform="translate(340,250) rotate(-34)">
+            <g stroke="var(--ink3)" stroke-width=".7" fill="none" opacity=".4">
+              <path d="M-110,-132 Q-96,0 -110,132"/><path d="M-50,-132 Q-36,0 -50,132"/>
+              <path d="M10,-132 Q24,0 10,132"/><path d="M70,-132 Q84,0 70,132"/><path d="M130,-132 Q144,0 130,132"/>
+            </g>
+            <path d="M-150,-58 C-120,-84 -40,-80 30,-64 C74,-54 76,20 34,44 C-16,72 -110,66 -146,34 C-166,16 -168,-38 -150,-58 Z" fill="var(--clear)" stroke="var(--forest)" stroke-width="1" stroke-dasharray="3 5"/>
+            <rect x="-160" y="-94" width="320" height="188" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="16 4 3 4"/>
+            <rect x="-152" y="-88" width="44" height="36" fill="none" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="4 3"/>
+          </g>
+          <text x="193" y="294" font-family="Archivo Narrow, sans-serif" font-size="10" fill="var(--ink3)" letter-spacing=".08em" text-anchor="middle">STATIONNEMENT</text>
+
+
+            <use href="#cf5" transform="translate(468,120)"/><use href="#cf5" transform="translate(502,150)"/>
+            <use href="#cf5" transform="translate(530,180)"/><use href="#cf5" transform="translate(494,198)"/>
+            <use href="#cf5" transform="translate(456,168)"/><use href="#cf5" transform="translate(524,224)"/>
+            <use href="#cf5" transform="translate(552,254)"/><use href="#cf5" transform="translate(510,270)"/>
+            <use href="#cf5" transform="translate(474,242)"/><use href="#cf5" transform="translate(438,298)"/>
+            <use href="#cf5" transform="translate(468,322)"/><use href="#cf5" transform="translate(500,302)"/>
+            <use href="#cf5" transform="translate(412,342)"/><use href="#cf5" transform="translate(442,372)"/>
+            <use href="#cf5" transform="translate(388,386)"/><use href="#cf5" transform="translate(354,416)"/>
+            <use href="#cf5" transform="translate(440,170)"/><use href="#cf5" transform="translate(470,205)"/>
+            <use href="#df5" transform="translate(380,76)"/><use href="#df5" transform="translate(344,98)"/>
+            <use href="#df5" transform="translate(302,74)"/><use href="#df5" transform="translate(264,152)"/>
+            <use href="#df5" transform="translate(228,178)"/><use href="#df5" transform="translate(194,210)"/>
+            <use href="#df5" transform="translate(162,170)"/><use href="#df5" transform="translate(130,206)"/>
+            <use href="#df5" transform="translate(198,332)"/><use href="#df5" transform="translate(166,302)"/>
+            <use href="#df5" transform="translate(232,382)"/><use href="#df5" transform="translate(152,362)"/>
+
+          <!-- b&#226;timent en L -->
+          <g transform="translate(349,225) rotate(-34)">
+            <rect x="-80" y="-2" width="56" height="46" fill="none" stroke="var(--forest)" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <polygon points="-56,-46 20,-46 20,40 -24,40 -24,-2 -56,-2" fill="var(--panel)" stroke="currentColor" stroke-width="2.6"/>
+            <line x1="-56" y1="-46" x2="20" y2="-46" stroke="var(--cold)" stroke-width="5"/>
+            <line x1="20" y1="-46" x2="20" y2="40" stroke="var(--cold)" stroke-width="5"/>
+            <line x1="-56" y1="-2" x2="-24" y2="-2" stroke="var(--sun)" stroke-width="4"/>
+            <line x1="-24" y1="-2" x2="-24" y2="26" stroke="var(--sun)" stroke-width="4"/>
+            <line x1="-24" y1="4" x2="-24" y2="18" stroke="var(--panel)" stroke-width="5"/>
+            <line x1="-24" y1="4" x2="-24" y2="18" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 2"/>
+            <rect x="-49" y="-32" width="9" height="7" fill="none" stroke="var(--sun)" stroke-width="1.4"/>
+            <g font-family="Archivo Narrow, sans-serif" font-size="11" font-weight="700" text-anchor="middle">
+              <g><circle cx="-44" cy="-24" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="-44" y="-20.5" transform="rotate(34 -44 -24)" fill="currentColor">4</text></g>
+              <g><circle cx="-24" cy="-24" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="-24" y="-20.5" transform="rotate(34 -24 -24)" fill="currentColor">3</text></g>
+              <g><circle cx="-4" cy="-24" r="9.5" fill="var(--sunsoft)" stroke="var(--sun)" stroke-width="1.4"/><text x="-4" y="-20.5" transform="rotate(34 -4 -24)" fill="currentColor">2</text></g>
+              <g><circle cx="12" cy="-24" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="12" y="-20.5" transform="rotate(34 12 -24)" fill="currentColor">8</text></g>
+              <g><circle cx="-12" cy="8" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="-12" y="11.5" transform="rotate(34 -12 8)" fill="currentColor">1</text></g>
+              <g><circle cx="9" cy="8" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="9" y="11.5" transform="rotate(34 9 8)" fill="currentColor">7</text></g>
+              <g><circle cx="9" cy="28" r="9.5" fill="var(--coldsoft)" stroke="var(--cold)" stroke-width="1.4"/><text x="9" y="31.5" transform="rotate(34 9 28)" fill="currentColor">6</text></g>
+              <g><circle cx="-12" cy="28" r="9.5" fill="none" stroke="currentColor" stroke-width="1.4"/><text x="-12" y="31.5" transform="rotate(34 -12 28)" fill="currentColor">5</text></g>
+              <g><circle cx="-52" cy="20" r="9.5" fill="var(--forestsoft)" stroke="var(--forest)" stroke-width="1.4"/><text x="-52" y="23.5" transform="rotate(34 -52 20)" fill="var(--forest)">9</text></g>
+            </g>
+          </g>
+
+          <g fill="none" stroke="var(--ink2)" stroke-width="2.4">
+            <path d="M18 546 C 54 500, 86 424, 106 348"/><circle cx="118" cy="308" r="24"/>
+          </g>
+          <path d="M474 161 C 512 132, 542 112, 578 96" fill="none" stroke="var(--forest)" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#ar5)"/>
+          <g stroke="var(--cold)" stroke-width="1.6" marker-end="url(#ar5c)">
+            <line x1="80" y1="70" x2="126" y2="116"/><line x1="116" y1="48" x2="162" y2="94"/>
+          </g>
+          <g transform="translate(636,142)">
+            <line x1="0" y1="30" x2="0" y2="-20" stroke="currentColor" stroke-width="1.6"/>
+            <polygon points="0,-30 6,-14 0,-18 -6,-14" fill="currentColor"/>
+            <text x="0" y="48" font-family="Archivo Narrow, sans-serif" font-size="14" font-weight="700" fill="currentColor" text-anchor="middle">N</text>
+          </g>
+          <path d="M556 375 A 250 250 0 0 1 124 375" fill="none" stroke="var(--sun)" stroke-width="1.2" stroke-dasharray="5 4"/>
+          <circle cx="556" cy="375" r="4" fill="var(--sun)"/><circle cx="124" cy="375" r="4" fill="var(--sun)"/>
+
+          <path d="M200 272 C 240 288, 276 282, 312 262" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar5)"/>
+          <path d="M396 254 C 428 220, 450 186, 468 166" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#ar5)"/>
+
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="301" y="186" fill="var(--cold)" font-weight="600" text-anchor="middle" transform="rotate(-34 301 186)">DOS AU VENT DU NORD-OUEST</text>
+            <text x="330" y="326" fill="var(--forest)" font-weight="700" text-anchor="middle">TERRASSE-COUR ABRIT&#201;E</text>
+            <text x="330" y="340" fill="var(--forest)" text-anchor="middle">PROT&#201;G&#201;E SUR DEUX C&#212;T&#201;S</text>
+            <text x="230" y="282" fill="var(--ink2)" text-anchor="end">ON ENTRE PAR LA COUR &#8594;</text>
+            <text x="340" y="522" fill="var(--sun)" text-anchor="middle" letter-spacing=".1em">SOLEIL D'HIVER &#8212; MIDI</text>
+          </g>
+          <g font-family="Archivo Narrow, sans-serif" font-size="11.5" letter-spacing=".08em">
+            <text x="596" y="88" fill="var(--forest)">SENTIERS &#8599;</text>
+            <text x="28" y="486" fill="var(--ink2)" transform="rotate(-64 28 486)">CHEMIN PRIV&#201;</text>
+            <text x="118" y="352" font-size="11" fill="var(--ink2)" text-anchor="middle">CUL-DE-SAC</text>
+            <text x="60" y="150" fill="var(--cold)">VENTS N.-O.</text>
+            <text x="100" y="366" fill="var(--sun)" text-anchor="end">16 H</text>
+            <text x="580" y="366" fill="var(--sun)">8 H</text>
+            <text x="76" y="416" fill="var(--sun)" font-weight="700">C&#212;NE DE VUE</text>
+            <text x="76" y="430" fill="var(--sun)">LA VALL&#201;E, EN CONTREBAS</text>
+          </g>
+          <text x="26" y="552" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">EMPRISE : LA PLUS LARGE DES TROIS &#8212; B&#194;TI + COUR</text>
+          <text x="26" y="567" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">PLOMBERIE &#201;CLAT&#201;E SUR DEUX AILES (2 &#183; 8 D'UN C&#212;T&#201;, 6 DE L'AUTRE)</text>
+          <text x="26" y="582" font-family="Archivo Narrow, sans-serif" font-size="11" fill="var(--ink2)" letter-spacing=".08em">P&#201;RIM&#200;TRE DE MUR + 25 % POUR LA M&#202;ME SUPERFICIE</text>
+          <g transform="translate(548,586)">
+            <line x1="0" y1="0" x2="107" y2="0" stroke="currentColor" stroke-width="2"/>
+            <line x1="0" y1="-4" x2="0" y2="4" stroke="currentColor" stroke-width="2"/>
+            <line x1="53.5" y1="-3" x2="53.5" y2="3" stroke="currentColor" stroke-width="1.4"/>
+            <line x1="107" y1="-4" x2="107" y2="4" stroke="currentColor" stroke-width="2"/>
+            <text x="0" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)">0</text>
+            <text x="107" y="16" font-family="Archivo Narrow, sans-serif" font-size="10.5" fill="var(--ink2)" text-anchor="middle">10 M</text>
+          </g>
+        </svg>
+        <figcaption>Organigramme 3. Le L tourne le dos au vent du nord-ouest et au chemin, et referme une cour-terrasse au sud-ouest. On y entre par l'intérieur du L, à l'abri des chutes de neige du toit.</figcaption>
+      </figure>
+    </div>
+    <div class="cart">
+      <div><b>Dessin</b> A-05</div>
+      <div><b>Titre</b> Organigramme — option 3&nbsp;: le L abrité</div>
+      <div><b>Éch.</b> 1&nbsp;:&nbsp;250 approx.</div>
+      <div>Brouillon</div>
+    </div>
+  </div>
+
+  <div class="pc">
+    <div class="pro"><h4>Ce qui fonctionne</h4><ul>
+      <li>La terrasse devient une <strong>vraie pièce extérieure</strong>, protégée du vent sur deux côtés&nbsp;: utilisable en avril comme en octobre.</li>
+      <li>Séparation jour/nuit très nette&nbsp;: une aile pour chaque.</li>
+      <li>L'entrée dans l'angle rentrant est à l'abri de la neige qui glisse du toit — un vrai problème au mont Orford.</li>
+    </ul></div>
+    <div class="con"><h4>Ce qui coince</h4><ul>
+      <li>Pour 46&nbsp;m², le L crée <strong>25&nbsp;% de mur extérieur en plus</strong> qu'une barre&nbsp;: plus de pertes de chaleur, plus cher.</li>
+      <li>Bâti + cour&nbsp;: <strong>la plus large emprise au sol des trois</strong> — c’est l’option qui gruge le plus de boisé.</li>
+      <li>Cuisine, salle de bain et mécanique se retrouvent dans deux ailes différentes&nbsp;: la plomberie n'est plus regroupée sur un seul mur.</li>
+      <li>La chambre, au bout de l'aile nord-est, n'a plus ni la vue ni le sud.</li>
+    </ul></div>
+  </div>
+
+  <div class="reject">
+    <span class="k">Note à inscrire sur le brouillon</span>
+    <p>Version non retenue&nbsp;: le L donne la plus belle terrasse des trois, mais il coûte trop cher au terrain et au budget. Il occupe la plus large emprise au sol des trois options, il allonge le périmètre de murs de 25&nbsp;% pour la même superficie, et il éclate la plomberie sur deux ailes. La qualité de la cour ne justifie pas ces trois pertes.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 5. COMPARATIF ══════════════ -->
+<section>
+  <div class="shead"><span class="n">05</span><h2>Ce qui décide</h2></div>
+  <div class="tw">
+    <table>
+      <thead><tr><th style="width:30%">Critère</th><th>01 · Barre alignée</th><th>02 · Volume pivoté</th><th>03 · L abrité</th></tr></thead>
+      <tbody>
+        <tr><td>Emprise au sol (bâti + terrasse)</td><td><b>La plus compacte</b></td><td>Volume + galerie</td><td>La plus large</td></tr>
+        <tr><td>Gain solaire d'hiver</td><td>Moyen — façade S.-E.</td><td><b>Maximal — façade plein sud</b></td><td>Moyen — façade S.-E.</td></tr>
+        <tr><td>Vue depuis les pièces de jour</td><td>Un pignon seulement</td><td><b>Salon, dinette et cuisine</b></td><td>Salon et dinette</td></tr>
+        <tr><td>Protection contre le vent N.-O.</td><td>Bonne</td><td>Bonne</td><td><b>Très bonne</b></td></tr>
+        <tr><td>Plomberie regroupée</td><td><b>Oui, un seul mur</b></td><td><b>Oui, un seul mur</b></td><td>Non, deux ailes</td></tr>
+        <tr><td>Périmètre de mur / m²</td><td><b>Le plus faible</b></td><td>Équivalent</td><td>+ 25 %</td></tr>
+        <tr><td>Qualité de la terrasse</td><td>Exposée</td><td>Galerie + coin abrité</td><td><b>Cour protégée sur 2 côtés</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col">
+    <p><strong>Recommandation&nbsp;: l'option 02.</strong> C'est la seule qui règle le conflit central du site au lieu de le subir. Les options 01 et 03 deviennent tes brouillons — garde-les, annote-les avec les notes encadrées ci-dessus, et joins-les en annexe derrière l'organigramme final, comme le demandent les consignes.</p>
+    <p>Le seul reproche sérieux à l'option 02, c'est la galerie qui mord sur la lisière au sud-est. Réponds-y franchement dans ton texte&nbsp;: quelques arbres de bordure pour gagner le soleil de décembre dans toute la maison et la vue depuis chaque pièce de jour, c'est un échange défendable — et le boisé dense du nord-est, lui, reste intact.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 6. ÉTUDE DE PRÉCÉDENTS ══════════════ -->
+<section>
+  <div class="shead"><span class="n">06</span><h2>Étude de précédents</h2></div>
+
+  <div class="col">
+    <p>Quatre projets québécois, tous vérifiables en ligne, choisis pour quatre raisons différentes&nbsp;: l'implantation, la volumétrie et le matériau, le style, l'optimisation de l'espace. Les descriptions sont en points de forme, comme dans l'exemple fourni.</p>
+    <p class="warn"><strong>À faire avant de remettre&nbsp;:</strong> ouvre chaque page, choisis l'image de la galerie qui montre vraiment l'élément décrit, colle-la dans le gabarit, et copie l'adresse web complète de la page. Ajuste un point de forme s'il ne correspond pas à la photo que tu as retenue — c'est l'image que ton enseignante regardera, pas le projet en général.</p>
+  </div>
+
+  <div class="prec">
+    <div class="slot">Image 1<br>Vue extérieure<br>du volume sur pilotis</div>
+    <div>
+      <h4>01 · L'implantation</h4>
+      <div class="meta">Résidence Chez Léon — Quinzhee Architecture · Charlevoix (QC), 2023</div>
+      <ul>
+        <li>Volume surélevé sur pilotis&nbsp;: empreinte au sol minimale, peu d'excavation</li>
+        <li>Terrain boisé en pente conservé sous le bâtiment</li>
+        <li>Espace couvert sous le plancher&nbsp;: abri et rangement extérieur</li>
+        <li>Grande baie vitrée orientée au sud&nbsp;: gain solaire et cadrage du paysage</li>
+        <li>Volumétrie épurée, sans décrochement inutile</li>
+      </ul>
+      <div class="src">Source&nbsp;: <a href="https://www.archdaily.com/1014890/residence-chez-leon-quinzhee-architecture">www.archdaily.com/1014890/residence-chez-leon-quinzhee-architecture</a></div>
+    </div>
+  </div>
+
+  <div class="prec">
+    <div class="slot">Image 2<br>Vue extérieure<br>revêtement et terrasse</div>
+    <div>
+      <h4>02 · La volumétrie et le matériau extérieur</h4>
+      <div class="meta">Chalet Grand-Pic — APPAREIL architecture · Austin (QC), 2017</div>
+      <ul>
+        <li>Toiture à deux versants&nbsp;: silhouette simple, la neige se dégage seule</li>
+        <li>Revêtement d'acier profilé noir&nbsp;: entretien minimal, contraste avec le boisé</li>
+        <li>Terrasse de cèdre qui relie les volumes et prolonge l'aire de vie</li>
+        <li>Rapport plein/vide marqué&nbsp;: mur presque aveugle d'un côté, large ouverture de l'autre</li>
+        <li>Palette réduite à deux matériaux&nbsp;: métal sombre et bois clair</li>
+      </ul>
+      <div class="src">Source&nbsp;: <a href="https://www.archdaily.com/915980/grand-pic-chalet-appareil-architecture">www.archdaily.com/915980/grand-pic-chalet-appareil-architecture</a></div>
+    </div>
+  </div>
+
+  <div class="prec">
+    <div class="slot">Image 3<br>Micro-refuge<br>dans le boisé</div>
+    <div>
+      <h4>03 · Le style architectural</h4>
+      <div class="meta">Farouche Tremblant — Atelier l'Abri · Lac-Supérieur (QC), 2022</div>
+      <ul>
+        <li>Micro-refuge quatre saisons&nbsp;: plan compact d'une seule pièce</li>
+        <li>Toiture à très forte pente&nbsp;: la neige glisse d'elle-même</li>
+        <li>Implantation dispersée le long d'un sentier sinueux, dans le couvert forestier</li>
+        <li>Ouverture concentrée sur un seul mur pignon, entièrement vitré vers le paysage</li>
+        <li>Vocabulaire nordique dépouillé&nbsp;: aucun ornement, la forme fait tout le travail</li>
+      </ul>
+      <div class="src">Source&nbsp;: <a href="https://www.archdaily.com/993112/farouche-tremblant-atelier-labri">www.archdaily.com/993112/farouche-tremblant-atelier-labri</a></div>
+    </div>
+  </div>
+
+  <div class="prec">
+    <div class="slot">Image 4<br>Terrasse couverte<br>ou mobilier intégré</div>
+    <div>
+      <h4>04 · L'optimisation de l'espace</h4>
+      <div class="meta">Chalet Kanata — Atelier l'Abri · Amherst (QC), 2024</div>
+      <ul>
+        <li>Chalet de 60&nbsp;m² seulement&nbsp;: chaque mur est mis au travail</li>
+        <li>Mobilier intégré&nbsp;: banquette, rangements bas, tablettes en continu</li>
+        <li>Terrasse couverte sous le débord de toit&nbsp;: pièce extérieure utilisable par mauvais temps</li>
+        <li>Toiture monopente&nbsp;: volume simple, écoulement d'un seul côté</li>
+        <li>Fenêtres qui cadrent des vues précises plutôt que d'ouvrir tout le mur</li>
+      </ul>
+      <div class="src">Source&nbsp;: <a href="https://www.archdaily.com/1012890/kanata-cabin-atelier-labri">www.archdaily.com/1012890/kanata-cabin-atelier-labri</a></div>
+      <p class="warn">Attention&nbsp;: ce chalet possède une mezzanine, interdite dans notre programme. Ne retiens que le mobilier intégré, la terrasse couverte et la toiture — et évite de choisir une photo où la mezzanine est le sujet principal.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:var(--s4);font-family:var(--display);font-size:.86rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)">Nombre de mots (descriptions et sources)&nbsp;: 220</p>
+</section>
+
+<!-- ══════════════ 7. REMISE ══════════════ -->
+<section>
+  <div class="shead"><span class="n">07</span><h2>Avant de remettre</h2></div>
+
+  <div class="col">
+    <ul class="check">
+      <li>Organigramme final (option 02) à l'encre, sur feuille blanche 8,5&nbsp;× 11, couleur au choix.</li>
+      <li>Brouillons des options 01 et 03 sur papier calque 8,5&nbsp;× 11, avec la note de rejet écrite dessus.</li>
+      <li>Toutes les annotations en lettrage architectural, y compris sur les brouillons.</li>
+      <li>Un titre au bas de chaque dessin — les quatre&nbsp;: analyse, option 01, option 02, option 03.</li>
+      <li>Étude de précédents dans le gabarit fourni, 4 images, sources complètes, nombre de mots au bas.</li>
+      <li>Fichier renommé <em>NOM DE FAMILLE, Prénom – Étude de précédents</em>.</li>
+      <li>Texte explicatif&nbsp;: max. 2 pages, double interligne, police 12, marges normales, nombre de mots à la fin.</li>
+      <li>Impression couleur, recto seulement. Assemblé dans le dossier, sans brocher.</li>
+    </ul>
+  </div>
+
+  <details>
+    <summary>Amorces pour ton texte explicatif — à réécrire dans tes mots</summary>
+    <div class="col">
+      <p><strong>La ligne directrice&nbsp;:</strong> sur ce terrain, le soleil d'hiver, la vue sur la vallée et l'arrivée en auto sont tous les trois du même côté. Tout le concept tient dans un seul geste&nbsp;: décoller la maison de l'angle du terrain pour la tourner plein sud.</p>
+      <p><strong>Pourquoi la maison est placée ainsi&nbsp;:</strong> elle occupe la clairière existante pour limiter l'abattage, se retire du cul-de-sac pour garder son intimité, et pivote de 34° pour que sa longue façade reçoive le soleil bas de décembre et cadre la vallée en même temps.</p>
+      <p><strong>Pourquoi les pièces sont là&nbsp;:</strong> les services (entrée, rangement, salle de bain, mécanique) forment un mur épais au nord, contre le vent&nbsp;; les pièces de jour s'alignent au sud, dans la lumière&nbsp;; la chambre occupe le bout est, le plus calme, le plus loin de la porte.</p>
+      <p><strong>Pourquoi ces précédents&nbsp;:</strong> les pilotis de Chez Léon règlent la pente sans excaver&nbsp;; le revêtement sombre du Grand-Pic vieillit sans entretien dans un boisé&nbsp;; la toiture à forte pente de Farouche gère la neige&nbsp;; le mobilier intégré du Kanata est la seule façon de faire tenir le programme dans 500&nbsp;pi².</p>
+    </div>
+  </details>
+</section>
+
+<div class="foot">
+  <span>Phase 1 · Concept — Analyse, organigrammes et précédents</span>
+  <span>Minimaison · Mont-Orford · 500&nbsp;pi²</span>
+</div>
+
+</div>
