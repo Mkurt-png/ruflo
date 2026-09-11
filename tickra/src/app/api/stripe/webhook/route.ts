@@ -56,9 +56,22 @@ function welcomeEmail(plan: 'pro' | 'lifetime' | null, locale: 'fr' | 'en') {
 }
 
 // POST /api/stripe/webhook
-// Required events: checkout.session.completed, customer.subscription.created,
-// customer.subscription.updated, customer.subscription.deleted,
-// invoice.payment_failed.
+// Required events — ALL SEVEN must be selected on the Stripe webhook endpoint,
+// or the handler below never runs for the ones that are missing:
+//
+//   checkout.session.completed      grants the plan after payment
+//   customer.subscription.created   \ keeps Pro in step with the subscription
+//   customer.subscription.updated   /
+//   customer.subscription.deleted   drops to free when Pro ends
+//   invoice.payment_failed          (no write — entitlements hold until the
+//                                   subscription itself flips)
+//   charge.refunded                 revokes access on a FULL refund
+//   charge.dispute.created          suspends access while funds are held
+//
+// The last two are easy to forget because they were added after the endpoint
+// was first configured. Without them a refunded customer — including a Lifetime
+// buyer refunded inside the advertised 14-day guarantee, where there is no
+// subscription to cancel — keeps access forever.
 
 export const runtime = 'nodejs';
 
@@ -242,8 +255,38 @@ export async function POST(req: Request) {
           process.env.STRIPE_PRICE_PRO_MONTHLY,
           process.env.STRIPE_PRICE_PRO_ANNUAL,
         ].filter(Boolean) as string[];
+        // TICKRA-FIX(billing): make this refusal audible.
+        //
+        // The check itself is right — an active subscription to something else
+        // must not grant Pro. But it used to `break` in silence, and there are
+        // two very different reasons it can fire:
+        //
+        //   1. The price genuinely is not one we sell. Ignoring it is correct.
+        //   2. Neither STRIPE_PRICE_* variable is set in this environment, so
+        //      `expected` is empty and EVERY price fails the test. Then a real
+        //      customer pays, Stripe reports success, and their account stays
+        //      free — with nothing written down anywhere to explain it.
+        //
+        // Case 2 is a misconfiguration that looks exactly like case 1 from the
+        // outside, and it is the one that costs money. Both are logged now, and
+        // case 2 says what to fix.
+        if (expected.length === 0) {
+          console.error(
+            '[stripe] %s: STRIPE_PRICE_PRO_MONTHLY and STRIPE_PRICE_PRO_ANNUAL are both unset — ' +
+              'no subscription can be recognised as Pro, so this grant is being dropped. ' +
+              'Set them in the environment and replay this event.',
+            event.type,
+          );
+          writeFailed = true;
+          break;
+        }
         if (priceId && !expected.includes(priceId)) {
           // Not our Pro price → ignore. Don't change the user's plan.
+          console.warn(
+            '[stripe] %s: price %s is not one of our Pro prices — leaving the plan untouched',
+            event.type,
+            priceId,
+          );
           break;
         }
         const periodEndSeconds =

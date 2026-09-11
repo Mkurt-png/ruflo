@@ -1,5 +1,15 @@
--- TICKRA-FIX(security): four SECURITY DEFINER functions were callable by anyone
+-- TICKRA-FIX(security): SECURITY DEFINER functions were callable by anyone
 -- holding the project's anon key.
+--
+-- Confirmed against the live database before applying — this query returned six
+-- rows, three functions × two roles:
+--
+--   tickra_ai_usage_increment   anon, authenticated
+--   tickra_rate_limit_hit       anon, authenticated
+--   tickra_rate_limits_prune    anon, authenticated
+--
+-- so this was not a theoretical hole. The same query is at the bottom of this
+-- file and must return zero rows once this has run.
 --
 -- Each of these runs as its owner and therefore bypasses row-level security by
 -- design — that is the point of SECURITY DEFINER, and it is correct for the
@@ -20,6 +30,8 @@
 --                                     sign-in nonces, so calling it in a loop
 --                                     breaks sign-in for everyone mid-flow:
 --                                     their link reports itself expired.
+--                                     (Not present in the live database when
+--                                     checked — see the note below the loop.)
 --   tickra_rate_limit_hit(k, w)     — increments any bucket by key. Burn the
 --                                     magic-link bucket for a chosen address
 --                                     and that person cannot request a link;
@@ -36,20 +48,30 @@
 --
 -- Idempotent — safe to re-run.
 
-revoke all on function tickra_magic_nonces_cleanup()
-  from public, anon, authenticated;
-
-revoke all on function tickra_rate_limit_hit(text, integer)
-  from public, anon, authenticated;
-
-revoke all on function tickra_rate_limits_prune()
-  from public, anon, authenticated;
-
-revoke all on function tickra_ai_usage_increment(text, date)
-  from public, anon, authenticated;
-
--- Catch-all: any other tickra_* routine in the public schema, including ones
--- added later that forget the revoke. Skips the four above harmlessly.
+-- One loop over whatever is actually in the database, rather than four
+-- hand-written REVOKE statements.
+--
+-- The first draft named each function with its signature:
+--
+--   revoke all on function tickra_magic_nonces_cleanup() from ...;
+--   revoke all on function tickra_rate_limit_hit(text, integer) from ...;
+--   ...
+--
+-- That has two ways to fail, and both fail CLOSED — Postgres aborts the whole
+-- script on the first error, so a single mismatch leaves every grant in place
+-- while looking like the migration simply errored:
+--
+--   1. A function that does not exist under that exact name. Running the
+--      verification query on the real database returned three functions, not
+--      four: `tickra_magic_nonces_cleanup` was absent. Whether it was never
+--      created or carries no grant, naming it here would have aborted the
+--      migration before anything was revoked.
+--   2. A signature that drifted. `tickra_ai_usage_increment(text, date)` is
+--      only correct until someone adds a parameter.
+--
+-- Reading the signatures out of pg_proc removes both. `oid::regprocedure`
+-- renders each function with its real argument types, so the REVOKE always
+-- matches, and a function that is not there simply is not in the loop.
 do $$
 declare r record;
 begin
@@ -59,6 +81,7 @@ begin
     join pg_namespace n on n.oid = p.pronamespace
     where n.nspname = 'public'
       and p.proname like 'tickra%'
+      and p.prokind = 'f'
   loop
     execute format('revoke all on function %s from public, anon, authenticated', r.sig);
   end loop;
