@@ -369,6 +369,60 @@ export async function POST(req: Request) {
         if (!email) break;
         console.warn('[stripe] full refund — revoking access for %s', email);
         await write(email, { plan: 'free', cycle: null, current_period_end: null });
+
+        // TICKRA-FIX(billing): end the subscription too, or this revocation
+        // does not stick.
+        //
+        // Found on the first real card run. Refunding set the plan to free
+        // correctly — and then cancelling the subscription put Pro straight
+        // back, because `cancel_at_period_end` does not change the
+        // subscription's status: Stripe sent `customer.subscription.updated`
+        // with status still 'active', and the handler above reads exactly that
+        // to decide the plan. The refund's write was silently overwritten.
+        //
+        // It is not specific to cancelling. ANY later subscription event — a
+        // card update, a proration, a renewal attempt — re-grants Pro to
+        // someone who has had their money back, for as long as the
+        // subscription exists. Someone could refund and keep access by
+        // updating their card.
+        //
+        // Two signals were contradicting each other: the refund says "no
+        // access", the still-active subscription says "access until the period
+        // ends". The refund has to win — the money went back — so the fix is to
+        // remove the contradiction at its source rather than to add a flag the
+        // next handler has to remember to check. Cancelling immediately makes
+        // Stripe's own state agree: status becomes 'canceled', and every
+        // subsequent event reads 'free' from the same line as before.
+        const invoiceId =
+          typeof (charge as { invoice?: unknown }).invoice === 'string'
+            ? ((charge as { invoice?: string }).invoice as string)
+            : null;
+        if (invoiceId) {
+          try {
+            const invoice = (await stripe.invoices.retrieve(invoiceId)) as {
+              subscription?: string | { id?: string } | null;
+            };
+            const subId =
+              typeof invoice.subscription === 'string'
+                ? invoice.subscription
+                : (invoice.subscription?.id ?? null);
+            if (subId) {
+              await stripe.subscriptions.cancel(subId);
+              console.warn('[stripe] full refund — cancelled subscription %s', subId);
+            }
+          } catch (err) {
+            // A refund that cannot cancel is still a refund: the plan is
+            // already free above. Log loudly so it can be cancelled by hand,
+            // rather than failing the event and replaying the revocation.
+            const detail = err instanceof Error ? err.message : 'unknown error';
+            console.error(
+              '[stripe] full refund for %s: could not cancel the subscription (%s) — ' +
+                'cancel it by hand, or a later subscription event will restore Pro',
+              email,
+              detail,
+            );
+          }
+        }
         break;
       }
       case 'charge.dispute.created': {
