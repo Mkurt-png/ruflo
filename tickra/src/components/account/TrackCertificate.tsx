@@ -20,7 +20,7 @@ const copy = {
     print: 'Imprimer',
     // Same as DiplomaCard: a certificate signed by invented people is a
     // forged credential once a learner prints it.
-    signature: 'Hamza Kurt · nkNOWTrade',
+    signature: 'Muhammed Kurt · nkNOWTrade',
     signature2: 'Victoriaville, Québec',
     refTitle: 'Référence',
     levelLabel: { foundations: 'Fondations', intermediate: 'Intermédiaire', advanced: 'Avancé', mastery: 'Maîtrise' },
@@ -36,7 +36,7 @@ const copy = {
     keepGoing: 'Keep going on the track',
     print: 'Print',
     // See the fr comment above.
-    signature: 'Hamza Kurt · nkNOWTrade',
+    signature: 'Muhammed Kurt · nkNOWTrade',
     signature2: 'Victoriaville, Québec',
     refTitle: 'Reference',
     levelLabel: { foundations: 'Foundations', intermediate: 'Intermediate', advanced: 'Advanced', mastery: 'Mastery' },

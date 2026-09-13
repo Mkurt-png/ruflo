@@ -44,10 +44,14 @@ export type Operator = {
 
 export const ENTITY: Operator = {
   kind: 'individual',
-  // The LEGAL name, as it appears on identity documents — not the name the
-  // author goes by publicly, which is Hamza. This one is what the Mentions
-  // légales and the Registraire des entreprises declaration must carry; it
-  // read 'Hamza Kurt' until he confirmed otherwise.
+  // The LEGAL name, exactly as it appears on identity documents. The Mentions
+  // légales and the Registraire des entreprises declaration must match those
+  // documents, so this field is not a place for a name of use.
+  //
+  // It read 'Hamza Kurt' — the name the author had been going by — until he
+  // confirmed his papers say Muhammed. On his instruction the site now carries
+  // Muhammed everywhere, legal pages and public bylines alike, so there is no
+  // second name to keep in step.
   legalName: 'Muhammed Kurt',
   street: '475, rue Notre-Dame',
   city: 'Victoriaville',

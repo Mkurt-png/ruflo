@@ -22,7 +22,7 @@ const copy = {
     // exist. This is a document a paying learner prints and may show to
     // someone; a fabricated signature on it is a forged credential, not a
     // copy placeholder. Signed by the person who actually wrote the course.
-    signature: 'Hamza Kurt · nkNOWTrade',
+    signature: 'Muhammed Kurt · nkNOWTrade',
     signature2: 'Victoriaville, Québec',
     refTitle: 'Référence',
   },
@@ -37,7 +37,7 @@ const copy = {
     keepGoing: 'Keep going',
     print: 'Print my diploma',
     // See the fr comment above.
-    signature: 'Hamza Kurt · nkNOWTrade',
+    signature: 'Muhammed Kurt · nkNOWTrade',
     signature2: 'Victoriaville, Québec',
     refTitle: 'Reference',
   },
