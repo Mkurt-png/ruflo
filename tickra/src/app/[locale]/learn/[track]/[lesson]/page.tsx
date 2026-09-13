@@ -14,6 +14,7 @@ import { PrefetchNeighbours } from '@/components/learn/PrefetchNeighbours';
 import { PaywallCard } from '@/components/learn/PaywallCard';
 import { ComingSoonCard } from '@/components/learn/ComingSoonCard';
 import { getCurrentPlan } from '@/lib/auth/server-plan';
+import { pageSeo } from '@/lib/seo';
 import { isLessonUnlocked } from '@/lib/curriculum/entitlement';
 
 // TICKRA-FIX(security): server-render only — was leaking full Pro lesson
@@ -31,8 +32,39 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (!isLocale(params.locale)) return {};
   const found = getLesson(params.track, params.lesson);
   if (!found) return {};
-  const title = found.lesson.title[params.locale as Locale];
-  return { title: `${title}` };
+  const locale = params.locale as Locale;
+  const title = found.lesson.title[locale];
+
+  // TICKRA-FIX(seo): don't ask to be indexed for a page with nothing on it.
+  //
+  // A crawler is anonymous, so on every lesson past the free limit it gets the
+  // paywall: roughly 1,300 characters, almost all of it navigation, plus
+  // "Leçon réservée à nkNOWTrade Pro". Measured on production. Three hundred
+  // odd URLs repeating the same nine words is the shape Google reads as thin
+  // content, and the cost is not only that those pages don't rank — it is
+  // crawl budget spent on emptiness, on a domain barely a week old, and a
+  // worse judgement of the site as a whole. The free lessons and the editorial
+  // articles are what has substance and what should get the attention.
+  //
+  // Removing them from the sitemap (see app/sitemap.ts) stops us advertising
+  // them; this stops them being indexed when the crawler finds them by
+  // following internal links, which it will. Both halves are needed.
+  //
+  // Not cloaking: the page is unchanged, still reachable, still linked. It
+  // simply no longer claims to be worth indexing, which is true while it is
+  // locked. Unseeded lessons are excluded for the same reason — a "Coming
+  // soon" card is not content either. If the free boundary moves, this follows
+  // it automatically.
+  const indexable =
+    isSeeded(found.lesson.id) &&
+    isLessonUnlocked(lessonGlobalIndex(params.track, params.lesson), 'free');
+
+  return {
+    title,
+    ...(indexable
+      ? pageSeo(locale, `/learn/${params.track}/${params.lesson}`, title)
+      : { robots: { index: false, follow: true } }),
+  };
 }
 
 export default async function LessonPage({

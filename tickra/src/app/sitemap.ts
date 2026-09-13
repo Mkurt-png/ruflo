@@ -2,8 +2,9 @@ import type { MetadataRoute } from 'next';
 import { locales } from '@/lib/i18n/config';
 import en from '@/lib/i18n/locales/en';
 import fr from '@/lib/i18n/locales/fr';
-import { TRACKS } from '@/lib/curriculum/data';
+import { TRACKS, lessonGlobalIndex } from '@/lib/curriculum/data';
 import { isSeeded } from '@/lib/curriculum/lesson-content';
+import { isLessonUnlocked, FREE_LESSON_LIMIT } from '@/lib/curriculum/entitlement';
 import { SITE_URL as SITE } from '@/lib/site-url';
 
 const routes = [
@@ -85,12 +86,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: 'monthly' as const,
         priority: locale === 'en' ? 0.7 : 0.65,
       },
-      // Only lessons that have been written. The other 64 render a "Coming
-      // soon" card, and submitting a few hundred near-identical placeholder
-      // pages is the textbook thin-content signal — it costs crawl budget on a
-      // brand-new domain and drags down the pages that do have substance.
+      // Only lessons a search engine can actually READ.
+      //
+      // Two filters, for two different kinds of empty page:
+      //
+      //   isSeeded            — the other 64 lessons render a "Coming soon"
+      //                         card. Nothing to index.
+      //   isLessonUnlocked    — everything past the first FREE_LESSON_LIMIT
+      //                         is behind the paywall. Fetched anonymously,
+      //                         such a page returns about 1,300 characters,
+      //                         nearly all of it navigation plus "Leçon
+      //                         réservée à nkNOWTrade Pro" — measured on
+      //                         production, not assumed.
+      //
+      // Submitting 316 near-identical pages that say the same nine words is
+      // the textbook thin-content signal. It does not merely fail to rank
+      // them: it spends the crawl budget of a week-old domain on pages with
+      // nothing in them, and drags down how the site as a whole is judged.
+      // The free lessons and the editorial articles are what has substance,
+      // and they are what the crawler should spend its time on.
+      //
+      // The paywalled pages stay reachable and linked — they are simply not
+      // advertised. Nothing here hides them; they are just not claimed as
+      // content worth indexing, which is true.
       ...track.lessons
-        .filter((lesson) => isSeeded(lesson.id))
+        .filter(
+          (lesson) =>
+            isSeeded(lesson.id) &&
+            isLessonUnlocked(lessonGlobalIndex(track.slug, lesson.slug), 'free'),
+        )
         .map((lesson) => ({
           url: `${SITE}/${locale}/learn/${track.slug}/${lesson.slug}`,
           lastModified: now,
