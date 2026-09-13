@@ -16,6 +16,7 @@ export function CourseJsonLd({ track, locale }: { track: TrackMeta; locale: Loca
     inLanguage: locale === 'fr' ? 'fr-FR' : 'en-US',
     provider: {
       '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
       name: 'nkNOWTrade',
       url: SITE_URL,
     },

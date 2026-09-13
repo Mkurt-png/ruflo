@@ -1,4 +1,3 @@
-import { EMAIL } from '@/lib/brand';
 import type { Dictionary } from '@/lib/i18n/dictionaries';
 import type { Locale } from '@/lib/i18n/config';
 import { SITE_URL } from '@/lib/site-url';
@@ -6,29 +5,21 @@ import { SITE_URL } from '@/lib/site-url';
 export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const url = `${SITE_URL}/${locale}`;
 
-  const organization = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'nkNOWTrade',
-    url: SITE_URL,
-    logo: `${SITE_URL}/favicon.svg`,
-    sameAs: [],
-    contactPoint: [
-      {
-        '@type': 'ContactPoint',
-        contactType: 'customer support',
-        email: EMAIL.support,
-        availableLanguage: ['English', 'French'],
-      },
-    ],
-  };
+  // No Organization block here on purpose.
+  //
+  // OrganizationJsonLd is mounted in the locale layout, so it is already on
+  // this page — with the address, the founder and three contact points. A
+  // second, thinner Organization emitted here made the home page assert two
+  // unlinked entities for one site, and the thin one contradicted the full
+  // one by omission. Everything below points at the layout's node by @id.
+  const ORG_ID = `${SITE_URL}/#organization`;
 
   const course = {
     '@context': 'https://schema.org',
     '@type': 'Course',
     name: 'nkNOWTrade — Trading curriculum',
     description: dict.hero.body,
-    provider: { '@type': 'Organization', name: 'nkNOWTrade', sameAs: SITE_URL },
+    provider: { '@id': ORG_ID },
     inLanguage: locale === 'fr' ? 'fr-FR' : 'en-US',
     educationalLevel: 'Beginner to Advanced',
     url,
@@ -60,7 +51,7 @@ export function HomeJsonLd({ dict, locale }: { dict: Dictionary; locale: Locale 
     })),
   };
 
-  const payload = [organization, course, faq, product];
+  const payload = [course, faq, product];
 
   return (
     <script

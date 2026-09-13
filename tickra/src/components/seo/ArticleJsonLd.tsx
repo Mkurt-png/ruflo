@@ -21,6 +21,8 @@ export function ArticleJsonLd({ url, title, description, date, author, image, lo
     author: { '@type': 'Person', name: author },
     publisher: {
       '@type': 'Organization',
+      // Same node as the layout's OrganizationJsonLd, not a second one.
+      '@id': `${SITE_URL}/#organization`,
       name: 'nkNOWTrade',
       logo: { '@type': 'ImageObject', url: `${SITE_URL}/favicon.svg` },
     },
