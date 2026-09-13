@@ -38,11 +38,13 @@ export function EditorialJsonLd({
     isAccessibleForFree: true,
     author: {
       '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
       name: 'nkNOWTrade',
       url: SITE_URL,
     },
     publisher: {
       '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
       name: 'nkNOWTrade',
       url: SITE_URL,
     },
