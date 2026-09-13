@@ -44,15 +44,30 @@ export type Operator = {
 
 export const ENTITY: Operator = {
   kind: 'individual',
-  legalName: 'Hamza Kurt',
+  // The LEGAL name, exactly as it appears on identity documents. The Mentions
+  // légales and the Registraire des entreprises declaration must match those
+  // documents, so this field is not a place for a name of use.
+  //
+  // It read 'Hamza Kurt' — the name the author had been going by — until he
+  // confirmed his papers say Muhammed. On his instruction the site now carries
+  // Muhammed everywhere, legal pages and public bylines alike, so there is no
+  // second name to keep in step.
+  legalName: 'Muhammed Kurt',
   street: '475, rue Notre-Dame',
   city: 'Victoriaville',
   postalCode: 'G6B 4B3',
   province: 'Québec',
   country: 'Canada',
   countryCode: 'CA',
-  // Not registered. Leave null rather than inventing a number — the pages
+  // Not registered yet. Leave null rather than inventing a number — the pages
   // simply omit the line.
+  //
+  // Registration is under way: operating under a name that does not contain
+  // the operator's surname and given name obliges a personne physique to
+  // register with the Registraire des entreprises within 60 days of starting
+  // activities. The NEQ issued will begin with '22' and belongs to the person,
+  // not to the business. Drop it in here and it appears in the legal pages on
+  // its own.
   neq: null,
   businessNumber: null,
 };

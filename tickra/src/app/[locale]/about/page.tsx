@@ -25,7 +25,7 @@ export function generateMetadata({ params }: { params: { locale: string } }) {
 const FOUNDER = {
   fr: {
     eyebrow: 'Fondateur',
-    name: 'Hamza Kurt',
+    name: 'Muhammed Kurt',
     role: 'Trader & fondateur',
     location: 'Paris · FR',
     bio: [
@@ -42,7 +42,7 @@ const FOUNDER = {
   },
   en: {
     eyebrow: 'Founder',
-    name: 'Hamza Kurt',
+    name: 'Muhammed Kurt',
     role: 'Trader & founder',
     location: 'Paris · FR',
     bio: [
