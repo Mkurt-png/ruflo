@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="Forex Bot — Tableau de bord de trading automatisé professionnel" />
+  <title>Forex Bot | Trading Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <style>
+    /* Prevent flash of unstyled content */
+    html, body, #root {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #0a0a0f;
+      color: #e2e8f0;
+    }
+    /* Loading spinner while app loads */
+    .app-loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      background: #0a0a0f;
+      z-index: 9999;
+    }
+    .app-loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #1a1a2e;
+      border-top-color: #00d4ff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .app-loader-text {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #475569;
+      letter-spacing: 2px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0a0a0f;color:#e2e8f0;font-family:monospace;text-align:center;padding:20px;">
+      <div>
+        <h1 style="color:#00d4ff;margin-bottom:8px;">JavaScript Requis</h1>
+        <p>Veuillez activer JavaScript pour utiliser le tableau de bord Forex Bot.</p>
+      </div>
+    </div>
+  </noscript>
+  <div id="root">
+    <div class="app-loader">
+      <div class="app-loader-spinner"></div>
+      <div class="app-loader-text">FOREX BOT</div>
+    </div>
+  </div>
+</body>
+</html>

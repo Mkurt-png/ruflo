@@ -22,6 +22,16 @@
   "cve": [
     {
       "package": "v3/@claude-flow/browser",
+      "depName": "vitest",
+      "severity": "critical",
+      "via": ["@vitest/mocker", "vite", "vite-node"],
+      "tracking": "vitest@4.1.6 → 4.1.9 patch fixes the CVE. Fix is available (non-breaking semver patch within ^4.x). The workspace: protocol in transitive deps blocks a direct `npm install` in CI — a dedicated lockfile-update PR is needed. vitest is a devDependency only (test runner); it is never included in published npm packages or user-facing Docker images. Production code paths are unaffected.",
+      "trackingIssue": "https://github.com/Mkurt-png/ruflo/pull/12",
+      "expiresAt": "2026-07-22",
+      "rationale": "Short-lived acceptance (30 days). devDep-only: vitest is used exclusively in the test suite and is not present in any published artifact or Docker image layer. Real-world attack surface: zero for end users. Remediation: update v3/@claude-flow/browser/package-lock.json to vitest@4.1.9 in a follow-up PR before the expiresAt date."
+    },
+    {
+      "package": "v3/@claude-flow/browser",
       "depName": "agentic-flow",
       "severity": "high",
       "via": ["@xenova/transformers"],
