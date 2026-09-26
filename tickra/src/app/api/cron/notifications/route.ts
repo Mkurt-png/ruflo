@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { bearerMatches } from '@/lib/security/bearer';
 import { FROM, sendEmailLogged } from '@/lib/email/resend';
 import {
   getUserPlan,
@@ -31,9 +32,7 @@ export const dynamic = 'force-dynamic';
 // unsigned header anyone can forge, and an unset CRON_SECRET used to open the
 // endpoint to the whole internet.
 function authorise(req: Request): boolean {
-  const secret = process.env.CRON_SECRET;
-  if (!secret) return false;
-  return req.headers.get('authorization') === `Bearer ${secret}`;
+  return bearerMatches(req, process.env.CRON_SECRET);
 }
 
 const ONE_DAY = 24 * 60 * 60 * 1000;

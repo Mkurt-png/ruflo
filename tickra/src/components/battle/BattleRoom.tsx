@@ -3,37 +3,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Locale } from '@/lib/i18n/config';
+import type { BattleView } from '@/lib/battle/view';
 
-// Mirrors the public shape returned by /api/battle/[id].
-type BattleQuestion = {
-  trackId: string;
-  lessonId: string;
-  q: { fr: string; en: string };
-  options: { fr: string[]; en: string[] };
-  correct: number;
-  rationale: { fr: string; en: string };
-};
-
-type BattleState = {
-  id: string;
-  hostEmail: string;
-  guestEmail: string | null;
-  status: 'waiting' | 'active' | 'finished';
-  currentIndex: number;
-  questions: BattleQuestion[];
-  hostAnswers: (number | null)[];
-  guestAnswers: (number | null)[];
-  hostTimes: (number | null)[];
-  guestTimes: (number | null)[];
-  createdAt: string;
-  startedAt: string | null;
-  finishedAt: string | null;
-  scores: { host: number; guest: number };
-};
+// The shape both the page and /api/battle/[id] produce — see
+// `@/lib/battle/view`. A question's `correct` and `rationale` are present only
+// once the viewer has answered it; no email address is ever included.
+type BattleState = BattleView;
 
 type Props = {
   locale: Locale;
-  viewerEmail: string;
   initial: BattleState;
 };
 
@@ -102,7 +80,7 @@ async function getRealtimeClient() {
   }
 }
 
-export function BattleRoom({ locale, viewerEmail, initial }: Props) {
+export function BattleRoom({ locale, initial }: Props) {
   const t = copy[locale];
   const router = useRouter();
   const [state, setStateRaw] = useState<BattleState>(initial);
@@ -124,7 +102,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
   // sees current status instead of a stale closure.
   const statusRef = useRef<BattleState['status']>(initial.status);
 
-  const isHost = state.hostEmail === viewerEmail;
+  const isHost = state.viewerRole === 'host';
   const youKey = isHost ? 'hostAnswers' : 'guestAnswers';
   const oppKey = isHost ? 'guestAnswers' : 'hostAnswers';
   const yourScore = isHost ? state.scores.host : state.scores.guest;
@@ -267,7 +245,9 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
               ch.send({
                 type: 'broadcast',
                 event: 'answer',
-                payload: { index: state.currentIndex, by: viewerEmail },
+                // A tick only — the listener refetches. It used to carry the
+                // sender's email, on a channel anyone with the public key can join.
+                payload: { index: state.currentIndex },
               });
               setTimeout(() => {
                 try {
@@ -283,7 +263,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
         /* noop */
       }
     },
-    [state, submitted, viewerEmail, setState],
+    [state, submitted, setState],
   );
 
   // Waiting room (host before guest joins).
@@ -352,8 +332,12 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
     state[oppKey][state.currentIndex] !== null &&
     state[oppKey][state.currentIndex] !== undefined;
   const ownAnswer = state[youKey][state.currentIndex];
-  const showRationale = submitted && ownAnswer !== null && ownAnswer !== undefined;
-  const isCorrect = showRationale && ownAnswer === currentQ.correct;
+  // The server includes the key only once this viewer has answered, so the
+  // explanation appears when it arrives — never before, never by guesswork.
+  const revealed = 'correct' in currentQ ? currentQ : null;
+  const showRationale =
+    submitted && ownAnswer !== null && ownAnswer !== undefined && revealed !== null;
+  const isCorrect = showRationale && ownAnswer === revealed?.correct;
 
   return (
     <div className="max-w-3xl">
@@ -389,9 +373,9 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
         <div className="mt-6 space-y-3">
           {currentQ.options[locale].map((opt, i) => {
             const selected = pendingAnswer === i;
-            const isThisCorrect = showRationale && i === currentQ.correct;
+            const isThisCorrect = showRationale && i === revealed?.correct;
             const isThisChosenWrong =
-              showRationale && i === ownAnswer && i !== currentQ.correct;
+              showRationale && i === ownAnswer && i !== revealed?.correct;
             const base =
               'flex w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm transition';
             const stateCls = isThisCorrect
@@ -440,7 +424,7 @@ export function BattleRoom({ locale, viewerEmail, initial }: Props) {
               <span className="font-mono uppercase tracking-[0.15em] text-subtle">
                 {t.rationale}
               </span>{' '}
-              {currentQ.rationale[locale]}
+              {revealed?.rationale[locale]}
             </p>
             {!opponentAnswered ? (
               <p className="text-xs text-subtle">{t.waitingNext}</p>

@@ -84,6 +84,10 @@ export async function joinBattle(id: string, guestEmail: string): Promise<Battle
   if (current.guest_email && current.guest_email !== guestEmail) return null;
   if (current.status !== 'waiting') return current;
 
+  // Conditional on the row still being open. The check above was a separate
+  // read, so two people opening the same invite together both passed it and
+  // the second write replaced the first guest mid-game. Now the database
+  // decides: only the update that finds the seat empty lands.
   const { data, error } = await db
     .from(TABLE)
     .update({
@@ -92,10 +96,15 @@ export async function joinBattle(id: string, guestEmail: string): Promise<Battle
       started_at: new Date().toISOString(),
     })
     .eq('id', id)
+    .eq('status', 'waiting')
+    .is('guest_email', null)
     .select('*')
-    .single();
-  if (error || !data) return null;
-  return data as Battle;
+    .maybeSingle();
+  if (error) return null;
+  if (data) return data as Battle;
+  // Lost the race — fine if the winner was this same person (double click).
+  const after = await getBattle(id);
+  return after && after.guest_email === guestEmail ? after : null;
 }
 
 // Records an answer for one side at a specific question index. Once both

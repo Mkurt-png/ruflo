@@ -10,6 +10,8 @@ type SendInput = {
   html?: string;
   text?: string;
   replyTo?: string;
+  /** Extra MIME headers, e.g. List-Unsubscribe. */
+  headers?: Record<string, string>;
 };
 
 type SendResult =
@@ -33,7 +35,13 @@ export async function sendEmail(input: SendInput): Promise<SendResult> {
     // Resend's CreateEmailOptions is a strict discriminated union requiring exactly one of
     // { html } | { text } | { react } | { template }. We build a single-content payload here.
     type SendArg = Parameters<typeof resend.emails.send>[0];
-    const base = { from: input.from, to: input.to, subject: input.subject, replyTo: input.replyTo };
+    const base = {
+      from: input.from,
+      to: input.to,
+      subject: input.subject,
+      replyTo: input.replyTo,
+      ...(input.headers ? { headers: input.headers } : {}),
+    };
     const payload: SendArg = input.html
       ? ({ ...base, html: input.html } as SendArg)
       : ({ ...base, text: input.text ?? '' } as SendArg);
@@ -64,6 +72,28 @@ export async function addToAudience(input: AudienceAddInput): Promise<AudienceAd
     return { ok: true, added: true, id: result.data?.id ?? '' };
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : 'unknown error' };
+  }
+}
+
+/**
+ * Mark an address unsubscribed in the Resend audience.
+ *
+ * The newsletter adds people to the audience; without this, the unsubscribe
+ * link only flipped the weekly-digest flag on `tickra_users` — a row most
+ * newsletter subscribers never have — so the audience kept them. Unsubscribed
+ * rather than removed: Resend then refuses to re-add silently, and broadcasts
+ * skip the contact.
+ */
+export async function unsubscribeFromAudience(email: string): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (!apiKey || !audienceId) return false;
+  try {
+    const { Resend } = await import('resend');
+    const result = await new Resend(apiKey).contacts.update({ audienceId, email, unsubscribed: true });
+    return !result.error;
+  } catch {
+    return false;
   }
 }
 

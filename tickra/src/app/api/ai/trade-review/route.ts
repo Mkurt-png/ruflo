@@ -4,6 +4,7 @@ import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 import { completeChat } from '@/lib/ai/client';
 import { consumeAiQuota } from '@/lib/ai/quota';
+import { clampContextField, finiteOrUndefined } from '@/lib/ai/sanitise';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -80,10 +81,27 @@ function buildUserPrompt(b: Body, locale: 'fr' | 'en') {
 }
 
 export async function POST(req: Request) {
-  const body = (await req.json().catch(() => null)) as Body | null;
-  if (!body || !body.symbol || !body.side) {
+  const raw = (await req.json().catch(() => null)) as Record<string, unknown> | null;
+  // Every field is re-read with its real type. They were trusted as declared:
+  // a string where a number belonged made `.toFixed` throw and the route 500,
+  // and `symbol` went into the prompt at any length.
+  const symbol = clampContextField(raw?.symbol)?.slice(0, 24) ?? null;
+  const side = raw?.side === 'long' || raw?.side === 'short' ? raw.side : null;
+  if (!raw || !symbol || !side) {
     return NextResponse.json({ error: 'missing_trade_details' }, { status: 400 });
   }
+  const body: Body = {
+    symbol,
+    side,
+    sizeLots: finiteOrUndefined(raw.sizeLots),
+    entry: finiteOrUndefined(raw.entry),
+    exit: finiteOrUndefined(raw.exit),
+    stopPips: finiteOrUndefined(raw.stopPips),
+    tpPips: finiteOrUndefined(raw.tpPips),
+    pnl: finiteOrUndefined(raw.pnl),
+    closeReason: raw.closeReason === 'tp' || raw.closeReason === 'sl' ? raw.closeReason : 'manual',
+    locale: raw.locale === 'en' ? 'en' : 'fr',
+  };
   const locale = body.locale === 'en' ? 'en' : 'fr';
 
   const session = getSession();

@@ -4,7 +4,8 @@ import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 import { completeChat } from '@/lib/ai/client';
 import { consumeAiQuota } from '@/lib/ai/quota';
-import { getLesson } from '@/lib/curriculum/data';
+import { getLesson, lessonGlobalIndex } from '@/lib/curriculum/data';
+import { isLessonUnlocked } from '@/lib/curriculum/entitlement';
 import { getLessonContent, isSeeded } from '@/lib/curriculum/lesson-content';
 
 export const runtime = 'nodejs';
@@ -108,6 +109,14 @@ export async function POST(req: Request) {
     const u = await getUser(email);
     plan = resolveEffectivePlan(u);
   }
+  // The paywall, applied here too. The lesson page checks the plan before it
+  // renders a word; this route read the same paid lesson server-side and had
+  // the model restate it as questions for anyone signed in. Checked before the
+  // quota, so a refused request does not spend one of the day's five calls.
+  if (!isLessonUnlocked(lessonGlobalIndex(found.track.slug, found.lesson.slug), plan)) {
+    return NextResponse.json({ error: 'pro_required' }, { status: 403 });
+  }
+
   const quota = await consumeAiQuota(email, plan);
   if (!quota.ok) {
     if (quota.reason === 'quota_exceeded') {

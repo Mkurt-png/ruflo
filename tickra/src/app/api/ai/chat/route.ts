@@ -4,6 +4,7 @@ import { getUser, isDbConfigured } from '@/lib/db/queries';
 import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 import { streamChat, type AiMessage } from '@/lib/ai/client';
 import { consumeAiQuota } from '@/lib/ai/quota';
+import { sanitiseMessages, clampContextField } from '@/lib/ai/sanitise';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -38,11 +39,13 @@ export async function POST(req: Request) {
     context?: { trackTitle?: string; lessonTitle?: string; locale?: 'fr' | 'en' };
   } | null;
 
-  if (!body?.messages || !Array.isArray(body.messages) || body.messages.length === 0) {
+  // Validated before auth and quota, so a malformed request costs nothing.
+  const messages = sanitiseMessages(body?.messages);
+  if (!messages) {
     return NextResponse.json({ error: 'missing_messages' }, { status: 400 });
   }
 
-  const locale = body.context?.locale === 'en' ? 'en' : 'fr';
+  const locale = body?.context?.locale === 'en' ? 'en' : 'fr';
   const session = getSession();
   const email = session?.email ?? null;
 
@@ -67,14 +70,16 @@ export async function POST(req: Request) {
 
   // Build the system prompt with optional context.
   let system = locale === 'fr' ? SYSTEM_PROMPT_FR : SYSTEM_PROMPT_EN;
-  if (body.context?.lessonTitle) {
+  const lessonTitle = clampContextField(body?.context?.lessonTitle);
+  const trackTitle = clampContextField(body?.context?.trackTitle);
+  if (lessonTitle) {
     system +=
       locale === 'fr'
-        ? `\n\nL'utilisateur est actuellement dans la leçon : "${body.context.lessonTitle}" (piste : ${body.context.trackTitle ?? 'inconnue'}).`
-        : `\n\nThe user is currently in lesson: "${body.context.lessonTitle}" (track: ${body.context.trackTitle ?? 'unknown'}).`;
+        ? `\n\nL'utilisateur est actuellement dans la leçon : "${lessonTitle}" (piste : ${trackTitle ?? 'inconnue'}).`
+        : `\n\nThe user is currently in lesson: "${lessonTitle}" (track: ${trackTitle ?? 'unknown'}).`;
   }
 
-  const result = await streamChat(system, body.messages, 800);
+  const result = await streamChat(system, messages, 800);
   if (!result.ok) {
     if (result.reason === 'not_configured') {
       return NextResponse.json(
