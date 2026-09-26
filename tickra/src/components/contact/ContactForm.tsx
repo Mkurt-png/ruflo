@@ -8,6 +8,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
   const t = dict.contact.form;
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,17 +22,24 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       subject: String(data.get('subject') ?? ''),
       message: String(data.get('message') ?? ''),
     };
+    // Only a 2xx is "sent". This used to confirm unconditionally, so a message
+    // the mailer rejected — or one refused by the rate limit — was reported as
+    // delivered and simply lost: someone writing to support for help would
+    // wait for an answer to a message nobody received.
+    let ok = false;
     try {
-      await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(payload),
       });
+      ok = res.ok;
     } catch {
-      /* swallow — we still acknowledge so users aren't blocked */
+      ok = false;
     }
     setPending(false);
-    setSent(true);
+    setFailed(!ok);
+    setSent(ok);
   };
 
   if (sent) {
@@ -60,6 +68,11 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           className="mt-3 block w-full rounded-sm border border-line bg-canvas px-4 py-3 text-[15px] text-ink placeholder:text-subtle focus-visible:border-ink focus-visible:outline-none"
         />
       </div>
+      {failed && (
+        <p role="alert" className="text-[14px] leading-relaxed text-ink">
+          {t.failed}
+        </p>
+      )}
       <button
         type="submit"
         disabled={pending}

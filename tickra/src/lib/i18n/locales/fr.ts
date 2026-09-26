@@ -416,6 +416,7 @@ const fr = {
       messageLabel: 'Message',
       submit: 'Envoyer',
       sent: 'Message envoyé. Nous revenons vers vous rapidement.',
+      failed: 'L’envoi a échoué. Réessayez dans quelques minutes, ou écrivez directement à hello@nknowtrade.com.',
     },
     address: {
       title: 'Adresse',

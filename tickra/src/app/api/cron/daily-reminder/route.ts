@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { bearerMatches } from '@/lib/security/bearer';
 import { FROM, sendEmail } from '@/lib/email/resend';
 import { renderEmail } from '@/lib/email/layout';
 import { EMAIL } from '@/lib/brand';
@@ -38,9 +39,7 @@ const SUBJECT_EN = '10 minutes — your nkNOWTrade lesson for today';
 // the entire Resend audience, so the old permissive path (forgeable
 // `x-vercel-cron` header, or no CRON_SECRET at all) was a spam cannon.
 function authorise(req: Request): boolean {
-  const secret = process.env.CRON_SECRET;
-  if (!secret) return false;
-  return req.headers.get('authorization') === `Bearer ${secret}`;
+  return bearerMatches(req, process.env.CRON_SECRET);
 }
 
 type Contact = { email: string; first_name?: string; unsubscribed?: boolean };

@@ -29,7 +29,7 @@ export default async function TrackCertificatePage({ params }: { params: Params 
   const track = getTrack(params.track);
   if (!track) notFound();
   const dict = await getDictionary(locale);
-  const session = getSession();
+  const session = await getSession();
 
   return (
     <>

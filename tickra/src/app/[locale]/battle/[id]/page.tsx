@@ -2,7 +2,8 @@ import { redirect, notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getDictionary } from '@/lib/i18n/dictionaries';
 import { getCurrentPlan } from '@/lib/auth/server-plan';
-import { getBattle, computeScores } from '@/lib/db/battle-queries';
+import { getBattle } from '@/lib/db/battle-queries';
+import { battleView, roleOf } from '@/lib/battle/view';
 import { Navbar } from '@/components/nav/Navbar';
 import { Footer } from '@/components/sections/Footer';
 import { Container } from '@/components/ui/Container';
@@ -33,9 +34,7 @@ export default async function BattleRoomPage({
   if (!battle) notFound();
 
   const dict = await getDictionary(locale);
-  const isHost = battle.host_email === email;
-  const isGuest = battle.guest_email === email;
-  const isParticipant = isHost || isGuest;
+  const role = roleOf(battle, email);
 
   const title = locale === 'fr' ? 'Battle en cours' : 'Battle in progress';
   const body =
@@ -43,22 +42,10 @@ export default async function BattleRoomPage({
       ? '5 questions, 20 secondes chacune. Le score combine justesse et vitesse.'
       : '5 questions, 20 seconds each. Score combines accuracy and speed.';
 
-  const initial = {
-    id: battle.id,
-    hostEmail: battle.host_email,
-    guestEmail: battle.guest_email,
-    status: battle.status,
-    currentIndex: battle.current_index,
-    questions: battle.questions,
-    hostAnswers: battle.host_answers,
-    guestAnswers: battle.guest_answers,
-    hostTimes: battle.host_times,
-    guestTimes: battle.guest_times,
-    createdAt: battle.created_at,
-    startedAt: battle.started_at,
-    finishedAt: battle.finished_at,
-    scores: computeScores(battle),
-  };
+  // The same view the API serves. This page used to assemble its own object
+  // from the raw row — answer key and both email addresses included — and hand
+  // it to the browser in the server-rendered payload.
+  const initial = role ? battleView(battle, role) : null;
 
   return (
     <>
@@ -67,12 +54,8 @@ export default async function BattleRoomPage({
         <PageHero eyebrow={locale === 'fr' ? 'Pro · Battle' : 'Pro · Battle'} title={title} body={body} />
         <section className="border-b border-line">
           <Container as="div" className="py-12 md:py-20">
-            {isParticipant ? (
-              <BattleRoom
-                locale={locale}
-                viewerEmail={email}
-                initial={initial}
-              />
+            {initial ? (
+              <BattleRoom locale={locale} initial={initial} />
             ) : battle.status === 'waiting' ? (
               <BattleJoin locale={locale} mode="join" battleId={battle.id} />
             ) : (

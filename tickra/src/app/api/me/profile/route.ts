@@ -21,7 +21,7 @@ function clip(s: string | null | undefined, n: number): string | null {
 }
 
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ user: null, configured: isDbConfigured() }, { status: 401 });
   }
@@ -34,7 +34,7 @@ export async function GET() {
 }
 
 export async function PATCH(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
 
   const body = (await req.json().catch(() => null)) as PatchBody | null;

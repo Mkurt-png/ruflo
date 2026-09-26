@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 // GET /api/me — returns current user + entitlement plan derived from DB.
 // Free / Pro / Lifetime are surfaced so client gates can decide what to show.
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ user: null, plan: 'free' });
 
   let plan: 'free' | 'pro' | 'lifetime' = 'free';

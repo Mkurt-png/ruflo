@@ -72,7 +72,7 @@ export default async function CerclePage({ params }: { params: { locale: string 
   const dict = await getDictionary(locale);
   const t = COPY[locale];
 
-  const session = getSession();
+  const session = await getSession();
   const pair = pairFor(session?.email ?? null);
   const partnerLines = pair.letter[locale];
 

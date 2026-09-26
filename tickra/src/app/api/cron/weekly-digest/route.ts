@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { bearerMatches } from '@/lib/security/bearer';
 import { FROM, sendEmail } from '@/lib/email/resend';
 import { getUser, isDbConfigured } from '@/lib/db/queries';
 import {
@@ -30,9 +31,7 @@ export const dynamic = 'force-dynamic';
 // trigger a mass mailing to the whole audience (Resend quota burn + domain
 // reputation damage). Only a matching CRON_SECRET is accepted now.
 function authorise(req: Request): boolean {
-  const secret = process.env.CRON_SECRET;
-  if (!secret) return false;
-  return req.headers.get('authorization') === `Bearer ${secret}`;
+  return bearerMatches(req, process.env.CRON_SECRET);
 }
 
 export async function GET(req: Request) {
@@ -87,11 +86,12 @@ export async function GET(req: Request) {
     const nextLessonUrl = `${siteUrl}/${locale}/learn/${track.slug}/${lesson.slug}`;
     const nextLessonTitle = lesson.title[locale];
 
+    const unsubToken = signUnsubToken(r.email, signingSecret);
     const { subject, html, text } = buildDigestEmail(
       { email: r.email, firstName: r.display_name, locale: r.locale },
       { ...stats, nextLessonTitle, nextLessonUrl },
       siteUrl,
-      signUnsubToken(r.email, signingSecret),
+      unsubToken,
     );
 
     const result = await sendEmail({
@@ -100,6 +100,12 @@ export async function GET(req: Request) {
       subject,
       html,
       text,
+      // One-click unsubscribe (RFC 8058) — required by Gmail and Yahoo for
+      // recurring mail; /api/unsubscribe answers the POST it sends.
+      headers: {
+        'List-Unsubscribe': `<${siteUrl}/api/unsubscribe?token=${encodeURIComponent(unsubToken)}>`,
+        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+      },
     });
     if (result.ok && 'delivered' in result && result.delivered) {
       sent += 1;

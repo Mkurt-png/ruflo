@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { SESSION_TTL_SECONDS } from '@/lib/auth/session';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { consumeMagicNonce, ensureUser, isDbConfigured } from '@/lib/db/queries';
 import { normaliseEmail } from '@/lib/auth/email';
@@ -28,7 +29,6 @@ export const dynamic = 'force-dynamic';
 // front-end can read `?session=success` and the UI can react.
 
 const COOKIE_NAME = 'tickra-session';
-const COOKIE_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
 function sign(payload: string, secret: string): string {
   return createHmac('sha256', secret).update(payload).digest('base64url');
@@ -240,7 +240,7 @@ async function handleCallback(req: Request) {
   }
 
   // Set a signed session marker. Replace with a real session ID from your store.
-  const sessionPayload = `${email}.${Math.floor(Date.now() / 1000) + COOKIE_TTL_SECONDS}`;
+  const sessionPayload = `${email}.${Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS}`;
   const sessionSig = sign(sessionPayload, secret);
   const sessionValue = `${Buffer.from(sessionPayload).toString('base64url')}.${sessionSig}`;
 
@@ -253,7 +253,7 @@ async function handleCallback(req: Request) {
     secure: true,
     sameSite: 'lax',
     path: '/',
-    maxAge: COOKIE_TTL_SECONDS,
+    maxAge: SESSION_TTL_SECONDS,
   });
   // Clear referral cookie once consumed.
   if (refSlug) {

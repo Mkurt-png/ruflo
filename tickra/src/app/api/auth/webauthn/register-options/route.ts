@@ -12,7 +12,7 @@ export async function POST() {
   if (!(await isWebAuthnAvailable())) {
     return NextResponse.json({ error: 'not_configured' }, { status: 501 });
   }
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
   const existing = await listPasskeys(session.email);

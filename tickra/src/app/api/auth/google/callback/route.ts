@@ -3,7 +3,7 @@ import { createHmac } from 'node:crypto';
 import { ensureUser, isDbConfigured } from '@/lib/db/queries';
 import { attachReferrer } from '@/lib/db/referral-queries';
 import { postDiscord, formatSignup } from '@/lib/notify/discord';
-import { getSession } from '@/lib/auth/session';
+import { getSession, SESSION_TTL_SECONDS } from '@/lib/auth/session';
 import { normaliseEmail } from '@/lib/auth/email';
 
 const REF_COOKIE = 'tickra-ref';
@@ -21,7 +21,6 @@ const REF_COOKIE = 'tickra-ref';
 
 const COOKIE_NAME = 'tickra-session';
 const STATE_COOKIE = 'tickra-oauth-state';
-const COOKIE_TTL_SECONDS = 60 * 60 * 24 * 7;
 
 function sign(payload: string, secret: string): string {
   return createHmac('sha256', secret).update(payload).digest('base64url');
@@ -54,7 +53,7 @@ export async function GET(req: Request) {
     // "invalid_state" error. This covers the case where the state cookie
     // got dropped (browser quirk, narrow path, multiple tabs) but the user
     // actually IS authenticated.
-    const existing = getSession();
+    const existing = await getSession();
     if (existing) {
       const ok = NextResponse.redirect(new URL(`/${locale}/learn?session=success`, url));
       ok.cookies.set(STATE_COOKIE, '', { path: '/', maxAge: 0 });
@@ -132,7 +131,7 @@ export async function GET(req: Request) {
   }
 
   // Set the same signed session cookie as the magic-link flow.
-  const sessionPayload = `${userEmail}.${Math.floor(Date.now() / 1000) + COOKIE_TTL_SECONDS}`;
+  const sessionPayload = `${userEmail}.${Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS}`;
   const sig = sign(sessionPayload, signingSecret);
   const value = `${Buffer.from(sessionPayload).toString('base64url')}.${sig}`;
 
@@ -142,7 +141,7 @@ export async function GET(req: Request) {
     secure: true,
     sameSite: 'lax',
     path: '/',
-    maxAge: COOKIE_TTL_SECONDS,
+    maxAge: SESSION_TTL_SECONDS,
   });
   // Clear the state cookie. We clear BOTH the new path '/' and the legacy
   // narrow path '/api/auth/google' so stale cookies from old deploys don't

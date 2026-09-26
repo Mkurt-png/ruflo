@@ -421,6 +421,7 @@ const en = {
       messageLabel: 'Message',
       submit: 'Send',
       sent: 'Message sent. We will get back to you soon.',
+      failed: 'Sending failed. Try again in a few minutes, or write directly to hello@nknowtrade.com.',
     },
     address: {
       title: 'Address',

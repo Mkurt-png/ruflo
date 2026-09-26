@@ -12,7 +12,7 @@ import { notifyAchievements } from '@/lib/achievements/notify';
 // return cleanly so the client can continue to rely on localStorage.
 
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     // No session — return `configured` based on DB env state, not on auth.
     // This way the same endpoint can answer "is the DB wired?" before login.
@@ -46,7 +46,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
 
   const body = (await req.json().catch(() => null)) as { lessonId?: string } | null;

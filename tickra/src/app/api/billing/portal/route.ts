@@ -7,7 +7,7 @@ import { getUser, updateUser } from '@/lib/db/queries';
 // Lookup order: DB row first (fast), then Stripe customers list by email.
 
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   }

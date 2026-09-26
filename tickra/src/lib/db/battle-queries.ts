@@ -84,6 +84,10 @@ export async function joinBattle(id: string, guestEmail: string): Promise<Battle
   if (current.guest_email && current.guest_email !== guestEmail) return null;
   if (current.status !== 'waiting') return current;
 
+  // Conditional on the row still being open. The check above was a separate
+  // read, so two people opening the same invite together both passed it and
+  // the second write replaced the first guest mid-game. Now the database
+  // decides: only the update that finds the seat empty lands.
   const { data, error } = await db
     .from(TABLE)
     .update({
@@ -92,24 +96,64 @@ export async function joinBattle(id: string, guestEmail: string): Promise<Battle
       started_at: new Date().toISOString(),
     })
     .eq('id', id)
+    .eq('status', 'waiting')
+    .is('guest_email', null)
     .select('*')
-    .single();
-  if (error || !data) return null;
-  return data as Battle;
+    .maybeSingle();
+  if (error) return null;
+  if (data) return data as Battle;
+  // Lost the race — fine if the winner was this same person (double click).
+  const after = await getBattle(id);
+  return after && after.guest_email === guestEmail ? after : null;
 }
 
 // Records an answer for one side at a specific question index. Once both
 // players have answered the same index, the server advances current_index.
 // When the last question is answered, the battle is auto-finished.
+// PostgREST's "function not found" and Postgres' "undefined function".
+const MISSING_FUNCTION = new Set(['PGRST202', '42883']);
+
+/**
+ * Record one side's answer. Done in the database (`tickra_battle_answer`,
+ * migration 024), which takes a row lock and measures the answer time itself.
+ *
+ * The read-modify-write below it is the path this replaced, kept only until
+ * the migration is applied. It had two faults the function fixes: when both
+ * players answered the same question together, each read the row before the
+ * other's write, neither saw both answers, and `current_index` never advanced
+ * — the battle froze; and `clientTimeMs` came from the browser, so sending 0
+ * won every speed tie.
+ */
 export async function submitAnswer(
+  id: string,
+  side: Side,
+  index: number,
+  answer: number,
+  clientTimeMs: number,
+): Promise<Battle | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const { data, error } = await db.rpc('tickra_battle_answer', {
+    p_id: id,
+    p_side: side,
+    p_index: index,
+    p_answer: answer,
+  });
+  if (!error) return (data as Battle | null) ?? null;
+  if (!MISSING_FUNCTION.has(error.code ?? '')) return null;
+
+  return submitAnswerLegacy(db, id, side, index, answer, clientTimeMs);
+}
+
+async function submitAnswerLegacy(
+  db: NonNullable<Awaited<ReturnType<typeof getDb>>>,
   id: string,
   side: Side,
   index: number,
   answer: number,
   timeMs: number,
 ): Promise<Battle | null> {
-  const db = await getDb();
-  if (!db) return null;
   const battle = await getBattle(id);
   if (!battle) return null;
   if (battle.status === 'finished') return battle;

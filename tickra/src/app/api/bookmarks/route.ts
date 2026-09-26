@@ -6,7 +6,7 @@ import { isDbConfigured, listBookmarks, setBookmark } from '@/lib/db/queries';
 // POST /api/bookmarks  { lessonId, on } → toggles
 
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ bookmarks: {}, configured: false }, { status: 401 });
   }
@@ -20,7 +20,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
 
   const body = (await req.json().catch(() => null)) as { lessonId?: string; on?: boolean } | null;

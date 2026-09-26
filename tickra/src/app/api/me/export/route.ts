@@ -13,7 +13,7 @@ import {
 // Portability (Law 25 / PIPEDA) — let users grab their own data.
 
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
 
   if (!isDbConfigured()) {

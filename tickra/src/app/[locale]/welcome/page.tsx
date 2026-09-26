@@ -59,7 +59,7 @@ export default async function WelcomePage({ params }: { params: { locale: string
   // 2. Otherwise the very first global lesson (forex-basics 01).
   let trackSlug = TRACKS[0].slug;
   if (isDbConfigured()) {
-    const session = getSession();
+    const session = await getSession();
     if (session) {
       const user = await getUser(session.email).catch(() => null);
       if (user?.placement_track && getTrack(user.placement_track)) {

@@ -3,7 +3,7 @@ import { getSession } from '@/lib/auth/session';
 import { isDbConfigured, logMistake } from '@/lib/db/queries';
 
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
 
   const body = (await req.json().catch(() => null)) as { lessonId?: string } | null;

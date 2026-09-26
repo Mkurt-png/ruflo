@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getSession, SESSION_COOKIE } from '@/lib/auth/session';
+import { getSession, revokeAllSessions, SESSION_COOKIE } from '@/lib/auth/session';
 import { deleteUser, isDbConfigured } from '@/lib/db/queries';
 
 // DELETE /api/me/account
@@ -8,7 +8,7 @@ import { deleteUser, isDbConfigured } from '@/lib/db/queries';
 // to prevent accidental triggers from generic clients.
 
 export async function DELETE(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
 
   const body = (await req.json().catch(() => null)) as { confirm?: string } | null;
@@ -17,6 +17,10 @@ export async function DELETE(req: Request) {
   }
 
   if (isDbConfigured()) {
+    // Before the delete, and on every device: a session left alive on another
+    // browser would recreate the row on its next write, bringing back an
+    // account its owner asked us to erase.
+    await revokeAllSessions(session.email);
     await deleteUser(session.email);
   }
 

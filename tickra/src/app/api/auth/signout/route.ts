@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { SESSION_COOKIE } from '@/lib/auth/session';
+import { cookies } from 'next/headers';
+import { SESSION_COOKIE, revokeSession } from '@/lib/auth/session';
 
 // POST /api/auth/signout?locale=fr|en — clears the session cookie and bounces
 // the user back to the localised home page.
@@ -19,6 +20,11 @@ import { SESSION_COOKIE } from '@/lib/auth/session';
 async function handle(req: Request) {
   const url = new URL(req.url);
   const locale = url.searchParams.get('locale') === 'fr' ? 'fr' : 'en';
+  // Clearing the cookie only signs out THIS browser's copy. Recording it as
+  // revoked means a copy made elsewhere stops working too. Other devices,
+  // which hold different cookies, stay signed in.
+  const cookie = cookies().get(SESSION_COOKIE)?.value;
+  await revokeSession(cookie);
   const response = NextResponse.redirect(new URL(`/${locale}`, url), { status: 303 });
   response.cookies.set(SESSION_COOKIE, '', { path: '/', maxAge: 0 });
   return response;

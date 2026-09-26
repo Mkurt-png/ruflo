@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 // POST /api/auth/webauthn/remove   { credentialId }
 // Removes the passkey from the current user. Requires a live session.
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   const body = (await req.json().catch(() => null)) as { credentialId?: string } | null;
   if (!body?.credentialId) {

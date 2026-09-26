@@ -12,7 +12,7 @@ const GRADES = ['again', 'hard', 'good', 'easy'] as const;
 // Records the user's recall grade for a card, runs SM-2, schedules the next
 // review. Returns the new nextReviewAt so the client can update the queue.
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
   const body = (await req.json().catch(() => null)) as

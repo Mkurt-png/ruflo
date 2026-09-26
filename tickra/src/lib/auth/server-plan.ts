@@ -8,7 +8,7 @@ import { resolveEffectivePlan } from '@/lib/auth/plan-expiry';
 import type { Plan } from '@/lib/auth/useUser';
 
 export async function getCurrentPlan(): Promise<{ email: string | null; plan: Plan }> {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return { email: null, plan: 'free' };
   if (!isDbConfigured()) return { email: session.email, plan: 'free' };
   const row = await getUser(session.email);
