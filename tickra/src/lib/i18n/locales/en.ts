@@ -25,10 +25,11 @@ const en = {
     secondaryCta: 'Free lesson preview (2 min)',
     chartCaption: 'EUR/USD · 1H · Last 24 sessions',
     stats: [
-      // 158 lessons are written; 222 are planned. Advertising 222 as shipped
-      // sold 64 "coming soon" pages — including four advanced tracks that are
-      // entirely empty, which are exactly the ones people pay for.
-      { value: '158', label: 'Lessons written' },
+      // The number of lessons WRITTEN, not planned — advertised-count.test.ts
+      // checks it. It stood at 158 of 222 for a long time: advertising 222 then
+      // sold 64 "coming soon" pages, the four advanced tracks among them. All
+      // 222 have been written since September 2026.
+      { value: '222', label: 'Lessons written' },
       { value: '15', label: 'Mastery tracks' },
       { value: '10 min', label: 'Daily commitment' },
     ],
@@ -69,7 +70,7 @@ const en = {
         body: 'Ten minutes counts. Miss a day, keep your streak with a freeze. nkNOWTrade rewards consistency, not grinding.',
       },
       library: {
-        title: '158 modules written, 222 planned.',
+        title: '222 modules, all written.',
         body: 'From forex basics to live markets. Every module ends with a checkpoint you can fail — and retake.',
       },
       risk: {
@@ -215,7 +216,7 @@ const en = {
         cta: 'Go Pro',
         highlighted: true,
         features: [
-          'Every published lesson unlocked (158 today)',
+          'Every published lesson unlocked (222 today)',
           'Unlimited lives, zero ads',
           'Pick any module, any time',
           'TradingView Pro embed',
@@ -243,7 +244,7 @@ const en = {
       title: 'Compare in detail',
       rows: [
         { label: 'Placement test', free: 'Included', pro: 'Included', lifetime: 'Included' },
-        { label: 'Lessons unlocked', free: '4 / 158', pro: '158 / 158', lifetime: '158 / 158 + future' },
+        { label: 'Lessons unlocked', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + future' },
         { label: 'Daily lives', free: '3', pro: 'Unlimited', lifetime: 'Unlimited' },
         { label: 'Embedded TradingView', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Decision journal', free: '—', pro: 'Included', lifetime: 'Included + export' },
@@ -368,10 +369,10 @@ const en = {
       cta: 'Create my free account',
       back: 'Review my answers',
       tracks: {
-        zero: { name: 'Foundations track', body: 'We start at candle 1. Japanese candles, structure, vocabulary. 35 lessons.' },
-        low: { name: 'Risk & Method track', body: 'You know the basics. We consolidate risk management and method first. 28 lessons.' },
-        mid: { name: 'Intermediate track', body: 'Support/resistance, volume, patterns. You have the foundations — we step it up. 30 lessons.' },
-        high: { name: 'Strategies & Regimes track', body: 'Trend, range, volatility. You arrive with a strong base — we work the regimes. 24 lessons.' },
+        zero: { name: 'Foundations track', body: 'We start at candle 1. Japanese candles, structure, vocabulary. Starting point: Japanese candles, 18 lessons.' },
+        low: { name: 'Risk & Method track', body: 'You know the basics. We consolidate risk management and method first. Starting point: Risk management, 16 lessons.' },
+        mid: { name: 'Intermediate track', body: 'Support/resistance, volume, patterns. You have the foundations — we step it up. Starting point: Support & resistance, 14 lessons.' },
+        high: { name: 'Strategies & Regimes track', body: 'Trend, range, volatility. You arrive with a strong base — we work the regimes. Starting point: Trend strategies, 16 lessons.' },
       },
       score: 'Score: {score} / {total}',
     },

@@ -90,8 +90,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       //
       // Two filters, for two different kinds of empty page:
       //
-      //   isSeeded            — the other 64 lessons render a "Coming soon"
-      //                         card. Nothing to index.
+      //   isSeeded            — a lesson without written content renders a
+      //                         "Coming soon" card. Nothing to index. (All 222
+      //                         are written today; the filter stays for the
+      //                         next lesson added to data.ts before its copy.)
       //   isLessonUnlocked    — everything past the first FREE_LESSON_LIMIT
       //                         is behind the paywall. Fetched anonymously,
       //                         such a page returns about 1,300 characters,

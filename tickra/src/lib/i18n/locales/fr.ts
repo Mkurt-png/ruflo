@@ -25,10 +25,11 @@ const fr = {
     secondaryCta: 'Aperçu gratuit d’une leçon (2 min)',
     chartCaption: 'EUR/USD · 1H · 24 dernières séances',
     stats: [
-      // 158 leçons sont rédigées ; 222 sont planifiées. Annoncer 222 comme
-      // livrées vendait 64 pages « bientôt » — dont quatre pistes avancées
-      // entièrement vides, exactement celles pour lesquelles on paie.
-      { value: '158', label: 'Leçons rédigées' },
+      // Le nombre de leçons RÉDIGÉES, pas planifiées — advertised-count.test.ts
+      // le vérifie. Il a longtemps été 158 sur 222 : annoncer 222 vendait alors
+      // 64 pages « bientôt », dont les quatre pistes avancées. Les 222 sont
+      // rédigées depuis septembre 2026.
+      { value: '222', label: 'Leçons rédigées' },
       { value: '15', label: 'Pistes de maîtrise' },
       { value: '10 min', label: 'Engagement quotidien' },
     ],
@@ -69,7 +70,7 @@ const fr = {
         body: 'Dix minutes comptent. Un jour manqué, un freeze conserve la série. nkNOWTrade récompense la régularité, pas le surmenage.',
       },
       library: {
-        title: '158 modules écrits, 222 planifiés.',
+        title: '222 modules, tous rédigés.',
         body: "Des bases du forex aux marchés réels. Chaque module se termine par un point de contrôle qui peut être manqué — et repassé.",
       },
       risk: {
@@ -210,7 +211,7 @@ const fr = {
         cta: 'Passer Pro',
         highlighted: true,
         features: [
-          'Toutes les leçons publiées débloquées (158 aujourd’hui)',
+          'Toutes les leçons publiées débloquées (222 aujourd’hui)',
           'Vies illimitées, zéro pub',
           'Choisissez n’importe quel module',
           'TradingView Pro intégré',
@@ -238,7 +239,7 @@ const fr = {
       title: 'Comparer en détail',
       rows: [
         { label: 'Test de niveau', free: 'Inclus', pro: 'Inclus', lifetime: 'Inclus' },
-        { label: 'Leçons débloquées', free: '4 / 158', pro: '158 / 158', lifetime: '158 / 158 + futures' },
+        { label: 'Leçons débloquées', free: '4 / 222', pro: '222 / 222', lifetime: '222 / 222 + futures' },
         { label: 'Vies quotidiennes', free: '3', pro: 'Illimitées', lifetime: 'Illimitées' },
         { label: 'TradingView intégré', free: '—', pro: 'Pro embed', lifetime: 'Pro embed' },
         { label: 'Journal de décisions', free: '—', pro: 'Inclus', lifetime: 'Inclus + export' },
@@ -363,10 +364,10 @@ const fr = {
       cta: 'Créer mon compte gratuit',
       back: 'Revoir mes réponses',
       tracks: {
-        zero: { name: 'Piste Fondations', body: 'On commence à la bougie 1. Bougies japonaises, structure, vocabulaire. 35 leçons.' },
-        low: { name: 'Piste Risque & Méthode', body: 'Vous connaissez les bases. On consolide la gestion du risque et la méthode avant tout. 28 leçons.' },
-        mid: { name: 'Piste Intermédiaire', body: 'Supports/résistances, volumes, figures. Vous avez les fondations, on monte d’un cran. 30 leçons.' },
-        high: { name: 'Piste Stratégies & Régimes', body: 'Tendance, range, volatilité. Vous arrivez avec une base solide — on travaille les régimes. 24 leçons.' },
+        zero: { name: 'Piste Fondations', body: 'On commence à la bougie 1. Bougies japonaises, structure, vocabulaire. Départ : Bougies japonaises, 18 leçons.' },
+        low: { name: 'Piste Risque & Méthode', body: 'Vous connaissez les bases. On consolide la gestion du risque et la méthode avant tout. Départ : Gestion du risque, 16 leçons.' },
+        mid: { name: 'Piste Intermédiaire', body: 'Supports/résistances, volumes, figures. Vous avez les fondations, on monte d’un cran. Départ : Supports & résistances, 14 leçons.' },
+        high: { name: 'Piste Stratégies & Régimes', body: 'Tendance, range, volatilité. Vous arrivez avec une base solide — on travaille les régimes. Départ : Stratégies de tendance, 16 leçons.' },
       },
       score: 'Score : {score} / {total}',
     },
