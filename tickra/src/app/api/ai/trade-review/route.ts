@@ -104,7 +104,7 @@ export async function POST(req: Request) {
   };
   const locale = body.locale === 'en' ? 'en' : 'fr';
 
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
 
   // Plan + quota — Pro-only for Trade Coach (better UX than rate-limiting).

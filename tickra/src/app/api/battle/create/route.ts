@@ -40,7 +40,7 @@ function pickRandomQuestions(count: number): BattleQuestion[] {
 }
 
 export async function POST() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }

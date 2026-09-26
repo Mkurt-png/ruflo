@@ -99,7 +99,7 @@ export async function POST(req: Request) {
   }
 
   // Auth + quota — same policy as the chat endpoint.
-  const session = getSession();
+  const session = await getSession();
   const email = session?.email ?? null;
   if (!email) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });

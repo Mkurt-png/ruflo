@@ -9,11 +9,10 @@ import {
   isWebAuthnAvailable,
   verifyAuthentication,
 } from '@/lib/auth/passkeys';
-import { SESSION_COOKIE } from '@/lib/auth/session';
+import { SESSION_COOKIE, SESSION_TTL_SECONDS } from '@/lib/auth/session';
 import { ensureUser, isDbConfigured } from '@/lib/db/queries';
 import { getPasskey, updatePasskeyCounter } from '@/lib/db/passkeys-queries';
 
-const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days — match magic-link callback
 
 export async function POST(req: Request) {
   if (!(await isWebAuthnAvailable())) {

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'lessonId and vote required' }, { status: 400 });
   }
 
-  const session = getSession();
+  const session = await getSession();
   if (!isDbConfigured()) {
     return NextResponse.json({ ok: true, persisted: false, reason: 'db_not_configured' });
   }

@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 async function gate() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return { err: NextResponse.json({ error: 'unauthorized' }, { status: 401 }) };
   if (!isDbConfigured())
     return { err: NextResponse.json({ error: 'db_unavailable' }, { status: 503 }) };

@@ -27,7 +27,7 @@ export default async function AchievementsPage({ params }: { params: { locale: s
   const locale = params.locale as Locale;
   const dict = await getDictionary(locale);
 
-  const session = getSession();
+  const session = await getSession();
   if (!session) redirect(`/${locale}/signin`);
 
   const unlockedMap = new Map<string, string>();

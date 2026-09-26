@@ -125,7 +125,7 @@ function inRange(v: number, lo: number, hi: number): boolean {
 // ─── Route ───────────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   }

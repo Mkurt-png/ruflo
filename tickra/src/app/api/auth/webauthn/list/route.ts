@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 // GET /api/auth/webauthn/list
 // Returns the current user's registered passkeys (metadata only).
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ passkeys: [] });
   const passkeys = await listPasskeys(session.email);
   return NextResponse.json({

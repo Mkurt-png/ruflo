@@ -25,7 +25,7 @@ function urlFor(locale: 'fr' | 'en', slug: string | null): string | null {
 }
 
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   }
@@ -49,7 +49,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   }

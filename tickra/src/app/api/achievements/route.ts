@@ -17,7 +17,7 @@ export const dynamic = 'force-dynamic';
 // the post-progress hook missed something (e.g. clock-based achievements
 // like streak_7 that depend on wall-clock time, not on a write event).
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
 
   const catalog = ACHIEVEMENTS.map((a) => ({

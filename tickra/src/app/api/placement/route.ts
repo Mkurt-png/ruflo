@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'trackSlug required' }, { status: 400 });
   }
 
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ ok: true, persisted: false, reason: 'not_authenticated' });
   }

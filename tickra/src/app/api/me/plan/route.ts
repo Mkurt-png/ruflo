@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 // latest placement_track.
 
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ plan: [], reason: 'not_authenticated' });
   if (!isDbConfigured()) return NextResponse.json({ plan: [], reason: 'db_not_configured' });
 
@@ -31,7 +31,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   if (!isDbConfigured()) return NextResponse.json({ error: 'db_not_configured' }, { status: 501 });
 

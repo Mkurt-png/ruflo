@@ -71,7 +71,7 @@ function toClosed(r: SimTradeRow): WireClosedPosition {
 }
 
 export async function GET() {
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   }

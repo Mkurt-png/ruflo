@@ -61,7 +61,7 @@ function isCurrencyRejection(err: unknown): boolean {
 export async function POST(req: Request) {
   // TICKRA-FIX(security): require an authenticated user. Was unauthenticated
   // (anyone could create Stripe sessions on behalf of any email).
-  const session = getSession();
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'not_authenticated' }, { status: 401 });
   }

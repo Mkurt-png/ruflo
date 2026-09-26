@@ -20,7 +20,7 @@ export function generateMetadata({ params }: { params: { locale: string } }) {
 export default async function SettingsPage({ params }: { params: { locale: string } }) {
   if (!isLocale(params.locale)) notFound();
   const locale: Locale = params.locale;
-  const session = getSession();
+  const session = await getSession();
   if (!session) redirect(`/${locale}/signin?next=/me/settings`);
   const dict = await getDictionary(locale);
 

@@ -38,7 +38,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
   if (!isLocale(params.locale)) notFound();
   const dict = await getDictionary(params.locale);
   const locale = params.locale;
-  const session = getSession();
+  const session = await getSession();
 
   if (session) {
     return (

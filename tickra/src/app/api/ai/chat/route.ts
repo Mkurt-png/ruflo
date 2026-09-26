@@ -46,7 +46,7 @@ export async function POST(req: Request) {
   }
 
   const locale = body?.context?.locale === 'en' ? 'en' : 'fr';
-  const session = getSession();
+  const session = await getSession();
   const email = session?.email ?? null;
 
   // Plan + quota

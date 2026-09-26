@@ -20,7 +20,7 @@ export default async function JournalPage({ params }: { params: { locale: string
   const locale = params.locale as Locale;
   const dict = await getDictionary(locale);
 
-  const session = getSession();
+  const session = await getSession();
   if (!session) redirect(`/${locale}/signin`);
   if (!isDbConfigured()) redirect(`/${locale}/me`);
   const user = await getUser(session.email);

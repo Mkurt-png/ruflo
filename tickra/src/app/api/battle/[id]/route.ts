@@ -23,14 +23,14 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const battle = await getBattle(params.id);
   if (!battle) return NextResponse.json({ error: 'not_found' }, { status: 404 });
 
-  const session = getSession();
+  const session = await getSession();
   const role = session ? roleOf(battle, session.email) : null;
   if (!role) return NextResponse.json({ battle: outsiderView(battle) });
   return NextResponse.json({ battle: battleView(battle, role) });
 }
 
 export async function POST(req: NextRequest, { params }: Params) {
-  const session = getSession();
+  const session = await getSession();
   if (!session) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   if (!isDbConfigured()) {
     return NextResponse.json({ error: 'db_unavailable' }, { status: 503 });
@@ -70,8 +70,9 @@ export async function POST(req: NextRequest, { params }: Params) {
     }
     const index = Number(body.index);
     const answer = Number(body.answer);
-    // TICKRA-FIX: clamp timeMs to [0, QUESTION_MAX_MS] so a malicious client
-    // can't claim `timeMs: 0` to always win the speed tie-breaker.
+    // Only used until migration 024 is applied: the database now measures the
+    // answer time itself, and a browser-reported time is ignored. Clamped for
+    // the fallback so `timeMs: 0` cannot be claimed there either.
     const timeMs = Math.min(
       QUESTION_MAX_MS,
       Math.max(0, Number(body.timeMs ?? 0)),

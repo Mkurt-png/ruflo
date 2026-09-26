@@ -15,7 +15,7 @@ export default async function ReviewPage({ params }: { params: { locale: string 
   const locale = params.locale as Locale;
   const dict = await getDictionary(locale);
 
-  const session = getSession();
+  const session = await getSession();
   if (!session) redirect(`/${locale}/signin`);
 
   const due = await listDueReviews(session.email, 50);
