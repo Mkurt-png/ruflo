@@ -5,6 +5,7 @@
 // placeholder so the lesson runtime never breaks.
 
 import type { LessonMeta, TrackMeta } from './data';
+import { ADVANCED_LESSONS } from './lessons';
 
 export type LessonContent = {
   intro: { fr: string[]; en: string[] };
@@ -4749,6 +4750,10 @@ const seeded: Seed = {
     ],
   },
 };
+
+// The advanced and mastery tracks live in ./lessons, one file per half-track,
+// so no single file grows past what a reviewer can read.
+Object.assign(seeded, ADVANCED_LESSONS);
 
 // ─── Placeholder generator ─────────────────────────────────────────────────
 

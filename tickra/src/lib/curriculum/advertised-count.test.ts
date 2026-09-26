@@ -60,3 +60,34 @@ describe('advertised lesson counts match reality', () => {
     }
   });
 });
+
+// The placement test tells each level where it starts and how long that
+// starting track is. Those counts were invented (35, 28, 30, 24) and matched
+// no track — the advanced one advertised 24 lessons that did not exist yet.
+// Now each body names its starting track, and the count must be that track's.
+describe('placement results state their starting track’s real size', () => {
+  // Mirrors trackKeyToSlug in components/onboarding/PlacementTest.tsx.
+  const START: Record<'zero' | 'low' | 'mid' | 'high', string> = {
+    zero: 'japanese-candles',
+    low: 'risk-management',
+    mid: 'support-resistance',
+    high: 'trend-strategies',
+  };
+
+  for (const [name, dict] of [
+    ['en', en],
+    ['fr', fr],
+  ] as const) {
+    it(name, () => {
+      const tracks = (dict as unknown as { onboarding: { result: { tracks: Record<string, { body: string }> } } }).onboarding.result.tracks;
+      for (const [key, slug] of Object.entries(START)) {
+        const track = TRACKS.find((t) => t.slug === slug)!;
+        const body = tracks[key].body;
+        const m = body.match(/(\d+)\s+(leçons|lessons)\.?$/);
+        expect(m, `${name}.${key}: no lesson count at the end of "${body}"`).not.toBeNull();
+        expect(Number(m![1]), `${name}.${key}`).toBe(track.lessons.length);
+        expect(body, `${name}.${key} should name its starting track`).toContain(track.title[name]);
+      }
+    });
+  }
+});
